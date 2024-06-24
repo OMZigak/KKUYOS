@@ -16,11 +16,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: Print environment variables for debugging
+        run: |
+          echo "JIRA_BASEURL=${{ secrets.JIRA_BASEURL }}"
+          echo "JIRA_API_TOKEN=${{ secrets.JIRA_API_TOKEN }}"
+          echo "JIRA_EMAIL=${{ secrets.JIRA_EMAIL }}"
+          echo "JIRA_PROJECT_KEY=${{ secrets.JIRA_PROJECT_KEY }}"
+
       - name: Create Jira issue
         id: create_jira
         env:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
         run: |
@@ -43,7 +50,7 @@ jobs:
               }
             }' \
             -H "Content-Type: application/json" \
-            "$JIRA_BASE_URL/rest/api/2/issue/")
+            "$JIRA_BASEURL/rest/api/2/issue/")
           echo "Jira API response: $RESPONSE"
           JIRA_ISSUE_KEY=$(echo "$RESPONSE" | grep -oP '(?<=key\":\")\w+-\d+')
           echo "JIRA_ISSUE_KEY=$JIRA_ISSUE_KEY" >> $GITHUB_ENV
@@ -69,7 +76,7 @@ jobs:
       - name: Update Jira issue with commit info
         env:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_ISSUE_KEY: ${{ env.JIRA_ISSUE_KEY }}
         run: |
@@ -89,4 +96,4 @@ jobs:
               }
             }' \
             -H "Content-Type: application/json" \
-            "$JIRA_BASE_URL/rest/api/2/issue/$JIRA_ISSUE_KEY"
+            "$JIRA_BASEURL/rest/api/2/issue/$JIRA_ISSUE_KEY"
