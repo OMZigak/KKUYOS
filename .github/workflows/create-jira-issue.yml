@@ -22,7 +22,7 @@ jobs:
         run: |
           ISSUE_TITLE="${{ github.event.issue.title }}"
           ISSUE_BODY="${{ github.event.issue.body }}"
-          JIRA_ISSUE=$(curl -D- \
+          RESPONSE=$(curl -D- \
             -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
             -X POST \
             --data '{
@@ -38,14 +38,16 @@ jobs:
               }
             }' \
             -H "Content-Type: application/json" \
-            "$JIRA_BASE_URL/rest/api/2/issue/" | grep -oP '(?<=issue\/key\/)\w+-\d+')
-          echo "JIRA_ISSUE=$JIRA_ISSUE" >> $GITHUB_ENV
+            "$JIRA_BASE_URL/rest/api/2/issue/")
+          echo "$RESPONSE"
+          JIRA_ISSUE_KEY=$(echo "$RESPONSE" | grep -oP '(?<=issue\/key\/)\w+-\d+')
+          echo "JIRA_ISSUE_KEY=$JIRA_ISSUE_KEY" >> $GITHUB_ENV
 
       - name: Create branch for the issue
         run: |
           ISSUE_NUMBER=${{ github.event.issue.number }}
           ISSUE_TITLE=${{ github.event.issue.title }}
-          BRANCH_NAME="feat/issue-${ISSUE_NUMBER}-${JIRA_ISSUE}"
+          BRANCH_NAME="feat/issue-${ISSUE_NUMBER}-${JIRA_ISSUE_KEY}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH_NAME"
@@ -53,44 +55,44 @@ jobs:
 
       - name: Add Jira issue key to commit message
         env:
-          JIRA_ISSUE: ${{ env.JIRA_ISSUE }}
+          JIRA_ISSUE_KEY: ${{ env.JIRA_ISSUE_KEY }}
         run: |
-          echo "JIRA_ISSUE=${JIRA_ISSUE}" >> $GITHUB_ENV
+          echo "JIRA_ISSUE_KEY=${JIRA_ISSUE_KEY}" >> $GITHUB_ENV
 
-  on:
-    push:
-      branches:
-        - 'feat/*'
+on:
+  push:
+    branches:
+      - 'feat/*'
 
-  jobs:
-    update_jira:
-      runs-on: ubuntu-latest
+jobs:
+  update_jira:
+    runs-on: ubuntu-latest
 
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@v2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-        - name: Update Jira issue with commit info
-          env:
-            JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-            JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-            JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
-            JIRA_ISSUE: ${{ env.JIRA_ISSUE }}
-          run: |
-            COMMITS=$(jq -r '.commits[] | .message' $GITHUB_EVENT_PATH)
-            curl -D- \
-              -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
-              -X PUT \
-              --data '{
-                "update": {
-                  "comment": [
-                    {
-                      "add": {
-                        "body": "'"Commits related to this issue:\n$COMMITS"'"
-                      }
+      - name: Update Jira issue with commit info
+        env:
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_ISSUE_KEY: ${{ env.JIRA_ISSUE_KEY }}
+        run: |
+          COMMITS=$(jq -r '.commits[] | .message' $GITHUB_EVENT_PATH)
+          curl -D- \
+            -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
+            -X PUT \
+            --data '{
+              "update": {
+                "comment": [
+                  {
+                    "add": {
+                      "body": "'"Commits related to this issue:\n$COMMITS"'"
                     }
-                  ]
-                }
-              }' \
-              -H "Content-Type: application/json" \
-              "$JIRA_BASE_URL/rest/api/2/issue/$JIRA_ISSUE"
+                  }
+                ]
+              }
+            }' \
+            -H "Content-Type: application/json" \
+            "$JIRA_BASE_URL/rest/api/2/issue/$JIRA_ISSUE_KEY"
