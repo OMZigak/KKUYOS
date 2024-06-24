@@ -3,9 +3,13 @@ name: Create Jira Issue and Sync with GitHub
 on:
   issues:
     types: [opened]
+  push:
+    branches:
+      - 'feat/*'
 
 jobs:
   create_jira_issue:
+    if: github.event_name == 'issues'
     runs-on: ubuntu-latest
 
     steps:
@@ -59,13 +63,8 @@ jobs:
         run: |
           echo "JIRA_ISSUE_KEY=${JIRA_ISSUE_KEY}" >> $GITHUB_ENV
 
-on:
-  push:
-    branches:
-      - 'feat/*'
-
-jobs:
   update_jira:
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
     steps:
