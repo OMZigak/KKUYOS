@@ -2,110 +2,64 @@ name: Create Jira Issue and Sync with GitHub
 
 on:
   issues:
-    types: [opened]
-  push:
-    branches:
-      - 'feat/*'
-      - 'fix/*'
-      - 'docs/*'
-      - 'setting/*'
-      - 'add/*'
-      - 'refactor/*'
-      - 'chore/*'
+    types: [opened, assigned, unassigned]
 
 jobs:
   create_jira_issue:
-    if: github.event_name == 'issues'
+    if: github.event_name == 'issues' && github.event.action == 'opened'
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Print environment variables for debugging
-        run: |
-          echo "JIRA_BASEURL=${{ secrets.JIRA_BASEURL }}"
-          echo "JIRA_API_TOKEN=${{ secrets.JIRA_API_TOKEN }}"
-          echo "JIRA_EMAIL=${{ secrets.JIRA_EMAIL }}"
-          echo "JIRA_PROJECT_KEY=${{ secrets.JIRA_PROJECT_KEY }}"
-
       - name: Create Jira issue
-        id: create_jira
         env:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-          JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
-          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
           JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
         run: |
           ISSUE_TITLE="${{ github.event.issue.title }}"
           ISSUE_BODY="${{ github.event.issue.body }}"
-          echo "Creating Jira issue with title: $ISSUE_TITLE and body: $ISSUE_BODY"
-          RESPONSE=$(curl -D- \
-            -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
-            -X POST \
+          ISSUE_ASSIGNEE="${{ github.event.issue.assignee.login }}"
+          JIRA_ASSIGNEE_ID=$(curl -s -u $JIRA_USER_EMAIL:$JIRA_API_TOKEN "$JIRA_BASE_URL/rest/api/3/user/search?query=$ISSUE_ASSIGNEE" | jq -r '.[0].accountId')
+          RESPONSE=$(curl -s -u $JIRA_USER_EMAIL:$JIRA_API_TOKEN -X POST -H "Content-Type: application/json" \
             --data '{
               "fields": {
-                "project": {
-                  "key": "'"$JIRA_PROJECT_KEY"'"
-                },
-                "summary": "'"$ISSUE_TITLE"'",
-                "description": "'"$ISSUE_BODY"'",
-                "issuetype": {
-                  "name": "Task"
-                }
+                "project": {"key": "'$JIRA_PROJECT_KEY'"},
+                "summary": "'$ISSUE_TITLE'",
+                "description": "'$ISSUE_BODY'",
+                "issuetype": {"name": "Task"},
+                "assignee": {"id": "'$JIRA_ASSIGNEE_ID'"}
               }
-            }' \
-            -H "Content-Type: application/json" \
-            "$JIRA_BASEURL/rest/api/2/issue/")
+            }' "$JIRA_BASE_URL/rest/api/3/issue/")
           echo "Jira API response: $RESPONSE"
-          JIRA_ISSUE_KEY=$(echo "$RESPONSE" | grep -oP '(?<=key\":\")\w+-\d+')
-          echo "JIRA_ISSUE_KEY=$JIRA_ISSUE_KEY" >> $GITHUB_ENV
 
       - name: Create branch for the issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          export LANG=en_US.UTF-8
           ISSUE_NUMBER=${{ github.event.issue.number }}
-          ISSUE_TITLE="${{ github.event.issue.title }}"
-          PREFIX=$(echo "$ISSUE_TITLE" | grep -oE '^(feat|fix|docs|setting|add|refactor|chore)' | tr '[:upper:]' '[:lower:]')
-          if [ -z "$PREFIX" ]; then PREFIX="feat"; fi
-          CLEAN_TITLE=$(echo "$ISSUE_TITLE" | sed 's/[^a-zA-Z0-9]/-/g' | cut -d "-" -f2-)
-          BRANCH_NAME="feature/${PREFIX}/${ISSUE_NUMBER}-${CLEAN_TITLE}"
+          ISSUE_TITLE="${{ github.event.issue.title | slugify }}"
+          BRANCH_NAME="feature/${{ github.event.issue.labels[0].name | slugify }}/${ISSUE_NUMBER}-${ISSUE_TITLE}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH_NAME"
-          git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME"
+          git push "https://x-access-token:$GITHUB_TOKEN@github.com/${{ github.repository }}/" "$BRANCH_NAME"
 
-  update_jira:
-    if: github.event_name == 'push'
+  sync_assignee:
+    if: github.event_name == 'issues' && (github.event.action == 'assigned' || github.event.action == 'unassigned')
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Update Jira issue with commit info
+      - name: Sync Jira assignee
         env:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-          JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
-          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
-          JIRA_ISSUE_KEY: ${{ env.JIRA_ISSUE_KEY }}
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_USER_EMAIL: ${{ secrets.JIRA_USER_EMAIL }}
         run: |
-          COMMITS=$(jq -r '.commits[] | .message' $GITHUB_EVENT_PATH)
-          curl -D- \
-            -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
-            -X PUT \
-            --data '{
-              "update": {
-                "comment": [
-                  {
-                    "add": {
-                      "body": "'"Commits related to this issue:\n$COMMITS"'"
-                    }
-                  }
-                ]
-              }
-            }' \
-            -H "Content-Type: application/json" \
-            "$JIRA_BASEURL/rest/api/2/issue/$JIRA_ISSUE_KEY"
+          JIRA_ISSUE_KEY="${{ github.event.issue.labels[0].name }}"
+          NEW_ASSIGNEE="${{ github.event.issue.assignee.login }}"
+          JIRA_ASSIGNEE_ID=$(curl -s -u $JIRA_USER_EMAIL:$JIRA_API_TOKEN "$JIRA_BASE_URL/rest/api/3/user/search?query=$NEW_ASSIGNEE" | jq -r '.[0].accountId')
+          curl -s -u $JIRA_USER_EMAIL:$JIRA_API_TOKEN -X PUT -H "Content-Type: application/json" \
+            --data '{"update": {"assignee": [{"set": {"id": "'$JIRA_ASSIGNEE_ID'"}}]}}' "$JIRA_BASE_URL/rest/api/3/issue/$JIRA_ISSUE_KEY"
