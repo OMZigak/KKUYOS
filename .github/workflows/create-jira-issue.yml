@@ -26,6 +26,7 @@ jobs:
         run: |
           ISSUE_TITLE="${{ github.event.issue.title }}"
           ISSUE_BODY="${{ github.event.issue.body }}"
+          echo "Creating Jira issue with title: $ISSUE_TITLE and body: $ISSUE_BODY"
           RESPONSE=$(curl -D- \
             -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
             -X POST \
@@ -43,8 +44,8 @@ jobs:
             }' \
             -H "Content-Type: application/json" \
             "$JIRA_BASE_URL/rest/api/2/issue/")
-          echo "$RESPONSE"
-          JIRA_ISSUE_KEY=$(echo "$RESPONSE" | grep -oP '(?<=issue\/key\/)\w+-\d+')
+          echo "Jira API response: $RESPONSE"
+          JIRA_ISSUE_KEY=$(echo "$RESPONSE" | grep -oP '(?<=key\":\")\w+-\d+')
           echo "JIRA_ISSUE_KEY=$JIRA_ISSUE_KEY" >> $GITHUB_ENV
 
       - name: Create branch for the issue
@@ -56,12 +57,6 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH_NAME"
           git push origin "$BRANCH_NAME"
-
-      - name: Add Jira issue key to commit message
-        env:
-          JIRA_ISSUE_KEY: ${{ env.JIRA_ISSUE_KEY }}
-        run: |
-          echo "JIRA_ISSUE_KEY=${JIRA_ISSUE_KEY}" >> $GITHUB_ENV
 
   update_jira:
     if: github.event_name == 'push'
