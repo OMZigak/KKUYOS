@@ -57,10 +57,10 @@ jobs:
 
       - name: Create branch for the issue
         run: |
+          export LANG=en_US.UTF-8
           ISSUE_NUMBER=${{ github.event.issue.number }}
           ISSUE_TITLE=${{ github.event.issue.title }}
-          SAFE_ISSUE_TITLE=$(echo $ISSUE_TITLE | tr -cd '[:alnum:]_-' | tr '[:upper:]' '[:lower:]')
-          BRANCH_NAME="feat/issue-${ISSUE_NUMBER}-${SAFE_ISSUE_TITLE}-${JIRA_ISSUE_KEY}"
+          BRANCH_NAME="feat/issue-${ISSUE_NUMBER}-${ISSUE_TITLE}-${JIRA_ISSUE_KEY}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH_NAME"
