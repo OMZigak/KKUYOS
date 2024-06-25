@@ -1,79 +1,44 @@
-name: Create Jira Issue and Sync with GitHub
+name: Sync GitHub Issues with Jira and Manage Assignees
 
 on:
   issues:
     types: [opened, assigned, unassigned]
 
 jobs:
-  create_jira_issue:
-    if: github.event_name == 'issues' && github.event.action == 'opened'
+  manage_issues_and_assignees:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Create Jira issue
+      - name: Set up Jira integration
         env:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
+          JIRA_BASE_URL: ${{ secrets.JIRA_BASEURL }}
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
           JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
         run: |
           ISSUE_TITLE="${{ github.event.issue.title }}"
           ISSUE_BODY="${{ github.event.issue.body }}"
-          echo "Creating Jira issue with title: $ISSUE_TITLE and body: $ISSUE_BODY"
-          RESPONSE=$(curl -s -u $JIRA_EMAIL:$JIRA_API_TOKEN -X POST -H "Content-Type: application/json" \
-            --data '{
-              "fields": {
-                "project": {"key": "'$JIRA_PROJECT_KEY'"},
-                "summary": "'$ISSUE_TITLE'",
-                "description": "'$ISSUE_BODY'",
-                "issuetype": {"name": "Task"}
-              }
-            }' "$JIRA_BASE_URL/rest/api/2/issue/")
-          echo "Jira API response: $RESPONSE"
-          JIRA_ISSUE_KEY=$(echo "$RESPONSE" | grep -oP '(?<=key\":\")\w+-\d+')
-          echo "JIRA_ISSUE_KEY=$JIRA_ISSUE_KEY" >> $GITHUB_ENV
-
-      - name: Create branch for the issue
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          ISSUE_NUMBER=${{ github.event.issue.number }}
-          ISSUE_TITLE="${{ github.event.issue.title }}"
-          SANITIZED_TITLE=$(echo "$ISSUE_TITLE" | tr '[:upper:]' '[:lower:]' | sed -e 's/[^a-zA-Z0-9]/-/g' | sed -e 's/--*/-/g')
-          PREFIX=$(echo "${{ github.event.issue.labels.*.name }}" | grep -oE '(feat|fix|docs|setting|add|refactor|chore)' | head -n 1)
-          if [ -z "$PREFIX" ]; then PREFIX="feat"; fi
-          BRANCH_NAME="feature/${PREFIX}/${ISSUE_NUMBER}-${SANITIZED_TITLE}"
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -b "$BRANCH_NAME"
-          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} "$BRANCH_NAME"
-
-  sync_assignee:
-    if: github.event_name == 'issues' && (github.event.action == 'assigned' || github.event.action == 'unassigned')
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Update Jira issue with assignee
-        env:
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-          JIRA_BASE_URL: ${{ secrets.JIRA_BASE_URL }}
-          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
-        run: |
           ISSUE_ASSIGNEE="${{ github.event.issue.assignee.login }}"
           JIRA_ASSIGNEE_ID=$(curl -s -u $JIRA_EMAIL:$JIRA_API_TOKEN "$JIRA_BASE_URL/rest/api/3/user/search?query=$ISSUE_ASSIGNEE" | jq -r '.[0].accountId')
-          curl -s -u $JIRA_EMAIL:$JIRA_API_TOKEN -X PUT -H "Content-Type: application/json" \
-            --data '{
-              "update": {
-                "assignee": [
-                  {
-                    "set": {"accountId": "'$JIRA_ASSIGNEE_ID'"}
-                  }
-                ]
-              }
-            }' "$JIRA_BASE_URL/rest/api/2/issue/${{ env.JIRA_ISSUE_KEY }}"
+
+          # Create or update Jira issue
+          if [ "${{ github.event.action }}" == 'opened' ]; then
+            RESPONSE=$(curl -s -u $JIRA_EMAIL:$JIRA_API_TOKEN -X POST -H "Content-Type: application/json" \
+              --data '{
+                "fields": {
+                  "project": {"key": "$JIRA_PROJECT_KEY"},
+                  "summary": "$ISSUE_TITLE",
+                  "description": "$ISSUE_BODY",
+                  "issuetype": {"name": "Task"},
+                  "assignee": {"id": "$JIRA_ASSIGNEE_ID"}
+                }
+              }' "$JIRA_BASE_URL/rest/api/2/issue/")
+            echo "Jira API response: $RESPONSE"
+          fi
+
+          # Sync assignee
+          if [ "${{ github.event.action }}" == 'assigned' ] || [ "${{ github.event.action }}" == 'unassigned' ]; then
+            curl -s -u $JIRA_EMAIL:$JIRA_API_TOKEN -X PUT -H "Content-Type: application/json" \
+              --data '{"update": {"assignee": [{"set": {"id": "$JIRA_ASSIGNEE_ID"}}]}}' "$JIRA_BASE_URL/rest/api/2/issue/${{ env.JIRA_ISSUE_KEY }}"
