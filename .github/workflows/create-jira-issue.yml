@@ -30,7 +30,6 @@ jobs:
           echo "JIRA_PROJECT_KEY=${{ secrets.JIRA_PROJECT_KEY }}"
 
       - name: Create Jira issue
-        id: create_jira
         env:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
@@ -61,7 +60,7 @@ jobs:
           JIRA_ISSUE_KEY=$(echo "$RESPONSE" | grep -oP '(?<=key\":\")\w+-\d+')
           echo "JIRA_ISSUE_KEY=$JIRA_ISSUE_KEY" >> $GITHUB_ENV
 
-           - name: Create branch for the issue
+      - name: Create branch for the issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
@@ -80,7 +79,6 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH_NAME"
           git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME"
-
 
   update_jira:
     if: github.event_name == 'push'
