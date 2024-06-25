@@ -66,10 +66,9 @@ jobs:
         run: |
           ISSUE_NUMBER=${{ github.event.issue.number }}
           ISSUE_TITLE="${{ github.event.issue.title }}"
-          # 접두사 추출 및 이슈 타이틀에서 접두사 제거
           PREFIX=${ISSUE_TITLE%% :*}
-          CLEAN_TITLE=${ISSUE_TITLE#*: }
-          CLEAN_TITLE=${CLEAN_TITLE// /-}  # 공백을 하이픈으로 대체
+          SUFFIX=${ISSUE_TITLE#*: }
+          CLEAN_TITLE=${SUFFIX// /}  # 공백을 제거
           BRANCH_NAME="${PREFIX}/#${ISSUE_NUMBER}-${CLEAN_TITLE}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
