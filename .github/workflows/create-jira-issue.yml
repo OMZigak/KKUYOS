@@ -65,13 +65,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          export LANG=en_US.UTF-8
+          export LANG=C.UTF-8
           ISSUE_NUMBER=${{ github.event.issue.number }}
           ISSUE_TITLE="${{ github.event.issue.title }}"
           PREFIX=$(echo "$ISSUE_TITLE" | grep -oE '^(feat|fix|docs|setting|add|refactor|chore)')
           if [ -z "$PREFIX" ]; then PREFIX="feature"; fi
           TITLE_NO_PREFIX=$(echo "$ISSUE_TITLE" | sed -e "s/$PREFIX : //")
-          CLEAN_TITLE=$(echo "$TITLE_NO_PREFIX" | iconv -f utf-8 -t utf-8 -c | sed 's/[^a-zA-Z0-9가-힣]//g')
+          CLEAN_TITLE=$(echo "$TITLE_NO_PREFIX" | sed 's/[^a-zA-Z0-9가-힣]//g')
           BRANCH_NAME="${PREFIX}/#${ISSUE_NUMBER}-${CLEAN_TITLE}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
@@ -104,7 +104,7 @@ jobs:
                     "add": {
                       "body": "Commits related to this issue:\n$COMMITS"
                     }
-                  }
+                  ]
                 ]
               }
             }' \
