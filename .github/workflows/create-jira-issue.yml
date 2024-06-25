@@ -9,22 +9,20 @@ jobs:
   sync_with_jira:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Sync branch creation with Jira
-        if: github.event_name == 'create' && github.event.ref_type == 'branch'
+      - name: Sync commits with Jira
         run: |
-          BRANCH_NAME=${{ github.ref }}
-          JIRA_ISSUE_KEY=extract_issue_key_from_branch_name "$BRANCH_NAME"
-          curl -u ${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_API_TOKEN }} \
+          JIRA_ISSUE_KEY=$(extract_issue_key_from_commit_message "${{ github.event.head_commit.message }}")
+          COMMIT_ID="${{ github.event.head_commit.id }}"
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+
+          curl -u "${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}" \
                -X POST \
                --data '{
                  "update": {
                    "comment": [
                      {
                        "add": {
-                         "body": "Branch '$BRANCH_NAME' was created for this issue."
+                         "body": "Commit '$COMMIT_ID' was added to this issue: $COMMIT_MSG"
                        }
                      }
                    ]
@@ -36,6 +34,7 @@ jobs:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+
 
       - name: Sync commits with Jira
         if: github.event_name == 'push' && !startsWith(github.event.ref, 'refs/tags/')
