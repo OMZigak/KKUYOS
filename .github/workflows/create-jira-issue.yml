@@ -21,17 +21,7 @@ jobs:
           
           curl -u "${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}" \
                -X POST \
-               --data '{
-                 "update": {
-                   "comment": [
-                     {
-                       "add": {
-                         "body": "Commit '"$COMMIT_ID"' was added to this issue: $COMMIT_MSG"
-                       }
-                     }
-                   ]
-                 }
-               }' \
+               --data "{\"update\": {\"comment\": [{\"add\": {\"body\": \"Commit '$COMMIT_ID' was added to this issue: $COMMIT_MSG\"}}]}}" \
                -H "Content-Type: application/json" \
                "${{ secrets.JIRA_BASEURL }}/rest/api/2/issue/$JIRA_ISSUE_KEY"
         env:
