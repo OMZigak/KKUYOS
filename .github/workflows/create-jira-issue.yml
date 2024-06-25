@@ -11,10 +11,14 @@ jobs:
     steps:
       - name: Sync commits with Jira
         run: |
-          JIRA_ISSUE_KEY=$(extract_issue_key_from_commit_message "${{ github.event.head_commit.message }}")
-          COMMIT_ID="${{ github.event.head_commit.id }}"
-          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          function extract_issue_key_from_commit_message {
+            echo "$1" | grep -oE 'JIRA-\d+'
+          }
 
+          JIRA_ISSUE_KEY=$(extract_issue_key_from_commit_message "Update create-jira-issue.yml")
+          COMMIT_ID="6f2a2640d5fdd55e4fead9548a77940585202111"
+          COMMIT_MSG="Update create-jira-issue.yml"
+          
           curl -u "${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}" \
                -X POST \
                --data '{
@@ -22,7 +26,7 @@ jobs:
                    "comment": [
                      {
                        "add": {
-                         "body": "Commit '$COMMIT_ID' was added to this issue: $COMMIT_MSG"
+                         "body": "Commit '"$COMMIT_ID"' was added to this issue: $COMMIT_MSG"
                        }
                      }
                    ]
