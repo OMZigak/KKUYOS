@@ -21,7 +21,7 @@ jobs:
           ISSUE_TITLE="${{ github.event.issue.title }}"
           ISSUE_BODY="${{ github.event.issue.body }}"
           ISSUE_ASSIGNEE="${{ github.event.issue.assignee.login }}"
-          JIRA_ASSIGNEE_ID=$(curl -s -u $JIRA_EMAIL:$JIRA_API_TOKEN "$JIRA_BASE_URL/rest/api/3/user/search?query=$ISSUE_ASSIGNEE" | jq -r '.[0].accountId')
+          JIRA_ASSIGNEE_ID=$(curl -s -u $JIRA_EMAIL:$JIRA_API_TOKEN "$JIRA_BASEURL/rest/api/3/user/search?query=$ISSUE_ASSIGNEE" | jq -r '.[0].accountId')
 
           # Create or update Jira issue
           if [ "${{ github.event.action }}" == "opened" ]; then
@@ -34,12 +34,12 @@ jobs:
                   "issuetype": {"name": "Task"},
                   "assignee": {"accountId": "'$JIRA_ASSIGNEE_ID'"}
                 }
-              }' "$JIRA_BASE_URL/rest/api/3/issue/")
+              }' "$JIRA_BASEURL/rest/api/3/issue/")
             echo "Jira API response: $RESPONSE"
           fi
 
           # Sync assignee
           if [ "${{ github.event.action }}" == "assigned" ] || [ "${{ github.event.action }}" == "unassigned" ]; then
             curl -s -u $JIRA_EMAIL:$JIRA_API_TOKEN -X PUT -H "Content-Type: application/json" \
-              --data '{"update": {"assignee": [{"set": {"accountId": "'$JIRA_ASSIGNEE_ID'"}}]}}' "$JIRA_BASE_URL/rest/api/3/issue/${{ env.JIRA_ISSUE_KEY }}"
+              --data '{"update": {"assignee": [{"set": {"accountId": "'$JIRA_ASSIGNEE_ID'"}}]}}' "$JIRA_BASEURL/rest/api/3/issue/${{ env.JIRA_ISSUE_KEY }}"
           fi
