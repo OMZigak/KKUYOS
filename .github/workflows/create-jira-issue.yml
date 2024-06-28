@@ -1,46 +1,52 @@
-name: Sync GitHub Actions with Jira
+name: Sync GitHub Actions with Jira and Manage Branches
 
 on:
   push:
     branches:
       - '*'
-  issues:
-    types: [opened]
 
 jobs:
   sync_with_jira:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Sync commits with Jira on Push
-        if: github.event_name == 'push'
+      - name: Extract JIRA Issue Key and Sync
         run: |
+          # 최신 커밋 메시지 가져오기
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          # JIRA 이슈 키 추출
           JIRA_ISSUE_KEY=$(echo "$COMMIT_MESSAGE" | grep -oE 'JIRA-\d+')
-          COMMIT_ID=$(git rev-parse HEAD)
-
+          
+          # JIRA 이슈 키가 없다면 오류 출력 후 종료
           if [ -z "$JIRA_ISSUE_KEY" ]; then
             echo "No JIRA issue key found in commit message."
             exit 1
           fi
 
+          # 커밋 ID 가져오기
+          COMMIT_ID=$(git rev-parse HEAD)
+
+          # JIRA에 커밋 정보 동기화
           curl -u "${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}" \
                -X POST \
                --data "{\"update\": {\"comment\": [{\"add\": {\"body\": \"Commit '$COMMIT_ID' was added to this issue: $COMMIT_MESSAGE\"}}]}}" \
                -H "Content-Type: application/json" \
                "${{ secrets.JIRA_BASEURL }}/rest/api/2/issue/$JIRA_ISSUE_KEY"
-
-      - name: Create Branch on Issue Opened
-        if: github.event_name == 'issues' && github.event.action == 'opened'
-        run: |
-          ISSUE_TITLE=${{ github.event.issue.title }}
-          BRANCH_NAME=$(echo "$ISSUE_TITLE" | sed 's/[^a-zA-Z0-9]/-/g' | tr '[:upper:]' '[:lower:]')
-          git checkout -b "$BRANCH_NAME"
-          git push origin "$BRANCH_NAME"
-
         env:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+
+      - name: Create Branch on Issue Opened
+        run: |
+          ISSUE_TITLE="${{ github.event.issue.title }}"
+          # 브랜치 이름 생성 (공백 및 특수문자를 하이픈으로 치환)
+          BRANCH_NAME=$(echo "$ISSUE_TITLE" | sed 's/[^a-zA-Z0-9가-힣]/-/g' | tr '[:upper:]' '[:lower:]')
+
+          # 브랜치 생성 및 푸시
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@users.noreply.github.com"
+          git checkout -b "$BRANCH_NAME"
+          git push origin "$BRANCH_NAME"
