@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - '*'
+  issues:
+    types: [opened]
 
 jobs:
   sync_with_jira:
@@ -12,25 +14,32 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Sync commits with Jira
+      - name: Sync commits with Jira on Push
+        if: github.event_name == 'push'
         run: |
-          # 커밋 메시지에서 JIRA 이슈 키를 추출하고 커밋 정보를 동기화
           COMMIT_MESSAGE=$(git log -1 --pretty=%B)
           JIRA_ISSUE_KEY=$(echo "$COMMIT_MESSAGE" | grep -oE 'JIRA-\d+')
+          COMMIT_ID=$(git rev-parse HEAD)
 
           if [ -z "$JIRA_ISSUE_KEY" ]; then
             echo "No JIRA issue key found in commit message."
             exit 1
           fi
 
-          COMMIT_ID=$(git rev-parse HEAD)
-          echo "Syncing commit $COMMIT_ID with JIRA issue $JIRA_ISSUE_KEY"
-
           curl -u "${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}" \
                -X POST \
                --data "{\"update\": {\"comment\": [{\"add\": {\"body\": \"Commit '$COMMIT_ID' was added to this issue: $COMMIT_MESSAGE\"}}]}}" \
                -H "Content-Type: application/json" \
                "${{ secrets.JIRA_BASEURL }}/rest/api/2/issue/$JIRA_ISSUE_KEY"
+
+      - name: Create Branch on Issue Opened
+        if: github.event_name == 'issues' && github.event.action == 'opened'
+        run: |
+          ISSUE_TITLE=${{ github.event.issue.title }}
+          BRANCH_NAME=$(echo "$ISSUE_TITLE" | sed 's/[^a-zA-Z0-9]/-/g' | tr '[:upper:]' '[:lower:]')
+          git checkout -b "$BRANCH_NAME"
+          git push origin "$BRANCH_NAME"
+
         env:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
