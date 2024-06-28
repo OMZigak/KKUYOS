@@ -38,22 +38,26 @@ jobs:
         run: |
           ISSUE_TITLE="${{ github.event.issue.title }}"
           ISSUE_BODY="${{ github.event.issue.body }}"
-          echo "Creating Jira issue with title: $ISSUE_TITLE and body: $ISSUE_BODY"
+          JSON_DATA=$(cat <<EOF
+          {
+            "fields": {
+              "project": {
+                "key": "${JIRA_PROJECT_KEY}"
+              },
+              "summary": "${ISSUE_TITLE}",
+              "description": "${ISSUE_BODY}",
+              "issuetype": {
+                "name": "Task"
+              }
+            }
+          }
+          EOF
+          )
+          echo "JSON Data: $JSON_DATA"
           RESPONSE=$(curl -D- \
             -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
             -X POST \
-            --data '{
-              "fields": {
-                "project": {
-                  "key": "'"$JIRA_PROJECT_KEY"'"
-                },
-                "summary": "'"$ISSUE_TITLE"'",
-                "description": "'"$ISSUE_BODY"'",
-                "issuetype": {
-                  "name": "Task"
-                }
-              }
-            }' \
+            --data "$JSON_DATA" \
             -H "Content-Type: application/json" \
             "$JIRA_BASEURL/rest/api/2/issue/")
           echo "Jira API response: $RESPONSE"
@@ -70,10 +74,7 @@ jobs:
           PREFIX=$(echo "$ISSUE_TITLE" | grep -oE '^(feat|fix|docs|setting|add|refactor|chore)')
           if [ -z "$PREFIX" ]; then PREFIX="feature"; fi
           TITLE_NO_PREFIX=$(echo "$ISSUE_TITLE" | sed -e "s/$PREFIX : //")
-          # iconv를 사용하여 비ASCII 문자 제거
-          CLEAN_TITLE=$(echo "$TITLE_NO_PREFIX" | iconv -c -f utf-8 -t ascii//TRANSLIT)
-          # ASCII가 아닌 문자 제거
-          CLEAN_TITLE=$(echo "$CLEAN_TITLE" | sed 's/[^a-zA-Z0-9]//g')
+          CLEAN_TITLE=$(echo "$TITLE_NO_PREFIX" | iconv -c -f utf-8 -t ascii//TRANSLIT | sed 's/[^a-zA-Z0-9]//g')
           BRANCH_NAME="${PREFIX}/#${ISSUE_NUMBER}-${CLEAN_TITLE}"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
