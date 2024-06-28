@@ -1,46 +1,114 @@
-name: Sync GitHub Actions with Jira
+name: Create Jira Issue and Sync with GitHub
 
 on:
+  issues:
+    types: [opened]
   push:
     branches:
-      - '*'
+      - 'feat/*'
+      - 'fix/*'
+      - 'docs/*'
+      - 'setting/*'
+      - 'add/*'
+      - 'refactor/*'
+      - 'chore/*'
 
 jobs:
-  sync_with_jira:
+  create_jira_issue:
+    if: github.event_name == 'issues'
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Extract JIRA Issue Key and Sync
+      - name: Print environment variables for debugging
         run: |
-          # 최근 커밋 메시지 가져오기
-          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
-          echo "Commit Message: $COMMIT_MESSAGE"
+          echo "JIRA_BASEURL=${{ secrets.JIRA_BASEURL }}"
+          echo "JIRA_API_TOKEN=${{ secrets.JIRA_API_TOKEN }}"
+          echo "JIRA_EMAIL=${{ secrets.JIRA_EMAIL }}"
+          echo "JIRA_PROJECT_KEY=${{ secrets.JIRA_PROJECT_KEY }}"
 
-          # JIRA 이슈 키 추출
-          JIRA_ISSUE_KEY=$(echo "$COMMIT_MESSAGE" | grep -oE 'JIRA-\d+')
-          echo "JIRA Issue Key: $JIRA_ISSUE_KEY"
-
-          # JIRA 이슈 키 검증
-          if [ -z "$JIRA_ISSUE_KEY" ]; then
-            echo "No JIRA issue key found in commit message."
-            exit 1
-          fi
-
-          # 커밋 ID 가져오기
-          COMMIT_ID=$(git rev-parse HEAD)
-          echo "Commit ID: $COMMIT_ID"
-
-          # JIRA에 커밋 정보 동기화
-          RESPONSE=$(curl -s -u "${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}" \
-               -X POST \
-               --data "{\"update\": {\"comment\": [{\"add\": {\"body\": \"Commit '$COMMIT_ID' was added to this issue: $COMMIT_MESSAGE\"}}]}}" \
-               -H "Content-Type: application/json" \
-               "${{ secrets.JIRA_BASEURL }}/rest/api/2/issue/$JIRA_ISSUE_KEY")
-          
-          echo "JIRA Response: $RESPONSE"
+      - name: Create Jira issue
         env:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
           JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
           JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
+        run: |
+          ISSUE_TITLE="${{ github.event.issue.title }}"
+          ISSUE_BODY="${{ github.event.issue.body }}"
+          echo "Creating Jira issue with title: $ISSUE_TITLE and body: $ISSUE_BODY"
+          RESPONSE=$(curl -D- \
+            -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
+            -X POST \
+            --data '{
+              "fields": {
+                "project": {
+                  "key": "'"$JIRA_PROJECT_KEY"'"
+                },
+                "summary": "'"$ISSUE_TITLE"'",
+                "description": "'"$ISSUE_BODY"'",
+                "issuetype": {
+                  "name": "Task"
+                }
+              }
+            }' \
+            -H "Content-Type: application/json" \
+            "$JIRA_BASEURL/rest/api/2/issue/")
+          echo "Jira API response: $RESPONSE"
+          JIRA_ISSUE_KEY=$(echo "$RESPONSE" | grep -oP '(?<=key\":\")\w+-\d+')
+          echo "JIRA_ISSUE_KEY=$JIRA_ISSUE_KEY" >> $GITHUB_ENV
+
+      - name: Create branch for the issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          export LANG=en_US.UTF-8
+          ISSUE_NUMBER=${{ github.event.issue.number }}
+          ISSUE_TITLE="${{ github.event.issue.title }}"
+          PREFIX=$(echo "$ISSUE_TITLE" | grep -oE '^(feat|fix|docs|setting|add|refactor|chore)')
+          if [ -z "$PREFIX" ]; then PREFIX="feature"; fi
+          TITLE_NO_PREFIX=$(echo "$ISSUE_TITLE" | sed -e "s/$PREFIX : //")
+          # iconv를 사용하여 비ASCII 문자 제거
+          CLEAN_TITLE=$(echo "$TITLE_NO_PREFIX" | iconv -c -f utf-8 -t ascii//TRANSLIT)
+          # ASCII가 아닌 문자 제거
+          CLEAN_TITLE=$(echo "$CLEAN_TITLE" | sed 's/[^a-zA-Z0-9]//g')
+          BRANCH_NAME="${PREFIX}/#${ISSUE_NUMBER}-${CLEAN_TITLE}"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH_NAME"
+          git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME"
+
+  update_jira:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Update Jira issue with commit info
+        env:
+          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
+          JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
+          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
+          JIRA_ISSUE_KEY: ${{ env.JIRA_ISSUE_KEY }}
+        run: |
+          COMMITS=$(jq -r '.commits[] | .message' $GITHUB_EVENT_PATH)
+          curl -D- \
+            -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
+            -X PUT \
+            --data '{
+              "update": {
+                "comment": [
+                  {
+                    "add": {
+                      "body": "Commits related to this issue:\n$COMMITS"
+                    }
+                  ]
+                ]
+              }
+            }' \
+            -H "Content-Type: application/json" \
+            "$JIRA_BASEURL/rest/api/2/issue/$JIRA_ISSUE_KEY"
