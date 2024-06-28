@@ -9,44 +9,26 @@ jobs:
   sync_with_jira:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Sync commits with Jira
         run: |
-          function extract_issue_key_from_commit_message {
-            echo "$1" | grep -oE 'JIRA-\d+'
-          }
+          # 커밋 메시지에서 JIRA 이슈 키를 추출하고 커밋 정보를 동기화
+          COMMIT_MESSAGE=$(git log -1 --pretty=%B)
+          JIRA_ISSUE_KEY=$(echo "$COMMIT_MESSAGE" | grep -oE 'JIRA-\d+')
 
-          JIRA_ISSUE_KEY=$(extract_issue_key_from_commit_message "Update create-jira-issue.yml")
-          COMMIT_ID="6f2a2640d5fdd55e4fead9548a77940585202111"
-          COMMIT_MSG="Update create-jira-issue.yml"
-          
+          if [ -z "$JIRA_ISSUE_KEY" ]; then
+            echo "No JIRA issue key found in commit message."
+            exit 1
+          fi
+
+          COMMIT_ID=$(git rev-parse HEAD)
+          echo "Syncing commit $COMMIT_ID with JIRA issue $JIRA_ISSUE_KEY"
+
           curl -u "${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_API_TOKEN }}" \
                -X POST \
-               --data "{\"update\": {\"comment\": [{\"add\": {\"body\": \"Commit '$COMMIT_ID' was added to this issue: $COMMIT_MSG\"}}]}}" \
-               -H "Content-Type: application/json" \
-               "${{ secrets.JIRA_BASEURL }}/rest/api/2/issue/$JIRA_ISSUE_KEY"
-        env:
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-          JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
-          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
-
-
-      - name: Sync commits with Jira
-        if: github.event_name == 'push' && !startsWith(github.event.ref, 'refs/tags/')
-        run: |
-          JIRA_ISSUE_KEY=extract_issue_key_from_commit_message "${{ github.event.head_commit.message }}"
-          curl -u ${{ secrets.JIRA_EMAIL }}:${{ secrets.JIRA_API_TOKEN }} \
-               -X POST \
-               --data '{
-                 "update": {
-                   "comment": [
-                     {
-                       "add": {
-                         "body": "Commit '${{ github.event.head_commit.id }}' was added to this issue: ${{ github.event.head_commit.message }}"
-                       }
-                     }
-                   ]
-                 }
-               }' \
+               --data "{\"update\": {\"comment\": [{\"add\": {\"body\": \"Commit '$COMMIT_ID' was added to this issue: $COMMIT_MESSAGE\"}}]}}" \
                -H "Content-Type: application/json" \
                "${{ secrets.JIRA_BASEURL }}/rest/api/2/issue/$JIRA_ISSUE_KEY"
         env:
