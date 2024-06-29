@@ -22,13 +22,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Print environment variables for debugging
-        run: |
-          echo "JIRA_BASEURL=${{ secrets.JIRA_BASEURL }}"
-          echo "JIRA_API_TOKEN=${{ secrets.JIRA_API_TOKEN }}"
-          echo "JIRA_EMAIL=${{ secrets.JIRA_EMAIL }}"
-          echo "JIRA_PROJECT_KEY=${{ secrets.JIRA_PROJECT_KEY }}"
-
       - name: Create Jira issue
         env:
           JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
