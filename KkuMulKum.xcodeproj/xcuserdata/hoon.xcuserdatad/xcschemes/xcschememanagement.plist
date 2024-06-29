@@ -7,6 +7,7 @@
 		<key>KkuMulKum.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+<<<<<<< HEAD
 			<integer>1</integer>
 		</dict>
 		<key>Promises (Playground) 1.xcscheme</key>
@@ -112,6 +113,8 @@
 			<key>isShown</key>
 			<false/>
 			<key>orderHint</key>
+=======
+>>>>>>> parent of a32ac4e (Merge pull request #69 from OMZigak/docs/#66-템플릿-gitignore-세팅)
 			<integer>0</integer>
 		</dict>
 	</dict>
