@@ -22,7 +22,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          ref: 'suyeon'  # 체크아웃할 브랜치를 suyeon으로 설정
+          ref: 'suyeon'  # 체크아웃할 브랜치
 
       - name: Create Jira issue
         env:
