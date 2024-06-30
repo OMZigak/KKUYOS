@@ -41,9 +41,14 @@ jobs:
           CLEAN_TITLE=$(echo "$TITLE_NO_PREFIX" | iconv -c -f utf-8 -t ascii//TRANSLIT | sed 's/[^a-zA-Z0-9]//g')
           BRANCH_NAME="${PREFIX}-#${ISSUE_NUMBER}-${CLEAN_TITLE}"
           echo "Creating branch with name: $BRANCH_NAME"
-          echo "Current branch before checkout:"
+          
+          # Display current branch and all remote branches
           git branch
+          git branch -r
+          
           git checkout -b "$BRANCH_NAME"
+          echo "Checkout to $BRANCH_NAME completed."
+          
           git push --set-upstream "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME" 2>&1 | tee push_output.txt
           if [ "${PIPESTATUS[0]}" != "0" ]; then
             echo "Failed to push branch $BRANCH_NAME"
