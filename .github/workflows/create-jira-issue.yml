@@ -1,27 +1,16 @@
-name: Create Jira Issue and Sync with GitHub
+name: Create Issue Branch
 
 on:
   issues:
     types: [opened]
-  push:
-    branches:
-      - 'feat/*'
-      - 'fix/*'
-      - 'docs/*'
-      - 'setting/*'
-      - 'add/*'
-      - 'refactor/*'
-      - 'chore/*'
 
 jobs:
-  create_jira_issue:
+  create_branch:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          ref: 'suyeon'  # 'suyeon' 브랜치 체크아웃
 
       - name: Setup Git Config
         run: |
@@ -41,10 +30,10 @@ jobs:
           CLEAN_TITLE=$(echo "$TITLE_NO_PREFIX" | iconv -c -f utf-8 -t ascii//TRANSLIT | sed 's/[^a-zA-Z0-9]//g')
           BRANCH_NAME="${PREFIX}-#${ISSUE_NUMBER}-${CLEAN_TITLE}"
           echo "Creating branch with name: $BRANCH_NAME"
-          
+
           git branch
           git status
-          
+
           git checkout -b "$BRANCH_NAME"
           if [ $? -ne 0 ]; then
             echo "Checkout to $BRANCH_NAME failed."
@@ -53,11 +42,9 @@ jobs:
             echo "Checkout to $BRANCH_NAME completed."
           fi
 
-          git push --set-upstream "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME" 2>&1 | tee push_output.txt
-          if [ "${PIPESTATUS[0]}" != "0" ]; then
+          git push --set-upstream "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME"
+          if [ $? -ne 0 ]; then
             echo "Failed to push branch $BRANCH_NAME"
-            echo "Debug output from push:"
-            cat push_output.txt
             exit 1
-          fi
-          echo "Pushed $BRANCH_NAME successfully."
+          else
+            echo "Pushed $BRANCH_NAME successfully."
