@@ -15,7 +15,6 @@ on:
 
 jobs:
   create_jira_issue:
-    if: github.event_name == 'issues'
     runs-on: ubuntu-latest
 
     steps:
@@ -23,42 +22,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: 'suyeon'  # suyeon 브랜치를 체크아웃
-
-      - name: Create Jira issue
-        env:
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-          JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
-          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
-          JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
-        run: |
-          ISSUE_TITLE="${{ github.event.issue.title }}"
-          
-          JSON_DATA=$(jq -n \
-            --arg key "$JIRA_PROJECT_KEY" \
-            --arg summary "$ISSUE_TITLE" \
-            '{
-              "fields": {
-                "project": {
-                  "key": $key
-                },
-                "summary": $summary,
-                "description": "No description provided.",
-                "issuetype": {
-                  "name": "Task"
-                }
-              }
-            }')
-
-          echo "JSON Data: $JSON_DATA"
-          RESPONSE=$(curl -D- \
-            -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
-            -X POST \
-            --data "$JSON_DATA" \
-            -H "Content-Type: application/json" \
-            "$JIRA_BASEURL/rest/api/2/issue/")
-          echo "Jira API response: $RESPONSE"
-          JIRA_ISSUE_KEY=$(echo "$RESPONSE" | grep -oP '(?<=key\":\")\w+-\d+')
-          echo "JIRA_ISSUE_KEY=$JIRA_ISSUE_KEY" >> $GITHUB_ENV
 
       - name: Create branch for the issue
         env:
@@ -72,15 +35,15 @@ jobs:
           TITLE_NO_PREFIX=$(echo "$ISSUE_TITLE" | sed -e "s/$PREFIX : //")
           CLEAN_TITLE=$(echo "$TITLE_NO_PREFIX" | iconv -c -f utf-8 -t ascii//TRANSLIT | sed 's/[^a-zA-Z0-9\-]//g' | tr "[:upper:]" "[:lower:]")
           BRANCH_NAME="${PREFIX}/${ISSUE_NUMBER}-${CLEAN_TITLE}"
-          echo "Creating branch with name: $BRANCH_NAME"
           
+          echo "Creating branch with name: $BRANCH_NAME"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           
           # Additional debug information
           echo "Remote branches before checkout:"
           git branch -r
+          echo "Attempting to create and push new branch: $BRANCH_NAME"
           
           git checkout -b "$BRANCH_NAME"
-          git push --set-upstream "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME"
-          echo "Pushed $BRANCH_NAME successfully."
+          git push --set-upstream "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME" || echo "Failed to push branch $BRANCH_NAME"
