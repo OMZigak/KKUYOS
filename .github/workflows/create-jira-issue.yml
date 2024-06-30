@@ -15,7 +15,6 @@ on:
 
 jobs:
   create_jira_issue:
-    if: github.event_name == 'issues'
     runs-on: ubuntu-latest
 
     steps:
@@ -24,45 +23,15 @@ jobs:
         with:
           ref: 'suyeon'  # suyeon 브랜치를 체크아웃
 
-      - name: Create Jira issue
-        env:
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-          JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
-          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
-          JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
+      - name: Setup Git Config
         run: |
-          ISSUE_TITLE="${{ github.event.issue.title }}"
-          JSON_DATA=$(jq -n \
-            --arg key "$JIRA_PROJECT_KEY" \
-            --arg summary "$ISSUE_TITLE" \
-            '{
-              "fields": {
-                "project": {
-                  "key": $key
-                },
-                "summary": $summary,
-                "description": "Automatically created issue from GitHub.",
-                "issuetype": {
-                  "name": "Task"
-                }
-              }
-            }')
-          echo "JSON Data: $JSON_DATA"
-          RESPONSE=$(curl -D- \
-            -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
-            -X POST \
-            --data "$JSON_DATA" \
-            -H "Content-Type: application/json" \
-            "$JIRA_BASEURL/rest/api/2/issue/")
-          echo "Jira API response: $RESPONSE"
-          JIRA_ISSUE_KEY=$(echo "$RESPONSE" | grep -oP '(?<=key\":\")\w+-\d+')
-          echo "JIRA_ISSUE_KEY=$JIRA_ISSUE_KEY" >> $GITHUB_ENV
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Create branch for the issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          export LANG=en_US.UTF-8
           ISSUE_NUMBER=${{ github.event.issue.number }}
           ISSUE_TITLE="${{ github.event.issue.title }}"
           PREFIX=$(echo "$ISSUE_TITLE" | grep -oE '^(feat|fix|docs|setting|add|refactor|chore)')
@@ -71,7 +40,18 @@ jobs:
           CLEAN_TITLE=$(echo "$TITLE_NO_PREFIX" | iconv -c -f utf-8 -t ascii//TRANSLIT | sed 's/[^a-zA-Z0-9\-]//g' | tr "[:upper:]" "[:lower:]")
           BRANCH_NAME="${PREFIX}/${ISSUE_NUMBER}-${CLEAN_TITLE}"
           echo "Creating branch with name: $BRANCH_NAME"
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # 디버깅을 위한 현재 브랜치 상태 출력
+          echo "Current branch:"
+          git branch
+          
           git checkout -b "$BRANCH_NAME"
-          git push --set-upstream "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME" || echo "Failed to push branch $BRANCH_NAME"
+          git push --set-upstream "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME" 2>&1 | tee push_output.txt
+          if [ "${PIPESTATUS[0]}" != "0" ]; then
+            echo "Failed to push branch $BRANCH_NAME"
+            echo "Debug output:"
+            cat push_output.txt
+            exit 1
+          fi
+
+          echo "Pushed $BRANCH_NAME successfully."
