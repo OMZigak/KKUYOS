@@ -15,7 +15,6 @@ on:
 
 jobs:
   create_jira_issue:
-    if: github.event_name == 'issues'
     runs-on: ubuntu-latest
 
     steps:
@@ -71,9 +70,13 @@ jobs:
           if [ -z "$PREFIX" ]; then PREFIX="feature"; fi
           TITLE_NO_PREFIX=$(echo "$ISSUE_TITLE" | sed -e "s/$PREFIX : //")
           CLEAN_TITLE=$(echo "$TITLE_NO_PREFIX" | iconv -c -f utf-8 -t ascii//TRANSLIT | sed 's/[^a-zA-Z0-9]//g')
-          BRANCH_NAME="${PREFIX}/#${ISSUE_NUMBER}-${CLEAN_TITLE}"
+          BRANCH_NAME="${PREFIX}/${ISSUE_NUMBER}-${CLEAN_TITLE}"
           echo "Creating branch with name: $BRANCH_NAME"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH_NAME"
-          git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME"
+          git push -v "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME" 2>&1 || {
+            echo "Failed to push branch $BRANCH_NAME"
+            exit 1
+          }
+          echo "Pushed $BRANCH_NAME successfully."
