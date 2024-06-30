@@ -22,7 +22,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          ref: suyeon  # 체크아웃할 브랜치를 suyeon으로 직접 지정
+          ref: 'suyeon'  # suyeon 브랜치를 체크아웃
 
       - name: Create Jira issue
         env:
@@ -64,6 +64,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          export LANG=en_US.UTF-8
           ISSUE_NUMBER=${{ github.event.issue.number }}
           ISSUE_TITLE="${{ github.event.issue.title }}"
           PREFIX=$(echo "$ISSUE_TITLE" | grep -oE '^(feat|fix|docs|setting|add|refactor|chore)')
@@ -74,5 +75,5 @@ jobs:
           echo "Creating branch with name: $BRANCH_NAME"
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git checkout -b "$BRANCH_NAME"  # 새로운 브랜치를 suyeon에서 파생
+          git checkout -b "$BRANCH_NAME"
           git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME"
