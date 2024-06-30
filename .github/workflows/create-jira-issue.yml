@@ -42,13 +42,14 @@ jobs:
           BRANCH_NAME="${PREFIX}-#${ISSUE_NUMBER}-${CLEAN_TITLE}"
           echo "Creating branch with name: $BRANCH_NAME"
           
-          # Display current branch and all remote branches
+          # Display current branch and status
           git branch
-          git branch -r
+          git status
           
           git checkout -b "$BRANCH_NAME"
           echo "Checkout to $BRANCH_NAME completed."
-          
+
+          # Detailed push attempt
           git push --set-upstream "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME" 2>&1 | tee push_output.txt
           if [ "${PIPESTATUS[0]}" != "0" ]; then
             echo "Failed to push branch $BRANCH_NAME"
