@@ -21,7 +21,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          ref: 'suyeon'  # suyeon 브랜치를 체크아웃
+          ref: 'suyeon'  # Checkout the 'suyeon' branch
 
       - name: Setup Git Config
         run: |
@@ -41,9 +41,9 @@ jobs:
           BRANCH_NAME="${PREFIX}/${ISSUE_NUMBER}-${CLEAN_TITLE}"
           echo "Creating branch with name: $BRANCH_NAME"
           
-          # 디버깅을 위한 현재 브랜치 상태 출력
-          echo "Current branch:"
+          # Check current branch and list all remote branches for debugging
           git branch
+          git branch -r
           
           git checkout -b "$BRANCH_NAME"
           git push --set-upstream "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME" 2>&1 | tee push_output.txt
@@ -53,5 +53,4 @@ jobs:
             cat push_output.txt
             exit 1
           fi
-
           echo "Pushed $BRANCH_NAME successfully."
