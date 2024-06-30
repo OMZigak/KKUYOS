@@ -22,7 +22,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
         with:
-          ref: 'suyeon'  # 체크아웃할 브랜치
+          ref: suyeon  # 체크아웃할 브랜치를 suyeon으로 직접 지정
 
       - name: Create Jira issue
         env:
@@ -32,6 +32,7 @@ jobs:
           JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
         run: |
           ISSUE_TITLE="${{ github.event.issue.title }}"
+          
           JSON_DATA=$(jq -n \
             --arg key "$JIRA_PROJECT_KEY" \
             --arg summary "$ISSUE_TITLE" \
@@ -47,6 +48,7 @@ jobs:
                 }
               }
             }')
+
           echo "JSON Data: $JSON_DATA"
           RESPONSE=$(curl -D- \
             -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
@@ -62,9 +64,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          export LANG=en_US.UTF-8
-          git fetch origin suyeon:suyeon  # suyeon 브랜치를 로컬로 가져오기
-          git checkout suyeon  # suyeon 브랜치로 체크아웃
           ISSUE_NUMBER=${{ github.event.issue.number }}
           ISSUE_TITLE="${{ github.event.issue.title }}"
           PREFIX=$(echo "$ISSUE_TITLE" | grep -oE '^(feat|fix|docs|setting|add|refactor|chore)')
