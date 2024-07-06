@@ -8,7 +8,7 @@
 import UIKit
 
 extension UILabel {
-    func setText(_ text: String, style: UIFont.Pretendard, color: UIColor) {
+    func setText(_ text: String, style: UIFont.Pretendard, color: UIColor = .black) {
         attributedText = .pretendardString(text, style: style)
         textColor = color
         numberOfLines = 0
