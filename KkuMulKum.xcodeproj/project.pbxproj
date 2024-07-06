@@ -216,20 +216,20 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		DDA2EE7C2C38607F007C6059 /* Group */ = {
+		DDA2EE7C2C38607F007C6059 /* GroupList */ = {
 			isa = PBXGroup;
 			children = (
 				DDA2EE762C385FC3007C6059 /* GroupViewController.swift */,
 			);
-			path = Group;
+			path = GroupList;
 			sourceTree = "<group>";
 		};
-		DDA2EE7D2C386087007C6059 /* My */ = {
+		DDA2EE7D2C386087007C6059 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
 				DDA2EE782C385FCF007C6059 /* MyViewController.swift */,
 			);
-			path = My;
+			path = MyPage;
 			sourceTree = "<group>";
 		};
 		DDA2EE7E2C3860B2007C6059 /* Core */ = {
@@ -254,8 +254,8 @@
 			children = (
 				DDA2EE7E2C3860B2007C6059 /* Core */,
 				DDA2EE7B2C386078007C6059 /* Home */,
-				DDA2EE7C2C38607F007C6059 /* Group */,
-				DDA2EE7D2C386087007C6059 /* My */,
+				DDA2EE7C2C38607F007C6059 /* GroupList */,
+				DDA2EE7D2C386087007C6059 /* MyPage */,
 			);
 			path = Source;
 			sourceTree = "<group>";

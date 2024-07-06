@@ -1,5 +1,5 @@
 //
-//  GroupViewController.swift
+//  GroupListViewController.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 7/6/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class GroupViewController: UIViewController {
+class GroupListViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

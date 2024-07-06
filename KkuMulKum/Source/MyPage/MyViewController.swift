@@ -1,5 +1,5 @@
 //
-//  MyViewController.swift
+//  MyPageViewController.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 7/6/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MyViewController: UIViewController {
+class MyPageViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
