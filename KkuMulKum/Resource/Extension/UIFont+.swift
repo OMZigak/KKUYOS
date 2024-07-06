@@ -21,7 +21,7 @@ extension UIFont {
         
         var weight: String {
             switch self {
-            case .title00: 
+            case .title00:
                 "Pretendard-Bold"
             case .title01, .head01, .body01, .body03, .body05, .caption01, .label01:
                 "Pretendard-SemiBold"
@@ -44,6 +44,11 @@ extension UIFont {
         
         var tracking: CGFloat { CGFloat(-2) / 100 * size }
         
-        var leading: CGFloat { (1.6 - 1) * size }
+        var leading: CGFloat {
+            switch self {
+            case .label00: (1.38 - 1) * size
+            default: (1.6 - 1) * size
+            }
+        }
     }
 }
