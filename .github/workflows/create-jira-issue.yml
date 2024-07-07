@@ -1,77 +1,49 @@
-name: Create Jira Issue and Sync with GitHub
+name: Create Branch from Issue
 
 on:
   issues:
     types: [opened]
-  push:
-    branches:
-      - 'feat/*'
-      - 'fix/*'
-      - 'docs/*'
-      - 'setting/*'
-      - 'add/*'
-      - 'refactor/*'
-      - 'chore/*'
 
 jobs:
-  create_jira_issue:
-    if: github.event_name == 'issues'
+  create_branch:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Create Jira issue
-        env:
-          JIRA_API_TOKEN: ${{ secrets.JIRA_API_TOKEN }}
-          JIRA_BASEURL: ${{ secrets.JIRA_BASEURL }}
-          JIRA_EMAIL: ${{ secrets.JIRA_EMAIL }}
-          JIRA_PROJECT_KEY: ${{ secrets.JIRA_PROJECT_KEY }}
+      - name: Setup Git Config
         run: |
-          ISSUE_TITLE="${{ github.event.issue.title }}"
-          
-          JSON_DATA=$(jq -n \
-            --arg key "$JIRA_PROJECT_KEY" \
-            --arg summary "$ISSUE_TITLE" \
-            '{
-              "fields": {
-                "project": {
-                  "key": $key
-                },
-                "summary": $summary,
-                "description": "No description provided.",
-                "issuetype": {
-                  "name": "Task"
-                }
-              }
-            }')
-
-          echo "JSON Data: $JSON_DATA"
-          RESPONSE=$(curl -D- \
-            -u "$JIRA_EMAIL:$JIRA_API_TOKEN" \
-            -X POST \
-            --data "$JSON_DATA" \
-            -H "Content-Type: application/json" \
-            "$JIRA_BASEURL/rest/api/2/issue/")
-          echo "Jira API response: $RESPONSE"
-          JIRA_ISSUE_KEY=$(echo "$RESPONSE" | grep -oP '(?<=key\":\")\w+-\d+')
-          echo "JIRA_ISSUE_KEY=$JIRA_ISSUE_KEY" >> $GITHUB_ENV
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Create branch for the issue
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          export LANG=en_US.UTF-8
           ISSUE_NUMBER=${{ github.event.issue.number }}
           ISSUE_TITLE="${{ github.event.issue.title }}"
+          # 접두사 추출
           PREFIX=$(echo "$ISSUE_TITLE" | grep -oE '^(feat|fix|docs|setting|add|refactor|chore)')
           if [ -z "$PREFIX" ]; then PREFIX="feature"; fi
-          TITLE_NO_PREFIX=$(echo "$ISSUE_TITLE" | sed -e "s/$PREFIX : //")
-          CLEAN_TITLE=$(echo "$TITLE_NO_PREFIX" | iconv -c -f utf-8 -t ascii//TRANSLIT | sed 's/[^a-zA-Z0-9]//g')
-          BRANCH_NAME="${PREFIX}/#${ISSUE_NUMBER}-${CLEAN_TITLE}"
+          # 브랜치 이름 생성
+          BRANCH_NAME="${PREFIX}/#${ISSUE_NUMBER}-$(echo "$ISSUE_TITLE" | iconv -c -f utf-8 -t ascii//TRANSLIT | sed 's/[^a-zA-Z0-9-]//g')"
           echo "Creating branch with name: $BRANCH_NAME"
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          
+          git branch
+          git status
+
           git checkout -b "$BRANCH_NAME"
-          git push "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME"
+          if [ $? -ne 0 ]; then
+            echo "Checkout to $BRANCH_NAME failed."
+            exit 1
+          else
+            echo "Checkout to $BRANCH_NAME completed."
+          fi
+
+          git push --set-upstream "https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}" "$BRANCH_NAME"
+          if [ $? -ne 0 ]; then
+            echo "Failed to push branch $BRANCH_NAME"
+            exit 1
+          else
+            echo "Pushed $BRANCH_NAME successfully."
