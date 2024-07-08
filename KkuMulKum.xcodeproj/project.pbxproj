@@ -72,6 +72,8 @@
 		DE254ACA2C311DC200A4015E /* Pretendard-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE254AC12C311DC200A4015E /* Pretendard-Light.otf */; };
 		DE254ACB2C311DC200A4015E /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE254AC22C311DC200A4015E /* Pretendard-Black.otf */; };
 		DE254ACC2C311DC200A4015E /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */; };
+		DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */; };
+		DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */; };
 		DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8247FC2C36E7C7000601BC /* MoyaLoggingPlugin.swift */; };
 		DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8247FF2C36E857000601BC /* ObservablePattern.swift */; };
 		DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E187F2C3BA4AA00DB76B4 /* CustomButton.swift */; };
@@ -79,7 +81,6 @@
 		DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18882C3BC91000DB76B4 /* ResponseBodyDTO.swift */; };
 		DE9E188B2C3BC92500DB76B4 /* EmptyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E188A2C3BC92500DB76B4 /* EmptyModel.swift */; };
 		DE9E18922C3BCC9D00DB76B4 /* AuthTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18912C3BCC9D00DB76B4 /* AuthTemp.swift */; };
-		DE9E18942C3BCCA300DB76B4 /* UsersTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18932C3BCCA300DB76B4 /* UsersTemp.swift */; };
 		DE9E18962C3BCCAC00DB76B4 /* MeetingsTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18952C3BCCAC00DB76B4 /* MeetingsTemp.swift */; };
 		DE9E18982C3BCCB800DB76B4 /* PromisesTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18972C3BCCB800DB76B4 /* PromisesTemp.swift */; };
 		DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18992C3BCCBE00DB76B4 /* UtilsTemp.swift */; };
@@ -123,6 +124,8 @@
 		DE254AC12C311DC200A4015E /* Pretendard-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Light.otf"; sourceTree = "<group>"; };
 		DE254AC22C311DC200A4015E /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
 		DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
+		DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserResponseModel.swift; sourceTree = "<group>"; };
+		DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileNameModel.swift; sourceTree = "<group>"; };
 		DE8247FC2C36E7C7000601BC /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
 		DE8247FF2C36E857000601BC /* ObservablePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePattern.swift; sourceTree = "<group>"; };
 		DE9E187F2C3BA4AA00DB76B4 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -130,7 +133,6 @@
 		DE9E18882C3BC91000DB76B4 /* ResponseBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseBodyDTO.swift; sourceTree = "<group>"; };
 		DE9E188A2C3BC92500DB76B4 /* EmptyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyModel.swift; sourceTree = "<group>"; };
 		DE9E18912C3BCC9D00DB76B4 /* AuthTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTemp.swift; sourceTree = "<group>"; };
-		DE9E18932C3BCCA300DB76B4 /* UsersTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTemp.swift; sourceTree = "<group>"; };
 		DE9E18952C3BCCAC00DB76B4 /* MeetingsTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingsTemp.swift; sourceTree = "<group>"; };
 		DE9E18972C3BCCB800DB76B4 /* PromisesTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromisesTemp.swift; sourceTree = "<group>"; };
 		DE9E18992C3BCCBE00DB76B4 /* UtilsTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTemp.swift; sourceTree = "<group>"; };
@@ -400,7 +402,8 @@
 		DE9E188C2C3BCC3E00DB76B4 /* Users */ = {
 			isa = PBXGroup;
 			children = (
-				DE9E18932C3BCCA300DB76B4 /* UsersTemp.swift */,
+				DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */,
+				DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -586,7 +589,6 @@
 			files = (
 				DED5DBF22C34534A006ECE7E /* BaseCollectionReusableView.swift in Sources */,
 				DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */,
-				DE9E18942C3BCCA300DB76B4 /* UsersTemp.swift in Sources */,
 				DE9E188B2C3BC92500DB76B4 /* EmptyModel.swift in Sources */,
 				DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */,
 				DD865B642C3920F000C351A2 /* AppleLoginVC.swift in Sources */,
@@ -598,6 +600,7 @@
 				DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */,
 				DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */,
 				DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */,
+				DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */,
 				DE9E18922C3BCC9D00DB76B4 /* AuthTemp.swift in Sources */,
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
 				DE254AAE2C31193600A4015E /* UIFont+.swift in Sources */,
@@ -610,6 +613,7 @@
 				78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */,
 				DDA2EE792C385FCF007C6059 /* MyPageViewController.swift in Sources */,
 				784E4D9B2C3BBD4D00BC943C /* KakaoLoginVC.swift in Sources */,
+				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
 				DE9E18982C3BCCB800DB76B4 /* PromisesTemp.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
