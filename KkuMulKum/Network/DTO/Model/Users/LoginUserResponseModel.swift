@@ -13,7 +13,7 @@ struct LoginUserResponseModel: Codable {
     let promiseCount: Int
     let tardyCount: Int
     let tardySum: Int
-    let profileImageURLString: String
+    let profileImageURL: String
     
     enum CodingKeys: String, CodingKey {
         case name
@@ -21,6 +21,6 @@ struct LoginUserResponseModel: Codable {
         case promiseCount
         case tardyCount
         case tardySum
-        case profileImageURLString = "profileImg"
+        case profileImageURL = "profileImg"
     }
 }
