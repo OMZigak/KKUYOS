@@ -7,9 +7,12 @@
 
 import UIKit
 
+import AuthenticationServices
+
 class LoginViewController: BaseViewController {
     
     private let loginView = LoginView()
+    private let loginViewModel = LoginViewModel()
     
     override func loadView() {
         view = loginView
@@ -17,7 +20,8 @@ class LoginViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // 여기에 필요한 설정이나 로직을 추가할 수 있습니다.
+        setupAction()
+        bindViewModel()
     }
     
     override func setupAction() {
@@ -30,11 +34,30 @@ class LoginViewController: BaseViewController {
         loginView.kakaoLoginImageView.addGestureRecognizer(kakaoTapGesture)
     }
     
+    private func bindViewModel() {
+        loginViewModel.loginState.bind(with: self) { (self, state) in
+            switch state {
+            case .notLoggedIn:
+                print("Not logged in")
+            case .loggedIn(let userInfo):
+                print("Logged in: \(userInfo)")
+                // Here you can navigate to the next screen or update UI
+            }
+        }
+        
+        loginViewModel.error.bind(with: self) { (self, error) in
+            if let error = error {
+                print("Error occurred: \(error)")
+                // Here you can show an alert to the user
+            }
+        }
+    }
+    
     @objc private func appleLoginTapped() {
-        // Apple 로그인 처리
+        loginViewModel.performAppleLogin(presentationAnchor: view.window!)
     }
     
     @objc private func kakaoLoginTapped() {
-        // 카카오 로그인 처리
+        loginViewModel.performKakaoLogin(presentationAnchor: view.window!)
     }
 }
