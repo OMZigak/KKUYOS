@@ -85,6 +85,11 @@
 		DE9E18842C3BA84500DB76B4 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18832C3BA84500DB76B4 /* CustomTextField.swift */; };
 		DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18882C3BC91000DB76B4 /* ResponseBodyDTO.swift */; };
 		DE9E188B2C3BC92500DB76B4 /* EmptyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E188A2C3BC92500DB76B4 /* EmptyModel.swift */; };
+		DE9E18922C3BCC9D00DB76B4 /* AuthTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18912C3BCC9D00DB76B4 /* AuthTemp.swift */; };
+		DE9E18942C3BCCA300DB76B4 /* UsersTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18932C3BCCA300DB76B4 /* UsersTemp.swift */; };
+		DE9E18962C3BCCAC00DB76B4 /* MeetingsTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18952C3BCCAC00DB76B4 /* MeetingsTemp.swift */; };
+		DE9E18982C3BCCB800DB76B4 /* PromisesTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18972C3BCCB800DB76B4 /* PromisesTemp.swift */; };
+		DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18992C3BCCBE00DB76B4 /* UtilsTemp.swift */; };
 		DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBEB2C345210006ECE7E /* BaseViewController.swift */; };
 		DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBED2C34529A006ECE7E /* BaseView.swift */; };
 		DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBEF2C345317006ECE7E /* BaseCollectionViewCell.swift */; };
@@ -130,6 +135,11 @@
 		DE9E18832C3BA84500DB76B4 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		DE9E18882C3BC91000DB76B4 /* ResponseBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseBodyDTO.swift; sourceTree = "<group>"; };
 		DE9E188A2C3BC92500DB76B4 /* EmptyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyModel.swift; sourceTree = "<group>"; };
+		DE9E18912C3BCC9D00DB76B4 /* AuthTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTemp.swift; sourceTree = "<group>"; };
+		DE9E18932C3BCCA300DB76B4 /* UsersTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTemp.swift; sourceTree = "<group>"; };
+		DE9E18952C3BCCAC00DB76B4 /* MeetingsTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingsTemp.swift; sourceTree = "<group>"; };
+		DE9E18972C3BCCB800DB76B4 /* PromisesTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromisesTemp.swift; sourceTree = "<group>"; };
+		DE9E18992C3BCCBE00DB76B4 /* UtilsTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTemp.swift; sourceTree = "<group>"; };
 		DED5DBEB2C345210006ECE7E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		DED5DBED2C34529A006ECE7E /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		DED5DBEF2C345317006ECE7E /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -374,7 +384,7 @@
 		DE9E18852C3BC8F000DB76B4 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				DE9E18872C3BC90300DB76B4 /* Request */,
+				DE9E18872C3BC90300DB76B4 /* Model */,
 				DE9E18862C3BC8F900DB76B4 /* Response */,
 			);
 			path = DTO;
@@ -388,12 +398,65 @@
 			path = Response;
 			sourceTree = "<group>";
 		};
-		DE9E18872C3BC90300DB76B4 /* Request */ = {
+		DE9E18872C3BC90300DB76B4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DE9E189B2C3BCCC600DB76B4 /* Empty */,
+				DE9E188D2C3BCC6100DB76B4 /* Auth */,
+				DE9E188C2C3BCC3E00DB76B4 /* Users */,
+				DE9E188E2C3BCC6B00DB76B4 /* Meetings */,
+				DE9E188F2C3BCC7600DB76B4 /* Promises */,
+				DE9E18902C3BCC8000DB76B4 /* Utils */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		DE9E188C2C3BCC3E00DB76B4 /* Users */ = {
+			isa = PBXGroup;
+			children = (
+				DE9E18932C3BCCA300DB76B4 /* UsersTemp.swift */,
+			);
+			path = Users;
+			sourceTree = "<group>";
+		};
+		DE9E188D2C3BCC6100DB76B4 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				DE9E18912C3BCC9D00DB76B4 /* AuthTemp.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		DE9E188E2C3BCC6B00DB76B4 /* Meetings */ = {
+			isa = PBXGroup;
+			children = (
+				DE9E18952C3BCCAC00DB76B4 /* MeetingsTemp.swift */,
+			);
+			path = Meetings;
+			sourceTree = "<group>";
+		};
+		DE9E188F2C3BCC7600DB76B4 /* Promises */ = {
+			isa = PBXGroup;
+			children = (
+				DE9E18972C3BCCB800DB76B4 /* PromisesTemp.swift */,
+			);
+			path = Promises;
+			sourceTree = "<group>";
+		};
+		DE9E18902C3BCC8000DB76B4 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				DE9E18992C3BCCBE00DB76B4 /* UtilsTemp.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		DE9E189B2C3BCCC600DB76B4 /* Empty */ = {
 			isa = PBXGroup;
 			children = (
 				DE9E188A2C3BC92500DB76B4 /* EmptyModel.swift */,
 			);
-			path = Request;
+			path = Empty;
 			sourceTree = "<group>";
 		};
 		DED5DBEA2C345202006ECE7E /* Base */ = {
@@ -544,6 +607,7 @@
 			files = (
 				DED5DBF22C34534A006ECE7E /* BaseCollectionReusableView.swift in Sources */,
 				DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */,
+				DE9E18942C3BCCA300DB76B4 /* UsersTemp.swift in Sources */,
 				DE9E188B2C3BC92500DB76B4 /* EmptyModel.swift in Sources */,
 				DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */,
 				DE9E18842C3BA84500DB76B4 /* CustomTextField.swift in Sources */,
@@ -555,8 +619,11 @@
 				DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */,
 				DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */,
 				DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */,
+				DE9E18922C3BCC9D00DB76B4 /* AuthTemp.swift in Sources */,
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
 				DE254AAE2C31193600A4015E /* UIFont+.swift in Sources */,
+				DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */,
+				DE9E18962C3BCCAC00DB76B4 /* MeetingsTemp.swift in Sources */,
 				DE254AB22C31197B00A4015E /* UIButton+.swift in Sources */,
 				DDA2EE772C385FC3007C6059 /* GroupListViewController.swift in Sources */,
 				78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */,
@@ -564,6 +631,7 @@
 				78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */,
 				DDA2EE792C385FCF007C6059 /* MyPageViewController.swift in Sources */,
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
+				DE9E18982C3BCCB800DB76B4 /* PromisesTemp.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
