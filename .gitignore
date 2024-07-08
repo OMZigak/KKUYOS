@@ -135,3 +135,6 @@ iOSInjectionProject/
 
 ### Firebase
 GoogleService-Info.plist
+
+# Exclude Info.plist files
+**/PrivacyInfo.plist
