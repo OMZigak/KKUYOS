@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MembersOfMeetingResponseModel: Codable {
+struct MeetingMembersResponseModel: Codable {
     let memberCount: Int
     let members: [Member]
 }
