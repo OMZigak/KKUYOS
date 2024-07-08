@@ -48,6 +48,15 @@
 		78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286D2C29402C006D9942 /* SceneDelegate.swift */; };
 		78B928752C29402E006D9942 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78B928742C29402E006D9942 /* Assets.xcassets */; };
 		78B928782C29402E006D9942 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78B928762C29402E006D9942 /* LaunchScreen.storyboard */; };
+		DD3072142C3BF87A00416D9F /* NearestPromiseResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072132C3BF87A00416D9F /* NearestPromiseResponseModel.swift */; };
+		DD3072162C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072152C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift */; };
+		DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072192C3C011600416D9F /* AddPromiseRequestModel.swift */; };
+		DD30721E2C3C0CC800416D9F /* PromiseInfoResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD30721D2C3C0CC800416D9F /* PromiseInfoResponseModel.swift */; };
+		DD3072202C3C0D4500416D9F /* MyReadyStatusResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD30721F2C3C0D4500416D9F /* MyReadyStatusResponseModel.swift */; };
+		DD3072222C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072212C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift */; };
+		DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072232C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift */; };
+		DD3072262C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072252C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift */; };
+		DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072272C3C104D00416D9F /* ArrivalCompletionResponseModel.swift */; };
 		DD865B642C3920F000C351A2 /* AppleLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD865B632C3920F000C351A2 /* AppleLoginVC.swift */; };
 		DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */; };
 		DDA2EE752C385FB1007C6059 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE742C385FB1007C6059 /* HomeViewController.swift */; };
@@ -81,7 +90,6 @@
 		DE9E18922C3BCC9D00DB76B4 /* AuthTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18912C3BCC9D00DB76B4 /* AuthTemp.swift */; };
 		DE9E18942C3BCCA300DB76B4 /* UsersTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18932C3BCCA300DB76B4 /* UsersTemp.swift */; };
 		DE9E18962C3BCCAC00DB76B4 /* MeetingsTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18952C3BCCAC00DB76B4 /* MeetingsTemp.swift */; };
-		DE9E18982C3BCCB800DB76B4 /* PromisesTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18972C3BCCB800DB76B4 /* PromisesTemp.swift */; };
 		DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18992C3BCCBE00DB76B4 /* UtilsTemp.swift */; };
 		DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBEB2C345210006ECE7E /* BaseViewController.swift */; };
 		DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBED2C34529A006ECE7E /* BaseView.swift */; };
@@ -99,6 +107,15 @@
 		78B928742C29402E006D9942 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		78B928772C29402E006D9942 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78B928792C29402E006D9942 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DD3072132C3BF87A00416D9F /* NearestPromiseResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearestPromiseResponseModel.swift; sourceTree = "<group>"; };
+		DD3072152C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingPromiseListResponseModel.swift; sourceTree = "<group>"; };
+		DD3072192C3C011600416D9F /* AddPromiseRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseRequestModel.swift; sourceTree = "<group>"; };
+		DD30721D2C3C0CC800416D9F /* PromiseInfoResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoResponseModel.swift; sourceTree = "<group>"; };
+		DD30721F2C3C0D4500416D9F /* MyReadyStatusResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyReadyStatusResponseModel.swift; sourceTree = "<group>"; };
+		DD3072212C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseParticipantListResponseModel.swift; sourceTree = "<group>"; };
+		DD3072232C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPromiseReadyInfoRequestModel.swift; sourceTree = "<group>"; };
+		DD3072252C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseLateInfoResponseModel.swift; sourceTree = "<group>"; };
+		DD3072272C3C104D00416D9F /* ArrivalCompletionResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalCompletionResponseModel.swift; sourceTree = "<group>"; };
 		DD865B632C3920F000C351A2 /* AppleLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginVC.swift; sourceTree = "<group>"; };
 		DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		DDA2EE742C385FB1007C6059 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -132,7 +149,6 @@
 		DE9E18912C3BCC9D00DB76B4 /* AuthTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTemp.swift; sourceTree = "<group>"; };
 		DE9E18932C3BCCA300DB76B4 /* UsersTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersTemp.swift; sourceTree = "<group>"; };
 		DE9E18952C3BCCAC00DB76B4 /* MeetingsTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingsTemp.swift; sourceTree = "<group>"; };
-		DE9E18972C3BCCB800DB76B4 /* PromisesTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromisesTemp.swift; sourceTree = "<group>"; };
 		DE9E18992C3BCCBE00DB76B4 /* UtilsTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTemp.swift; sourceTree = "<group>"; };
 		DED5DBEB2C345210006ECE7E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		DED5DBED2C34529A006ECE7E /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
@@ -424,7 +440,15 @@
 		DE9E188F2C3BCC7600DB76B4 /* Promises */ = {
 			isa = PBXGroup;
 			children = (
-				DE9E18972C3BCCB800DB76B4 /* PromisesTemp.swift */,
+				DD3072132C3BF87A00416D9F /* NearestPromiseResponseModel.swift */,
+				DD3072152C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift */,
+				DD3072192C3C011600416D9F /* AddPromiseRequestModel.swift */,
+				DD30721D2C3C0CC800416D9F /* PromiseInfoResponseModel.swift */,
+				DD30721F2C3C0D4500416D9F /* MyReadyStatusResponseModel.swift */,
+				DD3072212C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift */,
+				DD3072232C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift */,
+				DD3072252C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift */,
+				DD3072272C3C104D00416D9F /* ArrivalCompletionResponseModel.swift */,
 			);
 			path = Promises;
 			sourceTree = "<group>";
@@ -587,6 +611,8 @@
 				DED5DBF22C34534A006ECE7E /* BaseCollectionReusableView.swift in Sources */,
 				DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */,
 				DE9E18942C3BCCA300DB76B4 /* UsersTemp.swift in Sources */,
+				DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */,
+				DD30721E2C3C0CC800416D9F /* PromiseInfoResponseModel.swift in Sources */,
 				DE9E188B2C3BC92500DB76B4 /* EmptyModel.swift in Sources */,
 				DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */,
 				DD865B642C3920F000C351A2 /* AppleLoginVC.swift in Sources */,
@@ -602,7 +628,9 @@
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
 				DE254AAE2C31193600A4015E /* UIFont+.swift in Sources */,
 				DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */,
+				DD3072142C3BF87A00416D9F /* NearestPromiseResponseModel.swift in Sources */,
 				DE9E18962C3BCCAC00DB76B4 /* MeetingsTemp.swift in Sources */,
+				DD3072162C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift in Sources */,
 				DE254AB22C31197B00A4015E /* UIButton+.swift in Sources */,
 				DDA2EE772C385FC3007C6059 /* GroupListViewController.swift in Sources */,
 				78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */,
@@ -610,12 +638,16 @@
 				78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */,
 				DDA2EE792C385FCF007C6059 /* MyPageViewController.swift in Sources */,
 				784E4D9B2C3BBD4D00BC943C /* KakaoLoginVC.swift in Sources */,
+				DD3072222C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift in Sources */,
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
-				DE9E18982C3BCCB800DB76B4 /* PromisesTemp.swift in Sources */,
+				DD3072202C3C0D4500416D9F /* MyReadyStatusResponseModel.swift in Sources */,
+				DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */,
+				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,
+				DD3072262C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift in Sources */,
 				DE254AB92C311AB300A4015E /* Screen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
