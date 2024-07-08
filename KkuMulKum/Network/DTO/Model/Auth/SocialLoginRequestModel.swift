@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct SocialLoginRequestModel: Codable {
+    let provider: String?
+}
