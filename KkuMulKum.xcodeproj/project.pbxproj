@@ -90,11 +90,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-<<<<<<< HEAD
-		785AE1CE2C35560800677CA0 /* KkuMulKum.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KkuMulKum.entitlements; sourceTree = "<group>"; };
-=======
 		785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.plist; sourceTree = "<group>"; };
->>>>>>> feat/#112-카카오로그인구현
 		78B928682C29402C006D9942 /* KkuMulKum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KkuMulKum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78B9286B2C29402C006D9942 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78B9286D2C29402C006D9942 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -208,7 +204,6 @@
 		78B9286A2C29402C006D9942 /* KkuMulKum */ = {
 			isa = PBXGroup;
 			children = (
-				785AE1CE2C35560800677CA0 /* KkuMulKum.entitlements */,
 				DE254AA12C31106700A4015E /* Application */,
 				DE254AA22C31107700A4015E /* Source */,
 				DE254AA32C31107C00A4015E /* Resource */,
@@ -293,20 +288,10 @@
 				78B928742C29402E006D9942 /* Assets.xcassets */,
 				78B928762C29402E006D9942 /* LaunchScreen.storyboard */,
 				78B928792C29402E006D9942 /* Info.plist */,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 				DE9E187E2C3BA49B00DB76B4 /* Components */,
->>>>>>> ba7460ef3e4530701723c7cf90b339ab976895fc
-=======
-				DE9E187E2C3BA49B00DB76B4 /* Components */,
->>>>>>> ba7460ef3e4530701723c7cf90b339ab976895fc
 				DE8247FE2C36E846000601BC /* ObservablePattern */,
 				DED5DBEA2C345202006ECE7E /* Base */,
-=======
 				785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */,
->>>>>>> feat/#112-카카오로그인구현
 				DE254AA62C3118B300A4015E /* Extension */,
 				DE254AB52C3119BC00A4015E /* Util */,
 				DE254ABA2C311C3100A4015E /* Font */,
@@ -769,20 +754,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-<<<<<<< HEAD
-				CODE_SIGN_ENTITLEMENTS = KkuMulKum/KkuMulKum.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = D2DRA3F792;
-=======
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = D2DRA3F792;
->>>>>>> feat/#112-카카오로그인구현
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KkuMulKum/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -798,10 +775,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = KkuMulKum.yizihn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-<<<<<<< HEAD
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = KkumulkumDebug;
-=======
->>>>>>> feat/#112-카카오로그인구현
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -813,11 +787,6 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-<<<<<<< HEAD
-				CODE_SIGN_ENTITLEMENTS = KkuMulKum/KkuMulKum.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Development";
-=======
->>>>>>> feat/#112-카카오로그인구현
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
