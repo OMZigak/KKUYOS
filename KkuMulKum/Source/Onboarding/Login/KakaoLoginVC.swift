@@ -1,16 +1,17 @@
 //
-//  ViewController.swift
+//  KakaoLogin.swift
 //  KkuMulKum
 //
-//  Created by 이지훈 on 6/24/24.
+//  Created by 이지훈 on 7/8/24.
 //
 import UIKit
+
 import KakaoSDKCommon
 import KakaoSDKUser
 import KakaoSDKAuth
 import KeychainAccess
 
-class ViewController: UIViewController {
+class KakaoLoginVC: UIViewController {
     
     let keychain = Keychain(service: "KkuMulKum.yizihn")
     
@@ -24,7 +25,7 @@ class ViewController: UIViewController {
     
     private func setupUI() {
         setupLoginButton()
-        setupLogoutButton()  // 로그아웃 버튼 추가
+        setupLogoutButton()
     }
     
     private func setupLoginButton() {
@@ -62,7 +63,7 @@ class ViewController: UIViewController {
     
     private func printNativeAppKey() {
         if let appKey = nativeAppKey {
-            let urlScheme = "\(appKey)"
+            let urlScheme = "kakao\(appKey)"
             print("Native App Key: \(appKey)")
             print("URL Scheme: \(urlScheme)")
         }
@@ -78,21 +79,28 @@ class ViewController: UIViewController {
     }
     
     @objc func loginWithKakao() {
+        print("loginWithKakao called")
         if UserApi.isKakaoTalkLoginAvailable() {
             UserApi.shared.loginWithKakaoTalk { [weak self] (oauthToken, error) in
+                print("KakaoTalk login callback received")
                 self?.handleLoginResult(oauthToken: oauthToken, error: error)
             }
         } else {
             print("KakaoTalk is not installed, trying Kakao Account login...")
             UserApi.shared.loginWithKakaoAccount { [weak self] (oauthToken, error) in
+                print("Kakao Account login callback received")
                 self?.handleLoginResult(oauthToken: oauthToken, error: error)
             }
         }
     }
     
     private func handleLoginResult(oauthToken: OAuthToken?, error: Error?) {
+        print("handleLoginResult called")
         if let error = error {
             print("Login failed. Error: \(error.localizedDescription)")
+            if let sdkError = error as? SdkError {
+                print("SDK Error: \(sdkError)")
+            }
             return
         }
         
@@ -137,7 +145,7 @@ class ViewController: UIViewController {
         do {
             try keychain.set(accessToken, key: "accessToken")
             try keychain.set(refreshToken, key: "refreshToken")
-            print("Tokens saved successfully")
+            print("Tokens saved successfully. AccessToken: \(accessToken)")
         } catch {
             print("Error saving tokens: \(error)")
         }

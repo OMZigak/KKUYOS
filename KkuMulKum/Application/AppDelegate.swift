@@ -4,17 +4,13 @@
 //
 //  Created by 이지훈 on 6/24/24.
 //
-
 import UIKit
 import KakaoSDKCommon
 import KakaoSDKAuth
 
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-   
-   
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
@@ -26,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             print("Failed to load KAKAO_APP_KEY from PrivacyInfo.plist")
         }
-
+        
         return true
     }
     
@@ -38,7 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return appKey
     }
-
+    
     // 카카오 로그인
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         if AuthApi.isKakaoTalkLoginUrl(url) {
@@ -48,7 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: UISceneSession Lifecycle
-
+    
     func application(
         _ application: UIApplication,
         configurationForConnecting connectingSceneSession: UISceneSession,
@@ -59,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             sessionRole: connectingSceneSession.role
         )
     }
-
+    
     func application(
         _ application: UIApplication,
         didDiscardSceneSessions sceneSessions: Set<UISceneSession>
