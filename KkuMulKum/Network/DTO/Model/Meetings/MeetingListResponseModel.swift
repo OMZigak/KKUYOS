@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MeetingListResponseModel: Codable {
+struct MeetingListModel: ResponseModelType {
     let count: Int
     let meetings: [Meeting]
 }

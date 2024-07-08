@@ -10,7 +10,7 @@
 
 import Foundation
 
-struct AddPromiseRequestModel: Codable {
+struct AddPromiseModel: RequestModelType {
     let name, placeName, x, y, address, roadAddress, time, dressUpLevel, penalty: String
     let id: Int
     let participants: [Int]

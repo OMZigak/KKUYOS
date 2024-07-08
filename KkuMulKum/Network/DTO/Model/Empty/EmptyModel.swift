@@ -7,4 +7,4 @@
 
 import Foundation
 
-struct EmptyModel: Codable {}
+struct EmptyModel: RequestModelType, ResponseModelType {}

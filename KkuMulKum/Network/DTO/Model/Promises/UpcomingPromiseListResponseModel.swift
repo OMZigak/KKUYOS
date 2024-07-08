@@ -10,7 +10,7 @@
 
 import Foundation
 
-struct UpcomingPromiseListResponseModel: Codable {
+struct UpcomingPromiseListModel: ResponseModelType {
     let promises: [UpcomingPromise]
 }
 

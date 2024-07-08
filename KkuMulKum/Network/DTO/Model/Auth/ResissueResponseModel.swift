@@ -7,9 +7,6 @@
 
 import Foundation
 
-
-// MARK: - ReissueResponseModel
-
-struct ReissueResponseModel: Codable {
+struct ReissueModel: ResponseModelType {
     let accessToken, refreshToken: String?
 }
