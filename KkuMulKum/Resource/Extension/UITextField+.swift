@@ -31,7 +31,11 @@ extension UITextField {
         self.backgroundColor = backgroundColor
         attributedPlaceholder = NSAttributedString(
             string: placeholder,
-            attributes: [.foregroundColor: placeholderColor, .font: style, .kern: style.tracking]
+            attributes: [
+                .foregroundColor: placeholderColor,
+                .font: UIFont.pretendard(style),
+                .kern: style.tracking
+            ]
         )
         self.attributedText = .pretendardString(style: style)
     }
