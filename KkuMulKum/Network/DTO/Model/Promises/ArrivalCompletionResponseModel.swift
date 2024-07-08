@@ -12,12 +12,12 @@
 import Foundation
 
 struct ArrivalCompletionResponseModel: Codable {
-    let name, profileImage: String
+    let name, profileImageURL: String
     let level, promiseCount, tardyCount, tardySum: Int
     
     enum CodingKeys: String, CodingKey {
         case name
-        case profileImage = "profileImg"
+        case profileImageURL = "profileImg"
         case level
         case promiseCount
         case tardyCount

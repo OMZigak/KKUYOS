@@ -11,7 +11,7 @@
 import Foundation
 
 struct PromiseLateInfoResponseModel: Codable {
-    let penalty, name, profileImage: String
+    let penalty, name, profileImageURL: String
     let isPastDue: Bool
     let lateComers: [Comer]
     let id: Int
@@ -19,7 +19,7 @@ struct PromiseLateInfoResponseModel: Codable {
     enum CodingKeys: String, CodingKey {
         case penalty
         case name
-        case profileImage = "profileImg"
+        case profileImageURL = "profileImg"
         case isPastDue
         case lateComers
         case id
@@ -28,11 +28,11 @@ struct PromiseLateInfoResponseModel: Codable {
 
 struct Comer: Codable {
     let id: Int
-    let name, profileImage: String
+    let name, profileImageURL: String
     
     enum CodingKeys: String, CodingKey {
         case id
         case name
-        case profileImage = "profileImg"
+        case profileImageURL = "profileImg"
     }
 }
