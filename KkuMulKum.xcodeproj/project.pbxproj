@@ -295,6 +295,10 @@
 				78B928792C29402E006D9942 /* Info.plist */,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+				DE9E187E2C3BA49B00DB76B4 /* Components */,
+>>>>>>> ba7460ef3e4530701723c7cf90b339ab976895fc
 =======
 				DE9E187E2C3BA49B00DB76B4 /* Components */,
 >>>>>>> ba7460ef3e4530701723c7cf90b339ab976895fc
