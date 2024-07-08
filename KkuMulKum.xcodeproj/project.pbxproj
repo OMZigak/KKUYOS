@@ -81,6 +81,8 @@
 		DE254ACC2C311DC200A4015E /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */; };
 		DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8247FC2C36E7C7000601BC /* MoyaLoggingPlugin.swift */; };
 		DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8247FF2C36E857000601BC /* ObservablePattern.swift */; };
+		DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E187F2C3BA4AA00DB76B4 /* CustomButton.swift */; };
+		DE9E18842C3BA84500DB76B4 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18832C3BA84500DB76B4 /* CustomTextField.swift */; };
 		DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBEB2C345210006ECE7E /* BaseViewController.swift */; };
 		DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBED2C34529A006ECE7E /* BaseView.swift */; };
 		DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBEF2C345317006ECE7E /* BaseCollectionViewCell.swift */; };
@@ -122,6 +124,8 @@
 		DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		DE8247FC2C36E7C7000601BC /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
 		DE8247FF2C36E857000601BC /* ObservablePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePattern.swift; sourceTree = "<group>"; };
+		DE9E187F2C3BA4AA00DB76B4 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		DE9E18832C3BA84500DB76B4 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		DED5DBEB2C345210006ECE7E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		DED5DBED2C34529A006ECE7E /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		DED5DBEF2C345317006ECE7E /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -288,6 +292,7 @@
 				78B928742C29402E006D9942 /* Assets.xcassets */,
 				78B928762C29402E006D9942 /* LaunchScreen.storyboard */,
 				78B928792C29402E006D9942 /* Info.plist */,
+				DE9E187E2C3BA49B00DB76B4 /* Components */,
 				DE8247FE2C36E846000601BC /* ObservablePattern */,
 				DED5DBEA2C345202006ECE7E /* Base */,
 				DE254AA62C3118B300A4015E /* Extension */,
@@ -350,6 +355,15 @@
 				DE8247FF2C36E857000601BC /* ObservablePattern.swift */,
 			);
 			path = ObservablePattern;
+			sourceTree = "<group>";
+		};
+		DE9E187E2C3BA49B00DB76B4 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				DE9E187F2C3BA4AA00DB76B4 /* CustomButton.swift */,
+				DE9E18832C3BA84500DB76B4 /* CustomTextField.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		DED5DBEA2C345202006ECE7E /* Base */ = {
@@ -501,6 +515,7 @@
 				DED5DBF22C34534A006ECE7E /* BaseCollectionReusableView.swift in Sources */,
 				DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */,
 				DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */,
+				DE9E18842C3BA84500DB76B4 /* CustomTextField.swift in Sources */,
 				DD865B642C3920F000C351A2 /* LoginViewController.swift in Sources */,
 				DE254AAC2C31192400A4015E /* UILabel+.swift in Sources */,
 				DE254AB72C3119D000A4015E /* ReuseIdentifiable.swift in Sources */,
@@ -518,6 +533,7 @@
 				78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */,
 				DDA2EE792C385FCF007C6059 /* MyPageViewController.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
+				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,
 				DE254AB92C311AB300A4015E /* Screen.swift in Sources */,
