@@ -6,10 +6,11 @@
 //
 
 import UIKit
+
 import AuthenticationServices
 
 
-class LoginViewController: BaseViewController {
+class AppleLoginViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,7 +41,7 @@ class LoginViewController: BaseViewController {
 
 // MARK: - ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding
 
-extension LoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension AppleLoginViewController: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
             let idToken = credential.identityToken!
