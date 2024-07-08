@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct LoginUserResponseModel: Codable {
+struct LoginUserModel: ResponseModelType {
     let name: String
     let level: Int
     let promiseCount: Int

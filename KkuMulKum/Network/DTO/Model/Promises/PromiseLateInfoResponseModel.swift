@@ -10,7 +10,7 @@
 
 import Foundation
 
-struct PromiseLateInfoResponseModel: Codable {
+struct PromiseLateInfoModel: ResponseModelType {
     let penalty, name, profileImageURL: String
     let isPastDue: Bool
     let lateComers: [Comer]

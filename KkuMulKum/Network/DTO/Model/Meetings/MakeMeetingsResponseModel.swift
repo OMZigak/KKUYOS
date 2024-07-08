@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct MakeMeetingsResponseModel: Codable {
+struct MakeMeetingsResponseModel: ResponseModelType {
     let invitationCode: String
 }

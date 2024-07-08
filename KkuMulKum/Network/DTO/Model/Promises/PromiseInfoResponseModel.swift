@@ -10,6 +10,6 @@
 
 import Foundation
 
-struct PromiseInfoResponseModel: Codable {
+struct PromiseInfoModel: ResponseModelType {
     let placeName, address, roadAddress, time, dressUpLevel, penalty: String
 }

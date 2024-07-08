@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct UpdateProfileNameModel: Codable {
+struct UpdateProfileNameModel: RequestModelType, ResponseModelType {
     let name: String
 }

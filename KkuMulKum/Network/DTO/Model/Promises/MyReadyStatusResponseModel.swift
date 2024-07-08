@@ -10,7 +10,7 @@
 
 import Foundation
 
-struct MyReadyStatusResponseModel: Codable {
+struct MyReadyStatusModel: ResponseModelType {
     let preparationTime, travelTime: Int
     let preparationStartAt, departureAt, arrivalAt: String
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct MeetingInfoResponseModel: Codable {
+struct MeetingInfoModel: ResponseModelType {
     let id: Int
     let name, createdAt: String
     let metCount: Int

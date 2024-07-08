@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct RegisterMeetingsRequestModel: Codable {
-    let name: String
+struct RegisterMeetingsModel: RequestModelType {
+    let invitationCode: String
 }

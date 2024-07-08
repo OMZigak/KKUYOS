@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct MakeMeetingsRequestModel: Codable {
+struct MakeMeetingsRequestModel: RequestModelType {
     let name: String
 }
