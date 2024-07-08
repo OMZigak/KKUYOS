@@ -73,6 +73,7 @@
 		DE254ACB2C311DC200A4015E /* Pretendard-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE254AC22C311DC200A4015E /* Pretendard-Black.otf */; };
 		DE254ACC2C311DC200A4015E /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */; };
 		DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */; };
+		DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */; };
 		DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8247FC2C36E7C7000601BC /* MoyaLoggingPlugin.swift */; };
 		DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8247FF2C36E857000601BC /* ObservablePattern.swift */; };
 		DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E187F2C3BA4AA00DB76B4 /* CustomButton.swift */; };
@@ -124,6 +125,7 @@
 		DE254AC22C311DC200A4015E /* Pretendard-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Black.otf"; sourceTree = "<group>"; };
 		DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserResponseModel.swift; sourceTree = "<group>"; };
+		DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileNameModel.swift; sourceTree = "<group>"; };
 		DE8247FC2C36E7C7000601BC /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
 		DE8247FF2C36E857000601BC /* ObservablePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePattern.swift; sourceTree = "<group>"; };
 		DE9E187F2C3BA4AA00DB76B4 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -401,6 +403,7 @@
 			isa = PBXGroup;
 			children = (
 				DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */,
+				DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */,
 			);
 			path = Users;
 			sourceTree = "<group>";
@@ -597,6 +600,7 @@
 				DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */,
 				DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */,
 				DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */,
+				DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */,
 				DE9E18922C3BCC9D00DB76B4 /* AuthTemp.swift in Sources */,
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
 				DE254AAE2C31193600A4015E /* UIFont+.swift in Sources */,
