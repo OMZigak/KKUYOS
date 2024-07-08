@@ -14,11 +14,11 @@ struct MembersOfMeetingResponseModel: Codable {
 
 struct Member: Codable {
     let id: Int
-    let name, profileImageURLString: String
+    let name, profileImageURL: String
     
     enum CodingKeys: String, CodingKey {
         case id
         case name
-        case profileImageURLString = "profileImg"
+        case profileImageURL = "profileImg"
     }
 }
