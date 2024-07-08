@@ -65,9 +65,6 @@
 		DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072232C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift */; };
 		DD3072262C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072252C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift */; };
 		DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072272C3C104D00416D9F /* ArrivalCompletionResponseModel.swift */; };
-		DD30722C2C3C17CB00416D9F /* SocialLoginResponceModle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072292C3C17CB00416D9F /* SocialLoginResponceModle.swift */; };
-		DD30722D2C3C17CB00416D9F /* ResissueResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD30722A2C3C17CB00416D9F /* ResissueResponseModel.swift */; };
-		DD30722E2C3C17CB00416D9F /* SocialLoginRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD30722B2C3C17CB00416D9F /* SocialLoginRequestModel.swift */; };
 		DD865B642C3920F000C351A2 /* AppleLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD865B632C3920F000C351A2 /* AppleLoginVC.swift */; };
 		DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */; };
 		DDA2EE752C385FB1007C6059 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE742C385FB1007C6059 /* HomeViewController.swift */; };
@@ -135,9 +132,6 @@
 		DD3072232C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPromiseReadyInfoRequestModel.swift; sourceTree = "<group>"; };
 		DD3072252C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseLateInfoResponseModel.swift; sourceTree = "<group>"; };
 		DD3072272C3C104D00416D9F /* ArrivalCompletionResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalCompletionResponseModel.swift; sourceTree = "<group>"; };
-		DD3072292C3C17CB00416D9F /* SocialLoginResponceModle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialLoginResponceModle.swift; sourceTree = "<group>"; };
-		DD30722A2C3C17CB00416D9F /* ResissueResponseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResissueResponseModel.swift; sourceTree = "<group>"; };
-		DD30722B2C3C17CB00416D9F /* SocialLoginRequestModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialLoginRequestModel.swift; sourceTree = "<group>"; };
 		DD865B632C3920F000C351A2 /* AppleLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleLoginVC.swift; sourceTree = "<group>"; };
 		DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		DDA2EE742C385FB1007C6059 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -228,9 +222,6 @@
 		789AD4B82C3C1922002E2688 /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				DD30722B2C3C17CB00416D9F /* SocialLoginRequestModel.swift */,
-				DD3072292C3C17CB00416D9F /* SocialLoginResponceModle.swift */,
-				DD30722A2C3C17CB00416D9F /* ResissueResponseModel.swift */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -656,7 +647,6 @@
 				A3FB18512C3BF531001483E5 /* RegisterMeetingsResponseModel.swift in Sources */,
 				789AD4B32C3C0093002E2688 /* SocialLoginResponseModel.swift in Sources */,
 				DE9E188B2C3BC92500DB76B4 /* EmptyModel.swift in Sources */,
-				DD30722E2C3C17CB00416D9F /* SocialLoginRequestModel.swift in Sources */,
 				DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */,
 				A3FB184D2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift in Sources */,
 				DD865B642C3920F000C351A2 /* AppleLoginVC.swift in Sources */,
@@ -693,8 +683,6 @@
 				DD3072202C3C0D4500416D9F /* MyReadyStatusResponseModel.swift in Sources */,
 				DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */,
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
-				DD30722C2C3C17CB00416D9F /* SocialLoginResponceModle.swift in Sources */,
-				DD30722D2C3C17CB00416D9F /* ResissueResponseModel.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
