@@ -7,7 +7,8 @@
 
 import Foundation
 
-// MARK: - ResissueResponseModel
-struct ResissueResponseModel: Codable {
+
+// MARK: - ReissueResponseModel
+struct ReissueResponseModel: Codable {
     let accessToken, refreshToken: String?
 }

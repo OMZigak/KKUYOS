@@ -7,6 +7,9 @@
 
 import Foundation
 
+
+// MARK: - SocialLoginRequestModel
+
 struct SocialLoginRequestModel: Codable {
     let provider: String?
 }

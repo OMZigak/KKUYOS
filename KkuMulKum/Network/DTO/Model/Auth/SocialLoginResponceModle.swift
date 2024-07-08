@@ -7,7 +7,9 @@
 
 import Foundation
 
+
 // MARK: - SocialLoginRequestModel
+
 struct SocialLoginResponseModel: Codable {
     let name, accessToken, refreshToken: String?
 }
