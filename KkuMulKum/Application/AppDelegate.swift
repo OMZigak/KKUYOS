@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        
+        sleep(5)
         // KakaoSDK 초기화 과정에서 앱 키를 동적으로 불러오기
         if let kakaoAppKey = fetchKakaoAppKeyFromPrivacyInfo() {
             KakaoSDK.initSDK(appKey: kakaoAppKey)
