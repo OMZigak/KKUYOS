@@ -45,6 +45,7 @@ class LoginViewController: BaseViewController {
         
         loginViewModel.error.bind(with: self) { owner, error in
             if !error.isEmpty {
+                // TODO: 추후 에러처리 추가예정 -> Keychain 연결 이후
                 print("Error occurred: \(error)")
             }
         }
