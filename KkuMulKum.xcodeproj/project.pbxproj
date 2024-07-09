@@ -72,10 +72,11 @@
 		DDA2EE772C385FC3007C6059 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE762C385FC3007C6059 /* GroupListViewController.swift */; };
 		DDA2EE792C385FCF007C6059 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE782C385FCF007C6059 /* MyPageViewController.swift */; };
 		DDAF1C6D2C3CF028008A37D3 /* PromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C6C2C3CF028008A37D3 /* PromiseViewController.swift */; };
-		DDAF1C6F2C3D15C3008A37D3 /* PromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C6E2C3D15C3008A37D3 /* PromiseView.swift */; };
 		DDAF1C712C3D171A008A37D3 /* PromiseSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C702C3D171A008A37D3 /* PromiseSegmentedControl.swift */; };
 		DDAF1C732C3D2E7C008A37D3 /* PromiseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C722C3D2E7C008A37D3 /* PromiseInfoViewController.swift */; };
-		DDAF1C752C3D2E9D008A37D3 /* ReadyStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C742C3D2E9D008A37D3 /* ReadyStatusViewController.swift */; };
+		DDAF1C772C3D4ADA008A37D3 /* TardyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C762C3D4ADA008A37D3 /* TardyViewController.swift */; };
+		DDAF1C792C3D4B7B008A37D3 /* ReadyStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C782C3D4B7B008A37D3 /* ReadyStatusViewController.swift */; };
+		DDAF1C862C3D6A96008A37D3 /* PromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C852C3D6A96008A37D3 /* PromiseViewModel.swift */; };
 		DE254AA52C31131600A4015E /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE254AA42C31131600A4015E /* Color.xcassets */; };
 		DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA72C3118EA00A4015E /* UIView+.swift */; };
 		DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA92C31190E00A4015E /* UIStackView+.swift */; };
@@ -147,10 +148,11 @@
 		DDA2EE762C385FC3007C6059 /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		DDA2EE782C385FCF007C6059 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		DDAF1C6C2C3CF028008A37D3 /* PromiseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseViewController.swift; sourceTree = "<group>"; };
-		DDAF1C6E2C3D15C3008A37D3 /* PromiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseView.swift; sourceTree = "<group>"; };
 		DDAF1C702C3D171A008A37D3 /* PromiseSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseSegmentedControl.swift; sourceTree = "<group>"; };
 		DDAF1C722C3D2E7C008A37D3 /* PromiseInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoViewController.swift; sourceTree = "<group>"; };
-		DDAF1C742C3D2E9D008A37D3 /* ReadyStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadyStatusViewController.swift; sourceTree = "<group>"; };
+		DDAF1C762C3D4ADA008A37D3 /* TardyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TardyViewController.swift; sourceTree = "<group>"; };
+		DDAF1C782C3D4B7B008A37D3 /* ReadyStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadyStatusViewController.swift; sourceTree = "<group>"; };
+		DDAF1C852C3D6A96008A37D3 /* PromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseViewModel.swift; sourceTree = "<group>"; };
 		DE254AA42C31131600A4015E /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		DE254AA72C3118EA00A4015E /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		DE254AA92C31190E00A4015E /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -340,10 +342,11 @@
 			isa = PBXGroup;
 			children = (
 				DDAF1C6C2C3CF028008A37D3 /* PromiseViewController.swift */,
-				DDAF1C6E2C3D15C3008A37D3 /* PromiseView.swift */,
 				DDAF1C702C3D171A008A37D3 /* PromiseSegmentedControl.swift */,
 				DDAF1C722C3D2E7C008A37D3 /* PromiseInfoViewController.swift */,
-				DDAF1C742C3D2E9D008A37D3 /* ReadyStatusViewController.swift */,
+				DDAF1C762C3D4ADA008A37D3 /* TardyViewController.swift */,
+				DDAF1C782C3D4B7B008A37D3 /* ReadyStatusViewController.swift */,
+				DDAF1C852C3D6A96008A37D3 /* PromiseViewModel.swift */,
 			);
 			path = Promise;
 			sourceTree = "<group>";
@@ -702,6 +705,7 @@
 				DD30721E2C3C0CC800416D9F /* PromiseInfoResponseModel.swift in Sources */,
 				A3FB18512C3BF531001483E5 /* RegisterMeetingsResponseModel.swift in Sources */,
 				789AD4B32C3C0093002E2688 /* SocialLoginResponseModel.swift in Sources */,
+				DDAF1C792C3D4B7B008A37D3 /* ReadyStatusViewController.swift in Sources */,
 				DE9E188B2C3BC92500DB76B4 /* EmptyModel.swift in Sources */,
 				DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */,
 				A3FB184D2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift in Sources */,
@@ -711,10 +715,10 @@
 				DE9E18842C3BA84500DB76B4 /* CustomTextField.swift in Sources */,
 				A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */,
 				DE254AAC2C31192400A4015E /* UILabel+.swift in Sources */,
-				DDAF1C6F2C3D15C3008A37D3 /* PromiseView.swift in Sources */,
 				DE254AB72C3119D000A4015E /* ReuseIdentifiable.swift in Sources */,
 				DDA2EE752C385FB1007C6059 /* HomeViewController.swift in Sources */,
 				DE254AB42C31199B00A4015E /* UITextField+.swift in Sources */,
+				DDAF1C772C3D4ADA008A37D3 /* TardyViewController.swift in Sources */,
 				DDAF1C712C3D171A008A37D3 /* PromiseSegmentedControl.swift in Sources */,
 				DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */,
 				DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */,
@@ -736,7 +740,6 @@
 				78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */,
 				DDA2EE792C385FCF007C6059 /* MyPageViewController.swift in Sources */,
 				A3FB185B2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift in Sources */,
-				784E4D9B2C3BBD4D00BC943C /* KakaoLoginVC.swift in Sources */,
 				DDAF1C6D2C3CF028008A37D3 /* PromiseViewController.swift in Sources */,
 				DD3072222C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift in Sources */,
 				789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */,
@@ -750,6 +753,7 @@
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
 				DDAF1C732C3D2E7C008A37D3 /* PromiseInfoViewController.swift in Sources */,
+				DDAF1C862C3D6A96008A37D3 /* PromiseViewModel.swift in Sources */,
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,
 				DD3072262C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift in Sources */,
 				DE254AB92C311AB300A4015E /* Screen.swift in Sources */,
