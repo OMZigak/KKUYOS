@@ -74,6 +74,7 @@
 		DDAF1C7C2C3D5B86008A37D3 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C7B2C3D5B86008A37D3 /* RxCocoa */; };
 		DDAF1C7E2C3D5B86008A37D3 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C7D2C3D5B86008A37D3 /* RxRelay */; };
 		DDAF1C812C3D5BD5008A37D3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C802C3D5BD5008A37D3 /* Kingfisher */; };
+		DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */; };
 		DE254AA52C31131600A4015E /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE254AA42C31131600A4015E /* Color.xcassets */; };
 		DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA72C3118EA00A4015E /* UIView+.swift */; };
 		DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA92C31190E00A4015E /* UIStackView+.swift */; };
@@ -144,6 +145,7 @@
 		DDA2EE742C385FB1007C6059 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DDA2EE762C385FC3007C6059 /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		DDA2EE782C385FCF007C6059 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		DE254AA42C31131600A4015E /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		DE254AA72C3118EA00A4015E /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		DE254AA92C31190E00A4015E /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -332,6 +334,14 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		DDAF1C822C3D5CFA008A37D3 /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
 		DE254AA12C31106700A4015E /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -364,6 +374,7 @@
 				78B928792C29402E006D9942 /* Info.plist */,
 				DE9E187E2C3BA49B00DB76B4 /* Component */,
 				DE8247FE2C36E846000601BC /* ObservablePattern */,
+				DDAF1C822C3D5CFA008A37D3 /* Protocol */,
 				DED5DBEA2C345202006ECE7E /* Base */,
 				DE254AA62C3118B300A4015E /* Extension */,
 				DE254AB52C3119BC00A4015E /* Util */,
@@ -734,6 +745,7 @@
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,
+				DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */,
 				DD3072262C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift in Sources */,
 				DE254AB92C311AB300A4015E /* Screen.swift in Sources */,
 			);
