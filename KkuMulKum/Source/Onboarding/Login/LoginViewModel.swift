@@ -19,8 +19,8 @@ enum LoginState {
 
 class LoginViewModel: NSObject {
     var loginState: ObservablePattern<LoginState> = ObservablePattern(.notLoggedIn)
-    var error: ObservablePattern<String?> = ObservablePattern(nil)
-    
+    var error: ObservablePattern<String> = ObservablePattern("")
+
     func performAppleLogin(presentationAnchor: ASPresentationAnchor) {
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -70,15 +70,14 @@ class LoginViewModel: NSObject {
 
 extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        if let credential = authorization.credential as? ASAuthorizationAppleIDCredential {
-            if let name = credential.fullName?.givenName {
-                loginState.value = .loggedIn(userInfo: "Apple user: \(name)")
-            } else {
-                loginState.value = .loggedIn(userInfo: "Apple user")
-            }
+        guard let credential = authorization.credential as? ASAuthorizationAppleIDCredential else {
+            print("Authorization failed: Credential is not of type ASAuthorizationAppleIDCredential")
+            return
         }
+        let userName = credential.fullName?.givenName ?? "Apple user"
+        loginState.value = .loggedIn(userInfo: "Apple user: \(userName)")
     }
-    
+
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         self.error.value = error.localizedDescription
     }

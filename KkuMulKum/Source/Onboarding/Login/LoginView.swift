@@ -10,7 +10,7 @@ import UIKit
 import SnapKit
 import Then
 
-class LoginView: UIView {
+class LoginView: BaseView {
     
     let backgroundImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
@@ -45,7 +45,7 @@ class LoginView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView() {
+     override func setupView() {
         addSubview(backgroundImageView)
         addSubview(titleLabel)
         addSubview(appleLoginImageView)
@@ -74,6 +74,4 @@ class LoginView: UIView {
             $0.height.equalTo(54)
         }
     }
-    
-    
 }

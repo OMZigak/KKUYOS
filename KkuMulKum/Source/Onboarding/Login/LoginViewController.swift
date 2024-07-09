@@ -20,7 +20,6 @@ class LoginViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupAction()
         bindViewModel()
     }
     
@@ -35,8 +34,7 @@ class LoginViewController: BaseViewController {
     }
     
     private func bindViewModel() {
-        
-        loginViewModel.loginState.bind(with: self) { (self, state) in
+        loginViewModel.loginState.bind(with: self) { owner, state in
             switch state {
             case .notLoggedIn:
                 print("Not logged in")
@@ -45,12 +43,13 @@ class LoginViewController: BaseViewController {
             }
         }
         
-        loginViewModel.error.bind(with: self) { (self, error) in
-            if let error = error {
+        loginViewModel.error.bind(with: self) { owner, error in
+            if !error.isEmpty {
                 print("Error occurred: \(error)")
             }
         }
     }
+
     
     @objc private func appleLoginTapped() {
         loginViewModel.performAppleLogin(presentationAnchor: view.window!)
