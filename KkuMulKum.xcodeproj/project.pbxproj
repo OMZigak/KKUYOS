@@ -314,6 +314,33 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		DD931B672C3D9D9C00526452 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DDAF1C882C3D6E3D008A37D3 /* ReadyStatusViewController.swift */,
+				DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */,
+				DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */,
+				DDAF1C8D2C3D6E3D008A37D3 /* PromiseViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		DD931B682C3D9DAD00526452 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DDAF1C892C3D6E3D008A37D3 /* PromiseSegmentedControl.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DD931B692C3D9DC800526452 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DDAF1C8A2C3D6E3D008A37D3 /* PromiseViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 		DDA2EE7B2C386078007C6059 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -357,12 +384,9 @@
 		DDAF1C872C3D6E3D008A37D3 /* Promise */ = {
 			isa = PBXGroup;
 			children = (
-				DDAF1C882C3D6E3D008A37D3 /* ReadyStatusViewController.swift */,
-				DDAF1C892C3D6E3D008A37D3 /* PromiseSegmentedControl.swift */,
-				DDAF1C8A2C3D6E3D008A37D3 /* PromiseViewModel.swift */,
-				DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */,
-				DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */,
-				DDAF1C8D2C3D6E3D008A37D3 /* PromiseViewController.swift */,
+				DD931B672C3D9D9C00526452 /* ViewController */,
+				DD931B682C3D9DAD00526452 /* View */,
+				DD931B692C3D9DC800526452 /* ViewModel */,
 			);
 			path = Promise;
 			sourceTree = "<group>";
