@@ -6,66 +6,79 @@
 //
 
 import UIKit
-
 import SnapKit
 import Then
 
 class AlarmSettingView: BaseView {
     
-    let containerView = UIView().then {
+    private let containerView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.gray2.cgColor
         $0.layer.cornerRadius = 8
     }
     
-    let titleLabel = UILabel().then {
+    private let stackView = UIStackView(axis: .vertical).then {
+        $0.spacing = 8
+        $0.alignment = .fill
+        $0.distribution = .fill
+    }
+    
+    private let titleStackView = UIStackView(axis: .horizontal).then {
+        $0.alignment = .center
+        $0.distribution = .equalSpacing
+    }
+    
+    private let titleLabel = UILabel().then {
         $0.text = "내 푸시 알림"
         $0.font = UIFont.pretendard(.body03)
         $0.textColor = .black
     }
     
-    let subtitleLabel = UILabel().then {
-        $0.text = "준비, 이동을 시작해야할 시간에\n푸시 알림을 받을 수 있습니다."
-        $0.font = UIFont.pretendard(.caption02)
-        $0.textColor = .gray
-        $0.numberOfLines = 2
+    private let toggleSwitch = UISwitch().then {
+        $0.onTintColor = .green
     }
     
-    let toggleSwitch = UISwitch().then {
-        $0.onTintColor = .green
+    private let subtitleLabel = UILabel().then {
+        $0.setText("준비, 이동을 시작해야할 시간에\n푸시 알림을 받을 수 있습니다.", style: .caption02, color: .gray)
+        $0.font = UIFont.pretendard(.caption02)
+        $0.textColor = .gray
+        $0.numberOfLines = 0
     }
     
     override func setupView() {
         super.setupView()
-        backgroundColor = .white
+        backgroundColor = .systemMint.withAlphaComponent(0.1)
         
         addSubview(containerView)
-        containerView.addSubview(titleLabel)
-        containerView.addSubview(subtitleLabel)
-        containerView.addSubview(toggleSwitch)
+        containerView.addSubview(stackView)
+        
+        titleStackView.addArrangedSubviews(titleLabel, toggleSwitch)
+        stackView.addArrangedSubviews(titleStackView, subtitleLabel)
     }
     
     override func setupAutoLayout() {
         super.setupAutoLayout()
         
         containerView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(16)
-            $0.height.equalTo(100)
+            $0.edges.equalToSuperview()
         }
         
-        titleLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().offset(16)
+        stackView.snp.makeConstraints {
+            $0.edges.equalToSuperview().inset(15)
         }
         
-        subtitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(8)
-            $0.leading.trailing.equalToSuperview().inset(16)
+        titleStackView.snp.makeConstraints {
+            $0.height.greaterThanOrEqualTo(44)
         }
         
         toggleSwitch.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().offset(-16)
+            $0.width.equalTo(51)
+            $0.height.equalTo(31)
+        }
+        
+        subtitleLabel.snp.makeConstraints {
+            $0.height.greaterThanOrEqualTo(40) // 최소 높이 설정
         }
     }
 }

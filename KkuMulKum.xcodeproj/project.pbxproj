@@ -75,7 +75,6 @@
 		DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */; };
 		DDA2EE752C385FB1007C6059 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE742C385FB1007C6059 /* HomeViewController.swift */; };
 		DDA2EE772C385FC3007C6059 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE762C385FC3007C6059 /* GroupListViewController.swift */; };
-		DDA2EE792C385FCF007C6059 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE782C385FCF007C6059 /* MyPageViewController.swift */; };
 		DDAF1C7C2C3D5B86008A37D3 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C7B2C3D5B86008A37D3 /* RxCocoa */; };
 		DDAF1C7E2C3D5B86008A37D3 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C7D2C3D5B86008A37D3 /* RxRelay */; };
 		DDAF1C812C3D5BD5008A37D3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C802C3D5BD5008A37D3 /* Kingfisher */; };
@@ -383,27 +382,6 @@
 				DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */,
 			);
 			path = Core;
-			sourceTree = "<group>";
-		};
-		DDAF1C822C3D5CFA008A37D3 /* Protocol */ = {
-			isa = PBXGroup;
-			children = (
-				DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */,
-			);
-			path = Protocol;
-			sourceTree = "<group>";
-		};
-		DDAF1C872C3D6E3D008A37D3 /* Promise */ = {
-			isa = PBXGroup;
-			children = (
-				DDAF1C882C3D6E3D008A37D3 /* ReadyStatusViewController.swift */,
-				DDAF1C892C3D6E3D008A37D3 /* PromiseSegmentedControl.swift */,
-				DDAF1C8A2C3D6E3D008A37D3 /* PromiseViewModel.swift */,
-				DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */,
-				DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */,
-				DDAF1C8D2C3D6E3D008A37D3 /* PromiseViewController.swift */,
-			);
-			path = Promise;
 			sourceTree = "<group>";
 		};
 		DDAF1C822C3D5CFA008A37D3 /* Protocol */ = {
@@ -825,7 +803,6 @@
 				789AD4B52C3C0147002E2688 /* ResissueResponseModel.swift in Sources */,
 				DED5DBF42C34539A006ECE7E /* BaseTableViewCell.swift in Sources */,
 				78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */,
-				DDA2EE792C385FCF007C6059 /* MyPageViewController.swift in Sources */,
 				A3FB185B2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift in Sources */,
 				DD3072222C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift in Sources */,
 				789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */,

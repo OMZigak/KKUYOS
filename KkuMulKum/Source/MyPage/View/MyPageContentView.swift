@@ -10,10 +10,9 @@ import UIKit
 import SnapKit
 import Then
 
-class MyPageContentView: UIView {
+class MyPageContentView: BaseView {
     
-    let profileStackView = UIStackView().then {
-        $0.axis = .vertical
+    let profileStackView = UIStackView(axis: .vertical).then {
         $0.spacing = 12
         $0.alignment = .center
     }
@@ -55,11 +54,10 @@ class MyPageContentView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupView() {
+    override func setupView() {
         backgroundColor = .clear
         addSubview(profileStackView)
-        profileStackView.addArrangedSubview(profileImageView)
-        profileStackView.addArrangedSubview(nameLabel)
+        profileStackView.addArrangedSubviews(profileImageView, nameLabel)
         
         addSubview(levelView)
         addSubview(separatorView)
@@ -67,7 +65,7 @@ class MyPageContentView: UIView {
         levelView.addSubview(levelLabel)
     }
    
-    private func setupAutoLayout() {
+    override func setupAutoLayout() {
         profileStackView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(20)
             $0.centerX.equalToSuperview()
@@ -98,5 +96,4 @@ class MyPageContentView: UIView {
             $0.bottom.equalToSuperview().offset(-20)
         }
     }
-
 }
