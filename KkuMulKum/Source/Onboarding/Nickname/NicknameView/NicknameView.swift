@@ -4,56 +4,40 @@
 //
 //  Created by 이지훈 on 7/10/24.
 //
-
 import UIKit
 
 import SnapKit
 
-class NicknameView: UIView {
+class NicknameView: BaseView {
     
-    let navigationBar: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        return view
-    }()
+    let navigationBar = UIView().then {
+        $0.backgroundColor = .white
+    }
     
-    let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "프로필 설정"
-        label.font = UIFont.pretendard(.body03)
-        label.textAlignment = .center
-        return label
-    }()
+    let titleLabel = UILabel().then {
+        $0.setText("프로필 설정", style: .body03, color: .black)
+    }
     
-    let separatorLine: UIView = {
-        let view = UIView()
-        view.backgroundColor = .gray2
-        return view
-    }()
+    let separatorLine = UIView().then {
+        $0.backgroundColor = .gray2
+    }
     
-    let subtitleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "이름을 설정해 주세요"
-        label.font = UIFont.pretendard(.head01)
-        label.textAlignment = .left
-        label.textColor = .gray1
-        return label
-    }()
+    let subtitleLabel = UILabel().then {
+        $0.setText("이름을 설정해 주세요", style: .head01, color: .gray8)
+    }
     
-    let nicknameTextField: CustomTextField = {
-        let textField = CustomTextField(placeHolder: "text")
-        return textField
-    }()
+    let nicknameTextField = CustomTextField(placeHolder: "이름을 입력해 주세요").then {
+        $0.layer.cornerRadius = 8
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.gray3.cgColor
+    }
     
-    let nextButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.setTitle("다음", for: .normal)
-        button.backgroundColor = .lightGray
-        button.setTitleColor(.white, for: .normal)
-        button.layer.cornerRadius = 8
-        button.isEnabled = false
-        return button
-    }()
+    let nextButton = UIButton().then {
+        $0.setTitle("다음", style: .body01, color: .white)
+        $0.backgroundColor = .gray2
+        $0.setLayer(borderWidth: 0, borderColor: .clear, cornerRadius: 8)
+        $0.isEnabled = false
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -67,19 +51,19 @@ class NicknameView: UIView {
     private func setupUI() {
         backgroundColor = .white
         
-        [navigationBar, titleLabel, separatorLine, subtitleLabel, nicknameTextField, nextButton].forEach { addSubview($0) }
+        [navigationBar, separatorLine, subtitleLabel, nicknameTextField, nextButton].forEach { addSubview($0) }
+        navigationBar.addSubview(titleLabel)
         
         navigationBar.snp.makeConstraints {
-            $0.top.equalTo(44)
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(44)
+            $0.top.leading.trailing.equalToSuperview()
+            $0.height.equalTo(92)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.centerY.equalTo(navigationBar)
-            $0.centerX.equalToSuperview()
+            $0.centerX.equalTo(navigationBar.snp.centerX)
+            $0.bottom.equalTo(navigationBar.snp.bottom).offset(-12)
         }
-        
+
         separatorLine.snp.makeConstraints {
             $0.top.equalTo(navigationBar.snp.bottom)
             $0.leading.trailing.equalToSuperview()
@@ -87,21 +71,19 @@ class NicknameView: UIView {
         }
         
         subtitleLabel.snp.makeConstraints {
-            $0.top.equalTo(separatorLine.snp.bottom).offset(20)
-            $0.centerX.equalToSuperview()
+            $0.top.equalTo(separatorLine.snp.bottom).offset(24)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         
         nicknameTextField.snp.makeConstraints {
-            $0.top.equalTo(subtitleLabel.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
+            $0.top.equalTo(subtitleLabel.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(CustomTextField.defaultHeight)
         }
         
         nextButton.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalTo(safeAreaLayoutGuide).offset(-20)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview().offset(-20)
             $0.height.equalTo(48)
         }
     }

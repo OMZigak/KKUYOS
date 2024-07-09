@@ -27,7 +27,7 @@ class NicknameViewController: BaseViewController {
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
         nicknameView.nextButton.isEnabled = !(textField.text?.isEmpty ?? true)
-        nicknameView.nextButton.backgroundColor = nicknameView.nextButton.isEnabled ? .blue : .lightGray
+        nicknameView.nextButton.backgroundColor = nicknameView.nextButton.isEnabled ? .gray2 : .maincolor
     }
     
     @objc private func nextButtonTapped() {

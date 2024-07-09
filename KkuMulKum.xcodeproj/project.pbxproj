@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		782B406F2C3DBF93008B0CA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B406E2C3DBF93008B0CA7 /* ProfileViewController.swift */; };
+		782B40722C3DBFA3008B0CA7 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40712C3DBFA3008B0CA7 /* ProfileViewModel.swift */; };
+		782B40752C3DBFBA008B0CA7 /* ProfileVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40742C3DBFBA008B0CA7 /* ProfileVIew.swift */; };
 		784E4D942C3B1C7F00BC943C /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D932C3B1C7F00BC943C /* KakaoSDK */; };
 		784E4D962C3B1C7F00BC943C /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D952C3B1C7F00BC943C /* KakaoSDKAuth */; };
 		784E4D992C3B95A900BC943C /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D982C3B95A900BC943C /* KeychainAccess */; };
@@ -122,6 +125,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		782B406E2C3DBF93008B0CA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		782B40712C3DBFA3008B0CA7 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		782B40742C3DBFBA008B0CA7 /* ProfileVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVIew.swift; sourceTree = "<group>"; };
 		785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.plist; sourceTree = "<group>"; };
 		7898732F2C3D1A7B00435E96 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		789873302C3D1A7B00435E96 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -250,6 +256,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		782B406C2C3DBF72008B0CA7 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				782B40732C3DBFA8008B0CA7 /* View */,
+				782B40702C3DBF97008B0CA7 /* ViewModel */,
+				782B406D2C3DBF7C008B0CA7 /* VIewController */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		782B406D2C3DBF7C008B0CA7 /* VIewController */ = {
+			isa = PBXGroup;
+			children = (
+				782B406E2C3DBF93008B0CA7 /* ProfileViewController.swift */,
+			);
+			path = VIewController;
+			sourceTree = "<group>";
+		};
+		782B40702C3DBF97008B0CA7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				782B40712C3DBFA3008B0CA7 /* ProfileViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		782B40732C3DBFA8008B0CA7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				782B40742C3DBFBA008B0CA7 /* ProfileVIew.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		789873352C3D1B3000435E96 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -330,6 +370,7 @@
 		DD865B652C3920F600C351A2 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				782B406C2C3DBF72008B0CA7 /* Profile */,
 				78AED1322C3D9514000AD80A /* Nickname */,
 				DD865B662C39210E00C351A2 /* Login */,
 			);
@@ -765,6 +806,7 @@
 				A3FB184D2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift in Sources */,
 				DEBA03312C3C2972002ED8F2 /* ViewController.swift in Sources */,
 				789873342C3D1A7B00435E96 /* LoginView.swift in Sources */,
+				782B406F2C3DBF93008B0CA7 /* ProfileViewController.swift in Sources */,
 				A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */,
 				DE9E18842C3BA84500DB76B4 /* CustomTextField.swift in Sources */,
 				A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */,
@@ -800,6 +842,7 @@
 				A3FB185B2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift in Sources */,
 				DD3072222C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift in Sources */,
 				789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */,
+				782B40722C3DBFA3008B0CA7 /* ProfileViewModel.swift in Sources */,
 				DDAF1C8F2C3D6E3D008A37D3 /* PromiseSegmentedControl.swift in Sources */,
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
@@ -807,6 +850,7 @@
 				DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */,
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
 				789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */,
+				782B40752C3DBFBA008B0CA7 /* ProfileVIew.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
