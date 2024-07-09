@@ -28,7 +28,7 @@ class MyPageView: UIView {
         setupViews()
         layoutViews()
     }
-    
+    //
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupViews()
