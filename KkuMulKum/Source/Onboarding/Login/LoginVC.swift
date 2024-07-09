@@ -35,20 +35,19 @@ class LoginViewController: BaseViewController {
     }
     
     private func bindViewModel() {
+        
         loginViewModel.loginState.bind(with: self) { (self, state) in
             switch state {
             case .notLoggedIn:
                 print("Not logged in")
             case .loggedIn(let userInfo):
                 print("Logged in: \(userInfo)")
-                // Here you can navigate to the next screen or update UI
             }
         }
         
         loginViewModel.error.bind(with: self) { (self, error) in
             if let error = error {
                 print("Error occurred: \(error)")
-                // Here you can show an alert to the user
             }
         }
     }

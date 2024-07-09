@@ -11,14 +11,15 @@ import AuthenticationServices
 import KakaoSDKUser
 import KakaoSDKAuth
 
+
+enum LoginState {
+    case notLoggedIn
+    case loggedIn(userInfo: String)
+}
+
 class LoginViewModel: NSObject {
     var loginState: ObservablePattern<LoginState> = ObservablePattern(.notLoggedIn)
     var error: ObservablePattern<String?> = ObservablePattern(nil)
-    
-    enum LoginState {
-        case notLoggedIn
-        case loggedIn(userInfo: String)
-    }
     
     func performAppleLogin(presentationAnchor: ASPresentationAnchor) {
         let request = ASAuthorizationAppleIDProvider().createRequest()
