@@ -28,7 +28,7 @@ class GroupListViewController: BaseViewController {
     }
     
     @objc private func didAddScheduleButtonTapped() {
-        let scheduleViewController = ScheduleViewController()
+        let scheduleViewController = PromiseViewController()
         
         self.navigationController?.pushViewController(scheduleViewController, animated: true)
     }
