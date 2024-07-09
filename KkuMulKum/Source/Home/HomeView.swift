@@ -52,11 +52,16 @@ final class HomeView: BaseView {
         $0.setText("다가올 나의 약속은?", style: .body01, color: .gray8)
     }
     
-    private let upcomingPromiseView = UIView().then {
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = 8
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.gray2.cgColor
+    lazy var upcomingPromiseView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
+        $0.backgroundColor = .clear
+        $0.showsVerticalScrollIndicator = false
+        $0.showsHorizontalScrollIndicator = false
+        $0.contentInsetAdjustmentBehavior = .never
+        $0.isPagingEnabled = true
+    }
+    
+    private let layout = UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .horizontal
     }
     
     
@@ -70,6 +75,9 @@ final class HomeView: BaseView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    
+    // MARK: - UI Setting
     
     override func setupView() {
         addSubview(scrollView)
@@ -126,7 +134,7 @@ final class HomeView: BaseView {
         
         upcomingPromiseView.snp.makeConstraints {
             $0.top.equalTo(upcomingLabel.snp.bottom).offset(16)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(216)
         }
     }
