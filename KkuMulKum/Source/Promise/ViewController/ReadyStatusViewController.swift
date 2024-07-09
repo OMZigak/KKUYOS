@@ -8,11 +8,13 @@
 import UIKit
 
 class ReadyStatusViewController: BaseViewController {
+    
+    private let readyStatusView: ReadyStatusView = ReadyStatusView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .blue
+        view.addSubview(readyStatusView)
     }
     
 

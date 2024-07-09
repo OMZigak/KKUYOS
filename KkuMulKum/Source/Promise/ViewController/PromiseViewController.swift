@@ -10,9 +10,7 @@ import UIKit
 class PromiseViewController: BaseViewController {
     private let promiseViewModel = PromiseViewModel()
     
-    private lazy var promiseSegmentedControl = PromiseSegmentedControl(items: ["약속 정보",
-                                                                          "준비 현황",
-                                                                          "지각 꾸물이"])
+    private lazy var promiseSegmentedControl = PromiseSegmentedControl(items: ["약속 정보", "준비 현황", "지각 꾸물이"])
     
     private let promisePageViewController = UIPageViewController(transitionStyle: .scroll,
                                                                  navigationOrientation: .horizontal)
@@ -31,7 +29,7 @@ class PromiseViewController: BaseViewController {
             promisePageViewController.view
         ].forEach { view.addSubview($0) }
         
-        promisePageViewController.setViewControllers([promiseViewModel.promiseViewControllerList[0]], direction: .forward, animated: false)
+        promisePageViewController.setViewControllers([promiseViewModel.promiseViewControllerList[0]], direction: .forward, animated: true)
         
         promiseSegmentedControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
