@@ -20,6 +20,7 @@ final class HomeView: BaseView {
     
     private let scrollView = UIScrollView().then {
         $0.backgroundColor = .gray0
+        $0.showsVerticalScrollIndicator = false
     }
     
     private let contentView = UIView().then {
@@ -31,9 +32,32 @@ final class HomeView: BaseView {
         $0.roundCorners(cornerRadius: 16, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
     }
     
-    private let todayPromiseView = TodayPromiseView()
+    private let todayLabel = UILabel().then {
+        $0.setText("오늘의 약속은?", style: .body01, color: .gray8)
+    }
     
-    private let upcomingPromiseView = UpcomingPromiseView()
+    private let todayButton = UIButton().then {
+        let icon = UIImage(resource: .iconRight)
+        $0.setImage(icon, for: .normal)
+    }
+    
+    private let todayPromiseView = UIView().then {
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = 8
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.gray2.cgColor
+    }
+    
+    private let upcomingLabel = UILabel().then {
+        $0.setText("다가올 나의 약속은?", style: .body01, color: .gray8)
+    }
+    
+    private let upcomingPromiseView = UIView().then {
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = 8
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.gray2.cgColor
+    }
     
     
     // MARK: - Initializer
@@ -51,7 +75,13 @@ final class HomeView: BaseView {
         addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubviews(promiseView)
-        promiseView.addSubviews(todayPromiseView, upcomingPromiseView)
+        promiseView.addSubviews(
+            todayLabel,
+            todayButton,
+            todayPromiseView,
+            upcomingLabel,
+            upcomingPromiseView
+        )
     }
     
     override func setupAutoLayout() {
@@ -72,16 +102,32 @@ final class HomeView: BaseView {
             $0.bottom.equalTo(contentView)
         }
         
-        todayPromiseView.snp.makeConstraints {
+        todayLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
             $0.top.equalToSuperview().offset(16)
+        }
+        
+        todayButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.centerY.equalTo(todayLabel.snp.centerY)
+            $0.size.equalTo(20)
+        }
+        
+        todayPromiseView.snp.makeConstraints {
+            $0.top.equalTo(todayLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(298)
+            $0.height.equalTo(254)
+        }
+        
+        upcomingLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.top.equalToSuperview().offset(342)
         }
         
         upcomingPromiseView.snp.makeConstraints {
-            $0.top.equalTo(todayPromiseView.snp.bottom).offset(28)
+            $0.top.equalTo(upcomingLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(298)
+            $0.height.equalTo(216)
         }
     }
 }
