@@ -7,23 +7,29 @@
 
 import UIKit
 
+import SnapKit
+
 class GroupListViewController: BaseViewController {
+    private lazy var button: CustomButton = CustomButton(title: "모임 추가하기", isEnabled: true).then {
+        $0.addTarget(self, action: #selector(didAddScheduleButtonTapped), for: .touchUpInside)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         view.backgroundColor = .white
+        
+        view.addSubview(button)
+        
+        button.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(206)
+            $0.leading.trailing.equalToSuperview().inset(20)
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    @objc private func didAddScheduleButtonTapped() {
+        let scheduleViewController = ScheduleViewController()
+        
+        self.navigationController?.pushViewController(scheduleViewController, animated: true)
     }
-    */
-
 }

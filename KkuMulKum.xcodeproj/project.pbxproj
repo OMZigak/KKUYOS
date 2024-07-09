@@ -70,6 +70,7 @@
 		DDA2EE752C385FB1007C6059 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE742C385FB1007C6059 /* HomeViewController.swift */; };
 		DDA2EE772C385FC3007C6059 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE762C385FC3007C6059 /* GroupListViewController.swift */; };
 		DDA2EE792C385FCF007C6059 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE782C385FCF007C6059 /* MyPageViewController.swift */; };
+		DDAF1C6D2C3CF028008A37D3 /* ScheduleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C6C2C3CF028008A37D3 /* ScheduleViewController.swift */; };
 		DE254AA52C31131600A4015E /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE254AA42C31131600A4015E /* Color.xcassets */; };
 		DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA72C3118EA00A4015E /* UIView+.swift */; };
 		DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA92C31190E00A4015E /* UIStackView+.swift */; };
@@ -139,6 +140,7 @@
 		DDA2EE742C385FB1007C6059 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DDA2EE762C385FC3007C6059 /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		DDA2EE782C385FCF007C6059 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		DDAF1C6C2C3CF028008A37D3 /* ScheduleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewController.swift; sourceTree = "<group>"; };
 		DE254AA42C31131600A4015E /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		DE254AA72C3118EA00A4015E /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		DE254AA92C31190E00A4015E /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -299,6 +301,14 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
+		DDAF1C6B2C3CEFD1008A37D3 /* Schedule */ = {
+			isa = PBXGroup;
+			children = (
+				DDAF1C6C2C3CF028008A37D3 /* ScheduleViewController.swift */,
+			);
+			path = Schedule;
+			sourceTree = "<group>";
+		};
 		DE254AA12C31106700A4015E /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -311,6 +321,7 @@
 		DE254AA22C31107700A4015E /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				DDAF1C6B2C3CEFD1008A37D3 /* Schedule */,
 				DDA2EE7E2C3860B2007C6059 /* Core */,
 				DDA2EE7B2C386078007C6059 /* Home */,
 				DDA2EE7C2C38607F007C6059 /* GroupList */,
@@ -685,6 +696,7 @@
 				DDA2EE792C385FCF007C6059 /* MyPageViewController.swift in Sources */,
 				A3FB185B2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift in Sources */,
 				784E4D9B2C3BBD4D00BC943C /* KakaoLoginVC.swift in Sources */,
+				DDAF1C6D2C3CF028008A37D3 /* ScheduleViewController.swift in Sources */,
 				DD3072222C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift in Sources */,
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
