@@ -75,6 +75,12 @@
 		DDAF1C7E2C3D5B86008A37D3 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C7D2C3D5B86008A37D3 /* RxRelay */; };
 		DDAF1C812C3D5BD5008A37D3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C802C3D5BD5008A37D3 /* Kingfisher */; };
 		DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */; };
+		DE1599472C3D67BD001D3E76 /* MeetingMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1599462C3D67BD001D3E76 /* MeetingMemberCell.swift */; };
+		DE15994A2C3D6954001D3E76 /* MeetingInfoBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1599492C3D6954001D3E76 /* MeetingInfoBannerView.swift */; };
+		DE15994C2C3D6976001D3E76 /* MeetingInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15994B2C3D6976001D3E76 /* MeetingInfoView.swift */; };
+		DE15994F2C3D6B0F001D3E76 /* MeetingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15994E2C3D6B0F001D3E76 /* MeetingInfoViewController.swift */; };
+		DE1599522C3D731E001D3E76 /* MeetingInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1599512C3D731E001D3E76 /* MeetingInfoViewModel.swift */; };
+		DE1599552C3D7371001D3E76 /* MeetingInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1599542C3D7371001D3E76 /* MeetingInfoService.swift */; };
 		DE254AA52C31131600A4015E /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE254AA42C31131600A4015E /* Color.xcassets */; };
 		DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA72C3118EA00A4015E /* UIView+.swift */; };
 		DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA92C31190E00A4015E /* UIStackView+.swift */; };
@@ -146,6 +152,12 @@
 		DDA2EE762C385FC3007C6059 /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		DDA2EE782C385FCF007C6059 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
 		DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		DE1599462C3D67BD001D3E76 /* MeetingMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingMemberCell.swift; sourceTree = "<group>"; };
+		DE1599492C3D6954001D3E76 /* MeetingInfoBannerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoBannerView.swift; sourceTree = "<group>"; };
+		DE15994B2C3D6976001D3E76 /* MeetingInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoView.swift; sourceTree = "<group>"; };
+		DE15994E2C3D6B0F001D3E76 /* MeetingInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoViewController.swift; sourceTree = "<group>"; };
+		DE1599512C3D731E001D3E76 /* MeetingInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoViewModel.swift; sourceTree = "<group>"; };
+		DE1599542C3D7371001D3E76 /* MeetingInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoService.swift; sourceTree = "<group>"; };
 		DE254AA42C31131600A4015E /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		DE254AA72C3118EA00A4015E /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		DE254AA92C31190E00A4015E /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -342,6 +354,51 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		DE1599422C3D6782001D3E76 /* MeetingInfo */ = {
+			isa = PBXGroup;
+			children = (
+				DE1599532C3D7367001D3E76 /* Service */,
+				DE1599502C3D7311001D3E76 /* ViewModel */,
+				DE15994D2C3D6B05001D3E76 /* ViewController */,
+				DE1599452C3D679A001D3E76 /* View */,
+			);
+			path = MeetingInfo;
+			sourceTree = "<group>";
+		};
+		DE1599452C3D679A001D3E76 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DE15994B2C3D6976001D3E76 /* MeetingInfoView.swift */,
+				DE1599492C3D6954001D3E76 /* MeetingInfoBannerView.swift */,
+				DE1599462C3D67BD001D3E76 /* MeetingMemberCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DE15994D2C3D6B05001D3E76 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DE15994E2C3D6B0F001D3E76 /* MeetingInfoViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		DE1599502C3D7311001D3E76 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DE1599512C3D731E001D3E76 /* MeetingInfoViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DE1599532C3D7367001D3E76 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				DE1599542C3D7371001D3E76 /* MeetingInfoService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		DE254AA12C31106700A4015E /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -357,6 +414,7 @@
 				DDA2EE7E2C3860B2007C6059 /* Core */,
 				DDA2EE7B2C386078007C6059 /* Home */,
 				DDA2EE7C2C38607F007C6059 /* GroupList */,
+				DE1599422C3D6782001D3E76 /* MeetingInfo */,
 				DDA2EE7D2C386087007C6059 /* MyPage */,
 				DD865B652C3920F600C351A2 /* Onboarding */,
 			);
@@ -717,7 +775,9 @@
 				DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */,
 				DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */,
 				DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */,
+				DE15994A2C3D6954001D3E76 /* MeetingInfoBannerView.swift in Sources */,
 				DE9E18922C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift in Sources */,
+				DE1599472C3D67BD001D3E76 /* MeetingMemberCell.swift in Sources */,
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
 				DE254AAE2C31193600A4015E /* UIFont+.swift in Sources */,
 				DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */,
@@ -725,6 +785,7 @@
 				DD3072162C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift in Sources */,
 				A3FB18572C3BF704001483E5 /* MeetingListResponseModel.swift in Sources */,
 				DE254AB22C31197B00A4015E /* UIButton+.swift in Sources */,
+				DE1599522C3D731E001D3E76 /* MeetingInfoViewModel.swift in Sources */,
 				DDA2EE772C385FC3007C6059 /* GroupListViewController.swift in Sources */,
 				78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */,
 				DEBA032F2C3C24F2002ED8F2 /* ModelType.swift in Sources */,
@@ -740,13 +801,16 @@
 				DD3072202C3C0D4500416D9F /* MyReadyStatusResponseModel.swift in Sources */,
 				DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */,
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
+				DE15994F2C3D6B0F001D3E76 /* MeetingInfoViewController.swift in Sources */,
 				789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */,
+				DE15994C2C3D6976001D3E76 /* MeetingInfoView.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,
 				DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */,
 				DD3072262C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift in Sources */,
+				DE1599552C3D7371001D3E76 /* MeetingInfoService.swift in Sources */,
 				DE254AB92C311AB300A4015E /* Screen.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
