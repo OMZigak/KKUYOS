@@ -42,10 +42,25 @@ final class MainTabBarController: UITabBarController {
         tabBar.unselectedItemTintColor = .gray2
         tabBar.tintColor = .maincolor
         
+        let homeNavigationController = UINavigationController(rootViewController: homeViewController).then {
+            $0.navigationBar.topItem?.backButtonDisplayMode = .minimal
+            $0.navigationBar.tintColor = .black
+        }
+        
+        let groupListNavigationController = UINavigationController(rootViewController: groupListViewController).then {
+            $0.navigationBar.topItem?.backButtonDisplayMode = .minimal
+            $0.navigationBar.tintColor = .black
+        }
+        
+        let myPageViewNavigationController = UINavigationController(rootViewController: myPageViewController).then {
+            $0.navigationBar.topItem?.backButtonDisplayMode = .minimal
+            $0.navigationBar.tintColor = .black
+        }
+        
         setViewControllers([
-            UINavigationController(rootViewController: homeViewController),
-            UINavigationController(rootViewController: groupListViewController),
-            UINavigationController(rootViewController: myPageViewController)
+            homeNavigationController,
+            groupListNavigationController,
+            myPageViewNavigationController
         ], animated: true)
     }
 }
