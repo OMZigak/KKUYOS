@@ -25,18 +25,23 @@ class PromiseViewController: BaseViewController {
         view.backgroundColor = .white
         self.navigationItem.title = "기말고사 모각작"
         
-        view.addSubview(promiseSegmentedControl)
         addChild(promisePageViewController)
+        [
+            promiseSegmentedControl,
+            promisePageViewController.view
+        ].forEach { view.addSubview($0) }
+        
+        promisePageViewController.setViewControllers([promiseViewModel.promiseViewControllerList[0]], direction: .forward, animated: false)
         
         promiseSegmentedControl.snp.makeConstraints {
-            $0.top.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview().inset(-6)
             $0.height.equalTo(52)
         }
         
         promisePageViewController.view.snp.makeConstraints {
             $0.top.equalTo(promiseSegmentedControl.snp.bottom)
-            $0.horizontalEdges.bottom.equalToSuperview()
+            $0.leading.trailing.bottom.equalToSuperview()
         }
         
         promisePageViewController.didMove(toParent: self)
@@ -52,19 +57,43 @@ class PromiseViewController: BaseViewController {
     }
     
     @objc private func didSegmentedControlIndexUpdated() {
+        let direction: UIPageViewController.NavigationDirection = promiseViewModel.currentPage.value <= promiseSegmentedControl.selectedSegmentIndex ? .forward : .reverse
+        
         promiseSegmentedControl.selectedUnderLineView.snp.updateConstraints {
             $0.leading.equalToSuperview().offset((promiseSegmentedControl.bounds.width / CGFloat(promiseSegmentedControl.numberOfSegments)) * CGFloat(promiseSegmentedControl.selectedSegmentIndex))
         }
+        
+        promiseViewModel.didSegmentIndexChanged(index: promiseSegmentedControl.selectedSegmentIndex)
+        
+        promisePageViewController.setViewControllers([
+            promiseViewModel.promiseViewControllerList[promiseViewModel.currentPage.value]
+        ], direction: direction, animated: false)
     }
 }
 
 
-extension BaseViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+extension PromiseViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
+        return UIViewController()
+    }
+    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         return UIViewController()
     }
     
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        return UIViewController()
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: BaseViewController) -> BaseViewController? {
+        guard let index = promiseViewModel.promiseViewControllerList.firstIndex(of: viewController),
+                          index - 1 >= 0
+        else { return nil }
+        
+        return promiseViewModel.promiseViewControllerList[index - 1]
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: BaseViewController) -> BaseViewController? {
+        guard let index = promiseViewModel.promiseViewControllerList.firstIndex(of: viewController),
+                          index + 1 < promiseViewModel.promiseViewControllerList.count
+        else { return nil }
+        
+        return promiseViewModel.promiseViewControllerList[index + 1]
     }
 }
