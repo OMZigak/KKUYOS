@@ -25,6 +25,14 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
         $0.layer.borderColor = UIColor.gray2.cgColor
     }
     
+    private let meetingNameView = UIStackView().then {
+        $0.backgroundColor = .green2
+        $0.layer.cornerRadius = 10
+        $0.axis = .horizontal
+        $0.alignment = .fill
+        $0.distribution = .fill
+    }
+    
     private let dateIcon = UIImageView().then {
         $0.image = .iconDate
     }
@@ -89,12 +97,13 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
     
     override func setupView() {
         addSubview(cellView)
+        meetingNameView.addSubview(meetingNameLabel)
         cellView.addSubviews(
             dateIcon,
             timeIcon,
             placeIcon,
             dDayLabel,
-            meetingNameLabel,
+            meetingNameView,
             nameLabel,
             dateLabel,
             timeLabel,
@@ -114,6 +123,16 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
         dDayLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(18)
             $0.leading.equalToSuperview().offset(16)
+        }
+        
+        meetingNameView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(48)
+            $0.leading.equalToSuperview().offset(16)
+        }
+        
+        meetingNameLabel.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(8)
+            $0.top.bottom.equalToSuperview().inset(2)
         }
         
         nameLabel.snp.makeConstraints {
@@ -155,6 +174,9 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
         }
     }
 }
+
+
+// MARK: - Data Bind
 
 extension UpcomingPromiseCollectionViewCell {
     func dataBind(_ contentData: UpcomingPromiseModel, itemRow: Int) {
