@@ -9,10 +9,22 @@ import UIKit
 
 
 class HomeViewController: BaseViewController {
+    
+    
+    // MARK: - Property
+    
+    private let rootView = HomeView()
 
+
+    // MARK: - LifeCycle
+
+    override func loadView() {
+        self.view = rootView
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .white
     }
     

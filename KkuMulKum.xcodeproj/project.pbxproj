@@ -56,6 +56,7 @@
 		A3FB18572C3BF704001483E5 /* MeetingListResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18562C3BF704001483E5 /* MeetingListResponseModel.swift */; };
 		A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18582C3BF77D001483E5 /* MeetingInfoResponseModel.swift */; };
 		A3FB185B2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB185A2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift */; };
+		A3FB18652C3D3B4A001483E5 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18642C3D3B4A001483E5 /* HomeView.swift */; };
 		DD3072142C3BF87A00416D9F /* NearestPromiseResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072132C3BF87A00416D9F /* NearestPromiseResponseModel.swift */; };
 		DD3072162C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072152C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift */; };
 		DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072192C3C011600416D9F /* AddPromiseRequestModel.swift */; };
@@ -125,6 +126,7 @@
 		A3FB18562C3BF704001483E5 /* MeetingListResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListResponseModel.swift; sourceTree = "<group>"; };
 		A3FB18582C3BF77D001483E5 /* MeetingInfoResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoResponseModel.swift; sourceTree = "<group>"; };
 		A3FB185A2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingMembersResponseModel.swift; sourceTree = "<group>"; };
+		A3FB18642C3D3B4A001483E5 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DD3072132C3BF87A00416D9F /* NearestPromiseResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearestPromiseResponseModel.swift; sourceTree = "<group>"; };
 		DD3072152C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingPromiseListResponseModel.swift; sourceTree = "<group>"; };
 		DD3072192C3C011600416D9F /* AddPromiseRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseRequestModel.swift; sourceTree = "<group>"; };
@@ -271,6 +273,7 @@
 			isa = PBXGroup;
 			children = (
 				DDA2EE742C385FB1007C6059 /* HomeViewController.swift */,
+				A3FB18642C3D3B4A001483E5 /* HomeView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -687,6 +690,7 @@
 				784E4D9B2C3BBD4D00BC943C /* KakaoLoginVC.swift in Sources */,
 				DD3072222C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift in Sources */,
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,
+				A3FB18652C3D3B4A001483E5 /* HomeView.swift in Sources */,
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
 				DD3072202C3C0D4500416D9F /* MyReadyStatusResponseModel.swift in Sources */,
 				DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */,
