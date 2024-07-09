@@ -13,6 +13,7 @@ class ParticipantCollectionViewCell: BaseCollectionViewCell {
     
     private lazy var profileButton: UIButton = UIButton().then {
         $0.setImage(.imgProfile, for: .normal)
+        $0.imageView?.contentMode = .scaleAspectFill
     }
     
     private let userNameLabel: UILabel = UILabel().then {
