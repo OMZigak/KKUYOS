@@ -83,6 +83,9 @@ extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationCont
     }
     
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return UIApplication.shared.windows.first!
+        let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let window = windowScene?.windows.first
+        
+        return window!
     }
 }

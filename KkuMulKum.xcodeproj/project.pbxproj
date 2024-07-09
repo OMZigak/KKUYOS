@@ -71,12 +71,10 @@
 		DDA2EE752C385FB1007C6059 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE742C385FB1007C6059 /* HomeViewController.swift */; };
 		DDA2EE772C385FC3007C6059 /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE762C385FC3007C6059 /* GroupListViewController.swift */; };
 		DDA2EE792C385FCF007C6059 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE782C385FCF007C6059 /* MyPageViewController.swift */; };
-		DDAF1C6D2C3CF028008A37D3 /* PromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C6C2C3CF028008A37D3 /* PromiseViewController.swift */; };
-		DDAF1C712C3D171A008A37D3 /* PromiseSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C702C3D171A008A37D3 /* PromiseSegmentedControl.swift */; };
-		DDAF1C732C3D2E7C008A37D3 /* PromiseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C722C3D2E7C008A37D3 /* PromiseInfoViewController.swift */; };
-		DDAF1C772C3D4ADA008A37D3 /* TardyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C762C3D4ADA008A37D3 /* TardyViewController.swift */; };
-		DDAF1C792C3D4B7B008A37D3 /* ReadyStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C782C3D4B7B008A37D3 /* ReadyStatusViewController.swift */; };
-		DDAF1C862C3D6A96008A37D3 /* PromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C852C3D6A96008A37D3 /* PromiseViewModel.swift */; };
+		DDAF1C7C2C3D5B86008A37D3 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C7B2C3D5B86008A37D3 /* RxCocoa */; };
+		DDAF1C7E2C3D5B86008A37D3 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C7D2C3D5B86008A37D3 /* RxRelay */; };
+		DDAF1C812C3D5BD5008A37D3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C802C3D5BD5008A37D3 /* Kingfisher */; };
+		DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */; };
 		DE254AA52C31131600A4015E /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE254AA42C31131600A4015E /* Color.xcassets */; };
 		DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA72C3118EA00A4015E /* UIView+.swift */; };
 		DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA92C31190E00A4015E /* UIStackView+.swift */; };
@@ -147,12 +145,7 @@
 		DDA2EE742C385FB1007C6059 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DDA2EE762C385FC3007C6059 /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		DDA2EE782C385FCF007C6059 /* MyPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
-		DDAF1C6C2C3CF028008A37D3 /* PromiseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseViewController.swift; sourceTree = "<group>"; };
-		DDAF1C702C3D171A008A37D3 /* PromiseSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseSegmentedControl.swift; sourceTree = "<group>"; };
-		DDAF1C722C3D2E7C008A37D3 /* PromiseInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoViewController.swift; sourceTree = "<group>"; };
-		DDAF1C762C3D4ADA008A37D3 /* TardyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TardyViewController.swift; sourceTree = "<group>"; };
-		DDAF1C782C3D4B7B008A37D3 /* ReadyStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadyStatusViewController.swift; sourceTree = "<group>"; };
-		DDAF1C852C3D6A96008A37D3 /* PromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseViewModel.swift; sourceTree = "<group>"; };
+		DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		DE254AA42C31131600A4015E /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		DE254AA72C3118EA00A4015E /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		DE254AA92C31190E00A4015E /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -214,10 +207,12 @@
 				785AE19A2C2E878600677CA0 /* FirebaseCrashlytics in Frameworks */,
 				785AE16B2C2E85C200677CA0 /* Moya in Frameworks */,
 				785AE1922C2E878600677CA0 /* FirebaseAppCheck in Frameworks */,
+				DDAF1C7C2C3D5B86008A37D3 /* RxCocoa in Frameworks */,
 				785AE18A2C2E878600677CA0 /* FirebaseAnalytics in Frameworks */,
 				785AE1982C2E878600677CA0 /* FirebaseAuthCombine-Community in Frameworks */,
 				785AE1BE2C2E878600677CA0 /* FirebaseStorageCombine-Community in Frameworks */,
 				785AE1B42C2E878600677CA0 /* FirebaseMessaging in Frameworks */,
+				DDAF1C7E2C3D5B86008A37D3 /* RxRelay in Frameworks */,
 				785AE1B82C2E878600677CA0 /* FirebaseRemoteConfig in Frameworks */,
 				785AE1B62C2E878600677CA0 /* FirebasePerformance in Frameworks */,
 				784E4D942C3B1C7F00BC943C /* KakaoSDK in Frameworks */,
@@ -230,6 +225,7 @@
 				785AE1B22C2E878600677CA0 /* FirebaseMLModelDownloader in Frameworks */,
 				785AE19C2C2E878600677CA0 /* FirebaseDatabase in Frameworks */,
 				785AE1A02C2E878600677CA0 /* FirebaseDynamicLinks in Frameworks */,
+				DDAF1C812C3D5BD5008A37D3 /* Kingfisher in Frameworks */,
 				785AE1AE2C2E878600677CA0 /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -338,17 +334,12 @@
 			path = Core;
 			sourceTree = "<group>";
 		};
-		DDAF1C6B2C3CEFD1008A37D3 /* Promise */ = {
+		DDAF1C822C3D5CFA008A37D3 /* Protocol */ = {
 			isa = PBXGroup;
 			children = (
-				DDAF1C6C2C3CF028008A37D3 /* PromiseViewController.swift */,
-				DDAF1C702C3D171A008A37D3 /* PromiseSegmentedControl.swift */,
-				DDAF1C722C3D2E7C008A37D3 /* PromiseInfoViewController.swift */,
-				DDAF1C762C3D4ADA008A37D3 /* TardyViewController.swift */,
-				DDAF1C782C3D4B7B008A37D3 /* ReadyStatusViewController.swift */,
-				DDAF1C852C3D6A96008A37D3 /* PromiseViewModel.swift */,
+				DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */,
 			);
-			path = Promise;
+			path = Protocol;
 			sourceTree = "<group>";
 		};
 		DE254AA12C31106700A4015E /* Application */ = {
@@ -384,6 +375,7 @@
 				78B928792C29402E006D9942 /* Info.plist */,
 				DE9E187E2C3BA49B00DB76B4 /* Component */,
 				DE8247FE2C36E846000601BC /* ObservablePattern */,
+				DDAF1C822C3D5CFA008A37D3 /* Protocol */,
 				DED5DBEA2C345202006ECE7E /* Base */,
 				DE254AA62C3118B300A4015E /* Extension */,
 				DE254AB52C3119BC00A4015E /* Util */,
@@ -624,6 +616,9 @@
 				784E4D932C3B1C7F00BC943C /* KakaoSDK */,
 				784E4D952C3B1C7F00BC943C /* KakaoSDKAuth */,
 				784E4D982C3B95A900BC943C /* KeychainAccess */,
+				DDAF1C7B2C3D5B86008A37D3 /* RxCocoa */,
+				DDAF1C7D2C3D5B86008A37D3 /* RxRelay */,
+				DDAF1C802C3D5BD5008A37D3 /* Kingfisher */,
 			);
 			productName = KkuMulKum;
 			productReference = 78B928682C29402C006D9942 /* KkuMulKum.app */;
@@ -661,6 +656,8 @@
 				785AE1882C2E878600677CA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				784E4D922C3B1C7F00BC943C /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
 				784E4D972C3B95A900BC943C /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				DDAF1C7A2C3D5B86008A37D3 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				DDAF1C7F2C3D5BD5008A37D3 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			productRefGroup = 78B928692C29402C006D9942 /* Products */;
 			projectDirPath = "";
@@ -755,6 +752,7 @@
 				DDAF1C732C3D2E7C008A37D3 /* PromiseInfoViewController.swift in Sources */,
 				DDAF1C862C3D6A96008A37D3 /* PromiseViewModel.swift in Sources */,
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,
+				DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */,
 				DD3072262C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift in Sources */,
 				DE254AB92C311AB300A4015E /* Screen.swift in Sources */,
 			);
@@ -1038,6 +1036,22 @@
 				minimumVersion = 10.28.1;
 			};
 		};
+		DDAF1C7A2C3D5B86008A37D3 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.7.1;
+			};
+		};
+		DDAF1C7F2C3D5BD5008A37D3 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.12.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1215,6 +1229,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 785AE1882C2E878600677CA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseVertexAI-Preview";
+		};
+		DDAF1C7B2C3D5B86008A37D3 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DDAF1C7A2C3D5B86008A37D3 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		DDAF1C7D2C3D5B86008A37D3 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DDAF1C7A2C3D5B86008A37D3 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		DDAF1C802C3D5BD5008A37D3 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DDAF1C7F2C3D5BD5008A37D3 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
