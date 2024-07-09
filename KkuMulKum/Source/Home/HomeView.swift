@@ -31,6 +31,10 @@ final class HomeView: BaseView {
         $0.roundCorners(cornerRadius: 16, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
     }
     
+    private let todayPromiseView = TodayPromiseView()
+    
+    private let upcomingPromiseView = UpcomingPromiseView()
+    
     
     // MARK: - Initializer
 
@@ -47,6 +51,7 @@ final class HomeView: BaseView {
         addSubview(scrollView)
         scrollView.addSubview(contentView)
         contentView.addSubviews(promiseView)
+        promiseView.addSubviews(todayPromiseView, upcomingPromiseView)
     }
     
     override func setupAutoLayout() {
@@ -62,9 +67,21 @@ final class HomeView: BaseView {
         
         promiseView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(700)
+            $0.height.equalTo(646)
             $0.top.equalToSuperview().offset(350)
             $0.bottom.equalTo(contentView)
+        }
+        
+        todayPromiseView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(16)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(298)
+        }
+        
+        upcomingPromiseView.snp.makeConstraints {
+            $0.top.equalTo(todayPromiseView.snp.bottom).offset(28)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(298)
         }
     }
 }
