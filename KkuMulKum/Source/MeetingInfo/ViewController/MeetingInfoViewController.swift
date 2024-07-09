@@ -98,6 +98,21 @@ private extension MeetingInfoViewController {
                 cell.configure(with: .profile(member: member))
             }
             .disposed(by: disposeBag)
+        
+        output.promises
+            .drive(rootView.promiseListView.rx.items(
+                cellIdentifier: MeetingPromiseCell.reuseIdentifier,
+                cellType: MeetingPromiseCell.self
+            )) { index, promise, cell in
+                cell.configure(
+                    dDay: promise.dDay,
+                    name: promise.name,
+                    date: promise.date,
+                    time: promise.time,
+                    place: promise.placeName
+                )
+            }
+            .disposed(by: disposeBag)
     }
 }
 

@@ -81,6 +81,8 @@
 		DE15994F2C3D6B0F001D3E76 /* MeetingInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE15994E2C3D6B0F001D3E76 /* MeetingInfoViewController.swift */; };
 		DE1599522C3D731E001D3E76 /* MeetingInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1599512C3D731E001D3E76 /* MeetingInfoViewModel.swift */; };
 		DE1599552C3D7371001D3E76 /* MeetingInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1599542C3D7371001D3E76 /* MeetingInfoService.swift */; };
+		DE1599572C3DCD96001D3E76 /* MeetingPromiseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1599562C3DCD96001D3E76 /* MeetingPromiseCell.swift */; };
+		DE1599592C3DD4D6001D3E76 /* MeetingPromisesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1599582C3DD4D6001D3E76 /* MeetingPromisesModel.swift */; };
 		DE254AA52C31131600A4015E /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE254AA42C31131600A4015E /* Color.xcassets */; };
 		DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA72C3118EA00A4015E /* UIView+.swift */; };
 		DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA92C31190E00A4015E /* UIStackView+.swift */; };
@@ -158,6 +160,8 @@
 		DE15994E2C3D6B0F001D3E76 /* MeetingInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoViewController.swift; sourceTree = "<group>"; };
 		DE1599512C3D731E001D3E76 /* MeetingInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoViewModel.swift; sourceTree = "<group>"; };
 		DE1599542C3D7371001D3E76 /* MeetingInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoService.swift; sourceTree = "<group>"; };
+		DE1599562C3DCD96001D3E76 /* MeetingPromiseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingPromiseCell.swift; sourceTree = "<group>"; };
+		DE1599582C3DD4D6001D3E76 /* MeetingPromisesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingPromisesModel.swift; sourceTree = "<group>"; };
 		DE254AA42C31131600A4015E /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		DE254AA72C3118EA00A4015E /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		DE254AA92C31190E00A4015E /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -371,6 +375,7 @@
 				DE15994B2C3D6976001D3E76 /* MeetingInfoView.swift */,
 				DE1599492C3D6954001D3E76 /* MeetingInfoBannerView.swift */,
 				DE1599462C3D67BD001D3E76 /* MeetingMemberCell.swift */,
+				DE1599562C3DCD96001D3E76 /* MeetingPromiseCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -581,6 +586,7 @@
 				DD3072232C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift */,
 				DD3072252C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift */,
 				DD3072272C3C104D00416D9F /* ArrivalCompletionResponseModel.swift */,
+				DE1599582C3DD4D6001D3E76 /* MeetingPromisesModel.swift */,
 			);
 			path = Promises;
 			sourceTree = "<group>";
@@ -756,6 +762,7 @@
 				DED5DBF22C34534A006ECE7E /* BaseCollectionReusableView.swift in Sources */,
 				DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */,
 				DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */,
+				DE1599572C3DCD96001D3E76 /* MeetingPromiseCell.swift in Sources */,
 				DD30721E2C3C0CC800416D9F /* PromiseInfoResponseModel.swift in Sources */,
 				A3FB18512C3BF531001483E5 /* RegisterMeetingsResponseModel.swift in Sources */,
 				789AD4B32C3C0093002E2688 /* SocialLoginResponseModel.swift in Sources */,
@@ -766,6 +773,7 @@
 				789873342C3D1A7B00435E96 /* LoginView.swift in Sources */,
 				A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */,
 				DE9E18842C3BA84500DB76B4 /* CustomTextField.swift in Sources */,
+				DE1599592C3DD4D6001D3E76 /* MeetingPromisesModel.swift in Sources */,
 				A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */,
 				DE254AAC2C31192400A4015E /* UILabel+.swift in Sources */,
 				DE254AB72C3119D000A4015E /* ReuseIdentifiable.swift in Sources */,

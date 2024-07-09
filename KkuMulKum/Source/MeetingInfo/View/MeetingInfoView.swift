@@ -21,6 +21,7 @@ final class MeetingInfoView: BaseView {
             $0.scrollDirection = .horizontal
             $0.minimumInteritemSpacing = 12
             $0.itemSize = .init(width: Screen.height(64), height: Screen.height(88))
+            $0.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         }
     ).then {
         $0.backgroundColor = .white
@@ -28,6 +29,23 @@ final class MeetingInfoView: BaseView {
         $0.register(
             MeetingMemberCell.self,
             forCellWithReuseIdentifier: MeetingMemberCell.reuseIdentifier
+        )
+    }
+    
+    let promiseListView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: UICollectionViewFlowLayout().then {
+            $0.scrollDirection = .horizontal
+            $0.minimumInteritemSpacing = 12
+            $0.itemSize = .init(width: Screen.width(200), height: Screen.height(188))
+            $0.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        }
+    ).then {
+        $0.backgroundColor = .clear
+        $0.showsHorizontalScrollIndicator = false
+        $0.register(
+            MeetingPromiseCell.self,
+            forCellWithReuseIdentifier: MeetingPromiseCell.reuseIdentifier
         )
     }
     
@@ -44,19 +62,32 @@ final class MeetingInfoView: BaseView {
     }
     
     private let addPromiseButton = UIButton().then {
-        $0.setTitle("+ 약속추가", style: .body01, color: .white)
+        $0.setTitle("+   약속추가", style: .body01, color: .white)
         $0.backgroundColor = .maincolor
         $0.layer.cornerRadius = Screen.height(52) / 2
         $0.clipsToBounds = true
     }
     
+    // TODO: gray0으로 수정
+    private let grayBackgroundView = UIView(backgroundColor: .gray).then {
+        $0.roundCorners(
+            cornerRadius: 18,
+            maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        )
+    }
+    
+    private let promiseDescriptionLabel = UILabel().then {
+        $0.setText("남은 약속을 확인해보세요", style: .body01, color: .gray7)
+    }
+    
     override func setupView() {
         backgroundColor = .white
         
+        grayBackgroundView.addSubviews(promiseDescriptionLabel, promiseListView)
         addSubviews(
-            infoBanner, memberCountLabel, arrowButton, memberListView, addPromiseButton
+            infoBanner, memberCountLabel, arrowButton, memberListView, addPromiseButton,
+            grayBackgroundView
         )
-        
         bringSubviewToFront(addPromiseButton)
     }
     
@@ -80,9 +111,25 @@ final class MeetingInfoView: BaseView {
         
         memberListView.snp.makeConstraints {
             $0.top.equalTo(memberCountLabel.snp.bottom).offset(20)
-            $0.leading.equalToSuperview().offset(20)
-            $0.trailing.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(Screen.height(88))
+        }
+        
+        grayBackgroundView.snp.makeConstraints {
+            $0.top.equalTo(memberListView.snp.bottom).offset(40)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(safeArea)
+        }
+        
+        promiseDescriptionLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(22)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
+        promiseListView.snp.makeConstraints {
+            $0.top.equalTo(promiseDescriptionLabel.snp.bottom).offset(16)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(Screen.height(188))
         }
         
         addPromiseButton.snp.makeConstraints {

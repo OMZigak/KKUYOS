@@ -16,6 +16,7 @@ final class MeetingInfoViewModel {
     private let service: MeetingInfoServiceType
     private let infoRelay = BehaviorRelay<MeetingInfoModel?>(value: nil)
     private let meetingMemberModelRelay = BehaviorRelay<MeetingMembersModel?>(value: nil)
+    private let meetingPromisesModelRelay = BehaviorRelay<MeetingPromisesModel?>(value: nil)
     
     init(service: MeetingInfoServiceType) {
         self.service = service
@@ -31,6 +32,7 @@ extension MeetingInfoViewModel: ViewModelType {
         let info: Driver<MeetingInfoModel?>
         let memberCount: Driver<Int>
         let members: Driver<[Member]>
+        let promises: Driver<[MeetingPromise]>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -46,6 +48,13 @@ extension MeetingInfoViewModel: ViewModelType {
                 return self?.service.fetchMeetingMemberList(with: 1)
             }
             .bind(to: meetingMemberModelRelay)
+            .disposed(by: disposeBag)
+        
+        input.viewWillAppear
+            .map { [weak self] _ in
+                return self?.service.fetchMeetingPromiseList(with: 1)
+            }
+            .bind(to: meetingPromisesModelRelay)
             .disposed(by: disposeBag)
         
         let info = infoRelay.asDriver(onErrorJustReturn: nil)
@@ -64,10 +73,15 @@ extension MeetingInfoViewModel: ViewModelType {
             }
             .asDriver(onErrorJustReturn: [])
         
+        let promises = meetingPromisesModelRelay
+            .compactMap { $0?.promises }
+            .asDriver(onErrorJustReturn: [])
+        
         let output = Output(
             info: info,
             memberCount: memberCount,
-            members: members
+            members: members,
+            promises: promises
         )
         
         return output
