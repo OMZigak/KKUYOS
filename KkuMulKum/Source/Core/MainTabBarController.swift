@@ -41,6 +41,7 @@ final class MainTabBarController: UITabBarController {
         
         tabBar.unselectedItemTintColor = .gray2
         tabBar.tintColor = .maincolor
+        tabBar.backgroundColor = .white
         
         let homeNavigationController = UINavigationController(rootViewController: homeViewController).then {
             $0.navigationBar.topItem?.backButtonDisplayMode = .minimal
