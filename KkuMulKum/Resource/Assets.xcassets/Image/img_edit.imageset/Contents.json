@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "my_btn_edit.png",
+      "filename" : "edit.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "my_btn_edit 1.png",
+      "filename" : "edit 1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "my_btn_edit 2.png",
+      "filename" : "edit 2.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
