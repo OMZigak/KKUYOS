@@ -4,13 +4,14 @@
 //
 //  Created by 이지훈 on 6/24/24.
 //
+
 import UIKit
+
 import KakaoSDKCommon
 import KakaoSDKAuth
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
