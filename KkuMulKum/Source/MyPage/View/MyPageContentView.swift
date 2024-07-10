@@ -11,7 +11,6 @@ import SnapKit
 import Then
 
 class MyPageContentView: BaseView {
-    
     let profileStackView = UIStackView(axis: .vertical).then {
         $0.spacing = 12
         $0.alignment = .center
@@ -44,24 +43,10 @@ class MyPageContentView: BaseView {
         $0.backgroundColor = .green2
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
-        setupAutoLayout()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func setupView() {
         backgroundColor = .clear
-        addSubview(profileStackView)
+        addSubview(profileStackView,levelView,separatorView)
         profileStackView.addArrangedSubviews(profileImageView, nameLabel)
-        
-        addSubview(levelView)
-        addSubview(separatorView)
-        
         levelView.addSubview(levelLabel)
     }
    

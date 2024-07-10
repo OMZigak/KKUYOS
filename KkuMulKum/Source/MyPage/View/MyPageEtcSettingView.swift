@@ -11,7 +11,6 @@ import SnapKit
 import Then
 
 class EtcSettingView: BaseView {
-    
     let containerView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.borderWidth = 1

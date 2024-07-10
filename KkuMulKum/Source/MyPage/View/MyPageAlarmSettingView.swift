@@ -6,11 +6,11 @@
 //
 
 import UIKit
+
 import SnapKit
 import Then
 
 class AlarmSettingView: BaseView {
-    
     private let containerView = UIView().then {
         $0.backgroundColor = .white
         $0.layer.borderWidth = 1
@@ -30,9 +30,8 @@ class AlarmSettingView: BaseView {
     }
     
     private let titleLabel = UILabel().then {
-        $0.text = "내 푸시 알림"
-        $0.font = UIFont.pretendard(.body03)
-        $0.textColor = .black
+        $0.setText("알림 설정", style: .body03, color: .black)
+     
     }
     
     private let toggleSwitch = UISwitch().then {
