@@ -86,6 +86,9 @@
 		DDAF1C912C3D6E3D008A37D3 /* TardyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */; };
 		DDAF1C922C3D6E3D008A37D3 /* PromiseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */; };
 		DDAF1C932C3D6E3D008A37D3 /* PromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8D2C3D6E3D008A37D3 /* PromiseViewController.swift */; };
+		DDDEDDD72C3F031F0094681A /* CheckInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDEDDD62C3F031F0094681A /* CheckInviteCodeViewController.swift */; };
+		DDDEDDD92C3F03CF0094681A /* JoinButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDEDDD82C3F03CF0094681A /* JoinButtonView.swift */; };
+		DDDEDDDB2C3F09DC0094681A /* CheckInviteCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDEDDDA2C3F09DC0094681A /* CheckInviteCodeView.swift */; };
 		DE254AA52C31131600A4015E /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE254AA42C31131600A4015E /* Color.xcassets */; };
 		DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA72C3118EA00A4015E /* UIView+.swift */; };
 		DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA92C31190E00A4015E /* UIStackView+.swift */; };
@@ -168,6 +171,9 @@
 		DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TardyViewController.swift; sourceTree = "<group>"; };
 		DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseInfoViewController.swift; sourceTree = "<group>"; };
 		DDAF1C8D2C3D6E3D008A37D3 /* PromiseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseViewController.swift; sourceTree = "<group>"; };
+		DDDEDDD62C3F031F0094681A /* CheckInviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInviteCodeViewController.swift; sourceTree = "<group>"; };
+		DDDEDDD82C3F03CF0094681A /* JoinButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinButtonView.swift; sourceTree = "<group>"; };
+		DDDEDDDA2C3F09DC0094681A /* CheckInviteCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInviteCodeView.swift; sourceTree = "<group>"; };
 		DE254AA42C31131600A4015E /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		DE254AA72C3118EA00A4015E /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		DE254AA92C31190E00A4015E /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -414,6 +420,16 @@
 			path = Promise;
 			sourceTree = "<group>";
 		};
+		DDDEDDD52C3F028B0094681A /* GroupCreate */ = {
+			isa = PBXGroup;
+			children = (
+				DDDEDDD62C3F031F0094681A /* CheckInviteCodeViewController.swift */,
+				DDDEDDDA2C3F09DC0094681A /* CheckInviteCodeView.swift */,
+				DDDEDDD82C3F03CF0094681A /* JoinButtonView.swift */,
+			);
+			path = GroupCreate;
+			sourceTree = "<group>";
+		};
 		DE254AA12C31106700A4015E /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -428,6 +444,7 @@
 			children = (
 				DDA2EE7E2C3860B2007C6059 /* Core */,
 				DDA2EE7B2C386078007C6059 /* Home */,
+				DDDEDDD52C3F028B0094681A /* GroupCreate */,
 				DDA2EE7C2C38607F007C6059 /* GroupList */,
 				DDA2EE7D2C386087007C6059 /* MyPage */,
 				DD865B652C3920F600C351A2 /* Onboarding */,
@@ -780,6 +797,7 @@
 				DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */,
 				A3FB184D2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift in Sources */,
 				DEBA03312C3C2972002ED8F2 /* ViewController.swift in Sources */,
+				DDDEDDD92C3F03CF0094681A /* JoinButtonView.swift in Sources */,
 				DD931B742C3DAB9A00526452 /* ReadyPlanInfoView.swift in Sources */,
 				789873342C3D1A7B00435E96 /* LoginView.swift in Sources */,
 				A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */,
@@ -798,6 +816,7 @@
 				DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */,
 				DDAF1C932C3D6E3D008A37D3 /* PromiseViewController.swift in Sources */,
 				DE9E18922C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift in Sources */,
+				DDDEDDDB2C3F09DC0094681A /* CheckInviteCodeView.swift in Sources */,
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
 				DE254AAE2C31193600A4015E /* UIFont+.swift in Sources */,
 				DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */,
@@ -824,6 +843,7 @@
 				DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */,
 				DD931B762C3DC16100526452 /* PromiseInfoView.swift in Sources */,
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
+				DDDEDDD72C3F031F0094681A /* CheckInviteCodeViewController.swift in Sources */,
 				789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
