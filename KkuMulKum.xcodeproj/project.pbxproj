@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		782B406F2C3DBF93008B0CA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B406E2C3DBF93008B0CA7 /* ProfileViewController.swift */; };
 		782B40722C3DBFA3008B0CA7 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40712C3DBFA3008B0CA7 /* ProfileViewModel.swift */; };
-		782B40752C3DBFBA008B0CA7 /* ProfileVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40742C3DBFBA008B0CA7 /* ProfileVIew.swift */; };
+		782B40752C3DBFBA008B0CA7 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40742C3DBFBA008B0CA7 /* ProfileView.swift */; };
 		782B407B2C3E395A008B0CA7 /* WelcomeVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407A2C3E395A008B0CA7 /* WelcomeVIew.swift */; };
 		782B407D2C3E3984008B0CA7 /* WelcomeViewcontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407C2C3E3984008B0CA7 /* WelcomeViewcontroller.swift */; };
 		782B407F2C3E44B7008B0CA7 /* WelcomeVIewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407E2C3E44B7008B0CA7 /* WelcomeVIewModel.swift */; };
@@ -131,7 +131,7 @@
 /* Begin PBXFileReference section */
 		782B406E2C3DBF93008B0CA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		782B40712C3DBFA3008B0CA7 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
-		782B40742C3DBFBA008B0CA7 /* ProfileVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVIew.swift; sourceTree = "<group>"; };
+		782B40742C3DBFBA008B0CA7 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		782B407A2C3E395A008B0CA7 /* WelcomeVIew.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = WelcomeVIew.swift; sourceTree = "<group>"; };
 		782B407C2C3E3984008B0CA7 /* WelcomeViewcontroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewcontroller.swift; sourceTree = "<group>"; };
 		782B407E2C3E44B7008B0CA7 /* WelcomeVIewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVIewModel.swift; sourceTree = "<group>"; };
@@ -293,7 +293,7 @@
 		782B40732C3DBFA8008B0CA7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				782B40742C3DBFBA008B0CA7 /* ProfileVIew.swift */,
+				782B40742C3DBFBA008B0CA7 /* ProfileView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -906,7 +906,7 @@
 				DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */,
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
 				789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */,
-				782B40752C3DBFBA008B0CA7 /* ProfileVIew.swift in Sources */,
+				782B40752C3DBFBA008B0CA7 /* ProfileView.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,

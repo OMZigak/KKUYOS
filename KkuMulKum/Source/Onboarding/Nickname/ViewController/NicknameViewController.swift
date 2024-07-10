@@ -52,7 +52,7 @@ class NicknameViewController: BaseViewController, UITextFieldDelegate {
             self?.nicknameView.characterCountLabel.text = count
         }
     }
-
+    
     private func setupActions() {
         nicknameView.nicknameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         nicknameView.nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
@@ -73,7 +73,9 @@ class NicknameViewController: BaseViewController, UITextFieldDelegate {
     }
     
     @objc private func nextButtonTapped() {
-        print("Next button tapped with nickname: \(viewModel.nickname.value)")
+        let name = viewModel.enteredName.value
+        let welcomeVC = WelcomeViewController(name: name)
+        present(welcomeVC, animated: true, completion: nil)
     }
     
     @objc private func dismissKeyboard() {

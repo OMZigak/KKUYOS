@@ -8,8 +8,18 @@
 import UIKit
 
 class WelcomeViewController: BaseViewController {
-    
     private let welcomeView = WelcomeView()
+    
+    init(name: String) {
+        super.init(nibName: nil, bundle: nil)
+        welcomeView.welcomeLabel.text = "\(name)님 반가워요!"
+        modalPresentationStyle = .overFullScreen
+        modalTransitionStyle = .crossDissolve
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         view = welcomeView
@@ -18,25 +28,22 @@ class WelcomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        setupAction()
-        setupDelegate()
+        setupActions()
     }
     
     override func setupView() {
-        // 배경색상 설정
         view.backgroundColor = .green2
+        welcomeView.backgroundColor = .green1
     }
-    
-    override func setupAction() {
-        welcomeView.confirmButton.addTarget(self, 
-            action: #selector(confirmButtonTapped), for: .touchUpInside)
-    }
-    
-    override func setupDelegate() {
-
+    private func setupActions() {
+        welcomeView.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
     
     @objc private func confirmButtonTapped() {
-        print("확인 버튼이 탭되었습니다.")
+        
+        // TODO: main화면으로 넘기기
+        
+        print("Confirm button tapped")
     }
 }
+

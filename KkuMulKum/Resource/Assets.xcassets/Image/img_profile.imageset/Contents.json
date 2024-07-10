@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "profileBasic.png",
+      "filename" : "Mask group.svg",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "profileBasic@2x.png",
+      "filename" : "Mask group 1.svg",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "profileBasic@3x.png",
+      "filename" : "Mask group 2.svg",
       "idiom" : "universal",
       "scale" : "3x"
     }
