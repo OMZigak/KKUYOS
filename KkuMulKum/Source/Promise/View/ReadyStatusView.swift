@@ -8,8 +8,6 @@
 import UIKit
 
 class ReadyStatusView: BaseView {
-    
-
     override init(frame: CGRect) {
         super.init(frame: frame)
     }

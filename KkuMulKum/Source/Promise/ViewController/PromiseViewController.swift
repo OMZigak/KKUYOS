@@ -78,7 +78,6 @@ class PromiseViewController: BaseViewController {
         )
         
         promiseSegmentedControl.selectedUnderLineView.snp.updateConstraints {
-            
             $0.leading.equalToSuperview().offset((width / CGFloat(count)) * CGFloat(selectedIndex))
         }
         
