@@ -8,10 +8,17 @@
 import UIKit
 
 class CheckInviteCodeViewController: BaseViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+    private let checkInviteCodeView: CheckInviteCodeView = CheckInviteCodeView()
+    
+    override func setupView() {
+        view.backgroundColor = .white
+        self.navigationItem.title = "내 모임 추가하기"
+        self.tabBarController?.tabBar.isHidden = true
+        
+        view.addSubview(checkInviteCodeView)
+        
+        checkInviteCodeView.snp.makeConstraints {
+            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        }
     }
 }

@@ -88,6 +88,7 @@
 		DDAF1C932C3D6E3D008A37D3 /* PromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8D2C3D6E3D008A37D3 /* PromiseViewController.swift */; };
 		DDDEDDD72C3F031F0094681A /* CheckInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDEDDD62C3F031F0094681A /* CheckInviteCodeViewController.swift */; };
 		DDDEDDD92C3F03CF0094681A /* JoinButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDEDDD82C3F03CF0094681A /* JoinButtonView.swift */; };
+		DDDEDDDB2C3F09DC0094681A /* CheckInviteCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDDEDDDA2C3F09DC0094681A /* CheckInviteCodeView.swift */; };
 		DE254AA52C31131600A4015E /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE254AA42C31131600A4015E /* Color.xcassets */; };
 		DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA72C3118EA00A4015E /* UIView+.swift */; };
 		DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA92C31190E00A4015E /* UIStackView+.swift */; };
@@ -172,6 +173,7 @@
 		DDAF1C8D2C3D6E3D008A37D3 /* PromiseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseViewController.swift; sourceTree = "<group>"; };
 		DDDEDDD62C3F031F0094681A /* CheckInviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInviteCodeViewController.swift; sourceTree = "<group>"; };
 		DDDEDDD82C3F03CF0094681A /* JoinButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinButtonView.swift; sourceTree = "<group>"; };
+		DDDEDDDA2C3F09DC0094681A /* CheckInviteCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInviteCodeView.swift; sourceTree = "<group>"; };
 		DE254AA42C31131600A4015E /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		DE254AA72C3118EA00A4015E /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		DE254AA92C31190E00A4015E /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
@@ -422,6 +424,7 @@
 			isa = PBXGroup;
 			children = (
 				DDDEDDD62C3F031F0094681A /* CheckInviteCodeViewController.swift */,
+				DDDEDDDA2C3F09DC0094681A /* CheckInviteCodeView.swift */,
 				DDDEDDD82C3F03CF0094681A /* JoinButtonView.swift */,
 			);
 			path = GroupCreate;
@@ -813,6 +816,7 @@
 				DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */,
 				DDAF1C932C3D6E3D008A37D3 /* PromiseViewController.swift in Sources */,
 				DE9E18922C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift in Sources */,
+				DDDEDDDB2C3F09DC0094681A /* CheckInviteCodeView.swift in Sources */,
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
 				DE254AAE2C31193600A4015E /* UIFont+.swift in Sources */,
 				DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */,
