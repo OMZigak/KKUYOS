@@ -28,11 +28,12 @@ class WelcomeViewController: BaseViewController {
     }
     
     override func setupAction() {
-        welcomeView.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+        welcomeView.confirmButton.addTarget(self, 
+            action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
     
     override func setupDelegate() {
-        // 필요한 경우 delegate 설정
+
     }
     
     @objc private func confirmButtonTapped() {
