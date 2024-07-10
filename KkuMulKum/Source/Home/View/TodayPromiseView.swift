@@ -24,17 +24,11 @@ final class TodayPromiseView: BaseView {
     }
     
     private let meetingNameLabel = UILabel().then {
-        $0.text = "꾸물이들"
-        $0.textColor = .green3
-        $0.textAlignment = .left
-        $0.font = UIFont.pretendard(.caption02)
+        $0.setText("꾸물이들", style: .caption02, color: .green3)
     }
     
     private let nameLabel = UILabel().then {
-        $0.text = "리프레쉬 데이"
-        $0.textColor = .gray8
-        $0.textAlignment = .left
-        $0.font = UIFont.pretendard(.body03)
+        $0.setText("리프레쉬 데이", style: .body03, color: .gray8)
     }
     
     private let placeView = UIStackView().then {
@@ -67,17 +61,11 @@ final class TodayPromiseView: BaseView {
     }
     
     private let placeNameLabel = UILabel().then {
-        $0.text = "용산역"
-        $0.textColor = .gray7
-        $0.textAlignment = .left
-        $0.font = UIFont.pretendard(.body06)
+        $0.setText("용산역", style: .body06, color: .gray7)
     }
     
     private let timeLabel = UILabel().then {
-        $0.text = "PM 2:00"
-        $0.textColor = .gray7
-        $0.textAlignment = .left
-        $0.font = UIFont.pretendard(.body06)
+        $0.setText("PM 2:00", style: .body06, color: .gray7)
     }
     
     private let lineView = UIView().then {

@@ -44,41 +44,17 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
         $0.image = .iconPin
     }
     
-    private let dDayLabel = UILabel().then {
-        $0.textColor = .gray5
-        $0.textAlignment = .left
-        $0.font = UIFont.pretendard(.body05)
-    }
+    private let dDayLabel = UILabel()
     
-    private let meetingNameLabel = UILabel().then {
-        $0.textColor = .green3
-        $0.textAlignment = .left
-        $0.font = UIFont.pretendard(.caption02)
-    }
+    private let meetingNameLabel = UILabel()
     
-    private let nameLabel = UILabel().then {
-        $0.textColor = .gray8
-        $0.textAlignment = .left
-        $0.font = UIFont.pretendard(.body03)
-    }
+    private let nameLabel = UILabel()
     
-    private let dateLabel = UILabel().then {
-        $0.textColor = .gray7
-        $0.textAlignment = .left
-        $0.font = UIFont.pretendard(.body06)
-    }
+    private let dateLabel = UILabel()
     
-    private let timeLabel = UILabel().then {
-        $0.textColor = .gray7
-        $0.textAlignment = .left
-        $0.font = UIFont.pretendard(.body06)
-    }
+    private let timeLabel = UILabel()
     
-    private let placeNameLabel = UILabel().then {
-        $0.textColor = .gray7
-        $0.textAlignment = .left
-        $0.font = UIFont.pretendard(.body06)
-    }
+    private let placeNameLabel = UILabel()
     
     
     // MARK: - UI Setting
@@ -169,11 +145,11 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
 extension UpcomingPromiseCollectionViewCell {
     func dataBind(_ contentData: UpcomingPromiseModel, itemRow: Int) {
         self.itemRow = itemRow
-        dDayLabel.text = "D-\(contentData.dDay)"
-        meetingNameLabel.text = contentData.meetingName
-        nameLabel.text = contentData.name
-        dateLabel.text = contentData.date
-        timeLabel.text = contentData.time
-        placeNameLabel.text = contentData.placeName
+        dDayLabel.setText("D-\(contentData.dDay)", style: .body05, color: .gray5)
+        meetingNameLabel.setText(contentData.meetingName, style: .caption02, color: .green3)
+        nameLabel.setText(contentData.name, style: .body03, color: .gray8)
+        dateLabel.setText(contentData.date, style: .body06, color: .gray7)
+        timeLabel.setText(contentData.time, style: .body06, color: .gray7)
+        placeNameLabel.setText(contentData.placeName, style: .body06, color: .gray7)
     }
 }

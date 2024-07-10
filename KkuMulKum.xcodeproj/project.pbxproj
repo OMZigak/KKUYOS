@@ -304,6 +304,46 @@
 			path = KkuMulKum;
 			sourceTree = "<group>";
 		};
+		A3F258182C3EDB46002A4602 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A3FB18642C3D3B4A001483E5 /* HomeView.swift */,
+				A34B2B352C3E7A9600462AE8 /* TodayPromiseView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A3F258192C3EDB4F002A4602 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DDA2EE742C385FB1007C6059 /* HomeViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		A3F2581A2C3EDB60002A4602 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A3F2581B2C3EDB81002A4602 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A309B64D2C3DA4E600BE74D0 /* UpcomingPromiseCollecitonViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		A3F2581C2C3EDBAC002A4602 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A309B64F2C3DB2BF00BE74D0 /* UpcomingPromiseModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		DD865B652C3920F600C351A2 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -325,11 +365,11 @@
 		DDA2EE7B2C386078007C6059 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				DDA2EE742C385FB1007C6059 /* HomeViewController.swift */,
-				A3FB18642C3D3B4A001483E5 /* HomeView.swift */,
-				A309B64D2C3DA4E600BE74D0 /* UpcomingPromiseCollecitonViewCell.swift */,
-				A309B64F2C3DB2BF00BE74D0 /* UpcomingPromiseModel.swift */,
-				A34B2B352C3E7A9600462AE8 /* TodayPromiseView.swift */,
+				A3F2581C2C3EDBAC002A4602 /* Model */,
+				A3F2581A2C3EDB60002A4602 /* ViewModel */,
+				A3F258192C3EDB4F002A4602 /* ViewController */,
+				A3F258182C3EDB46002A4602 /* View */,
+				A3F2581B2C3EDB81002A4602 /* Cell */,
 			);
 			path = Home;
 			sourceTree = "<group>";

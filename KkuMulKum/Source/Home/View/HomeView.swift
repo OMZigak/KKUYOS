@@ -10,8 +10,6 @@ import UIKit
 import Then
 import SnapKit
 
-// MARK: - HomeView
-
 final class HomeView: BaseView {
     
     
