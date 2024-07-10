@@ -25,10 +25,9 @@ class ParticipantCollectionViewCell: BaseCollectionViewCell {
     
     override func setupAutoLayout() {
         profileImageView.snp.makeConstraints {
-            $0.width.equalTo(Screen.width(68))
             $0.height.equalTo(Screen.height(68))
-            $0.top.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(2)
+            $0.width.equalTo(profileImageView.snp.height)
+            $0.top.centerX.equalToSuperview()
         }
         
         userNameLabel.snp.makeConstraints {
