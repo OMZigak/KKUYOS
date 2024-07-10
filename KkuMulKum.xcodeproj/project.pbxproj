@@ -10,6 +10,8 @@
 		782B406F2C3DBF93008B0CA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B406E2C3DBF93008B0CA7 /* ProfileViewController.swift */; };
 		782B40722C3DBFA3008B0CA7 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40712C3DBFA3008B0CA7 /* ProfileViewModel.swift */; };
 		782B40752C3DBFBA008B0CA7 /* ProfileVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40742C3DBFBA008B0CA7 /* ProfileVIew.swift */; };
+		782B407B2C3E395A008B0CA7 /* WelcomeVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407A2C3E395A008B0CA7 /* WelcomeVIew.swift */; };
+		782B407D2C3E3984008B0CA7 /* WelcomeViewcontroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407C2C3E3984008B0CA7 /* WelcomeViewcontroller.swift */; };
 		784E4D942C3B1C7F00BC943C /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D932C3B1C7F00BC943C /* KakaoSDK */; };
 		784E4D962C3B1C7F00BC943C /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D952C3B1C7F00BC943C /* KakaoSDKAuth */; };
 		784E4D992C3B95A900BC943C /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D982C3B95A900BC943C /* KeychainAccess */; };
@@ -128,6 +130,8 @@
 		782B406E2C3DBF93008B0CA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		782B40712C3DBFA3008B0CA7 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		782B40742C3DBFBA008B0CA7 /* ProfileVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVIew.swift; sourceTree = "<group>"; };
+		782B407A2C3E395A008B0CA7 /* WelcomeVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeVIew.swift; sourceTree = "<group>"; };
+		782B407C2C3E3984008B0CA7 /* WelcomeViewcontroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewcontroller.swift; sourceTree = "<group>"; };
 		785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.plist; sourceTree = "<group>"; };
 		7898732F2C3D1A7B00435E96 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		789873302C3D1A7B00435E96 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -290,6 +294,39 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		782B40762C3E389F008B0CA7 /* Welcome */ = {
+			isa = PBXGroup;
+			children = (
+				782B40792C3E38C3008B0CA7 /* ViewController */,
+				782B40782C3E38BC008B0CA7 /* ViewModel */,
+				782B40772C3E38B5008B0CA7 /* View */,
+			);
+			path = Welcome;
+			sourceTree = "<group>";
+		};
+		782B40772C3E38B5008B0CA7 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				782B407A2C3E395A008B0CA7 /* WelcomeVIew.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		782B40782C3E38BC008B0CA7 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		782B40792C3E38C3008B0CA7 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				782B407C2C3E3984008B0CA7 /* WelcomeViewcontroller.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		789873352C3D1B3000435E96 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -370,6 +407,7 @@
 		DD865B652C3920F600C351A2 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				782B40762C3E389F008B0CA7 /* Welcome */,
 				782B406C2C3DBF72008B0CA7 /* Profile */,
 				78AED1322C3D9514000AD80A /* Nickname */,
 				DD865B662C39210E00C351A2 /* Login */,
@@ -817,6 +855,7 @@
 				78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */,
 				DE254AB42C31199B00A4015E /* UITextField+.swift in Sources */,
 				DDAF1C912C3D6E3D008A37D3 /* TardyViewController.swift in Sources */,
+				782B407D2C3E3984008B0CA7 /* WelcomeViewcontroller.swift in Sources */,
 				DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */,
 				DDAF1C902C3D6E3D008A37D3 /* PromiseViewModel.swift in Sources */,
 				DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */,
@@ -827,6 +866,7 @@
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
 				DE254AAE2C31193600A4015E /* UIFont+.swift in Sources */,
 				DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */,
+				782B407B2C3E395A008B0CA7 /* WelcomeVIew.swift in Sources */,
 				DD3072142C3BF87A00416D9F /* NearestPromiseResponseModel.swift in Sources */,
 				DD3072162C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift in Sources */,
 				A3FB18572C3BF704001483E5 /* MeetingListResponseModel.swift in Sources */,

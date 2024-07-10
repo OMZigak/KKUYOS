@@ -6,3 +6,16 @@
 //
 
 import Foundation
+
+class ProfileViewModel {
+    
+    var nickname: String = ""
+    
+    func setNickname(_ nickname: String) {
+        self.nickname = nickname
+    }
+    
+    func getNickname() -> String {
+        return nickname
+    }
+}
