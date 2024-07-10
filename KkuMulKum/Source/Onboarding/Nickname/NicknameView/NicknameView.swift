@@ -101,7 +101,7 @@ class NicknameView: BaseView {
         nextButton.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.bottom.equalTo(safeAreaLayoutGuide).offset(-20)
-            $0.height.equalTo(48)
+            $0.height.equalTo(52)
         }
     }
 }
