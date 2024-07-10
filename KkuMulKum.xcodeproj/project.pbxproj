@@ -55,6 +55,7 @@
 		A309B64E2C3DA4E600BE74D0 /* UpcomingPromiseCollecitonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A309B64D2C3DA4E600BE74D0 /* UpcomingPromiseCollecitonViewCell.swift */; };
 		A309B6502C3DB2BF00BE74D0 /* UpcomingPromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A309B64F2C3DB2BF00BE74D0 /* UpcomingPromiseModel.swift */; };
 		A34B2B362C3E7A9600462AE8 /* TodayPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34B2B352C3E7A9600462AE8 /* TodayPromiseView.swift */; };
+		A3F2581E2C3EF866002A4602 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2581D2C3EF865002A4602 /* HomeViewModel.swift */; };
 		A3FB184D2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */; };
 		A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */; };
 		A3FB18512C3BF531001483E5 /* RegisterMeetingsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18502C3BF531001483E5 /* RegisterMeetingsResponseModel.swift */; };
@@ -139,6 +140,7 @@
 		A309B64D2C3DA4E600BE74D0 /* UpcomingPromiseCollecitonViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingPromiseCollecitonViewCell.swift; sourceTree = "<group>"; };
 		A309B64F2C3DB2BF00BE74D0 /* UpcomingPromiseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingPromiseModel.swift; sourceTree = "<group>"; };
 		A34B2B352C3E7A9600462AE8 /* TodayPromiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayPromiseView.swift; sourceTree = "<group>"; };
+		A3F2581D2C3EF865002A4602 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsRequestModel.swift; sourceTree = "<group>"; };
 		A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsResponseModel.swift; sourceTree = "<group>"; };
 		A3FB18502C3BF531001483E5 /* RegisterMeetingsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMeetingsResponseModel.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 		A3F2581A2C3EDB60002A4602 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				A3F2581D2C3EF865002A4602 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -776,6 +779,7 @@
 				DDAF1C8E2C3D6E3D008A37D3 /* ReadyStatusViewController.swift in Sources */,
 				DED5DBF22C34534A006ECE7E /* BaseCollectionReusableView.swift in Sources */,
 				DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */,
+				A3F2581E2C3EF866002A4602 /* HomeViewModel.swift in Sources */,
 				DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */,
 				DD30721E2C3C0CC800416D9F /* PromiseInfoResponseModel.swift in Sources */,
 				A3FB18512C3BF531001483E5 /* RegisterMeetingsResponseModel.swift in Sources */,

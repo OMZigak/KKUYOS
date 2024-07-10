@@ -72,17 +72,17 @@ final class TodayPromiseView: BaseView {
         $0.backgroundColor = .gray2
     }
     
-    private let prepareButton = UIButton().then {
-        $0.setTitle("준비 중", style: .body05, color: .gray4)
-        $0.setLayer(borderWidth: 1, borderColor: .gray4, cornerRadius: 16)
+    let prepareButton = UIButton().then {
+        $0.setTitle("준비 중", style: .body05, color: .maincolor)
+        $0.setLayer(borderWidth: 1, borderColor: .maincolor, cornerRadius: 16)
     }
     
-    private let moveButton = UIButton().then {
+    let moveButton = UIButton().then {
         $0.setTitle("이동 시작", style: .body05, color: .gray4)
         $0.setLayer(borderWidth: 1, borderColor: .gray4, cornerRadius: 16)
     }
     
-    private let arriveButton = UIButton().then {
+    let arriveButton = UIButton().then {
         $0.setTitle("도착 완료", style: .body05, color: .gray4)
         $0.setLayer(borderWidth: 1, borderColor: .gray4, cornerRadius: 16)
     }

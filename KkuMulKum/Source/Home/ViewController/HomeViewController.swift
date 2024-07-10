@@ -44,6 +44,7 @@ class HomeViewController: BaseViewController {
         view.backgroundColor = .white
         register()
         setupDelegate()
+        setupAction()
     }
     
     private func register() {
@@ -57,8 +58,71 @@ class HomeViewController: BaseViewController {
         rootView.upcomingPromiseView.dataSource = self
     }
     
+    
+    // MARK: - Action
+    
     override func setupAction() {
-        
+        rootView.todayPromiseView.prepareButton.addTarget(
+            self,
+            action: #selector(prepareButtonDidTap),
+            for: .touchUpInside
+        )
+        rootView.todayPromiseView.moveButton.addTarget(
+            self,
+            action: #selector(moveButtonDidTap),
+            for: .touchUpInside
+        )
+        rootView.todayPromiseView.arriveButton.addTarget(
+            self,
+            action: #selector(arriveButtonDidTap),
+            for: .touchUpInside
+        )
+    }
+    
+    private func setDisableButton(_ sender: UIButton) {
+        sender.setTitleColor(.gray3, for: .normal)
+        sender.layer.borderColor = UIColor.gray3.cgColor
+        sender.backgroundColor = .white
+    }
+    
+    private func setEnableButton(_ sender: UIButton) {
+        sender.setTitleColor(.maincolor, for: .normal)
+        sender.layer.borderColor = UIColor.maincolor.cgColor
+        sender.backgroundColor = .white
+    }
+    
+    private func setProgressButton(_ sender: UIButton) {
+        sender.setTitleColor(.maincolor, for: .normal)
+        sender.layer.borderColor = UIColor.maincolor.cgColor
+        sender.backgroundColor = .green2
+    }
+    
+    private func setCompleteButton(_ sender: UIButton) {
+        sender.setTitleColor(.white, for: .normal)
+        sender.layer.borderColor = UIColor.maincolor.cgColor
+        sender.backgroundColor = .maincolor
+    }
+    
+    @objc
+    private func prepareButtonDidTap(_ sender: UIButton) {
+        setProgressButton(rootView.todayPromiseView.prepareButton)
+        setEnableButton(rootView.todayPromiseView.moveButton)
+        setDisableButton(rootView.todayPromiseView.arriveButton)
+    }
+
+    @objc
+    private func moveButtonDidTap(_ sender: UIButton) {
+        setCompleteButton(rootView.todayPromiseView.prepareButton)
+        rootView.todayPromiseView.moveButton.setTitle("이동 중", for: .normal)
+        setProgressButton(rootView.todayPromiseView.moveButton)
+        setEnableButton(rootView.todayPromiseView.arriveButton)
+    }
+    
+    @objc
+    private func arriveButtonDidTap(_ sender: UIButton) {
+        setCompleteButton(rootView.todayPromiseView.prepareButton)
+        setCompleteButton(rootView.todayPromiseView.moveButton)
+        setCompleteButton(rootView.todayPromiseView.arriveButton)
     }
 }
 

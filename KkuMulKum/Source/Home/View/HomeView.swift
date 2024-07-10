@@ -76,7 +76,7 @@ final class HomeView: BaseView {
         $0.setImage(icon, for: .normal)
     }
     
-    private let todayPromiseView = TodayPromiseView().then {
+    let todayPromiseView = TodayPromiseView().then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 8
         $0.layer.borderWidth = 1
