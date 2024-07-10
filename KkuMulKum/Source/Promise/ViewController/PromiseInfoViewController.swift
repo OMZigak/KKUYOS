@@ -30,13 +30,25 @@ class PromiseInfoViewController: BaseViewController {
 }
 
 
-extension PromiseInfoViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+extension PromiseInfoViewController: UICollectionViewDataSource {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         return 10
     }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ParticipantCollectionViewCell.reuseIdentifier, for: indexPath) as? ParticipantCollectionViewCell else { return UICollectionViewCell() }
+}
+
+
+extension PromiseInfoViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: ParticipantCollectionViewCell.reuseIdentifier,
+            for: indexPath) as? ParticipantCollectionViewCell 
+        else { return UICollectionViewCell() }
         
         return cell
     }

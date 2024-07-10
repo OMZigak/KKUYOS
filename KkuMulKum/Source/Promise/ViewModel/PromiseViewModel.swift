@@ -10,9 +10,6 @@ import Foundation
 
 class PromiseViewModel {
     var currentPage = ObservablePattern<Int>(0)
-    let promiseViewControllerList: [BaseViewController] = [PromiseInfoViewController(),
-                                             ReadyStatusViewController(),
-                                             TardyViewController()]
     
     func didSegmentIndexChanged(index: Int) {
         currentPage.value = index

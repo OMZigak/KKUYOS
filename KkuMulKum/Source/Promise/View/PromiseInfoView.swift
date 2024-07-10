@@ -18,12 +18,19 @@ class PromiseInfoView: BaseView {
         $0.contentMode = .scaleAspectFill
     }
     
-    let participantCollectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .horizontal
-        $0.minimumInteritemSpacing = 12
-        $0.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+    let participantCollectionView: UICollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: UICollectionViewFlowLayout().then {
+            $0.scrollDirection = .horizontal
+            $0.minimumInteritemSpacing = 12
+            $0.estimatedItemSize = .init(width: Screen.width(68), height: Screen.height(88))
     }).then {
-        $0.register(ParticipantCollectionViewCell.self, forCellWithReuseIdentifier: ParticipantCollectionViewCell.reuseIdentifier)
+        $0.showsHorizontalScrollIndicator = false
+        $0.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
+        $0.register(
+            ParticipantCollectionViewCell.self,
+            forCellWithReuseIdentifier: ParticipantCollectionViewCell.reuseIdentifier
+        )
     }
     
     private let backgroundView: UIView = UIView().then {
@@ -87,24 +94,28 @@ class PromiseInfoView: BaseView {
     }
     
     override func setupView() {
-        addSubviews(participantNumberLabel,
-                    chevronButton,
-                    participantCollectionView,
-                    backgroundView,
-                    promiseInfoLabel,
-                    promiseInfoBackgroundView)
+        addSubviews(
+            participantNumberLabel,
+            chevronButton,
+            participantCollectionView,
+            backgroundView,
+            promiseInfoLabel,
+            promiseInfoBackgroundView
+        )
         
-        promiseInfoBackgroundView.addSubviews(locationInfoLabel,
-                                              locationContentLabel,
-                                              locationDivideView,
-                                              timeInfoLabel,
-                                              timeContentLabel,
-                                              timeDivideView,
-                                              readyLevelInfoLabel,
-                                              readyLevelContentLabel,
-                                              readyLevelDivideView,
-                                              penaltyLevelInfoLabel,
-                                              penaltyLevelContentLabel)
+        promiseInfoBackgroundView.addSubviews(
+            locationInfoLabel,
+            locationContentLabel,
+            locationDivideView,
+            timeInfoLabel,
+            timeContentLabel,
+            timeDivideView,
+            readyLevelInfoLabel,
+            readyLevelContentLabel,
+            readyLevelDivideView,
+            penaltyLevelInfoLabel,
+            penaltyLevelContentLabel
+        )
     }
     
     override func setupAutoLayout() {
@@ -122,8 +133,7 @@ class PromiseInfoView: BaseView {
         
         participantCollectionView.snp.makeConstraints {
             $0.top.equalTo(participantNumberLabel.snp.bottom).offset(20)
-            $0.leading.equalTo(participantNumberLabel)
-            $0.trailing.equalToSuperview()
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(Screen.height(88))
         }
         
