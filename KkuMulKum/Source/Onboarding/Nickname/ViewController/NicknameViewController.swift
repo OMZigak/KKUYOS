@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NicknameViewController: BaseViewController, UITextFieldDelegate {
+class NicknameViewController: BaseViewController {
     
     private let nicknameView = NicknameView()
     private let viewModel = NicknameViewModel()
@@ -73,18 +73,18 @@ class NicknameViewController: BaseViewController, UITextFieldDelegate {
     }
     
     @objc private func nextButtonTapped() {
-        let name = viewModel.enteredName.value
-        let welcomeVC = WelcomeViewController(name: name)
-        present(welcomeVC, animated: true, completion: nil)
+        let profileSetupVC = ProfileSetupViewController(viewModel: ProfileSetupViewModel(nickname: viewModel.nickname.value))
+        profileSetupVC.modalPresentationStyle = .fullScreen
+        present(profileSetupVC, animated: true, completion: nil)
     }
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
         nicknameView.nicknameTextField.layer.borderColor = UIColor.gray3.cgColor
     }
-    
-    // MARK: - UITextFieldDelegate
-    
+}
+
+extension NicknameViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         nicknameView.nicknameTextField.layer.borderColor = UIColor.gray3.cgColor

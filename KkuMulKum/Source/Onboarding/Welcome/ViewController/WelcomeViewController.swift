@@ -9,10 +9,11 @@ import UIKit
 
 class WelcomeViewController: BaseViewController {
     private let welcomeView = WelcomeView()
+    private let viewModel: WelcomeViewModel
     
-    init(name: String) {
+    init(viewModel: WelcomeViewModel) {
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        welcomeView.welcomeLabel.text = "\(name)님 반가워요!"
         modalPresentationStyle = .overFullScreen
         modalTransitionStyle = .crossDissolve
     }
@@ -29,21 +30,24 @@ class WelcomeViewController: BaseViewController {
         super.viewDidLoad()
         setupView()
         setupActions()
+        updateWelcomeLabel()
     }
     
     override func setupView() {
         view.backgroundColor = .green2
         welcomeView.backgroundColor = .green1
     }
+    
     private func setupActions() {
         welcomeView.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
     }
     
+    private func updateWelcomeLabel() {
+        welcomeView.welcomeLabel.text = "\(viewModel.nickname.value)님 반가워요!"
+    }
+    
     @objc private func confirmButtonTapped() {
-        
         // TODO: main화면으로 넘기기
-        
         print("Confirm button tapped")
     }
 }
-

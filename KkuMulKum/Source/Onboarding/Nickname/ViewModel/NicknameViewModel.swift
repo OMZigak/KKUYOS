@@ -16,18 +16,15 @@ enum NicknameState {
 class NicknameViewModel {
     let nickname = ObservablePattern<String>("")
     let nicknameState = ObservablePattern<NicknameState>(.empty)
-    let errorMessage = ObservablePattern<String?>("")
+    let errorMessage = ObservablePattern<String?>(nil)
     let isNextButtonEnabled = ObservablePattern<Bool>(false)
     let characterCount = ObservablePattern<String>("0/5")
-    let enteredName = ObservablePattern<String>("") //데이터 전송
-
     
     private let nicknameRegex = "^[가-힣a-zA-Z0-9]{1,5}$"
     
     func validateNickname(_ name: String) {
         nickname.value = name
         characterCount.value = "\(name.count)/5"
-        enteredName.value = name
         
         if name.isEmpty {
             nicknameState.value = .empty

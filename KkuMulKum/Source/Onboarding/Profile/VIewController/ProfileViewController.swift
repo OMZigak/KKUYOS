@@ -7,10 +7,19 @@
 
 import UIKit
 
-class ProfileSetupViewController: BaseViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class ProfileSetupViewController: BaseViewController {
     private let rootView = ProfileSetupView()
-    private let viewModel = ProfileSetupViewModel()
+    private let viewModel: ProfileSetupViewModel
+
+    init(viewModel: ProfileSetupViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
     
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     override func loadView() {
         view = rootView
     }
@@ -22,13 +31,13 @@ class ProfileSetupViewController: BaseViewController, UIImagePickerControllerDel
     }
     
     private func setupBindings() {
-        viewModel.profileImage.bind(with: self) { (vc, image) in
-            vc.rootView.profileImageView.image = image
+        viewModel.profileImage.bind { [weak self] image in
+            self?.rootView.profileImageView.image = image
         }
         
-        viewModel.isConfirmButtonEnabled.bind(with: self) { (vc, isEnabled) in
-            vc.rootView.confirmButton.isEnabled = isEnabled
-            vc.rootView.confirmButton.alpha = isEnabled ? 1.0 : 0.5
+        viewModel.isConfirmButtonEnabled.bind { [weak self] isEnabled in
+            self?.rootView.confirmButton.isEnabled = isEnabled
+            self?.rootView.confirmButton.alpha = isEnabled ? 1.0 : 0.5
         }
     }
     
@@ -39,13 +48,15 @@ class ProfileSetupViewController: BaseViewController, UIImagePickerControllerDel
     }
     
     @objc private func confirmButtonTapped() {
-        // TODO: 확인 버튼 탭 시 동작 구현
-        print("프로필 이미지 설정 완료")
+        let welcomeVC = WelcomeViewController(viewModel: WelcomeViewModel(nickname: viewModel.nickname))
+        welcomeVC.modalPresentationStyle = .fullScreen
+        present(welcomeVC, animated: true, completion: nil)
     }
     
     @objc private func skipButtonTapped() {
-        // TODO: 건너뛰기 버튼 탭 시 동작 구현
-        print("프로필 이미지 설정 건너뛰기")
+        let welcomeVC = WelcomeViewController(viewModel: WelcomeViewModel(nickname: viewModel.nickname))
+        welcomeVC.modalPresentationStyle = .fullScreen
+        present(welcomeVC, animated: true, completion: nil)
     }
     
     @objc private func cameraButtonTapped() {
@@ -56,13 +67,25 @@ class ProfileSetupViewController: BaseViewController, UIImagePickerControllerDel
         present(imagePicker, animated: true)
     }
     
-    // MARK: - UIImagePickerControllerDelegate
-    
+    private func cropToCircle(image: UIImage) -> UIImage {
+        let shorterSide = min(image.size.width, image.size.height)
+        let imageBounds = CGRect(x: 0, y: 0, width: shorterSide, height: shorterSide)
+        UIGraphicsBeginImageContextWithOptions(imageBounds.size, false, UIScreen.main.scale)
+        let context = UIGraphicsGetCurrentContext()!
+        context.addEllipse(in: imageBounds)
+        context.clip()
+        image.draw(in: imageBounds)
+        let circleImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return circleImage
+    }
+}
+
+extension ProfileSetupViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let editedImage = info[.editedImage] as? UIImage {
-            viewModel.updateProfileImage(editedImage)
-        } else if let originalImage = info[.originalImage] as? UIImage {
-            viewModel.updateProfileImage(originalImage)
+        if let editedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
+            let croppedImage = cropToCircle(image: editedImage)
+            viewModel.updateProfileImage(croppedImage)
         }
         dismiss(animated: true)
     }
@@ -70,5 +93,4 @@ class ProfileSetupViewController: BaseViewController, UIImagePickerControllerDel
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true)
     }
-    
 }
