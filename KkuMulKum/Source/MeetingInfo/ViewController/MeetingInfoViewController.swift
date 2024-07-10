@@ -118,8 +118,14 @@ private extension MeetingInfoViewController {
 
 extension MeetingInfoViewController: MeetingMemberCellDelegate {
     func profileImageButtonDidTap() {
-        // TODO: 초대코드를 보여주는 팝업
-        print(">>> \(viewModel.meetingInvitationCode) : \(#function)")
+        guard let code = viewModel.meetingInvitationCode else { return }
+        
+        let viewController = InvitationCodePopUpViewController(
+            invitationCode: code
+        )
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.modalPresentationStyle = .overCurrentContext
+        present(viewController, animated: true)
     }
 }
 

@@ -104,6 +104,7 @@
 		DE254ACC2C311DC200A4015E /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */; };
 		DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */; };
 		DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */; };
+		DE6D4CFF2C3F08090005584B /* InvitationCodePopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D4CFE2C3F08090005584B /* InvitationCodePopUpView.swift */; };
 		DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8247FC2C36E7C7000601BC /* MoyaLoggingPlugin.swift */; };
 		DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8247FF2C36E857000601BC /* ObservablePattern.swift */; };
 		DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E187F2C3BA4AA00DB76B4 /* CustomButton.swift */; };
@@ -184,6 +185,7 @@
 		DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserResponseModel.swift; sourceTree = "<group>"; };
 		DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileNameModel.swift; sourceTree = "<group>"; };
+		DE6D4CFE2C3F08090005584B /* InvitationCodePopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationCodePopUpView.swift; sourceTree = "<group>"; };
 		DE8247FC2C36E7C7000601BC /* MoyaLoggingPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaLoggingPlugin.swift; sourceTree = "<group>"; };
 		DE8247FF2C36E857000601BC /* ObservablePattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservablePattern.swift; sourceTree = "<group>"; };
 		DE9E187F2C3BA4AA00DB76B4 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -378,6 +380,7 @@
 				DE1599492C3D6954001D3E76 /* MeetingInfoBannerView.swift */,
 				DE1599462C3D67BD001D3E76 /* MeetingMemberCell.swift */,
 				DE1599562C3DCD96001D3E76 /* MeetingPromiseCell.swift */,
+				DE6D4CFE2C3F08090005584B /* InvitationCodePopUpView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -791,6 +794,7 @@
 				DE1599472C3D67BD001D3E76 /* MeetingMemberCell.swift in Sources */,
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
 				DE254AAE2C31193600A4015E /* UIFont+.swift in Sources */,
+				DE6D4CFF2C3F08090005584B /* InvitationCodePopUpView.swift in Sources */,
 				DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */,
 				DD3072142C3BF87A00416D9F /* NearestPromiseResponseModel.swift in Sources */,
 				DD3072162C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift in Sources */,
