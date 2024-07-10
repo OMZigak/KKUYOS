@@ -11,7 +11,7 @@ class HomeViewController: BaseViewController {
     
     
     // MARK: - Property
-    
+
     private let rootView = HomeView()
     
     final let cellWidth: CGFloat = 200
@@ -59,7 +59,7 @@ class HomeViewController: BaseViewController {
     }
     
     
-    // MARK: - Action
+    // MARK: - Function
     
     override func setupAction() {
         rootView.todayPromiseView.prepareButton.addTarget(
@@ -103,11 +103,19 @@ class HomeViewController: BaseViewController {
         sender.backgroundColor = .maincolor
     }
     
+    
+    // MARK: - Action
+    
     @objc
     private func prepareButtonDidTap(_ sender: UIButton) {
         setProgressButton(rootView.todayPromiseView.prepareButton)
         setEnableButton(rootView.todayPromiseView.moveButton)
         setDisableButton(rootView.todayPromiseView.arriveButton)
+        rootView.todayPromiseView.prepareButton.isEnabled = false
+        
+        rootView.todayPromiseView.prepareLabel.isHidden = true
+        rootView.todayPromiseView.moveLabel.isHidden = false
+        rootView.todayPromiseView.arriveLabel.isHidden = true
     }
 
     @objc
@@ -116,6 +124,11 @@ class HomeViewController: BaseViewController {
         rootView.todayPromiseView.moveButton.setTitle("이동 중", for: .normal)
         setProgressButton(rootView.todayPromiseView.moveButton)
         setEnableButton(rootView.todayPromiseView.arriveButton)
+        rootView.todayPromiseView.moveButton.isEnabled = false
+        
+        rootView.todayPromiseView.prepareLabel.isHidden = true
+        rootView.todayPromiseView.moveLabel.isHidden = true
+        rootView.todayPromiseView.arriveLabel.isHidden = false
     }
     
     @objc
@@ -123,6 +136,10 @@ class HomeViewController: BaseViewController {
         setCompleteButton(rootView.todayPromiseView.prepareButton)
         setCompleteButton(rootView.todayPromiseView.moveButton)
         setCompleteButton(rootView.todayPromiseView.arriveButton)
+        
+        rootView.todayPromiseView.prepareLabel.isHidden = true
+        rootView.todayPromiseView.moveLabel.isHidden = true
+        rootView.todayPromiseView.arriveLabel.isHidden = true
     }
 }
 

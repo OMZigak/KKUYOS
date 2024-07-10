@@ -87,6 +87,21 @@ final class TodayPromiseView: BaseView {
         $0.setLayer(borderWidth: 1, borderColor: .gray4, cornerRadius: 16)
     }
     
+    let prepareLabel = UILabel().then {
+        $0.setText("준비를 시작 시 눌러주세요", style: .label02, color: .gray5)
+        $0.isHidden = false
+    }
+    
+    let moveLabel = UILabel().then {
+        $0.setText("이동를 시작 시 눌러주세요", style: .label02, color: .gray5)
+        $0.isHidden = true
+    }
+    
+    let arriveLabel = UILabel().then {
+        $0.setText("도착 완료 시 눌러주세요", style: .label02, color: .gray5)
+        $0.isHidden = true
+    }
+    
     
     // MARK: - UI Setting
 
@@ -98,7 +113,10 @@ final class TodayPromiseView: BaseView {
             lineView,
             prepareButton,
             moveButton,
-            arriveButton
+            arriveButton,
+            prepareLabel,
+            moveLabel,
+            arriveLabel
         )
         meetingNameView.addSubviews(meetingNameLabel)
         infoView.addArrangedSubviews(placeView, timeView)
@@ -161,6 +179,21 @@ final class TodayPromiseView: BaseView {
         
         placeIcon.snp.makeConstraints {
             $0.size.equalTo(24)
+        }
+        
+        prepareLabel.snp.makeConstraints {
+            $0.top.equalTo(prepareButton.snp.bottom).offset(6)
+            $0.centerX.equalTo(prepareButton.snp.centerX)
+        }
+        
+        moveLabel.snp.makeConstraints {
+            $0.top.equalTo(moveButton.snp.bottom).offset(6)
+            $0.centerX.equalTo(moveButton.snp.centerX)
+        }
+        
+        arriveLabel.snp.makeConstraints {
+            $0.top.equalTo(arriveButton.snp.bottom).offset(6)
+            $0.centerX.equalTo(arriveButton.snp.centerX)
         }
     }
 }
