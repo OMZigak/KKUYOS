@@ -20,7 +20,7 @@ final class MeetingInfoView: BaseView {
         collectionViewLayout: UICollectionViewFlowLayout().then {
             $0.scrollDirection = .horizontal
             $0.minimumInteritemSpacing = 12
-            $0.itemSize = .init(width: Screen.height(64), height: Screen.height(88))
+            $0.estimatedItemSize = .init(width: Screen.width(68), height: Screen.height(88))
             $0.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         }
     ).then {

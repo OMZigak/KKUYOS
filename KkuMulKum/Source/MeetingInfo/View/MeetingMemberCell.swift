@@ -24,7 +24,7 @@ final class MeetingMemberCell: BaseCollectionViewCell {
     }
     
     private let nameLabel = UILabel().then {
-        $0.setText("?", style: .caption02, color: .gray6)
+        $0.setText("", style: .caption02, color: .gray6)
         $0.textAlignment = .center
     }
     
@@ -48,8 +48,9 @@ final class MeetingMemberCell: BaseCollectionViewCell {
     
     override func setupAutoLayout() {
         profileImageButton.snp.makeConstraints {
-            $0.size.equalTo(Screen.height(64))
-            $0.top.horizontalEdges.equalToSuperview()
+            $0.top.centerX.equalToSuperview()
+            $0.height.equalTo(Screen.height(64))
+            $0.width.equalTo(profileImageButton.snp.height)
         }
         
         nameLabel.snp.makeConstraints {
@@ -94,7 +95,7 @@ private extension MeetingMemberCell {
             $0.isEnabled = true
         }
         
-        nameLabel.setText("", style: .caption02, color: .gray6)
+        nameLabel.setText(" ", style: .caption02, color: .gray6)
     }
     
     func configureForProfile(with member: Member) {

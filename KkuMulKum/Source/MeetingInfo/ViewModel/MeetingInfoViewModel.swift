@@ -38,21 +38,21 @@ extension MeetingInfoViewModel: ViewModelType {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         input.viewWillAppear
             .map { [weak self] _ in
-                return self?.service.fetchMeetingInfo(with: 1)
+                self?.service.fetchMeetingInfo(with: 1)
             }
             .bind(to: infoRelay)
             .disposed(by: disposeBag)
         
         input.viewWillAppear
             .map { [weak self] _ in
-                return self?.service.fetchMeetingMemberList(with: 1)
+                self?.service.fetchMeetingMemberList(with: 1)
             }
             .bind(to: meetingMemberModelRelay)
             .disposed(by: disposeBag)
         
         input.viewWillAppear
             .map { [weak self] _ in
-                return self?.service.fetchMeetingPromiseList(with: 1)
+                self?.service.fetchMeetingPromiseList(with: 1)
             }
             .bind(to: meetingPromisesModelRelay)
             .disposed(by: disposeBag)
@@ -75,6 +75,7 @@ extension MeetingInfoViewModel: ViewModelType {
         
         let promises = meetingPromisesModelRelay
             .compactMap { $0?.promises }
+            .map { $0.sorted { $0.dDay < $1.dDay }}
             .asDriver(onErrorJustReturn: [])
         
         let output = Output(

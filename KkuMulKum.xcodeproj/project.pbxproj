@@ -119,6 +119,7 @@
 		DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBEF2C345317006ECE7E /* BaseCollectionViewCell.swift */; };
 		DED5DBF22C34534A006ECE7E /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBF12C34534A006ECE7E /* BaseCollectionReusableView.swift */; };
 		DED5DBF42C34539A006ECE7E /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBF32C34539A006ECE7E /* BaseTableViewCell.swift */; };
+		DEF8D1552C3E76B600BCB6CB /* InvitationCodePopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF8D1542C3E76B600BCB6CB /* InvitationCodePopUpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -198,6 +199,7 @@
 		DED5DBEF2C345317006ECE7E /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		DED5DBF12C34534A006ECE7E /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionReusableView.swift; sourceTree = "<group>"; };
 		DED5DBF32C34539A006ECE7E /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		DEF8D1542C3E76B600BCB6CB /* InvitationCodePopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationCodePopUpViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -384,6 +386,7 @@
 			isa = PBXGroup;
 			children = (
 				DE15994E2C3D6B0F001D3E76 /* MeetingInfoViewController.swift */,
+				DEF8D1542C3E76B600BCB6CB /* InvitationCodePopUpViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -796,6 +799,7 @@
 				DE1599522C3D731E001D3E76 /* MeetingInfoViewModel.swift in Sources */,
 				DDA2EE772C385FC3007C6059 /* GroupListViewController.swift in Sources */,
 				78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */,
+				DEF8D1552C3E76B600BCB6CB /* InvitationCodePopUpViewController.swift in Sources */,
 				DEBA032F2C3C24F2002ED8F2 /* ModelType.swift in Sources */,
 				789AD4B52C3C0147002E2688 /* ResissueResponseModel.swift in Sources */,
 				DED5DBF42C34539A006ECE7E /* BaseTableViewCell.swift in Sources */,
