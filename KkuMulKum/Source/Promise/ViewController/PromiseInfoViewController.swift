@@ -16,6 +16,7 @@ class PromiseInfoViewController: BaseViewController {
     
     override func setupView() {
         view.addSubview(promiseInfoView)
+        self.navigationController?.navigationBar.shadowImage = nil
         
         promiseInfoView.snp.makeConstraints {
             $0.edges.equalToSuperview()

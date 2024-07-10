@@ -65,3 +65,24 @@ final class MainTabBarController: UITabBarController {
         ], animated: true)
     }
 }
+
+
+class NavigationBar: UINavigationBar {
+    
+    var preferredHeight: CGFloat = 44
+
+    override var frame: CGRect {
+        get {
+            return super.frame
+        } set {
+            var frame = newValue
+            frame.size.height = preferredHeight
+            super.frame = frame
+        }
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        frame = CGRect(x: frame.minX, y: frame.minY, width: frame.width, height: preferredHeight)
+    }
+}

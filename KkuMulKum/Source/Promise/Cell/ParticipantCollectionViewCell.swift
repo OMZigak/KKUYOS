@@ -10,29 +10,30 @@ import UIKit
 import SnapKit
 
 class ParticipantCollectionViewCell: BaseCollectionViewCell {
-    
-    private lazy var profileButton: UIButton = UIButton().then {
-        $0.setImage(.imgProfile, for: .normal)
-        $0.imageView?.contentMode = .scaleAspectFill
+    private lazy var profileImageView: UIImageView = UIImageView().then {
+        $0.image = .imgProfile
+        $0.contentMode = .scaleAspectFit
     }
     
     private let userNameLabel: UILabel = UILabel().then {
-        $0.setText("dddd", style: .caption02)
+        $0.setText("dddd", style: .caption02, color: .gray6)
     }
     
     override func setupView() {
-        contentView.addSubviews(profileButton, userNameLabel)
+        contentView.addSubviews(profileImageView, userNameLabel)
     }
     
     override func setupAutoLayout() {
-        profileButton.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview()
-            $0.width.height.equalTo(64)
+        profileImageView.snp.makeConstraints {
+            $0.width.equalTo(Screen.width(68))
+            $0.height.equalTo(Screen.height(68))
+            $0.top.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(2)
         }
         
         userNameLabel.snp.makeConstraints {
-            $0.top.equalTo(profileButton.snp.bottom).offset(4)
-            $0.centerX.equalTo(profileButton)
+            $0.top.equalTo(profileImageView.snp.bottom).offset(6)
+            $0.centerX.equalTo(profileImageView)
             $0.bottom.equalToSuperview()
         }
     }

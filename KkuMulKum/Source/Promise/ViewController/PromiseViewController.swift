@@ -13,7 +13,7 @@ class PromiseViewController: BaseViewController {
     private lazy var promiseSegmentedControl = PromiseSegmentedControl(items: ["약속 정보", "준비 현황", "지각 꾸물이"])
     
     private let promisePageViewController = UIPageViewController(transitionStyle: .scroll,
-                                                                 navigationOrientation: .horizontal)
+                                                                 navigationOrientation: .vertical)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,15 +34,13 @@ class PromiseViewController: BaseViewController {
         promiseSegmentedControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview().inset(-6)
-            $0.height.equalTo(52)
+            $0.height.equalTo(61)
         }
         
         promisePageViewController.view.snp.makeConstraints {
             $0.top.equalTo(promiseSegmentedControl.snp.bottom)
             $0.leading.trailing.bottom.equalToSuperview()
         }
-        
-        promisePageViewController.didMove(toParent: self)
     }
     
     override func setupAction() {
@@ -72,26 +70,10 @@ class PromiseViewController: BaseViewController {
 
 extension PromiseViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-        return UIViewController()
+        return nil
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        return UIViewController()
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: BaseViewController) -> BaseViewController? {
-        guard let index = promiseViewModel.promiseViewControllerList.firstIndex(of: viewController),
-                          index - 1 >= 0
-        else { return nil }
-        
-        return promiseViewModel.promiseViewControllerList[index - 1]
-    }
-    
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: BaseViewController) -> BaseViewController? {
-        guard let index = promiseViewModel.promiseViewControllerList.firstIndex(of: viewController),
-                          index + 1 < promiseViewModel.promiseViewControllerList.count
-        else { return nil }
-        
-        return promiseViewModel.promiseViewControllerList[index + 1]
+        return nil
     }
 }
