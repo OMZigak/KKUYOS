@@ -16,7 +16,7 @@ class ParticipantCollectionViewCell: BaseCollectionViewCell {
     }
     
     private let userNameLabel: UILabel = UILabel().then {
-        $0.setText("dddd", style: .caption02, color: .gray6)
+        $0.setText("userName", style: .caption02, color: .gray6)
     }
     
     override func setupView() {
