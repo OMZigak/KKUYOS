@@ -101,7 +101,5 @@ extension HomeViewController: UICollectionViewDataSource {
         ) as? UpcomingPromiseCollectionViewCell else { return UICollectionViewCell() }
         cell.dataBind(contentData[indexPath.item], itemRow: indexPath.item)
         return cell
-    }
-    
-    
+    }    
 }
