@@ -19,10 +19,38 @@ struct UpcomingPromiseModel {
 extension UpcomingPromiseModel {
     static func dummy() -> [UpcomingPromiseModel] {
         return [
-            UpcomingPromiseModel(name: "리프레쉬 데이", meetingName: "꾸물이들", dDay: 4, date: "2024.07.13", time: "PM 2:00", placeName: "어디가지"),
-            UpcomingPromiseModel(name: "리프레쉬 데이", meetingName: "꾸물이들", dDay: 4, date: "2024.07.13", time: "PM 2:00", placeName: "어디가지"),
-            UpcomingPromiseModel(name: "리프레쉬 데이", meetingName: "꾸물이들", dDay: 4, date: "2024.07.13", time: "PM 2:00", placeName: "어디가지"),
-            UpcomingPromiseModel(name: "리프레쉬 데이", meetingName: "꾸물이들", dDay: 4, date: "2024.07.13", time: "PM 2:00", placeName: "어디가지")
+            UpcomingPromiseModel(
+                name: "리프레쉬 데이",
+                meetingName: "꾸물이들",
+                dDay: 4,
+                date: "2024.07.13",
+                time: "PM 2:00",
+                placeName: "어디가지"
+            ),
+            UpcomingPromiseModel(
+                name: "리프레쉬 데이",
+                meetingName: "꾸물이들",
+                dDay: 4,
+                date: "2024.07.13",
+                time: "PM 2:00",
+                placeName: "어디가지"
+            ),
+            UpcomingPromiseModel(
+                name: "리프레쉬 데이",
+                meetingName: "꾸물이들",
+                dDay: 4,
+                date: "2024.07.13",
+                time: "PM 2:00",
+                placeName: "어디가지"
+            ),
+            UpcomingPromiseModel(
+                name: "리프레쉬 데이",
+                meetingName: "꾸물이들",
+                dDay: 4,
+                date: "2024.07.13",
+                time: "PM 2:00",
+                placeName: "어디가지"
+            )
         ]
     }
 }

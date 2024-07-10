@@ -18,7 +18,7 @@ final class TodayPromiseView: BaseView {
     
     private let meetingNameView = UIStackView().then {
         $0.backgroundColor = .green2
-        $0.layer.cornerRadius = 10
+        $0.layer.cornerRadius = 12
         $0.axis = .horizontal
         $0.alignment = .fill
         $0.distribution = .fill
@@ -80,32 +80,45 @@ final class TodayPromiseView: BaseView {
         $0.textAlignment = .left
         $0.font = UIFont.pretendard(.body06)
     }
-
     
-    // MARK: - Initializer
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    private let lineView = UIView().then {
+        $0.backgroundColor = .gray2
     }
     
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    private let prepareButton = UIButton().then {
+        $0.setTitle("준비 중", style: .body05, color: .gray4)
+        $0.setLayer(borderWidth: 1, borderColor: .gray4, cornerRadius: 16)
+    }
+    
+    private let moveButton = UIButton().then {
+        $0.setTitle("이동 시작", style: .body05, color: .gray4)
+        $0.setLayer(borderWidth: 1, borderColor: .gray4, cornerRadius: 16)
+    }
+    
+    private let arriveButton = UIButton().then {
+        $0.setTitle("도착 완료", style: .body05, color: .gray4)
+        $0.setLayer(borderWidth: 1, borderColor: .gray4, cornerRadius: 16)
     }
     
     
     // MARK: - UI Setting
 
-    /// UI 설정 (addSubView 등)
     override func setupView() {
-        addSubviews(meetingNameView, nameLabel, infoView)
+        addSubviews(
+            meetingNameView,
+            nameLabel,
+            infoView,
+            lineView,
+            prepareButton,
+            moveButton,
+            arriveButton
+        )
         meetingNameView.addSubviews(meetingNameLabel)
         infoView.addArrangedSubviews(placeView, timeView)
         placeView.addArrangedSubviews(placeIcon, placeNameLabel)
         timeView.addArrangedSubviews(timeIcon, timeLabel)
     }
     
-    /// 오토레이아웃 설정 (SnapKit 코드)
     override func setupAutoLayout() {
         meetingNameView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
@@ -114,7 +127,7 @@ final class TodayPromiseView: BaseView {
         
         meetingNameLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(8)
-            $0.top.bottom.equalToSuperview().inset(2)
+            $0.top.bottom.equalToSuperview().inset(4)
         }
         
         nameLabel.snp.makeConstraints {
@@ -128,26 +141,39 @@ final class TodayPromiseView: BaseView {
             $0.trailing.lessThanOrEqualToSuperview().offset(-24)
         }
         
-        timeIcon.snp.makeConstraints {
-            //$0.top.equalToSuperview()
-            //$0.leading.trailing.equalToSuperview()
-            $0.size.equalTo(24)
+        lineView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.top.equalToSuperview().offset(168)
+            $0.height.equalTo(4)
         }
         
-//        timeLabel.snp.makeConstraints {
-//            $0.top.equalToSuperview()
-//            $0.leading.equalToSuperview()
-//        }
+        prepareButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.top.equalToSuperview().offset(188)
+            $0.width.equalTo(84)
+            $0.height.equalTo(32)
+        }
+        
+        moveButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().offset(188)
+            $0.width.equalTo(84)
+            $0.height.equalTo(32)
+        }
+        
+        arriveButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.top.equalToSuperview().offset(188)
+            $0.width.equalTo(84)
+            $0.height.equalTo(32)
+        }
+        
+        timeIcon.snp.makeConstraints {
+            $0.size.equalTo(24)
+        }
         
         placeIcon.snp.makeConstraints {
-            //$0.top.equalToSuperview()
-            //$0.leading.trailing.equalToSuperview()
             $0.size.equalTo(24)
         }
-        
-//        placeNameLabel.snp.makeConstraints {
-//            $0.top.equalToSuperview()
-//            $0.leading.equalToSuperview()
-//        }
     }
 }

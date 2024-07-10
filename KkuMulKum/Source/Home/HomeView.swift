@@ -58,7 +58,11 @@ final class HomeView: BaseView {
     }
     
     private let levelCaptionLabel = UILabel().then {
-        $0.setText("아직 한번도 정시에 도착하지 못했어요!\n정시 도착으로 캐릭터를 성장시켜 보세요", style: .label02, color: .gray7)
+        $0.setText(
+            "아직 한번도 정시에 도착하지 못했어요!\n정시 도착으로 캐릭터를 성장시켜 보세요",
+            style: .label02,
+            color: .gray7
+        )
     }
     
     private let promiseView = UIView().then {
@@ -96,18 +100,6 @@ final class HomeView: BaseView {
     
     private let layout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
-    }
-    
-    
-    // MARK: - Initializer
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    @available(*, unavailable)
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     

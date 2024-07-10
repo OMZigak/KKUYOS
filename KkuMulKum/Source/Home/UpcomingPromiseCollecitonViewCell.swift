@@ -27,7 +27,7 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
     
     private let meetingNameView = UIStackView().then {
         $0.backgroundColor = .green2
-        $0.layer.cornerRadius = 10
+        $0.layer.cornerRadius = 12
         $0.axis = .horizontal
         $0.alignment = .fill
         $0.distribution = .fill
@@ -82,17 +82,6 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
     }
     
     
-    // MARK: - Initializer
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    
     // MARK: - UI Setting
     
     override func setupView() {
@@ -132,7 +121,7 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
         
         meetingNameLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(8)
-            $0.top.bottom.equalToSuperview().inset(2)
+            $0.top.bottom.equalToSuperview().inset(4)
         }
         
         nameLabel.snp.makeConstraints {
