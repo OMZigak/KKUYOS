@@ -13,75 +13,57 @@ import SnapKit
 import Then
 
 final class InvitationCodePopUpView: BaseView {
-    private let contentView = UIView().then {
-        $0.backgroundColor = .white
+    private let contentView = UIView(backgroundColor: .white).then {
         $0.layer.cornerRadius = 8
     }
     
     private let titleLabel = UILabel().then {
-        $0.text = "친구 초대하기"
-        $0.font = UIFont.systemFont(ofSize: 16)
-        $0.textColor = .gray8
+        $0.setText("친구 초대하기", style: .body01, color: .gray8)
     }
     
     private let subtitleLabel = UILabel().then {
-        $0.text = "초대 코드를 공유해 함께할 꾸물이를 추가해 보세요"
-        $0.font = UIFont.systemFont(ofSize: 12)
-        $0.textColor = .gray6
+        $0.setText(
+            "초대 코드를 공유해 함께할 꾸물이를 추가해 보세요",
+            style: .caption02,
+            color: .gray6
+        )
     }
     
-    // TODO: gray -> gray0
-    private let innerContentView = UIView().then {
-        $0.backgroundColor = .gray
+    private let innerContentView = UIView(backgroundColor: .gray0).then {
         $0.layer.cornerRadius = 4
     }
     
     private let descriptionLabel = UILabel().then {
-        $0.text = "초대코드"
-        $0.font = UIFont.systemFont(ofSize: 14)
-        $0.textColor = .gray8
+        $0.setText("초대코드", style: .body06, color: .gray8)
     }
     
     private let invitationCodeLabel = UILabel()
     
-    private let inviteLaterButton = UIButton().then {
-        $0.setTitle("나중에 초대하기", for: .normal)
-        $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        $0.setTitleColor(.white, for: .normal)
-        $0.backgroundColor = .gray3
+    private let inviteLaterButton = UIButton(backgroundColor: .gray3).then {
+        $0.setTitle("나중에 초대하기", style: .body05, color: .white)
         $0.layer.cornerRadius = 8
         $0.layer.maskedCorners = [.layerMinXMaxYCorner]
     }
     
-    private let copyButton = UIButton().then {
-        $0.setTitle("복사하기", for: .normal)
-        $0.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        $0.setTitleColor(.white, for: .normal)
+    private let copyButton = UIButton(backgroundColor: .gray7).then {
+        $0.setTitle("복사하기", style: .body05, color: .white)
         $0.backgroundColor = .gray7
         $0.layer.cornerRadius = 8
         $0.layer.maskedCorners = [.layerMaxXMaxYCorner]
     }
     
-    private let buttonStackView = UIStackView().then {
-        $0.axis = .horizontal
+    private let buttonStackView = UIStackView(axis: .horizontal).then {
         $0.distribution = .fillEqually
         $0.layer.cornerRadius = 8
         $0.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
     }
     
     override func setupView() {
-        backgroundColor = .black.withAlphaComponent(0.6)
+        backgroundColor = .black.withAlphaComponent(0.7)
         
-        setupBlurView()
-        
-        innerContentView.addSubview(descriptionLabel)
-        innerContentView.addSubview(invitationCodeLabel)
-        buttonStackView.addArrangedSubview(inviteLaterButton)
-        buttonStackView.addArrangedSubview(copyButton)
-        contentView.addSubview(titleLabel)
-        contentView.addSubview(subtitleLabel)
-        contentView.addSubview(innerContentView)
-        contentView.addSubview(buttonStackView)
+        innerContentView.addSubviews(descriptionLabel, invitationCodeLabel)
+        buttonStackView.addArrangedSubviews(inviteLaterButton, copyButton)
+        contentView.addSubviews(titleLabel, subtitleLabel, innerContentView, buttonStackView)
         addSubview(contentView)
     }
     
@@ -137,17 +119,8 @@ extension InvitationCodePopUpView {
     func isBackgroundViewDidTap(with location: CGPoint) -> Bool {
         return !contentView.frame.contains(location)
     }
-}
-
-private extension InvitationCodePopUpView {
-    func setupBlurView() {
-        let blurEffect = UIBlurEffect(style: .dark)
-        let blurView = UIVisualEffectView(effect: blurEffect)
-        
-        addSubview(blurView)
-        
-        blurView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+    
+    func setInvitationCodeText(_ invitationCode: String) {
+        invitationCodeLabel.setText(invitationCode, style: .body01, color: .maincolor)
     }
 }

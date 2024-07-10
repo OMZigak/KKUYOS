@@ -13,6 +13,8 @@ extension UIFont {
     }
     
     enum Pretendard {
+        private static let scaleRatio: CGFloat = max(Screen.height(1), Screen.width(1))
+        
         case title00, title01, title02
         case head01, head02
         case body01, body02, body03, body04, body05, body06
@@ -31,6 +33,10 @@ extension UIFont {
         }
         
         var size: CGFloat {
+            return defaultSize * Pretendard.scaleRatio
+        }
+        
+        private var defaultSize: CGFloat {
             switch self {
             case .title00, .title01, .title02: 24
             case .head01, .head02: 22

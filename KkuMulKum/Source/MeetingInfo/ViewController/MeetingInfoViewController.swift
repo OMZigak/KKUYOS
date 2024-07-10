@@ -62,7 +62,8 @@ final class MeetingInfoViewController: BaseViewController {
 private extension MeetingInfoViewController {
     func bindViewModel() {
         let input = MeetingInfoViewModel.Input(
-            viewWillAppear: viewWillAppearRelay
+            viewWillAppear: viewWillAppearRelay,
+            createPromiseButtonDidTap: rootView.createPromiseButtonDidTap
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
@@ -113,8 +114,17 @@ private extension MeetingInfoViewController {
                 )
             }
             .disposed(by: disposeBag)
+        
+        output.createNewPromise
+            .drive(with: self) { owner, _ in
+                // TODO: 약속 추가 화면으로 이동
+            }
+            .disposed(by: disposeBag)
     }
 }
+
+
+// MARK: - MeetingMemberCellDelegate
 
 extension MeetingInfoViewController: MeetingMemberCellDelegate {
     func profileImageButtonDidTap() {

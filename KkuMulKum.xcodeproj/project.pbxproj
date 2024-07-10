@@ -107,7 +107,6 @@
 		DE254ACC2C311DC200A4015E /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */; };
 		DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */; };
 		DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */; };
-		DE6D4CFF2C3F08090005584B /* InvitationCodePopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D4CFE2C3F08090005584B /* InvitationCodePopUpView.swift */; };
 		DE6D4D0F2C3F14D80005584B /* MeetingInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D4D012C3F14D80005584B /* MeetingInfoService.swift */; };
 		DE6D4D102C3F14D80005584B /* InvitationCodePopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D4D032C3F14D80005584B /* InvitationCodePopUpView.swift */; };
 		DE6D4D112C3F14D80005584B /* MeetingInfoBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D4D042C3F14D80005584B /* MeetingInfoBannerView.swift */; };
@@ -125,6 +124,7 @@
 		DE9E188B2C3BC92500DB76B4 /* EmptyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E188A2C3BC92500DB76B4 /* EmptyModel.swift */; };
 		DE9E18922C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18912C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift */; };
 		DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18992C3BCCBE00DB76B4 /* UtilsTemp.swift */; };
+		DEA932182C3F180800FDF637 /* MeetingPromisesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA932172C3F180800FDF637 /* MeetingPromisesModel.swift */; };
 		DEBA032F2C3C24F2002ED8F2 /* ModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA032E2C3C24F2002ED8F2 /* ModelType.swift */; };
 		DEBA03312C3C2972002ED8F2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA03302C3C2972002ED8F2 /* ViewController.swift */; };
 		DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBEB2C345210006ECE7E /* BaseViewController.swift */; };
@@ -132,7 +132,7 @@
 		DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBEF2C345317006ECE7E /* BaseCollectionViewCell.swift */; };
 		DED5DBF22C34534A006ECE7E /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBF12C34534A006ECE7E /* BaseCollectionReusableView.swift */; };
 		DED5DBF42C34539A006ECE7E /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBF32C34539A006ECE7E /* BaseTableViewCell.swift */; };
-		DEF8D1552C3E76B600BCB6CB /* InvitationCodePopUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF8D1542C3E76B600BCB6CB /* InvitationCodePopUpViewController.swift */; };
+		DEF725DB2C3F3BBF008C87C7 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF725DA2C3F3BBF008C87C7 /* Toast.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -200,7 +200,6 @@
 		DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserResponseModel.swift; sourceTree = "<group>"; };
 		DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileNameModel.swift; sourceTree = "<group>"; };
-		DE6D4CFE2C3F08090005584B /* InvitationCodePopUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationCodePopUpView.swift; sourceTree = "<group>"; };
 		DE6D4D012C3F14D80005584B /* MeetingInfoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingInfoService.swift; sourceTree = "<group>"; };
 		DE6D4D032C3F14D80005584B /* InvitationCodePopUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationCodePopUpView.swift; sourceTree = "<group>"; };
 		DE6D4D042C3F14D80005584B /* MeetingInfoBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingInfoBannerView.swift; sourceTree = "<group>"; };
@@ -218,6 +217,7 @@
 		DE9E188A2C3BC92500DB76B4 /* EmptyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyModel.swift; sourceTree = "<group>"; };
 		DE9E18912C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginRequestModel.swift; sourceTree = "<group>"; };
 		DE9E18992C3BCCBE00DB76B4 /* UtilsTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTemp.swift; sourceTree = "<group>"; };
+		DEA932172C3F180800FDF637 /* MeetingPromisesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingPromisesModel.swift; sourceTree = "<group>"; };
 		DEBA032E2C3C24F2002ED8F2 /* ModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelType.swift; sourceTree = "<group>"; };
 		DEBA03302C3C2972002ED8F2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		DED5DBEB2C345210006ECE7E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
@@ -225,7 +225,7 @@
 		DED5DBEF2C345317006ECE7E /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		DED5DBF12C34534A006ECE7E /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionReusableView.swift; sourceTree = "<group>"; };
 		DED5DBF32C34539A006ECE7E /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
-		DEF8D1542C3E76B600BCB6CB /* InvitationCodePopUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InvitationCodePopUpViewController.swift; sourceTree = "<group>"; };
+		DEF725DA2C3F3BBF008C87C7 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -306,7 +306,6 @@
 			children = (
 				78B9286A2C29402C006D9942 /* KkuMulKum */,
 				78B928692C29402C006D9942 /* Products */,
-				DE6D4D002C3F14B80005584B /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -499,6 +498,7 @@
 			children = (
 				DE254AB62C3119D000A4015E /* ReuseIdentifiable.swift */,
 				DE254AB82C311AB300A4015E /* Screen.swift */,
+				DEF725DA2C3F3BBF008C87C7 /* Toast.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -517,15 +517,6 @@
 				DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */,
 			);
 			path = Font;
-			sourceTree = "<group>";
-		};
-		DE6D4D002C3F14B80005584B /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				DE6D4CFE2C3F08090005584B /* InvitationCodePopUpView.swift */,
-				DEF8D1542C3E76B600BCB6CB /* InvitationCodePopUpViewController.swift */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		DE6D4D022C3F14D80005584B /* Service */ = {
@@ -668,6 +659,7 @@
 		DE9E188F2C3BCC7600DB76B4 /* Promises */ = {
 			isa = PBXGroup;
 			children = (
+				DEA932172C3F180800FDF637 /* MeetingPromisesModel.swift */,
 				DD3072132C3BF87A00416D9F /* NearestPromiseResponseModel.swift */,
 				DD3072152C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift */,
 				DD3072192C3C011600416D9F /* AddPromiseRequestModel.swift */,
@@ -868,8 +860,10 @@
 				DD931B742C3DAB9A00526452 /* ReadyPlanInfoView.swift in Sources */,
 				789873342C3D1A7B00435E96 /* LoginView.swift in Sources */,
 				A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */,
+				DEA932182C3F180800FDF637 /* MeetingPromisesModel.swift in Sources */,
 				DE9E18842C3BA84500DB76B4 /* CustomTextField.swift in Sources */,
 				A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */,
+				DEF725DB2C3F3BBF008C87C7 /* Toast.swift in Sources */,
 				DE254AAC2C31192400A4015E /* UILabel+.swift in Sources */,
 				DE254AB72C3119D000A4015E /* ReuseIdentifiable.swift in Sources */,
 				DDA2EE752C385FB1007C6059 /* HomeViewController.swift in Sources */,
@@ -886,7 +880,6 @@
 				DE9E18922C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift in Sources */,
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
 				DE254AAE2C31193600A4015E /* UIFont+.swift in Sources */,
-				DE6D4CFF2C3F08090005584B /* InvitationCodePopUpView.swift in Sources */,
 				DE6D4D152C3F14D80005584B /* InvitationCodePopUpViewController.swift in Sources */,
 				DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */,
 				DD3072142C3BF87A00416D9F /* NearestPromiseResponseModel.swift in Sources */,
@@ -896,7 +889,6 @@
 				DE6D4D162C3F14D80005584B /* MeetingInfoViewController.swift in Sources */,
 				DDA2EE772C385FC3007C6059 /* GroupListViewController.swift in Sources */,
 				78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */,
-				DEF8D1552C3E76B600BCB6CB /* InvitationCodePopUpViewController.swift in Sources */,
 				DEBA032F2C3C24F2002ED8F2 /* ModelType.swift in Sources */,
 				789AD4B52C3C0147002E2688 /* ResissueResponseModel.swift in Sources */,
 				DE6D4D0F2C3F14D80005584B /* MeetingInfoService.swift in Sources */,

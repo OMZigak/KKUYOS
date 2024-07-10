@@ -26,6 +26,7 @@ final class MeetingInfoViewModel {
 extension MeetingInfoViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: PublishRelay<Void>
+        let createPromiseButtonDidTap: Observable<Void>
     }
     
     struct Output {
@@ -33,6 +34,7 @@ extension MeetingInfoViewModel: ViewModelType {
         let memberCount: Driver<Int>
         let members: Driver<[Member]>
         let promises: Driver<[MeetingPromise]>
+        let createNewPromise: Driver<Void>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -78,11 +80,15 @@ extension MeetingInfoViewModel: ViewModelType {
             .map { $0.sorted { $0.dDay < $1.dDay }}
             .asDriver(onErrorJustReturn: [])
         
+        let createNewPromise = input.createPromiseButtonDidTap
+            .asDriver(onErrorJustReturn: ())
+        
         let output = Output(
             info: info,
             memberCount: memberCount,
             members: members,
-            promises: promises
+            promises: promises,
+            createNewPromise: createNewPromise
         )
         
         return output

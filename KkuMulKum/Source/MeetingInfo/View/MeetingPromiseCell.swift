@@ -63,6 +63,7 @@ final class MeetingPromiseCell: BaseCollectionViewCell {
     
     private let contentStackView = UIStackView(axis: .vertical).then {
         $0.spacing = 8
+        $0.distribution = .equalSpacing
     }
     
     override func setupView() {

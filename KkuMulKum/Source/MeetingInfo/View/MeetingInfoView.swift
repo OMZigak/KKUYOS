@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
 import SnapKit
 import Then
 
@@ -61,15 +63,13 @@ final class MeetingInfoView: BaseView {
         $0.contentMode = .scaleAspectFill
     }
     
-    private let addPromiseButton = UIButton().then {
+    private let createPromiseButton = UIButton(backgroundColor: .maincolor).then {
         $0.setTitle("+   약속추가", style: .body01, color: .white)
-        $0.backgroundColor = .maincolor
         $0.layer.cornerRadius = Screen.height(52) / 2
         $0.clipsToBounds = true
     }
     
-    // TODO: gray0으로 수정
-    private let grayBackgroundView = UIView(backgroundColor: .gray).then {
+    private let grayBackgroundView = UIView(backgroundColor: .gray0).then {
         $0.roundCorners(
             cornerRadius: 18,
             maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -85,10 +85,10 @@ final class MeetingInfoView: BaseView {
         
         grayBackgroundView.addSubviews(promiseDescriptionLabel, promiseListView)
         addSubviews(
-            infoBanner, memberCountLabel, arrowButton, memberListView, addPromiseButton,
+            infoBanner, memberCountLabel, arrowButton, memberListView, createPromiseButton,
             grayBackgroundView
         )
-        bringSubviewToFront(addPromiseButton)
+        bringSubviewToFront(createPromiseButton)
     }
     
     override func setupAutoLayout() {
@@ -100,12 +100,12 @@ final class MeetingInfoView: BaseView {
         }
         
         memberCountLabel.snp.makeConstraints {
-            $0.top.equalTo(infoBanner.snp.bottom).offset(24)
+            $0.top.equalTo(infoBanner.snp.bottom).offset(20)
             $0.leading.equalTo(infoBanner)
         }
         
         arrowButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-27)
+            $0.trailing.equalToSuperview().offset(-20)
             $0.centerY.equalTo(memberCountLabel)
         }
         
@@ -116,9 +116,8 @@ final class MeetingInfoView: BaseView {
         }
         
         grayBackgroundView.snp.makeConstraints {
-            $0.top.equalTo(memberListView.snp.bottom).offset(40)
-            $0.horizontalEdges.equalToSuperview()
-            $0.bottom.equalTo(safeArea)
+            $0.top.equalTo(memberListView.snp.bottom).offset(35)
+            $0.horizontalEdges.bottom.equalToSuperview()
         }
         
         promiseDescriptionLabel.snp.makeConstraints {
@@ -132,9 +131,9 @@ final class MeetingInfoView: BaseView {
             $0.height.equalTo(Screen.height(188))
         }
         
-        addPromiseButton.snp.makeConstraints {
-            $0.bottom.equalTo(safeArea).offset(-20)
-            $0.trailing.equalTo(safeArea).offset(-14)
+        createPromiseButton.snp.makeConstraints {
+            $0.top.equalTo(promiseListView.snp.bottom).offset(45)
+            $0.trailing.equalTo(safeArea).offset(-16)
             $0.width.equalTo(Screen.width(136))
             $0.height.equalTo(Screen.height(52))
         }
@@ -142,6 +141,8 @@ final class MeetingInfoView: BaseView {
 }
 
 extension MeetingInfoView {
+    var createPromiseButtonDidTap: Observable<Void> { createPromiseButton.rx.tap.asObservable() }
+    
     func configureInfo(createdAt: String, metCount: Int) {
         infoBanner.configure(createdAt: createdAt, metCount: metCount)
     }

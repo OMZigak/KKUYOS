@@ -13,14 +13,13 @@ import SnapKit
 import Then
 
 final class InvitationCodePopUpViewController: BaseViewController {
-    
     private let invitationCode: String
     private let disposeBag = DisposeBag()
     private let rootView = InvitationCodePopUpView()
     
     
     // MARK: - Initializer
-
+    
     init(invitationCode: String) {
         self.invitationCode = invitationCode
         super.init(nibName: nil, bundle: nil)
@@ -28,6 +27,19 @@ final class InvitationCodePopUpViewController: BaseViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    // MARK: - Life Cycle
+    
+    override func loadView() {
+        view = rootView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        rootView.setInvitationCodeText(invitationCode)
     }
     
     override func setupAction() {
@@ -53,9 +65,20 @@ final class InvitationCodePopUpViewController: BaseViewController {
             .subscribe(with: self) { owner, _ in
                 UIPasteboard.general.string = owner.invitationCode
                 
-                // TODO: Toast 메세지로 복사되었다고 알리기
-                
+                let toast = Toast()
+                toast.show(
+                    message: "클립보드에 복사되었슈",
+                    view: owner.view,
+                    position: .bottom,
+                    inset: 100
+                )
             }
             .disposed(by: disposeBag)
+    }
+}
+
+private extension InvitationCodePopUpViewController {
+    func copyInvitationCode() {
+        UIPasteboard.general.string = invitationCode
     }
 }
