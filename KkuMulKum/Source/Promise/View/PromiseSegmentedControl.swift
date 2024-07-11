@@ -26,7 +26,6 @@ class PromiseSegmentedControl: UISegmentedControl {
         setupTextAttribute()
         setupBackgroundLineView()
         setupBackgroundAndDivider()
-        
     }
     
     required init?(coder: NSCoder) {
