@@ -143,15 +143,25 @@ private extension MeetingInfoViewController {
     func setupNavigationBar() {
         title = ""
         
-        let navigationBar = navigationController?.navigationBar
+        navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.gray8,
+            .font: UIFont.pretendard(.body03)
+        ]
         
-        navigationBar?.do {
-            $0.titleTextAttributes = [
-                .foregroundColor: UIColor.gray8,
-                .font: UIFont.pretendard(.body03)
-            ]
-            
-            $0.topItem?.backButtonDisplayMode = .minimal
+        let backButton = UIBarButtonItem(
+            image: .iconBack,
+            style: .plain,
+            target: self,
+            action: #selector(backButtonDidTap)
+        ).then {
+            $0.tintColor = .black
         }
+        
+        navigationItem.leftBarButtonItem = backButton
+    }
+    
+    @objc
+    func backButtonDidTap() {
+        navigationController?.popViewController(animated: true)
     }
 }
