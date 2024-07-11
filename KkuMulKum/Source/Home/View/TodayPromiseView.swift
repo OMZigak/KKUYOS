@@ -149,6 +149,12 @@ final class TodayPromiseView: BaseView {
         $0.isHidden = true
     }
     
+    let prepareTimeLabel = UILabel()
+    
+    let moveTimeLabel = UILabel()
+    
+    let arriveTimeLabel = UILabel()
+    
     
     // MARK: - UI Setting
 
@@ -172,7 +178,10 @@ final class TodayPromiseView: BaseView {
             arriveCircleView,
             prepareCheckView,
             moveCheckView,
-            arriveCheckView
+            arriveCheckView,
+            prepareTimeLabel,
+            moveTimeLabel,
+            arriveTimeLabel
         )
         meetingNameView.addSubviews(meetingNameLabel)
         infoView.addArrangedSubviews(placeView, timeView)
@@ -306,6 +315,21 @@ final class TodayPromiseView: BaseView {
         
         arriveLabel.snp.makeConstraints {
             $0.top.equalTo(arriveButton.snp.bottom).offset(6)
+            $0.centerX.equalTo(arriveButton.snp.centerX)
+        }
+        
+        prepareTimeLabel.snp.makeConstraints {
+            $0.bottom.equalTo(prepareCircleView.snp.top).offset(-8)
+            $0.centerX.equalTo(prepareButton.snp.centerX)
+        }
+        
+        moveTimeLabel.snp.makeConstraints {
+            $0.bottom.equalTo(moveCircleView.snp.top).offset(-8)
+            $0.centerX.equalTo(moveButton.snp.centerX)
+        }
+        
+        arriveTimeLabel.snp.makeConstraints {
+            $0.bottom.equalTo(arriveCircleView.snp.top).offset(-8)
             $0.centerX.equalTo(arriveButton.snp.centerX)
         }
     }

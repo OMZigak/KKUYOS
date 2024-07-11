@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Then
+
 class HomeViewController: BaseViewController {
     
     
@@ -19,6 +21,12 @@ class HomeViewController: BaseViewController {
     final let contentInterSpacing: CGFloat = 12
     final let contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     final let cellNumber = 4
+    
+    private let dateFormatter = DateFormatter().then {
+        $0.dateFormat = "a hh:mm"
+        $0.amSymbol = "AM"
+        $0.pmSymbol = "PM"
+    }
     
     private var contentData = UpcomingPromiseModel.dummy() {
         didSet {
@@ -108,6 +116,9 @@ class HomeViewController: BaseViewController {
     
     @objc
     private func prepareButtonDidTap(_ sender: UIButton) {
+        let currentTimeString = dateFormatter.string(from: Date())
+        rootView.todayPromiseView.prepareTimeLabel.setText(currentTimeString, style: .caption02, color: .gray8)
+        
         setProgressButton(rootView.todayPromiseView.prepareButton)
         setEnableButton(rootView.todayPromiseView.moveButton)
         setDisableButton(rootView.todayPromiseView.arriveButton)
@@ -125,6 +136,9 @@ class HomeViewController: BaseViewController {
 
     @objc
     private func moveButtonDidTap(_ sender: UIButton) {
+        let currentTimeString = dateFormatter.string(from: Date())
+        rootView.todayPromiseView.moveTimeLabel.setText(currentTimeString, style: .caption02, color: .gray8)
+        
         setCompleteButton(rootView.todayPromiseView.prepareButton)
         rootView.todayPromiseView.moveButton.setTitle("이동 중", for: .normal)
         setProgressButton(rootView.todayPromiseView.moveButton)
@@ -146,6 +160,9 @@ class HomeViewController: BaseViewController {
     
     @objc
     private func arriveButtonDidTap(_ sender: UIButton) {
+        let currentTimeString = dateFormatter.string(from: Date())
+        rootView.todayPromiseView.arriveTimeLabel.setText(currentTimeString, style: .caption02, color: .gray8)
+        
         setCompleteButton(rootView.todayPromiseView.prepareButton)
         setCompleteButton(rootView.todayPromiseView.moveButton)
         setCompleteButton(rootView.todayPromiseView.arriveButton)
