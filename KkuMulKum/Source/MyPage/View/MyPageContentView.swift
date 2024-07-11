@@ -45,7 +45,7 @@ class MyPageContentView: BaseView {
     
     override func setupView() {
         backgroundColor = .clear
-        addSubview(profileStackView,levelView,separatorView)
+        addSubviews(profileStackView,levelView,separatorView)
         profileStackView.addArrangedSubviews(profileImageView, nameLabel)
         levelView.addSubview(levelLabel)
     }
