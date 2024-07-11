@@ -57,8 +57,8 @@ final class HomeView: BaseView {
     private let levelCaptionLabel = UILabel().then {
         $0.setText(
             "아직 한번도 정시에 도착하지 못했어요!\n정시 도착으로 캐릭터를 성장시켜 보세요",
-            style: .label02,
-            color: .gray7
+            style: .label01,
+            color: .white
         )
     }
     
@@ -83,6 +83,14 @@ final class HomeView: BaseView {
         $0.layer.borderColor = UIColor.gray2.cgColor
     }
     
+    let todayEmptyView = TodayEmptyView().then {
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = 8
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.gray2.cgColor
+        $0.isHidden = true
+    }
+    
     private let upcomingLabel = UILabel().then {
         $0.setText("다가올 나의 약속은?", style: .body01, color: .gray8)
     }
@@ -97,6 +105,14 @@ final class HomeView: BaseView {
     
     private let layout = UICollectionViewFlowLayout().then {
         $0.scrollDirection = .horizontal
+    }
+    
+    let upcomingEmptyView = UpcomingEmptyView().then {
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = 8
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.gray2.cgColor
+        $0.isHidden = true
     }
     
     
@@ -118,8 +134,10 @@ final class HomeView: BaseView {
             todayLabel,
             todayButton,
             todayPromiseView,
+            todayEmptyView,
             upcomingLabel,
-            upcomingPromiseView
+            upcomingPromiseView,
+            upcomingEmptyView
         )
     }
     
@@ -192,6 +210,12 @@ final class HomeView: BaseView {
             $0.height.equalTo(254)
         }
         
+        todayEmptyView.snp.makeConstraints {
+            $0.top.equalTo(todayLabel.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(254)
+        }
+        
         upcomingLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.top.equalToSuperview().offset(342)
@@ -201,6 +225,12 @@ final class HomeView: BaseView {
             $0.top.equalTo(upcomingLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(216)
+        }
+        
+        upcomingEmptyView.snp.makeConstraints {
+            $0.top.equalTo(upcomingLabel.snp.bottom).offset(16)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(140)
         }
     }
 }

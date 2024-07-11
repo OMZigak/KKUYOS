@@ -55,6 +55,8 @@
 		A309B64E2C3DA4E600BE74D0 /* UpcomingPromiseCollecitonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A309B64D2C3DA4E600BE74D0 /* UpcomingPromiseCollecitonViewCell.swift */; };
 		A309B6502C3DB2BF00BE74D0 /* UpcomingPromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A309B64F2C3DB2BF00BE74D0 /* UpcomingPromiseModel.swift */; };
 		A34B2B362C3E7A9600462AE8 /* TodayPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A34B2B352C3E7A9600462AE8 /* TodayPromiseView.swift */; };
+		A3DD9C1F2C40703000E58A13 /* TodayEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C1E2C40702F00E58A13 /* TodayEmptyView.swift */; };
+		A3DD9C212C40704100E58A13 /* UpcomingEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C202C40704100E58A13 /* UpcomingEmptyView.swift */; };
 		A3F2581E2C3EF866002A4602 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3F2581D2C3EF865002A4602 /* HomeViewModel.swift */; };
 		A3FB184D2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */; };
 		A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */; };
@@ -140,6 +142,8 @@
 		A309B64D2C3DA4E600BE74D0 /* UpcomingPromiseCollecitonViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingPromiseCollecitonViewCell.swift; sourceTree = "<group>"; };
 		A309B64F2C3DB2BF00BE74D0 /* UpcomingPromiseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingPromiseModel.swift; sourceTree = "<group>"; };
 		A34B2B352C3E7A9600462AE8 /* TodayPromiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayPromiseView.swift; sourceTree = "<group>"; };
+		A3DD9C1E2C40702F00E58A13 /* TodayEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayEmptyView.swift; sourceTree = "<group>"; };
+		A3DD9C202C40704100E58A13 /* UpcomingEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingEmptyView.swift; sourceTree = "<group>"; };
 		A3F2581D2C3EF865002A4602 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsRequestModel.swift; sourceTree = "<group>"; };
 		A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsResponseModel.swift; sourceTree = "<group>"; };
@@ -311,6 +315,8 @@
 			children = (
 				A3FB18642C3D3B4A001483E5 /* HomeView.swift */,
 				A34B2B352C3E7A9600462AE8 /* TodayPromiseView.swift */,
+				A3DD9C1E2C40702F00E58A13 /* TodayEmptyView.swift */,
+				A3DD9C202C40704100E58A13 /* UpcomingEmptyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -804,6 +810,7 @@
 				DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */,
 				A34B2B362C3E7A9600462AE8 /* TodayPromiseView.swift in Sources */,
 				DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */,
+				A3DD9C212C40704100E58A13 /* UpcomingEmptyView.swift in Sources */,
 				DDAF1C932C3D6E3D008A37D3 /* PromiseViewController.swift in Sources */,
 				DE9E18922C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift in Sources */,
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
@@ -833,6 +840,7 @@
 				A309B64E2C3DA4E600BE74D0 /* UpcomingPromiseCollecitonViewCell.swift in Sources */,
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
 				789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */,
+				A3DD9C1F2C40703000E58A13 /* TodayEmptyView.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
