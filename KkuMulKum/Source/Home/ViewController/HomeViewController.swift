@@ -15,6 +15,7 @@ class HomeViewController: BaseViewController {
     // MARK: - Property
 
     private let rootView = HomeView()
+    private let viewModel = HomeViewModel()
     
     final let cellWidth: CGFloat = 200
     final let cellHeight: CGFloat = 216
@@ -53,7 +54,11 @@ class HomeViewController: BaseViewController {
         register()
         setupDelegate()
         setupAction()
+        updateUI()
     }
+    
+    
+    // MARK: - Function
     
     private func register() {
         rootView.upcomingPromiseView.register(UpcomingPromiseCollectionViewCell.self,
@@ -111,14 +116,22 @@ class HomeViewController: BaseViewController {
         sender.backgroundColor = .maincolor
     }
     
+    private func updateUI() {
+        viewModel.currentState.bind { [weak self] state in
+            switch state {
+            case .prepare:
+                self?.setPrepareUI()
+            case .move:
+                self?.setMoveUI()
+            case .arrive:
+                self?.setArriveUI()
+            case .none:
+                break
+            }
+        }
+    }
     
-    // MARK: - Action
-    
-    @objc
-    private func prepareButtonDidTap(_ sender: UIButton) {
-        let currentTimeString = dateFormatter.string(from: Date())
-        rootView.todayPromiseView.prepareTimeLabel.setText(currentTimeString, style: .caption02, color: .gray8)
-        
+    private func setPrepareUI() {
         setProgressButton(rootView.todayPromiseView.prepareButton)
         setEnableButton(rootView.todayPromiseView.moveButton)
         setDisableButton(rootView.todayPromiseView.arriveButton)
@@ -133,12 +146,8 @@ class HomeViewController: BaseViewController {
     
         rootView.todayPromiseView.prepareLineView.isHidden = false
     }
-
-    @objc
-    private func moveButtonDidTap(_ sender: UIButton) {
-        let currentTimeString = dateFormatter.string(from: Date())
-        rootView.todayPromiseView.moveTimeLabel.setText(currentTimeString, style: .caption02, color: .gray8)
-        
+    
+    private func setMoveUI() {
         setCompleteButton(rootView.todayPromiseView.prepareButton)
         rootView.todayPromiseView.moveButton.setTitle("이동 중", for: .normal)
         setProgressButton(rootView.todayPromiseView.moveButton)
@@ -158,11 +167,7 @@ class HomeViewController: BaseViewController {
         rootView.todayPromiseView.moveLineView.isHidden = false
     }
     
-    @objc
-    private func arriveButtonDidTap(_ sender: UIButton) {
-        let currentTimeString = dateFormatter.string(from: Date())
-        rootView.todayPromiseView.arriveTimeLabel.setText(currentTimeString, style: .caption02, color: .gray8)
-        
+    private func setArriveUI() {
         setCompleteButton(rootView.todayPromiseView.prepareButton)
         setCompleteButton(rootView.todayPromiseView.moveButton)
         setCompleteButton(rootView.todayPromiseView.arriveButton)
@@ -181,6 +186,42 @@ class HomeViewController: BaseViewController {
         rootView.todayPromiseView.moveCheckView.isHidden = false
         rootView.todayPromiseView.arriveCheckView.isHidden = false
         rootView.todayPromiseView.arriveLineView.isHidden = false
+    }
+    
+    
+    // MARK: - Action
+    
+    @objc
+    private func prepareButtonDidTap(_ sender: UIButton) {
+        let currentTimeString = dateFormatter.string(from: Date())
+        rootView.todayPromiseView.prepareTimeLabel.setText(
+            currentTimeString,
+            style: .caption02,
+            color: .gray8
+        )
+        viewModel.updateState(newState: .prepare)
+    }
+
+    @objc
+    private func moveButtonDidTap(_ sender: UIButton) {
+        let currentTimeString = dateFormatter.string(from: Date())
+        rootView.todayPromiseView.moveTimeLabel.setText(
+            currentTimeString,
+            style: .caption02,
+            color: .gray8
+        )
+        viewModel.updateState(newState: .move)
+    }
+    
+    @objc
+    private func arriveButtonDidTap(_ sender: UIButton) {
+        let currentTimeString = dateFormatter.string(from: Date())
+        rootView.todayPromiseView.arriveTimeLabel.setText(
+            currentTimeString,
+            style: .caption02,
+            color: .gray8
+        )
+        viewModel.updateState(newState: .arrive)
     }
 }
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum ReadyStatus {
+enum ReadyState {
     case none
     case prepare
     case move
@@ -15,10 +15,9 @@ enum ReadyStatus {
 }
 
 final class HomeViewModel {
-    private var currentStatus: ReadyStatus = .none
+    var currentState = ObservablePattern<ReadyState>(.none)
     
-    func updateStatus(currentStatus: ReadyStatus) {
-        
+    func updateState(newState: ReadyState) {
+        currentState.value = newState
     }
-    
 }
