@@ -48,7 +48,7 @@ private extension Toast {
     }
     
     func setupToastAppearance() {
-        layer.cornerRadius = 25
+        layer.cornerRadius = 20
         backgroundColor = .black.withAlphaComponent(0.4)
         isUserInteractionEnabled = false
     }

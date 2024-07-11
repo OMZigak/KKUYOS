@@ -115,11 +115,23 @@ private extension MeetingInfoViewController {
             }
             .disposed(by: disposeBag)
         
-        output.createNewPromise
-            .drive(with: self) { owner, _ in
-                // TODO: 약속 추가 화면으로 이동
+        output.isPossbleToCreatePromise
+            .drive(with: self) { owner, flag in
+                guard flag else {
+                    let toast = Toast()
+                    toast.show(
+                        message: "모임에 구성원이 없어서 약속을 만들 수 없어요.",
+                        view: owner.view,
+                        position: .bottom,
+                        inset: 100
+                    )
+                    return
+                }
+                // TODO: 약속 추가 화면으로 넘어가기
             }
             .disposed(by: disposeBag)
+        
+        rootView.configureEmptyView(with: viewModel.meetingPromises.count == 0)
     }
 }
 

@@ -54,7 +54,7 @@ final class MeetingInfoView: BaseView {
     private let infoBanner = MeetingInfoBannerView()
     
     private let memberCountLabel = UILabel().then {
-        $0.setText("모임 참여 인원 ?명", style: .body01, color: .gray8)
+        $0.setText("모임 참여 인원 0명", style: .body01, color: .gray8)
     }
     
     private let arrowButton = UIButton().then {
@@ -80,10 +80,25 @@ final class MeetingInfoView: BaseView {
         $0.setText("남은 약속을 확인해보세요", style: .body01, color: .gray7)
     }
     
+    private let emptyDescriptionView = UIView(backgroundColor: .white).then {
+        $0.layer.cornerRadius = 8
+        $0.layer.borderColor = UIColor.gray2.cgColor
+        $0.layer.borderWidth = 1
+    }
+    
+    private let emptyDescriptionLabel = UILabel().then {
+        $0.setText("아직 약속이 없네요!\n약속을 추가해 보세요!", style: .body05, color: .gray3)
+        $0.setHighlightText("약속을 추가", style: .body05, color: .maincolor)
+        $0.textAlignment = .center
+    }
+    
     override func setupView() {
         backgroundColor = .white
         
-        grayBackgroundView.addSubviews(promiseDescriptionLabel, promiseListView)
+        grayBackgroundView.addSubviews(
+            promiseDescriptionLabel, emptyDescriptionView, promiseListView
+        )
+        emptyDescriptionView.addSubviews(emptyDescriptionLabel)
         addSubviews(
             infoBanner, memberCountLabel, arrowButton, memberListView, createPromiseButton,
             grayBackgroundView
@@ -137,6 +152,16 @@ final class MeetingInfoView: BaseView {
             $0.width.equalTo(Screen.width(136))
             $0.height.equalTo(Screen.height(52))
         }
+        
+        emptyDescriptionView.snp.makeConstraints {
+            $0.top.equalTo(promiseDescriptionLabel.snp.bottom).offset(16)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
+        emptyDescriptionLabel.snp.makeConstraints {
+            $0.verticalEdges.equalToSuperview().inset(48)
+            $0.horizontalEdges.equalToSuperview().inset(109)
+        }
     }
 }
 
@@ -152,5 +177,9 @@ extension MeetingInfoView {
             $0.setText("모임 참여 인원 \(memberCount)명", style: .body01, color: .gray8)
             $0.setHighlightText("\(memberCount)명", style: .body01, color: .maincolor)
         }
+    }
+    
+    func configureEmptyView(with flag: Bool) {
+        emptyDescriptionView.isHidden = !flag
     }
 }

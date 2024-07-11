@@ -12,6 +12,7 @@ import RxSwift
 
 final class MeetingInfoViewModel {
     var meetingInvitationCode: String? { infoRelay.value?.invitationCode }
+    var meetingPromises: [MeetingPromise] { meetingPromisesModelRelay.value?.promises ?? [] }
     
     private let service: MeetingInfoServiceType
     private let infoRelay = BehaviorRelay<MeetingInfoModel?>(value: nil)
@@ -34,7 +35,7 @@ extension MeetingInfoViewModel: ViewModelType {
         let memberCount: Driver<Int>
         let members: Driver<[Member]>
         let promises: Driver<[MeetingPromise]>
-        let createNewPromise: Driver<Void>
+        let isPossbleToCreatePromise: Driver<Bool>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -80,15 +81,24 @@ extension MeetingInfoViewModel: ViewModelType {
             .map { $0.sorted { $0.dDay < $1.dDay }}
             .asDriver(onErrorJustReturn: [])
         
-        let createNewPromise = input.createPromiseButtonDidTap
-            .asDriver(onErrorJustReturn: ())
+        let isPossibleToCreatePromise = input.createPromiseButtonDidTap
+            .map { [weak self] _ in
+                guard let count = self?.meetingMemberModelRelay.value?.memberCount,
+                      count != 0
+                else {
+                    return false
+                }
+                return true
+            }
+            .asDriver(onErrorJustReturn: false)
+            
         
         let output = Output(
             info: info,
             memberCount: memberCount,
             members: members,
             promises: promises,
-            createNewPromise: createNewPromise
+            isPossbleToCreatePromise: isPossibleToCreatePromise
         )
         
         return output
