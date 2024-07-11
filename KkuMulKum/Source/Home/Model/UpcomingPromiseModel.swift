@@ -22,8 +22,8 @@ extension UpcomingPromiseModel {
             UpcomingPromiseModel(
                 name: "리프레쉬 데이",
                 meetingName: "꾸물이들",
-                dDay: 4,
-                date: "2024.07.13",
+                dDay: 0,
+                date: "2024.07.11",
                 time: "PM 2:00",
                 placeName: "어디가지"
             ),
