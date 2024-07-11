@@ -111,11 +111,19 @@ class HomeViewController: BaseViewController {
         setProgressButton(rootView.todayPromiseView.prepareButton)
         setEnableButton(rootView.todayPromiseView.moveButton)
         setDisableButton(rootView.todayPromiseView.arriveButton)
+        
         rootView.todayPromiseView.prepareButton.isEnabled = false
+        rootView.todayPromiseView.moveButton.isEnabled = true
+        
+        rootView.todayPromiseView.prepareCircleView.backgroundColor = .green2
+        rootView.todayPromiseView.moveCircleView.backgroundColor = .gray2
+        rootView.todayPromiseView.arriveCircleView.backgroundColor = .gray2
         
         rootView.todayPromiseView.prepareLabel.isHidden = true
         rootView.todayPromiseView.moveLabel.isHidden = false
         rootView.todayPromiseView.arriveLabel.isHidden = true
+        
+        rootView.todayPromiseView.prepareLineView.isHidden = false
     }
 
     @objc
@@ -124,11 +132,20 @@ class HomeViewController: BaseViewController {
         rootView.todayPromiseView.moveButton.setTitle("이동 중", for: .normal)
         setProgressButton(rootView.todayPromiseView.moveButton)
         setEnableButton(rootView.todayPromiseView.arriveButton)
+        
         rootView.todayPromiseView.moveButton.isEnabled = false
+        rootView.todayPromiseView.arriveButton.isEnabled = true
+        
+        rootView.todayPromiseView.prepareCircleView.backgroundColor = .maincolor
+        rootView.todayPromiseView.moveCircleView.backgroundColor = .green2
+        rootView.todayPromiseView.arriveCircleView.backgroundColor = .gray2
         
         rootView.todayPromiseView.prepareLabel.isHidden = true
         rootView.todayPromiseView.moveLabel.isHidden = true
         rootView.todayPromiseView.arriveLabel.isHidden = false
+        
+        rootView.todayPromiseView.prepareCheckView.isHidden = false
+        rootView.todayPromiseView.moveLineView.isHidden = false
     }
     
     @objc
@@ -136,10 +153,21 @@ class HomeViewController: BaseViewController {
         setCompleteButton(rootView.todayPromiseView.prepareButton)
         setCompleteButton(rootView.todayPromiseView.moveButton)
         setCompleteButton(rootView.todayPromiseView.arriveButton)
+
+        rootView.todayPromiseView.moveButton.isEnabled = false
+        rootView.todayPromiseView.arriveButton.isEnabled = false
+        
+        rootView.todayPromiseView.prepareCircleView.backgroundColor = .maincolor
+        rootView.todayPromiseView.moveCircleView.backgroundColor = .maincolor
+        rootView.todayPromiseView.arriveCircleView.backgroundColor = .maincolor
         
         rootView.todayPromiseView.prepareLabel.isHidden = true
         rootView.todayPromiseView.moveLabel.isHidden = true
         rootView.todayPromiseView.arriveLabel.isHidden = true
+        
+        rootView.todayPromiseView.moveCheckView.isHidden = false
+        rootView.todayPromiseView.arriveCheckView.isHidden = false
+        rootView.todayPromiseView.arriveLineView.isHidden = false
     }
 }
 

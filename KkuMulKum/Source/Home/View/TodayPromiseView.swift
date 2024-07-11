@@ -72,6 +72,51 @@ final class TodayPromiseView: BaseView {
         $0.backgroundColor = .gray2
     }
     
+    let prepareLineView = UIView().then {
+        $0.backgroundColor = .maincolor
+        $0.isHidden = true
+    }
+    
+    let moveLineView = UIView().then {
+        $0.backgroundColor = .maincolor
+        $0.isHidden = true
+    }
+    
+    let arriveLineView = UIView().then {
+        $0.backgroundColor = .maincolor
+        $0.isHidden = true
+    }
+    
+    let prepareCircleView = UIView().then {
+        $0.backgroundColor = .gray2
+        $0.layer.cornerRadius = 8
+    }
+    
+    let moveCircleView = UIView().then {
+        $0.backgroundColor = .gray2
+        $0.layer.cornerRadius = 8
+    }
+    
+    let arriveCircleView = UIView().then {
+        $0.backgroundColor = .gray2
+        $0.layer.cornerRadius = 8
+    }
+    
+    let prepareCheckView = UIImageView().then {
+        $0.image = .iconCheck
+        $0.isHidden = true
+    }
+    
+    let moveCheckView = UIImageView().then {
+        $0.image = .iconCheck
+        $0.isHidden = true
+    }
+    
+    let arriveCheckView = UIImageView().then {
+        $0.image = .iconCheck
+        $0.isHidden = true
+    }
+    
     let prepareButton = UIButton().then {
         $0.setTitle("준비 중", style: .body05, color: .maincolor)
         $0.setLayer(borderWidth: 1, borderColor: .maincolor, cornerRadius: 16)
@@ -80,11 +125,13 @@ final class TodayPromiseView: BaseView {
     let moveButton = UIButton().then {
         $0.setTitle("이동 시작", style: .body05, color: .gray4)
         $0.setLayer(borderWidth: 1, borderColor: .gray4, cornerRadius: 16)
+        $0.isEnabled = false
     }
     
     let arriveButton = UIButton().then {
         $0.setTitle("도착 완료", style: .body05, color: .gray4)
         $0.setLayer(borderWidth: 1, borderColor: .gray4, cornerRadius: 16)
+        $0.isEnabled = false
     }
     
     let prepareLabel = UILabel().then {
@@ -111,12 +158,21 @@ final class TodayPromiseView: BaseView {
             nameLabel,
             infoView,
             lineView,
+            prepareLineView,
+            moveLineView,
+            arriveLineView,
             prepareButton,
             moveButton,
             arriveButton,
             prepareLabel,
             moveLabel,
-            arriveLabel
+            arriveLabel,
+            prepareCircleView,
+            moveCircleView,
+            arriveCircleView,
+            prepareCheckView,
+            moveCheckView,
+            arriveCheckView
         )
         meetingNameView.addSubviews(meetingNameLabel)
         infoView.addArrangedSubviews(placeView, timeView)
@@ -166,6 +222,27 @@ final class TodayPromiseView: BaseView {
             $0.height.equalTo(32)
         }
         
+        prepareLineView.snp.makeConstraints {
+            $0.leading.equalToSuperview()
+            $0.trailing.equalTo(prepareButton.snp.centerX)
+            $0.top.equalToSuperview().offset(168)
+            $0.height.equalTo(4)
+        }
+        
+        moveLineView.snp.makeConstraints {
+            $0.leading.equalTo(prepareButton.snp.centerX)
+            $0.trailing.equalTo(moveButton.snp.centerX)
+            $0.top.equalToSuperview().offset(168)
+            $0.height.equalTo(4)
+        }
+        
+        arriveLineView.snp.makeConstraints {
+            $0.leading.equalTo(moveButton.snp.centerX)
+            $0.trailing.equalToSuperview()
+            $0.top.equalToSuperview().offset(168)
+            $0.height.equalTo(4)
+        }
+        
         arriveButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
             $0.top.equalToSuperview().offset(188)
@@ -179,6 +256,42 @@ final class TodayPromiseView: BaseView {
         
         placeIcon.snp.makeConstraints {
             $0.size.equalTo(24)
+        }
+        
+        prepareCircleView.snp.makeConstraints {
+            $0.centerY.equalTo(lineView.snp.centerY)
+            $0.centerX.equalTo(prepareButton.snp.centerX)
+            $0.size.equalTo(16)
+        }
+        
+        moveCircleView.snp.makeConstraints {
+            $0.centerY.equalTo(lineView.snp.centerY)
+            $0.centerX.equalTo(moveButton.snp.centerX)
+            $0.size.equalTo(16)
+        }
+        
+        arriveCircleView.snp.makeConstraints {
+            $0.centerY.equalTo(lineView.snp.centerY)
+            $0.centerX.equalTo(arriveButton.snp.centerX)
+            $0.size.equalTo(16)
+        }
+        
+        prepareCheckView.snp.makeConstraints {
+            $0.centerY.equalTo(lineView.snp.centerY)
+            $0.centerX.equalTo(prepareButton.snp.centerX)
+            $0.size.equalTo(16)
+        }
+        
+        moveCheckView.snp.makeConstraints {
+            $0.centerY.equalTo(lineView.snp.centerY)
+            $0.centerX.equalTo(moveButton.snp.centerX)
+            $0.size.equalTo(16)
+        }
+        
+        arriveCheckView.snp.makeConstraints {
+            $0.centerY.equalTo(lineView.snp.centerY)
+            $0.centerX.equalTo(arriveButton.snp.centerX)
+            $0.size.equalTo(16)
         }
         
         prepareLabel.snp.makeConstraints {
