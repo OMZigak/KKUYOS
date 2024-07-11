@@ -116,13 +116,10 @@ class HomeViewController: BaseViewController {
         rootView.todayPromiseView.moveButton.isEnabled = true
         
         rootView.todayPromiseView.prepareCircleView.backgroundColor = .green2
-        rootView.todayPromiseView.moveCircleView.backgroundColor = .gray2
-        rootView.todayPromiseView.arriveCircleView.backgroundColor = .gray2
         
         rootView.todayPromiseView.prepareLabel.isHidden = true
         rootView.todayPromiseView.moveLabel.isHidden = false
-        rootView.todayPromiseView.arriveLabel.isHidden = true
-        
+    
         rootView.todayPromiseView.prepareLineView.isHidden = false
     }
 
@@ -138,7 +135,6 @@ class HomeViewController: BaseViewController {
         
         rootView.todayPromiseView.prepareCircleView.backgroundColor = .maincolor
         rootView.todayPromiseView.moveCircleView.backgroundColor = .green2
-        rootView.todayPromiseView.arriveCircleView.backgroundColor = .gray2
         
         rootView.todayPromiseView.prepareLabel.isHidden = true
         rootView.todayPromiseView.moveLabel.isHidden = true
