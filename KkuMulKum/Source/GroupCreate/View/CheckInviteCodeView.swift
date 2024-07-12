@@ -25,8 +25,10 @@ class CheckInviteCodeView: BaseView {
     }
     
     override func setupAutoLayout() {
+        let safeArea = safeAreaLayoutGuide
+        
         checkInviteLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(32)
+            $0.top.equalTo(safeArea).offset(32)
             $0.leading.equalToSuperview().offset(20)
         }
         

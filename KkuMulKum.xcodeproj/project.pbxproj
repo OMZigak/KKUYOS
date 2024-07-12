@@ -67,6 +67,10 @@
 		DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072232C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift */; };
 		DD3072262C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072252C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift */; };
 		DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072272C3C104D00416D9F /* ArrivalCompletionResponseModel.swift */; };
+		DD43935F2C4049F800EC1799 /* EnterInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43935E2C4049F800EC1799 /* EnterInviteCodeViewController.swift */; };
+		DD4393612C404A8E00EC1799 /* EnterInviteCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4393602C404A8E00EC1799 /* EnterInviteCodeView.swift */; };
+		DD4393652C41230800EC1799 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4393642C41230800EC1799 /* CreateGroupViewController.swift */; };
+		DD4393672C4123A000EC1799 /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4393662C4123A000EC1799 /* CreateGroupView.swift */; };
 		DD931B6B2C3D9EBB00526452 /* ReadyStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B6A2C3D9EBB00526452 /* ReadyStatusView.swift */; };
 		DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */; };
 		DD931B722C3DA92700526452 /* EnterReadyInfoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B712C3DA92700526452 /* EnterReadyInfoButtonView.swift */; };
@@ -155,6 +159,10 @@
 		DD3072232C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPromiseReadyInfoRequestModel.swift; sourceTree = "<group>"; };
 		DD3072252C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseLateInfoResponseModel.swift; sourceTree = "<group>"; };
 		DD3072272C3C104D00416D9F /* ArrivalCompletionResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalCompletionResponseModel.swift; sourceTree = "<group>"; };
+		DD43935E2C4049F800EC1799 /* EnterInviteCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterInviteCodeViewController.swift; sourceTree = "<group>"; };
+		DD4393602C404A8E00EC1799 /* EnterInviteCodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterInviteCodeView.swift; sourceTree = "<group>"; };
+		DD4393642C41230800EC1799 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
+		DD4393662C4123A000EC1799 /* CreateGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		DD931B6A2C3D9EBB00526452 /* ReadyStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadyStatusView.swift; sourceTree = "<group>"; };
 		DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD931B712C3DA92700526452 /* EnterReadyInfoButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterReadyInfoButtonView.swift; sourceTree = "<group>"; };
@@ -312,6 +320,27 @@
 			path = KkuMulKum;
 			sourceTree = "<group>";
 		};
+		DD4393622C407C1700EC1799 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DDDEDDD62C3F031F0094681A /* CheckInviteCodeViewController.swift */,
+				DD43935E2C4049F800EC1799 /* EnterInviteCodeViewController.swift */,
+				DD4393642C41230800EC1799 /* CreateGroupViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		DD4393632C407C2500EC1799 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DDDEDDDA2C3F09DC0094681A /* CheckInviteCodeView.swift */,
+				DD4393602C404A8E00EC1799 /* EnterInviteCodeView.swift */,
+				DD4393662C4123A000EC1799 /* CreateGroupView.swift */,
+				DDDEDDD82C3F03CF0094681A /* JoinButtonView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		DD865B652C3920F600C351A2 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -423,9 +452,8 @@
 		DDDEDDD52C3F028B0094681A /* GroupCreate */ = {
 			isa = PBXGroup;
 			children = (
-				DDDEDDD62C3F031F0094681A /* CheckInviteCodeViewController.swift */,
-				DDDEDDDA2C3F09DC0094681A /* CheckInviteCodeView.swift */,
-				DDDEDDD82C3F03CF0094681A /* JoinButtonView.swift */,
+				DD4393622C407C1700EC1799 /* ViewController */,
+				DD4393632C407C2500EC1799 /* View */,
 			);
 			path = GroupCreate;
 			sourceTree = "<group>";
@@ -806,6 +834,7 @@
 				DE254AAC2C31192400A4015E /* UILabel+.swift in Sources */,
 				DE254AB72C3119D000A4015E /* ReuseIdentifiable.swift in Sources */,
 				DDA2EE752C385FB1007C6059 /* HomeViewController.swift in Sources */,
+				DD4393672C4123A000EC1799 /* CreateGroupView.swift in Sources */,
 				DDAF1C922C3D6E3D008A37D3 /* PromiseInfoViewController.swift in Sources */,
 				DE254AB42C31199B00A4015E /* UITextField+.swift in Sources */,
 				DDAF1C912C3D6E3D008A37D3 /* TardyViewController.swift in Sources */,
@@ -815,6 +844,7 @@
 				DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */,
 				DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */,
 				DDAF1C932C3D6E3D008A37D3 /* PromiseViewController.swift in Sources */,
+				DD4393612C404A8E00EC1799 /* EnterInviteCodeView.swift in Sources */,
 				DE9E18922C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift in Sources */,
 				DDDEDDDB2C3F09DC0094681A /* CheckInviteCodeView.swift in Sources */,
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
@@ -834,6 +864,7 @@
 				A3FB185B2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift in Sources */,
 				DD3072222C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift in Sources */,
 				789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */,
+				DD4393652C41230800EC1799 /* CreateGroupViewController.swift in Sources */,
 				DDAF1C8F2C3D6E3D008A37D3 /* PromiseSegmentedControl.swift in Sources */,
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
@@ -850,6 +881,7 @@
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,
 				DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */,
+				DD43935F2C4049F800EC1799 /* EnterInviteCodeViewController.swift in Sources */,
 				DD3072262C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift in Sources */,
 				DE254AB92C311AB300A4015E /* Screen.swift in Sources */,
 			);
