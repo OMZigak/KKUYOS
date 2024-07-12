@@ -64,7 +64,6 @@
 		A3DD9C232C4112EB00E58A13 /* MeetingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C222C4112EB00E58A13 /* MeetingListView.swift */; };
 		A3DD9C252C4133CD00E58A13 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C242C4133CD00E58A13 /* MeetingTableViewCell.swift */; };
 		A3DD9C272C41383200E58A13 /* MeetingDummyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C262C41383200E58A13 /* MeetingDummyModel.swift */; };
-		A3DD9C292C41653700E58A13 /* MeetingListHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C282C41653600E58A13 /* MeetingListHeader.swift */; };
 		A3FB184D2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */; };
 		A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */; };
 		A3FB18512C3BF531001483E5 /* RegisterMeetingsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18502C3BF531001483E5 /* RegisterMeetingsResponseModel.swift */; };
@@ -178,7 +177,6 @@
 		A3DD9C222C4112EB00E58A13 /* MeetingListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListView.swift; sourceTree = "<group>"; };
 		A3DD9C242C4133CD00E58A13 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
 		A3DD9C262C41383200E58A13 /* MeetingDummyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingDummyModel.swift; sourceTree = "<group>"; };
-		A3DD9C282C41653600E58A13 /* MeetingListHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListHeader.swift; sourceTree = "<group>"; };
 		A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsRequestModel.swift; sourceTree = "<group>"; };
 		A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsResponseModel.swift; sourceTree = "<group>"; };
 		A3FB18502C3BF531001483E5 /* RegisterMeetingsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMeetingsResponseModel.swift; sourceTree = "<group>"; };
@@ -541,7 +539,6 @@
 				A3DD9C222C4112EB00E58A13 /* MeetingListView.swift */,
 				A3DD9C242C4133CD00E58A13 /* MeetingTableViewCell.swift */,
 				A3DD9C262C41383200E58A13 /* MeetingDummyModel.swift */,
-				A3DD9C282C41653600E58A13 /* MeetingListHeader.swift */,
 			);
 			path = MeetingList;
 			sourceTree = "<group>";
@@ -1054,7 +1051,6 @@
 				DE9E18922C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift in Sources */,
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
 				DE254AAE2C31193600A4015E /* UIFont+.swift in Sources */,
-				A3DD9C292C41653700E58A13 /* MeetingListHeader.swift in Sources */,
 				DE6D4D152C3F14D80005584B /* InvitationCodePopUpViewController.swift in Sources */,
 				DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */,
 				782B407B2C3E395A008B0CA7 /* WelcomeView.swift in Sources */,

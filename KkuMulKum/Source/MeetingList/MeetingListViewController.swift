@@ -68,7 +68,16 @@ class MeetingListViewController: BaseViewController {
             .foregroundColor: UIColor.gray8,
             .font: UIFont.pretendard(.body03)
         ]
-    }
+         
+         let lineView = UIView(backgroundColor: .gray2)
+         navigationController?.navigationBar.addSubview(lineView)
+         
+         lineView.snp.makeConstraints {
+             $0.leading.trailing.equalToSuperview()
+             $0.bottom.equalTo(navigationController?.navigationBar.snp.bottom ?? 0)
+             $0.height.equalTo(1)
+         }
+     }
 }
 
 extension MeetingListViewController: UITableViewDelegate {
