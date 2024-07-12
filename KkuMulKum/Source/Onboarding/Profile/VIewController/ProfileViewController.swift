@@ -28,6 +28,7 @@ class ProfileSetupViewController: BaseViewController {
         super.viewDidLoad()
         
         setupNavigationBarTitle(with: "프로필 설정")
+        setupNavigationBarBackButton()
         setupBindings()
     }
     

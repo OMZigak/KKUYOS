@@ -86,8 +86,11 @@ class NicknameViewController: BaseViewController {
                 nickname: viewModel.nickname.value
             )
         )
-        profileSetupVC.modalPresentationStyle = .fullScreen
-        present(profileSetupVC, animated: true, completion: nil)
+//        profileSetupVC.modalPresentationStyle = .fullScreen
+//        present(profileSetupVC, animated: true, completion: nil)
+        // TODO: 온보딩 플로우 네비게이션으로 실행
+        navigationController?.pushViewController(profileSetupVC, animated: true)
+        
     }
     
     @objc private func dismissKeyboard() {
