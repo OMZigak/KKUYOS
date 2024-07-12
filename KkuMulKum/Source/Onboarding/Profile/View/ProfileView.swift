@@ -17,7 +17,7 @@ class ProfileSetupView: BaseView {
     }
     
     let titleLabel = UILabel().then {
-        $0.setText("프로필 설정", style: .body03, color: .black)
+        $0.setText("프로필 설정", style: .body03, color: .gray8)
         $0.textAlignment = .center
     }
     
@@ -40,7 +40,7 @@ class ProfileSetupView: BaseView {
     let cameraButton = UIButton().then {
         $0.setImage(UIImage.iconCamera, for: .normal)
         $0.tintColor = .white
-        $0.setLayer(borderWidth: 0, borderColor: .clear, cornerRadius: Screen.width(15))
+        $0.setLayer(borderWidth: 0, borderColor: .clear, cornerRadius: 15)
     }
     
     let skipButton = UIButton().then {

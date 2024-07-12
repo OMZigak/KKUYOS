@@ -27,7 +27,6 @@ class WelcomeViewController: BaseViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         setupView()
         setupActions()
         updateWelcomeLabel()
