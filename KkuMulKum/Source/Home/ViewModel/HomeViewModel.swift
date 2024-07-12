@@ -16,8 +16,13 @@ enum ReadyState {
 
 final class HomeViewModel {
     var currentState = ObservablePattern<ReadyState>(.none)
+    var contentData = ObservablePattern<[UpcomingPromiseModel]>(UpcomingPromiseModel.dummy())
     
     func updateState(newState: ReadyState) {
         currentState.value = newState
+    }
+    
+    func updateContentData(newData: [UpcomingPromiseModel]) {
+        contentData.value = newData
     }
 }

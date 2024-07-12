@@ -29,11 +29,11 @@ class HomeViewController: BaseViewController {
         $0.pmSymbol = "PM"
     }
     
-    private var contentData = UpcomingPromiseModel.dummy() {
-        didSet {
-            self.rootView.upcomingPromiseView.reloadData()
-        }
-    }
+//    private var contentData = UpcomingPromiseModel.dummy() {
+//        didSet {
+//            self.rootView.upcomingPromiseView.reloadData()
+//        }
+//    }
 
 
     // MARK: - LifeCycle
@@ -128,6 +128,14 @@ class HomeViewController: BaseViewController {
                 self?.setArriveUI()
             case .none:
                 break
+            }
+        }
+    }
+    
+    private func updateData() {
+        viewModel.contentData.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.rootView.upcomingPromiseView.reloadData()
             }
         }
     }
@@ -254,7 +262,7 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier, for: indexPath
         ) as? UpcomingPromiseCollectionViewCell else { return UICollectionViewCell() }
-        cell.dataBind(contentData[indexPath.item])
+        cell.dataBind(viewModel.contentData.value[indexPath.item])
         return cell
     }    
 }
