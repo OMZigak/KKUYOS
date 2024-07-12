@@ -1,5 +1,5 @@
 //
-//  EnterInviteCodeView.swift
+//  InviteCodeView.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 7/12/24.
@@ -7,19 +7,32 @@
 
 import UIKit
 
-class EnterInviteCodeView: BaseView {
+class InviteCodeView: BaseView {
     private let mainTitleLabel: UILabel = UILabel().then {
         $0.setText("모임 초대 코드를\n입력해 주세요", style: .head01)
     }
     
-    private let inviteCodeTextField: CustomTextField = CustomTextField(
+    let inviteCodeTextField: CustomTextField = CustomTextField(
         placeHolder: "모임 초대 코드를 입력해 주세요"
     )
+    
+    let checkImageView: UIImageView = UIImageView().then {
+        $0.image = .iconCheck.withTintColor(.maincolor)
+        $0.contentMode = .scaleAspectFit
+        $0.isHidden = true
+    }
+    
+    let errorLabel: UILabel = UILabel().then {
+        $0.setText("모임 초대 코드를 다시 확인해주세요.", style: .caption02, color: .mainred)
+        $0.isHidden = true
+    }
     
     let presentButton: CustomButton = CustomButton(title: "모임 가입하기", isEnabled: false)
     
     override func setupView() {
-        addSubviews(mainTitleLabel, inviteCodeTextField, presentButton)
+        backgroundColor = .white
+        
+        addSubviews(mainTitleLabel, inviteCodeTextField, checkImageView, errorLabel, presentButton)
     }
     
     override func setupAutoLayout() {
@@ -35,6 +48,18 @@ class EnterInviteCodeView: BaseView {
             $0.width.equalTo(CustomTextField.defaultWidth)
             $0.height.equalTo(CustomTextField.defaultHeight)
             $0.leading.equalTo(mainTitleLabel)
+        }
+        
+        checkImageView.snp.makeConstraints {
+            $0.centerY.equalTo(inviteCodeTextField)
+            $0.trailing.equalTo(inviteCodeTextField.snp.trailing).inset(12)
+            $0.height.equalTo(Screen.height(24))
+            $0.width.equalTo(checkImageView.snp.height)
+        }
+        
+        errorLabel.snp.makeConstraints {
+            $0.top.equalTo(inviteCodeTextField.snp.bottom).offset(8)
+            $0.leading.equalTo(inviteCodeTextField)
         }
         
         presentButton.snp.makeConstraints {
