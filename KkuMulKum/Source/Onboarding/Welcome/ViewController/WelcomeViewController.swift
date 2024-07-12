@@ -43,18 +43,19 @@ class WelcomeViewController: BaseViewController {
     }
     
     private func updateWelcomeLabel() {
-        welcomeView.welcomeLabel.text = "\(viewModel.nickname.value)님 반가워요!"
+        welcomeView.configure(with: viewModel.nickname.value)
     }
     
     @objc private func confirmButtonTapped() {
-            let mainTabBarController = MainTabBarController()
+        let mainTabBarController = MainTabBarController()
+        
+        let navigationController = UINavigationController(rootViewController: mainTabBarController)
+        
+        navigationController.isNavigationBarHidden = true
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.modalTransitionStyle = .crossDissolve
+        
+        self.present(navigationController, animated: true, completion: nil)
+    }
     
-            let navigationController = UINavigationController(rootViewController: mainTabBarController)
-            
-            navigationController.isNavigationBarHidden = true
-            navigationController.modalPresentationStyle = .fullScreen
-            navigationController.modalTransitionStyle = .crossDissolve
-            
-            self.present(navigationController, animated: true, completion: nil)
-        }
 }

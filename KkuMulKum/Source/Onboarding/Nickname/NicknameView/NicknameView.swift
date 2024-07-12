@@ -29,9 +29,7 @@ class NicknameView: BaseView {
     }
     
     let nicknameTextField = CustomTextField(placeHolder: "이름을 입력해 주세요").then {
-        $0.layer.cornerRadius = 8
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.gray3.cgColor
+        $0.setLayer(borderWidth: 1, borderColor: .gray3, cornerRadius: 8)
     }
     
     let characterCountLabel = UILabel().then {
@@ -53,8 +51,7 @@ class NicknameView: BaseView {
     
     override func setupView() {
         backgroundColor = .white
-        
-        [navigationBar, separatorLine, subtitleLabel, nicknameTextField, errorLabel, nextButton].forEach { addSubview($0) }
+        addSubviews(navigationBar, separatorLine, subtitleLabel, nicknameTextField, errorLabel, nextButton)
         navigationBar.addSubview(titleLabel)
         nicknameTextField.addSubview(characterCountLabel)
     }
@@ -62,12 +59,12 @@ class NicknameView: BaseView {
     override func setupAutoLayout() {
         navigationBar.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(92)
+            $0.height.equalTo(Screen.height(92))
         }
         
         titleLabel.snp.makeConstraints {
             $0.centerX.equalTo(navigationBar.snp.centerX)
-            $0.bottom.equalTo(navigationBar.snp.bottom).offset(-12)
+            $0.bottom.equalTo(navigationBar.snp.bottom).offset(-Screen.height(12))
         }
 
         separatorLine.snp.makeConstraints {
@@ -77,31 +74,31 @@ class NicknameView: BaseView {
         }
         
         subtitleLabel.snp.makeConstraints {
-            $0.top.equalTo(separatorLine.snp.bottom).offset(24)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(separatorLine.snp.bottom).offset(Screen.height(24))
+            $0.leading.trailing.equalToSuperview().inset(Screen.width(20))
         }
         
         nicknameTextField.snp.makeConstraints {
-            $0.top.equalTo(subtitleLabel.snp.bottom).offset(22)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(subtitleLabel.snp.bottom).offset(Screen.height(22))
+            $0.leading.trailing.equalToSuperview().inset(Screen.width(20))
             $0.height.equalTo(CustomTextField.defaultHeight)
         }
         
         characterCountLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.trailing.equalToSuperview().inset(12)
-            $0.width.equalTo(30)
+            $0.trailing.equalToSuperview().inset(Screen.width(12))
+            $0.width.equalTo(Screen.width(30))
         }
         
         errorLabel.snp.makeConstraints {
-            $0.top.equalTo(nicknameTextField.snp.bottom).offset(8)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(nicknameTextField.snp.bottom).offset(Screen.height(8))
+            $0.leading.trailing.equalToSuperview().inset(Screen.width(20))
         }
         
         nextButton.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(safeAreaLayoutGuide).offset(-20)
-            $0.height.equalTo(52)
+            $0.leading.trailing.equalToSuperview().inset(Screen.width(20))
+            $0.bottom.equalTo(safeAreaLayoutGuide).offset(-Screen.height(20))
+            $0.height.equalTo(Screen.height(52))
         }
     }
 }
