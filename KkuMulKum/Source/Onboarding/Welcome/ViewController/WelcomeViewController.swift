@@ -27,7 +27,6 @@ class WelcomeViewController: BaseViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
         setupView()
         setupActions()
         updateWelcomeLabel()
@@ -43,11 +42,19 @@ class WelcomeViewController: BaseViewController {
     }
     
     private func updateWelcomeLabel() {
-        welcomeView.welcomeLabel.text = "\(viewModel.nickname.value)님 반가워요!"
+        welcomeView.configure(with: viewModel.nickname.value)
     }
     
     @objc private func confirmButtonTapped() {
-        // TODO: main화면으로 넘기기
-        print("Confirm button tapped")
+        let mainTabBarController = MainTabBarController()
+        
+        let navigationController = UINavigationController(rootViewController: mainTabBarController)
+        
+        navigationController.isNavigationBarHidden = true
+        navigationController.modalPresentationStyle = .fullScreen
+        navigationController.modalTransitionStyle = .crossDissolve
+        
+        self.present(navigationController, animated: true, completion: nil)
     }
+    
 }
