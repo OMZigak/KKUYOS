@@ -75,10 +75,6 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
         )
     }
     
-    override func setupAction() {
-        
-    }
-    
     override func setupAutoLayout() {
         cellView.snp.makeConstraints {
             $0.edges.equalToSuperview()
