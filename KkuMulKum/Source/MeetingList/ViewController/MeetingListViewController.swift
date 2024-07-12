@@ -32,7 +32,7 @@ class MeetingListViewController: BaseViewController {
         register()
         setupDelegate()
         
-        updateMeeingList()
+        updateMeetingList()
     }
     
     
@@ -53,7 +53,7 @@ class MeetingListViewController: BaseViewController {
         rootView.tableView.dataSource = self
     }
     
-    private func updateMeeingList() {
+    private func updateMeetingList() {
         viewModel.meetingListData.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.rootView.tableView.reloadData()

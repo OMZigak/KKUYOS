@@ -37,7 +37,7 @@ final class MeetingListView: BaseView {
         $0.setText("모임 추가하기", style: .body05, color: .green3)
     }
     
-    private let addIcon = UIImageView().then {
+    private let addIconImageView = UIImageView().then {
         $0.image = .icGroupPlus
     }
     
@@ -56,7 +56,7 @@ final class MeetingListView: BaseView {
         self.backgroundColor = .gray0
         addSubview(tableView)
         header.addSubviews(infoLabel, addButton, addInfoView)
-        addInfoView.addArrangedSubviews(addIcon, addInfoLabel)
+        addInfoView.addArrangedSubviews(addIconImageView, addInfoLabel)
     }
     
     override func setupAutoLayout() {
