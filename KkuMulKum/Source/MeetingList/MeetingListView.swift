@@ -78,8 +78,7 @@ final class MeetingListView: BaseView {
         
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(64)
+            $0.top.bottom.equalToSuperview()
         }
     }
 }
