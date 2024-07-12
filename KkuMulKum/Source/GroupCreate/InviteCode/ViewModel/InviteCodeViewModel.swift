@@ -19,6 +19,12 @@ class InviteCodeViewModel {
     let inviteCodeState = ObservablePattern<InviteCodeState>(.empty)
     let isNextButtonEnabled = ObservablePattern<Bool>(false)
     
+    private let service: InviteCodeServiceType
+    
+    init(service: InviteCodeServiceType) {
+        self.service = service
+    }
+    
     func validateCode(_ code: String) {
         inviteCode.value = code
         

@@ -20,6 +20,12 @@ class CreateGroupViewModel {
     let isNextButtonEnabled = ObservablePattern<Bool>(false)
     let characterCount = ObservablePattern<String>("0/5")
     
+    private let service: CreateGroupServiceType
+    
+    init(service: CreateGroupServiceType) {
+        self.service = service
+    }
+    
     func validateName(_ name: String) {
         groupName.value = name
         characterCount.value = "\(name.count)/10"

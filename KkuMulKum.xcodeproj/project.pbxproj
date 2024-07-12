@@ -78,6 +78,8 @@
 		DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072272C3C104D00416D9F /* ArrivalCompletionResponseModel.swift */; };
 		DD3976682C41769400E2A4C4 /* CreateGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3976672C41769400E2A4C4 /* CreateGroupViewModel.swift */; };
 		DD39766B2C41995A00E2A4C4 /* FinishCreateNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39766A2C41995A00E2A4C4 /* FinishCreateNavigationView.swift */; };
+		DD39766F2C41B54400E2A4C4 /* InviteCodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39766E2C41B54400E2A4C4 /* InviteCodeService.swift */; };
+		DD3976732C41B6C800E2A4C4 /* CreateGroupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3976722C41B6C800E2A4C4 /* CreateGroupService.swift */; };
 		DD4393762C412F4500EC1799 /* InviteCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43936D2C412F4500EC1799 /* InviteCodeView.swift */; };
 		DD4393772C412F4500EC1799 /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43936E2C412F4500EC1799 /* CreateGroupView.swift */; };
 		DD4393782C412F4500EC1799 /* CheckInviteCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43936F2C412F4500EC1799 /* CheckInviteCodeView.swift */; };
@@ -199,6 +201,8 @@
 		DD3072272C3C104D00416D9F /* ArrivalCompletionResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalCompletionResponseModel.swift; sourceTree = "<group>"; };
 		DD3976672C41769400E2A4C4 /* CreateGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewModel.swift; sourceTree = "<group>"; };
 		DD39766A2C41995A00E2A4C4 /* FinishCreateNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishCreateNavigationView.swift; sourceTree = "<group>"; };
+		DD39766E2C41B54400E2A4C4 /* InviteCodeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodeService.swift; sourceTree = "<group>"; };
+		DD3976722C41B6C800E2A4C4 /* CreateGroupService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupService.swift; sourceTree = "<group>"; };
 		DD43936D2C412F4500EC1799 /* InviteCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteCodeView.swift; sourceTree = "<group>"; };
 		DD43936E2C412F4500EC1799 /* CreateGroupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		DD43936F2C412F4500EC1799 /* CheckInviteCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInviteCodeView.swift; sourceTree = "<group>"; };
@@ -504,6 +508,22 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		DD3976702C41B54800E2A4C4 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				DD39766E2C41B54400E2A4C4 /* InviteCodeService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		DD3976712C41B6B100E2A4C4 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				DD3976722C41B6C800E2A4C4 /* CreateGroupService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		DD43936B2C412F4500EC1799 /* GroupCreate */ = {
 			isa = PBXGroup;
 			children = (
@@ -521,6 +541,7 @@
 				DD4393872C41637D00EC1799 /* ViewController */,
 				DD4393882C41638500EC1799 /* View */,
 				DD4393892C41638A00EC1799 /* ViewModel */,
+				DD3976702C41B54800E2A4C4 /* Service */,
 			);
 			path = InviteCode;
 			sourceTree = "<group>";
@@ -563,6 +584,7 @@
 		DD4393842C41630200EC1799 /* CreateGroup */ = {
 			isa = PBXGroup;
 			children = (
+				DD3976712C41B6B100E2A4C4 /* Service */,
 				DD4393852C41632100EC1799 /* ViewController */,
 				DD4393862C41632800EC1799 /* View */,
 				DD3976692C41769900E2A4C4 /* ViewModel */,
@@ -1200,6 +1222,7 @@
 				DDAF1C932C3D6E3D008A37D3 /* PromiseViewController.swift in Sources */,
 				DE9E18922C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift in Sources */,
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
+				DD3976732C41B6C800E2A4C4 /* CreateGroupService.swift in Sources */,
 				DE254AAE2C31193600A4015E /* UIFont+.swift in Sources */,
 				DE6D4D152C3F14D80005584B /* InvitationCodePopUpViewController.swift in Sources */,
 				DD4393792C412F4500EC1799 /* JoinButtonView.swift in Sources */,
@@ -1219,6 +1242,7 @@
 				DE6D4D0F2C3F14D80005584B /* MeetingInfoService.swift in Sources */,
 				DED5DBF42C34539A006ECE7E /* BaseTableViewCell.swift in Sources */,
 				78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */,
+				DD39766F2C41B54400E2A4C4 /* InviteCodeService.swift in Sources */,
 				DE6D4D172C3F14D80005584B /* MeetingInfoViewModel.swift in Sources */,
 				78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */,
 				A3FB185B2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift in Sources */,
