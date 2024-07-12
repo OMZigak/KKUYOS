@@ -69,6 +69,7 @@ class HomeViewController: BaseViewController {
     override func setupDelegate() {
         rootView.upcomingPromiseView.delegate = self
         rootView.upcomingPromiseView.dataSource = self
+        rootView.scrollView.delegate = self
     }
     
     
@@ -226,7 +227,7 @@ class HomeViewController: BaseViewController {
 }
 
 
-// MARK: - UICollectionView Setting
+// MARK: - UICollectionViewDelegate
 
 extension HomeViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
@@ -256,4 +257,20 @@ extension HomeViewController: UICollectionViewDataSource {
         cell.dataBind(contentData[indexPath.item], itemRow: indexPath.item)
         return cell
     }    
+}
+
+
+// MARK: - UIScrollViewDelegate
+
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if rootView.scrollView.contentOffset.y < 0 {
+            rootView.scrollView.contentOffset.y = 0
+        }
+        
+        let maxOffsetY = rootView.scrollView.contentSize.height - rootView.scrollView.bounds.height
+        if rootView.scrollView.contentOffset.y > maxOffsetY {
+            rootView.scrollView.contentOffset.y = maxOffsetY
+        }
+    }
 }

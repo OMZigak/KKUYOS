@@ -15,7 +15,7 @@ final class HomeView: BaseView {
     
     // MARK: - Property
     
-    private let scrollView = UIScrollView().then {
+    let scrollView = UIScrollView().then {
         $0.backgroundColor = .gray0
         $0.showsVerticalScrollIndicator = false
         if #available(iOS 11.0, *) {
