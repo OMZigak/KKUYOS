@@ -1,5 +1,5 @@
 //
-//  EnterInviteCodeViewController.swift
+//  InviteCodeViewController.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 7/12/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EnterInviteCodeViewController: BaseViewController {
+class InviteCodeViewController: BaseViewController {
     private let inviteCodeViewModel: InviteCodeViewModel = InviteCodeViewModel()
     
     private let inviteCodeView: InviteCodeView = InviteCodeView()
@@ -84,7 +84,7 @@ class EnterInviteCodeViewController: BaseViewController {
     }
 }
 
-extension EnterInviteCodeViewController: UITextFieldDelegate {
+extension InviteCodeViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor

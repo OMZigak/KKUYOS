@@ -82,7 +82,7 @@
 		DD4393792C412F4500EC1799 /* JoinButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4393702C412F4500EC1799 /* JoinButtonView.swift */; };
 		DD43937A2C412F4500EC1799 /* FinishCreateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4393722C412F4500EC1799 /* FinishCreateViewController.swift */; };
 		DD43937B2C412F4500EC1799 /* CreateGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4393732C412F4500EC1799 /* CreateGroupViewController.swift */; };
-		DD43937C2C412F4500EC1799 /* EnterInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4393742C412F4500EC1799 /* EnterInviteCodeViewController.swift */; };
+		DD43937C2C412F4500EC1799 /* InviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4393742C412F4500EC1799 /* InviteCodeViewController.swift */; };
 		DD43937D2C412F4500EC1799 /* CheckInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4393752C412F4500EC1799 /* CheckInviteCodeViewController.swift */; };
 		DD43937F2C41357800EC1799 /* InviteCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43937E2C41357800EC1799 /* InviteCodeViewModel.swift */; };
 		DD931B6B2C3D9EBB00526452 /* ReadyStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B6A2C3D9EBB00526452 /* ReadyStatusView.swift */; };
@@ -201,7 +201,7 @@
 		DD4393702C412F4500EC1799 /* JoinButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JoinButtonView.swift; sourceTree = "<group>"; };
 		DD4393722C412F4500EC1799 /* FinishCreateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FinishCreateViewController.swift; sourceTree = "<group>"; };
 		DD4393732C412F4500EC1799 /* CreateGroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupViewController.swift; sourceTree = "<group>"; };
-		DD4393742C412F4500EC1799 /* EnterInviteCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterInviteCodeViewController.swift; sourceTree = "<group>"; };
+		DD4393742C412F4500EC1799 /* InviteCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteCodeViewController.swift; sourceTree = "<group>"; };
 		DD4393752C412F4500EC1799 /* CheckInviteCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInviteCodeViewController.swift; sourceTree = "<group>"; };
 		DD43937E2C41357800EC1799 /* InviteCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodeViewModel.swift; sourceTree = "<group>"; };
 		DD931B6A2C3D9EBB00526452 /* ReadyStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadyStatusView.swift; sourceTree = "<group>"; };
@@ -479,36 +479,100 @@
 		DD43936B2C412F4500EC1799 /* GroupCreate */ = {
 			isa = PBXGroup;
 			children = (
-				DD43936C2C412F4500EC1799 /* View */,
-				DD4393712C412F4500EC1799 /* ViewController */,
-				DD4393802C41357D00EC1799 /* ViewModel */,
+				DD4393812C4162CA00EC1799 /* CheckInviteCode */,
+				DD4393842C41630200EC1799 /* CreateGroup */,
+				DD43936C2C412F4500EC1799 /* InviteCode */,
+				DD4393712C412F4500EC1799 /* FinishCreate */,
 			);
 			path = GroupCreate;
 			sourceTree = "<group>";
 		};
-		DD43936C2C412F4500EC1799 /* View */ = {
+		DD43936C2C412F4500EC1799 /* InviteCode */ = {
 			isa = PBXGroup;
 			children = (
-				DD43936D2C412F4500EC1799 /* InviteCodeView.swift */,
-				DD43936E2C412F4500EC1799 /* CreateGroupView.swift */,
+				DD4393872C41637D00EC1799 /* ViewController */,
+				DD4393882C41638500EC1799 /* View */,
+				DD4393892C41638A00EC1799 /* ViewModel */,
+			);
+			path = InviteCode;
+			sourceTree = "<group>";
+		};
+		DD4393712C412F4500EC1799 /* FinishCreate */ = {
+			isa = PBXGroup;
+			children = (
+				DD4393722C412F4500EC1799 /* FinishCreateViewController.swift */,
+			);
+			path = FinishCreate;
+			sourceTree = "<group>";
+		};
+		DD4393812C4162CA00EC1799 /* CheckInviteCode */ = {
+			isa = PBXGroup;
+			children = (
+				DD4393822C4162E600EC1799 /* ViewController */,
+				DD4393832C4162F400EC1799 /* View */,
+			);
+			path = CheckInviteCode;
+			sourceTree = "<group>";
+		};
+		DD4393822C4162E600EC1799 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DD4393752C412F4500EC1799 /* CheckInviteCodeViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		DD4393832C4162F400EC1799 /* View */ = {
+			isa = PBXGroup;
+			children = (
 				DD43936F2C412F4500EC1799 /* CheckInviteCodeView.swift */,
 				DD4393702C412F4500EC1799 /* JoinButtonView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
 		};
-		DD4393712C412F4500EC1799 /* ViewController */ = {
+		DD4393842C41630200EC1799 /* CreateGroup */ = {
 			isa = PBXGroup;
 			children = (
-				DD4393722C412F4500EC1799 /* FinishCreateViewController.swift */,
+				DD4393852C41632100EC1799 /* ViewController */,
+				DD4393862C41632800EC1799 /* View */,
+			);
+			path = CreateGroup;
+			sourceTree = "<group>";
+		};
+		DD4393852C41632100EC1799 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
 				DD4393732C412F4500EC1799 /* CreateGroupViewController.swift */,
-				DD4393742C412F4500EC1799 /* EnterInviteCodeViewController.swift */,
-				DD4393752C412F4500EC1799 /* CheckInviteCodeViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
 		};
-		DD4393802C41357D00EC1799 /* ViewModel */ = {
+		DD4393862C41632800EC1799 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DD43936E2C412F4500EC1799 /* CreateGroupView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DD4393872C41637D00EC1799 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DD4393742C412F4500EC1799 /* InviteCodeViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		DD4393882C41638500EC1799 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DD43936D2C412F4500EC1799 /* InviteCodeView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DD4393892C41638A00EC1799 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				DD43937E2C41357800EC1799 /* InviteCodeViewModel.swift */,
@@ -1057,7 +1121,7 @@
 				DED5DBF22C34534A006ECE7E /* BaseCollectionReusableView.swift in Sources */,
 				DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */,
 				DE6D4D142C3F14D80005584B /* MeetingPromiseCell.swift in Sources */,
-				DD43937C2C412F4500EC1799 /* EnterInviteCodeViewController.swift in Sources */,
+				DD43937C2C412F4500EC1799 /* InviteCodeViewController.swift in Sources */,
 				DD4393782C412F4500EC1799 /* CheckInviteCodeView.swift in Sources */,
 				DE6D4D102C3F14D80005584B /* InvitationCodePopUpView.swift in Sources */,
 				DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */,
