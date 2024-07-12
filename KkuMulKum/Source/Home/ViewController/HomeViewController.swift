@@ -44,6 +44,7 @@ class HomeViewController: BaseViewController {
         
         updateUI()
         updateUpcomingPromise()
+        viewModel.dummy()
     }
     
     
@@ -122,7 +123,7 @@ class HomeViewController: BaseViewController {
     }
     
     private func updateUpcomingPromise() {
-        viewModel.upComingPromiseData.bind { [weak self] _ in
+        viewModel.upcomingPromiseData.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.rootView.upcomingPromiseView.reloadData()
             }
@@ -241,14 +242,14 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.upComingPromiseData.value.count
+        return viewModel.upcomingPromiseData.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier, for: indexPath
         ) as? UpcomingPromiseCollectionViewCell else { return UICollectionViewCell() }
-        cell.dataBind(viewModel.upComingPromiseData.value[indexPath.item])
+        cell.dataBind(viewModel.upcomingPromiseData.value[indexPath.item])
         return cell
     }    
 }

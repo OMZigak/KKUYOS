@@ -18,7 +18,8 @@ enum ReadyState {
 
 final class HomeViewModel {
     var currentState = ObservablePattern<ReadyState>(.none)
-    var upComingPromiseData = ObservablePattern<[UpcomingPromiseModel]>(UpcomingPromiseModel.dummy())
+    //var upComingPromiseData = ObservablePattern<[UpcomingPromiseModel]>(UpcomingPromiseModel.dummy())
+    var upcomingPromiseData = ObservablePattern<[UpcomingPromiseModel]>([])
     
     var homePrepareTime: String = ""
     var homeMoveTime: String = ""
@@ -45,7 +46,12 @@ final class HomeViewModel {
         }
     }
     
+    /// 더미 함수 이후에 삭제
+    func dummy() {
+        upcomingPromiseData.value = UpcomingPromiseModel.dummy()
+    }
+    
     func updateContentData(newData: [UpcomingPromiseModel]) {
-        upComingPromiseData.value = newData
+        upcomingPromiseData.value = newData
     }
 }
