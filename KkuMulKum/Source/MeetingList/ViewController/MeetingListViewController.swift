@@ -33,6 +33,7 @@ class MeetingListViewController: BaseViewController {
         setupDelegate()
         
         updateMeetingList()
+        viewModel.dummy()
     }
     
     

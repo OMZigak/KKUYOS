@@ -10,5 +10,14 @@ import UIKit
 import Then
 
 final class MeetingListViewModel {
-    var meetingListData = ObservablePattern<[MeetingDummyModel]>(MeetingDummyModel.dummy())
+    var meetingListData = ObservablePattern<[MeetingDummyModel]>([])
+    
+    /// 더미 함수 이후에 삭제
+    func dummy() {
+        meetingListData.value = MeetingDummyModel.dummy()
+    }
+    
+    func updateContentData(newData: [MeetingDummyModel]) {
+        meetingListData.value = newData
+    }
 }
