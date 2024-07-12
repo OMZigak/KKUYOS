@@ -55,7 +55,7 @@ final class MeetingInfoViewController: BaseViewController {
     }
     
     override func setupView() {
-        setupNavigationBar()
+        setupNavigationBarBackButton()
     }
 }
 
@@ -148,32 +148,5 @@ extension MeetingInfoViewController: MeetingMemberCellDelegate {
         viewController.modalTransitionStyle = .crossDissolve
         viewController.modalPresentationStyle = .overCurrentContext
         present(viewController, animated: true)
-    }
-}
-
-private extension MeetingInfoViewController {
-    func setupNavigationBar() {
-        title = ""
-        
-        navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor.gray8,
-            .font: UIFont.pretendard(.body03)
-        ]
-        
-        let backButton = UIBarButtonItem(
-            image: .iconBack,
-            style: .plain,
-            target: self,
-            action: #selector(backButtonDidTap)
-        ).then {
-            $0.tintColor = .black
-        }
-        
-        navigationItem.leftBarButtonItem = backButton
-    }
-    
-    @objc
-    func backButtonDidTap() {
-        navigationController?.popViewController(animated: true)
     }
 }
