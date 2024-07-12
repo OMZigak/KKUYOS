@@ -135,7 +135,7 @@ class HomeViewController: BaseViewController {
     }
     
     private func updateUpcomingPromise() {
-        viewModel.contentData.bind { [weak self] _ in
+        viewModel.upComingPromiseData.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.rootView.upcomingPromiseView.reloadData()
             }
