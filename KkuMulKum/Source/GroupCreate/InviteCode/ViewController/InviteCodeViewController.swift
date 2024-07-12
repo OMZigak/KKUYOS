@@ -8,7 +8,7 @@
 import UIKit
 
 class InviteCodeViewController: BaseViewController {
-    private let inviteCodeViewModel: InviteCodeViewModel = InviteCodeViewModel()
+    private let inviteCodeViewModel: InviteCodeViewModel = InviteCodeViewModel(service: MockInviteCodeService())
     
     private let inviteCodeView: InviteCodeView = InviteCodeView()
     

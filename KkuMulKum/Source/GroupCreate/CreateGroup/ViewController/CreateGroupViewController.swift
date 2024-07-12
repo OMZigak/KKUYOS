@@ -8,7 +8,7 @@
 import UIKit
 
 class CreateGroupViewController: BaseViewController {
-    private let createGroupViewModel: CreateGroupViewModel = CreateGroupViewModel()
+    private let createGroupViewModel: CreateGroupViewModel = CreateGroupViewModel(service: CreateGroupService())
     
     private let createGroupView: CreateGroupView = CreateGroupView()
     
