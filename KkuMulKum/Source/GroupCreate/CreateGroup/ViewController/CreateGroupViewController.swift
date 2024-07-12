@@ -67,7 +67,9 @@ class CreateGroupViewController: BaseViewController {
         // TODO: 서버 연결해서 초대 코드 받아올 수 있게 처리
         let inviteCodePopUpViewController = InvitationCodePopUpViewController(invitationCode: createGroupViewModel.inviteCode.value)
         
-        inviteCodePopUpViewController.modalPresentationStyle = .fullScreen
+        inviteCodePopUpViewController.modalPresentationStyle = .overFullScreen
+        inviteCodePopUpViewController.modalTransitionStyle = .crossDissolve
+        inviteCodePopUpViewController.view.backgroundColor = .black.withAlphaComponent(0.7)
         
         present(inviteCodePopUpViewController, animated: true, completion: nil)
     }

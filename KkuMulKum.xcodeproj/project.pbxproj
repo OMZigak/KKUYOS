@@ -77,6 +77,7 @@
 		DD3072262C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072252C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift */; };
 		DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072272C3C104D00416D9F /* ArrivalCompletionResponseModel.swift */; };
 		DD3976682C41769400E2A4C4 /* CreateGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3976672C41769400E2A4C4 /* CreateGroupViewModel.swift */; };
+		DD39766B2C41995A00E2A4C4 /* FinishCreateNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39766A2C41995A00E2A4C4 /* FinishCreateNavigationView.swift */; };
 		DD4393762C412F4500EC1799 /* InviteCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43936D2C412F4500EC1799 /* InviteCodeView.swift */; };
 		DD4393772C412F4500EC1799 /* CreateGroupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43936E2C412F4500EC1799 /* CreateGroupView.swift */; };
 		DD4393782C412F4500EC1799 /* CheckInviteCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43936F2C412F4500EC1799 /* CheckInviteCodeView.swift */; };
@@ -197,6 +198,7 @@
 		DD3072252C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseLateInfoResponseModel.swift; sourceTree = "<group>"; };
 		DD3072272C3C104D00416D9F /* ArrivalCompletionResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalCompletionResponseModel.swift; sourceTree = "<group>"; };
 		DD3976672C41769400E2A4C4 /* CreateGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupViewModel.swift; sourceTree = "<group>"; };
+		DD39766A2C41995A00E2A4C4 /* FinishCreateNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinishCreateNavigationView.swift; sourceTree = "<group>"; };
 		DD43936D2C412F4500EC1799 /* InviteCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteCodeView.swift; sourceTree = "<group>"; };
 		DD43936E2C412F4500EC1799 /* CreateGroupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateGroupView.swift; sourceTree = "<group>"; };
 		DD43936F2C412F4500EC1799 /* CheckInviteCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInviteCodeView.swift; sourceTree = "<group>"; };
@@ -486,6 +488,22 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		DD39766C2C4199BC00E2A4C4 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DD39766A2C41995A00E2A4C4 /* FinishCreateNavigationView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DD39766D2C4199C100E2A4C4 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DD4393722C412F4500EC1799 /* FinishCreateViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
 		DD43936B2C412F4500EC1799 /* GroupCreate */ = {
 			isa = PBXGroup;
 			children = (
@@ -510,7 +528,8 @@
 		DD4393712C412F4500EC1799 /* FinishCreate */ = {
 			isa = PBXGroup;
 			children = (
-				DD4393722C412F4500EC1799 /* FinishCreateViewController.swift */,
+				DD39766D2C4199C100E2A4C4 /* ViewController */,
+				DD39766C2C4199BC00E2A4C4 /* View */,
 			);
 			path = FinishCreate;
 			sourceTree = "<group>";
@@ -1211,6 +1230,7 @@
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
 				DD931B6B2C3D9EBB00526452 /* ReadyStatusView.swift in Sources */,
 				DD3976682C41769400E2A4C4 /* CreateGroupViewModel.swift in Sources */,
+				DD39766B2C41995A00E2A4C4 /* FinishCreateNavigationView.swift in Sources */,
 				DD3072202C3C0D4500416D9F /* MyReadyStatusResponseModel.swift in Sources */,
 				DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */,
 				DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */,
