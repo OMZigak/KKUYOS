@@ -68,7 +68,7 @@ final class MeetingListView: BaseView {
         addButton.snp.makeConstraints {
             $0.top.equalTo(infoLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(48)
+            $0.height.equalTo(Screen.height(48))
         }
         
         addInfoView.snp.makeConstraints {

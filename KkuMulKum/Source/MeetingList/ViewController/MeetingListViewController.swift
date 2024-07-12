@@ -78,7 +78,7 @@ class MeetingListViewController: BaseViewController {
          lineView.snp.makeConstraints {
              $0.leading.trailing.equalToSuperview()
              $0.bottom.equalTo(navigationController?.navigationBar.snp.bottom ?? 0)
-             $0.height.equalTo(1)
+             $0.height.equalTo(Screen.height(1))
          }
      }
 }
