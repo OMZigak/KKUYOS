@@ -54,7 +54,9 @@ class HomeViewController: BaseViewController {
         register()
         setupDelegate()
         setupAction()
+        
         updateUI()
+        updateUpcomingPromise()
     }
     
     
@@ -132,7 +134,7 @@ class HomeViewController: BaseViewController {
         }
     }
     
-    private func updateData() {
+    private func updateUpcomingPromise() {
         viewModel.contentData.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.rootView.upcomingPromiseView.reloadData()
@@ -262,7 +264,7 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier, for: indexPath
         ) as? UpcomingPromiseCollectionViewCell else { return UICollectionViewCell() }
-        cell.dataBind(viewModel.contentData.value[indexPath.item])
+        cell.dataBind(viewModel.upComingPromiseData.value[indexPath.item])
         return cell
     }    
 }
