@@ -21,19 +21,6 @@ class HomeViewController: BaseViewController {
     final let cellHeight: CGFloat = 216
     final let contentInterSpacing: CGFloat = 12
     final let contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-    final let cellNumber = 4
-    
-    private let dateFormatter = DateFormatter().then {
-        $0.dateFormat = "a hh:mm"
-        $0.amSymbol = "AM"
-        $0.pmSymbol = "PM"
-    }
-    
-//    private var contentData = UpcomingPromiseModel.dummy() {
-//        didSet {
-//            self.rootView.upcomingPromiseView.reloadData()
-//        }
-//    }
 
 
     // MARK: - LifeCycle
@@ -204,35 +191,32 @@ class HomeViewController: BaseViewController {
     
     @objc
     private func prepareButtonDidTap(_ sender: UIButton) {
-        let currentTimeString = dateFormatter.string(from: Date())
+        viewModel.updateState(newState: .prepare)
         rootView.todayPromiseView.prepareTimeLabel.setText(
-            currentTimeString,
+            viewModel.homePrepareTime,
             style: .caption02,
             color: .gray8
         )
-        viewModel.updateState(newState: .prepare)
     }
 
     @objc
     private func moveButtonDidTap(_ sender: UIButton) {
-        let currentTimeString = dateFormatter.string(from: Date())
+        viewModel.updateState(newState: .move)
         rootView.todayPromiseView.moveTimeLabel.setText(
-            currentTimeString,
+            viewModel.homeMoveTime,
             style: .caption02,
             color: .gray8
         )
-        viewModel.updateState(newState: .move)
     }
     
     @objc
     private func arriveButtonDidTap(_ sender: UIButton) {
-        let currentTimeString = dateFormatter.string(from: Date())
+        viewModel.updateState(newState: .arrive)
         rootView.todayPromiseView.arriveTimeLabel.setText(
-            currentTimeString,
+            viewModel.homeArriveTime,
             style: .caption02,
             color: .gray8
         )
-        viewModel.updateState(newState: .arrive)
     }
 }
 
@@ -257,7 +241,7 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
 
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cellNumber
+        return viewModel.upComingPromiseData.value.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
