@@ -21,7 +21,11 @@ class CheckInviteCodeView: BaseView {
     }
     
     override func setupView() {
-        self.addSubviews(checkInviteLabel, enterInviteCodeView, createGroupView)
+        self.addSubviews(
+            checkInviteLabel,
+            enterInviteCodeView,
+            createGroupView
+        )
     }
     
     override func setupAutoLayout() {

@@ -24,7 +24,11 @@ class JoinButtonView: BaseView {
     override func setupView() {
         self.backgroundColor = .green1
         
-        self.addSubviews(subTitleLabel, mainTitleLabel, chevronImageView)
+        self.addSubviews(
+            subTitleLabel,
+            mainTitleLabel,
+            chevronImageView
+        )
     }
     
     override func setupAutoLayout() {

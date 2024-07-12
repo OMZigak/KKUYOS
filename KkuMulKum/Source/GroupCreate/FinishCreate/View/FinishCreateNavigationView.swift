@@ -12,14 +12,15 @@ class FinishCreateNavigationView: BaseView {
         $0.setText("내 모임 추가하기", style: .body03, color: .gray8)
     }
     
-    let separatorView = UIView().then {
-        $0.backgroundColor = .gray1
-    }
+    let separatorView = UIView(backgroundColor: .gray1)
 
     override func setupView() {
         backgroundColor = .white
         
-        addSubviews(titleLabel, separatorView)
+        addSubviews(
+            titleLabel,
+            separatorView
+        )
     }
     
     override func setupAutoLayout() {

@@ -32,7 +32,13 @@ class InviteCodeView: BaseView {
     override func setupView() {
         backgroundColor = .white
         
-        addSubviews(mainTitleLabel, inviteCodeTextField, checkImageView, errorLabel, presentButton)
+        addSubviews(
+            mainTitleLabel,
+            inviteCodeTextField,
+            checkImageView,
+            errorLabel,
+            presentButton
+        )
     }
     
     override func setupAutoLayout() {

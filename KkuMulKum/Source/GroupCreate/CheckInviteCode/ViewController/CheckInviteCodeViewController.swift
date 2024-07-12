@@ -25,7 +25,7 @@ class CheckInviteCodeViewController: BaseViewController {
     override func setupAction() {
         checkInviteCodeView.enterInviteCodeView.addGestureRecognizer(UITapGestureRecognizer(
             target: self,
-            action: #selector(enterInviteCodeViewDidTap)
+            action: #selector(inviteCodeViewDidTap)
         ))
         checkInviteCodeView.createGroupView.addGestureRecognizer(UITapGestureRecognizer(
             target: self,
@@ -33,13 +33,13 @@ class CheckInviteCodeViewController: BaseViewController {
         ))
     }
     
-    @objc private func enterInviteCodeViewDidTap() {
-        let enterInviteCodeViewController = InviteCodeViewController()
+    @objc private func inviteCodeViewDidTap() {
+        let inviteCodeViewController = InviteCodeViewController()
         
-        enterInviteCodeViewController.modalTransitionStyle = .crossDissolve
-        enterInviteCodeViewController.modalPresentationStyle = .fullScreen
+        inviteCodeViewController.modalTransitionStyle = .crossDissolve
+        inviteCodeViewController.modalPresentationStyle = .fullScreen
         
-        navigationController?.pushViewController(enterInviteCodeViewController, animated: true)
+        navigationController?.pushViewController(inviteCodeViewController, animated: true)
     }
     
     @objc private func createGroupViewDidTap() {
