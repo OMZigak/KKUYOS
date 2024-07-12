@@ -22,13 +22,9 @@ final class HomeView: BaseView {
         }
     }
     
-    private let safeAreaView = UIView().then {
-        $0.backgroundColor = .maincolor
-    }
+    private let safeAreaView = UIView(backgroundColor: .maincolor)
     
-    private let contentView = UIView().then {
-        $0.backgroundColor = .maincolor
-    }
+    private let contentView = UIView(backgroundColor: .maincolor)
     
     private let logo = UIImageView().then {
         $0.image = .imgLogo
@@ -40,10 +36,9 @@ final class HomeView: BaseView {
         $0.setHighlightText("14번", "10번", style: .title00, color: .lightGreen)
     }
     
-    private let levelView = UIStackView().then {
+    private let levelView = UIStackView(axis: .horizontal).then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 12
-        $0.axis = .horizontal
         $0.alignment = .fill
         $0.distribution = .fill
     }
@@ -65,8 +60,7 @@ final class HomeView: BaseView {
         )
     }
     
-    private let promiseView = UIView().then {
-        $0.backgroundColor = .gray0
+    private let promiseView = UIView(backgroundColor: .gray0).then {
         $0.roundCorners(cornerRadius: 16, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
     }
     
@@ -79,15 +73,13 @@ final class HomeView: BaseView {
         $0.setImage(icon, for: .normal)
     }
     
-    let todayPromiseView = TodayPromiseView().then {
-        $0.backgroundColor = .white
+    let todayPromiseView = TodayPromiseView(backgroundColor: .white).then {
         $0.layer.cornerRadius = 8
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.gray2.cgColor
     }
     
-    let todayEmptyView = TodayEmptyView().then {
-        $0.backgroundColor = .white
+    let todayEmptyView = TodayEmptyView(backgroundColor: .white).then {
         $0.layer.cornerRadius = 8
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.gray2.cgColor
@@ -98,7 +90,10 @@ final class HomeView: BaseView {
         $0.setText("다가올 나의 약속은?", style: .body01, color: .gray8)
     }
     
-    lazy var upcomingPromiseView = UICollectionView(frame: .zero, collectionViewLayout: layout).then {
+    lazy var upcomingPromiseView = UICollectionView(
+        frame: .zero, collectionViewLayout: UICollectionViewFlowLayout().then {
+        $0.scrollDirection = .horizontal
+    }).then {
         $0.backgroundColor = .clear
         $0.showsVerticalScrollIndicator = false
         $0.showsHorizontalScrollIndicator = false
@@ -106,12 +101,7 @@ final class HomeView: BaseView {
         $0.isPagingEnabled = true
     }
     
-    private let layout = UICollectionViewFlowLayout().then {
-        $0.scrollDirection = .horizontal
-    }
-    
-    let upcomingEmptyView = UpcomingEmptyView().then {
-        $0.backgroundColor = .white
+    let upcomingEmptyView = UpcomingEmptyView(backgroundColor: .white).then {
         $0.layer.cornerRadius = 8
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.gray2.cgColor

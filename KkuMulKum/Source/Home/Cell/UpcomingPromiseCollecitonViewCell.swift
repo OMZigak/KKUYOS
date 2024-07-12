@@ -17,17 +17,15 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
     
     var itemRow: Int?
     
-    private let cellView = UIView().then {
-        $0.backgroundColor = .white
+    private let cellView = UIView(backgroundColor: .white).then {
         $0.layer.cornerRadius = 8
         $0.layer.borderWidth = 1
         $0.layer.borderColor = UIColor.gray2.cgColor
     }
     
-    private let meetingNameView = UIStackView().then {
+    private let meetingNameView = UIStackView(axis: .horizontal).then {
         $0.backgroundColor = .green2
         $0.layer.cornerRadius = 12
-        $0.axis = .horizontal
         $0.alignment = .fill
         $0.distribution = .fill
     }
@@ -60,7 +58,7 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
     // MARK: - UI Setting
     
     override func setupView() {
-        addSubview(cellView)
+        contentView.addSubview(cellView)
         meetingNameView.addSubview(meetingNameLabel)
         cellView.addSubviews(
             dateIcon,
@@ -139,8 +137,7 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
 // MARK: - Data Bind
 
 extension UpcomingPromiseCollectionViewCell {
-    func dataBind(_ contentData: UpcomingPromiseModel, itemRow: Int) {
-        self.itemRow = itemRow
+    func dataBind(_ contentData: UpcomingPromiseModel) {
         let dDayText = contentData.dDay == 0 ? "DAY" : "\(contentData.dDay)"
         dDayLabel.setText(
             "D-\(dDayText)",

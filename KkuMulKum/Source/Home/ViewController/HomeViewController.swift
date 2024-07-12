@@ -38,13 +38,13 @@ class HomeViewController: BaseViewController {
 
     // MARK: - LifeCycle
     
+    override func loadView() {
+        self.view = rootView
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(false)
         navigationController?.isNavigationBarHidden = true
-    }
-
-    override func loadView() {
-        self.view = rootView
     }
     
     override func viewDidLoad() {
@@ -254,7 +254,7 @@ extension HomeViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier, for: indexPath
         ) as? UpcomingPromiseCollectionViewCell else { return UICollectionViewCell() }
-        cell.dataBind(contentData[indexPath.item], itemRow: indexPath.item)
+        cell.dataBind(contentData[indexPath.item])
         return cell
     }    
 }

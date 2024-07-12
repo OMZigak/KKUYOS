@@ -15,10 +15,9 @@ final class TodayPromiseView: BaseView {
     
     // MARK: - Property
     
-    private let meetingNameView = UIStackView().then {
+    private let meetingNameView = UIStackView(axis: .horizontal).then {
         $0.backgroundColor = .green2
         $0.layer.cornerRadius = 12
-        $0.axis = .horizontal
         $0.alignment = .fill
         $0.distribution = .fill
     }
@@ -31,22 +30,19 @@ final class TodayPromiseView: BaseView {
         $0.setText("리프레쉬 데이", style: .body03, color: .gray8)
     }
     
-    private let placeView = UIStackView().then {
-        $0.axis = .horizontal
+    private let placeView = UIStackView(axis: .horizontal).then {
         $0.spacing = 4
         $0.alignment = .fill
         $0.distribution = .fill
     }
     
-    private let timeView = UIStackView().then {
-        $0.axis = .horizontal
+    private let timeView = UIStackView(axis: .horizontal).then {
         $0.spacing = 4
         $0.alignment = .fill
         $0.distribution = .fill
     }
     
-    private let infoView = UIStackView().then {
-        $0.axis = .horizontal
+    private let infoView = UIStackView(axis: .horizontal).then {
         $0.spacing = 12
         $0.alignment = .fill
         $0.distribution = .fill
@@ -68,37 +64,29 @@ final class TodayPromiseView: BaseView {
         $0.setText("PM 2:00", style: .body06, color: .gray7)
     }
     
-    private let lineView = UIView().then {
-        $0.backgroundColor = .gray2
-    }
+    private let lineView = UIView(backgroundColor: .gray2)
     
-    let prepareLineView = UIView().then {
-        $0.backgroundColor = .maincolor
+    let prepareLineView = UIView(backgroundColor: .maincolor).then {
         $0.isHidden = true
     }
     
-    let moveLineView = UIView().then {
-        $0.backgroundColor = .maincolor
+    let moveLineView = UIView(backgroundColor: .maincolor).then {
         $0.isHidden = true
     }
     
-    let arriveLineView = UIView().then {
-        $0.backgroundColor = .maincolor
+    let arriveLineView = UIView(backgroundColor: .maincolor).then {
         $0.isHidden = true
     }
     
-    let prepareCircleView = UIView().then {
-        $0.backgroundColor = .gray2
+    let prepareCircleView = UIView(backgroundColor: .maincolor).then {
         $0.layer.cornerRadius = 8
     }
     
-    let moveCircleView = UIView().then {
-        $0.backgroundColor = .gray2
+    let moveCircleView = UIView(backgroundColor: .gray2).then {
         $0.layer.cornerRadius = 8
     }
     
-    let arriveCircleView = UIView().then {
-        $0.backgroundColor = .gray2
+    let arriveCircleView = UIView(backgroundColor: .gray2).then {
         $0.layer.cornerRadius = 8
     }
     
