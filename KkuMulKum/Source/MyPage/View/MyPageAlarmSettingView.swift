@@ -39,7 +39,11 @@ class AlarmSettingView: BaseView {
     }
     
     private let subtitleLabel = UILabel().then {
-        $0.setText("준비, 이동을 시작해야할 시간에\n푸시 알림을 받을 수 있습니다.", style: .caption02, color: .gray)
+        $0.setText(
+            "준비, 이동을 시작해야할 시간에\n푸시 알림을 받을 수 있습니다.",
+            style: .caption02,
+            color: .gray
+        )
     }
     
     override func setupView() {

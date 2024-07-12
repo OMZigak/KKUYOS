@@ -11,7 +11,6 @@ import SnapKit
 import Then
 
 class MyPageNavigationView: BaseView {
-    
     let titleLabel = UILabel().then {
         $0.text = "마이페이지"
         $0.textAlignment = .center

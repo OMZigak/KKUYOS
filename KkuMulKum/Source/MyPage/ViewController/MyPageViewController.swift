@@ -16,17 +16,12 @@ class MyPageViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
-        setupAutoLayout()
     }
     
     override func setupView() {
-        super.setupView()
         view.backgroundColor = .green1
-        view.addSubview(navigationView)
-        view.addSubview(myPageContentView)
-        view.addSubview(alarmSettingView)
-        view.addSubview(etcSettingView)
+
+        view.addSubviews(navigationView, myPageContentView, alarmSettingView, etcSettingView)
     }
     
     private func setupAutoLayout() {

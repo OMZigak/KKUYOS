@@ -27,8 +27,8 @@ class WelcomeViewController: BaseViewController {
     }
     
     override func viewDidLoad() {
-        setupView()
-        setupActions()
+        super.viewDidLoad()
+        
         updateWelcomeLabel()
     }
     
@@ -37,8 +37,12 @@ class WelcomeViewController: BaseViewController {
         welcomeView.backgroundColor = .green1
     }
     
-    private func setupActions() {
-        welcomeView.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+    override func setupAction() {
+        welcomeView.confirmButton.addTarget(
+            self,
+            action: #selector(confirmButtonTapped), 
+            for: .touchUpInside
+        )
     }
     
     private func updateWelcomeLabel() {

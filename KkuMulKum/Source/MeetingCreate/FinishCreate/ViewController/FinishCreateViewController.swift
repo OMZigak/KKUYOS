@@ -66,13 +66,11 @@ class FinishCreateViewController: BaseViewController {
         confirmButton.addTarget(
             self,
             action: #selector(presentMeetingInfoViewControllerDidTapped),
-            for: .touchUpInside)
+            for: .touchUpInside
+        )
     }
     
     @objc func presentMeetingInfoViewControllerDidTapped() {
         // TODO: 모임 상세 화면 띄우기
-//        let meetingInfoViewController = MeetingInfoViewController(viewModel: Mee)
-//        
-//        present(meetingInfoViewController, animated: true)
     }
 }

@@ -28,6 +28,7 @@ class MeetingListViewController: BaseViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .gray0
+        setupNavigationBarTitle(with: "내 모임")
         register()
         
         updateMeetingList()
@@ -36,10 +37,6 @@ class MeetingListViewController: BaseViewController {
     
     
     // MARK: - Function
-    
-    override func setupView() {
-        setupNavigationBar()
-    }
     
     private func register() {
         rootView.tableView.register(
@@ -59,27 +56,6 @@ class MeetingListViewController: BaseViewController {
             }
         }
     }
-
-
-    // MARK: - Function
-    
-     private func setupNavigationBar() {
-        title = "내 모임"
-        
-        navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor.gray8,
-            .font: UIFont.pretendard(.body03)
-        ]
-         
-         let lineView = UIView(backgroundColor: .gray2)
-         navigationController?.navigationBar.addSubview(lineView)
-         
-         lineView.snp.makeConstraints {
-             $0.leading.trailing.equalToSuperview()
-             $0.bottom.equalTo(navigationController?.navigationBar.snp.bottom ?? 0)
-             $0.height.equalTo(Screen.height(1))
-         }
-     }
 }
 
 extension MeetingListViewController: UITableViewDelegate {

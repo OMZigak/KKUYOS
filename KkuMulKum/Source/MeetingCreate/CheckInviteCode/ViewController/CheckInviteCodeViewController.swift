@@ -34,7 +34,11 @@ class CheckInviteCodeViewController: BaseViewController {
     }
     
     @objc private func inviteCodeViewDidTap() {
-        let inviteCodeViewController = InviteCodeViewController()
+        let inviteCodeViewController = InviteCodeViewController(
+            viewModel: InviteCodeViewModel(
+                service: MockInviteCodeService()
+            )
+        )
         
         inviteCodeViewController.modalTransitionStyle = .crossDissolve
         inviteCodeViewController.modalPresentationStyle = .fullScreen
@@ -43,7 +47,11 @@ class CheckInviteCodeViewController: BaseViewController {
     }
     
     @objc private func createMeetingViewDidTap() {
-        let createMeetingViewController = CreateMeetingViewController()
+        let createMeetingViewController = CreateMeetingViewController(
+            viewModel: CreateMeetingViewModel(
+                service: CreateMeetingService()
+            )
+        )
         
         createMeetingViewController.modalTransitionStyle = .crossDissolve
         createMeetingViewController.modalPresentationStyle = .fullScreen

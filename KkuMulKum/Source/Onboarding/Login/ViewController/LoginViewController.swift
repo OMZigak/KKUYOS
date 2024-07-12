@@ -32,7 +32,7 @@ class LoginViewController: BaseViewController {
         let kakaoTapGesture = UITapGestureRecognizer(target: self, action: #selector(kakaoLoginTapped))
         loginView.kakaoLoginImageView.addGestureRecognizer(kakaoTapGesture)
         
-        // 더미 버튼
+        /// 더미 버튼
         loginView.dummyNextButton.addTarget(self, action: #selector(dummyNextButtonTapped), for: .touchUpInside)
     }
     
