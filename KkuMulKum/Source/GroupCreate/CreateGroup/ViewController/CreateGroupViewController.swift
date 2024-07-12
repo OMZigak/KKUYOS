@@ -20,7 +20,6 @@ class CreateGroupViewController: BaseViewController {
         super.viewDidLoad()
         
         setupBinding()
-        setupActions()
         setupTapGesture()
     }
     
@@ -44,7 +43,7 @@ class CreateGroupViewController: BaseViewController {
         }
     }
     
-    private func setupActions() {
+    override func setupAction() {
         createGroupView.nameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
         createGroupView.presentButton.addTarget(self, action: #selector(presentButtonDidTapped), for: .touchUpInside)
     }
