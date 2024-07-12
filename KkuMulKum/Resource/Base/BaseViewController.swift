@@ -8,8 +8,11 @@
 import UIKit
 
 class BaseViewController: UIViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        view.backgroundColor = .white
         
         setupView()
         setupAction()
@@ -24,4 +27,37 @@ class BaseViewController: UIViewController {
     
     /// RootView 또는 ViewController 자체로부터 Delegate, DateSource 등 설정
     func setupDelegate() {}
+}
+
+extension BaseViewController {
+    /// 네비게이션 바 타이틀 설정
+    final func setupNavigationBarTitle(with string: String) {
+        title = string
+        
+        navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor.gray8,
+            .font: UIFont.pretendard(.body03)
+        ]
+    }
+    
+    /// 네비게이션 바 BackButton 구성
+    final func setupNavigationBarBackButton() {
+        let backButton = UIBarButtonItem(
+            image: .iconBack,
+            style: .plain,
+            target: self,
+            action: #selector(backButtonDidTap)
+        ).then {
+            $0.tintColor = .black
+        }
+        
+        navigationItem.leftBarButtonItem = backButton
+    }
+}
+
+private extension BaseViewController {
+    @objc
+    func backButtonDidTap() {
+        navigationController?.popViewController(animated: true)
+    }
 }

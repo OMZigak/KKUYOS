@@ -29,7 +29,7 @@ final class MainTabBarController: UITabBarController {
             $0.tabBarItem.image = .iconHome
         }
         
-        let groupListViewController: GroupListViewController = GroupListViewController().then {
+        let groupListViewController: MeetingListViewController = MeetingListViewController().then {
             $0.tabBarItem.title = "내 모임"
             $0.tabBarItem.image = .iconGroup
         }
