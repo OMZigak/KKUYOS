@@ -16,7 +16,7 @@ class CheckInviteCodeView: BaseView {
         $0.setJoinButtonViewStatus(isReceived: true)
     }
     
-    let createGroupView: JoinButtonView = JoinButtonView().then {
+    let createMeetingView: JoinButtonView = JoinButtonView().then {
         $0.setJoinButtonViewStatus(isReceived: false)
     }
     
@@ -24,7 +24,7 @@ class CheckInviteCodeView: BaseView {
         self.addSubviews(
             checkInviteLabel,
             enterInviteCodeView,
-            createGroupView
+            createMeetingView
         )
     }
     
@@ -41,7 +41,7 @@ class CheckInviteCodeView: BaseView {
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
-        createGroupView.snp.makeConstraints {
+        createMeetingView.snp.makeConstraints {
             $0.top.equalTo(enterInviteCodeView.snp.bottom).offset(12)
             $0.leading.trailing.equalToSuperview().inset(20)
         }

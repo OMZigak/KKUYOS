@@ -29,7 +29,7 @@ final class MainTabBarController: UITabBarController {
             $0.tabBarItem.image = .iconHome
         }
         
-        let groupListViewController: MeetingListViewController = MeetingListViewController().then {
+        let meetingListViewController: MeetingListViewController = MeetingListViewController().then {
             $0.tabBarItem.title = "내 모임"
             $0.tabBarItem.image = .iconGroup
         }
@@ -54,7 +54,7 @@ final class MainTabBarController: UITabBarController {
             $0.navigationBar.tintColor = .black
         }
         
-        let groupListNavigationController = UINavigationController(rootViewController: groupListViewController).then {
+        let meetingListNavigationController = UINavigationController(rootViewController: meetingListViewController).then {
             $0.navigationBar.topItem?.backButtonDisplayMode = .minimal
             $0.navigationBar.tintColor = .black
         }
@@ -66,7 +66,7 @@ final class MainTabBarController: UITabBarController {
         
         setViewControllers([
             homeNavigationController,
-            groupListNavigationController,
+            meetingListNavigationController,
             myPageViewNavigationController
         ], animated: true)
     }

@@ -1,5 +1,5 @@
 //
-//  GroupListView.swift
+//  MeetingListView.swift
 //  KkuMulKum
 //
 //  Created by 예삐 on 7/12/24.

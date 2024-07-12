@@ -1,5 +1,5 @@
 //
-//  CreateGroupViewModel.swift
+//  CreateMeetingViewModel.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 7/12/24.
@@ -7,27 +7,27 @@
 
 import Foundation
 
-enum GroupNameState {
+enum MeetingNameState {
     case empty
     case valid
     case invalid
 }
 
-class CreateGroupViewModel {
-    let groupName = ObservablePattern<String>("")
-    let inviteCodeState = ObservablePattern<GroupNameState>(.empty)
+class CreateMeetingViewModel {
+    let meetingName = ObservablePattern<String>("")
+    let inviteCodeState = ObservablePattern<MeetingNameState>(.empty)
     let inviteCode = ObservablePattern<String>("")
     let isNextButtonEnabled = ObservablePattern<Bool>(false)
     let characterCount = ObservablePattern<String>("0/5")
     
-    private let service: CreateGroupServiceType
+    private let service: CreateMeetingServiceType
     
-    init(service: CreateGroupServiceType) {
+    init(service: CreateMeetingServiceType) {
         self.service = service
     }
     
     func validateName(_ name: String) {
-        groupName.value = name
+        meetingName.value = name
         characterCount.value = "\(name.count)/10"
         
         if name.isEmpty {

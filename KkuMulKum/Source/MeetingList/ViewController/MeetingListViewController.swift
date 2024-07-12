@@ -1,5 +1,5 @@
 //
-//  GroupListViewController.swift
+//  MeetingListViewController.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 7/6/24.

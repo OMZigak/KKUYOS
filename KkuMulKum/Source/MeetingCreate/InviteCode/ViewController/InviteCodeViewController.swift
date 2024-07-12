@@ -70,7 +70,7 @@ class InviteCodeViewController: BaseViewController {
     
     @objc private func nextButtonTapped() {
         // TODO: 서버 연결할 때 데이터 바인딩해서 화면 전환 시키기
-        let promiseViewController = PromiseViewController()
+        let promiseViewController = BasePromiseViewController()
         
         promiseViewController.modalPresentationStyle = .fullScreen
         

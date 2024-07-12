@@ -1,5 +1,5 @@
 //
-//  CreateGroupView.swift
+//  CreateMeetingView.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 7/12/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CreateGroupView: BaseView {
+class CreateMeetingView: BaseView {
     private let mainTitleLabel: UILabel = UILabel().then {
         $0.setText("모임 이름을\n입력해 주세요", style: .head01)
     }

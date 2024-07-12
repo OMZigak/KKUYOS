@@ -1,5 +1,5 @@
 //
-//  CreateGroupViewController.swift
+//  CreateMeetingViewController.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 7/12/24.
@@ -7,13 +7,13 @@
 
 import UIKit
 
-class CreateGroupViewController: BaseViewController {
-    private let createGroupViewModel: CreateGroupViewModel = CreateGroupViewModel(service: CreateGroupService())
+class CreateMeetingViewController: BaseViewController {
+    private let createMeetingViewModel: CreateMeetingViewModel = CreateMeetingViewModel(service: CreateMeetingService())
     
-    private let createGroupView: CreateGroupView = CreateGroupView()
+    private let createMeetingView: CreateMeetingView = CreateMeetingView()
     
     override func loadView() {
-        view = createGroupView
+        view = createMeetingView
     }
     
     override func viewDidLoad() {
@@ -29,23 +29,23 @@ class CreateGroupViewController: BaseViewController {
     }
     
     private func setupBinding() {
-        createGroupViewModel.inviteCodeState.bind(with: self) { owner, state in
+        createMeetingViewModel.inviteCodeState.bind(with: self) { owner, state in
             switch state {
             case .empty, .invalid:
-                self.createGroupView.presentButton.isEnabled = false
+                self.createMeetingView.presentButton.isEnabled = false
             case .valid:
-                self.createGroupView.presentButton.isEnabled = true
+                self.createMeetingView.presentButton.isEnabled = true
             }
             
-            self.createGroupViewModel.characterCount.bind(with: self) { owner, count in
-                self.createGroupView.characterLabel.text = count
+            self.createMeetingViewModel.characterCount.bind(with: self) { owner, count in
+                self.createMeetingView.characterLabel.text = count
             }
         }
     }
     
     override func setupAction() {
-        createGroupView.nameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        createGroupView.presentButton.addTarget(self, action: #selector(presentButtonDidTapped), for: .touchUpInside)
+        createMeetingView.nameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
+        createMeetingView.presentButton.addTarget(self, action: #selector(presentButtonDidTapped), for: .touchUpInside)
     }
     
     private func setupTapGesture() {
@@ -54,17 +54,17 @@ class CreateGroupViewController: BaseViewController {
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        createGroupViewModel.validateName(textField.text ?? "")
+        createMeetingViewModel.validateName(textField.text ?? "")
     }
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
-        createGroupView.nameTextField.layer.borderColor = UIColor.gray3.cgColor
+        createMeetingView.nameTextField.layer.borderColor = UIColor.gray3.cgColor
     }
     
     @objc private func presentButtonDidTapped() {
         // TODO: 서버 연결해서 초대 코드 받아올 수 있게 처리
-        let inviteCodePopUpViewController = InvitationCodePopUpViewController(invitationCode: createGroupViewModel.inviteCode.value)
+        let inviteCodePopUpViewController = InvitationCodePopUpViewController(invitationCode: createMeetingViewModel.inviteCode.value)
         
         inviteCodePopUpViewController.modalPresentationStyle = .overFullScreen
         inviteCodePopUpViewController.modalTransitionStyle = .crossDissolve

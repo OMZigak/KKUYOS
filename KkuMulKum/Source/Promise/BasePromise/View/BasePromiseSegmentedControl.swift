@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class PromiseSegmentedControl: UISegmentedControl {
+class BasePromiseSegmentedControl: UISegmentedControl {
     private let backgroundLineView: UIView = UIView().then {
         $0.backgroundColor = .gray2
     }

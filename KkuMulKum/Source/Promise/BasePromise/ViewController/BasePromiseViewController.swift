@@ -7,14 +7,14 @@
 
 import UIKit
 
-class PromiseViewController: BaseViewController {
-    private let promiseViewModel = PromiseViewModel()
+class BasePromiseViewController: BaseViewController {
+    private let promiseViewModel = BasePromiseViewModel()
     
     private let promiseViewControllerList: [BaseViewController] = [PromiseInfoViewController(),
                                              ReadyStatusViewController(),
                                              TardyViewController()]
     
-    private lazy var promiseSegmentedControl = PromiseSegmentedControl(
+    private lazy var promiseSegmentedControl = BasePromiseSegmentedControl(
         items: ["약속 정보", "준비 현황", "지각 꾸물이"]
     )
     
@@ -90,7 +90,7 @@ class PromiseViewController: BaseViewController {
 }
 
 
-extension PromiseViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+extension BasePromiseViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     func pageViewController(
         _ pageViewController: UIPageViewController,
         viewControllerAfter viewController: UIViewController

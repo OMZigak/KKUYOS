@@ -8,7 +8,7 @@
 import Foundation
 
 
-class PromiseViewModel {
+class BasePromiseViewModel {
     var currentPage = ObservablePattern<Int>(0)
     
     func didSegmentIndexChanged(index: Int) {
