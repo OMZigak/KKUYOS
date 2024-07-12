@@ -17,7 +17,7 @@ class InviteCodeView: BaseView {
     )
     
     let checkImageView: UIImageView = UIImageView().then {
-        $0.image = .iconCheck.withTintColor(.maincolor)
+        $0.image = .iconCheck
         $0.contentMode = .scaleAspectFit
         $0.isHidden = true
     }

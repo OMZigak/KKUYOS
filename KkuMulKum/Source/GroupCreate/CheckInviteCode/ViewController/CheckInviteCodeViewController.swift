@@ -34,7 +34,7 @@ class CheckInviteCodeViewController: BaseViewController {
     }
     
     @objc private func enterInviteCodeViewDidTap() {
-        let enterInviteCodeViewController = EnterInviteCodeViewController()
+        let enterInviteCodeViewController = InviteCodeViewController()
         
         enterInviteCodeViewController.modalTransitionStyle = .crossDissolve
         enterInviteCodeViewController.modalPresentationStyle = .fullScreen

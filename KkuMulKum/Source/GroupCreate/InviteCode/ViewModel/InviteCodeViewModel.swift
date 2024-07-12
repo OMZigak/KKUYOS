@@ -9,7 +9,7 @@ import Foundation
 
 enum InviteCodeState {
     case empty
-    case selected
+    case success
     case valid
     case invalid
 }
@@ -17,25 +17,24 @@ enum InviteCodeState {
 class InviteCodeViewModel {
     let inviteCode = ObservablePattern<String>("")
     let inviteCodeState = ObservablePattern<InviteCodeState>(.empty)
-    let codeErrorMessage = ObservablePattern<String?>(nil)
     let isNextButtonEnabled = ObservablePattern<Bool>(false)
-    
-    private let codeRegex = "{1,5}$"
     
     func validateCode(_ code: String) {
         inviteCode.value = code
         
         if code.isEmpty {
             inviteCodeState.value = .empty
-            codeErrorMessage.value = nil
             isNextButtonEnabled.value = false
-        } else if code.range(of: codeRegex, options: .regularExpression) != nil {
+        } else if code.count == 6 && code != "eeeeee" {
             inviteCodeState.value = .valid
-            codeErrorMessage.value = nil
+            isNextButtonEnabled.value = true
+        } 
+        // TODO: 서버 검증 성공했을 때 조건 변경
+        else if code == "eeeeee" {
+            inviteCodeState.value = .success
             isNextButtonEnabled.value = true
         } else {
             inviteCodeState.value = .invalid
-            codeErrorMessage.value = "한글, 영문, 숫자만을 사용해 총 5자 이내로 입력해주세요."
             isNextButtonEnabled.value = false
         }
     }

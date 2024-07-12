@@ -17,6 +17,8 @@ class InviteCodeViewController: BaseViewController {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         setupBinding()
         setupTapGesture()
     }
@@ -33,10 +35,6 @@ class InviteCodeViewController: BaseViewController {
                 self.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
                 self.inviteCodeView.errorLabel.isHidden = true
                 self.inviteCodeView.checkImageView.isHidden = true
-            case.selected:
-                self.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
-                self.inviteCodeView.errorLabel.isHidden = true
-                self.inviteCodeView.checkImageView.isHidden = true
             case .invalid:
                 self.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.mainred.cgColor
                 self.inviteCodeView.errorLabel.isHidden = false
@@ -44,7 +42,12 @@ class InviteCodeViewController: BaseViewController {
             case .valid:
                 self.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
                 self.inviteCodeView.errorLabel.isHidden = true
+                self.inviteCodeView.checkImageView.isHidden = true
+            case .success:
+                self.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
+                self.inviteCodeView.errorLabel.isHidden = true
                 self.inviteCodeView.checkImageView.isHidden = false
+                self.inviteCodeView.presentButton.isEnabled = true
             }
         }
     }
@@ -85,9 +88,21 @@ class InviteCodeViewController: BaseViewController {
 }
 
 extension InviteCodeViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
+        
+        return true
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        switch inviteCodeViewModel.inviteCodeState.value {
+        case .empty:
+            inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
+        case .valid, .success:
+            inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
+        case .invalid:
+            inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.mainred.cgColor
+        }
         
         return true
     }
