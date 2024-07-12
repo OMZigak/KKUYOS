@@ -466,6 +466,46 @@
 			path = KkuMulKum;
 			sourceTree = "<group>";
 		};
+		A3DD9C2C2C419FDA00E58A13 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				A3DD9C222C4112EB00E58A13 /* MeetingListView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		A3DD9C2D2C419FE000E58A13 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				A3DD9C2A2C419CF600E58A13 /* MeetingListViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		A3DD9C2E2C419FED00E58A13 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DDA2EE762C385FC3007C6059 /* MeetingListViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		A3DD9C2F2C419FFB00E58A13 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A3DD9C262C41383200E58A13 /* MeetingDummyModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		A3DD9C302C41A00900E58A13 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A3DD9C242C4133CD00E58A13 /* MeetingTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		DD865B652C3920F600C351A2 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -537,11 +577,11 @@
 		DDA2EE7C2C38607F007C6059 /* MeetingList */ = {
 			isa = PBXGroup;
 			children = (
-				DDA2EE762C385FC3007C6059 /* MeetingListViewController.swift */,
-				A3DD9C222C4112EB00E58A13 /* MeetingListView.swift */,
-				A3DD9C242C4133CD00E58A13 /* MeetingTableViewCell.swift */,
-				A3DD9C262C41383200E58A13 /* MeetingDummyModel.swift */,
-				A3DD9C2A2C419CF600E58A13 /* MeetingListViewModel.swift */,
+				A3DD9C302C41A00900E58A13 /* Cell */,
+				A3DD9C2F2C419FFB00E58A13 /* Model */,
+				A3DD9C2E2C419FED00E58A13 /* ViewController */,
+				A3DD9C2D2C419FE000E58A13 /* ViewModel */,
+				A3DD9C2C2C419FDA00E58A13 /* View */,
 			);
 			path = MeetingList;
 			sourceTree = "<group>";
