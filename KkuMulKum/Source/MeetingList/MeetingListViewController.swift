@@ -15,14 +15,7 @@ class MeetingListViewController: BaseViewController {
     // MARK: - Property
     
     private let rootView = MeetingListView()
-    
-    private var meetingList: [MeetingDummyModel] = MeetingDummyModel.dummy() {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.rootView.tableView.reloadData()
-            }
-        }
-    }
+    private let viewModel = MeetingListViewModel()
     
     
     // MARK: - Initializer
@@ -38,6 +31,8 @@ class MeetingListViewController: BaseViewController {
         setupView()
         register()
         setupDelegate()
+        
+        updateMeeingList()
     }
     
     
@@ -56,6 +51,14 @@ class MeetingListViewController: BaseViewController {
     override func setupDelegate() {
         rootView.tableView.delegate = self
         rootView.tableView.dataSource = self
+    }
+    
+    private func updateMeeingList() {
+        viewModel.meetingListData.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.rootView.tableView.reloadData()
+            }
+        }
     }
 
 
@@ -88,14 +91,14 @@ extension MeetingListViewController: UITableViewDelegate {
 
 extension MeetingListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return meetingList.count
+        return viewModel.meetingListData.value.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = rootView.tableView.dequeueReusableCell(
             withIdentifier: MeetingTableViewCell.reuseIdentifier, for: indexPath
         ) as? MeetingTableViewCell else { return UITableViewCell() }
-        cell.dataBind(meetingList[indexPath.item], itemRow: indexPath.item)
+        cell.dataBind(viewModel.meetingListData.value[indexPath.item])
         cell.selectionStyle = .none
         return cell
     }
