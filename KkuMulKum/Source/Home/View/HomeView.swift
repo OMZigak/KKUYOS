@@ -16,11 +16,14 @@ final class HomeView: BaseView {
     // MARK: - Property
     
     let scrollView = UIScrollView().then {
-        $0.backgroundColor = .gray0
         $0.showsVerticalScrollIndicator = false
         if #available(iOS 11.0, *) {
             $0.contentInsetAdjustmentBehavior = .never
         }
+    }
+    
+    private let safeAreaView = UIView().then {
+        $0.backgroundColor = .maincolor
     }
     
     private let contentView = UIView().then {
@@ -119,7 +122,7 @@ final class HomeView: BaseView {
     // MARK: - UI Setting
     
     override func setupView() {
-        addSubview(scrollView)
+        addSubviews(scrollView, safeAreaView)
         scrollView.addSubview(contentView)
         contentView.addSubviews(
             logo,
@@ -146,6 +149,11 @@ final class HomeView: BaseView {
             $0.edges.equalToSuperview()
         }
         
+        safeAreaView.snp.makeConstraints {
+            $0.top.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(self.safeAreaLayoutGuide.snp.top)
+        }
+        
         contentView.snp.makeConstraints {
             $0.edges.equalToSuperview()
             $0.width.equalToSuperview()
@@ -154,14 +162,14 @@ final class HomeView: BaseView {
         
         logo.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(58)
+            $0.top.equalToSuperview().offset(60)
             $0.width.equalTo(64)
             $0.height.equalTo(24)
         }
         
         kkumulLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(110)
+            $0.top.equalToSuperview().offset(112)
         }
         
         levelView.snp.makeConstraints {
