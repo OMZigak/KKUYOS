@@ -15,10 +15,7 @@ final class MeetingTableViewCell: BaseTableViewCell {
     
     // MARK: - Property
     
-    var itemRow: Int?
-    
-    private let cellView = UIView().then {
-        $0.backgroundColor = .white
+    private let cellView = UIView(backgroundColor: .white).then {
         $0.layer.cornerRadius = 8
     }
     
@@ -34,9 +31,7 @@ final class MeetingTableViewCell: BaseTableViewCell {
     // MARK: - UI Setting
     
     override func setupView() {
-        self.do {
-            $0.backgroundColor = .clear
-        }
+        self.backgroundColor = .clear
         addSubviews(cellView, nameLabel, countLabel, rightIcon)
     }
     

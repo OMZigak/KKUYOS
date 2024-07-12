@@ -45,7 +45,6 @@ final class MeetingListView: BaseView {
         $0.backgroundColor = .clear
         $0.showsVerticalScrollIndicator = false
         $0.separatorStyle = .none
-        header.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 170)
         $0.tableHeaderView = header
     }
     
@@ -79,6 +78,12 @@ final class MeetingListView: BaseView {
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.top.bottom.equalToSuperview()
+        }
+        
+        header.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.width)
+            $0.height.equalTo(Screen.height(170))
         }
     }
 }

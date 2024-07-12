@@ -28,9 +28,7 @@ class MeetingListViewController: BaseViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .gray0
-        setupView()
         register()
-        setupDelegate()
         
         updateMeetingList()
         viewModel.dummy()
@@ -86,7 +84,7 @@ class MeetingListViewController: BaseViewController {
 
 extension MeetingListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 88
+        return Screen.height(88)
     }
 }
 
