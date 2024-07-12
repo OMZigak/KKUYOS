@@ -6,7 +6,6 @@
 //
 
 import UIKit
-
 import AuthenticationServices
 
 class LoginViewController: BaseViewController {
@@ -21,6 +20,7 @@ class LoginViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bindViewModel()
+        setupAction()
     }
     
     override func setupAction() {
@@ -31,6 +31,9 @@ class LoginViewController: BaseViewController {
         
         let kakaoTapGesture = UITapGestureRecognizer(target: self, action: #selector(kakaoLoginTapped))
         loginView.kakaoLoginImageView.addGestureRecognizer(kakaoTapGesture)
+        
+        // 더미 버튼
+        loginView.dummyNextButton.addTarget(self, action: #selector(dummyNextButtonTapped), for: .touchUpInside)
     }
     
     private func bindViewModel() {
@@ -50,7 +53,6 @@ class LoginViewController: BaseViewController {
             }
         }
     }
-
     
     @objc private func appleLoginTapped() {
         loginViewModel.performAppleLogin(presentationAnchor: view.window!)
@@ -59,4 +61,13 @@ class LoginViewController: BaseViewController {
     @objc private func kakaoLoginTapped() {
         loginViewModel.performKakaoLogin(presentationAnchor: view.window!)
     }
+
+    // TODO: 추후 서버연결후 삭제예정
+    @objc private func dummyNextButtonTapped() {
+        _ = NicknameViewController()
+        let welcomeViewController = NicknameViewController()
+        welcomeViewController.modalPresentationStyle = .fullScreen
+        present(welcomeViewController, animated: true, completion: nil)
+    }
 }
+

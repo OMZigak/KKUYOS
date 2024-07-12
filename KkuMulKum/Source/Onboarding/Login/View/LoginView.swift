@@ -14,14 +14,15 @@ class LoginView: BaseView {
     
     let backgroundImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFill
-        $0.image = UIImage(named: "")
+        $0.image = .imgLogin
     }
     
-    let titleLabel = UILabel().then {
-        $0.text = "꾸물꿈"
-        $0.font = UIFont.systemFont(ofSize: 24, weight: .bold)
-        $0.textColor = .white
-        $0.textAlignment = .center
+    // TODO: 서버 연결후 삭제예정
+    let dummyNextButton = UIButton().then {
+        $0.setTitle("다음 화면으로 (서버연결후 삭제예정)", for: .normal)
+        $0.setTitleColor(.white, for: .normal)
+        $0.backgroundColor = .blue
+        $0.layer.cornerRadius = 8
     }
     
     let appleLoginImageView = UIImageView().then {
@@ -36,42 +37,34 @@ class LoginView: BaseView {
         $0.isUserInteractionEnabled = true
     }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        setupView()
+    override func setupView() {
+        addSubviews(backgroundImageView, appleLoginImageView, kakaoLoginImageView, dummyNextButton)
     }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-     override func setupView() {
-        addSubview(backgroundImageView)
-        addSubview(titleLabel)
-        addSubview(appleLoginImageView)
-        addSubview(kakaoLoginImageView)
-        
+    override func setupAutoLayout() {
         backgroundImageView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
         
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide).offset(50)
-            $0.centerX.equalToSuperview()
-        }
-        
         appleLoginImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(kakaoLoginImageView.snp.top).offset(-20)
-            $0.width.equalToSuperview().offset(-40)
-            $0.height.equalTo(54)
+            $0.bottom.equalTo(kakaoLoginImageView.snp.top).offset(20)
+            $0.width.equalToSuperview().offset(-Screen.width(40))
+            $0.height.equalTo(Screen.height(54))
         }
         
         kakaoLoginImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(safeAreaLayoutGuide).offset(-50)
-            $0.width.equalToSuperview().offset(-40)
-            $0.height.equalTo(54)
+            $0.bottom.equalTo(safeAreaLayoutGuide).offset(50)
+            $0.width.equalToSuperview().offset(40)
+            $0.height.equalTo(Screen.height(54))
+        }
+        
+        dummyNextButton.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalTo(kakaoLoginImageView.snp.bottom).offset(20)
+            $0.width.equalTo(200)
+            $0.height.equalTo(44)
         }
     }
 }
