@@ -29,33 +29,13 @@ final class SetReadyInfoView: BaseView {
         $0.distribution = .fill
     }
     
-    private let readyHourTextField = UITextField().then {
-        $0.setText(
-            placeholder: "00",
-            textColor: .gray8,
-            backgroundColor: .white,
-            placeholderColor: .gray3,
-            style: .body02
-        )
-        $0.setLayer(borderWidth: 1, borderColor: .gray3, cornerRadius: 8)
-        $0.addPadding(left: 16, right: 16)
-    }
+    private let readyHourTextField = CustomTextField(placeHolder: "00")
     
     private let readyHourLabel = UILabel().then {
         $0.setText("시간", style: .body03, color: .gray8)
     }
     
-    private let readyMinuteTextField = UITextField().then {
-        $0.setText(
-            placeholder: "00",
-            textColor: .gray8,
-            backgroundColor: .white,
-            placeholderColor: .gray3,
-            style: .body02
-        )
-        $0.setLayer(borderWidth: 1, borderColor: .gray3, cornerRadius: 8)
-        $0.addPadding(left: 16, right: 16)
-    }
+    private let readyMinuteTextField = CustomTextField(placeHolder: "00")
     
     private let readyMinuteLabel = UILabel().then {
         $0.setText("분", style: .body03, color: .gray8)
@@ -71,33 +51,13 @@ final class SetReadyInfoView: BaseView {
         $0.distribution = .fill
     }
     
-    private let moveHourTextField = UITextField().then {
-        $0.setText(
-            placeholder: "00",
-            textColor: .gray8,
-            backgroundColor: .white,
-            placeholderColor: .gray3,
-            style: .body02
-        )
-        $0.setLayer(borderWidth: 1, borderColor: .gray3, cornerRadius: 8)
-        $0.addPadding(left: 16, right: 16)
-    }
+    private let moveHourTextField = CustomTextField(placeHolder: "00")
     
     private let moveHourLabel = UILabel().then {
         $0.setText("시간", style: .body03, color: .gray8)
     }
     
-    private let moveMinuteTextField = UITextField().then {
-        $0.setText(
-            placeholder: "00",
-            textColor: .gray8,
-            backgroundColor: .white,
-            placeholderColor: .gray3,
-            style: .body02
-        )
-        $0.setLayer(borderWidth: 1, borderColor: .gray3, cornerRadius: 8)
-        $0.addPadding(left: 16, right: 16)
-    }
+    private let moveMinuteTextField = CustomTextField(placeHolder: "00")
     
     private let moveMinuteLabel = UILabel().then {
         $0.setText("분", style: .body03, color: .gray8)
