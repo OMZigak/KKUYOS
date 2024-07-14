@@ -68,155 +68,6 @@ class HomeViewController: BaseViewController {
         rootView.upcomingPromiseView.dataSource = self
         rootView.scrollView.delegate = self
     }
-    
-    
-    // MARK: - Function
-    
-    private func register() {
-        rootView.upcomingPromiseView.register(UpcomingPromiseCollectionViewCell.self,
-            forCellWithReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier
-        )
-    }
-    
-    
-    // MARK: - Function
-    
-    private func setDisableButton(_ sender: UIButton) {
-        sender.setTitleColor(.gray3, for: .normal)
-        sender.layer.borderColor = UIColor.gray3.cgColor
-        sender.backgroundColor = .white
-    }
-    
-    private func setEnableButton(_ sender: UIButton) {
-        sender.setTitleColor(.maincolor, for: .normal)
-        sender.layer.borderColor = UIColor.maincolor.cgColor
-        sender.backgroundColor = .white
-    }
-    
-    private func setProgressButton(_ sender: UIButton) {
-        sender.setTitleColor(.maincolor, for: .normal)
-        sender.layer.borderColor = UIColor.maincolor.cgColor
-        sender.backgroundColor = .green2
-    }
-    
-    private func setCompleteButton(_ sender: UIButton) {
-        sender.setTitleColor(.white, for: .normal)
-        sender.layer.borderColor = UIColor.maincolor.cgColor
-        sender.backgroundColor = .maincolor
-    }
-    
-    private func updateUI() {
-        viewModel.currentState.bind { [weak self] state in
-            switch state {
-            case .prepare:
-                self?.setPrepareUI()
-            case .move:
-                self?.setMoveUI()
-            case .arrive:
-                self?.setArriveUI()
-            case .none:
-                break
-            }
-        }
-    }
-    
-    private func updateUpcomingPromise() {
-        viewModel.upcomingPromiseData.bind { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.rootView.upcomingPromiseView.reloadData()
-            }
-        }
-    }
-    
-    private func setPrepareUI() {
-        setProgressButton(rootView.todayPromiseView.prepareButton)
-        setEnableButton(rootView.todayPromiseView.moveButton)
-        setDisableButton(rootView.todayPromiseView.arriveButton)
-        
-        rootView.todayPromiseView.prepareButton.isEnabled = false
-        rootView.todayPromiseView.moveButton.isEnabled = true
-        
-        rootView.todayPromiseView.prepareCircleView.backgroundColor = .green2
-        
-        rootView.todayPromiseView.prepareLabel.isHidden = true
-        rootView.todayPromiseView.moveLabel.isHidden = false
-    
-        rootView.todayPromiseView.prepareLineView.isHidden = false
-    }
-    
-    private func setMoveUI() {
-        setCompleteButton(rootView.todayPromiseView.prepareButton)
-        rootView.todayPromiseView.moveButton.setTitle("이동 중", for: .normal)
-        setProgressButton(rootView.todayPromiseView.moveButton)
-        setEnableButton(rootView.todayPromiseView.arriveButton)
-        
-        rootView.todayPromiseView.moveButton.isEnabled = false
-        rootView.todayPromiseView.arriveButton.isEnabled = true
-        
-        rootView.todayPromiseView.prepareCircleView.backgroundColor = .maincolor
-        rootView.todayPromiseView.moveCircleView.backgroundColor = .green2
-        
-        rootView.todayPromiseView.prepareLabel.isHidden = true
-        rootView.todayPromiseView.moveLabel.isHidden = true
-        rootView.todayPromiseView.arriveLabel.isHidden = false
-        
-        rootView.todayPromiseView.prepareCheckView.isHidden = false
-        rootView.todayPromiseView.moveLineView.isHidden = false
-    }
-    
-    private func setArriveUI() {
-        setCompleteButton(rootView.todayPromiseView.prepareButton)
-        setCompleteButton(rootView.todayPromiseView.moveButton)
-        setCompleteButton(rootView.todayPromiseView.arriveButton)
-
-        rootView.todayPromiseView.moveButton.isEnabled = false
-        rootView.todayPromiseView.arriveButton.isEnabled = false
-        
-        rootView.todayPromiseView.prepareCircleView.backgroundColor = .maincolor
-        rootView.todayPromiseView.moveCircleView.backgroundColor = .maincolor
-        rootView.todayPromiseView.arriveCircleView.backgroundColor = .maincolor
-        
-        rootView.todayPromiseView.prepareLabel.isHidden = true
-        rootView.todayPromiseView.moveLabel.isHidden = true
-        rootView.todayPromiseView.arriveLabel.isHidden = true
-        
-        rootView.todayPromiseView.moveCheckView.isHidden = false
-        rootView.todayPromiseView.arriveCheckView.isHidden = false
-        rootView.todayPromiseView.arriveLineView.isHidden = false
-    }
-    
-    
-    // MARK: - Action
-    
-    @objc
-    private func prepareButtonDidTap(_ sender: UIButton) {
-        viewModel.updateState(newState: .prepare)
-        rootView.todayPromiseView.prepareTimeLabel.setText(
-            viewModel.homePrepareTime,
-            style: .caption02,
-            color: .gray8
-        )
-    }
-
-    @objc
-    private func moveButtonDidTap(_ sender: UIButton) {
-        viewModel.updateState(newState: .move)
-        rootView.todayPromiseView.moveTimeLabel.setText(
-            viewModel.homeMoveTime,
-            style: .caption02,
-            color: .gray8
-        )
-    }
-    
-    @objc
-    private func arriveButtonDidTap(_ sender: UIButton) {
-        viewModel.updateState(newState: .arrive)
-        rootView.todayPromiseView.arriveTimeLabel.setText(
-            viewModel.homeArriveTime,
-            style: .caption02,
-            color: .gray8
-        )
-    }
 }
 
 
@@ -247,6 +98,9 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         return contentInset
     }
 }
+
+
+// MARK: - UICollectionViewDataSource
 
 extension HomeViewController: UICollectionViewDataSource {
     func collectionView(
@@ -282,5 +136,154 @@ extension HomeViewController: UIScrollViewDelegate {
         if rootView.scrollView.contentOffset.y > maxOffsetY {
             rootView.scrollView.contentOffset.y = maxOffsetY
         }
+    }
+}
+
+
+// MARK: - Function
+
+private extension HomeViewController {
+    func register() {
+        rootView.upcomingPromiseView.register(
+            UpcomingPromiseCollectionViewCell.self,
+            forCellWithReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier
+        )
+    }
+    
+    func setDisableButton(_ sender: UIButton) {
+        sender.setTitleColor(.gray3, for: .normal)
+        sender.layer.borderColor = UIColor.gray3.cgColor
+        sender.backgroundColor = .white
+    }
+    
+    func setEnableButton(_ sender: UIButton) {
+        sender.setTitleColor(.maincolor, for: .normal)
+        sender.layer.borderColor = UIColor.maincolor.cgColor
+        sender.backgroundColor = .white
+    }
+    
+    func setProgressButton(_ sender: UIButton) {
+        sender.setTitleColor(.maincolor, for: .normal)
+        sender.layer.borderColor = UIColor.maincolor.cgColor
+        sender.backgroundColor = .green2
+    }
+    
+    func setCompleteButton(_ sender: UIButton) {
+        sender.setTitleColor(.white, for: .normal)
+        sender.layer.borderColor = UIColor.maincolor.cgColor
+        sender.backgroundColor = .maincolor
+    }
+    
+    func updateUI() {
+        viewModel.currentState.bind { [weak self] state in
+            switch state {
+            case .prepare:
+                self?.setPrepareUI()
+            case .move:
+                self?.setMoveUI()
+            case .arrive:
+                self?.setArriveUI()
+            case .none:
+                break
+            }
+        }
+    }
+    
+    func updateUpcomingPromise() {
+        viewModel.upcomingPromiseData.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.rootView.upcomingPromiseView.reloadData()
+            }
+        }
+    }
+    
+    func setPrepareUI() {
+        setProgressButton(rootView.todayPromiseView.prepareButton)
+        setEnableButton(rootView.todayPromiseView.moveButton)
+        setDisableButton(rootView.todayPromiseView.arriveButton)
+        
+        rootView.todayPromiseView.prepareButton.isEnabled = false
+        rootView.todayPromiseView.moveButton.isEnabled = true
+        
+        rootView.todayPromiseView.prepareCircleView.backgroundColor = .green2
+        
+        rootView.todayPromiseView.prepareLabel.isHidden = true
+        rootView.todayPromiseView.moveLabel.isHidden = false
+        
+        rootView.todayPromiseView.prepareLineView.isHidden = false
+    }
+    
+    func setMoveUI() {
+        setCompleteButton(rootView.todayPromiseView.prepareButton)
+        rootView.todayPromiseView.moveButton.setTitle("이동 중", for: .normal)
+        setProgressButton(rootView.todayPromiseView.moveButton)
+        setEnableButton(rootView.todayPromiseView.arriveButton)
+        
+        rootView.todayPromiseView.moveButton.isEnabled = false
+        rootView.todayPromiseView.arriveButton.isEnabled = true
+        
+        rootView.todayPromiseView.prepareCircleView.backgroundColor = .maincolor
+        rootView.todayPromiseView.moveCircleView.backgroundColor = .green2
+        
+        rootView.todayPromiseView.prepareLabel.isHidden = true
+        rootView.todayPromiseView.moveLabel.isHidden = true
+        rootView.todayPromiseView.arriveLabel.isHidden = false
+        
+        rootView.todayPromiseView.prepareCheckView.isHidden = false
+        rootView.todayPromiseView.moveLineView.isHidden = false
+    }
+    
+    func setArriveUI() {
+        setCompleteButton(rootView.todayPromiseView.prepareButton)
+        setCompleteButton(rootView.todayPromiseView.moveButton)
+        setCompleteButton(rootView.todayPromiseView.arriveButton)
+        
+        rootView.todayPromiseView.moveButton.isEnabled = false
+        rootView.todayPromiseView.arriveButton.isEnabled = false
+        
+        rootView.todayPromiseView.prepareCircleView.backgroundColor = .maincolor
+        rootView.todayPromiseView.moveCircleView.backgroundColor = .maincolor
+        rootView.todayPromiseView.arriveCircleView.backgroundColor = .maincolor
+        
+        rootView.todayPromiseView.prepareLabel.isHidden = true
+        rootView.todayPromiseView.moveLabel.isHidden = true
+        rootView.todayPromiseView.arriveLabel.isHidden = true
+        
+        rootView.todayPromiseView.moveCheckView.isHidden = false
+        rootView.todayPromiseView.arriveCheckView.isHidden = false
+        rootView.todayPromiseView.arriveLineView.isHidden = false
+    }
+    
+    
+    // MARK: - Action
+    
+    @objc
+    func prepareButtonDidTap(_ sender: UIButton) {
+        viewModel.updateState(newState: .prepare)
+        rootView.todayPromiseView.prepareTimeLabel.setText(
+            viewModel.homePrepareTime,
+            style: .caption02,
+            color: .gray8
+        )
+    }
+    
+    @objc
+    func moveButtonDidTap(_ sender: UIButton) {
+        viewModel.updateState(newState: .move)
+        rootView.todayPromiseView.moveTimeLabel.setText(
+            viewModel.homeMoveTime,
+            style: .caption02,
+            color: .gray8
+        )
+    }
+    
+    @objc
+    func arriveButtonDidTap(_ sender: UIButton) {
+        viewModel.updateState(newState: .arrive)
+        rootView.todayPromiseView.arriveTimeLabel.setText(
+            viewModel.homeArriveTime,
+            style: .caption02,
+            color: .gray8
+        )
     }
 }
