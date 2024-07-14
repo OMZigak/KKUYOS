@@ -61,6 +61,7 @@
 		78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286D2C29402C006D9942 /* SceneDelegate.swift */; };
 		78B928752C29402E006D9942 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78B928742C29402E006D9942 /* Assets.xcassets */; };
 		78B928782C29402E006D9942 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78B928762C29402E006D9942 /* LaunchScreen.storyboard */; };
+		78BD611D2C43F405005752FD /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 78BD611C2C43F405005752FD /* SwiftKeychainWrapper */; };
 		A3DD9C3D2C41BAD000E58A13 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */; };
 		A3DD9C3E2C41BAD000E58A13 /* MeetingDummyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C342C41BAD000E58A13 /* MeetingDummyModel.swift */; };
 		A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */; };
@@ -340,6 +341,7 @@
 				785AE1A62C2E878600677CA0 /* FirebaseFirestoreSwift in Frameworks */,
 				785AE1A22C2E878600677CA0 /* FirebaseFirestore in Frameworks */,
 				785AE1A42C2E878600677CA0 /* FirebaseFirestoreCombine-Community in Frameworks */,
+				78BD611D2C43F405005752FD /* SwiftKeychainWrapper in Frameworks */,
 				785AE1AC2C2E878600677CA0 /* FirebaseInAppMessaging-Beta in Frameworks */,
 				785AE1B22C2E878600677CA0 /* FirebaseMLModelDownloader in Frameworks */,
 				785AE19C2C2E878600677CA0 /* FirebaseDatabase in Frameworks */,
@@ -1277,6 +1279,7 @@
 				DDAF1C7B2C3D5B86008A37D3 /* RxCocoa */,
 				DDAF1C7D2C3D5B86008A37D3 /* RxRelay */,
 				DDAF1C802C3D5BD5008A37D3 /* Kingfisher */,
+				78BD611C2C43F405005752FD /* SwiftKeychainWrapper */,
 			);
 			productName = KkuMulKum;
 			productReference = 78B928682C29402C006D9942 /* KkuMulKum.app */;
@@ -1316,6 +1319,7 @@
 				784E4D972C3B95A900BC943C /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				DDAF1C7A2C3D5B86008A37D3 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				DDAF1C7F2C3D5BD5008A37D3 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				78BD611B2C43F405005752FD /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
 			);
 			productRefGroup = 78B928692C29402C006D9942 /* Products */;
 			projectDirPath = "";
@@ -1749,6 +1753,14 @@
 				minimumVersion = 10.28.1;
 			};
 		};
+		78BD611B2C43F405005752FD /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
 		DDAF1C7A2C3D5B86008A37D3 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -1942,6 +1954,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 785AE1882C2E878600677CA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseVertexAI-Preview";
+		};
+		78BD611C2C43F405005752FD /* SwiftKeychainWrapper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78BD611B2C43F405005752FD /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
+			productName = SwiftKeychainWrapper;
 		};
 		DDAF1C7B2C3D5B86008A37D3 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
