@@ -13,7 +13,13 @@ class PagePromiseViewController: BaseViewController {
     private let promiseViewControllerList: [BaseViewController] = [
         PromiseInfoViewController(),
         ReadyStatusViewController(),
-        TardyViewController(tardyViewModel: TardyViewModel(hasTardy: true))
+        // TODO: 서버 연결 시 데이터 바인딩 필요
+        TardyViewController(
+            tardyViewModel: TardyViewModel(
+                isPastDue: ObservablePattern<Bool>(false),
+                hasTardy: ObservablePattern<Bool>(false)
+            )
+        )
     ]
     
     private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(
@@ -79,7 +85,9 @@ class PagePromiseViewController: BaseViewController {
             $0.leading.equalToSuperview().offset((width / CGFloat(count)) * CGFloat(selectedIndex))
         }
         
-        promiseViewModel.didSegmentIndexChanged(index: promiseSegmentedControl.selectedSegmentIndex)
+        promiseViewModel.didSegmentIndexChanged(
+            index: promiseSegmentedControl.selectedSegmentIndex
+        )
         
         promisePageViewController.setViewControllers([
             promiseViewControllerList[promiseViewModel.currentPage.value]

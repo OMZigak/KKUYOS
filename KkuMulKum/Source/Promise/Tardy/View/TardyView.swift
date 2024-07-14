@@ -27,7 +27,10 @@ class TardyView: BaseView {
         }
     ).then {
         $0.showsVerticalScrollIndicator = false
-        $0.register(TardyCollectionViewCell.self, forCellWithReuseIdentifier: TardyCollectionViewCell.reuseIdentifier)
+        $0.register(
+            TardyCollectionViewCell.self,
+            forCellWithReuseIdentifier: TardyCollectionViewCell.reuseIdentifier
+        )
     }
     
     let finishMeetingButton: CustomButton = CustomButton(

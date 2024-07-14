@@ -8,10 +8,14 @@
 import Foundation
 
 class TardyViewModel {
+    var isPastDue: ObservablePattern<Bool>
+    var hasTardy: ObservablePattern<Bool>
     
-    var hasTardy: Bool
-    
-    init(hasTardy: Bool) {
+    init(
+        isPastDue: ObservablePattern<Bool>,
+        hasTardy: ObservablePattern<Bool>
+    ) {
+        self.isPastDue = isPastDue
         self.hasTardy = hasTardy
     }
 }

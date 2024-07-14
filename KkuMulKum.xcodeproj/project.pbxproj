@@ -99,7 +99,6 @@
 		DD41BEFC2C41D54D0095A068 /* TardyPenaltyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD41BEFB2C41D54D0095A068 /* TardyPenaltyView.swift */; };
 		DD41BEFF2C41DAA40095A068 /* TardyEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD41BEFE2C41DAA40095A068 /* TardyEmptyView.swift */; };
 		DD41BF012C41DE4F0095A068 /* TardyCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD41BF002C41DE4F0095A068 /* TardyCollectionViewCell.swift */; };
-		DD41BF042C41EF310095A068 /* ArriveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD41BF032C41EF310095A068 /* ArriveViewController.swift */; };
 		DD4393762C412F4500EC1799 /* InviteCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43936D2C412F4500EC1799 /* InviteCodeView.swift */; };
 		DD4393772C412F4500EC1799 /* CreateMeetingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43936E2C412F4500EC1799 /* CreateMeetingView.swift */; };
 		DD4393782C412F4500EC1799 /* CheckInviteCodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43936F2C412F4500EC1799 /* CheckInviteCodeView.swift */; };
@@ -241,7 +240,6 @@
 		DD41BEFB2C41D54D0095A068 /* TardyPenaltyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TardyPenaltyView.swift; sourceTree = "<group>"; };
 		DD41BEFE2C41DAA40095A068 /* TardyEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TardyEmptyView.swift; sourceTree = "<group>"; };
 		DD41BF002C41DE4F0095A068 /* TardyCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TardyCollectionViewCell.swift; sourceTree = "<group>"; };
-		DD41BF032C41EF310095A068 /* ArriveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArriveViewController.swift; sourceTree = "<group>"; };
 		DD43936D2C412F4500EC1799 /* InviteCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteCodeView.swift; sourceTree = "<group>"; };
 		DD43936E2C412F4500EC1799 /* CreateMeetingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateMeetingView.swift; sourceTree = "<group>"; };
 		DD43936F2C412F4500EC1799 /* CheckInviteCodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInviteCodeView.swift; sourceTree = "<group>"; };
@@ -784,14 +782,6 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
-		DD41BF052C41EF3F0095A068 /* Arrive */ = {
-			isa = PBXGroup;
-			children = (
-				DD41BF032C41EF310095A068 /* ArriveViewController.swift */,
-			);
-			path = Arrive;
-			sourceTree = "<group>";
-		};
 		DD43936B2C412F4500EC1799 /* MeetingCreate */ = {
 			isa = PBXGroup;
 			children = (
@@ -981,7 +971,6 @@
 				DD3976912C41CAF900E2A4C4 /* PromiseInfo */,
 				DD931B672C3D9D9C00526452 /* ReadyStatus */,
 				DD931B682C3D9DAD00526452 /* Tardy */,
-				DD41BF052C41EF3F0095A068 /* Arrive */,
 			);
 			path = Promise;
 			sourceTree = "<group>";
@@ -1431,7 +1420,6 @@
 				DD4393782C412F4500EC1799 /* CheckInviteCodeView.swift in Sources */,
 				DE6D4D102C3F14D80005584B /* InvitationCodePopUpView.swift in Sources */,
 				DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */,
-				DD41BF042C41EF310095A068 /* ArriveViewController.swift in Sources */,
 				DE159D332C406E1600425101 /* MyPageContentView.swift in Sources */,
 				DE6D4D112C3F14D80005584B /* MeetingInfoBannerView.swift in Sources */,
 				DE6D4D122C3F14D80005584B /* MeetingInfoView.swift in Sources */,

@@ -8,9 +8,9 @@
 import UIKit
 
 class TardyViewController: BaseViewController {
-    var tardyViewModel: TardyViewModel
-    var tardyView: TardyView = TardyView()
-    var arriveView: ArriveView = ArriveView()
+    private let tardyViewModel: TardyViewModel
+    private let tardyView: TardyView = TardyView()
+    private let arriveView: ArriveView = ArriveView()
     
     init(tardyViewModel: TardyViewModel) {
         self.tardyViewModel = tardyViewModel
@@ -23,7 +23,7 @@ class TardyViewController: BaseViewController {
     }
     
     override func loadView() {
-        view = tardyViewModel.hasTardy ? tardyView : arriveView
+        view = tardyViewModel.hasTardy.value ? tardyView : arriveView
     }
     
     override func setupAction() {
@@ -59,11 +59,17 @@ extension TardyViewController: UICollectionViewDelegate {
 // MARK: UICollectionViewDataSource
 
 extension TardyViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
         return 10
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: TardyCollectionViewCell.reuseIdentifier,
             for: indexPath
