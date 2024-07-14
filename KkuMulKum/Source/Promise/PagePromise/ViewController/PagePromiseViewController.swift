@@ -7,16 +7,22 @@
 
 import UIKit
 
-class BasePromiseViewController: BaseViewController {
-    private let promiseViewModel = BasePromiseViewModel()
+class PagePromiseViewController: BaseViewController {
+    private let promiseViewModel = PagePromiseViewModel()
     
     private let promiseViewControllerList: [BaseViewController] = [
         PromiseInfoViewController(),
         ReadyStatusViewController(),
-        TardyViewController()
+        // TODO: 서버 연결 시 데이터 바인딩 필요
+        TardyViewController(
+            tardyViewModel: TardyViewModel(
+                isPastDue: ObservablePattern<Bool>(false),
+                hasTardy: ObservablePattern<Bool>(false)
+            )
+        )
     ]
     
-    private lazy var promiseSegmentedControl = BasePromiseSegmentedControl(
+    private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(
         items: ["약속 정보", "준비 현황", "지각 꾸물이"]
     )
     
@@ -25,16 +31,11 @@ class BasePromiseViewController: BaseViewController {
         navigationOrientation: .vertical
     )
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupNavigationBarTitle(with: "기말고사 모각작")
-    }
-    
     override func setupView() {
         view.backgroundColor = .white
         
         addChild(promisePageViewController)
+        
         view.addSubviews(
             promiseSegmentedControl,
             promisePageViewController.view
@@ -49,7 +50,7 @@ class BasePromiseViewController: BaseViewController {
         promiseSegmentedControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview().inset(-6)
-            $0.height.equalTo(61)
+            $0.height.equalTo(60)
         }
         
         promisePageViewController.view.snp.makeConstraints {
@@ -84,7 +85,9 @@ class BasePromiseViewController: BaseViewController {
             $0.leading.equalToSuperview().offset((width / CGFloat(count)) * CGFloat(selectedIndex))
         }
         
-        promiseViewModel.didSegmentIndexChanged(index: promiseSegmentedControl.selectedSegmentIndex)
+        promiseViewModel.didSegmentIndexChanged(
+            index: promiseSegmentedControl.selectedSegmentIndex
+        )
         
         promisePageViewController.setViewControllers([
             promiseViewControllerList[promiseViewModel.currentPage.value]
@@ -93,7 +96,7 @@ class BasePromiseViewController: BaseViewController {
 }
 
 
-extension BasePromiseViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+extension PagePromiseViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     func pageViewController(
         _ pageViewController: UIPageViewController,
         viewControllerAfter viewController: UIViewController

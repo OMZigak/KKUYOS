@@ -21,7 +21,7 @@ final class MeetingListView: BaseView {
         $0.setText("꾸물리안이 가입한 모임은\n총 3개예요!", style: .head01, color: .gray8)
     }
     
-    private let addButton = UIButton().then {
+    let addButton = UIButton().then {
         $0.backgroundColor = .green2
         $0.layer.cornerRadius = 8
     }
