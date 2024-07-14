@@ -101,4 +101,12 @@ extension MeetingListViewController: UITableViewDataSource {
         cell.selectionStyle = .none
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let basePromiseViewController = BasePromiseViewController()
+        
+        basePromiseViewController.modalPresentationStyle = .fullScreen
+        
+        present(basePromiseViewController, animated: true)
+    }
 }
