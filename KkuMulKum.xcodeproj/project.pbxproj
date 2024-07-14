@@ -111,13 +111,7 @@
 		DD4909962C440CDC003ED304 /* ArriveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4909952C440CDC003ED304 /* ArriveView.swift */; };
 		DD4909982C441215003ED304 /* TardyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4909972C441215003ED304 /* TardyViewModel.swift */; };
 		DD49099C2C441719003ED304 /* TardyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD49099B2C441719003ED304 /* TardyService.swift */; };
-		DD86262B2C44811100E4F980 /* OurReadyStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626222C44811100E4F980 /* OurReadyStatusTableViewCell.swift */; };
-		DD86262C2C44811100E4F980 /* EnterReadyInfoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626242C44811100E4F980 /* EnterReadyInfoButtonView.swift */; };
-		DD86262D2C44811100E4F980 /* ReadyPlanInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626252C44811100E4F980 /* ReadyPlanInfoView.swift */; };
-		DD86262E2C44811100E4F980 /* ReadyStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626262C44811100E4F980 /* ReadyStatusView.swift */; };
-		DD86262F2C44811100E4F980 /* ReadyStatusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626272C44811100E4F980 /* ReadyStatusButton.swift */; };
-		DD8626302C44811100E4F980 /* ReadyStatusProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626282C44811100E4F980 /* ReadyStatusProgressView.swift */; };
-		DD8626312C44811100E4F980 /* ReadyStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD86262A2C44811100E4F980 /* ReadyStatusViewController.swift */; };
+		DD931B6B2C3D9EBB00526452 /* ReadyStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B6A2C3D9EBB00526452 /* ReadyStatusView.swift */; };
 		DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */; };
 		DD931B762C3DC16100526452 /* PromiseInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B752C3DC16100526452 /* PromiseInfoView.swift */; };
 		DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */; };
@@ -125,6 +119,7 @@
 		DDAF1C7E2C3D5B86008A37D3 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C7D2C3D5B86008A37D3 /* RxRelay */; };
 		DDAF1C812C3D5BD5008A37D3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C802C3D5BD5008A37D3 /* Kingfisher */; };
 		DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */; };
+		DDAF1C8E2C3D6E3D008A37D3 /* ReadyStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C882C3D6E3D008A37D3 /* ReadyStatusViewController.swift */; };
 		DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C892C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift */; };
 		DDAF1C902C3D6E3D008A37D3 /* PagePromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8A2C3D6E3D008A37D3 /* PagePromiseViewModel.swift */; };
 		DDAF1C912C3D6E3D008A37D3 /* TardyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */; };
@@ -255,17 +250,12 @@
 		DD4909952C440CDC003ED304 /* ArriveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArriveView.swift; sourceTree = "<group>"; };
 		DD4909972C441215003ED304 /* TardyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TardyViewModel.swift; sourceTree = "<group>"; };
 		DD49099B2C441719003ED304 /* TardyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TardyService.swift; sourceTree = "<group>"; };
-		DD8626222C44811100E4F980 /* OurReadyStatusTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OurReadyStatusTableViewCell.swift; sourceTree = "<group>"; };
-		DD8626242C44811100E4F980 /* EnterReadyInfoButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterReadyInfoButtonView.swift; sourceTree = "<group>"; };
-		DD8626252C44811100E4F980 /* ReadyPlanInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyPlanInfoView.swift; sourceTree = "<group>"; };
-		DD8626262C44811100E4F980 /* ReadyStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusView.swift; sourceTree = "<group>"; };
-		DD8626272C44811100E4F980 /* ReadyStatusButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusButton.swift; sourceTree = "<group>"; };
-		DD8626282C44811100E4F980 /* ReadyStatusProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusProgressView.swift; sourceTree = "<group>"; };
-		DD86262A2C44811100E4F980 /* ReadyStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusViewController.swift; sourceTree = "<group>"; };
+		DD931B6A2C3D9EBB00526452 /* ReadyStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadyStatusView.swift; sourceTree = "<group>"; };
 		DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD931B752C3DC16100526452 /* PromiseInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoView.swift; sourceTree = "<group>"; };
 		DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
+		DDAF1C882C3D6E3D008A37D3 /* ReadyStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusViewController.swift; sourceTree = "<group>"; };
 		DDAF1C892C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseSegmentedControl.swift; sourceTree = "<group>"; };
 		DDAF1C8A2C3D6E3D008A37D3 /* PagePromiseViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseViewModel.swift; sourceTree = "<group>"; };
 		DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TardyViewController.swift; sourceTree = "<group>"; };
@@ -1443,6 +1433,7 @@
 				DE6D4D112C3F14D80005584B /* MeetingInfoBannerView.swift in Sources */,
 				DE6D4D122C3F14D80005584B /* MeetingInfoView.swift in Sources */,
 				DD30721E2C3C0CC800416D9F /* PromiseInfoResponseModel.swift in Sources */,
+				DD931B722C3DA92700526452 /* EnterReadyInfoButtonView.swift in Sources */,
 				DD41BEFF2C41DAA40095A068 /* TardyEmptyView.swift in Sources */,
 				A3FB18512C3BF531001483E5 /* RegisterMeetingsResponseModel.swift in Sources */,
 				789AD4B32C3C0093002E2688 /* SocialLoginResponseModel.swift in Sources */,
