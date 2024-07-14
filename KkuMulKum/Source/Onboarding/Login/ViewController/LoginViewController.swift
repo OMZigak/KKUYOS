@@ -6,12 +6,20 @@
 //
 
 import UIKit
-import AuthenticationServices
 
 class LoginViewController: BaseViewController {
-    
     private let loginView = LoginView()
-    private let loginViewModel = LoginViewModel()
+    private let loginViewModel: LoginViewModel
+    
+    init() {
+        let authService = AuthService()
+        self.loginViewModel = LoginViewModel(authService: authService)
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         view = loginView
@@ -26,24 +34,13 @@ class LoginViewController: BaseViewController {
     override func setupAction() {
         super.setupAction()
         
-        let appleTapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(appleLoginTapped)
-        )
+        let appleTapGesture = UITapGestureRecognizer(target: self, action: #selector(appleLoginTapped))
         loginView.appleLoginImageView.addGestureRecognizer(appleTapGesture)
         
-        let kakaoTapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(kakaoLoginTapped)
-        )
+        let kakaoTapGesture = UITapGestureRecognizer(target: self, action: #selector(kakaoLoginTapped))
         loginView.kakaoLoginImageView.addGestureRecognizer(kakaoTapGesture)
         
-        /// 더미 버튼
-        loginView.dummyNextButton.addTarget(
-            self,
-            action: #selector(dummyNextButtonTapped),
-            for: .touchUpInside
-        )
+        loginView.dummyNextButton.addTarget(self, action: #selector(dummyNextButtonTapped), for: .touchUpInside)
     }
     
     private func bindViewModel() {
@@ -53,13 +50,13 @@ class LoginViewController: BaseViewController {
                 print("Not logged in")
             case .loggedIn(let userInfo):
                 print("Logged in: \(userInfo)")
+                owner.navigateToMainScreen()
             }
         }
         
         loginViewModel.error.bind(with: self) { owner, error in
             if !error.isEmpty {
-                // TODO: 추후 에러처리 추가예정 -> Keychain 연결 이후
-                print("Error occurred: \(error)")
+                owner.showErrorAlert(message: error)
             }
         }
     }
@@ -69,15 +66,15 @@ class LoginViewController: BaseViewController {
     }
     
     @objc private func kakaoLoginTapped() {
-        loginViewModel.performKakaoLogin(presentationAnchor: view.window!)
+        loginViewModel.performKakaoLogin()
     }
-
+    
     // TODO: 추후 서버연결후 삭제예정
     @objc private func dummyNextButtonTapped() {
-//        _ = NicknameViewController()
-//        let welcomeViewController = NicknameViewController()
-//        welcomeViewController.modalPresentationStyle = .fullScreen
-//        present(welcomeViewController, animated: true, completion: nil)
+        //        _ = NicknameViewController()
+        //        let welcomeViewController = NicknameViewController()
+        //        welcomeViewController.modalPresentationStyle = .fullScreen
+        //        present(welcomeViewController, animated: true, completion: nil)
         
         // TODO: 프로필 설정부터 네비게이션으로 플로우 동작
         
@@ -87,5 +84,14 @@ class LoginViewController: BaseViewController {
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
     }
+    
+    private func navigateToMainScreen() {
+        // 로그인 성공 후 메인 화면으로 이동하는 로직
+    }
+    
+    private func showErrorAlert(message: String) {
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
 }
-

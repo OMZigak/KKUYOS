@@ -11,16 +11,22 @@ import AuthenticationServices
 import KakaoSDKUser
 import KakaoSDKAuth
 
-
 enum LoginState {
-    case notLoggedIn
     case loggedIn(userInfo: String)
+    case notLoggedIn
 }
 
 class LoginViewModel: NSObject {
+    private let authService: AuthServiceType
+    
     var loginState: ObservablePattern<LoginState> = ObservablePattern(.notLoggedIn)
     var error: ObservablePattern<String> = ObservablePattern("")
-
+    
+    init(authService: AuthServiceType) {
+        self.authService = authService
+        super.init()
+    }
+    
     func performAppleLogin(presentationAnchor: ASPresentationAnchor) {
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -31,7 +37,7 @@ class LoginViewModel: NSObject {
         controller.performRequests()
     }
     
-    func performKakaoLogin(presentationAnchor: UIWindow) {
+    func performKakaoLogin() {
         if UserApi.isKakaoTalkLoginAvailable() {
             UserApi.shared.loginWithKakaoTalk { [weak self] (oauthToken, error) in
                 self?.handleKakaoLoginResult(oauthToken: oauthToken, error: error)
@@ -68,26 +74,22 @@ class LoginViewModel: NSObject {
     }
 }
 
-extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension LoginViewModel: ASAuthorizationControllerDelegate,
+                            ASAuthorizationControllerPresentationContextProviding {
     func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
-        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
-            print("Authorization failed: Credential is not of type ASAuthorizationAppleIDCredential")
+        guard let appleIDCredential = authorization.credential as?
+                ASAuthorizationAppleIDCredential else {
+            error.value = "Failed to get Apple ID Credential"
             return
         }
         
-        let userName = appleIDCredential.fullName?.givenName ?? "Apple user"
-        loginState.value = .loggedIn(userInfo: "Apple user: \(userName)")
-        
-        /// 액세스 토큰 출력
-        if let identityToken = appleIDCredential.identityToken,
-           let tokenString = String(data: identityToken, encoding: .utf8) {
-            print("Apple Login Access Token: \(tokenString)")
-        }
+        let userIdentifier = appleIDCredential.user
+        loginState.value = .loggedIn(userInfo: "Apple user: \(userIdentifier)")
     }
-
+    
     func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithError error: Error
