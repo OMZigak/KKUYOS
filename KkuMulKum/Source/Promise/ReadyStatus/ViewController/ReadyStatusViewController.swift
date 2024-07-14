@@ -10,9 +10,7 @@ import UIKit
 class ReadyStatusViewController: BaseViewController {
     private let rootView: ReadyStatusView = ReadyStatusView()
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        view.addSubview(rootView)
+    override func loadView() {
+        view = rootView
     }
 }
