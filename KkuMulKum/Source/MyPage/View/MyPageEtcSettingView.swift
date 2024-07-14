@@ -10,72 +10,54 @@ import UIKit
 import SnapKit
 import Then
 
-class EtcSettingView: BaseView {
-    let containerView = UIView().then {
-        $0.backgroundColor = .white
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.gray2.cgColor
-        $0.layer.cornerRadius = 12
-    }
-    
-    let stackView = UIStackView().then {
-        $0.axis = .vertical
-        $0.spacing = 0
+class MyPageEtcSettingView: BaseView {
+    let stackView = UIStackView(axis: .vertical).then {
+        $0.spacing = 24
         $0.distribution = .fillEqually
     }
     
     override func setupView() {
-        addSubview(containerView)
-        containerView.addSubview(stackView)
+        backgroundColor = .white
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.gray2.cgColor
+        layer.cornerRadius = 8
         
-        let rows = [
+        stackView.addArrangedSubviews(
             createRow(title: "버전정보", subtitle: "0.1.0"),
             createRow(title: "이용약관"),
             createRow(title: "로그아웃"),
             createRow(title: "탈퇴하기")
-        ]
+        )
         
-        rows.forEach {
-            stackView.addArrangedSubview($0)
-            $0.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        }
+        addSubviews(stackView)
     }
     
     override func setupAutoLayout() {
-        containerView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(16)
-        }
-        
         stackView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.edges.equalToSuperview().inset(22)
         }
     }
     
     private func createRow(title: String, subtitle: String? = nil) -> UIView {
         let rowView = UIView()
         let titleLabel = UILabel().then {
-            $0.text = title
-            $0.font = UIFont.pretendard(.body01)
-            $0.textColor = .gray7
+            $0.setText(title, style: .body03, color: .gray7)
         }
         rowView.addSubview(titleLabel)
         
         titleLabel.snp.makeConstraints {
-            $0.left.equalToSuperview().offset(16)
-            $0.centerY.equalToSuperview()
+            $0.verticalEdges.leading.equalToSuperview()
         }
         
         if let subtitle = subtitle {
             let subtitleLabel = UILabel().then {
-                $0.text = subtitle
-                $0.font = UIFont.pretendard(.body01)
-                $0.textColor = .gray8
+                $0.setText(subtitle, style: .body03, color: .gray8)
             }
             rowView.addSubview(subtitleLabel)
             
             subtitleLabel.snp.makeConstraints {
-                $0.right.equalToSuperview().offset(-16)
-                $0.centerY.equalToSuperview()
+                $0.trailing.equalToSuperview()
+                $0.verticalEdges.equalToSuperview()
             }
         }
         

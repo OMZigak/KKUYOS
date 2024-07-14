@@ -82,7 +82,7 @@ final class MeetingListView: BaseView {
         
         header.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.width.equalTo(UIScreen.main.bounds.width)
+            $0.width.equalTo(UIScreen.main.bounds.width-40)
             $0.height.equalTo(Screen.height(170))
         }
     }

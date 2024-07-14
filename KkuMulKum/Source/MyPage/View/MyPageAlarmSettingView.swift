@@ -10,28 +10,14 @@ import UIKit
 import SnapKit
 import Then
 
-class AlarmSettingView: BaseView {
-    private let containerView = UIView().then {
-        $0.backgroundColor = .white
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.gray2.cgColor
-        $0.layer.cornerRadius = 8
-    }
-    
+class MyPageAlarmSettingView: BaseView {
     private let stackView = UIStackView(axis: .vertical).then {
-        $0.spacing = 8
-        $0.alignment = .fill
-        $0.distribution = .fill
-    }
-    
-    private let titleStackView = UIStackView(axis: .horizontal).then {
-        $0.alignment = .center
-        $0.distribution = .equalSpacing
+        $0.spacing = 16
+        $0.alignment = .leading
     }
     
     private let titleLabel = UILabel().then {
-        $0.setText("알림 설정", style: .body03, color: .black)
-     
+        $0.setText("내 푸쉬 알림", style: .body03, color: .gray7)
     }
     
     private let toggleSwitch = UISwitch().then {
@@ -42,43 +28,29 @@ class AlarmSettingView: BaseView {
         $0.setText(
             "준비, 이동을 시작해야할 시간에\n푸시 알림을 받을 수 있습니다.",
             style: .caption02,
-            color: .gray
+            color: .gray6
         )
     }
     
     override func setupView() {
-        super.setupView()
-        backgroundColor = .systemMint.withAlphaComponent(0.1)
+        backgroundColor = .white
+        layer.borderColor = UIColor.gray1.cgColor
+        layer.borderWidth = 1
+        layer.cornerRadius = 8
         
-        addSubview(containerView)
-        containerView.addSubview(stackView)
-        
-        titleStackView.addArrangedSubviews(titleLabel, toggleSwitch)
-        stackView.addArrangedSubviews(titleStackView, subtitleLabel)
+        stackView.addArrangedSubviews(titleLabel, subtitleLabel)
+        addSubviews(stackView, toggleSwitch)
     }
     
     override func setupAutoLayout() {
-        super.setupAutoLayout()
-        
-        containerView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
-        
         stackView.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(15)
-        }
-        
-        titleStackView.snp.makeConstraints {
-            $0.height.greaterThanOrEqualTo(44)
+            $0.top.bottom.equalToSuperview().inset(16)
+            $0.leading.equalToSuperview().offset(16)
         }
         
         toggleSwitch.snp.makeConstraints {
-            $0.width.equalTo(51)
-            $0.height.equalTo(31)
-        }
-        
-        subtitleLabel.snp.makeConstraints {
-            $0.height.greaterThanOrEqualTo(40) // 최소 높이 설정
+            $0.top.equalToSuperview().offset(14)
+            $0.trailing.equalToSuperview().offset(-16)
         }
     }
 }
