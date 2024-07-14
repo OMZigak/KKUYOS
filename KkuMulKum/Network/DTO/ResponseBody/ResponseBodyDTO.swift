@@ -9,6 +9,7 @@ import Foundation
 
 /// 제네릭 ResponseBody 구조체 정의
 struct ResponseBodyDTO<T: ResponseModelType>: Codable {
+    let success: Bool
     let data: T?
     let error: ErrorResponse?
 }
