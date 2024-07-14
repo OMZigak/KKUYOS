@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		782B406F2C3DBF93008B0CA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B406E2C3DBF93008B0CA7 /* ProfileViewController.swift */; };
-		782B40722C3DBFA3008B0CA7 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40712C3DBFA3008B0CA7 /* ProfileViewModel.swift */; };
-		782B40752C3DBFBA008B0CA7 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40742C3DBFBA008B0CA7 /* ProfileView.swift */; };
+		782B406F2C3DBF93008B0CA7 /* ProfileSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B406E2C3DBF93008B0CA7 /* ProfileSetupViewController.swift */; };
+		782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40712C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift */; };
+		782B40752C3DBFBA008B0CA7 /* ProfileSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40742C3DBFBA008B0CA7 /* ProfileSetupView.swift */; };
 		782B407B2C3E395A008B0CA7 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407A2C3E395A008B0CA7 /* WelcomeView.swift */; };
 		782B407D2C3E3984008B0CA7 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */; };
 		782B407F2C3E44B7008B0CA7 /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */; };
@@ -175,9 +175,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		782B406E2C3DBF93008B0CA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		782B40712C3DBFA3008B0CA7 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
-		782B40742C3DBFBA008B0CA7 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		782B406E2C3DBF93008B0CA7 /* ProfileSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewController.swift; sourceTree = "<group>"; };
+		782B40712C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewModel.swift; sourceTree = "<group>"; };
+		782B40742C3DBFBA008B0CA7 /* ProfileSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetupView.swift; sourceTree = "<group>"; };
 		782B407A2C3E395A008B0CA7 /* WelcomeView.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
@@ -369,7 +369,7 @@
 		782B406D2C3DBF7C008B0CA7 /* VIewController */ = {
 			isa = PBXGroup;
 			children = (
-				782B406E2C3DBF93008B0CA7 /* ProfileViewController.swift */,
+				782B406E2C3DBF93008B0CA7 /* ProfileSetupViewController.swift */,
 			);
 			path = VIewController;
 			sourceTree = "<group>";
@@ -377,7 +377,7 @@
 		782B40702C3DBF97008B0CA7 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				782B40712C3DBFA3008B0CA7 /* ProfileViewModel.swift */,
+				782B40712C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -385,7 +385,7 @@
 		782B40732C3DBFA8008B0CA7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				782B40742C3DBFBA008B0CA7 /* ProfileView.swift */,
+				782B40742C3DBFBA008B0CA7 /* ProfileSetupView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1397,7 +1397,7 @@
 				DD4393772C412F4500EC1799 /* CreateMeetingView.swift in Sources */,
 				789873342C3D1A7B00435E96 /* LoginView.swift in Sources */,
 				782B40822C3E4925008B0CA7 /* NicknameViewModel.swift in Sources */,
-				782B406F2C3DBF93008B0CA7 /* ProfileViewController.swift in Sources */,
+				782B406F2C3DBF93008B0CA7 /* ProfileSetupViewController.swift in Sources */,
 				A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */,
 				DEA932182C3F180800FDF637 /* MeetingPromisesModel.swift in Sources */,
 				DE159D342C406E1600425101 /* MyPageEtcSettingView.swift in Sources */,
@@ -1454,7 +1454,7 @@
 				DD3072222C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift in Sources */,
 				DD3976862C41C2AD00E2A4C4 /* HomeView.swift in Sources */,
 				789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */,
-				782B40722C3DBFA3008B0CA7 /* ProfileViewModel.swift in Sources */,
+				782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */,
 				DDAF1C8F2C3D6E3D008A37D3 /* BasePromiseSegmentedControl.swift in Sources */,
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
@@ -1470,7 +1470,7 @@
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
 				DD3976872C41C2AD00E2A4C4 /* TodayPromiseView.swift in Sources */,
 				789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */,
-				782B40752C3DBFBA008B0CA7 /* ProfileView.swift in Sources */,
+				782B40752C3DBFBA008B0CA7 /* ProfileSetupView.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
 				A3DD9C402C41BAD000E58A13 /* MeetingListViewController.swift in Sources */,
 				A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */,
