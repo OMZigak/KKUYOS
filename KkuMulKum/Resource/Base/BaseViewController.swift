@@ -30,14 +30,30 @@ class BaseViewController: UIViewController {
 }
 
 extension BaseViewController {
-    /// 네비게이션 바 타이틀 설정
-    final func setupNavigationBarTitle(with string: String) {
+    /// 네비게이션 바 설정
+    final func setupNavigationBar(with string: String) {
         title = string
         
         navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor.gray8,
             .font: UIFont.pretendard(.body03)
         ]
+        
+        let lineView = UIView(backgroundColor: .gray2)
+        navigationController?.navigationBar.addSubview(lineView)
+        
+        lineView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalTo(navigationController?.navigationBar.snp.bottom ?? 0)
+            $0.height.equalTo(Screen.height(1))
+        }
+        
+        if #available(iOS 15, *) {
+            let barAppearance = UINavigationBarAppearance()
+            barAppearance.backgroundColor = .white
+            navigationItem.standardAppearance = barAppearance
+            navigationItem.scrollEdgeAppearance = barAppearance
+        }
     }
     
     /// 네비게이션 바 BackButton 구성
