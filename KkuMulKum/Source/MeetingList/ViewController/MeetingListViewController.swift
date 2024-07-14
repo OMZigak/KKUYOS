@@ -83,6 +83,7 @@ extension MeetingListViewController: UITableViewDataSource {
         
         basePromiseViewController.modalPresentationStyle = .fullScreen
         
-        present(basePromiseViewController, animated: true)
+        // TODO: 추후 네비게이션 여부 정해지면 맞춰서 수정
+        present(basePromiseViewController, animated: false)
     }
 }

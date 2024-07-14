@@ -25,12 +25,6 @@ class PagePromiseViewController: BaseViewController {
         navigationOrientation: .vertical
     )
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupNavigationBarTitle(with: "기말고사 모각작")
-    }
-    
     override func setupView() {
         view.backgroundColor = .white
         
