@@ -14,6 +14,8 @@ final class SetReadyInfoViewController: BaseViewController {
     
     private let rootView = SetReadyInfoView()
     
+    private let viewModel = SetReadyInfoViewModel()
+    
     
     // MARK: - LifeCycle
     
@@ -24,6 +26,7 @@ final class SetReadyInfoViewController: BaseViewController {
     override func viewDidLoad() {
         view.backgroundColor = .white
         setTextFieldDelegate()
+        bindViewModel()
     }
     
     private func setTextFieldDelegate() {
@@ -36,6 +39,30 @@ final class SetReadyInfoViewController: BaseViewController {
         rootView.readyMinuteTextField.keyboardType = .numberPad
         rootView.moveHourTextField.keyboardType = .numberPad
         rootView.moveMinuteTextField.keyboardType = .numberPad
+        
+        rootView.readyHourTextField.accessibilityIdentifier = "readyHour"
+        rootView.readyMinuteTextField.accessibilityIdentifier = "readyMinute"
+        rootView.moveHourTextField.accessibilityIdentifier = "moveHour"
+        rootView.moveMinuteTextField.accessibilityIdentifier = "moveMinute"
+    }
+    
+    private func bindViewModel() {
+        viewModel.isValid.bind { [weak self] isValid in
+            if isValid {
+                self?.rootView.doneButton.isEnabled = true
+            }
+        }
+        
+        viewModel.errMessage.bind { [weak self] err in
+            if !err.isEmpty {
+                self?.showToast(err)
+            }
+        }
+    }
+    
+    func showToast(_ message: String, bottomInset: CGFloat = 128) {
+        guard let view else { return }
+        Toast().show(message: message, view: view, position: .bottom, inset: bottomInset)
     }
 }
 
@@ -49,7 +76,7 @@ extension SetReadyInfoViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderColor = UIColor.gray3.cgColor
-        validateTextField(textField)
+        viewModel.validateTextField(for: textField)
     }
     
     func textField(
@@ -60,20 +87,5 @@ extension SetReadyInfoViewController: UITextFieldDelegate {
         let allowedCharacters = CharacterSet.decimalDigits
         let characterSet = CharacterSet(charactersIn: string)
         return allowedCharacters.isSuperset(of: characterSet)
-    }
-    
-    private func validateTextField(_ textField: UITextField) {
-        guard let text = textField.text, let value = Int(text) else { return }
-        
-        if textField == rootView.readyHourTextField || textField == rootView.moveHourTextField {
-            if value >= 24 {
-                textField.text = "23"
-            }
-        }
-        if textField == rootView.readyMinuteTextField || textField == rootView.moveMinuteTextField {
-            if value >= 60 {
-                textField.text = "59"
-            }
-        }
     }
 }

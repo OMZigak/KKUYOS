@@ -63,7 +63,7 @@ final class SetReadyInfoView: BaseView {
         $0.setText("분", style: .body03, color: .gray8)
     }
     
-    private let doneButton = CustomButton(title: "완료", isEnabled: false)
+    let doneButton = CustomButton(title: "완료", isEnabled: false)
     
     
     // MARK: - UI Setting
