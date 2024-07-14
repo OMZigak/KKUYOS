@@ -8,14 +8,26 @@
 import UIKit
 
 class TardyViewController: BaseViewController {
-    private let rootView: TardyView = TardyView()
+    var tardyViewModel: TardyViewModel
+    var tardyView: TardyView = TardyView()
+    var arriveView: ArriveView = ArriveView()
+    
+    init(tardyViewModel: TardyViewModel) {
+        self.tardyViewModel = tardyViewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+       
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
-        view = rootView
+        view = tardyViewModel.hasTardy ? tardyView : arriveView
     }
     
     override func setupAction() {
-        rootView.finishMeetingButton.addTarget(
+        tardyView.finishMeetingButton.addTarget(
             self,
             action: #selector(finishMeetingButtonDidTapped),
             for: .touchUpInside
@@ -23,8 +35,8 @@ class TardyViewController: BaseViewController {
     }
     
     override func setupDelegate() {
-        rootView.tardyCollectionView.delegate = self
-        rootView.tardyCollectionView.dataSource = self
+        tardyView.tardyCollectionView.delegate = self
+        tardyView.tardyCollectionView.dataSource = self
     }
 }
 
@@ -32,11 +44,7 @@ class TardyViewController: BaseViewController {
 private extension TardyViewController {
     @objc
     func finishMeetingButtonDidTapped() {
-        let arriveViewController = ArriveViewController()
         
-        arriveViewController.modalPresentationStyle = .fullScreen
-        
-        navigationController?.pushViewController(arriveViewController, animated: true)
     }
 }
 

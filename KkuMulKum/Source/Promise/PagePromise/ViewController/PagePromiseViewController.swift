@@ -13,7 +13,7 @@ class PagePromiseViewController: BaseViewController {
     private let promiseViewControllerList: [BaseViewController] = [
         PromiseInfoViewController(),
         ReadyStatusViewController(),
-        TardyViewController()
+        TardyViewController(tardyViewModel: TardyViewModel(hasTardy: true))
     ]
     
     private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(
