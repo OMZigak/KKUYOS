@@ -23,18 +23,12 @@ class BasePromiseViewController: BaseViewController {
         navigationOrientation: .vertical
     )
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
-    
     override func setupView() {
-        view.backgroundColor = .white
-        self.navigationItem.title = "기말고사 모각작"
-        
         addChild(promisePageViewController)
+        
         view.addSubviews(
             promiseSegmentedControl,
-                         promisePageViewController.view
+            promisePageViewController.view
         )
         
         promisePageViewController.setViewControllers(
@@ -46,7 +40,7 @@ class BasePromiseViewController: BaseViewController {
         promiseSegmentedControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview().inset(-6)
-            $0.height.equalTo(61)
+            $0.height.equalTo(60)
         }
         
         promisePageViewController.view.snp.makeConstraints {
