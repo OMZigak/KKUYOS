@@ -8,9 +8,59 @@
 import UIKit
 
 class TardyViewController: BaseViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    private let rootView: TardyView = TardyView()
+    
+    override func loadView() {
+        view = rootView
+    }
+    
+    override func setupAction() {
+        rootView.finishMeetingButton.addTarget(
+            self,
+            action: #selector(finishMeetingButtonDidTapped),
+            for: .touchUpInside
+        )
+    }
+    
+    override func setupDelegate() {
+        rootView.tardyCollectionView.delegate = self
+        rootView.tardyCollectionView.dataSource = self
+    }
+}
 
-        view.backgroundColor = .green
+
+private extension TardyViewController {
+    @objc
+    func finishMeetingButtonDidTapped() {
+        let arriveViewController = ArriveViewController()
+        
+        arriveViewController.modalPresentationStyle = .fullScreen
+        
+        navigationController?.pushViewController(arriveViewController, animated: true)
+    }
+}
+
+
+// MARK: UICollectionViewDelegate
+
+extension TardyViewController: UICollectionViewDelegate {
+    
+}
+
+
+// MARK: UICollectionViewDataSource
+
+extension TardyViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 10
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: TardyCollectionViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? TardyCollectionViewCell else { return UICollectionViewCell() }
+        
+        return cell
     }
 }

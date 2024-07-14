@@ -20,6 +20,10 @@ class TardyCollectionViewCell: BaseCollectionViewCell {
     
     override func setupView() {
         addSubviews(profileImageView, nameLabel)
+        
+        self.layer.cornerRadius = 8
+        self.layer.borderWidth = 1
+        self.layer.borderColor = UIColor.gray2.cgColor
     }
     
     override func setupAutoLayout() {
