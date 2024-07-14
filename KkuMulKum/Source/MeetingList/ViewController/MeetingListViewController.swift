@@ -79,7 +79,7 @@ extension MeetingListViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let basePromiseViewController = BasePromiseViewController()
+        let basePromiseViewController = PagePromiseViewController()
         
         basePromiseViewController.modalPresentationStyle = .fullScreen
         

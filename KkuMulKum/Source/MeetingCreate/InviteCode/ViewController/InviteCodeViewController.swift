@@ -33,7 +33,7 @@ class InviteCodeViewController: BaseViewController {
     }
     
     override func setupView() {
-        setupNavigationBar(with: "내 모임 추가하기")
+        setupNavigationBarTitle(with: "내 모임 추가하기")
         setupNavigationBarBackButton()
     }
     
@@ -87,7 +87,7 @@ class InviteCodeViewController: BaseViewController {
     
     @objc private func nextButtonTapped() {
         // TODO: 서버 연결할 때 데이터 바인딩해서 화면 전환 시키기
-        let basePromiseViewController = BasePromiseViewController()
+        let basePromiseViewController = PagePromiseViewController()
         
         navigationController?.pushViewController(basePromiseViewController, animated: true)
     }

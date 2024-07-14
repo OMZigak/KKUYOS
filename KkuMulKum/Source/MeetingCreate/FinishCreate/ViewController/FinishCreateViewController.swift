@@ -28,7 +28,7 @@ class FinishCreateViewController: BaseViewController {
     override func setupView() {
         view.backgroundColor = .green1
         
-        setupNavigationBar(with: "내 모임 추가하기")
+        setupNavigationBarTitle(with: "내 모임 추가하기")
         
         view.addSubviews(
             peopleImageView,

@@ -33,7 +33,7 @@ class CreateMeetingViewController: BaseViewController {
     }
     
     override func setupView() {
-        setupNavigationBar(with: "내 모임 추가하기")
+        setupNavigationBarTitle(with: "내 모임 추가하기")
         setupNavigationBarBackButton()
     }
     

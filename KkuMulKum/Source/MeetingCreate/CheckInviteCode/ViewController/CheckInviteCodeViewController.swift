@@ -18,7 +18,7 @@ class CheckInviteCodeViewController: BaseViewController {
         view.backgroundColor = .white
         self.tabBarController?.tabBar.isHidden = true
         
-        setupNavigationBar(with: "내 모임 추가하기")
+        setupNavigationBarTitle(with: "내 모임 추가하기")
         setupNavigationBarBackButton()
     }
     
