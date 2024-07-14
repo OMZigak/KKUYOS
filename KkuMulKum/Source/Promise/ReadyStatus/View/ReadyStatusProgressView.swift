@@ -25,7 +25,10 @@ class ReadyStatusProgressView: BaseView {
     private let readyStartButton: ReadyStatusButton = ReadyStatusButton(
         title: "준비 중",
         readyStatus: .none
-    )
+    ).then {
+        $0.layer.cornerRadius = 16
+        $0.layer.borderWidth = 1
+    }
     
     private let readyStartTitleLabel: UILabel = UILabel().then {
         $0.setText("준비를 시작 시 눌러주세요", style: .label02, color: .gray5)
@@ -43,7 +46,10 @@ class ReadyStatusProgressView: BaseView {
     private let moveStartButton: ReadyStatusButton = ReadyStatusButton(
         title: "이동 시작",
         readyStatus: .none
-    )
+    ).then {
+        $0.layer.cornerRadius = 16
+        $0.layer.borderWidth = 1
+    }
     
     private let moveStartTitleLabel: UILabel = UILabel().then {
         $0.setText("이동을 시작 시 눌러주세요", style: .label02, color: .gray5)
@@ -61,21 +67,27 @@ class ReadyStatusProgressView: BaseView {
     private let arrivalButton: ReadyStatusButton = ReadyStatusButton(
         title: "도착 완료",
         readyStatus: .none
-    )
+    ).then {
+        $0.layer.cornerRadius = 16
+        $0.layer.borderWidth = 1
+    }
     
     private let arrivalTitleLabel: UILabel = UILabel().then {
         $0.setText("도착 시작 시 눌러주세요", style: .label02, color: .gray5)
     }
     
     override func setupView() {
+        backgroundColor = .white
+        
         addSubviews(
             statusProgressView,
             readyStartTimeLabel,
             readyStartCheckImageView,
             readyStartButton,
-            readyStartTimeLabel,
+            readyStartTitleLabel,
             moveStartTimeLabel,
             moveStartCheckImageView,
+            moveStartButton,
             moveStartTitleLabel,
             arrivalTimeLabel,
             arrivalCheckImageView,
@@ -86,14 +98,9 @@ class ReadyStatusProgressView: BaseView {
     
     override func setupAutoLayout() {
         statusProgressView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(31.5)
-            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalToSuperview().offset(50)
+            $0.horizontalEdges.equalToSuperview().inset(-4)
             $0.height.equalTo(Screen.height(5))
-        }
-        
-        readyStartTimeLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(23)
-            $0.leading.equalToSuperview().offset(38)
         }
         
         readyStartCheckImageView.snp.makeConstraints {
@@ -108,6 +115,11 @@ class ReadyStatusProgressView: BaseView {
             $0.centerX.equalTo(readyStartCheckImageView)
             $0.height.equalTo(Screen.height(32))
             $0.width.equalTo(Screen.width(84))
+        }
+        
+        readyStartTimeLabel.snp.makeConstraints {
+            $0.bottom.equalTo(statusProgressView).offset(-18.5)
+            $0.centerX.equalTo(readyStartCheckImageView)
         }
         
         readyStartTitleLabel.snp.makeConstraints {
@@ -161,6 +173,7 @@ class ReadyStatusProgressView: BaseView {
         arrivalTitleLabel.snp.makeConstraints {
             $0.centerX.equalTo(arrivalCheckImageView)
             $0.centerY.equalTo(readyStartTitleLabel)
+            $0.bottom.equalToSuperview().inset(17)
         }
     }
 }

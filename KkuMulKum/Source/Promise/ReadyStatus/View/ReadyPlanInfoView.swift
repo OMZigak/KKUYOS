@@ -31,6 +31,8 @@ class ReadyPlanInfoView: BaseView {
     }
     
     override func setupView() {
+        backgroundColor = .white
+        
         addSubviews(
             readyTimeLabel,
             requestReadyTimeLabel,

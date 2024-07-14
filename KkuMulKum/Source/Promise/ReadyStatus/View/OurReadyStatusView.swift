@@ -1,5 +1,5 @@
 //
-//  OurReadyStatusTableViewCell.swift
+//  OurReadyStatusView.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 7/15/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class OurReadyStatusTableViewCell: BaseTableViewCell {
+class OurReadyStatusView: BaseView {
     private let profileImageView: UIImageView = UIImageView(image: .imgProfile).then {
         $0.contentMode = .scaleAspectFill
     }
@@ -22,12 +22,21 @@ class OurReadyStatusTableViewCell: BaseTableViewCell {
     )
     
     override func setupView() {
-        addSubviews(profileImageView, nameLabel, readyStatusButton)
+        backgroundColor = .white
+        layer.cornerRadius = 8
+        clipsToBounds = true
+        
+        addSubviews(
+            profileImageView,
+            nameLabel,
+            readyStatusButton
+        )
     }
     
     override func setupAutoLayout() {
         profileImageView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().offset(14)
+            $0.bottom.equalToSuperview().inset(14)
             $0.leading.equalToSuperview().offset(12)
             $0.height.equalTo(Screen.height(44))
             $0.width.equalTo(profileImageView.snp.height)
