@@ -51,9 +51,8 @@ final class AddPromiseView: BaseView {
         $0.setText("약속 장소", style: .body03, color: .gray8)
     }
     
-    private let promisePlaceTextField = CustomTextField(placeHolder: "약속 장소를 검색해 주세요").then {
+    let promisePlaceTextField = CustomTextField(placeHolder: "약속 장소를 검색해 주세요").then {
         $0.addPadding(right: 12)
-        $0.isEnabled = false
     }
     
     private let searchIconView = UIImageView(image: .iconSearch.withTintColor(.gray3))
@@ -108,7 +107,7 @@ final class AddPromiseView: BaseView {
         }
         
         searchIconView.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.centerY.equalToSuperview().offset(4)
             $0.trailing.equalToSuperview().offset(-14)
         }
     }
@@ -140,6 +139,10 @@ extension AddPromiseView {
                 errorMessage: "공백 포함 한글, 영문, 숫자만을 사용해 총 10자 이내로 입력해주세요."
             )
         }
+    }
+    
+    func configurePromisePlaceTextField(with placeName: String) {
+        promisePlaceTextField.text = placeName
     }
 }
 

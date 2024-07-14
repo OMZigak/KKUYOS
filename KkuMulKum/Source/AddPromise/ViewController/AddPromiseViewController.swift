@@ -22,10 +22,11 @@ final class AddPromiseViewController: BaseViewController {
     private let viewModel: AddPromiseViewModel
     private let disposeBag = DisposeBag()
     private let rootView = AddPromiseView()
-    private let promiseTextFieldEndEditingRelay = PublishRelay<Void>()
+    private let promiseNameTextFieldEndEditingRelay = PublishRelay<Void>()
+    private let promisePlaceTextFieldDidTapRelay = PublishRelay<Void>()
     
     // MARK: - Intializer
-
+    
     init(viewModel: AddPromiseViewModel) {
         self.viewModel = viewModel
         
@@ -38,7 +39,7 @@ final class AddPromiseViewController: BaseViewController {
     
     
     // MARK: - Life Cycle
-
+    
     override func loadView() {
         view = rootView
     }
@@ -74,8 +75,17 @@ final class AddPromiseViewController: BaseViewController {
     }
     
     override func setupAction() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
+        let viewTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(dismissKeyboard)
+        )
+        view.addGestureRecognizer(viewTapGesture)
+        
+        let textFieldTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(promisePlaceTextFieldDidTap)
+        )
+        rootView.promisePlaceTextField.addGestureRecognizer(textFieldTapGesture)
     }
     
     override func setupDelegate() {
@@ -83,14 +93,34 @@ final class AddPromiseViewController: BaseViewController {
     }
 }
 
+
+// MARK: - FindPlaceViewControllerDelegate
+
+extension AddPromiseViewController: FindPlaceViewControllerDelegate {
+    func configure(selectedPlace: Place) {
+        rootView.configurePromisePlaceTextField(with: selectedPlace.location)
+    }
+}
+
+
+// MARK: - UITextFieldDelegate
+
 extension AddPromiseViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == rootView.promiseNameTextField {
             textField.resignFirstResponder()
-            promiseTextFieldEndEditingRelay.accept(())
+            promiseNameTextFieldEndEditingRelay.accept(())
             return true
         }
         
+        return false
+    }
+    
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
         return false
     }
 }
@@ -99,7 +129,8 @@ private extension AddPromiseViewController {
     func bindViewModel() {
         let input = AddPromiseViewModel.Input(
             promiseNameTextFieldDidChange: rootView.promiseNameTextFieldDidChange,
-            promiseTextFieldEndEditing: promiseTextFieldEndEditingRelay
+            promiseTextFieldEndEditing: promiseNameTextFieldEndEditingRelay,
+            promisePlaceTextFieldDidTap: promisePlaceTextFieldDidTapRelay
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
@@ -115,11 +146,31 @@ private extension AddPromiseViewController {
                 owner.rootView.configureNameTextField(state: state)
             }
             .disposed(by: disposeBag)
+        
+        output.searchPlace
+            .drive(with: self) { owner, _ in
+                owner.navigateToFindPlace(with: owner)
+            }
+            .disposed(by: disposeBag)
     }
     
     @objc
     func dismissKeyboard() {
         view.endEditing(true)
-        promiseTextFieldEndEditingRelay.accept(())
+        promiseNameTextFieldEndEditingRelay.accept(())
+    }
+    
+    @objc
+    func promisePlaceTextFieldDidTap() {
+        promisePlaceTextFieldDidTapRelay.accept(())
+    }
+    
+    func navigateToFindPlace(with delegate: FindPlaceViewControllerDelegate) {
+        let viewController = FindPlaceViewController(
+            viewModel: FindPlaceViewModel(
+                service: MockFindPlaceService()
+            )
+        )
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }

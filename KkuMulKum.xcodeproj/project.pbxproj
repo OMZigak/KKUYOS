@@ -161,7 +161,7 @@
 		DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18882C3BC91000DB76B4 /* ResponseBodyDTO.swift */; };
 		DE9E188B2C3BC92500DB76B4 /* EmptyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E188A2C3BC92500DB76B4 /* EmptyModel.swift */; };
 		DE9E18922C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18912C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift */; };
-		DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18992C3BCCBE00DB76B4 /* UtilsTemp.swift */; };
+		DE9E189A2C3BCCBE00DB76B4 /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18992C3BCCBE00DB76B4 /* PlaceModel.swift */; };
 		DEA932182C3F180800FDF637 /* MeetingPromisesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA932172C3F180800FDF637 /* MeetingPromisesModel.swift */; };
 		DEBA032F2C3C24F2002ED8F2 /* ModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA032E2C3C24F2002ED8F2 /* ModelType.swift */; };
 		DEBA03312C3C2972002ED8F2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA03302C3C2972002ED8F2 /* ViewController.swift */; };
@@ -169,6 +169,11 @@
 		DECB84562C43FB990022A003 /* AddPromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECB84552C43FB990022A003 /* AddPromiseViewModel.swift */; };
 		DECB84582C43FBEB0022A003 /* AddPromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECB84572C43FBEB0022A003 /* AddPromiseViewController.swift */; };
 		DECB845A2C43FC140022A003 /* AddPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECB84592C43FC140022A003 /* AddPromiseView.swift */; };
+		DECB845C2C4442490022A003 /* FindPlaceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECB845B2C4442490022A003 /* FindPlaceViewController.swift */; };
+		DECB845E2C4442AF0022A003 /* FindPlaceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECB845D2C4442AF0022A003 /* FindPlaceView.swift */; };
+		DECB84602C4446930022A003 /* FindPlaceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECB845F2C4446930022A003 /* FindPlaceService.swift */; };
+		DECB84622C44472F0022A003 /* FindPlaceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECB84612C44472F0022A003 /* FindPlaceViewModel.swift */; };
+		DECB84642C44655A0022A003 /* PlaceListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECB84632C44655A0022A003 /* PlaceListCell.swift */; };
 		DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBEB2C345210006ECE7E /* BaseViewController.swift */; };
 		DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBED2C34529A006ECE7E /* BaseView.swift */; };
 		DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBEF2C345317006ECE7E /* BaseCollectionViewCell.swift */; };
@@ -296,7 +301,7 @@
 		DE9E18882C3BC91000DB76B4 /* ResponseBodyDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseBodyDTO.swift; sourceTree = "<group>"; };
 		DE9E188A2C3BC92500DB76B4 /* EmptyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyModel.swift; sourceTree = "<group>"; };
 		DE9E18912C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginRequestModel.swift; sourceTree = "<group>"; };
-		DE9E18992C3BCCBE00DB76B4 /* UtilsTemp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTemp.swift; sourceTree = "<group>"; };
+		DE9E18992C3BCCBE00DB76B4 /* PlaceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceModel.swift; sourceTree = "<group>"; };
 		DEA932172C3F180800FDF637 /* MeetingPromisesModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingPromisesModel.swift; sourceTree = "<group>"; };
 		DEBA032E2C3C24F2002ED8F2 /* ModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelType.swift; sourceTree = "<group>"; };
 		DEBA03302C3C2972002ED8F2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -304,6 +309,11 @@
 		DECB84552C43FB990022A003 /* AddPromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseViewModel.swift; sourceTree = "<group>"; };
 		DECB84572C43FBEB0022A003 /* AddPromiseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseViewController.swift; sourceTree = "<group>"; };
 		DECB84592C43FC140022A003 /* AddPromiseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseView.swift; sourceTree = "<group>"; };
+		DECB845B2C4442490022A003 /* FindPlaceViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPlaceViewController.swift; sourceTree = "<group>"; };
+		DECB845D2C4442AF0022A003 /* FindPlaceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPlaceView.swift; sourceTree = "<group>"; };
+		DECB845F2C4446930022A003 /* FindPlaceService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPlaceService.swift; sourceTree = "<group>"; };
+		DECB84612C44472F0022A003 /* FindPlaceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindPlaceViewModel.swift; sourceTree = "<group>"; };
+		DECB84632C44655A0022A003 /* PlaceListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceListCell.swift; sourceTree = "<group>"; };
 		DED5DBEB2C345210006ECE7E /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		DED5DBED2C34529A006ECE7E /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
 		DED5DBEF2C345317006ECE7E /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -1200,7 +1210,7 @@
 		DE9E18902C3BCC8000DB76B4 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
-				DE9E18992C3BCCBE00DB76B4 /* UtilsTemp.swift */,
+				DE9E18992C3BCCBE00DB76B4 /* PlaceModel.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1236,6 +1246,7 @@
 			isa = PBXGroup;
 			children = (
 				DECB84572C43FBEB0022A003 /* AddPromiseViewController.swift */,
+				DECB845B2C4442490022A003 /* FindPlaceViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1244,6 +1255,8 @@
 			isa = PBXGroup;
 			children = (
 				DECB84592C43FC140022A003 /* AddPromiseView.swift */,
+				DECB845D2C4442AF0022A003 /* FindPlaceView.swift */,
+				DECB84632C44655A0022A003 /* PlaceListCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1252,6 +1265,7 @@
 			isa = PBXGroup;
 			children = (
 				DECB84552C43FB990022A003 /* AddPromiseViewModel.swift */,
+				DECB84612C44472F0022A003 /* FindPlaceViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1260,6 +1274,7 @@
 			isa = PBXGroup;
 			children = (
 				DECB84532C43FB640022A003 /* AddPromiseService.swift */,
+				DECB845F2C4446930022A003 /* FindPlaceService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1415,6 +1430,7 @@
 				DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */,
 				DE6D4D142C3F14D80005584B /* MeetingPromiseCell.swift in Sources */,
 				DD3976892C41C2AD00E2A4C4 /* TodayEmptyView.swift in Sources */,
+				DECB84622C44472F0022A003 /* FindPlaceViewModel.swift in Sources */,
 				DD43937C2C412F4500EC1799 /* InviteCodeViewController.swift in Sources */,
 				DD4393782C412F4500EC1799 /* CheckInviteCodeView.swift in Sources */,
 				DE6D4D102C3F14D80005584B /* InvitationCodePopUpView.swift in Sources */,
@@ -1472,7 +1488,7 @@
 				DD4393792C412F4500EC1799 /* JoinButtonView.swift in Sources */,
 				A3DD9C3E2C41BAD000E58A13 /* MeetingDummyModel.swift in Sources */,
 				DD3976832C41C2AD00E2A4C4 /* HomeViewModel.swift in Sources */,
-				DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */,
+				DE9E189A2C3BCCBE00DB76B4 /* PlaceModel.swift in Sources */,
 				782B407B2C3E395A008B0CA7 /* WelcomeView.swift in Sources */,
 				DD3072142C3BF87A00416D9F /* NearestPromiseResponseModel.swift in Sources */,
 				782B407F2C3E44B7008B0CA7 /* WelcomeViewModel.swift in Sources */,
@@ -1483,8 +1499,10 @@
 				DE159D322C406E1600425101 /* MyPageAlarmSettingView.swift in Sources */,
 				78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */,
 				DECB84562C43FB990022A003 /* AddPromiseViewModel.swift in Sources */,
+				DECB84602C4446930022A003 /* FindPlaceService.swift in Sources */,
 				DEBA032F2C3C24F2002ED8F2 /* ModelType.swift in Sources */,
 				789AD4B52C3C0147002E2688 /* ResissueResponseModel.swift in Sources */,
+				DECB845E2C4442AF0022A003 /* FindPlaceView.swift in Sources */,
 				DE6D4D0F2C3F14D80005584B /* MeetingInfoService.swift in Sources */,
 				DD39768A2C41C2AD00E2A4C4 /* HomeViewController.swift in Sources */,
 				DED5DBF42C34539A006ECE7E /* BaseTableViewCell.swift in Sources */,
@@ -1510,6 +1528,7 @@
 				DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */,
 				DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */,
 				DD3976882C41C2AD00E2A4C4 /* UpcomingEmptyView.swift in Sources */,
+				DECB84642C44655A0022A003 /* PlaceListCell.swift in Sources */,
 				DD931B762C3DC16100526452 /* PromiseInfoView.swift in Sources */,
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
 				DD3976872C41C2AD00E2A4C4 /* TodayPromiseView.swift in Sources */,
@@ -1523,6 +1542,7 @@
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
 				DD43937B2C412F4500EC1799 /* CreateMeetingViewController.swift in Sources */,
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,
+				DECB845C2C4442490022A003 /* FindPlaceViewController.swift in Sources */,
 				DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */,
 				DD3072262C3C0F0B00416D9F /* PromiseLateInfoResponseModel.swift in Sources */,
 				DE254AB92C311AB300A4015E /* Screen.swift in Sources */,

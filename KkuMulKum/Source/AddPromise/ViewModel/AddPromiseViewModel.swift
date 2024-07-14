@@ -30,11 +30,13 @@ extension AddPromiseViewModel: ViewModelType {
     struct Input {
         let promiseNameTextFieldDidChange: Observable<String?>
         let promiseTextFieldEndEditing: PublishRelay<Void>
+        let promisePlaceTextFieldDidTap: PublishRelay<Void>
     }
     
     struct Output {
         let validateNameEditing: Driver<PromiseNameState>
         let validateNameEndEditing: Driver<PromiseNameState>
+        let searchPlace: Driver<Void>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -74,9 +76,14 @@ extension AddPromiseViewModel: ViewModelType {
             }
             .asDriver(onErrorJustReturn: .failure)
         
+        let searchPlace = input.promisePlaceTextFieldDidTap
+            .map { _ in }
+            .asDriver(onErrorJustReturn: ())
+        
         let output = Output(
             validateNameEditing: validateNameEditing, 
-            validateNameEndEditing: validateNameEndEditing
+            validateNameEndEditing: validateNameEndEditing,
+            searchPlace: searchPlace
         )
         
         return output
