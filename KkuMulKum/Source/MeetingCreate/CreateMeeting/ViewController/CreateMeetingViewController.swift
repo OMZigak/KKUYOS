@@ -24,7 +24,7 @@ class CreateMeetingViewController: BaseViewController {
     }
     
     override func setupView() {
-        setupNavigationBarTitle(with: "내 모임 추가하기")
+        setupNavigationBar(with: "내 모임 추가하기")
         setupNavigationBarBackButton()
     }
     
