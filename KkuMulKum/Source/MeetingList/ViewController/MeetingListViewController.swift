@@ -62,6 +62,17 @@ extension MeetingListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Screen.height(88)
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewController = MeetingInfoViewController(
+            viewModel: MeetingInfoViewModel(
+                meetingID: 1,
+                service: MockMeetingInfoService()
+            )
+        )
+        
+        tabBarController?.navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 extension MeetingListViewController: UITableViewDataSource {

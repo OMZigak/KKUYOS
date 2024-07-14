@@ -46,12 +46,20 @@ final class MeetingInfoViewController: BaseViewController {
         super.viewDidLoad()
         
         bindViewModel()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        navigationController?.isNavigationBarHidden = false
         viewWillAppearRelay.accept(())
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
     }
     
     override func setupView() {
@@ -127,11 +135,20 @@ private extension MeetingInfoViewController {
                     )
                     return
                 }
-                // TODO: 약속 추가 화면으로 넘어가기
+                
+                owner.navigateToAddPromise()
             }
             .disposed(by: disposeBag)
         
         rootView.configureEmptyView(with: viewModel.meetingPromises.count == 0)
+    }
+    
+    func navigateToAddPromise() {
+        let service = MockAddPromiseService()
+        let viewModel = AddPromiseViewModel(meetingID: viewModel.meetingID, service: service)
+        let viewController = AddPromiseViewController(viewModel: viewModel)
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
 
