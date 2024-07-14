@@ -42,27 +42,27 @@ class WelcomeView: BaseView {
      
      override func setupAutoLayout() {
           characterImageView.snp.makeConstraints {
-               $0.top.equalTo(safeAreaLayoutGuide).offset(Screen.height(200))
+               $0.top.equalTo(safeAreaLayoutGuide).offset(200)
                $0.centerX.equalToSuperview()
                $0.size.equalTo(Screen.width(150))
           }
           
           welcomeLabel.snp.makeConstraints {
-               $0.top.equalTo(characterImageView.snp.bottom).offset(Screen.height(20))
+               $0.top.equalTo(characterImageView.snp.bottom).offset(20)
                $0.centerX.equalToSuperview()
-               $0.leading.trailing.equalToSuperview().inset(Screen.width(20))
+               $0.leading.trailing.equalToSuperview().inset(20)
           }
           
           descriptionLabel.snp.makeConstraints {
-               $0.top.equalTo(welcomeLabel.snp.bottom).offset(Screen.height(10))
+               $0.top.equalTo(welcomeLabel.snp.bottom).offset(10)
                $0.centerX.equalToSuperview()
-               $0.leading.trailing.equalToSuperview().inset(Screen.width(20))
-               $0.bottom.lessThanOrEqualTo(confirmButton.snp.top).offset(-Screen.height(20))
+               $0.leading.trailing.equalToSuperview().inset(20)
+               $0.bottom.lessThanOrEqualTo(confirmButton.snp.top).offset(-20)
           }
           
           confirmButton.snp.makeConstraints {
-               $0.bottom.equalTo(safeAreaLayoutGuide).offset(-Screen.height(20))
-               $0.leading.trailing.equalToSuperview().inset(Screen.width(20))
+               $0.bottom.equalTo(safeAreaLayoutGuide).offset(-20)
+               $0.leading.trailing.equalToSuperview().inset(20)
                $0.height.equalTo(Screen.height(50))
           }
      }

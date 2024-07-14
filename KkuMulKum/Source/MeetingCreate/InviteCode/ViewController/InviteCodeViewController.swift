@@ -8,9 +8,18 @@
 import UIKit
 
 class InviteCodeViewController: BaseViewController {
-    private let inviteCodeViewModel: InviteCodeViewModel = InviteCodeViewModel(service: MockInviteCodeService())
+    private let inviteCodeViewModel: InviteCodeViewModel
     
     private let inviteCodeView: InviteCodeView = InviteCodeView()
+    
+    init(viewModel: InviteCodeViewModel) {
+        self.inviteCodeViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         view = inviteCodeView
@@ -27,39 +36,47 @@ class InviteCodeViewController: BaseViewController {
         setupNavigationBar(with: "내 모임 추가하기")
         setupNavigationBarBackButton()
     }
-
-    private func setupBinding() {
-        inviteCodeViewModel.inviteCodeState.bind(with: self) { owner, state in
-            switch state {
-            case .empty:
-                self.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
-                self.inviteCodeView.errorLabel.isHidden = true
-                self.inviteCodeView.checkImageView.isHidden = true
-            case .invalid:
-                self.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.mainred.cgColor
-                self.inviteCodeView.errorLabel.isHidden = false
-                self.inviteCodeView.checkImageView.isHidden = true
-            case .valid:
-                self.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
-                self.inviteCodeView.errorLabel.isHidden = true
-                self.inviteCodeView.checkImageView.isHidden = true
-            case .success:
-                self.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
-                self.inviteCodeView.errorLabel.isHidden = true
-                self.inviteCodeView.checkImageView.isHidden = false
-                self.inviteCodeView.presentButton.isEnabled = true
-            }
-        }
-    }
     
     override func setupAction() {
-        inviteCodeView.inviteCodeTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        inviteCodeView.presentButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
+        inviteCodeView.inviteCodeTextField.addTarget(
+            self,
+            action: #selector(textFieldDidChange(_:)),
+            for: .editingChanged
+        )
+        inviteCodeView.presentButton.addTarget(
+            self,
+            action: #selector(nextButtonTapped),
+            for: .touchUpInside
+        )
     }
     
     override func setupDelegate() {
         inviteCodeView.inviteCodeTextField.delegate = self
         inviteCodeView.inviteCodeTextField.returnKeyType = .done
+    }
+    
+    private func setupBinding() {
+        inviteCodeViewModel.inviteCodeState.bind(with: self) { owner, state in
+            switch state {
+            case .empty:
+                owner.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
+                owner.inviteCodeView.errorLabel.isHidden = true
+                owner.inviteCodeView.checkImageView.isHidden = true
+            case .invalid:
+                owner.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.mainred.cgColor
+                owner.inviteCodeView.errorLabel.isHidden = false
+                owner.inviteCodeView.checkImageView.isHidden = true
+            case .valid:
+                owner.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
+                owner.inviteCodeView.errorLabel.isHidden = true
+                owner.inviteCodeView.checkImageView.isHidden = true
+            case .success:
+                owner.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
+                owner.inviteCodeView.errorLabel.isHidden = true
+                owner.inviteCodeView.checkImageView.isHidden = false
+                owner.inviteCodeView.presentButton.isEnabled = true
+            }
+        }
     }
     
     private func setupTapGesture() {
@@ -84,6 +101,9 @@ class InviteCodeViewController: BaseViewController {
         inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
     }
 }
+
+
+// MARK: - UITextFieldDelegate
 
 extension InviteCodeViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {

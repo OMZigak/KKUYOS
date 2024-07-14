@@ -10,12 +10,9 @@ import UIKit
 import SnapKit
 
 class BasePromiseSegmentedControl: UISegmentedControl {
-    private let backgroundLineView: UIView = UIView().then {
-        $0.backgroundColor = .gray2
-    }
+    private let backgroundLineView: UIView = UIView(backgroundColor: .gray2)
     
-    let selectedUnderLineView: UIView = UIView().then {
-        $0.backgroundColor = .black
+    let selectedUnderLineView: UIView = UIView(backgroundColor: .black).then {
         $0.layer.cornerRadius = 1
     }
     
@@ -33,20 +30,17 @@ class BasePromiseSegmentedControl: UISegmentedControl {
     }
     
     private func setupSegment() {
-        [
-            backgroundLineView,
-            selectedUnderLineView
-        ].forEach { addSubview($0) }
+        addSubviews(backgroundLineView, selectedUnderLineView)
         
-        self.selectedSegmentIndex = 0
+        selectedSegmentIndex = 0
     }
     
     private func setupBackgroundAndDivider() {
-        self.setBackgroundImage(UIImage(), for: .normal, barMetrics: .default)
-        self.setBackgroundImage(UIImage(), for: .selected, barMetrics: .default)
-        self.setBackgroundImage(UIImage(), for: .highlighted, barMetrics: .default)
+        setBackgroundImage(UIImage(), for: .normal, barMetrics: .default)
+        setBackgroundImage(UIImage(), for: .selected, barMetrics: .default)
+        setBackgroundImage(UIImage(), for: .highlighted, barMetrics: .default)
         
-        self.setDividerImage(
+        setDividerImage(
             UIImage(),
             forLeftSegmentState: .selected,
             rightSegmentState: .normal,

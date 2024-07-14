@@ -23,51 +23,43 @@ class MyPageContentView: BaseView {
     }
     
     let nameLabel = UILabel().then {
-        $0.font = UIFont.pretendard(.body01)
-        $0.textColor = .gray8
-        $0.text = "꾸물리안 님"
+        $0.setText("꾸물리안 님", style: .body01, color: .gray8)
     }
     
-    let levelView = UIView().then {
-        $0.backgroundColor = .maincolor
-        $0.layer.cornerRadius = 20
+    let levelView = UIView(backgroundColor: .maincolor).then {
+        $0.layer.cornerRadius = Screen.height(36) / 2
     }
     
     let levelLabel = UILabel().then {
-        $0.textColor = .white
-        $0.font = UIFont.pretendard(.body02)
-        $0.text = "Lv. 1 지각대장 꾸물이"
+        $0.setText("Lv. 1 지각대장 꾸물이", style: .body05, color: .white)
+        $0.setHighlightText("Lv. 1", style: .body05, color: .lightGreen)
     }
     
-    let separatorView = UIView().then {
-        $0.backgroundColor = .green2
-    }
+    let separatorView = UIView(backgroundColor: .green2)
     
     override func setupView() {
-        backgroundColor = .clear
-        addSubviews(profileStackView,levelView,separatorView)
+        backgroundColor = .green1
+        
         profileStackView.addArrangedSubviews(profileImageView, nameLabel)
         levelView.addSubview(levelLabel)
+        addSubviews(profileStackView, levelView, separatorView)
     }
    
     override func setupAutoLayout() {
         profileStackView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(20)
+            $0.top.equalToSuperview().offset(24)
             $0.centerX.equalToSuperview()
         }
         
         profileImageView.snp.makeConstraints {
-            $0.size.equalTo(100)
-        }
-        
-        nameLabel.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(12)
+            $0.height.equalTo(Screen.height(82))
+            $0.width.equalTo(profileImageView.snp.height)
         }
         
         levelView.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(12)
-            $0.height.equalTo(36)
-            $0.leading.trailing.equalToSuperview().inset(80)
+            $0.top.equalTo(profileStackView.snp.bottom).offset(12)
+            $0.height.equalTo(Screen.height(36))
+            $0.leading.trailing.equalToSuperview().inset(83)
         }
         
         levelLabel.snp.makeConstraints {
@@ -75,10 +67,10 @@ class MyPageContentView: BaseView {
         }
         
         separatorView.snp.makeConstraints {
-            $0.height.equalTo(6)
+            $0.height.equalTo(Screen.height(6))
             $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(levelView.snp.bottom).offset(35)
-            $0.bottom.equalToSuperview().offset(-20)
+            $0.bottom.equalToSuperview().offset(-25)
         }
     }
 }

@@ -8,9 +8,18 @@
 import UIKit
 
 class CreateMeetingViewController: BaseViewController {
-    private let createMeetingViewModel: CreateMeetingViewModel = CreateMeetingViewModel(service: CreateMeetingService())
+    private let createMeetingViewModel: CreateMeetingViewModel
     
     private let createMeetingView: CreateMeetingView = CreateMeetingView()
+    
+    init(viewModel: CreateMeetingViewModel) {
+        self.createMeetingViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         view = createMeetingView
@@ -32,20 +41,28 @@ class CreateMeetingViewController: BaseViewController {
         createMeetingViewModel.inviteCodeState.bind(with: self) { owner, state in
             switch state {
             case .empty, .invalid:
-                self.createMeetingView.presentButton.isEnabled = false
+                owner.createMeetingView.presentButton.isEnabled = false
             case .valid:
-                self.createMeetingView.presentButton.isEnabled = true
+                owner.createMeetingView.presentButton.isEnabled = true
             }
             
-            self.createMeetingViewModel.characterCount.bind(with: self) { owner, count in
-                self.createMeetingView.characterLabel.text = count
+            owner.createMeetingViewModel.characterCount.bind(with: self) { owner, count in
+                owner.createMeetingView.characterLabel.text = count
             }
         }
     }
     
     override func setupAction() {
-        createMeetingView.nameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        createMeetingView.presentButton.addTarget(self, action: #selector(presentButtonDidTapped), for: .touchUpInside)
+        createMeetingView.nameTextField.addTarget(
+            self,
+            action: #selector(textFieldDidChange(_:)),
+            for: .editingChanged
+        )
+        createMeetingView.presentButton.addTarget(
+            self,
+            action: #selector(presentButtonDidTapped),
+            for: .touchUpInside
+        )
     }
     
     private func setupTapGesture() {
@@ -64,7 +81,9 @@ class CreateMeetingViewController: BaseViewController {
     
     @objc private func presentButtonDidTapped() {
         // TODO: 서버 연결해서 초대 코드 받아올 수 있게 처리
-        let inviteCodePopUpViewController = InvitationCodePopUpViewController(invitationCode: createMeetingViewModel.inviteCode.value)
+        let inviteCodePopUpViewController = InvitationCodePopUpViewController(
+            invitationCode: createMeetingViewModel.inviteCode.value
+        )
         
         inviteCodePopUpViewController.modalPresentationStyle = .overFullScreen
         inviteCodePopUpViewController.modalTransitionStyle = .crossDissolve

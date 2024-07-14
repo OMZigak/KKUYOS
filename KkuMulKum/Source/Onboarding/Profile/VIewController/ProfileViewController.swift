@@ -26,8 +26,16 @@ class ProfileSetupViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        setupNavigationBarTitle(with: "프로필 설정")
+        setupNavigationBarBackButton()
         setupBindings()
-        setupAction()
+    }
+    
+    override func setupAction() {
+        rootView.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
+        rootView.skipButton.addTarget(self, action: #selector(skipButtonTapped), for: .touchUpInside)
+        rootView.cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
     }
     
     private func setupBindings() {
@@ -41,20 +49,18 @@ class ProfileSetupViewController: BaseViewController {
         }
     }
     
-    override func setupAction() {
-        rootView.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
-        rootView.skipButton.addTarget(self, action: #selector(skipButtonTapped), for: .touchUpInside)
-        rootView.cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
-    }
-    
     @objc private func confirmButtonTapped() {
-        let welcomeVC = WelcomeViewController(viewModel: WelcomeViewModel(nickname: viewModel.nickname))
+        let welcomeVC = WelcomeViewController(
+            viewModel: WelcomeViewModel(nickname: viewModel.nickname)
+        )
         welcomeVC.modalPresentationStyle = .fullScreen
         present(welcomeVC, animated: true, completion: nil)
     }
     
     @objc private func skipButtonTapped() {
-        let welcomeVC = WelcomeViewController(viewModel: WelcomeViewModel(nickname: viewModel.nickname))
+        let welcomeVC = WelcomeViewController(
+            viewModel: WelcomeViewModel(nickname: viewModel.nickname)
+        )
         welcomeVC.modalPresentationStyle = .fullScreen
         present(welcomeVC, animated: true, completion: nil)
     }
@@ -82,7 +88,10 @@ class ProfileSetupViewController: BaseViewController {
 }
 
 extension ProfileSetupViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
         if let editedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
             let croppedImage = cropToCircle(image: editedImage)
             viewModel.updateProfileImage(croppedImage)

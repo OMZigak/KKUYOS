@@ -52,13 +52,16 @@ class JoinButtonView: BaseView {
     }
     
     func setJoinButtonViewStatus(isReceived: Bool) {
-        if isReceived {
-            subTitleLabel.setText("초대 코드를 받았다면", style: .caption02, color: .gray5)
-            mainTitleLabel.setText("초대 코드 입력하기", style: .body03, color: .gray8)
-        }
-        else {
-            subTitleLabel.setText("초대 코드가 없다면", style: .caption02, color: .gray5)
-            mainTitleLabel.setText("직접 모임 추가하기", style: .body03, color: .gray8)
-        }
+        subTitleLabel.setText(
+            isReceived ? "초대 코드를 받았다면" : "초대 코드가 없다면",
+            style: .caption02,
+            color: .gray5
+        )
+        
+        mainTitleLabel.setText(
+            isReceived ? "초대 코드 입력하기" : "직접 모임 추가하기",
+            style: .body03,
+            color: .gray8
+        )
     }
 }

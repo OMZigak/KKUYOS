@@ -19,9 +19,22 @@ class NicknameViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBindings()
-        setupActions()
         setupTextField()
         setupTapGesture()
+        setupNavigationBarTitle(with: "닉네임 설정")
+    }
+    
+    override func setupAction() {
+        nicknameView.nicknameTextField.addTarget(
+            self,
+            action: #selector(textFieldDidChange(_:)),
+            for: .editingChanged
+        )
+        nicknameView.nextButton.addTarget(
+            self,
+            action: #selector(nextButtonTapped),
+            for: .touchUpInside
+        )
     }
     
     private func setupBindings() {
@@ -53,11 +66,6 @@ class NicknameViewController: BaseViewController {
         }
     }
     
-    private func setupActions() {
-        nicknameView.nicknameTextField.addTarget(self, action: #selector(textFieldDidChange(_:)), for: .editingChanged)
-        nicknameView.nextButton.addTarget(self, action: #selector(nextButtonTapped), for: .touchUpInside)
-    }
-    
     private func setupTextField() {
         nicknameView.nicknameTextField.delegate = self
         nicknameView.nicknameTextField.returnKeyType = .done
@@ -73,9 +81,16 @@ class NicknameViewController: BaseViewController {
     }
     
     @objc private func nextButtonTapped() {
-        let profileSetupVC = ProfileSetupViewController(viewModel: ProfileSetupViewModel(nickname: viewModel.nickname.value))
-        profileSetupVC.modalPresentationStyle = .fullScreen
-        present(profileSetupVC, animated: true, completion: nil)
+        let profileSetupVC = ProfileSetupViewController(
+            viewModel: ProfileSetupViewModel(
+                nickname: viewModel.nickname.value
+            )
+        )
+//        profileSetupVC.modalPresentationStyle = .fullScreen
+//        present(profileSetupVC, animated: true, completion: nil)
+        // TODO: 온보딩 플로우 네비게이션으로 실행
+        navigationController?.pushViewController(profileSetupVC, animated: true)
+        
     }
     
     @objc private func dismissKeyboard() {

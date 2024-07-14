@@ -69,7 +69,10 @@ class LoginViewModel: NSObject {
 }
 
 extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential else {
             print("Authorization failed: Credential is not of type ASAuthorizationAppleIDCredential")
             return
@@ -78,14 +81,17 @@ extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationCont
         let userName = appleIDCredential.fullName?.givenName ?? "Apple user"
         loginState.value = .loggedIn(userInfo: "Apple user: \(userName)")
         
-        // 액세스 토큰 출력
+        /// 액세스 토큰 출력
         if let identityToken = appleIDCredential.identityToken,
            let tokenString = String(data: identityToken, encoding: .utf8) {
             print("Apple Login Access Token: \(tokenString)")
         }
     }
 
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithError error: Error
+    ) {
         self.error.value = error.localizedDescription
     }
     

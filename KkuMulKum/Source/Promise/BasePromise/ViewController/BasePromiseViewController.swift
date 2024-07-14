@@ -10,9 +10,11 @@ import UIKit
 class BasePromiseViewController: BaseViewController {
     private let promiseViewModel = BasePromiseViewModel()
     
-    private let promiseViewControllerList: [BaseViewController] = [PromiseInfoViewController(),
-                                             ReadyStatusViewController(),
-                                             TardyViewController()]
+    private let promiseViewControllerList: [BaseViewController] = [
+        PromiseInfoViewController(),
+        ReadyStatusViewController(),
+        TardyViewController()
+    ]
     
     private lazy var promiseSegmentedControl = BasePromiseSegmentedControl(
         items: ["약속 정보", "준비 현황", "지각 꾸물이"]
@@ -23,7 +25,15 @@ class BasePromiseViewController: BaseViewController {
         navigationOrientation: .vertical
     )
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupNavigationBarTitle(with: "기말고사 모각작")
+    }
+    
     override func setupView() {
+        view.backgroundColor = .white
+        
         addChild(promisePageViewController)
         
         view.addSubviews(
@@ -33,7 +43,7 @@ class BasePromiseViewController: BaseViewController {
         
         promisePageViewController.setViewControllers(
             [promiseViewControllerList[0]],
-            direction: .forward, 
+            direction: .forward,
             animated: true
         )
         
@@ -92,7 +102,10 @@ extension BasePromiseViewController: UIPageViewControllerDelegate, UIPageViewCon
         return nil
     }
     
-    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+    func pageViewController(
+        _ pageViewController: UIPageViewController,
+        viewControllerBefore viewController: UIViewController
+    ) -> UIViewController? {
         return nil
     }
 }

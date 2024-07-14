@@ -26,14 +26,24 @@ class LoginViewController: BaseViewController {
     override func setupAction() {
         super.setupAction()
         
-        let appleTapGesture = UITapGestureRecognizer(target: self, action: #selector(appleLoginTapped))
+        let appleTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(appleLoginTapped)
+        )
         loginView.appleLoginImageView.addGestureRecognizer(appleTapGesture)
         
-        let kakaoTapGesture = UITapGestureRecognizer(target: self, action: #selector(kakaoLoginTapped))
+        let kakaoTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(kakaoLoginTapped)
+        )
         loginView.kakaoLoginImageView.addGestureRecognizer(kakaoTapGesture)
         
-        // 더미 버튼
-        loginView.dummyNextButton.addTarget(self, action: #selector(dummyNextButtonTapped), for: .touchUpInside)
+        /// 더미 버튼
+        loginView.dummyNextButton.addTarget(
+            self,
+            action: #selector(dummyNextButtonTapped),
+            for: .touchUpInside
+        )
     }
     
     private func bindViewModel() {
@@ -64,10 +74,18 @@ class LoginViewController: BaseViewController {
 
     // TODO: 추후 서버연결후 삭제예정
     @objc private func dummyNextButtonTapped() {
-        _ = NicknameViewController()
-        let welcomeViewController = NicknameViewController()
-        welcomeViewController.modalPresentationStyle = .fullScreen
-        present(welcomeViewController, animated: true, completion: nil)
+//        _ = NicknameViewController()
+//        let welcomeViewController = NicknameViewController()
+//        welcomeViewController.modalPresentationStyle = .fullScreen
+//        present(welcomeViewController, animated: true, completion: nil)
+        
+        // TODO: 프로필 설정부터 네비게이션으로 플로우 동작
+        
+        let viewController = NicknameViewController()
+        let navigationController = UINavigationController(rootViewController: viewController)
+        navigationController.modalTransitionStyle = .crossDissolve
+        navigationController.modalPresentationStyle = .fullScreen
+        present(navigationController, animated: true)
     }
 }
 

@@ -29,41 +29,21 @@ class HomeViewController: BaseViewController {
         self.view = rootView
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(false)
-        navigationController?.isNavigationBarHidden = true
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        register()
-        setupDelegate()
-        setupAction()
         
+        register()
         updateUI()
         updateUpcomingPromise()
         viewModel.dummy()
     }
     
-    
-    // MARK: - Function
-    
-    private func register() {
-        rootView.upcomingPromiseView.register(UpcomingPromiseCollectionViewCell.self,
-            forCellWithReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier
-        )
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.isNavigationBarHidden = true
     }
-    
-    override func setupDelegate() {
-        rootView.upcomingPromiseView.delegate = self
-        rootView.upcomingPromiseView.dataSource = self
-        rootView.scrollView.delegate = self
-    }
-    
-    
-    // MARK: - Function
     
     override func setupAction() {
         rootView.todayPromiseView.prepareButton.addTarget(
@@ -83,31 +63,118 @@ class HomeViewController: BaseViewController {
         )
     }
     
-    private func setDisableButton(_ sender: UIButton) {
+    override func setupDelegate() {
+        rootView.upcomingPromiseView.delegate = self
+        rootView.upcomingPromiseView.dataSource = self
+        rootView.scrollView.delegate = self
+    }
+}
+
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension HomeViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        return CGSize(width: cellWidth, height: cellHeight)
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        minimumLineSpacingForSectionAt section: Int
+    ) -> CGFloat {
+        return contentInterSpacing
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        insetForSectionAt section: Int
+    ) -> UIEdgeInsets {
+        return contentInset
+    }
+}
+
+
+// MARK: - UICollectionViewDataSource
+
+extension HomeViewController: UICollectionViewDataSource {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        return viewModel.upcomingPromiseData.value.count
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier, 
+            for: indexPath
+        ) as? UpcomingPromiseCollectionViewCell else { return UICollectionViewCell() }
+        cell.dataBind(viewModel.upcomingPromiseData.value[indexPath.item])
+        return cell
+    }    
+}
+
+
+// MARK: - UIScrollViewDelegate
+
+extension HomeViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if rootView.scrollView.contentOffset.y < 0 {
+            rootView.scrollView.contentOffset.y = 0
+        }
+        
+        let maxOffsetY = rootView.scrollView.contentSize.height - rootView.scrollView.bounds.height
+        if rootView.scrollView.contentOffset.y > maxOffsetY {
+            rootView.scrollView.contentOffset.y = maxOffsetY
+        }
+    }
+}
+
+
+// MARK: - Function
+
+private extension HomeViewController {
+    func register() {
+        rootView.upcomingPromiseView.register(
+            UpcomingPromiseCollectionViewCell.self,
+            forCellWithReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier
+        )
+    }
+    
+    func setDisableButton(_ sender: UIButton) {
         sender.setTitleColor(.gray3, for: .normal)
         sender.layer.borderColor = UIColor.gray3.cgColor
         sender.backgroundColor = .white
     }
     
-    private func setEnableButton(_ sender: UIButton) {
+    func setEnableButton(_ sender: UIButton) {
         sender.setTitleColor(.maincolor, for: .normal)
         sender.layer.borderColor = UIColor.maincolor.cgColor
         sender.backgroundColor = .white
     }
     
-    private func setProgressButton(_ sender: UIButton) {
+    func setProgressButton(_ sender: UIButton) {
         sender.setTitleColor(.maincolor, for: .normal)
         sender.layer.borderColor = UIColor.maincolor.cgColor
         sender.backgroundColor = .green2
     }
     
-    private func setCompleteButton(_ sender: UIButton) {
+    func setCompleteButton(_ sender: UIButton) {
         sender.setTitleColor(.white, for: .normal)
         sender.layer.borderColor = UIColor.maincolor.cgColor
         sender.backgroundColor = .maincolor
     }
     
-    private func updateUI() {
+    func updateUI() {
         viewModel.currentState.bind { [weak self] state in
             switch state {
             case .prepare:
@@ -122,7 +189,7 @@ class HomeViewController: BaseViewController {
         }
     }
     
-    private func updateUpcomingPromise() {
+    func updateUpcomingPromise() {
         viewModel.upcomingPromiseData.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.rootView.upcomingPromiseView.reloadData()
@@ -130,7 +197,7 @@ class HomeViewController: BaseViewController {
         }
     }
     
-    private func setPrepareUI() {
+    func setPrepareUI() {
         setProgressButton(rootView.todayPromiseView.prepareButton)
         setEnableButton(rootView.todayPromiseView.moveButton)
         setDisableButton(rootView.todayPromiseView.arriveButton)
@@ -142,11 +209,11 @@ class HomeViewController: BaseViewController {
         
         rootView.todayPromiseView.prepareLabel.isHidden = true
         rootView.todayPromiseView.moveLabel.isHidden = false
-    
+        
         rootView.todayPromiseView.prepareLineView.isHidden = false
     }
     
-    private func setMoveUI() {
+    func setMoveUI() {
         setCompleteButton(rootView.todayPromiseView.prepareButton)
         rootView.todayPromiseView.moveButton.setTitle("이동 중", for: .normal)
         setProgressButton(rootView.todayPromiseView.moveButton)
@@ -166,11 +233,11 @@ class HomeViewController: BaseViewController {
         rootView.todayPromiseView.moveLineView.isHidden = false
     }
     
-    private func setArriveUI() {
+    func setArriveUI() {
         setCompleteButton(rootView.todayPromiseView.prepareButton)
         setCompleteButton(rootView.todayPromiseView.moveButton)
         setCompleteButton(rootView.todayPromiseView.arriveButton)
-
+        
         rootView.todayPromiseView.moveButton.isEnabled = false
         rootView.todayPromiseView.arriveButton.isEnabled = false
         
@@ -191,7 +258,7 @@ class HomeViewController: BaseViewController {
     // MARK: - Action
     
     @objc
-    private func prepareButtonDidTap(_ sender: UIButton) {
+    func prepareButtonDidTap(_ sender: UIButton) {
         viewModel.updateState(newState: .prepare)
         rootView.todayPromiseView.prepareTimeLabel.setText(
             viewModel.homePrepareTime,
@@ -199,9 +266,9 @@ class HomeViewController: BaseViewController {
             color: .gray8
         )
     }
-
+    
     @objc
-    private func moveButtonDidTap(_ sender: UIButton) {
+    func moveButtonDidTap(_ sender: UIButton) {
         viewModel.updateState(newState: .move)
         rootView.todayPromiseView.moveTimeLabel.setText(
             viewModel.homeMoveTime,
@@ -211,61 +278,12 @@ class HomeViewController: BaseViewController {
     }
     
     @objc
-    private func arriveButtonDidTap(_ sender: UIButton) {
+    func arriveButtonDidTap(_ sender: UIButton) {
         viewModel.updateState(newState: .arrive)
         rootView.todayPromiseView.arriveTimeLabel.setText(
             viewModel.homeArriveTime,
             style: .caption02,
             color: .gray8
         )
-    }
-}
-
-
-// MARK: - UICollectionViewDelegate
-
-extension HomeViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: cellWidth, height: cellHeight)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
-                        minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return contentInterSpacing
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return contentInset
-    }
-}
-
-extension HomeViewController: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return viewModel.upcomingPromiseData.value.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier, for: indexPath
-        ) as? UpcomingPromiseCollectionViewCell else { return UICollectionViewCell() }
-        cell.dataBind(viewModel.upcomingPromiseData.value[indexPath.item])
-        return cell
-    }    
-}
-
-
-// MARK: - UIScrollViewDelegate
-
-extension HomeViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if rootView.scrollView.contentOffset.y < 0 {
-            rootView.scrollView.contentOffset.y = 0
-        }
-        
-        let maxOffsetY = rootView.scrollView.contentSize.height - rootView.scrollView.bounds.height
-        if rootView.scrollView.contentOffset.y > maxOffsetY {
-            rootView.scrollView.contentOffset.y = maxOffsetY
-        }
     }
 }
