@@ -38,6 +38,14 @@ extension BaseViewController {
             .foregroundColor: UIColor.gray8,
             .font: UIFont.pretendard(.body03)
         ]
+        
+        let lineView = UIView(backgroundColor: .gray2)
+        navigationController?.navigationBar.addSubviews(lineView)
+        
+        lineView.snp.makeConstraints {
+            $0.horizontalEdges.bottom.equalToSuperview()
+            $0.height.equalTo(Screen.height(1))
+        }
     }
     
     /// 네비게이션 바 BackButton 구성

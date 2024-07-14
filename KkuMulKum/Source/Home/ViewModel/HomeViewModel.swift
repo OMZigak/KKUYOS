@@ -18,7 +18,6 @@ enum ReadyState {
 
 final class HomeViewModel {
     var currentState = ObservablePattern<ReadyState>(.none)
-    //var upComingPromiseData = ObservablePattern<[UpcomingPromiseModel]>(UpcomingPromiseModel.dummy())
     var upcomingPromiseData = ObservablePattern<[UpcomingPromiseModel]>([])
     
     var homePrepareTime: String = ""

@@ -42,6 +42,10 @@ final class InvitationCodePopUpViewController: BaseViewController {
         rootView.setInvitationCodeText(invitationCode)
     }
     
+    override func setupView() {
+        view.backgroundColor = .black.withAlphaComponent(0.7)
+    }
+    
     override func setupAction() {
         let tapGesture = UITapGestureRecognizer()
         view.addGestureRecognizer(tapGesture)

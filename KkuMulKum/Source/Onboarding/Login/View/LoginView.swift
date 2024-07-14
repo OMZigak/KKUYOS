@@ -46,17 +46,17 @@ class LoginView: BaseView {
             $0.edges.equalToSuperview()
         }
         
-        appleLoginImageView.snp.makeConstraints {
+        kakaoLoginImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(kakaoLoginImageView.snp.top).offset(20)
-            $0.width.equalToSuperview().offset(-Screen.width(40))
+            $0.bottom.equalToSuperview().offset(-194)
+            $0.horizontalEdges.equalToSuperview().inset(14)
             $0.height.equalTo(Screen.height(54))
         }
         
-        kakaoLoginImageView.snp.makeConstraints {
+        appleLoginImageView.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalTo(safeAreaLayoutGuide).offset(50)
-            $0.width.equalToSuperview().offset(40)
+            $0.top.equalTo(kakaoLoginImageView.snp.bottom).offset(16)
+            $0.horizontalEdges.equalToSuperview().inset(14)
             $0.height.equalTo(Screen.height(54))
         }
         

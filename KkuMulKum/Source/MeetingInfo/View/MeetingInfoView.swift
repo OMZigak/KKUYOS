@@ -180,6 +180,6 @@ extension MeetingInfoView {
     }
     
     func configureEmptyView(with flag: Bool) {
-        emptyDescriptionView.isHidden = !flag
+        emptyDescriptionView.isHidden = flag
     }
 }

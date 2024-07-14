@@ -1,5 +1,5 @@
 //
-//  GroupListView.swift
+//  MeetingListView.swift
 //  KkuMulKum
 //
 //  Created by 예삐 on 7/12/24.
@@ -82,7 +82,7 @@ final class MeetingListView: BaseView {
         
         header.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.width.equalTo(UIScreen.main.bounds.width)
+            $0.width.equalTo(UIScreen.main.bounds.width-40)
             $0.height.equalTo(Screen.height(170))
         }
     }

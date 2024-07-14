@@ -91,7 +91,7 @@ private extension MeetingMemberCell {
         
         profileImageButton.do {
             $0.backgroundColor = .gray1
-            $0.setImage(.iconPlus, for: .normal)
+            $0.setImage(.iconPlus.withTintColor(.gray4), for: .normal)
             $0.isEnabled = true
         }
         

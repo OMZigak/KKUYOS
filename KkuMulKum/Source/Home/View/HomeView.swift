@@ -61,7 +61,10 @@ final class HomeView: BaseView {
     }
     
     private let promiseView = UIView(backgroundColor: .gray0).then {
-        $0.roundCorners(cornerRadius: 16, maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
+        $0.roundCorners(
+            cornerRadius: 16,
+            maskedCorners: [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        )
     }
     
     private let todayLabel = UILabel().then {
