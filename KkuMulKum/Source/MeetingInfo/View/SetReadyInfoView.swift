@@ -29,13 +29,13 @@ final class SetReadyInfoView: BaseView {
         $0.distribution = .fill
     }
     
-    private let readyHourTextField = CustomTextField(placeHolder: "00")
+    let readyHourTextField = CustomTextField(placeHolder: "00")
     
     private let readyHourLabel = UILabel().then {
         $0.setText("시간", style: .body03, color: .gray8)
     }
     
-    private let readyMinuteTextField = CustomTextField(placeHolder: "00")
+    let readyMinuteTextField = CustomTextField(placeHolder: "00")
     
     private let readyMinuteLabel = UILabel().then {
         $0.setText("분", style: .body03, color: .gray8)
@@ -51,13 +51,13 @@ final class SetReadyInfoView: BaseView {
         $0.distribution = .fill
     }
     
-    private let moveHourTextField = CustomTextField(placeHolder: "00")
+    let moveHourTextField = CustomTextField(placeHolder: "00")
     
     private let moveHourLabel = UILabel().then {
         $0.setText("시간", style: .body03, color: .gray8)
     }
     
-    private let moveMinuteTextField = CustomTextField(placeHolder: "00")
+    let moveMinuteTextField = CustomTextField(placeHolder: "00")
     
     private let moveMinuteLabel = UILabel().then {
         $0.setText("분", style: .body03, color: .gray8)
