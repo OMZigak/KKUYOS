@@ -10,15 +10,12 @@ import UIKit
 enum ReadyStatus {
     case none
     case ready
-    case boarding
+    case move
     case done
 }
 
 class ReadyStatusButton: UIButton {
-    static let defaultWidth: CGFloat = Screen.width(335)
-    static let defaultHeight: CGFloat = Screen.height(52)
-    
-    init(readyStatus: ReadyStatus) {
+    init(title: String,readyStatus: ReadyStatus) {
         super.init(frame: .zero)
         
         setupButton(title, readyStatus)
@@ -38,25 +35,24 @@ private extension ReadyStatusButton {
         _ title: String,
         _ readyStatus: ReadyStatus
     ) {
-    switch readyStatus {
-    case .none:
-        self.backgroundColor = .white
-        self.layer.borderColor = UIColor.gray3.cgColor
-        setTitle(title, style: .body05, color: .gray3)
-    case .ready:
-        self.backgroundColor = .white
-        self.layer.borderColor = UIColor.gray3.cgColor
-        setTitle(title, style: .body05, color: .gray3)
-    case .boarding:
-        self.backgroundColor = .green2
-        self.layer.borderColor = UIColor.maincolor.cgColor
-        setTitle(title, style: .body05, color: .gray3)
-    case .done:
-        self.backgroundColor = .white
-        self.layer.borderColor = UIColor.gray3.cgColor
-        setTitle(title, style: .body05, color: .gray3)
-    }
-        
+        switch readyStatus {
+        case .none:
+            self.backgroundColor = .white
+            self.layer.borderColor = UIColor.gray3.cgColor
+            setTitle(title, style: .body05, color: .gray3)
+        case .ready:
+            self.backgroundColor = .white
+            self.layer.borderColor = UIColor.gray3.cgColor
+            setTitle(title, style: .body05, color: .maincolor)
+        case .move:
+            self.backgroundColor = .green2
+            self.layer.borderColor = UIColor.maincolor.cgColor
+            setTitle(title, style: .body05, color: .maincolor)
+        case .done:
+            self.backgroundColor = .maincolor
+            self.layer.borderColor = UIColor.maincolor.cgColor
+            setTitle(title, style: .body05, color: .white)
+        }
     }
     
     func updateButtonColor() {
@@ -65,7 +61,6 @@ private extension ReadyStatusButton {
     
     @objc
     func buttonPressed() {
-        rea
     }
     
     @objc

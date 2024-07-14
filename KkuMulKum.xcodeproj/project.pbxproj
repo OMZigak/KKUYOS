@@ -106,6 +106,7 @@
 		DD43937F2C41357800EC1799 /* InviteCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43937E2C41357800EC1799 /* InviteCodeViewModel.swift */; };
 		DD7698192C443D7E00EB09FA /* ReadyStatusProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD7698182C443D7E00EB09FA /* ReadyStatusProgressView.swift */; };
 		DD76981B2C44402A00EB09FA /* ReadyStatusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD76981A2C44402A00EB09FA /* ReadyStatusButton.swift */; };
+		DD76981D2C44767E00EB09FA /* OurReadyStatusTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD76981C2C44767E00EB09FA /* OurReadyStatusTableViewCell.swift */; };
 		DD931B6B2C3D9EBB00526452 /* ReadyStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B6A2C3D9EBB00526452 /* ReadyStatusView.swift */; };
 		DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */; };
 		DD931B722C3DA92700526452 /* EnterReadyInfoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B712C3DA92700526452 /* EnterReadyInfoButtonView.swift */; };
@@ -242,6 +243,7 @@
 		DD43937E2C41357800EC1799 /* InviteCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodeViewModel.swift; sourceTree = "<group>"; };
 		DD7698182C443D7E00EB09FA /* ReadyStatusProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadyStatusProgressView.swift; sourceTree = "<group>"; };
 		DD76981A2C44402A00EB09FA /* ReadyStatusButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadyStatusButton.swift; sourceTree = "<group>"; };
+		DD76981C2C44767E00EB09FA /* OurReadyStatusTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OurReadyStatusTableViewCell.swift; sourceTree = "<group>"; };
 		DD931B6A2C3D9EBB00526452 /* ReadyStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadyStatusView.swift; sourceTree = "<group>"; };
 		DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD931B712C3DA92700526452 /* EnterReadyInfoButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterReadyInfoButtonView.swift; sourceTree = "<group>"; };
@@ -863,6 +865,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		DD76981E2C44768100EB09FA /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				DD76981C2C44767E00EB09FA /* OurReadyStatusTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		DD865B652C3920F600C351A2 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
@@ -889,6 +899,7 @@
 			children = (
 				DD3976952C41CC2200E2A4C4 /* ViewController */,
 				DD3976962C41CC2C00E2A4C4 /* View */,
+				DD76981E2C44768100EB09FA /* Cell */,
 			);
 			path = ReadyStatus;
 			sourceTree = "<group>";
@@ -1463,6 +1474,7 @@
 				DD3976882C41C2AD00E2A4C4 /* UpcomingEmptyView.swift in Sources */,
 				DD931B762C3DC16100526452 /* PromiseInfoView.swift in Sources */,
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
+				DD76981D2C44767E00EB09FA /* OurReadyStatusTableViewCell.swift in Sources */,
 				DD3976872C41C2AD00E2A4C4 /* TodayPromiseView.swift in Sources */,
 				789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */,
 				782B40752C3DBFBA008B0CA7 /* ProfileView.swift in Sources */,
