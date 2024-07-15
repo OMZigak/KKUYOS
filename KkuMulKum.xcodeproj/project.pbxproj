@@ -528,14 +528,6 @@
 			path = KkuMulKum;
 			sourceTree = "<group>";
 		};
-		A3DD9C332C41BAD000E58A13 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
 		A3DD9C352C41BAD000E58A13 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -548,6 +540,7 @@
 			isa = PBXGroup;
 			children = (
 				A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */,
+				A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -571,11 +564,10 @@
 		A3DD9C3C2C41BAD000E58A13 /* MeetingList */ = {
 			isa = PBXGroup;
 			children = (
-				A3DD9C332C41BAD000E58A13 /* Cell */,
-				A3DD9C352C41BAD000E58A13 /* Model */,
-				A3DD9C372C41BAD000E58A13 /* View */,
-				A3DD9C392C41BAD000E58A13 /* ViewController */,
 				A3DD9C3B2C41BAD000E58A13 /* ViewModel */,
+				A3DD9C392C41BAD000E58A13 /* ViewController */,
+				A3DD9C372C41BAD000E58A13 /* View */,
+				A3DD9C352C41BAD000E58A13 /* Model */,
 			);
 			path = MeetingList;
 			sourceTree = "<group>";
@@ -632,10 +624,9 @@
 			isa = PBXGroup;
 			children = (
 				DD3976762C41C2AD00E2A4C4 /* ViewModel */,
-				DD3976782C41C2AD00E2A4C4 /* Cell */,
-				DD39767A2C41C2AD00E2A4C4 /* Model */,
-				DD39767C2C41C2AD00E2A4C4 /* View */,
 				DD3976812C41C2AD00E2A4C4 /* ViewController */,
+				DD39767C2C41C2AD00E2A4C4 /* View */,
+				DD39767A2C41C2AD00E2A4C4 /* Model */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -646,14 +637,6 @@
 				DD3976772C41C2AD00E2A4C4 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		DD3976782C41C2AD00E2A4C4 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				DD3976792C41C2AD00E2A4C4 /* UpcomingPromiseCollecitonViewCell.swift */,
-			);
-			path = Cell;
 			sourceTree = "<group>";
 		};
 		DD39767A2C41C2AD00E2A4C4 /* Model */ = {
@@ -671,6 +654,7 @@
 				DD39767E2C41C2AD00E2A4C4 /* TodayPromiseView.swift */,
 				DD39767F2C41C2AD00E2A4C4 /* UpcomingEmptyView.swift */,
 				DD3976802C41C2AD00E2A4C4 /* TodayEmptyView.swift */,
+				DD3976792C41C2AD00E2A4C4 /* UpcomingPromiseCollecitonViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
