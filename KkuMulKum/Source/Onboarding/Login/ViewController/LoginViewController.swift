@@ -51,8 +51,8 @@ class LoginViewController: BaseViewController {
             switch state {
             case .notLogin:
                 print("Login State: Not logged in")
-            case .login(let userInfo):
-                print("Login State: Logged in with user info: \(userInfo)")
+            case .login:
+                print("Login State: Logged in with user info: ")
                 owner.navigateToMainScreen()
             case .needOnboarding:
                 print("Login State: Need onboarding")

@@ -14,7 +14,7 @@ import Moya
 
 enum LoginState {
     case notLogin
-    case login(userInfo: String)
+    case login
     case needOnboarding
 }
 
@@ -23,17 +23,16 @@ class LoginViewModel: NSObject {
     var error: ObservablePattern<String> = ObservablePattern("")
     
     private let provider: MoyaProvider<LoginTargetType>
+    private var keychainService: KeychainService
     
     init(
         provider: MoyaProvider<LoginTargetType> = MoyaProvider<LoginTargetType>(
-            plugins: [NetworkLoggerPlugin(
-                configuration: .init(
-                    logOptions: .verbose
-                )
-            )]
-        )
+            plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
+        ),
+        keychainService: KeychainService = DefaultKeychainService.shared
     ) {
         self.provider = provider
+        self.keychainService = keychainService
         super.init()
     }
     
@@ -103,17 +102,15 @@ class LoginViewModel: NSObject {
             print("Handling login response")
             if response.success {
                 if let data = response.data {
-                    if let name = data.name {
-                        print("Login successful, user name: \(name)")
-                        loginState.value = .login(userInfo: name)
+                    if data.name != nil {
+                        print("Login successful")
+                        loginState.value = .login
                     } else {
-                        print("Login successful, but no name provided. Needs onboarding.")
+                        print("Login successful, but needs onboarding.")
                         loginState.value = .needOnboarding
                     }
                     
-                    let tokens = data.jwtTokenDTO
-                    print("Received tokens - Access: \(tokens.accessToken), Refresh: \(tokens.refreshToken)")
-                    // TODO: 토큰 저장 로직 구현
+                    saveTokens(accessToken: data.jwtTokenDTO.accessToken, refreshToken: data.jwtTokenDTO.refreshToken)
                 } else {
                     print("Warning: No data received in response")
                     error.value = "No data received"
@@ -128,11 +125,56 @@ class LoginViewModel: NSObject {
                 }
             }
         }
-    
-}
+        
+    private func saveTokens(accessToken: String, refreshToken: String) {
+        keychainService.accessToken = accessToken
+        keychainService.refreshToken = refreshToken
+        print("Tokens saved to keychain")
+        
+        // 저장 후 바로 읽어서 확인
+        if let savedAccessToken = keychainService.accessToken {
+            print("Saved Access Token: \(savedAccessToken)")
+        } else {
+            print("Failed to save Access Token")
+        }
+        
+        if let savedRefreshToken = keychainService.refreshToken {
+            print("Saved Refresh Token: \(savedRefreshToken)")
+        } else {
+            print("Failed to save Refresh Token")
+        }
+    }
+        
+        func refreshToken() {
+            guard let refreshToken = keychainService.refreshToken else {
+                error.value = "No refresh token available"
+                return
+            }
+            
+            provider.request(.refreshToken(refreshToken: refreshToken)) { [weak self] result in
+                switch result {
+                case .success(let response):
+                    do {
+                        let refreshResponse = try response.map(ResponseBodyDTO<RefreshTokenResponseModel>.self)
+                        if refreshResponse.success, let data = refreshResponse.data {
+                            self?.saveTokens(accessToken: data.accessToken, refreshToken: data.refreshToken)
+                            self?.loginState.value = .login
+                        } else if let error = refreshResponse.error {
+                            self?.error.value = error.message
+                        }
+                    } catch {
+                        self?.error.value = "Failed to decode refresh token response"
+                    }
+                case .failure(let error):
+                    self?.error.value = "Token refresh failed: \(error.localizedDescription)"
+                }
+            }
+        }
+    }
+
 
 extension LoginViewModel: ASAuthorizationControllerDelegate,
-                            ASAuthorizationControllerPresentationContextProviding {
+                          ASAuthorizationControllerPresentationContextProviding {
     func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization
