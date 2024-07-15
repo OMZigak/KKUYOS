@@ -17,10 +17,12 @@ enum TextFieldVailidationResult {
 final class AddPromiseViewModel {
     let meetingID: Int
     
-    var combinedDataTime: String { combinedDateTimeRelay.value }
+    var place: Place? { placeRelay.value }
+    var combinedDateTime: String { combinedDateTimeRelay.value }
     
     private let service: AddPromiseServiceType
     private let combinedDateTimeRelay = BehaviorRelay(value: "")
+    private let placeRelay = BehaviorRelay<Place?>(value: nil)
     
     init(meetingID: Int, service: AddPromiseServiceType) {
         self.meetingID = meetingID
@@ -34,16 +36,18 @@ extension AddPromiseViewModel: ViewModelType {
         let promiseTextFieldEndEditing: Observable<Void>
         let date: Observable<Date>
         let time: Observable<Date>
+        let place: PublishRelay<Place>
     }
     
     struct Output {
         let validationPromiseNameResult: Observable<TextFieldVailidationResult>
+        let isEnabledConfirmButton: Observable<Bool>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let isValid = input.promiseNameText
             .map { [weak self] text in
-                self?.isValid(text: text) ?? false
+                return !text.isEmpty && self?.isValid(text: text) ?? false
             }
         
         let validationResultWhileEditing = input.promiseNameText
@@ -91,16 +95,24 @@ extension AddPromiseViewModel: ViewModelType {
             .bind(to: combinedDateTimeRelay)
             .disposed(by: disposeBag)
         
+        input.place
+            .bind(to: placeRelay)
+            .disposed(by: disposeBag)
+        
+        let isEnabledConfirmButton = Observable.combineLatest(isValid, placeRelay)
+            .map { flag, place -> Bool in
+                return flag && place != nil
+            }
+        
         return Output(
-            validationPromiseNameResult: validationPromiseNameResult
+            validationPromiseNameResult: validationPromiseNameResult,
+            isEnabledConfirmButton: isEnabledConfirmButton
         )
     }
 }
 
 private extension AddPromiseViewModel {
-    func isValid(text: String) -> Bool {
-        if text.isEmpty { return true }
-        
+    func isValid(text: String) -> Bool {        
         let regex = "^[가-힣a-zA-Z0-9 ]{1,10}$"
         let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
         

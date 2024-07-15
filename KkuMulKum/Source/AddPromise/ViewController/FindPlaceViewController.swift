@@ -112,7 +112,7 @@ private extension FindPlaceViewController {
     func bindViewModel() {
         let input = FindPlaceViewModel.Input(
             textFieldDidChange: rootView.placeTextFieldDidChange,
-            textFieldEneEditing: textFieldEndEditing,
+            textFieldEndEditing: textFieldEndEditing,
             cellIsSelected: cellIsSeleceted,
             confirmButtonDidTap: rootView.confirmButtonDidTap
         )

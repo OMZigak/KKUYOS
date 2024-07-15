@@ -24,7 +24,7 @@ final class FindPlaceViewModel {
 extension FindPlaceViewModel: ViewModelType {
     struct Input {
         let textFieldDidChange: Observable<String?>
-        let textFieldEneEditing: PublishRelay<Void>
+        let textFieldEndEditing: PublishRelay<Void>
         let cellIsSelected: PublishRelay<Place?>
         let confirmButtonDidTap: Observable<Void>
     }
@@ -37,11 +37,11 @@ extension FindPlaceViewModel: ViewModelType {
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
-        let isEndEditingTextField = input.textFieldEneEditing
+        let isEndEditingTextField = input.textFieldEndEditing
             .map { true }
             .asDriver(onErrorJustReturn: false)
         
-        input.textFieldEneEditing
+        input.textFieldEndEditing
             .withLatestFrom(input.textFieldDidChange)
             .map { [weak self] text -> [Place] in
                 guard let text,
@@ -65,7 +65,7 @@ extension FindPlaceViewModel: ViewModelType {
         
         let isEnabledConfirmButton = selectedPlaceRelay
             .map { place -> Bool in
-                place != nil ? true : false
+                place != nil
             }
             .asDriver(onErrorJustReturn: false)
         

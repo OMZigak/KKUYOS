@@ -53,12 +53,21 @@ final class AddPromiseViewController: BaseViewController {
         navigationController?.isNavigationBarHidden = false
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
         view.endEditing(true)
     }
     
     override func setupAction() {
-        /// progressView의 progress 설정
+        let tapGesture = UITapGestureRecognizer()
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.rx.event
+            .subscribe(with: self) { owner, _ in
+                owner.view.endEditing(true)
+            }
+            .disposed(by: disposeBag)
+        
         rootView.promiseNameTextField.rx.text.orEmpty
             .map { !$0.isEmpty ? 0.25 : 0.0 }
             .bind(to: rootView.progressView.rx.progress)
@@ -69,12 +78,25 @@ final class AddPromiseViewController: BaseViewController {
             .bind(to: rootView.promiseNameCountLabel.rx.text)
             .disposed(by: disposeBag)
         
+        let tapTextFieldGesture = UITapGestureRecognizer()
+        rootView.promisePlaceTextField.addGestureRecognizer(tapTextFieldGesture)
+        
+        tapTextFieldGesture.rx.event
+            .subscribe(with: self) { owner, _ in
+                let viewController = FindPlaceViewController(
+                    viewModel: FindPlaceViewModel(
+                        service: MockFindPlaceService()
+                    )
+                )
+                viewController.delegate = owner
+                owner.navigationController?.pushViewController(viewController, animated: true)
+            }
+            .disposed(by: disposeBag)
+        
         rootView.confirmButton.rx.tap
             .map { _ in }
             .subscribe(with: self) { owner, temp in
-                
                 // TODO: 다음화면으로 넘어가기
-                
             }
             .disposed(by: disposeBag)
     }
@@ -106,18 +128,6 @@ extension AddPromiseViewController: UITextFieldDelegate {
         }
         return false
     }
-    
-    /// 위치 텍스트필드의 사용자 입력 차단
-    func textField(
-        _ textField: UITextField,
-        shouldChangeCharactersIn range: NSRange,
-        replacementString string: String
-    ) -> Bool {
-        if textField == rootView.promisePlaceTextField {
-            return false
-        }
-        return true
-    }
 }
 
 private extension AddPromiseViewController {
@@ -131,7 +141,8 @@ private extension AddPromiseViewController {
             promiseNameText: rootView.promiseNameTextField.rx.text.orEmpty.asObservable(),
             promiseTextFieldEndEditing: promiseTextFieldEndEditing,
             date: rootView.datePicker.rx.date.asObservable(),
-            time: rootView.timePicker.rx.date.asObservable()
+            time: rootView.timePicker.rx.date.asObservable(),
+            place: searchPlaceCompleted
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
@@ -141,11 +152,15 @@ private extension AddPromiseViewController {
                 owner.configurePromiseName(result: result)
             }
             .disposed(by: disposeBag)
+        
+        output.isEnabledConfirmButton
+            .subscribe(with: self) { owner, flag in
+                owner.rootView.confirmButton.isEnabled = flag
+            }
+            .disposed(by: disposeBag)
     }
     
     func configurePromiseName(result: TextFieldVailidationResult) {
-        print(">>> \(viewModel.combinedDataTime) : \(#function)")
-
         switch result {
         case .basic:
             rootView.do {
