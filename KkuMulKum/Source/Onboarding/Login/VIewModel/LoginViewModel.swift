@@ -131,7 +131,8 @@ class LoginViewModel: NSObject {
     
 }
 
-extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension LoginViewModel: ASAuthorizationControllerDelegate,
+                            ASAuthorizationControllerPresentationContextProviding {
     func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization

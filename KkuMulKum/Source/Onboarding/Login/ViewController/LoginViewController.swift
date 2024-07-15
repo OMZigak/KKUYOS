@@ -6,13 +6,11 @@
 //
 
 import UIKit
-import AuthenticationServices
 
 class LoginViewController: BaseViewController {
-    
     private let loginView = LoginView()
     private let loginViewModel: LoginViewModel
-    
+
     init(viewModel: LoginViewModel = LoginViewModel()) {
         self.loginViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -35,18 +33,12 @@ class LoginViewController: BaseViewController {
     override func setupAction() {
         super.setupAction()
         
-        let appleTapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(appleLoginTapped)
-        )
+        let appleTapGesture = UITapGestureRecognizer(target: self, action: #selector(appleLoginTapped))
         loginView.appleLoginImageView.addGestureRecognizer(appleTapGesture)
         
-        let kakaoTapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(kakaoLoginTapped)
-        )
+        let kakaoTapGesture = UITapGestureRecognizer(target: self, action: #selector(kakaoLoginTapped))
         loginView.kakaoLoginImageView.addGestureRecognizer(kakaoTapGesture)
-        
+
         loginView.dummyNextButton.addTarget(
             self,
             action: #selector(dummyNextButtonTapped),
@@ -83,7 +75,7 @@ class LoginViewController: BaseViewController {
     @objc private func kakaoLoginTapped() {
         loginViewModel.performKakaoLogin()
     }
-    
+   
     @objc private func dummyNextButtonTapped() {
         let viewController = MainTabBarController()
         viewController.modalPresentationStyle = .fullScreen

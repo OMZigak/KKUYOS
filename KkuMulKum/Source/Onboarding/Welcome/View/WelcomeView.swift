@@ -54,7 +54,7 @@ class WelcomeView: BaseView {
           }
           
           descriptionLabel.snp.makeConstraints {
-               $0.top.equalTo(welcomeLabel.snp.bottom).offset(10)
+               $0.top.equalTo(welcomeLabel.snp.bottom).offset(18)
                $0.centerX.equalToSuperview()
                $0.leading.trailing.equalToSuperview().inset(20)
                $0.bottom.lessThanOrEqualTo(confirmButton.snp.top).offset(-20)
