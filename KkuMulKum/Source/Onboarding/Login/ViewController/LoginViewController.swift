@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 import AuthenticationServices
 
 class LoginViewController: BaseViewController {
@@ -15,16 +16,19 @@ class LoginViewController: BaseViewController {
     
     override func loadView() {
         view = loginView
+        print("LoginViewController loadView called")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("LoginViewController viewDidLoad called")
         bindViewModel()
         setupAction()
     }
     
     override func setupAction() {
         super.setupAction()
+        print("Setting up actions for LoginViewController")
         
         let appleTapGesture = UITapGestureRecognizer(
             target: self,
@@ -38,7 +42,6 @@ class LoginViewController: BaseViewController {
         )
         loginView.kakaoLoginImageView.addGestureRecognizer(kakaoTapGesture)
         
-        /// 더미 버튼
         loginView.dummyNextButton.addTarget(
             self,
             action: #selector(dummyNextButtonTapped),
@@ -47,45 +50,61 @@ class LoginViewController: BaseViewController {
     }
     
     private func bindViewModel() {
+        print("Binding ViewModel in LoginViewController")
         loginViewModel.loginState.bind(with: self) { owner, state in
             switch state {
             case .notLoggedIn:
-                print("Not logged in")
+                print("Login State: Not logged in")
             case .loggedIn(let userInfo):
-                print("Logged in: \(userInfo)")
+                print("Login State: Logged in with user info: \(userInfo)")
+                owner.navigateToMainScreen()
+            case .needOnboarding:
+                print("Login State: Need onboarding")
+                owner.navigateToOnboardingScreen()
             }
         }
         
         loginViewModel.error.bind(with: self) { owner, error in
             if !error.isEmpty {
-                // TODO: 추후 에러처리 추가예정 -> Keychain 연결 이후
-                print("Error occurred: \(error)")
+                print("Login Error: \(error)")
+                owner.showErrorAlert(message: error)
             }
         }
     }
     
     @objc private func appleLoginTapped() {
+        print("Apple Login button tapped")
         loginViewModel.performAppleLogin(presentationAnchor: view.window!)
     }
     
     @objc private func kakaoLoginTapped() {
-        loginViewModel.performKakaoLogin(presentationAnchor: view.window!)
+        print("Kakao Login button tapped")
+        loginViewModel.performKakaoLogin()
     }
 
-    // TODO: 추후 서버연결후 삭제예정
     @objc private func dummyNextButtonTapped() {
-//        _ = NicknameViewController()
-//        let welcomeViewController = NicknameViewController()
-//        welcomeViewController.modalPresentationStyle = .fullScreen
-//        present(welcomeViewController, animated: true, completion: nil)
-        
-        // TODO: 프로필 설정부터 네비게이션으로 플로우 동작
-        
+        print("Dummy Next button tapped")
         let viewController = NicknameViewController()
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.modalTransitionStyle = .crossDissolve
         navigationController.modalPresentationStyle = .fullScreen
         present(navigationController, animated: true)
     }
+    
+    private func navigateToMainScreen() {
+        print("Navigating to Main Screen")
+        // TODO: Implement navigation to main screen
+    }
+    
+    private func navigateToOnboardingScreen() {
+        print("Navigating to Onboarding Screen")
+        // TODO: Implement navigation to onboarding screen
+    }
+    
+    private func showErrorAlert(message: String) {
+        print("Showing error alert with message: \(message)")
+        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
 }
-
