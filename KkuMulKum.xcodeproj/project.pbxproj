@@ -145,6 +145,8 @@
 		DE254ACC2C311DC200A4015E /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */; };
 		DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */; };
 		DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */; };
+		DE558C592C45954B008DAC4A /* SelectPeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE558C582C45954B008DAC4A /* SelectPeopleViewController.swift */; };
+		DE558C5B2C4595A7008DAC4A /* SelectPeopleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE558C5A2C4595A7008DAC4A /* SelectPeopleView.swift */; };
 		DE6D4D0F2C3F14D80005584B /* MeetingInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D4D012C3F14D80005584B /* MeetingInfoService.swift */; };
 		DE6D4D102C3F14D80005584B /* InvitationCodePopUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D4D032C3F14D80005584B /* InvitationCodePopUpView.swift */; };
 		DE6D4D112C3F14D80005584B /* MeetingInfoBannerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D4D042C3F14D80005584B /* MeetingInfoBannerView.swift */; };
@@ -285,6 +287,8 @@
 		DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserResponseModel.swift; sourceTree = "<group>"; };
 		DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileNameModel.swift; sourceTree = "<group>"; };
+		DE558C582C45954B008DAC4A /* SelectPeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPeopleViewController.swift; sourceTree = "<group>"; };
+		DE558C5A2C4595A7008DAC4A /* SelectPeopleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPeopleView.swift; sourceTree = "<group>"; };
 		DE6D4D012C3F14D80005584B /* MeetingInfoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingInfoService.swift; sourceTree = "<group>"; };
 		DE6D4D032C3F14D80005584B /* InvitationCodePopUpView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InvitationCodePopUpView.swift; sourceTree = "<group>"; };
 		DE6D4D042C3F14D80005584B /* MeetingInfoBannerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingInfoBannerView.swift; sourceTree = "<group>"; };
@@ -1247,6 +1251,7 @@
 			children = (
 				DECB84572C43FBEB0022A003 /* AddPromiseViewController.swift */,
 				DECB845B2C4442490022A003 /* FindPlaceViewController.swift */,
+				DE558C582C45954B008DAC4A /* SelectPeopleViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1257,6 +1262,7 @@
 				DECB84592C43FC140022A003 /* AddPromiseView.swift */,
 				DECB845D2C4442AF0022A003 /* FindPlaceView.swift */,
 				DECB84632C44655A0022A003 /* PlaceListCell.swift */,
+				DE558C5A2C4595A7008DAC4A /* SelectPeopleView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1524,6 +1530,7 @@
 				DECB84582C43FBEB0022A003 /* AddPromiseViewController.swift in Sources */,
 				A3DD9C3D2C41BAD000E58A13 /* MeetingTableViewCell.swift in Sources */,
 				DD39766B2C41995A00E2A4C4 /* FinishCreateNavigationView.swift in Sources */,
+				DE558C5B2C4595A7008DAC4A /* SelectPeopleView.swift in Sources */,
 				DD3072202C3C0D4500416D9F /* MyReadyStatusResponseModel.swift in Sources */,
 				DD3072282C3C104D00416D9F /* ArrivalCompletionResponseModel.swift in Sources */,
 				DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */,
@@ -1539,6 +1546,7 @@
 				A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */,
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE0137D32C43C5E50088C777 /* MyPageView.swift in Sources */,
+				DE558C592C45954B008DAC4A /* SelectPeopleViewController.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
 				DD43937B2C412F4500EC1799 /* CreateMeetingViewController.swift in Sources */,
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,

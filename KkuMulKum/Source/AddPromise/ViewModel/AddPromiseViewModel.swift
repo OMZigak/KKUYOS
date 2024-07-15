@@ -74,23 +74,8 @@ extension AddPromiseViewModel: ViewModelType {
         )
         
         Observable.combineLatest(input.date, input.time)
-            .map { (date, time) -> String in
-                let calendar = Calendar.current
-                let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
-                let timeComponents = calendar.dateComponents([.hour, .minute, .second], from: time)
-                
-                var combinedComponents = DateComponents()
-                combinedComponents.year = dateComponents.year
-                combinedComponents.month = dateComponents.month
-                combinedComponents.day = dateComponents.day
-                combinedComponents.hour = timeComponents.hour
-                combinedComponents.minute = timeComponents.minute
-                combinedComponents.second = timeComponents.second
-                
-                let combinedDate = calendar.date(from: combinedComponents)!
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                return dateFormatter.string(from: combinedDate)
+            .map { [weak self] date, time -> String in
+                return self?.combine(date: date, time: time) ?? ""
             }
             .bind(to: combinedDateTimeRelay)
             .disposed(by: disposeBag)
@@ -117,5 +102,21 @@ private extension AddPromiseViewModel {
         let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
         
         return predicate.evaluate(with: text)
+    }
+    
+    func combine(date: Date, time: Date) -> String {
+        let calendar = Calendar.current
+        var combinedComponents = DateComponents()
+        combinedComponents.year = calendar.component(.year, from: date)
+        combinedComponents.month = calendar.component(.month, from: date)
+        combinedComponents.day = calendar.component(.day, from: date)
+        combinedComponents.hour = calendar.component(.hour, from: time)
+        combinedComponents.minute = calendar.component(.minute, from: time)
+        combinedComponents.second = calendar.component(.second, from: time)
+        
+        guard let combinedDate = calendar.date(from: combinedComponents) else { return "" }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.string(from: combinedDate)
     }
 }
