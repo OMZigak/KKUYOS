@@ -199,6 +199,7 @@ private extension HomeViewController {
     
     func setPrepareUI() {
         setProgressButton(rootView.todayPromiseView.prepareButton)
+        rootView.todayPromiseView.moveButton.setTitle("준비 중", for: .normal)
         setEnableButton(rootView.todayPromiseView.moveButton)
         setDisableButton(rootView.todayPromiseView.arriveButton)
         

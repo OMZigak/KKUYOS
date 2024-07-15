@@ -106,7 +106,7 @@ final class TodayPromiseView: BaseView {
     }
     
     let prepareButton = UIButton().then {
-        $0.setTitle("준비 중", style: .body05, color: .maincolor)
+        $0.setTitle("준비 시작", style: .body05, color: .maincolor)
         $0.setLayer(borderWidth: 1, borderColor: .maincolor, cornerRadius: 16)
     }
     

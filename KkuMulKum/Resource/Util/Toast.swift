@@ -39,7 +39,7 @@ private extension Toast {
             $0.textColor = .white
             $0.textAlignment = .center
             $0.text = message
-            $0.font = .pretendard(.body02)
+            $0.font = .pretendard(.body06)
             $0.clipsToBounds = true
             $0.numberOfLines = 0
             $0.sizeToFit()

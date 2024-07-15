@@ -10,10 +10,9 @@ import UIKit
 class LoginViewController: BaseViewController {
     private let loginView = LoginView()
     private let loginViewModel: LoginViewModel
-    
-    init() {
-        let authService = AuthService()
-        self.loginViewModel = LoginViewModel(authService: authService)
+
+    init(viewModel: LoginViewModel = LoginViewModel()) {
+        self.loginViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -39,23 +38,31 @@ class LoginViewController: BaseViewController {
         
         let kakaoTapGesture = UITapGestureRecognizer(target: self, action: #selector(kakaoLoginTapped))
         loginView.kakaoLoginImageView.addGestureRecognizer(kakaoTapGesture)
-        
-        loginView.dummyNextButton.addTarget(self, action: #selector(dummyNextButtonTapped), for: .touchUpInside)
+
+        loginView.dummyNextButton.addTarget(
+            self,
+            action: #selector(dummyNextButtonTapped),
+            for: .touchUpInside
+        )
     }
     
     private func bindViewModel() {
         loginViewModel.loginState.bind(with: self) { owner, state in
             switch state {
-            case .notLoggedIn:
-                print("Not logged in")
-            case .loggedIn(let userInfo):
-                print("Logged in: \(userInfo)")
+            case .notLogin:
+                print("Login State: Not logged in")
+            case .login(let userInfo):
+                print("Login State: Logged in with user info: \(userInfo)")
                 owner.navigateToMainScreen()
+            case .needOnboarding:
+                print("Login State: Need onboarding")
+                owner.navigateToOnboardingScreen()
             }
         }
         
         loginViewModel.error.bind(with: self) { owner, error in
             if !error.isEmpty {
+                print("Login Error: \(error)")
                 owner.showErrorAlert(message: error)
             }
         }
@@ -68,28 +75,40 @@ class LoginViewController: BaseViewController {
     @objc private func kakaoLoginTapped() {
         loginViewModel.performKakaoLogin()
     }
-    
-    // TODO: 추후 서버연결후 삭제예정
+   
     @objc private func dummyNextButtonTapped() {
-        //        _ = NicknameViewController()
-        //        let welcomeViewController = NicknameViewController()
-        //        welcomeViewController.modalPresentationStyle = .fullScreen
-        //        present(welcomeViewController, animated: true, completion: nil)
-        
-        // TODO: 프로필 설정부터 네비게이션으로 플로우 동작
-        
         let viewController = MainTabBarController()
-        
         viewController.modalPresentationStyle = .fullScreen
-        
         present(viewController, animated: true)
     }
     
     private func navigateToMainScreen() {
-        // 로그인 성공 후 메인 화면으로 이동하는 로직
+        DispatchQueue.main.async {
+            let mainTabBarController = MainTabBarController()
+            let navigationController = UINavigationController(rootViewController: mainTabBarController)
+            navigationController.isNavigationBarHidden = true
+            navigationController.modalPresentationStyle = .fullScreen
+            navigationController.modalTransitionStyle = .crossDissolve
+            self.present(navigationController, animated: true, completion: nil)
+        }
+    }
+    
+    private func navigateToOnboardingScreen() {
+        DispatchQueue.main.async {
+            let nicknameViewController = NicknameViewController()
+            if let navigationController = self.navigationController {
+                navigationController.pushViewController(nicknameViewController, animated: true)
+            } else {
+                let navigationController = UINavigationController(rootViewController: nicknameViewController)
+                navigationController.modalPresentationStyle = .fullScreen
+                navigationController.modalTransitionStyle = .crossDissolve
+                self.present(navigationController, animated: true, completion: nil)
+            }
+        }
     }
     
     private func showErrorAlert(message: String) {
+        print("Showing error alert with message: \(message)")
         let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default))
         present(alert, animated: true)
