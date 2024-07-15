@@ -7,17 +7,17 @@
 
 import Foundation
 
-struct UserData: ResponseModelType {
+struct SocialLoginResponseModel: ResponseModelType {
     let name: String?
-    let jwtTokenDto: JwtTokenDto
+    let jwtTokenDTO: JwtTokenDTO
 
     enum CodingKeys: String, CodingKey {
         case name
-        case jwtTokenDto // 서버 응답맞춰 수정
+        case jwtTokenDTO = "jwtTokenDto"
     }
 }
 
-struct JwtTokenDto: Codable {
+struct JwtTokenDTO: Codable {
     let accessToken: String
     let refreshToken: String
 }

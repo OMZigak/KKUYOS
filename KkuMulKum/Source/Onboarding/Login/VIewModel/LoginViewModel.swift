@@ -84,7 +84,7 @@ class LoginViewModel: NSObject {
             case .success(let response):
                 print("Received response from server: \(response)")
                 do {
-                    let loginResponse = try response.map(ResponseBodyDTO<UserData>.self)
+                    let loginResponse = try response.map(ResponseBodyDTO<SocialLoginResponseModel>.self)
                     print("Successfully mapped response: \(loginResponse)")
                     self?.handleLoginResponse(loginResponse)
                 } catch {
@@ -99,7 +99,7 @@ class LoginViewModel: NSObject {
         }
     }
     
-    private func handleLoginResponse(_ response: ResponseBodyDTO<UserData>) {
+    private func handleLoginResponse(_ response: ResponseBodyDTO<SocialLoginResponseModel>) {
             print("Handling login response")
             if response.success {
                 if let data = response.data {
@@ -111,7 +111,7 @@ class LoginViewModel: NSObject {
                         loginState.value = .needOnboarding
                     }
                     
-                    let tokens = data.jwtTokenDto
+                    let tokens = data.jwtTokenDTO
                     print("Received tokens - Access: \(tokens.accessToken), Refresh: \(tokens.refreshToken)")
                     // TODO: 토큰 저장 로직 구현
                 } else {
