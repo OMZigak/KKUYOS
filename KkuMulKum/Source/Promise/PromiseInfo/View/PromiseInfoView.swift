@@ -128,7 +128,7 @@ class PromiseInfoView: BaseView {
             $0.centerY.equalTo(participantNumberLabel)
             $0.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(Screen.height(24))
-            $0.width.equalTo(Screen.width(70))
+            $0.width.equalTo(chevronButton.snp.height)
         }
         
         participantCollectionView.snp.makeConstraints {
