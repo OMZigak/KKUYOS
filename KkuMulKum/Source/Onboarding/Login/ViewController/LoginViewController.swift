@@ -77,11 +77,18 @@ class LoginViewController: BaseViewController {
     }
     
     @objc private func dummyNextButtonTapped() {
-        let viewController = NicknameViewController()
-        let navigationController = UINavigationController(rootViewController: viewController)
-        navigationController.modalTransitionStyle = .crossDissolve
-        navigationController.modalPresentationStyle = .fullScreen
-        present(navigationController, animated: true)
+//        _ = NicknameViewController()
+//        let welcomeViewController = NicknameViewController()
+//        welcomeViewController.modalPresentationStyle = .fullScreen
+//        present(welcomeViewController, animated: true, completion: nil)
+        
+        // TODO: 프로필 설정부터 네비게이션으로 플로우 동작
+        
+        let viewController = MainTabBarController()
+        
+        viewController.modalPresentationStyle = .fullScreen
+        
+        present(viewController, animated: true)
     }
     
     private func navigateToMainScreen() {

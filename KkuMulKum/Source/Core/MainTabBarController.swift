@@ -49,20 +49,17 @@ final class MainTabBarController: UITabBarController {
         tabBar.standardAppearance = tabBarAppearance
         tabBar.scrollEdgeAppearance = tabBarAppearance
         
-        let homeNavigationController = UINavigationController(rootViewController: homeViewController).then {
-            $0.navigationBar.topItem?.backButtonDisplayMode = .minimal
-            $0.navigationBar.tintColor = .black
-        }
+        let homeNavigationController = UINavigationController(
+            rootViewController: homeViewController
+        )
         
-        let meetingListNavigationController = UINavigationController(rootViewController: meetingListViewController).then {
-            $0.navigationBar.topItem?.backButtonDisplayMode = .minimal
-            $0.navigationBar.tintColor = .black
-        }
+        let meetingListNavigationController = UINavigationController(
+            rootViewController: meetingListViewController
+        )
         
-        let myPageViewNavigationController = UINavigationController(rootViewController: myPageViewController).then {
-            $0.navigationBar.topItem?.backButtonDisplayMode = .minimal
-            $0.navigationBar.tintColor = .black
-        }
+        let myPageViewNavigationController = UINavigationController(
+            rootViewController: myPageViewController
+        )
         
         setViewControllers([
             homeNavigationController,

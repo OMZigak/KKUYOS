@@ -1,5 +1,5 @@
 //
-//  PromiseSegmentedControl.swift
+//  PagePromiseSegmentedControl.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 7/9/24.
@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-class BasePromiseSegmentedControl: UISegmentedControl {
+class PagePromiseSegmentedControl: UISegmentedControl {
     private let backgroundLineView: UIView = UIView(backgroundColor: .gray2)
     
     let selectedUnderLineView: UIView = UIView(backgroundColor: .black).then {
