@@ -6,13 +6,21 @@
 //
 
 import UIKit
-
 import AuthenticationServices
 
 class LoginViewController: BaseViewController {
     
     private let loginView = LoginView()
-    private let loginViewModel = LoginViewModel()
+    private let loginViewModel: LoginViewModel
+    
+    init(viewModel: LoginViewModel = LoginViewModel()) {
+        self.loginViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         view = loginView
@@ -77,32 +85,19 @@ class LoginViewController: BaseViewController {
     }
     
     @objc private func dummyNextButtonTapped() {
-//        _ = NicknameViewController()
-//        let welcomeViewController = NicknameViewController()
-//        welcomeViewController.modalPresentationStyle = .fullScreen
-//        present(welcomeViewController, animated: true, completion: nil)
-        
-        // TODO: 프로필 설정부터 네비게이션으로 플로우 동작
-        
         let viewController = MainTabBarController()
-        
         viewController.modalPresentationStyle = .fullScreen
-        
         present(viewController, animated: true)
     }
     
     private func navigateToMainScreen() {
         DispatchQueue.main.async {
             let mainTabBarController = MainTabBarController()
-            
             let navigationController = UINavigationController(rootViewController: mainTabBarController)
-            
             navigationController.isNavigationBarHidden = true
             navigationController.modalPresentationStyle = .fullScreen
             navigationController.modalTransitionStyle = .crossDissolve
-            
             self.present(navigationController, animated: true, completion: nil)
-        
         }
     }
     

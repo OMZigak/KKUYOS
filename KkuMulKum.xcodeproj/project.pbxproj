@@ -63,6 +63,7 @@
 		78B928782C29402E006D9942 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78B928762C29402E006D9942 /* LaunchScreen.storyboard */; };
 		78BD61202C43F557005752FD /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 78BD611F2C43F557005752FD /* SwiftKeychainWrapper */; };
 		78BD61272C446A97005752FD /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61262C446A97005752FD /* LoginService.swift */; };
+		78BD612B2C4550A6005752FD /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD612A2C4550A6005752FD /* Bundle.swift */; };
 		A3DD9C3D2C41BAD000E58A13 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */; };
 		A3DD9C3E2C41BAD000E58A13 /* MeetingDummyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C342C41BAD000E58A13 /* MeetingDummyModel.swift */; };
 		A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */; };
@@ -205,6 +206,7 @@
 		78B928772C29402E006D9942 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78B928792C29402E006D9942 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78BD61262C446A97005752FD /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		78BD612A2C4550A6005752FD /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
 		A3DD9C342C41BAD000E58A13 /* MeetingDummyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingDummyModel.swift; sourceTree = "<group>"; };
 		A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListView.swift; sourceTree = "<group>"; };
@@ -1053,6 +1055,7 @@
 				DE254AA62C3118B300A4015E /* Extension */,
 				DE254AB52C3119BC00A4015E /* Util */,
 				DE254ABA2C311C3100A4015E /* Font */,
+				78BD612A2C4550A6005752FD /* Bundle.swift */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -1540,6 +1543,7 @@
 				DD43937B2C412F4500EC1799 /* CreateMeetingViewController.swift in Sources */,
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,
 				DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */,
+				78BD612B2C4550A6005752FD /* Bundle.swift in Sources */,
 				DD3072262C3C0F0B00416D9F /* TardyInfoModel.swift in Sources */,
 				DE254AB92C311AB300A4015E /* Screen.swift in Sources */,
 			);
