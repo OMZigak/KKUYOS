@@ -57,9 +57,9 @@ class LoginViewController: BaseViewController {
     private func bindViewModel() {
         loginViewModel.loginState.bind(with: self) { owner, state in
             switch state {
-            case .notLoggedIn:
+            case .notLogin:
                 print("Login State: Not logged in")
-            case .loggedIn(let userInfo):
+            case .login(let userInfo):
                 print("Login State: Logged in with user info: \(userInfo)")
                 owner.navigateToMainScreen()
             case .needOnboarding:

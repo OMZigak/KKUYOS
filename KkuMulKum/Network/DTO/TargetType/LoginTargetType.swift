@@ -6,14 +6,15 @@
 //
 
 import Foundation
+
 import Moya
 
-enum LoginService {
+enum LoginTargetType {
     case appleLogin(identityToken: String, fcmToken: String)
     case kakaoLogin(accessToken: String, fcmToken: String)
 }
 
-extension LoginService: TargetType {
+extension LoginTargetType: TargetType {
     var baseURL: URL {
         guard let privacyInfo = Bundle.main.privacyInfo,
               let urlString = privacyInfo["BASE_URL"] as? String,

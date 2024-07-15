@@ -13,7 +13,7 @@ struct UserData: ResponseModelType {
 
     enum CodingKeys: String, CodingKey {
         case name
-        case jwtTokenDto // 서버 응답과
+        case jwtTokenDto // 서버 응답맞춰 수정
     }
 }
 

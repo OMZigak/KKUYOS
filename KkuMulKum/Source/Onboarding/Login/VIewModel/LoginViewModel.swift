@@ -13,18 +13,26 @@ import KakaoSDKAuth
 import Moya
 
 enum LoginState {
-    case notLoggedIn
-    case loggedIn(userInfo: String)
+    case notLogin
+    case login(userInfo: String)
     case needOnboarding
 }
 
 class LoginViewModel: NSObject {
-    var loginState: ObservablePattern<LoginState> = ObservablePattern(.notLoggedIn)
+    var loginState: ObservablePattern<LoginState> = ObservablePattern(.notLogin)
     var error: ObservablePattern<String> = ObservablePattern("")
     
-    private let provider: MoyaProvider<LoginService>
+    private let provider: MoyaProvider<LoginTargetType>
     
-    init(provider: MoyaProvider<LoginService> = MoyaProvider<LoginService>(plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))])) {
+    init(
+        provider: MoyaProvider<LoginTargetType> = MoyaProvider<LoginTargetType>(
+            plugins: [NetworkLoggerPlugin(
+                configuration: .init(
+                    logOptions: .verbose
+                )
+            )]
+        )
+    ) {
         self.provider = provider
         super.init()
     }
@@ -70,8 +78,8 @@ class LoginViewModel: NSObject {
         }
     }
     
-    private func loginToServer(with loginService: LoginService) {
-        provider.request(loginService) { [weak self] result in
+    private func loginToServer(with loginTarget: LoginTargetType) {
+        provider.request(loginTarget) { [weak self] result in
             switch result {
             case .success(let response):
                 print("Received response from server: \(response)")
@@ -92,34 +100,34 @@ class LoginViewModel: NSObject {
     }
     
     private func handleLoginResponse(_ response: ResponseBodyDTO<UserData>) {
-        print("Handling login response")
-        if response.success {
-            if let data = response.data {
-                if let name = data.name {
-                    print("Login successful, user name: \(name)")
-                    loginState.value = .loggedIn(userInfo: name)
+            print("Handling login response")
+            if response.success {
+                if let data = response.data {
+                    if let name = data.name {
+                        print("Login successful, user name: \(name)")
+                        loginState.value = .login(userInfo: name)
+                    } else {
+                        print("Login successful, but no name provided. Needs onboarding.")
+                        loginState.value = .needOnboarding
+                    }
+                    
+                    let tokens = data.jwtTokenDto
+                    print("Received tokens - Access: \(tokens.accessToken), Refresh: \(tokens.refreshToken)")
+                    // TODO: 토큰 저장 로직 구현
                 } else {
-                    print("Login successful, but no name provided. Needs onboarding.")
-                    loginState.value = .needOnboarding
+                    print("Warning: No data received in response")
+                    error.value = "No data received"
                 }
-                
-                let tokens = data.jwtTokenDto
-                print("Received tokens - Access: \(tokens.accessToken), Refresh: \(tokens.refreshToken)")
-                // TODO: 토큰 저장 로직 구현
             } else {
-                print("Warning: No data received in response")
-                error.value = "No data received"
-            }
-        } else {
-            if let error = response.error {
-                print("Login failed: \(error.message)")
-                self.error.value = error.message
-            } else {
-                print("Login failed: Unknown error")
-                self.error.value = "Unknown error occurred"
+                if let error = response.error {
+                    print("Login failed: \(error.message)")
+                    self.error.value = error.message
+                } else {
+                    print("Login failed: Unknown error")
+                    self.error.value = "Unknown error occurred"
+                }
             }
         }
-    }
     
 }
 
