@@ -1,25 +1,28 @@
 //
-//  OurReadyStatusView.swift
+//  OurReadyStatusCollectionViewCell.swift
 //  KkuMulKum
 //
-//  Created by YOUJIM on 7/15/24.
+//  Created by YOUJIM on 7/16/24.
 //
 
 import UIKit
 
-class OurReadyStatusView: BaseView {
-    private let profileImageView: UIImageView = UIImageView(image: .imgProfile).then {
+class OurReadyStatusCollectionViewCell: BaseCollectionViewCell {
+    var profileImageView: UIImageView = UIImageView(image: .imgProfile).then {
         $0.contentMode = .scaleAspectFill
     }
     
-    private let nameLabel: UILabel = UILabel().then {
+    let nameLabel: UILabel = UILabel().then {
         $0.setText("유짐이", style: .body03, color: .gray8)
     }
     
-    private let readyStatusButton: ReadyStatusButton = ReadyStatusButton(
+    var readyStatusButton: ReadyStatusButton = ReadyStatusButton(
         title: "준비중",
         readyStatus: .ready
-    )
+    ).then {
+        $0.layer.cornerRadius = Screen.height(14)
+        $0.layer.borderWidth = 0.5
+    }
     
     override func setupView() {
         backgroundColor = .white
