@@ -20,9 +20,15 @@ enum LoginState {
 class LoginViewModel: NSObject {
     var loginState: ObservablePattern<LoginState> = ObservablePattern(.notLoggedIn)
     var error: ObservablePattern<String> = ObservablePattern("")
-
-    private let provider = MoyaProvider<LoginService>(plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))])
-
+    
+    private let provider = MoyaProvider<LoginService>(
+        plugins: [NetworkLoggerPlugin(
+            configuration: .init(
+                logOptions: .verbose
+            )
+        )]
+    )
+    
     func performAppleLogin(presentationAnchor: ASPresentationAnchor) {
         print("Performing Apple Login")
         let request = ASAuthorizationAppleIDProvider().createRequest()
@@ -35,14 +41,13 @@ class LoginViewModel: NSObject {
     }
     
     func performKakaoLogin() {
-        print("Performing Kakao Login")
         if UserApi.isKakaoTalkLoginAvailable() {
-            print("Kakao Talk is available, using Kakao Talk login")
+            print("Kakao Talk is available")
             UserApi.shared.loginWithKakaoTalk { [weak self] (oauthToken, error) in
                 self?.handleKakaoLoginResult(oauthToken: oauthToken, error: error)
             }
         } else {
-            print("Kakao Talk is not available, using Kakao Account login")
+            print("Kakao Talk is not available")
             UserApi.shared.loginWithKakaoAccount { [weak self] (oauthToken, error) in
                 self?.handleKakaoLoginResult(oauthToken: oauthToken, error: error)
             }
@@ -58,7 +63,7 @@ class LoginViewModel: NSObject {
         
         if let token = oauthToken?.accessToken {
             print("Kakao Login Successful, access token: \(token)")
-            loginToServer(with: .kakaoLogin(accessToken: token, fcmToken: "dummy_fcm_token"))
+            loginToServer(with: .kakaoLogin(accessToken: token, fcmToken: ""))
         } else {
             print("Kakao Login Error: No access token")
             self.error.value = "No access token received"
@@ -66,7 +71,6 @@ class LoginViewModel: NSObject {
     }
     
     private func loginToServer(with loginService: LoginService) {
-        print("Attempting to login to server")
         provider.request(loginService) { [weak self] result in
             switch result {
             case .success(let response):
@@ -79,6 +83,7 @@ class LoginViewModel: NSObject {
                     print("Failed to decode response: \(error)")
                     self?.error.value = "Failed to decode response: \(error.localizedDescription)"
                 }
+                
             case .failure(let error):
                 print("Network error: \(error)")
                 self?.error.value = "Network error: \(error.localizedDescription)"
@@ -88,25 +93,37 @@ class LoginViewModel: NSObject {
     
     private func handleLoginResponse(_ response: SocialLoginResponseModel) {
         print("Handling login response")
-        if let name = response.name {
-            print("Login successful, user name: \(name)")
-            loginState.value = .loggedIn(userInfo: name)
+        if response.success {
+            if let data = response.data {
+                if let name = data.name {
+                    print("Login successful, user name: \(name)")
+                    loginState.value = .loggedIn(userInfo: name)
+                } else {
+                    print("Login successful, but no name provided. Needs onboarding.")
+                    loginState.value = .needOnboarding
+                }
+                
+                let tokens = data.jwtTokenDto
+                print("Received tokens - Access: \(tokens.accessToken), Refresh: \(tokens.refreshToken)")
+                // TODO: 키체인에 토큰 저장 로직추가 예정
+            } else {
+                print("Warning: No data received in response")
+                error.value = "No data received"
+            }
         } else {
-            print("Login successful, but no name provided. Needs onboarding.")
-            loginState.value = .needOnboarding
-        }
-        
-        // TODO: 토큰 저장
-        if let accessToken = response.accessToken, let refreshToken = response.refreshToken {
-            print("Received tokens - Access: \(accessToken), Refresh: \(refreshToken)")
-            // Save tokens to secure storage
-        } else {
-            print("Warning: No tokens received in response")
+            if let error = response.error {
+                print("Login failed: \(error.message)")
+                self.error.value = error.message
+            } else {
+                print("Login failed: Unknown error")
+                self.error.value = "Unknown error occurred"
+            }
         }
     }
 }
 
-extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+extension LoginViewModel: ASAuthorizationControllerDelegate, 
+                            ASAuthorizationControllerPresentationContextProviding {
     func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization
@@ -120,9 +137,9 @@ extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationCont
         }
         
         print("Apple Login Successful, identity token: \(tokenString)")
-        loginToServer(with: .appleLogin(identityToken: tokenString, fcmToken: "dummy_fcm_token"))
+        loginToServer(with: .appleLogin(identityToken: tokenString, fcmToken: ""))
     }
-
+    
     func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithError error: Error

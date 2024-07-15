@@ -8,5 +8,22 @@
 import Foundation
 
 struct SocialLoginResponseModel: ResponseModelType {
-    let name, accessToken, refreshToken: String?
+    let success: Bool
+    let data: LoginData?
+    let error: ErrorData?
+}
+
+struct LoginData: Codable {
+    let name: String?
+    let jwtTokenDto: JwtTokenDto
+}
+
+struct JwtTokenDto: Codable {
+    let accessToken: String
+    let refreshToken: String
+}
+
+struct ErrorData: Codable {
+    let code: Int
+    let message: String
 }

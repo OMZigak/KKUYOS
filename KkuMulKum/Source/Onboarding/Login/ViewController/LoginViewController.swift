@@ -16,19 +16,16 @@ class LoginViewController: BaseViewController {
     
     override func loadView() {
         view = loginView
-        print("LoginViewController loadView called")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("LoginViewController viewDidLoad called")
         bindViewModel()
         setupAction()
     }
     
     override func setupAction() {
         super.setupAction()
-        print("Setting up actions for LoginViewController")
         
         let appleTapGesture = UITapGestureRecognizer(
             target: self,
@@ -50,7 +47,6 @@ class LoginViewController: BaseViewController {
     }
     
     private func bindViewModel() {
-        print("Binding ViewModel in LoginViewController")
         loginViewModel.loginState.bind(with: self) { owner, state in
             switch state {
             case .notLoggedIn:
@@ -73,17 +69,14 @@ class LoginViewController: BaseViewController {
     }
     
     @objc private func appleLoginTapped() {
-        print("Apple Login button tapped")
         loginViewModel.performAppleLogin(presentationAnchor: view.window!)
     }
     
     @objc private func kakaoLoginTapped() {
-        print("Kakao Login button tapped")
         loginViewModel.performKakaoLogin()
     }
-
+    
     @objc private func dummyNextButtonTapped() {
-        print("Dummy Next button tapped")
         let viewController = NicknameViewController()
         let navigationController = UINavigationController(rootViewController: viewController)
         navigationController.modalTransitionStyle = .crossDissolve
@@ -92,13 +85,32 @@ class LoginViewController: BaseViewController {
     }
     
     private func navigateToMainScreen() {
-        print("Navigating to Main Screen")
-        // TODO: Implement navigation to main screen
+        DispatchQueue.main.async {
+            let mainTabBarController = MainTabBarController()
+            
+            let navigationController = UINavigationController(rootViewController: mainTabBarController)
+            
+            navigationController.isNavigationBarHidden = true
+            navigationController.modalPresentationStyle = .fullScreen
+            navigationController.modalTransitionStyle = .crossDissolve
+            
+            self.present(navigationController, animated: true, completion: nil)
+        
+        }
     }
     
     private func navigateToOnboardingScreen() {
-        print("Navigating to Onboarding Screen")
-        // TODO: Implement navigation to onboarding screen
+        DispatchQueue.main.async {
+            let nicknameViewController = NicknameViewController()
+            if let navigationController = self.navigationController {
+                navigationController.pushViewController(nicknameViewController, animated: true)
+            } else {
+                let navigationController = UINavigationController(rootViewController: nicknameViewController)
+                navigationController.modalPresentationStyle = .fullScreen
+                navigationController.modalTransitionStyle = .crossDissolve
+                self.present(navigationController, animated: true, completion: nil)
+            }
+        }
     }
     
     private func showErrorAlert(message: String) {
