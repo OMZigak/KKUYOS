@@ -29,7 +29,7 @@ final class MainTabBarController: UITabBarController {
             $0.tabBarItem.image = .iconHome
         }
         
-        let meetingListViewController: MeetingListViewController = MeetingListViewController().then {
+        let meetingListViewController: MeetingListViewController = MeetingListViewController(viewModel: MeetingListViewModel(service: MockMeetingListService() as MeetingListServiceType)).then {
             $0.tabBarItem.title = "내 모임"
             $0.tabBarItem.image = .iconGroup
         }

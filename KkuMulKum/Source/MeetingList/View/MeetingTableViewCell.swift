@@ -62,8 +62,8 @@ final class MeetingTableViewCell: BaseTableViewCell {
 // MARK: - Data Bind
 
 extension MeetingTableViewCell {
-    func dataBind(_ contentData: MeetingDummyModel) {
+    func dataBind(_ contentData: Meeting) {
         nameLabel.setText(contentData.name, style: .body03, color: .gray8)
-        countLabel.setText("\(contentData.count)명 참여 중", style: .caption02, color: .gray5)
+        countLabel.setText("\(contentData.memberCount)명 참여 중", style: .caption02, color: .gray5)
     }
 }

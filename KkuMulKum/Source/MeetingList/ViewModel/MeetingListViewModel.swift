@@ -10,14 +10,15 @@ import UIKit
 import Then
 
 final class MeetingListViewModel {
-    var meetingListData = ObservablePattern<[MeetingDummyModel]>([])
+    var meetingList = ObservablePattern<MeetingListModel?>(nil)
     
-    /// 더미 함수 이후에 삭제
-    func dummy() {
-        meetingListData.value = MeetingDummyModel.dummy()
+    private let service: MeetingListServiceType
+    
+    init(service: MeetingListServiceType) {
+        self.service = service
     }
     
-    func updateContentData(newData: [MeetingDummyModel]) {
-        meetingListData.value = newData
+    func requestMeetingList() {
+        meetingList.value = service.fetchMeetingList()
     }
 }

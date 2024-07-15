@@ -17,9 +17,7 @@ final class MeetingListView: BaseView {
     
     private let header = UIView()
     
-    private let infoLabel = UILabel().then {
-        $0.setText("꾸물리안이 가입한 모임은\n총 3개예요!", style: .head01, color: .gray8)
-    }
+    let infoLabel = UILabel()
     
     let addButton = UIButton().then {
         $0.backgroundColor = .green2
