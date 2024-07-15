@@ -13,7 +13,6 @@ final class SetReadyInfoViewController: BaseViewController {
     // MARK: - Property
     
     private let rootView = SetReadyInfoView()
-    
     private let viewModel = SetReadyInfoViewModel()
     
     
@@ -28,8 +27,46 @@ final class SetReadyInfoViewController: BaseViewController {
         setTextFieldDelegate()
         bindViewModel()
     }
+}
+
+
+// MARK: - UITextFieldDelegate
+
+extension SetReadyInfoViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor.maincolor.cgColor
+    }
     
-    private func setTextFieldDelegate() {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor.gray3.cgColor
+        viewModel.updateTime(
+            textField: textField.accessibilityIdentifier ?? "",
+            time: textField.text ?? ""
+        )
+        viewModel.checkValid(
+            readyHourText: rootView.readyHourTextField.text ?? "",
+            readyMinuteText: rootView.readyMinuteTextField.text ?? "",
+            moveHourText: rootView.moveHourTextField.text ?? "",
+            moveMinuteText: rootView.moveMinuteTextField.text ?? ""
+        )
+    }
+    
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        let allowedCharacters = CharacterSet.decimalDigits
+        let characterSet = CharacterSet(charactersIn: string)
+        return allowedCharacters.isSuperset(of: characterSet)
+    }
+}
+
+
+// MARK: - Function
+
+private extension SetReadyInfoViewController {
+    func setTextFieldDelegate() {
         rootView.readyHourTextField.delegate = self
         rootView.readyMinuteTextField.delegate = self
         rootView.moveHourTextField.delegate = self
@@ -46,11 +83,33 @@ final class SetReadyInfoViewController: BaseViewController {
         rootView.moveMinuteTextField.accessibilityIdentifier = "moveMinute"
     }
     
-    private func bindViewModel() {
+    func showToast(_ message: String, bottomInset: CGFloat = 128) {
+        guard let view else { return }
+        Toast().show(message: message, view: view, position: .bottom, inset: bottomInset)
+    }
+    
+    
+    // MARK: - Data Bind
+    
+    func bindViewModel() {       
+        viewModel.readyHour.bind { [weak self] readyHour in
+            self?.rootView.readyHourTextField.text = readyHour
+        }
+        
+        viewModel.readyMinute.bind { [weak self] readyMinute in
+            self?.rootView.readyMinuteTextField.text = readyMinute
+        }
+        
+        viewModel.moveHour.bind { [weak self] moveHour in
+            self?.rootView.moveHourTextField.text = moveHour
+        }
+        
+        viewModel.moveMinute.bind { [weak self] moveMinute in
+            self?.rootView.moveMinuteTextField.text = moveMinute
+        }
+        
         viewModel.isValid.bind { [weak self] isValid in
-            if isValid {
-                self?.rootView.doneButton.isEnabled = true
-            }
+            self?.rootView.doneButton.isEnabled = isValid
         }
         
         viewModel.errMessage.bind { [weak self] err in
@@ -58,34 +117,5 @@ final class SetReadyInfoViewController: BaseViewController {
                 self?.showToast(err)
             }
         }
-    }
-    
-    func showToast(_ message: String, bottomInset: CGFloat = 128) {
-        guard let view else { return }
-        Toast().show(message: message, view: view, position: .bottom, inset: bottomInset)
-    }
-}
-
-
-// MARK: - UITextFieldDelegate
-
-extension SetReadyInfoViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.layer.borderColor = UIColor.maincolor.cgColor
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderColor = UIColor.gray3.cgColor
-        viewModel.validateTextField(for: textField)
-    }
-    
-    func textField(
-        _ textField: UITextField,
-        shouldChangeCharactersIn range: NSRange,
-        replacementString string: String
-    ) -> Bool {
-        let allowedCharacters = CharacterSet.decimalDigits
-        let characterSet = CharacterSet(charactersIn: string)
-        return allowedCharacters.isSuperset(of: characterSet)
     }
 }

@@ -11,30 +11,57 @@ final class SetReadyInfoViewModel {
     var isValid = ObservablePattern<Bool>(false)
     var errMessage = ObservablePattern<String>("")
     
-//    var readyHour = ObservablePattern<String?>(nil)
-//    var readyMinute = ObservablePattern<String?>(nil)
-//    var moveHour = ObservablePattern<String?>(nil)
-//    var moveMinute = ObservablePattern<String?>(nil)
+    var readyHour = ObservablePattern<String>("")
+    var readyMinute = ObservablePattern<String>("")
+    var moveHour = ObservablePattern<String>("")
+    var moveMinute = ObservablePattern<String>("")
     
-    func validateTextField(for textField: UITextField) {
-        guard let text = textField.text, let time = Int(text) else { return }
+    //TODO: 준비 및 이동 시간 분 단위로 계산
+    var readyTime: Int = 0
+    var moveTime: Int = 0
+    
+    func updateTime(textField: String, time: String) {
+        guard let time = Int(time) else { return }
         
-        if textField.accessibilityIdentifier == "readyHour" || textField.accessibilityIdentifier == "moveHour" {
-            if time >= 24 {
-                textField.text = "23"
+        switch textField {
+        case "readyHour":
+            if (0...23).contains(time) {
+                readyHour.value = String(time)
+            } else {
+                readyHour.value = "23"
                 errMessage.value = "시간은 23시간 59분까지만 입력할 수 있어요!"
-                print(errMessage.value)
-                return
             }
-        } else if textField.accessibilityIdentifier == "readyMinute" || textField.accessibilityIdentifier == "moveMinute" {
-            if time >= 60 {
-                textField.text = "59"
+        case "readyMinute":
+            if (0...59).contains(time) {
+                readyMinute.value = String(time)
+            } else {
+                readyMinute.value = "59"
                 errMessage.value = "시간은 23시간 59분까지만 입력할 수 있어요!"
-                print(errMessage.value)
-                return
             }
+        case "moveHour":
+            if (0...23).contains(time) {
+                moveHour.value = String(time)
+            } else {
+                moveHour.value = "23"
+                errMessage.value = "시간은 23시간 59분까지만 입력할 수 있어요!"
+            }
+        case "moveMinute":
+            if (0...59).contains(time) {
+                moveMinute.value = String(time)
+            } else {
+                moveMinute.value = "59"
+                errMessage.value = "시간은 23시간 59분까지만 입력할 수 있어요!"
+            }
+        default:
+            break
         }
-        
-        isValid.value = true
+    }
+    
+    func checkValid(readyHourText: String, readyMinuteText: String, moveHourText: String, moveMinuteText: String) {
+        if !readyHourText.isEmpty && !readyMinuteText.isEmpty && !moveHourText.isEmpty && !moveMinuteText.isEmpty {
+            isValid.value = true
+        } else {
+            isValid.value = false
+        }
     }
 }
