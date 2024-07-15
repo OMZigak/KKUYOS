@@ -57,8 +57,14 @@ final class SetReadyInfoViewModel {
         }
     }
     
-    func checkValid(readyHourText: String, readyMinuteText: String, moveHourText: String, moveMinuteText: String) {
-        if !readyHourText.isEmpty && !readyMinuteText.isEmpty && !moveHourText.isEmpty && !moveMinuteText.isEmpty {
+    func checkValid(
+        readyHourText: String,
+        readyMinuteText: String,
+        moveHourText: String,
+        moveMinuteText: String
+    ) {
+        if !readyHourText.isEmpty && !readyMinuteText.isEmpty 
+            && !moveHourText.isEmpty && !moveMinuteText.isEmpty {
             isValid.value = true
         } else {
             isValid.value = false
