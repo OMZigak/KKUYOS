@@ -66,6 +66,7 @@
 		78BD612B2C4550A6005752FD /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD612A2C4550A6005752FD /* Bundle.swift */; };
 		78BD612F2C4561B9005752FD /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD612E2C4561B9005752FD /* KeychainAccessible.swift */; };
 		78BD61312C456799005752FD /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61302C456799005752FD /* KeychainService.swift */; };
+		78BD61342C45B4A7005752FD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61332C45B4A7005752FD /* AuthService.swift */; };
 		A3DD9C3D2C41BAD000E58A13 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */; };
 		A3DD9C3E2C41BAD000E58A13 /* MeetingDummyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C342C41BAD000E58A13 /* MeetingDummyModel.swift */; };
 		A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */; };
@@ -214,6 +215,7 @@
 		78BD612A2C4550A6005752FD /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		78BD612E2C4561B9005752FD /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		78BD61302C456799005752FD /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		78BD61332C45B4A7005752FD /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
 		A3DD9C342C41BAD000E58A13 /* MeetingDummyModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingDummyModel.swift; sourceTree = "<group>"; };
 		A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListView.swift; sourceTree = "<group>"; };
@@ -559,6 +561,14 @@
 				78BD61302C456799005752FD /* KeychainService.swift */,
 			);
 			path = KeyChain;
+			sourceTree = "<group>";
+		};
+		78BD61322C45B4A7005752FD /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				78BD61332C45B4A7005752FD /* AuthService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		A3DD9C332C41BAD000E58A13 /* Cell */ = {
@@ -969,6 +979,7 @@
 		DD865B662C39210E00C351A2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				78BD61322C45B4A7005752FD /* Service */,
 				789873372C3D1B4800435E96 /* ViewController */,
 				789873362C3D1B3900435E96 /* VIewModel */,
 				789873352C3D1B3000435E96 /* View */,
@@ -1560,6 +1571,7 @@
 				782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */,
 				DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */,
 				DD49099C2C441719003ED304 /* TardyService.swift in Sources */,
+				78BD61342C45B4A7005752FD /* AuthService.swift in Sources */,
 				782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */,
 				DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */,
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,

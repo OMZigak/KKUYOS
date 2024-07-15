@@ -6,131 +6,105 @@
 //
 
 import Foundation
-import SwiftKeychainWrapper
-import Security
 
 protocol KeychainService {
     var accessToken: String? { get set }
     var refreshToken: String? { get set }
-    func removeAllTokens()
-    func verifyKeychainAccess()
+    var accessTokenExpiresIn: Int? { get set }
 }
 
 class DefaultKeychainService: KeychainService {
     static let shared = DefaultKeychainService()
+    private init() {}
     
-    private let keychain: KeychainWrapper
+    private let keychainAccess = DefaultKeychainAccessible()
     
-    private struct Key {
+    struct Key {
+        static let tempAccessToken = "tempAccessToken"
+        static let tempRefreshToken = "tempRefreshToken"
+        static let tempAccessTokenExpiresIn = "tempAccessTokenExpiresIn"
+        
         static let accessToken = "accessToken"
         static let refreshToken = "refreshToken"
+        static let accessTokenExpiresIn = "accessTokenExpiresIn"
     }
     
-    init() {
-        let serviceName = Bundle.main.privacyInfo?["ServiceName"] as? String ?? Bundle.main.bundleIdentifier ?? "DefaultServiceName"
-        self.keychain = KeychainWrapper(serviceName: serviceName)
-        print("Keychain initialized with service name: \(serviceName)")
+    var tempAccessToken: String? {
+        get {
+            keychainAccess.getToken(Key.tempAccessToken)
+        }
+        set {
+            if newValue != nil {
+                keychainAccess.saveToken(Key.tempAccessToken, newValue ?? "")
+            } else {
+                keychainAccess.remove(Key.tempAccessToken)
+            }
+        }
     }
+    
+    var tempRefreshToken: String? {
+        get {
+            keychainAccess.getToken(Key.tempRefreshToken)
+        }
+        set {
+            if newValue != nil {
+                keychainAccess.saveToken(Key.tempRefreshToken, newValue ?? "")
+            } else {
+                keychainAccess.remove(Key.tempRefreshToken)
+            }
+        }
+    }
+    
+    var tempAccessTokenExpiresIn: Int? {
+        get {
+            keychainAccess.getExpiresIn(Key.tempAccessTokenExpiresIn)
+        }
+        set {
+            if newValue != nil {
+                keychainAccess.saveExpiresIn(Key.tempAccessTokenExpiresIn, newValue ?? 0)
+            } else {
+                keychainAccess.remove(Key.tempAccessTokenExpiresIn)
+            }
+        }
+    }
+    
     
     var accessToken: String? {
         get {
-            let token = keychain.string(forKey: Key.accessToken)
-            print("Reading Access Token: \(token ?? "nil")")
-            return token
+            keychainAccess.getToken(Key.accessToken)
         }
         set {
-            if let newValue = newValue {
-                let success = keychain.set(newValue, forKey: Key.accessToken)
-                print("Setting Access Token: \(newValue)")
-                if success {
-                    print("Access Token saved successfully")
-                    // 저장 후 즉시 읽어 확인
-                    if let savedToken = keychain.string(forKey: Key.accessToken) {
-                        print("Verified Access Token: \(savedToken)")
-                    } else {
-                        print("Failed to verify Access Token after saving")
-                    }
-                } else {
-                    print("Failed to save Access Token")
-                    printKeychainError(forKey: Key.accessToken)
-                }
+            if newValue != nil {
+                keychainAccess.saveToken(Key.accessToken, newValue ?? "")
             } else {
-                let success = keychain.removeObject(forKey: Key.accessToken)
-                print(success ? "Access Token removed successfully" : "Failed to remove Access Token")
+                keychainAccess.remove(Key.accessToken)
             }
         }
     }
     
     var refreshToken: String? {
         get {
-            let token = keychain.string(forKey: Key.refreshToken)
-            print("Reading Refresh Token: \(token ?? "nil")")
-            return token
+            keychainAccess.getToken(Key.refreshToken)
         }
         set {
-            if let newValue = newValue {
-                let success = keychain.set(newValue, forKey: Key.refreshToken)
-                print("Setting Refresh Token: \(newValue)")
-                if success {
-                    print("Refresh Token saved successfully")
-                    // 저장 후 즉시 읽어 확인
-                    if let savedToken = keychain.string(forKey: Key.refreshToken) {
-                        print("Verified Refresh Token: \(savedToken)")
-                    } else {
-                        print("Failed to verify Refresh Token after saving")
-                    }
-                } else {
-                    print("Failed to save Refresh Token")
-                    printKeychainError(forKey: Key.refreshToken)
-                }
+            if newValue != nil {
+                keychainAccess.saveToken(Key.refreshToken, newValue ?? "")
             } else {
-                let success = keychain.removeObject(forKey: Key.refreshToken)
-                print(success ? "Refresh Token removed successfully" : "Failed to remove Refresh Token")
+                keychainAccess.remove(Key.refreshToken)
             }
         }
     }
     
-    func removeAllTokens() {
-        keychain.removeObject(forKey: Key.accessToken)
-        keychain.removeObject(forKey: Key.refreshToken)
-        print("All tokens removed from keychain")
-    }
-    
-    func verifyKeychainAccess() {
-        let testKey = "TestKeychainAccess"
-        let testValue = "TestValue"
-        
-        // 키체인에 테스트 값 저장
-        let saveSuccess = keychain.set(testValue, forKey: testKey)
-        if saveSuccess {
-            print("Test value saved to keychain successfully")
-            
-            // 저장된 값 읽기
-            if let retrievedValue = keychain.string(forKey: testKey) {
-                print("Test value retrieved successfully: \(retrievedValue)")
-            } else {
-                print("Failed to retrieve test value")
-            }
-            
-            // 테스트 값 삭제
-            let removeSuccess = keychain.removeObject(forKey: testKey)
-            print(removeSuccess ? "Test value removed successfully" : "Failed to remove test value")
-        } else {
-            print("Failed to save test value to keychain")
-            printKeychainError(forKey: testKey)
+    var accessTokenExpiresIn: Int? {
+        get {
+            keychainAccess.getExpiresIn(Key.accessTokenExpiresIn)
         }
-    }
-    
-    private func printKeychainError(forKey key: String) {
-        let query: [String: Any] = [
-            kSecClass as String: kSecClassGenericPassword,
-            kSecAttrAccount as String: key,
-            kSecAttrService as String: keychain.serviceName,
-            kSecReturnData as String: true
-        ]
-        
-        var item: CFTypeRef?
-        let status = SecItemCopyMatching(query as CFDictionary, &item)
-        print("Keychain error for key '\(key)': \(SecCopyErrorMessageString(status, nil) ?? "Unknown error" as CFString)")
+        set {
+            if newValue != nil {
+                keychainAccess.saveExpiresIn(Key.accessTokenExpiresIn, newValue ?? 0)
+            } else {
+                keychainAccess.remove(Key.accessTokenExpiresIn)
+            }
+        }
     }
 }

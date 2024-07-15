@@ -99,51 +99,38 @@ class LoginViewModel: NSObject {
     }
     
     private func handleLoginResponse(_ response: ResponseBodyDTO<SocialLoginResponseModel>) {
-            print("Handling login response")
-            if response.success {
-                if let data = response.data {
-                    if data.name != nil {
-                        print("Login successful")
-                        loginState.value = .login
-                    } else {
-                        print("Login successful, but needs onboarding.")
-                        loginState.value = .needOnboarding
-                    }
-                    
-                    saveTokens(accessToken: data.jwtTokenDTO.accessToken, refreshToken: data.jwtTokenDTO.refreshToken)
+        print("Handling login response")
+        if response.success {
+            if let data = response.data {
+                if data.name != nil {
+                    print("Login successful")
+                    loginState.value = .login
                 } else {
-                    print("Warning: No data received in response")
-                    error.value = "No data received"
+                    print("Login successful, but needs onboarding.")
+                    loginState.value = .needOnboarding
                 }
+                
+                saveTokens(accessToken: data.jwtTokenDTO.accessToken, refreshToken: data.jwtTokenDTO.refreshToken)
             } else {
-                if let error = response.error {
-                    print("Login failed: \(error.message)")
-                    self.error.value = error.message
-                } else {
-                    print("Login failed: Unknown error")
-                    self.error.value = "Unknown error occurred"
-                }
+                print("Warning: No data received in response")
+                error.value = "No data received"
+            }
+        } else {
+            if let error = response.error {
+                print("Login failed: \(error.message)")
+                self.error.value = error.message
+            } else {
+                print("Login failed: Unknown error")
+                self.error.value = "Unknown error occurred"
             }
         }
-        
-    private func saveTokens(accessToken: String, refreshToken: String) {
-        keychainService.accessToken = accessToken
-        keychainService.refreshToken = refreshToken
-        print("Tokens saved to keychain")
-        
-        // 저장 후 바로 읽어서 확인
-        if let savedAccessToken = keychainService.accessToken {
-            print("Saved Access Token: \(savedAccessToken)")
-        } else {
-            print("Failed to save Access Token")
-        }
-        
-        if let savedRefreshToken = keychainService.refreshToken {
-            print("Saved Refresh Token: \(savedRefreshToken)")
-        } else {
-            print("Failed to save Refresh Token")
-        }
     }
+        
+        private func saveTokens(accessToken: String, refreshToken: String) {
+            keychainService.accessToken = accessToken
+            keychainService.refreshToken = refreshToken
+            print("Tokens saved to keychain")
+        }
         
         func refreshToken() {
             guard let refreshToken = keychainService.refreshToken else {
