@@ -86,7 +86,7 @@ final class SetReadyInfoView: BaseView {
     
     override func setupAutoLayout() {
         infoLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(60)
+            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(24)
             $0.leading.equalToSuperview().offset(20)
         }
         
@@ -97,12 +97,12 @@ final class SetReadyInfoView: BaseView {
         }
         
         readyTimeLabel.snp.makeConstraints {
-            $0.top.equalTo(infoLabel.snp.bottom).offset(20)
+            $0.top.equalTo(infoLabel.snp.bottom).offset(24)
             $0.leading.equalToSuperview().offset(20)
         }
         
         readyTimeView.snp.makeConstraints {
-            $0.top.equalTo(readyTimeLabel.snp.bottom).offset(12)
+            $0.top.equalTo(readyTimeLabel.snp.bottom).offset(16)
             $0.leading.equalToSuperview().offset(20)
         }
         
@@ -117,12 +117,12 @@ final class SetReadyInfoView: BaseView {
         }
         
         moveTimeLabel.snp.makeConstraints {
-            $0.top.equalTo(readyTimeView.snp.bottom).offset(16)
+            $0.top.equalTo(readyTimeView.snp.bottom).offset(20)
             $0.leading.equalToSuperview().offset(20)
         }
         
         moveTimeView.snp.makeConstraints {
-            $0.top.equalTo(moveTimeLabel.snp.bottom).offset(12)
+            $0.top.equalTo(moveTimeLabel.snp.bottom).offset(16)
             $0.leading.equalToSuperview().offset(20)
         }
         

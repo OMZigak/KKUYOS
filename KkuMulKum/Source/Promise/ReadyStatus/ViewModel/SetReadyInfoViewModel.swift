@@ -5,7 +5,7 @@
 //  Created by 예삐 on 7/15/24.
 //
 
-import UIKit
+import Foundation
 
 final class SetReadyInfoViewModel {
     var isValid = ObservablePattern<Bool>(false)
