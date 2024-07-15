@@ -20,38 +20,27 @@ final class SetReadyInfoViewModel {
     var readyTime: Int = 0
     var moveTime: Int = 0
     
+    private func validTime(time: Int, range: ClosedRange<Int>, defaultValue: String) -> String {
+        if range.contains(time) {
+            return String(time)
+        } else {
+            errMessage.value = "시간은 23시간 59분까지만 입력할 수 있어요!"
+            return defaultValue
+        }
+    }
+    
     func updateTime(textField: String, time: String) {
         guard let time = Int(time) else { return }
         
         switch textField {
         case "readyHour":
-            if (0...23).contains(time) {
-                readyHour.value = String(time)
-            } else {
-                readyHour.value = "23"
-                errMessage.value = "시간은 23시간 59분까지만 입력할 수 있어요!"
-            }
+            readyHour.value = validTime(time: time, range: 0...23, defaultValue: "23")
         case "readyMinute":
-            if (0...59).contains(time) {
-                readyMinute.value = String(time)
-            } else {
-                readyMinute.value = "59"
-                errMessage.value = "시간은 23시간 59분까지만 입력할 수 있어요!"
-            }
+            readyMinute.value = validTime(time: time, range: 0...59, defaultValue: "59")
         case "moveHour":
-            if (0...23).contains(time) {
-                moveHour.value = String(time)
-            } else {
-                moveHour.value = "23"
-                errMessage.value = "시간은 23시간 59분까지만 입력할 수 있어요!"
-            }
+            moveHour.value = validTime(time: time, range: 0...23, defaultValue: "23")
         case "moveMinute":
-            if (0...59).contains(time) {
-                moveMinute.value = String(time)
-            } else {
-                moveMinute.value = "59"
-                errMessage.value = "시간은 23시간 59분까지만 입력할 수 있어요!"
-            }
+            moveMinute.value = validTime(time: time, range: 0...59, defaultValue: "59")
         default:
             break
         }

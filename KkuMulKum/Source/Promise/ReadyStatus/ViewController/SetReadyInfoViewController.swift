@@ -23,9 +23,47 @@ final class SetReadyInfoViewController: BaseViewController {
     }
     
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         view.backgroundColor = .white
-        setTextFieldDelegate()
         bindViewModel()
+    }
+    
+    override func setupDelegate() {
+        setTextFieldDelegate()
+    }
+    
+    override func setupAction() {
+        rootView.readyHourTextField.addTarget(
+            self,
+            action: #selector(textFieldDidChange),
+            for: .editingChanged
+        )
+        rootView.readyMinuteTextField.addTarget(
+            self,
+            action: #selector(textFieldDidChange),
+            for: .editingChanged
+        )
+        rootView.moveHourTextField.addTarget(
+            self,
+            action: #selector(textFieldDidChange),
+            for: .editingChanged
+        )
+        rootView.moveMinuteTextField.addTarget(
+            self,
+            action: #selector(textFieldDidChange),
+            for: .editingChanged
+        )
+    }
+    
+    @objc
+    private func textFieldDidChange(_ textField: UITextField) {
+        viewModel.checkValid(
+            readyHourText: rootView.readyHourTextField.text ?? "",
+            readyMinuteText: rootView.readyMinuteTextField.text ?? "",
+            moveHourText: rootView.moveHourTextField.text ?? "",
+            moveMinuteText: rootView.moveMinuteTextField.text ?? ""
+        )
     }
 }
 
@@ -42,12 +80,6 @@ extension SetReadyInfoViewController: UITextFieldDelegate {
         viewModel.updateTime(
             textField: textField.accessibilityIdentifier ?? "",
             time: textField.text ?? ""
-        )
-        viewModel.checkValid(
-            readyHourText: rootView.readyHourTextField.text ?? "",
-            readyMinuteText: rootView.readyMinuteTextField.text ?? "",
-            moveHourText: rootView.moveHourTextField.text ?? "",
-            moveMinuteText: rootView.moveMinuteTextField.text ?? ""
         )
     }
     
