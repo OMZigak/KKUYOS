@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		782B406F2C3DBF93008B0CA7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B406E2C3DBF93008B0CA7 /* ProfileViewController.swift */; };
-		782B40722C3DBFA3008B0CA7 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40712C3DBFA3008B0CA7 /* ProfileViewModel.swift */; };
-		782B40752C3DBFBA008B0CA7 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40742C3DBFBA008B0CA7 /* ProfileView.swift */; };
+		782B406F2C3DBF93008B0CA7 /* ProfileSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B406E2C3DBF93008B0CA7 /* ProfileSetupViewController.swift */; };
+		782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40712C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift */; };
+		782B40752C3DBFBA008B0CA7 /* ProfileSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40742C3DBFBA008B0CA7 /* ProfileSetupView.swift */; };
 		782B407B2C3E395A008B0CA7 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407A2C3E395A008B0CA7 /* WelcomeView.swift */; };
 		782B407D2C3E3984008B0CA7 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */; };
 		782B407F2C3E44B7008B0CA7 /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */; };
@@ -62,6 +62,8 @@
 		78B928752C29402E006D9942 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78B928742C29402E006D9942 /* Assets.xcassets */; };
 		78B928782C29402E006D9942 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78B928762C29402E006D9942 /* LaunchScreen.storyboard */; };
 		78BD61202C43F557005752FD /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 78BD611F2C43F557005752FD /* SwiftKeychainWrapper */; };
+		78BD61272C446A97005752FD /* LoginTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61262C446A97005752FD /* LoginTargetType.swift */; };
+		78BD612B2C4550A6005752FD /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD612A2C4550A6005752FD /* Bundle.swift */; };
 		A3DD9C3D2C41BAD000E58A13 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */; };
 		A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */; };
 		A3DD9C402C41BAD000E58A13 /* MeetingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */; };
@@ -184,9 +186,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		782B406E2C3DBF93008B0CA7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		782B40712C3DBFA3008B0CA7 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
-		782B40742C3DBFBA008B0CA7 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		782B406E2C3DBF93008B0CA7 /* ProfileSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewController.swift; sourceTree = "<group>"; };
+		782B40712C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewModel.swift; sourceTree = "<group>"; };
+		782B40742C3DBFBA008B0CA7 /* ProfileSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetupView.swift; sourceTree = "<group>"; };
 		782B407A2C3E395A008B0CA7 /* WelcomeView.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
@@ -206,6 +208,8 @@
 		78B928742C29402E006D9942 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		78B928772C29402E006D9942 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78B928792C29402E006D9942 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78BD61262C446A97005752FD /* LoginTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTargetType.swift; sourceTree = "<group>"; };
+		78BD612A2C4550A6005752FD /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
 		A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListView.swift; sourceTree = "<group>"; };
 		A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListViewController.swift; sourceTree = "<group>"; };
@@ -387,7 +391,7 @@
 		782B406D2C3DBF7C008B0CA7 /* VIewController */ = {
 			isa = PBXGroup;
 			children = (
-				782B406E2C3DBF93008B0CA7 /* ProfileViewController.swift */,
+				782B406E2C3DBF93008B0CA7 /* ProfileSetupViewController.swift */,
 			);
 			path = VIewController;
 			sourceTree = "<group>";
@@ -395,7 +399,7 @@
 		782B40702C3DBF97008B0CA7 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				782B40712C3DBFA3008B0CA7 /* ProfileViewModel.swift */,
+				782B40712C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -403,7 +407,7 @@
 		782B40732C3DBFA8008B0CA7 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				782B40742C3DBFBA008B0CA7 /* ProfileView.swift */,
+				782B40742C3DBFBA008B0CA7 /* ProfileSetupView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -526,6 +530,38 @@
 				DE8247FB2C36E7BB000601BC /* Network */,
 			);
 			path = KkuMulKum;
+			sourceTree = "<group>";
+		};
+		78BD61252C446A84005752FD /* TargetType */ = {
+			isa = PBXGroup;
+			children = (
+				78BD61262C446A97005752FD /* LoginTargetType.swift */,
+			);
+			path = TargetType;
+			sourceTree = "<group>";
+		};
+		78BD612C2C455680005752FD /* Bundle */ = {
+			isa = PBXGroup;
+			children = (
+				78BD612A2C4550A6005752FD /* Bundle.swift */,
+			);
+			path = Bundle;
+			sourceTree = "<group>";
+		};
+		A3DD9C332C41BAD000E58A13 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		A3DD9C352C41BAD000E58A13 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A3DD9C342C41BAD000E58A13 /* MeetingDummyModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A3DD9C372C41BAD000E58A13 /* View */ = {
@@ -919,6 +955,7 @@
 		DD865B662C39210E00C351A2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				78BD61212C440AC8005752FD /* Service */,
 				789873372C3D1B4800435E96 /* ViewController */,
 				789873362C3D1B3900435E96 /* VIewModel */,
 				789873352C3D1B3000435E96 /* View */,
@@ -1030,6 +1067,7 @@
 		DE254AA32C31107C00A4015E /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				78BD612C2C455680005752FD /* Bundle */,
 				A3DD9C642C45B30600E58A13 /* Service */,
 				DEBA03302C3C2972002ED8F2 /* ViewController.swift */,
 				DD39768B2C41C36B00E2A4C4 /* Color.xcassets */,
@@ -1165,6 +1203,7 @@
 		DE9E18852C3BC8F000DB76B4 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
+				78BD61252C446A84005752FD /* TargetType */,
 				DE9E18872C3BC90300DB76B4 /* Model */,
 				DE9E18862C3BC8F900DB76B4 /* ResponseBody */,
 			);
@@ -1425,6 +1464,7 @@
 				DE6D4D112C3F14D80005584B /* MeetingInfoBannerView.swift in Sources */,
 				DE6D4D122C3F14D80005584B /* MeetingInfoView.swift in Sources */,
 				DD30721E2C3C0CC800416D9F /* PromiseInfoResponseModel.swift in Sources */,
+				78BD61232C440AD5005752FD /* AuthService.swift in Sources */,
 				DD931B722C3DA92700526452 /* EnterReadyInfoButtonView.swift in Sources */,
 				DD41BEFF2C41DAA40095A068 /* TardyEmptyView.swift in Sources */,
 				A3FB18512C3BF531001483E5 /* RegisterMeetingsResquestModel.swift in Sources */,
@@ -1440,7 +1480,7 @@
 				DD4393772C412F4500EC1799 /* CreateMeetingView.swift in Sources */,
 				789873342C3D1A7B00435E96 /* LoginView.swift in Sources */,
 				782B40822C3E4925008B0CA7 /* NicknameViewModel.swift in Sources */,
-				782B406F2C3DBF93008B0CA7 /* ProfileViewController.swift in Sources */,
+				782B406F2C3DBF93008B0CA7 /* ProfileSetupViewController.swift in Sources */,
 				A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */,
 				DD4909982C441215003ED304 /* TardyViewModel.swift in Sources */,
 				DEA932182C3F180800FDF637 /* MeetingPromisesModel.swift in Sources */,
@@ -1449,6 +1489,7 @@
 				A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */,
 				DD3976852C41C2AD00E2A4C4 /* UpcomingPromiseModel.swift in Sources */,
 				DEF725DB2C3F3BBF008C87C7 /* Toast.swift in Sources */,
+				78BD61272C446A97005752FD /* LoginTargetType.swift in Sources */,
 				DD43937A2C412F4500EC1799 /* FinishCreateViewController.swift in Sources */,
 				DE254AAC2C31192400A4015E /* UILabel+.swift in Sources */,
 				DE254AB72C3119D000A4015E /* ReuseIdentifiable.swift in Sources */,
@@ -1502,6 +1543,8 @@
 				DD3976862C41C2AD00E2A4C4 /* HomeView.swift in Sources */,
 				DD41BEFC2C41D54D0095A068 /* TardyPenaltyView.swift in Sources */,
 				789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */,
+				782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */,
+				DDAF1C8F2C3D6E3D008A37D3 /* BasePromiseSegmentedControl.swift in Sources */,
 				DD49099C2C441719003ED304 /* TardyService.swift in Sources */,
 				782B40722C3DBFA3008B0CA7 /* ProfileViewModel.swift in Sources */,
 				DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */,
@@ -1521,7 +1564,7 @@
 				DD3976872C41C2AD00E2A4C4 /* TodayPromiseView.swift in Sources */,
 				A3DD9C5A2C43F99800E58A13 /* SetReadyInfoView.swift in Sources */,
 				789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */,
-				782B40752C3DBFBA008B0CA7 /* ProfileView.swift in Sources */,
+				782B40752C3DBFBA008B0CA7 /* ProfileSetupView.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
 				A3DD9C402C41BAD000E58A13 /* MeetingListViewController.swift in Sources */,
 				A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */,
@@ -1532,6 +1575,7 @@
 				DD43937B2C412F4500EC1799 /* CreateMeetingViewController.swift in Sources */,
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,
 				DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */,
+				78BD612B2C4550A6005752FD /* Bundle.swift in Sources */,
 				DD3072262C3C0F0B00416D9F /* TardyInfoModel.swift in Sources */,
 				DE254AB92C311AB300A4015E /* Screen.swift in Sources */,
 			);
@@ -1607,6 +1651,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
+				NEW_SETTING = "";
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
@@ -1664,6 +1709,7 @@
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				NEW_SETTING = "";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;

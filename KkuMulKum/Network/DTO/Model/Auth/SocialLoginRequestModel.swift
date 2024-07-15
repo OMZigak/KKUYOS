@@ -8,5 +8,6 @@
 import Foundation
 
 struct SocialLoginRequestModel: RequestModelType {
-    let provider: String?
+    let provider: String
+    let fcmToken: String
 }
