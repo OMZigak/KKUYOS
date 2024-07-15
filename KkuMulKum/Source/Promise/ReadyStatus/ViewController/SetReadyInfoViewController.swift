@@ -99,20 +99,18 @@ extension SetReadyInfoViewController: UITextFieldDelegate {
 
 private extension SetReadyInfoViewController {
     func setTextFieldDelegate() {
-        rootView.readyHourTextField.delegate = self
-        rootView.readyMinuteTextField.delegate = self
-        rootView.moveHourTextField.delegate = self
-        rootView.moveMinuteTextField.delegate = self
+        let textFields: [(UITextField, String)] = [
+            (rootView.readyHourTextField, "readyHour"),
+            (rootView.readyMinuteTextField, "readyMinute"),
+            (rootView.moveHourTextField, "moveHour"),
+            (rootView.moveMinuteTextField, "moveMinute")
+        ]
         
-        rootView.readyHourTextField.keyboardType = .numberPad
-        rootView.readyMinuteTextField.keyboardType = .numberPad
-        rootView.moveHourTextField.keyboardType = .numberPad
-        rootView.moveMinuteTextField.keyboardType = .numberPad
-        
-        rootView.readyHourTextField.accessibilityIdentifier = "readyHour"
-        rootView.readyMinuteTextField.accessibilityIdentifier = "readyMinute"
-        rootView.moveHourTextField.accessibilityIdentifier = "moveHour"
-        rootView.moveMinuteTextField.accessibilityIdentifier = "moveMinute"
+        textFields.forEach { (textField, identifier) in
+            textField.delegate = self
+            textField.keyboardType = .numberPad
+            textField.accessibilityIdentifier = identifier
+        }
     }
     
     func showToast(_ message: String, bottomInset: CGFloat = 128) {
