@@ -13,17 +13,11 @@ import SnapKit
 import Then
 
 final class AddPromiseViewController: BaseViewController {
-    private let progressView = UIProgressView(progressViewStyle: .default).then {
-        $0.progressTintColor = .maincolor
-        $0.backgroundColor = .gray2
-        $0.setProgress(0.33, animated: false)
-    }
-    
     private let viewModel: AddPromiseViewModel
     private let disposeBag = DisposeBag()
     private let rootView = AddPromiseView()
     private let promiseNameTextFieldEndEditingRelay = PublishRelay<Void>()
-    private let promisePlaceTextFieldDidTapRelay = PublishRelay<Void>()
+    private let searchPlaceCompleted = PublishRelay<Place>()
     
     // MARK: - Intializer
     
@@ -59,33 +53,30 @@ final class AddPromiseViewController: BaseViewController {
         navigationController?.isNavigationBarHidden = false
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        progressView.removeFromSuperview()
-    }
-    
-    override func setupView() {
-        navigationController?.navigationBar.addSubviews(progressView)
-        
-        progressView.snp.makeConstraints {
-            $0.horizontalEdges.bottom.equalToSuperview()
-            $0.height.equalTo(Screen.height(3))
-        }
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
     
     override func setupAction() {
-        let viewTapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(dismissKeyboard)
-        )
-        view.addGestureRecognizer(viewTapGesture)
+        /// progressView의 progress 설정
+        rootView.promiseNameTextField.rx.text.orEmpty
+            .map { !$0.isEmpty ? 0.25 : 0.0 }
+            .bind(to: rootView.progressView.rx.progress)
+            .disposed(by: disposeBag)
         
-        let textFieldTapGesture = UITapGestureRecognizer(
-            target: self,
-            action: #selector(promisePlaceTextFieldDidTap)
-        )
-        rootView.promisePlaceTextField.addGestureRecognizer(textFieldTapGesture)
+        rootView.promiseNameTextField.rx.text
+            .map { "\($0?.count ?? 0)/10" }
+            .bind(to: rootView.promiseNameCountLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        rootView.confirmButton.rx.tap
+            .map { _ in }
+            .subscribe(with: self) { owner, temp in
+                
+                // TODO: 다음화면으로 넘어가기
+                
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setupDelegate() {
@@ -98,7 +89,8 @@ final class AddPromiseViewController: BaseViewController {
 
 extension AddPromiseViewController: FindPlaceViewControllerDelegate {
     func configure(selectedPlace: Place) {
-        rootView.configurePromisePlaceTextField(with: selectedPlace.location)
+        rootView.promisePlaceTextField.text = selectedPlace.location
+        searchPlaceCompleted.accept(selectedPlace)
     }
 }
 
@@ -106,71 +98,73 @@ extension AddPromiseViewController: FindPlaceViewControllerDelegate {
 // MARK: - UITextFieldDelegate
 
 extension AddPromiseViewController: UITextFieldDelegate {
+    /// done을 눌렀을 때
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == rootView.promiseNameTextField {
             textField.resignFirstResponder()
-            promiseNameTextFieldEndEditingRelay.accept(())
             return true
         }
-        
         return false
     }
     
+    /// 위치 텍스트필드의 사용자 입력 차단
     func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
         replacementString string: String
     ) -> Bool {
-        return false
+        if textField == rootView.promisePlaceTextField {
+            return false
+        }
+        return true
     }
 }
 
 private extension AddPromiseViewController {
     func bindViewModel() {
+        let promiseTextFieldEndEditing = Observable.merge(
+            rootView.promiseNameTextField.rx.controlEvent(.editingDidEndOnExit).asObservable(),
+            rootView.promiseNameTextField.rx.controlEvent(.editingDidEnd).asObservable()
+        )
+        
         let input = AddPromiseViewModel.Input(
-            promiseNameTextFieldDidChange: rootView.promiseNameTextFieldDidChange,
-            promiseTextFieldEndEditing: promiseNameTextFieldEndEditingRelay,
-            promisePlaceTextFieldDidTap: promisePlaceTextFieldDidTapRelay
+            promiseNameText: rootView.promiseNameTextField.rx.text.orEmpty.asObservable(),
+            promiseTextFieldEndEditing: promiseTextFieldEndEditing,
+            date: rootView.datePicker.rx.date.asObservable(),
+            time: rootView.timePicker.rx.date.asObservable()
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
         
-        output.validateNameEditing
-            .drive(with: self) { owner, state in
-                owner.rootView.configureNameTextField(state: state)
-            }
-            .disposed(by: disposeBag)
-        
-        output.validateNameEndEditing
-            .drive(with: self) { owner, state in
-                owner.rootView.configureNameTextField(state: state)
-            }
-            .disposed(by: disposeBag)
-        
-        output.searchPlace
-            .drive(with: self) { owner, _ in
-                owner.navigateToFindPlace(with: owner)
+        output.validationPromiseNameResult
+            .subscribe(with: self) { owner, result in
+                owner.configurePromiseName(result: result)
             }
             .disposed(by: disposeBag)
     }
     
-    @objc
-    func dismissKeyboard() {
-        view.endEditing(true)
-        promiseNameTextFieldEndEditingRelay.accept(())
-    }
-    
-    @objc
-    func promisePlaceTextFieldDidTap() {
-        promisePlaceTextFieldDidTapRelay.accept(())
-    }
-    
-    func navigateToFindPlace(with delegate: FindPlaceViewControllerDelegate) {
-        let viewController = FindPlaceViewController(
-            viewModel: FindPlaceViewModel(
-                service: MockFindPlaceService()
-            )
-        )
-        navigationController?.pushViewController(viewController, animated: true)
+    func configurePromiseName(result: TextFieldVailidationResult) {
+        print(">>> \(viewModel.combinedDataTime) : \(#function)")
+
+        switch result {
+        case .basic:
+            rootView.do {
+                $0.promiseNameTextField.layer.borderColor = UIColor.gray3.cgColor
+                $0.promiseNameCountLabel.textColor = .gray3
+                $0.promiseNameErrorLabel.isHidden = true
+            }
+        case .onWriting:
+            rootView.do {
+                $0.promiseNameTextField.layer.borderColor = UIColor.maincolor.cgColor
+                $0.promiseNameCountLabel.textColor = .maincolor
+                $0.promiseNameErrorLabel.isHidden = true
+            }
+        case .error:
+            rootView.do {
+                $0.promiseNameTextField.layer.borderColor = UIColor.mainred.cgColor
+                $0.promiseNameCountLabel.textColor = .mainred
+                $0.promiseNameErrorLabel.isHidden = false
+            }
+        }
     }
 }

@@ -11,48 +11,37 @@ import SnapKit
 import Then
 
 final class PlaceListCell: BaseCollectionViewCell {
+    static let defaultWidth = Screen.width(335)
+    static let defaultHeight = Screen.height(118)
+    
     private let titleLabel = UILabel().then {
         $0.setText("", style: .body05, color: .gray8)
     }
     
-    private let roadAddressView = UIView(backgroundColor: .gray0).then {
+    private let roadAddressTitleLabel = UILabel().then {
+        $0.setText("도로명", style: .label01, color: .gray6)
+        $0.textAlignment = .center
+        $0.backgroundColor = .gray0
         $0.layer.cornerRadius = 4
         $0.layer.borderColor = UIColor.gray3.cgColor
         $0.layer.borderWidth = 1
-    }
-    
-    private let roadAddressLabel = UILabel().then {
-        $0.setText("도로명", style: .label01, color: .gray6)
     }
     
     private let roadAddressNameLabel = UILabel().then {
         $0.setText(" ", style: .caption02, color: .gray6)
     }
     
-    private let roadAddressStackView = UIStackView(axis: .horizontal).then {
-        $0.spacing = 8
-    }
-    
-    private let addressView = UIView(backgroundColor: .gray0).then {
+    private let addressTitleLabel = UILabel().then {
+        $0.setText("지번", style: .label01, color: .gray6)
+        $0.textAlignment = .center
+        $0.backgroundColor = .gray0
         $0.layer.cornerRadius = 4
         $0.layer.borderColor = UIColor.gray3.cgColor
         $0.layer.borderWidth = 1
     }
     
-    private let addressLabel = UILabel().then {
-        $0.setText("지번", style: .label01, color: .gray6)
-    }
-    
     private let addressNameLabel = UILabel().then {
-        $0.setText("", style: .caption02, color: .gray6)
-    }
-    
-    private let addressStackView = UIStackView(axis: .horizontal).then {
-        $0.spacing = 8
-    }
-    
-    private let contentStackView = UIStackView(axis: .vertical).then {
-        $0.spacing = 8
+        $0.setText(" ", style: .caption02, color: .gray6)
     }
     
     
@@ -60,8 +49,8 @@ final class PlaceListCell: BaseCollectionViewCell {
 
     override var isSelected: Bool {
         didSet {
-            contentView.layer.borderColor = 
-            isSelected ? UIColor.maincolor.cgColor : UIColor.gray3.cgColor
+            let color: UIColor = isSelected ? .maincolor : .gray3
+            contentView.layer.borderColor = color.cgColor
         }
     }
     
@@ -74,30 +63,43 @@ final class PlaceListCell: BaseCollectionViewCell {
             $0.layer.borderWidth = 1
         }
         
-        roadAddressView.addSubviews(roadAddressLabel)
-        roadAddressStackView.addArrangedSubviews(roadAddressView, roadAddressNameLabel)
-        
-        addressView.addSubviews(addressLabel)
-        addressStackView.addArrangedSubviews(addressView, addressNameLabel)
-        
-        contentStackView.addArrangedSubviews(titleLabel, roadAddressStackView, addressStackView)
-        contentView.addSubviews(contentStackView)
+        contentView.addSubviews(
+            titleLabel,
+            roadAddressTitleLabel,
+            roadAddressNameLabel,
+            addressTitleLabel,
+            addressNameLabel
+        )
     }
     
     override func setupAutoLayout() {
-        roadAddressLabel.snp.makeConstraints {
-            $0.verticalEdges.equalToSuperview().inset(4)
-            $0.horizontalEdges.equalToSuperview().inset(5)
-        }
-        
-        addressLabel.snp.makeConstraints {
-            $0.verticalEdges.equalToSuperview().inset(4)
-            $0.horizontalEdges.equalToSuperview().inset(10)
-        }
-        
-        contentStackView.snp.makeConstraints {
-            $0.verticalEdges.equalToSuperview().inset(16)
+        titleLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(16)
+        }
+        
+        roadAddressTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(12)
+            $0.leading.equalToSuperview().offset(16)
+            $0.centerY.equalToSuperview()
+            $0.width.equalTo(Screen.width(38))
+            $0.height.equalTo(Screen.height(24))
+        }
+        
+        roadAddressNameLabel.snp.makeConstraints {
+            $0.leading.equalTo(roadAddressTitleLabel.snp.trailing).offset(8)
+            $0.centerY.equalTo(roadAddressTitleLabel)
+        }
+        
+        addressTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(roadAddressTitleLabel.snp.bottom).offset(8)
+            $0.leading.equalToSuperview().offset(16)
+            $0.width.equalTo(Screen.width(38))
+            $0.height.equalTo(Screen.height(24))
+        }
+        
+        addressNameLabel.snp.makeConstraints {
+            $0.leading.equalTo(addressTitleLabel.snp.trailing).offset(8)
+            $0.centerY.equalTo(addressTitleLabel)
         }
     }
 }

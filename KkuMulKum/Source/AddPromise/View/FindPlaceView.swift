@@ -13,13 +13,18 @@ import SnapKit
 import Then
 
 final class FindPlaceView: BaseView {
-    let placeTextField = CustomTextField(placeHolder: "약속 장소를 검색해 주세요")
+    let placeTextField = CustomTextField(placeHolder: "약속 장소를 검색해 주세요").then {
+        $0.returnKeyType = .done
+    }
     
     let placeListView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout().then {
             $0.scrollDirection = .vertical
-            $0.itemSize = UICollectionViewFlowLayout.automaticSize
+            $0.itemSize = .init(
+                width: PlaceListCell.defaultWidth,
+                height: PlaceListCell.defaultHeight
+            )
             $0.minimumInteritemSpacing = 8
         }
     ).then {
@@ -59,11 +64,7 @@ extension FindPlaceView {
     var placeTextFieldDidChange: Observable<String?> { placeTextField.rx.text.asObservable() }
     var confirmButtonDidTap: Observable<Void> { confirmButton.rx.tap.asObservable() }
     
-    func configureTextField(isEditing: Bool) {
-        placeTextField.setLayer(
-            borderWidth: 1,
-            borderColor: isEditing ? .maincolor : .gray3,
-            cornerRadius: 8
-        )
+    func configureTextField(flag: Bool) {
+        placeTextField.layer.borderColor = flag ? UIColor.gray3.cgColor : UIColor.maincolor.cgColor
     }
 }

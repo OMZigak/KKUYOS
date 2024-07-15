@@ -20,10 +20,11 @@ final class FindPlaceViewController: BaseViewController {
     private let viewModel: FindPlaceViewModel
     private let rootView = FindPlaceView()
     private let disposeBag = DisposeBag()
-    
+    private let textFieldEndEditing = PublishRelay<Void>()
+    private let cellIsSeleceted = PublishRelay<Place?>()
     
     // MARK: - Initializer
-
+    
     init(viewModel: FindPlaceViewModel) {
         self.viewModel = viewModel
         
@@ -36,7 +37,7 @@ final class FindPlaceViewController: BaseViewController {
     
     
     // MARK: - Life Cycle
-
+    
     override func loadView() {
         view = rootView
     }
@@ -62,11 +63,6 @@ final class FindPlaceViewController: BaseViewController {
         navigationController?.isNavigationBarHidden = true
     }
     
-    override func setupAction() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
-    }
-    
     override func setupDelegate() {
         rootView.placeTextField.delegate = self
         rootView.placeListView.delegate = self
@@ -77,12 +73,15 @@ final class FindPlaceViewController: BaseViewController {
 // MARK: - UITextFieldDelegate
 
 extension FindPlaceViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor.maincolor.cgColor
+        rootView.confirmButton.isEnabled = false
+    }
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == rootView.placeTextField {
             textField.resignFirstResponder()
-            
-            // TODO: 키보드 입력 끝난 이벤트 처리
-            
+            textFieldEndEditing.accept(())
             return true
         }
         
@@ -90,10 +89,11 @@ extension FindPlaceViewController: UITextFieldDelegate {
     }
 }
 
+
 // MARK: - UICollectionViewDelegate
 
 extension FindPlaceViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {        
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         for i in 0..<collectionView.numberOfItems(inSection: indexPath.section) {
             guard i != indexPath.item else { continue }
             let otherIndexPath = IndexPath(item: i, section: indexPath.section)
@@ -103,20 +103,49 @@ extension FindPlaceViewController: UICollectionViewDelegate {
             cell.isSelected = false
         }
         
-        // TODO: 선택된 셀의 위치 처리
+        guard let cell = collectionView.cellForItem(at: indexPath) as? PlaceListCell else { return }
+        cellIsSeleceted.accept(cell.place)
     }
 }
 
 private extension FindPlaceViewController {
     func bindViewModel() {
+        let input = FindPlaceViewModel.Input(
+            textFieldDidChange: rootView.placeTextFieldDidChange,
+            textFieldEneEditing: textFieldEndEditing,
+            cellIsSelected: cellIsSeleceted,
+            confirmButtonDidTap: rootView.confirmButtonDidTap
+        )
         
-    }
-    
-    @objc
-    func dismissKeyboard() {
-        view.endEditing(true)
+        let output = viewModel.transform(input: input, disposeBag: disposeBag)
         
-        // TODO: 키보드 입력 끝난 이벤트 처리
+        output.isEndEditingTextField
+            .drive(with: self) { owner, flag in
+                owner.rootView.configureTextField(flag: flag)
+            }
+            .disposed(by: disposeBag)
         
+        output.placeList
+            .drive(rootView.placeListView.rx.items(
+                cellIdentifier: PlaceListCell.reuseIdentifier,
+                cellType: PlaceListCell.self
+            )) { index, place, cell in
+                cell.configure(place: place)
+            }
+            .disposed(by: disposeBag)
+        
+        output.isEnabledConfirmButton
+            .drive(with: self) { owner, flag in
+                owner.rootView.confirmButton.isEnabled = flag
+            }
+            .disposed(by: disposeBag)
+        
+        output.popViewController
+            .drive(with: self) { owner, place in
+                guard let place else { return }
+                owner.delegate?.configure(selectedPlace: place)
+                owner.navigationController?.popViewController(animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }

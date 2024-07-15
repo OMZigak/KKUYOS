@@ -10,15 +10,17 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-enum PromiseNameState {
-    case basic
-    case success
-    case failure
+enum TextFieldVailidationResult {
+    case basic, onWriting, error
 }
 
 final class AddPromiseViewModel {
-    private let meetingID: Int
+    let meetingID: Int
+    
+    var combinedDataTime: String { combinedDateTimeRelay.value }
+    
     private let service: AddPromiseServiceType
+    private let combinedDateTimeRelay = BehaviorRelay(value: "")
     
     init(meetingID: Int, service: AddPromiseServiceType) {
         self.meetingID = meetingID
@@ -28,64 +30,80 @@ final class AddPromiseViewModel {
 
 extension AddPromiseViewModel: ViewModelType {
     struct Input {
-        let promiseNameTextFieldDidChange: Observable<String?>
-        let promiseTextFieldEndEditing: PublishRelay<Void>
-        let promisePlaceTextFieldDidTap: PublishRelay<Void>
+        let promiseNameText: Observable<String>
+        let promiseTextFieldEndEditing: Observable<Void>
+        let date: Observable<Date>
+        let time: Observable<Date>
     }
     
     struct Output {
-        let validateNameEditing: Driver<PromiseNameState>
-        let validateNameEndEditing: Driver<PromiseNameState>
-        let searchPlace: Driver<Void>
+        let validationPromiseNameResult: Observable<TextFieldVailidationResult>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
-        let promiseTextFieldRelay = BehaviorRelay<String?>(value: nil)
-        
-        input.promiseNameTextFieldDidChange
-            .bind(to: promiseTextFieldRelay)
-            .disposed(by: disposeBag)
-        
-        let validateName: (String?) -> PromiseNameState = { value in
-            guard let name = value,
-                  !name.isEmpty
-            else {
-                return .basic
+        let isValid = input.promiseNameText
+            .map { [weak self] text in
+                self?.isValid(text: text) ?? false
             }
-            
-            let regex = "^[가-힣a-zA-Z0-9 ]{1,10}$"
-            let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
-            
-            return predicate.evaluate(with: name) ? .success : .failure
-        }
         
-        let validateNameEditing = promiseTextFieldRelay
-            .map(validateName)
-            .asDriver(onErrorJustReturn: .failure)
-        
-        let validateNameEndEditing = input.promiseTextFieldEndEditing
-            .withLatestFrom(promiseTextFieldRelay)
-            .map(validateName)
-            .map { state -> PromiseNameState in
-                switch state {
-                case .basic, .success:
+        let validationResultWhileEditing = input.promiseNameText
+            .map { text -> TextFieldVailidationResult in
+                if text.isEmpty {
                     return .basic
-                case .failure:
-                    return .failure
                 }
+                
+                if self.isValid(text: text) {
+                    return .onWriting
+                }
+                
+                return .error
             }
-            .asDriver(onErrorJustReturn: .failure)
         
-        let searchPlace = input.promisePlaceTextFieldDidTap
-            .map { _ in }
-            .asDriver(onErrorJustReturn: ())
+        let validationResultAfterEditing = input.promiseTextFieldEndEditing
+            .withLatestFrom(isValid)
+            .map { flag -> TextFieldVailidationResult in
+                return flag ? .basic : .error
+            }
         
-        let output = Output(
-            validateNameEditing: validateNameEditing, 
-            validateNameEndEditing: validateNameEndEditing,
-            searchPlace: searchPlace
+        let validationPromiseNameResult = Observable.merge(
+            validationResultWhileEditing, validationResultAfterEditing
         )
         
-        return output
+        Observable.combineLatest(input.date, input.time)
+            .map { (date, time) -> String in
+                let calendar = Calendar.current
+                let dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
+                let timeComponents = calendar.dateComponents([.hour, .minute, .second], from: time)
+                
+                var combinedComponents = DateComponents()
+                combinedComponents.year = dateComponents.year
+                combinedComponents.month = dateComponents.month
+                combinedComponents.day = dateComponents.day
+                combinedComponents.hour = timeComponents.hour
+                combinedComponents.minute = timeComponents.minute
+                combinedComponents.second = timeComponents.second
+                
+                let combinedDate = calendar.date(from: combinedComponents)!
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                return dateFormatter.string(from: combinedDate)
+            }
+            .bind(to: combinedDateTimeRelay)
+            .disposed(by: disposeBag)
+        
+        return Output(
+            validationPromiseNameResult: validationPromiseNameResult
+        )
+    }
+}
+
+private extension AddPromiseViewModel {
+    func isValid(text: String) -> Bool {
+        if text.isEmpty { return true }
+        
+        let regex = "^[가-힣a-zA-Z0-9 ]{1,10}$"
+        let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
+        
+        return predicate.evaluate(with: text)
     }
 }

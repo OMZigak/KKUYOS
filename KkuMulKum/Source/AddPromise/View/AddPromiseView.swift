@@ -13,6 +13,12 @@ import SnapKit
 import Then
 
 final class AddPromiseView: BaseView {
+    let progressView = UIProgressView(progressViewStyle: .default).then {
+        $0.progressTintColor = .maincolor
+        $0.backgroundColor = .gray2
+        $0.setProgress(0.0, animated: false)
+    }
+    
     private let pageNumberLabel = UILabel().then {
         $0.setText("1/3", style: .body05, color: .gray6)
     }
@@ -35,12 +41,17 @@ final class AddPromiseView: BaseView {
         $0.returnKeyType = .done
     }
     
-    private let promiseNameCountLabel = UILabel().then {
+    let promiseNameCountLabel = UILabel().then {
         $0.setText("0/10", style: .body06, color: .gray3)
     }
     
-    private let promiseNameErrorLabel = UILabel().then {
-        $0.setText(" ", style: .caption02, color: .red)
+    let promiseNameErrorLabel = UILabel().then {
+        $0.setText(
+            "공백 포함 한글, 영문, 숫자만을 사용해 총 10자 이내로 입력해주세요.",
+            style: .caption02,
+            color: .mainred
+        )
+        $0.isHidden = true
     }
     
     private let promiseNameStackView = UIStackView(axis: .vertical).then {
@@ -61,22 +72,69 @@ final class AddPromiseView: BaseView {
         $0.spacing = 8
     }
     
+    private let promiseTimeTitleLabel = UILabel().then {
+        $0.setText("약속 시간", style: .body03, color: .gray8)
+        $0.textAlignment = .left
+    }
+    
+    let datePicker = UIDatePicker().then {
+        $0.datePickerMode = .date
+        $0.preferredDatePickerStyle = .compact
+        $0.locale = Locale(identifier: "ko_KR")
+        $0.minimumDate = Date()
+    }
+    
+    let timePicker = UIDatePicker().then {
+        $0.datePickerMode = .time
+        $0.preferredDatePickerStyle = .compact
+        $0.locale = Locale(identifier: "ko_KR")
+        let date = Date()
+        $0.minimumDate = date
+        $0.date = date
+    }
+    
+    let confirmButton = CustomButton(title: "다음")
+    
     override func setupView() {
-        descriptionStackView.addArrangedSubviews(pageNumberLabel, titleLabel)
-        
-        promiseNameTextField.addSubviews(promiseNameCountLabel)
-        promiseNameStackView.addArrangedSubviews(
-            promiseNameLabel, promiseNameTextField, promiseNameErrorLabel
+        descriptionStackView.addArrangedSubviews(
+            pageNumberLabel,
+            titleLabel
         )
-        
-        promisePlaceTextField.addSubviews(searchIconView)
-        promisePlaceStackView.addArrangedSubviews(promisePlaceLabel, promisePlaceTextField)
-        
-        addSubviews(descriptionStackView, promiseNameStackView, promisePlaceStackView)
+        promiseNameTextField.addSubviews(
+            promiseNameCountLabel
+        )
+        promiseNameStackView.addArrangedSubviews(
+            promiseNameLabel,
+            promiseNameTextField,
+            promiseNameErrorLabel
+        )
+        promisePlaceTextField.addSubviews(
+            searchIconView
+        )
+        promisePlaceStackView.addArrangedSubviews(
+            promisePlaceLabel,
+            promisePlaceTextField
+        )
+        addSubviews(
+            progressView,
+            descriptionStackView,
+            promiseNameStackView,
+            promisePlaceStackView,
+            promiseTimeTitleLabel,
+            datePicker,
+            timePicker,
+            confirmButton
+        )
     }
     
     override func setupAutoLayout() {
         let safeArea = safeAreaLayoutGuide
+        
+        progressView.snp.makeConstraints {
+            $0.top.equalTo(safeArea).offset(-2)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(Screen.height(3))
+        }
         
         descriptionStackView.snp.makeConstraints {
             $0.top.equalTo(safeArea).offset(32)
@@ -98,7 +156,7 @@ final class AddPromiseView: BaseView {
         }
         
         promisePlaceStackView.snp.makeConstraints {
-            $0.top.equalTo(promiseNameStackView.snp.bottom).offset(5)
+            $0.top.equalTo(promiseNameTextField.snp.bottom).offset(36)
             $0.horizontalEdges.equalTo(promiseNameStackView)
         }
         
@@ -110,58 +168,26 @@ final class AddPromiseView: BaseView {
             $0.centerY.equalToSuperview().offset(4)
             $0.trailing.equalToSuperview().offset(-14)
         }
-    }
-}
-
-extension AddPromiseView {
-    var promiseNameTextFieldDidChange: Observable<String?> {
-        promiseNameTextField.rx.text.asObservable()
-    }
-    
-    func configureNameTextField(state: PromiseNameState) {
-        switch state {
-        case .basic:
-            setupNameTextFieldForState(
-                borderColor: .gray3,
-                countLabelColor: .gray3,
-                errorMessage: " "
-            )
-        case .success:
-            setupNameTextFieldForState(
-                borderColor: .maincolor,
-                countLabelColor: .maincolor,
-                errorMessage: " "
-            )
-        case .failure:
-            setupNameTextFieldForState(
-                borderColor: .mainred,
-                countLabelColor: .mainred,
-                errorMessage: "공백 포함 한글, 영문, 숫자만을 사용해 총 10자 이내로 입력해주세요."
-            )
+        
+        promiseTimeTitleLabel.snp.makeConstraints {
+            $0.top.equalTo(promisePlaceStackView.snp.bottom).offset(28)
+            $0.leading.equalToSuperview().offset(20)
         }
-    }
-    
-    func configurePromisePlaceTextField(with placeName: String) {
-        promisePlaceTextField.text = placeName
-    }
-}
-
-private extension AddPromiseView {
-    func setupNameTextFieldForState(
-        borderColor: UIColor,
-        countLabelColor: UIColor,
-        errorMessage: String
-    ) {
-        promiseNameTextField.setLayer(borderWidth: 1, borderColor: borderColor, cornerRadius: 8)
-        promiseNameCountLabel.setText(
-            "\(promiseNameTextField.text?.count ?? 0)/10",
-            style: .body06,
-            color: countLabelColor
-        )
-        promiseNameErrorLabel.setText(
-            errorMessage,
-            style: .caption02,
-            color: .mainred
-        )
+        
+        datePicker.snp.makeConstraints {
+            $0.top.equalTo(promiseTimeTitleLabel.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().offset(20)
+        }
+        
+        timePicker.snp.makeConstraints {
+            $0.leading.equalTo(datePicker.snp.trailing).offset(12)
+            $0.centerY.equalTo(datePicker)
+        }
+        
+        confirmButton.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.height.equalTo(CustomButton.defaultHeight)
+            $0.bottom.equalToSuperview().offset(-64)
+        }
     }
 }
