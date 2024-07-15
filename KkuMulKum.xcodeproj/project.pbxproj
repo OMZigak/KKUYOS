@@ -72,7 +72,7 @@
 		A3DD9C5F2C441F8E00E58A13 /* SetReadyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C5E2C441F8E00E58A13 /* SetReadyInfoViewModel.swift */; };
 		A3FB184D2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */; };
 		A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */; };
-		A3FB18512C3BF531001483E5 /* RegisterMeetingsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18502C3BF531001483E5 /* RegisterMeetingsResponseModel.swift */; };
+		A3FB18512C3BF531001483E5 /* RegisterMeetingsResquestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18502C3BF531001483E5 /* RegisterMeetingsResquestModel.swift */; };
 		A3FB18572C3BF704001483E5 /* MeetingListResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18562C3BF704001483E5 /* MeetingListResponseModel.swift */; };
 		A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18582C3BF77D001483E5 /* MeetingInfoResponseModel.swift */; };
 		A3FB185B2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB185A2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift */; };
@@ -216,7 +216,7 @@
 		A3DD9C5E2C441F8E00E58A13 /* SetReadyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReadyInfoViewModel.swift; sourceTree = "<group>"; };
 		A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsRequestModel.swift; sourceTree = "<group>"; };
 		A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsResponseModel.swift; sourceTree = "<group>"; };
-		A3FB18502C3BF531001483E5 /* RegisterMeetingsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMeetingsResponseModel.swift; sourceTree = "<group>"; };
+		A3FB18502C3BF531001483E5 /* RegisterMeetingsResquestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMeetingsResquestModel.swift; sourceTree = "<group>"; };
 		A3FB18562C3BF704001483E5 /* MeetingListResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListResponseModel.swift; sourceTree = "<group>"; };
 		A3FB18582C3BF77D001483E5 /* MeetingInfoResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoResponseModel.swift; sourceTree = "<group>"; };
 		A3FB185A2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingMembersResponseModel.swift; sourceTree = "<group>"; };
@@ -1233,7 +1233,7 @@
 			children = (
 				A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */,
 				A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */,
-				A3FB18502C3BF531001483E5 /* RegisterMeetingsResponseModel.swift */,
+				A3FB18502C3BF531001483E5 /* RegisterMeetingsResquestModel.swift */,
 				A3FB18562C3BF704001483E5 /* MeetingListResponseModel.swift */,
 				A3FB18582C3BF77D001483E5 /* MeetingInfoResponseModel.swift */,
 				A3FB185A2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift */,
@@ -1443,7 +1443,7 @@
 				DD30721E2C3C0CC800416D9F /* PromiseInfoResponseModel.swift in Sources */,
 				DD931B722C3DA92700526452 /* EnterReadyInfoButtonView.swift in Sources */,
 				DD41BEFF2C41DAA40095A068 /* TardyEmptyView.swift in Sources */,
-				A3FB18512C3BF531001483E5 /* RegisterMeetingsResponseModel.swift in Sources */,
+				A3FB18512C3BF531001483E5 /* RegisterMeetingsResquestModel.swift in Sources */,
 				789AD4B32C3C0093002E2688 /* SocialLoginResponseModel.swift in Sources */,
 				DD43937F2C41357800EC1799 /* InviteCodeViewModel.swift in Sources */,
 				DE9E188B2C3BC92500DB76B4 /* EmptyModel.swift in Sources */,
