@@ -26,8 +26,10 @@ class DefaultKeychainService: KeychainService {
         static let refreshToken = "refreshToken"
     }
     
-    init(serviceName: String = Bundle.main.bundleIdentifier ?? "KkuMulKum.yizihn") {
+    init() {
+        let serviceName = Bundle.main.privacyInfo?["ServiceName"] as? String ?? Bundle.main.bundleIdentifier ?? "DefaultServiceName"
         self.keychain = KeychainWrapper(serviceName: serviceName)
+        print("Keychain initialized with service name: \(serviceName)")
     }
     
     var accessToken: String? {
