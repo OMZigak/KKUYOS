@@ -47,7 +47,7 @@ extension AddPromiseViewModel: ViewModelType {
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         let isValid = input.promiseNameText
             .map { [weak self] text in
-                return !text.isEmpty && self?.isValid(text: text) ?? false
+                return self?.isValid(text: text) ?? false
             }
         
         let validationResultWhileEditing = input.promiseNameText
@@ -97,7 +97,11 @@ extension AddPromiseViewModel: ViewModelType {
 }
 
 private extension AddPromiseViewModel {
-    func isValid(text: String) -> Bool {        
+    func isValid(text: String) -> Bool {
+        if text.isEmpty {
+            return true
+        }
+        
         let regex = "^[가-힣a-zA-Z0-9 ]{1,10}$"
         let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
         
