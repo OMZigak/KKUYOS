@@ -36,7 +36,7 @@ class InviteCodeViewModel {
 
 // MARK: - Extension
 
-private extension InviteCodeViewModel {
+extension InviteCodeViewModel {
     func validateCode(_ code: String) {
         inviteCode.value = code
         

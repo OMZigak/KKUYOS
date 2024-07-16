@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		782B406F2C3DBF93008B0CA7 /* ProfileSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B406E2C3DBF93008B0CA7 /* ProfileSetupViewController.swift */; };
-		782B40752C3DBFBA008B0CA7 /* ProfileSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40742C3DBFBA008B0CA7 /* ProfileSetupView.swift */; };
 		782B407B2C3E395A008B0CA7 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407A2C3E395A008B0CA7 /* WelcomeView.swift */; };
 		782B407D2C3E3984008B0CA7 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */; };
 		782B407F2C3E44B7008B0CA7 /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */; };
@@ -133,11 +131,13 @@
 		DDAF1C7E2C3D5B86008A37D3 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C7D2C3D5B86008A37D3 /* RxRelay */; };
 		DDAF1C812C3D5BD5008A37D3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C802C3D5BD5008A37D3 /* Kingfisher */; };
 		DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */; };
-		DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C892C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift */; };
 		DDAF1C902C3D6E3D008A37D3 /* PagePromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8A2C3D6E3D008A37D3 /* PagePromiseViewModel.swift */; };
 		DDAF1C912C3D6E3D008A37D3 /* TardyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */; };
 		DDAF1C922C3D6E3D008A37D3 /* PromiseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */; };
 		DDAF1C932C3D6E3D008A37D3 /* PagePromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8D2C3D6E3D008A37D3 /* PagePromiseViewController.swift */; };
+		DDFA507F2C4693BD000A62E2 /* ProfileSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507A2C4693BD000A62E2 /* ProfileSetupViewModel.swift */; };
+		DDFA50802C4693BD000A62E2 /* ProfileSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507C2C4693BD000A62E2 /* ProfileSetupView.swift */; };
+		DDFA50812C4693BD000A62E2 /* ProfileSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507E2C4693BD000A62E2 /* ProfileSetupViewController.swift */; };
 		DE0137D32C43C5E50088C777 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0137D22C43C5E50088C777 /* MyPageView.swift */; };
 		DE159D322C406E1600425101 /* MyPageAlarmSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2A2C406E1600425101 /* MyPageAlarmSettingView.swift */; };
 		DE159D332C406E1600425101 /* MyPageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2B2C406E1600425101 /* MyPageContentView.swift */; };
@@ -192,9 +192,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		782B406E2C3DBF93008B0CA7 /* ProfileSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewController.swift; sourceTree = "<group>"; };
-		782B40712C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewModel.swift; sourceTree = "<group>"; };
-		782B40742C3DBFBA008B0CA7 /* ProfileSetupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSetupView.swift; sourceTree = "<group>"; };
 		782B407A2C3E395A008B0CA7 /* WelcomeView.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
@@ -288,6 +285,9 @@
 		DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TardyViewController.swift; sourceTree = "<group>"; };
 		DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseInfoViewController.swift; sourceTree = "<group>"; };
 		DDAF1C8D2C3D6E3D008A37D3 /* PagePromiseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseViewController.swift; sourceTree = "<group>"; };
+		DDFA507A2C4693BD000A62E2 /* ProfileSetupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewModel.swift; sourceTree = "<group>"; };
+		DDFA507C2C4693BD000A62E2 /* ProfileSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupView.swift; sourceTree = "<group>"; };
+		DDFA507E2C4693BD000A62E2 /* ProfileSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewController.swift; sourceTree = "<group>"; };
 		DE0137D22C43C5E50088C777 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		DE159D2A2C406E1600425101 /* MyPageAlarmSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageAlarmSettingView.swift; sourceTree = "<group>"; };
 		DE159D2B2C406E1600425101 /* MyPageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageContentView.swift; sourceTree = "<group>"; };
@@ -391,40 +391,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		782B406C2C3DBF72008B0CA7 /* Profile */ = {
-			isa = PBXGroup;
-			children = (
-				782B40732C3DBFA8008B0CA7 /* View */,
-				782B40702C3DBF97008B0CA7 /* ViewModel */,
-				782B406D2C3DBF7C008B0CA7 /* VIewController */,
-			);
-			path = Profile;
-			sourceTree = "<group>";
-		};
-		782B406D2C3DBF7C008B0CA7 /* VIewController */ = {
-			isa = PBXGroup;
-			children = (
-				782B406E2C3DBF93008B0CA7 /* ProfileSetupViewController.swift */,
-			);
-			path = VIewController;
-			sourceTree = "<group>";
-		};
-		782B40702C3DBF97008B0CA7 /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-				782B40712C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift */,
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		782B40732C3DBFA8008B0CA7 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				782B40742C3DBFBA008B0CA7 /* ProfileSetupView.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
 		782B40762C3E389F008B0CA7 /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
@@ -981,8 +947,8 @@
 		DD865B652C3920F600C351A2 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				DDFA50782C4693BD000A62E2 /* Profile */,
 				782B40762C3E389F008B0CA7 /* Welcome */,
-				782B406C2C3DBF72008B0CA7 /* Profile */,
 				78AED1322C3D9514000AD80A /* Nickname */,
 				DD865B662C39210E00C351A2 /* Login */,
 			);
@@ -1037,6 +1003,40 @@
 				DD931B682C3D9DAD00526452 /* Tardy */,
 			);
 			path = Promise;
+			sourceTree = "<group>";
+		};
+		DDFA50782C4693BD000A62E2 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				DDFA50792C4693BD000A62E2 /* ViewModel */,
+				DDFA507B2C4693BD000A62E2 /* View */,
+				DDFA507D2C4693BD000A62E2 /* VIewController */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
+		DDFA50792C4693BD000A62E2 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DDFA507A2C4693BD000A62E2 /* ProfileSetupViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DDFA507B2C4693BD000A62E2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DDFA507C2C4693BD000A62E2 /* ProfileSetupView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DDFA507D2C4693BD000A62E2 /* VIewController */ = {
+			isa = PBXGroup;
+			children = (
+				DDFA507E2C4693BD000A62E2 /* ProfileSetupViewController.swift */,
+			);
+			path = VIewController;
 			sourceTree = "<group>";
 		};
 		DE159D2E2C406E1600425101 /* View */ = {
@@ -1478,9 +1478,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD86266F2C4658E800E4F980 /* PagePromiseSegmentedControl.swift in Sources */,
-				DD86266D2C4658B500E4F980 /* ProfileSetupViewModel.swift in Sources */,
-				DDAF1C8E2C3D6E3D008A37D3 /* ReadyStatusViewController.swift in Sources */,
 				DED5DBF22C34534A006ECE7E /* BaseCollectionReusableView.swift in Sources */,
 				DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */,
 				DE6D4D142C3F14D80005584B /* MeetingPromiseCell.swift in Sources */,
@@ -1489,6 +1486,7 @@
 				DD4393782C412F4500EC1799 /* CheckInviteCodeView.swift in Sources */,
 				DD8626622C4606A300E4F980 /* ReadyStatusViewModel.swift in Sources */,
 				DE6D4D102C3F14D80005584B /* InvitationCodePopUpView.swift in Sources */,
+				DDFA50812C4693BD000A62E2 /* ProfileSetupViewController.swift in Sources */,
 				DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */,
 				DD8626682C4606A300E4F980 /* ReadyStatusButton.swift in Sources */,
 				DE159D332C406E1600425101 /* MyPageContentView.swift in Sources */,
@@ -1509,7 +1507,6 @@
 				DD4393772C412F4500EC1799 /* CreateMeetingView.swift in Sources */,
 				789873342C3D1A7B00435E96 /* LoginView.swift in Sources */,
 				782B40822C3E4925008B0CA7 /* NicknameViewModel.swift in Sources */,
-				782B406F2C3DBF93008B0CA7 /* ProfileSetupViewController.swift in Sources */,
 				A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */,
 				DD4909982C441215003ED304 /* TardyViewModel.swift in Sources */,
 				DEA932182C3F180800FDF637 /* MeetingPromisesModel.swift in Sources */,
@@ -1582,6 +1579,7 @@
 				DD8626642C4606A300E4F980 /* ReadyPlanInfoView.swift in Sources */,
 				DD3976682C41769400E2A4C4 /* CreateMeetingViewModel.swift in Sources */,
 				A3DD9C622C455E3300E58A13 /* MeetingListService.swift in Sources */,
+				DDFA507F2C4693BD000A62E2 /* ProfileSetupViewModel.swift in Sources */,
 				A3DD9C3D2C41BAD000E58A13 /* MeetingTableViewCell.swift in Sources */,
 				DD39766B2C41995A00E2A4C4 /* FinishCreateNavigationView.swift in Sources */,
 				DD3072202C3C0D4500416D9F /* MyReadyStatusResponseModel.swift in Sources */,
@@ -1592,7 +1590,6 @@
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
 				DD3976872C41C2AD00E2A4C4 /* TodayPromiseView.swift in Sources */,
 				789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */,
-				782B40752C3DBFBA008B0CA7 /* ProfileSetupView.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
 				A3DD9C402C41BAD000E58A13 /* MeetingListViewController.swift in Sources */,
 				A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */,
@@ -1606,6 +1603,7 @@
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,
 				DD8626652C4606A300E4F980 /* OurReadyStatusCollectionViewCell.swift in Sources */,
 				DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */,
+				DDFA50802C4693BD000A62E2 /* ProfileSetupView.swift in Sources */,
 				78BD612B2C4550A6005752FD /* Bundle.swift in Sources */,
 				DD3072262C3C0F0B00416D9F /* TardyInfoModel.swift in Sources */,
 				DD8626662C4606A300E4F980 /* ReadyStatusView.swift in Sources */,

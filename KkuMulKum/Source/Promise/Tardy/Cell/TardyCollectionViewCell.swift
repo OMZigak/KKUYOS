@@ -16,6 +16,7 @@ class TardyCollectionViewCell: BaseCollectionViewCell {
         $0.image = .imgProfile
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 67 / 2
+        $0.clipsToBounds = true
     }
     
     let nameLabel: UILabel = UILabel().then {
