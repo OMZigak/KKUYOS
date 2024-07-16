@@ -60,15 +60,13 @@ final class HomeView: BaseView {
         $0.setText("오늘의 약속은?", style: .body01, color: .gray8)
     }
     
+    private let upcomingLabel = UILabel().then {
+        $0.setText("다가올 나의 약속은?", style: .body01, color: .gray8)
+    }
+    
     private let todayButton = UIButton().then {
         let icon = UIImage(resource: .iconRight)
         $0.setImage(icon, for: .normal)
-    }
-    
-    let todayPromiseView = TodayPromiseView(backgroundColor: .white).then {
-        $0.layer.cornerRadius = 8
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.gray2.cgColor
     }
     
     let todayEmptyView = TodayEmptyView(backgroundColor: .white).then {
@@ -78,8 +76,17 @@ final class HomeView: BaseView {
         $0.isHidden = true
     }
     
-    private let upcomingLabel = UILabel().then {
-        $0.setText("다가올 나의 약속은?", style: .body01, color: .gray8)
+    let upcomingEmptyView = UpcomingEmptyView(backgroundColor: .white).then {
+        $0.layer.cornerRadius = 8
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.gray2.cgColor
+        $0.isHidden = true
+    }
+    
+    let todayPromiseView = TodayPromiseView(backgroundColor: .white).then {
+        $0.layer.cornerRadius = 8
+        $0.layer.borderWidth = 1
+        $0.layer.borderColor = UIColor.gray2.cgColor
     }
     
     lazy var upcomingPromiseView = UICollectionView(
@@ -91,13 +98,6 @@ final class HomeView: BaseView {
         $0.showsHorizontalScrollIndicator = false
         $0.contentInsetAdjustmentBehavior = .never
         $0.isPagingEnabled = true
-    }
-    
-    let upcomingEmptyView = UpcomingEmptyView(backgroundColor: .white).then {
-        $0.layer.cornerRadius = 8
-        $0.layer.borderWidth = 1
-        $0.layer.borderColor = UIColor.gray2.cgColor
-        $0.isHidden = true
     }
     
     

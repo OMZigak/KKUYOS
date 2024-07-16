@@ -46,8 +46,8 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
         register()
+        
         updateUI()
         
         updateUserInfo()
