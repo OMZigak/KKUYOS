@@ -24,7 +24,7 @@ class PagePromiseViewController: BaseViewController {
         ),
         TardyViewController(
             tardyViewModel: TardyViewModel(
-                tardyService: <#MockTardyService#>,
+                tardyService: MockTardyService(),
                 isPastDue: ObservablePattern<Bool>(false),
                 hasTardy: ObservablePattern<Bool>(false)
             )
