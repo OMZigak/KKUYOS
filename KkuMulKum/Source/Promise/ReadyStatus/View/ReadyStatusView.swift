@@ -8,14 +8,6 @@
 import UIKit
 
 class ReadyStatusView: BaseView {
-    private var ourReadyStatusViews: [OurReadyStatusView] = [
-        OurReadyStatusView(),
-        OurReadyStatusView(),
-        OurReadyStatusView(),
-        OurReadyStatusView(),
-        OurReadyStatusView()
-    ]
-    
     private let scrollView: UIScrollView = UIScrollView().then {
         $0.showsVerticalScrollIndicator = false
     }
@@ -27,12 +19,12 @@ class ReadyStatusView: BaseView {
         $0.backgroundColor = .gray0
     }
     
-    private let enterReadyButtonView: EnterReadyInfoButtonView = EnterReadyInfoButtonView().then {
+    let enterReadyButtonView: EnterReadyInfoButtonView = EnterReadyInfoButtonView().then {
         $0.layer.cornerRadius = 8
         $0.clipsToBounds = true
     }
     
-    private let readyPlanInfoView: ReadyPlanInfoView = ReadyPlanInfoView().then {
+    let readyPlanInfoView: ReadyPlanInfoView = ReadyPlanInfoView().then {
         $0.layer.cornerRadius = 8
         $0.clipsToBounds = true
     }
@@ -45,7 +37,7 @@ class ReadyStatusView: BaseView {
         $0.spacing = 4
     }
     
-    private let myReadyStatusProgressView: ReadyStatusProgressView = ReadyStatusProgressView().then {
+    let myReadyStatusProgressView: ReadyStatusProgressView = ReadyStatusProgressView().then {
         $0.layer.cornerRadius = 8
         $0.clipsToBounds = true
     }
@@ -62,23 +54,20 @@ class ReadyStatusView: BaseView {
         )
     }
     
-    let ourReadyStatusStackView: UIStackView = UIStackView(axis: .vertical).then {
-        $0.spacing = 8
-    }
-    
-    let ourReadyStatusTableView: UITableView = UITableView().then {
-        $0.register(
-            OurReadyStatusTableViewCell.self,
-            forCellReuseIdentifier: OurReadyStatusTableViewCell.reuseIdentifier
-        )
-        $0.backgroundColor = .clear
-    }
+    let ourReadyStatusCollectionView: UICollectionView = UICollectionView(
+        frame: .zero,
+        collectionViewLayout: UICollectionViewFlowLayout().then {
+            $0.scrollDirection = .vertical
+            $0.estimatedItemSize = .init(width: Screen.width(335), height: Screen.height(72))
+        }).then {
+            $0.backgroundColor = .clear
+            $0.register(
+                OurReadyStatusCollectionViewCell.self,
+                forCellWithReuseIdentifier: OurReadyStatusCollectionViewCell.reuseIdentifier
+            )
+        }
     
     override func setupView() {
-        ourReadyStatusViews.forEach {
-            ourReadyStatusStackView.addArrangedSubview($0)
-        }
-        
         readyBaseView.addArrangedSubviews(
             myReadyStatusProgressView,
             popUpImageView
@@ -89,17 +78,17 @@ class ReadyStatusView: BaseView {
             readyPlanInfoView,
             myReadyStatusTitleLabel,
             readyBaseView,
-            ourReadyStatusLabel,
-            ourReadyStatusStackView
+            ourReadyStatusLabel
         )
         
-        contentView.addSubview(baseStackView)
+        contentView.addSubviews(
+            baseStackView,
+            ourReadyStatusCollectionView
+        )
         
         scrollView.addSubview(contentView)
         
-        addSubviews(
-            scrollView
-        )
+        addSubviews(scrollView)
     }
     
     override func setupAutoLayout() {
@@ -108,13 +97,18 @@ class ReadyStatusView: BaseView {
         }
         
         contentView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.edges.width.height.equalToSuperview()
         }
         
         baseStackView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24)
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview().inset(24)
+        }
+        
+        ourReadyStatusCollectionView.snp.makeConstraints {
+            $0.top.equalTo(baseStackView.snp.bottom).offset(22)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(20)
         }
     }
 }
