@@ -32,6 +32,12 @@ final class HomeView: BaseView {
     
     let kkumulLabel = UILabel()
     
+    let levelCharacterImage = UIImageView()
+    
+    let levelLabel = UILabel()
+    
+    let levelCaptionLabel = UILabel()
+    
     private let levelView = UIStackView(axis: .horizontal).then {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = 12
@@ -39,21 +45,8 @@ final class HomeView: BaseView {
         $0.distribution = .fill
     }
     
-    let levelLabel = UILabel().then {
-        $0.setText("Lv.0 새끼 꾸물이", style: .caption01, color: .gray6)
-        $0.setHighlightText("Lv.0", style: .caption01, color: .maincolor)
-    }
-    
     private let levelCaptionView = UIImageView().then {
         $0.image = .imgBoard
-    }
-    
-    let levelCaptionLabel = UILabel().then {
-        $0.setText(
-            "아직 한번도 정시에 도착하지 못했어요!\n정시 도착으로 캐릭터를 성장시켜 보세요",
-            style: .label01,
-            color: .white
-        )
     }
     
     private let promiseView = UIView(backgroundColor: .gray0).then {
@@ -116,6 +109,7 @@ final class HomeView: BaseView {
         contentView.addSubviews(
             logo,
             kkumulLabel,
+            levelCharacterImage,
             levelView,
             levelCaptionView,
             levelCaptionLabel,
@@ -159,6 +153,13 @@ final class HomeView: BaseView {
         kkumulLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.top.equalToSuperview().offset(112)
+        }
+        
+        levelCharacterImage.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(106)
+            $0.trailing.equalToSuperview()
+            $0.width.equalTo(160)
+            $0.height.equalTo(198)
         }
         
         levelView.snp.makeConstraints {
@@ -231,12 +232,3 @@ final class HomeView: BaseView {
         }
     }
 }
-
-//extension HomeView {
-//    func dataBind(_ data: LoginUserModel) {
-//        kkumulLabel.setText("\(data.name) 님,\n\(data.promiseCount)번의 약속에서\n\(data.tardyCount)번 꾸물거렸어요!", style: .title02, color: .white)
-//        kkumulLabel.setHighlightText("\(data.name) 님,", style: .title00, color: .white)
-//        kkumulLabel.setHighlightText("\(data.promiseCount)번", "\(data.tardyCount)번", style: .title00, color: .lightGreen)
-//        levelLabel.setText("Lv.\(data.level) \(viewModel.levelName)", style: .caption01, color: .gray6)
-//    }
-//}

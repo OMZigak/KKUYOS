@@ -187,6 +187,7 @@ private extension HomeViewController {
         viewModel.loginUser.bind { [weak self] _ in
             DispatchQueue.main.async {
                 let data = self?.viewModel.loginUser.value
+                
                 self?.rootView.kkumulLabel.setText(
                     "\(data?.name ?? "") 님,\n\(data?.promiseCount ?? 0)번의 약속에서\n\(data?.tardyCount ?? 0)번 꾸물거렸어요!",
                     style: .title02,
@@ -203,6 +204,28 @@ private extension HomeViewController {
                     style: .title00,
                     color: .lightGreen
                 )
+                self?.rootView.levelLabel.setText(
+                    "Lv.\(data?.level ?? 0) \(self?.viewModel.levelName.value ?? "")",
+                    style: .caption01,
+                    color: .gray6
+                )
+                self?.rootView.levelLabel.setHighlightText(
+                    "Lv.\(data?.level ?? 0)",
+                    style: .caption01,
+                    color: .maincolor
+                )
+                self?.rootView.levelCaptionLabel.setText(
+                    self?.viewModel.levelCaption.value ?? "",
+                    style: .label01,
+                    color: .white
+                )
+                switch data?.level {
+                case 1: self?.rootView.levelCharacterImage.image = .imgLevel01
+                case 2: self?.rootView.levelCharacterImage.image = .imgLevel02
+                case 3: self?.rootView.levelCharacterImage.image = .imgLevel03
+                case 4: self?.rootView.levelCharacterImage.image = .imgLevel04
+                default: break
+                }
             }
         }
     }
