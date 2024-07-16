@@ -18,5 +18,11 @@ struct TardyInfoModel: ResponseModelType {
 
 struct Comer: Codable {
     let participantId: Int
-    let name, profileImg: String
+    let name, profileImageURL: String
+    
+    enum CodingKeys: CodingKey {
+        case participantId
+        case name
+        case profileImageURL = "profileImg"
+    }
 }

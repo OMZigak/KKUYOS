@@ -18,5 +18,13 @@ struct PromiseParticipantListModel: ResponseModelType {
 struct Participant: Codable {
     let participantId, memberId: Int
     let name, state: String
-    let profileImg: String?
+    let profileImageURL: String?
+    
+    enum CodingKeys: CodingKey {
+        case participantId
+        case memberId
+        case name
+        case state
+        case profileImageURL: "profileImg"
+    }
 }
