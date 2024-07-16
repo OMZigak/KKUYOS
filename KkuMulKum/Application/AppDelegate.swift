@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Failed to load KAKAO_APP_KEY from PrivacyInfo.plist")
         }
         
+        
         return true
     }
     

@@ -21,3 +21,8 @@ struct JwtTokenDTO: Codable {
     let accessToken: String
     let refreshToken: String
 }
+
+struct RefreshTokenResponseModel: ResponseModelType {
+    let accessToken: String
+    let refreshToken: String
+}

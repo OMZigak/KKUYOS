@@ -8,24 +8,39 @@
 import Foundation
 
 protocol AuthServiceType {
-    
-    // TODO: 토큰 관리를 위한 메서드 (키체인 생성이후 구현예정)
-    func saveToken(_ token: String)
-    func getToken() -> String?
-    func clearToken()
+    func saveAccessToken(_ token: String)
+    func saveRefreshToken(_ token: String)
+    func getAccessToken() -> String?
+    func getRefreshToken() -> String?
+    func clearTokens()
 }
 
 class AuthService: AuthServiceType {
-    func saveToken(_ token: String) {
-        
+    private var keychainService: KeychainService
+    
+    init(keychainService: KeychainService = DefaultKeychainService.shared) {
+        self.keychainService = keychainService
     }
     
-    func getToken() -> String? {
-        
-        return nil
+    func saveAccessToken(_ token: String) {
+        keychainService.accessToken = token
     }
     
-    func clearToken() {
+    func saveRefreshToken(_ token: String) {
+        keychainService.refreshToken = token
     }
     
+    func getAccessToken() -> String? {
+        return keychainService.accessToken
+    }
+    
+    func getRefreshToken() -> String? {
+        return keychainService.refreshToken
+    }
+    
+    ///앱잼내 구현 X
+    func clearTokens() {
+//        keychainService.accessToken = nil
+//        keychainService.refreshToken = nil
+    }
 }
