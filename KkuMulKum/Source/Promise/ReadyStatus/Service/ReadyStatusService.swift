@@ -13,7 +13,7 @@ protocol ReadyStatusServiceType {
     func getParticipantList(with promiseID: Int) -> ResponseBodyDTO<PromiseParticipantListModel>?
 }
 
-final class MockReadyStatusService: ReadyStatusServiceType {
+final class ReadyStatusService: ReadyStatusServiceType {
     func patchMyReadyStatus(with myInfo: MyPromiseReadyInfoModel) {
         
     }

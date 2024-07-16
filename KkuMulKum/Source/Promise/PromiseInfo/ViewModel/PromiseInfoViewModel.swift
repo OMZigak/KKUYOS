@@ -8,9 +8,9 @@
 import Foundation
 
 class PromiseInfoViewModel {
-    var promiseInfoService: PromiseInfoService
+    var promiseInfoService: PromiseInfoServiceType
     
-    init(promiseInfoService: PromiseInfoService) {
+    init(promiseInfoService: PromiseInfoServiceType) {
         self.promiseInfoService = promiseInfoService
     }
 }

@@ -18,7 +18,7 @@ class CreateMeetingViewModel {
     
     // MARK: Property
     
-    let createMeetingService: MockCreateMeetingService
+    let createMeetingService: CreateMeetingServiceType
 
     let meetingName = ObservablePattern<String>("")
     let inviteCodeState = ObservablePattern<MeetingNameState>(.empty)
@@ -29,7 +29,7 @@ class CreateMeetingViewModel {
     
     // MARK: Initialize
 
-    init(createMeetingService: MockCreateMeetingService) {
+    init(createMeetingService: CreateMeetingServiceType) {
         self.createMeetingService = createMeetingService
     }
 }

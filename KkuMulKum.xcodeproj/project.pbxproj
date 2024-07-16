@@ -121,7 +121,7 @@
 		DD8626672C4606A300E4F980 /* SetReadyInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626592C4606A300E4F980 /* SetReadyInfoView.swift */; };
 		DD8626682C4606A300E4F980 /* ReadyStatusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD86265A2C4606A300E4F980 /* ReadyStatusButton.swift */; };
 		DD8626692C4606A300E4F980 /* ReadyStatusProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD86265B2C4606A300E4F980 /* ReadyStatusProgressView.swift */; };
-		DD86266A2C4606A300E4F980 /* MockReadyStatusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD86265D2C4606A300E4F980 /* MockReadyStatusService.swift */; };
+		DD86266A2C4606A300E4F980 /* ReadyStatusService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD86265D2C4606A300E4F980 /* ReadyStatusService.swift */; };
 		DD86266B2C4606A300E4F980 /* ReadyStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD86265F2C4606A300E4F980 /* ReadyStatusViewController.swift */; };
 		DD86266C2C4606A300E4F980 /* SetReadyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626602C4606A300E4F980 /* SetReadyInfoViewController.swift */; };
 		DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */; };
@@ -276,7 +276,7 @@
 		DD8626592C4606A300E4F980 /* SetReadyInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetReadyInfoView.swift; sourceTree = "<group>"; };
 		DD86265A2C4606A300E4F980 /* ReadyStatusButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusButton.swift; sourceTree = "<group>"; };
 		DD86265B2C4606A300E4F980 /* ReadyStatusProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusProgressView.swift; sourceTree = "<group>"; };
-		DD86265D2C4606A300E4F980 /* MockReadyStatusService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockReadyStatusService.swift; sourceTree = "<group>"; };
+		DD86265D2C4606A300E4F980 /* ReadyStatusService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusService.swift; sourceTree = "<group>"; };
 		DD86265F2C4606A300E4F980 /* ReadyStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusViewController.swift; sourceTree = "<group>"; };
 		DD8626602C4606A300E4F980 /* SetReadyInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetReadyInfoViewController.swift; sourceTree = "<group>"; };
 		DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -937,7 +937,7 @@
 		DD86265C2C4606A300E4F980 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				DD86265D2C4606A300E4F980 /* MockReadyStatusService.swift */,
+				DD86265D2C4606A300E4F980 /* ReadyStatusService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1622,7 +1622,7 @@
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE0137D32C43C5E50088C777 /* MyPageView.swift in Sources */,
 				DD4909962C440CDC003ED304 /* ArriveView.swift in Sources */,
-				DD86266A2C4606A300E4F980 /* MockReadyStatusService.swift in Sources */,
+				DD86266A2C4606A300E4F980 /* ReadyStatusService.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
 				DD43937B2C412F4500EC1799 /* CreateMeetingViewController.swift in Sources */,
 				DD86266C2C4606A300E4F980 /* SetReadyInfoViewController.swift in Sources */,

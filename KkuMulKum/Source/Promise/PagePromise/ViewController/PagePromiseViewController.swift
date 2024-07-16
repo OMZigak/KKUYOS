@@ -19,7 +19,7 @@ class PagePromiseViewController: BaseViewController {
         PromiseInfoViewController(),
         ReadyStatusViewController(
             readyStatusViewModel: ReadyStatusViewModel(
-                readyStatusService: MockReadyStatusService()
+                readyStatusService: ReadyStatusService()
             )
         ),
         TardyViewController(
