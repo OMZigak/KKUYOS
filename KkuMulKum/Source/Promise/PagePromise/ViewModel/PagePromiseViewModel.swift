@@ -19,7 +19,7 @@ class PagePromiseViewModel {
 
 // MARK: - Extension
 
-private extension PagePromiseViewModel {
+extension PagePromiseViewModel {
     func didSegmentIndexChanged(index: Int) {
         currentPage.value = index
     }

@@ -115,7 +115,7 @@ extension ReadyStatusViewController: UICollectionViewDataSource {
             color: .gray8
         )
         
-        if let imageURL = readyStatusViewModel.participantInfos.value[indexPath.row].profileImg {
+        if let imageURL = readyStatusViewModel.participantInfos.value[indexPath.row].profileImageURL {
             cell.profileImageView.kf.setImage(with: URL(string: imageURL))
         } else {
             cell.profileImageView.image = .imgProfile
