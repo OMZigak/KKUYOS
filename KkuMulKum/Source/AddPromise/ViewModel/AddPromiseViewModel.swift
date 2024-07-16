@@ -59,12 +59,14 @@ extension AddPromiseViewModel: ViewModelType {
             }
         
         let validationResultWhileEditing = input.promiseNameText
-            .map { text -> TextFieldVailidationResult in
+            .map { [weak self] text -> TextFieldVailidationResult in
+                guard let self else { return .basic }
+                
                 if text.isEmpty {
                     return .basic
                 }
                 
-                if self.validate(text: text) {
+                if validate(text: text) {
                     return .onWriting
                 }
                 
