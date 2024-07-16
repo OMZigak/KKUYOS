@@ -26,11 +26,7 @@ final class MockReadyStatusService: CreateMeetingServiceType {
         return mockData
     }
     
-    func patchMyReadyStatus(with myInfo: MyPromiseReadyInfoModel) {
-        
-    }
-    
-    func getParticipantList(with promiseID: Int) -> PromiseParticipantListModel? {
+    func getParticipantList(with promiseID: Int) -> PromiseParticipantListModel {
         let mockData = PromiseParticipantListModel(
             participantCount: 3,
             participants: [
@@ -38,22 +34,22 @@ final class MockReadyStatusService: CreateMeetingServiceType {
                     participantId: 1,
                     memberId: 3,
                     name: "안꾸물이",
-                    profileImg: "imageUrl",
-                    state: "도착"
+                    state: "도착", 
+                    profileImg: nil
                 ),
                 Participant(
                     participantId: 2,
                     memberId: 4,
                     name: "꾸우우우웅물이",
-                    profileImg: "imageUrl",
-                    state: "도착"
+                    state: "도착", 
+                    profileImg: nil
                 ),
                 Participant(
                     participantId: 3,
                     memberId: 5,
                     name: "꾸물이",
-                    profileImg: "imageUrl",
-                    state: "이동중"
+                    state: "이동중", 
+                    profileImg: nil
                 )
             ]
         )
