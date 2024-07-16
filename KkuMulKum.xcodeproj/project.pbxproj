@@ -53,6 +53,7 @@
 		789AD4B32C3C0093002E2688 /* SocialLoginResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */; };
 		789AD4B52C3C0147002E2688 /* ResissueResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */; };
 		789D73A72C46AF4900C7077D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73A62C46AF4900C7077D /* KeychainService.swift */; };
+		789D73A92C46BBB000C7077D /* PagePromiseSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73A82C46BBB000C7077D /* PagePromiseSegmentedControl.swift */; };
 		78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1332C3D951F000AD80A /* NicknameViewController.swift */; };
 		78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1362C3D98D1000AD80A /* NicknameView.swift */; };
 		78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286B2C29402C006D9942 /* AppDelegate.swift */; };
@@ -205,6 +206,7 @@
 		789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginResponseModel.swift; sourceTree = "<group>"; };
 		789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResissueResponseModel.swift; sourceTree = "<group>"; };
 		789D73A62C46AF4900C7077D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		789D73A82C46BBB000C7077D /* PagePromiseSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseSegmentedControl.swift; sourceTree = "<group>"; };
 		78AED1312C3D94F2000AD80A /* KkuMulKum.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KkuMulKum.entitlements; sourceTree = "<group>"; };
 		78AED1332C3D951F000AD80A /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		78AED1362C3D98D1000AD80A /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
@@ -284,7 +286,6 @@
 		DD931B752C3DC16100526452 /* PromiseInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoView.swift; sourceTree = "<group>"; };
 		DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
-		DDAF1C892C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseSegmentedControl.swift; sourceTree = "<group>"; };
 		DDAF1C8A2C3D6E3D008A37D3 /* PagePromiseViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseViewModel.swift; sourceTree = "<group>"; };
 		DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TardyViewController.swift; sourceTree = "<group>"; };
 		DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseInfoViewController.swift; sourceTree = "<group>"; };
@@ -541,14 +542,6 @@
 			path = KeyChain;
 			sourceTree = "<group>";
 		};
-		78BD61322C45B4A7005752FD /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				78BD61332C45B4A7005752FD /* AuthService.swift */,
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
 		A3DD9C372C41BAD000E58A13 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -709,7 +702,7 @@
 		DD3976902C41CACF00E2A4C4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DDAF1C892C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift */,
+				789D73A82C46BBB000C7077D /* PagePromiseSegmentedControl.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1535,6 +1528,7 @@
 				DDAF1C912C3D6E3D008A37D3 /* TardyViewController.swift in Sources */,
 				782B407D2C3E3984008B0CA7 /* WelcomeViewController.swift in Sources */,
 				DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */,
+				789D73A92C46BBB000C7077D /* PagePromiseSegmentedControl.swift in Sources */,
 				DDAF1C902C3D6E3D008A37D3 /* PagePromiseViewModel.swift in Sources */,
 				DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */,
 				DE159D362C406E1600425101 /* MyPageViewController.swift in Sources */,
