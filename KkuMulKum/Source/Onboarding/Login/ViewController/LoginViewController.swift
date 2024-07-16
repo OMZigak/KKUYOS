@@ -85,7 +85,7 @@ class LoginViewController: BaseViewController {
         
         viewController.modalPresentationStyle = .fullScreen
         
-        present(viewController, animated: true)
+        present(viewController, animated: false)
     }
 }
 
