@@ -24,13 +24,14 @@ class EnterReadyInfoButtonView: BaseView {
     
     override func setupAutoLayout() {
         descriptionLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.top.equalToSuperview().offset(21)
             $0.leading.equalToSuperview().offset(20)
         }
         
         chevronButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(17)
-            $0.centerY.equalToSuperview()
+            $0.centerY.equalTo(descriptionLabel)
+            $0.bottom.equalToSuperview().inset(21)
         }
     }
     
