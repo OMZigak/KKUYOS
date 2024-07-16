@@ -17,9 +17,7 @@ final class MeetingListView: BaseView {
     
     private let header = UIView()
     
-    private let infoLabel = UILabel().then {
-        $0.setText("꾸물리안이 가입한 모임은\n총 3개예요!", style: .head01, color: .gray8)
-    }
+    let infoLabel = UILabel()
     
     let addButton = UIButton().then {
         $0.backgroundColor = .green2
@@ -65,7 +63,7 @@ final class MeetingListView: BaseView {
         }
         
         addButton.snp.makeConstraints {
-            $0.top.equalTo(infoLabel.snp.bottom).offset(16)
+            $0.top.equalTo(infoLabel.snp.bottom).offset(24)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(Screen.height(48))
         }
@@ -83,7 +81,7 @@ final class MeetingListView: BaseView {
         header.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.width.equalTo(UIScreen.main.bounds.width-40)
-            $0.height.equalTo(Screen.height(170))
+            $0.height.equalTo(Screen.height(174))
         }
     }
 }

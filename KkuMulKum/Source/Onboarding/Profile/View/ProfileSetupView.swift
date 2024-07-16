@@ -13,7 +13,7 @@ import Then
 class ProfileSetupView: BaseView {
     let titleLabel = UILabel().then {
         $0.setText("프로필을 설정해 주세요", style: .head01, color: .gray8)
-        $0.textAlignment = .center
+        $0.textAlignment = .left
     }
     
     let profileImageView = UIImageView().then {
@@ -30,6 +30,7 @@ class ProfileSetupView: BaseView {
     
     let skipButton = UIButton().then {
         $0.setTitle("지금은 넘어가기", style: .body05, color: .gray5)
+        $0.addUnderline()
     }
     
     let confirmButton = UIButton().then {

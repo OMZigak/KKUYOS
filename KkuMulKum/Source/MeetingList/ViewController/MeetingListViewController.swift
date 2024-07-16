@@ -15,10 +15,23 @@ class MeetingListViewController: BaseViewController {
     // MARK: - Property
     
     private let rootView = MeetingListView()
-    private let viewModel = MeetingListViewModel()
+    
+    private let viewModel: MeetingListViewModel
     
     
     // MARK: - Initializer
+    
+    init(viewModel: MeetingListViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    // MARK: - LifeCycle
     
     override func loadView() {
         self.view = rootView
@@ -32,7 +45,7 @@ class MeetingListViewController: BaseViewController {
         register()
         
         updateMeetingList()
-        viewModel.dummy()
+        viewModel.requestMeetingList()
     }
     
     
@@ -49,14 +62,26 @@ class MeetingListViewController: BaseViewController {
         rootView.tableView.dataSource = self
     }
     
+    private func updateInfoLabel() {
+        
+    }
+    
     private func updateMeetingList() {
-        viewModel.meetingListData.bind { [weak self] _ in
+        viewModel.meetingList.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.rootView.tableView.reloadData()
+                self?.rootView.infoLabel.setText(
+                    "꾸물리안이 가입한 모임은\n총 \(self?.viewModel.meetingList.value?.count ?? 0)개예요!",
+                    style: .head01,
+                    color: .gray8
+                )
             }
         }
     }
 }
+
+
+// MARK: - UITableViewDelegate
 
 extension MeetingListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -64,16 +89,22 @@ extension MeetingListViewController: UITableViewDelegate {
     }
 }
 
+
+// MARK: - UITableViewDataSource
+
 extension MeetingListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.meetingListData.value.count
+        return viewModel.meetingList.value?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = rootView.tableView.dequeueReusableCell(
             withIdentifier: MeetingTableViewCell.reuseIdentifier, for: indexPath
         ) as? MeetingTableViewCell else { return UITableViewCell() }
-        cell.dataBind(viewModel.meetingListData.value[indexPath.item])
+        if let data = viewModel.meetingList.value?.meetings[indexPath.item] {
+            cell.dataBind(data)
+        }
+        //cell.dataBind(viewModel.meetingList.value?[indexPath.item])
         cell.selectionStyle = .none
         return cell
     }
