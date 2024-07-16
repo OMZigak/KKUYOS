@@ -8,6 +8,10 @@
 import UIKit
 
 class PagePromiseViewController: BaseViewController {
+    
+    
+    // MARK: Property
+
     private let promiseViewModel = PagePromiseViewModel()
     
     // TODO: 서버 연결 시 데이터 바인딩 필요
@@ -35,6 +39,9 @@ class PagePromiseViewController: BaseViewController {
         navigationOrientation: .vertical
     )
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         view.backgroundColor = .white
         
@@ -75,7 +82,12 @@ class PagePromiseViewController: BaseViewController {
         promisePageViewController.delegate = self
         promisePageViewController.dataSource = self
     }
-    
+}
+
+
+// MARK: - Extension
+
+extension PagePromiseViewController {
     @objc private func didSegmentedControlIndexUpdated() {
         let condition = promiseViewModel.currentPage.value <= promiseSegmentedControl.selectedSegmentIndex
         let direction: UIPageViewController.NavigationDirection = condition ? .forward : .reverse
@@ -100,7 +112,17 @@ class PagePromiseViewController: BaseViewController {
 }
 
 
-extension PagePromiseViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+
+// MARK: - UIPageViewControllerDelegate
+
+extension PagePromiseViewController: UIPageViewControllerDelegate {
+    
+}
+
+
+// MARK: - UIPageViewControllerDataSource
+
+extension PagePromiseViewController: UIPageViewControllerDataSource {
     func pageViewController(
         _ pageViewController: UIPageViewController,
         viewControllerAfter viewController: UIViewController

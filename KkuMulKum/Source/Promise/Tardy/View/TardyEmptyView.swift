@@ -8,6 +8,10 @@
 import UIKit
 
 class TardyEmptyView: BaseView {
+    
+    
+    // MARK: Property
+
     private let characterImageView: UIImageView = UIImageView().then {
         $0.image = .imgEmptyTardy
         $0.contentMode = .scaleAspectFit
@@ -17,6 +21,9 @@ class TardyEmptyView: BaseView {
         $0.setText("꾸물이들이 도착하길\n기다리는 중이에요", style: .body05, color: .gray3)
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         addSubviews(characterImageView, emptyContentLabel)
     }

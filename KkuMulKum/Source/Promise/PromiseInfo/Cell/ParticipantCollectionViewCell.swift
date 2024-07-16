@@ -10,6 +10,10 @@ import UIKit
 import SnapKit
 
 class ParticipantCollectionViewCell: BaseCollectionViewCell {
+    
+    
+    // MARK: Property
+
     private lazy var profileImageView: UIImageView = UIImageView().then {
         $0.image = .imgProfile
         $0.contentMode = .scaleAspectFit
@@ -19,6 +23,9 @@ class ParticipantCollectionViewCell: BaseCollectionViewCell {
         $0.setText("userName", style: .caption02, color: .gray6)
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         contentView.addSubviews(profileImageView, userNameLabel)
     }

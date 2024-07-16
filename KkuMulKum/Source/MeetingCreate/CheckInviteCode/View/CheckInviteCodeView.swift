@@ -8,6 +8,10 @@
 import UIKit
 
 class CheckInviteCodeView: BaseView {
+    
+    
+    // MARK: Property
+
     private let checkInviteLabel: UILabel = UILabel().then {
         $0.setText("친구에게 받은\n모임 초대 코드가 있으신가요?", style: .head01, color: .gray8)
     }
@@ -19,6 +23,9 @@ class CheckInviteCodeView: BaseView {
     let createMeetingView: JoinButtonView = JoinButtonView().then {
         $0.setJoinButtonViewStatus(isReceived: false)
     }
+    
+    
+    // MARK: - Setup
     
     override func setupView() {
         self.addSubviews(

@@ -8,6 +8,10 @@
 import UIKit
 
 class InviteCodeView: BaseView {
+    
+    
+    // MARK: Property
+
     private let mainTitleLabel: UILabel = UILabel().then {
         $0.setText("모임 초대 코드를\n입력해 주세요", style: .head01)
     }
@@ -29,6 +33,9 @@ class InviteCodeView: BaseView {
     
     let presentButton: CustomButton = CustomButton(title: "모임 가입하기", isEnabled: false)
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         backgroundColor = .white
         

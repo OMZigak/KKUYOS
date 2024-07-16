@@ -8,6 +8,10 @@
 import UIKit
 
 class CreateMeetingView: BaseView {
+    
+    
+    // MARK: Property
+
     private let mainTitleLabel: UILabel = UILabel().then {
         $0.setText("모임 이름을\n입력해 주세요", style: .head01)
     }
@@ -25,6 +29,9 @@ class CreateMeetingView: BaseView {
         isEnabled: false
     )
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         addSubviews(
             mainTitleLabel,
