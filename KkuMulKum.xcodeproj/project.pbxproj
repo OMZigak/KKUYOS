@@ -136,6 +136,8 @@
 		DDAF1C922C3D6E3D008A37D3 /* PromiseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */; };
 		DDAF1C932C3D6E3D008A37D3 /* PagePromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8D2C3D6E3D008A37D3 /* PagePromiseViewController.swift */; };
 		DDB0D7D32C469C77000CF782 /* PagePromiseSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB0D7D22C469C77000CF782 /* PagePromiseSegmentedControl.swift */; };
+		DDB0D7D52C46C496000CF782 /* PromiseInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB0D7D42C46C496000CF782 /* PromiseInfoService.swift */; };
+		DDB0D7D82C46C5FA000CF782 /* PromiseInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB0D7D72C46C5FA000CF782 /* PromiseInfoViewModel.swift */; };
 		DDFA507F2C4693BD000A62E2 /* ProfileSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507A2C4693BD000A62E2 /* ProfileSetupViewModel.swift */; };
 		DDFA50802C4693BD000A62E2 /* ProfileSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507C2C4693BD000A62E2 /* ProfileSetupView.swift */; };
 		DDFA50812C4693BD000A62E2 /* ProfileSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507E2C4693BD000A62E2 /* ProfileSetupViewController.swift */; };
@@ -286,6 +288,8 @@
 		DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseInfoViewController.swift; sourceTree = "<group>"; };
 		DDAF1C8D2C3D6E3D008A37D3 /* PagePromiseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseViewController.swift; sourceTree = "<group>"; };
 		DDB0D7D22C469C77000CF782 /* PagePromiseSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseSegmentedControl.swift; sourceTree = "<group>"; };
+		DDB0D7D42C46C496000CF782 /* PromiseInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoService.swift; sourceTree = "<group>"; };
+		DDB0D7D72C46C5FA000CF782 /* PromiseInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoViewModel.swift; sourceTree = "<group>"; };
 		DDFA507A2C4693BD000A62E2 /* ProfileSetupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewModel.swift; sourceTree = "<group>"; };
 		DDFA507C2C4693BD000A62E2 /* ProfileSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupView.swift; sourceTree = "<group>"; };
 		DDFA507E2C4693BD000A62E2 /* ProfileSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewController.swift; sourceTree = "<group>"; };
@@ -712,7 +716,9 @@
 		DD3976912C41CAF900E2A4C4 /* PromiseInfo */ = {
 			isa = PBXGroup;
 			children = (
+				DDB0D7D62C46C49A000CF782 /* Service */,
 				DD3976922C41CBD900E2A4C4 /* ViewController */,
+				DDB0D7D92C46C5FF000CF782 /* ViewModel */,
 				DD3976932C41CBDF00E2A4C4 /* View */,
 				DD3976942C41CBE400E2A4C4 /* Cell */,
 			);
@@ -1004,6 +1010,23 @@
 				DD931B682C3D9DAD00526452 /* Tardy */,
 			);
 			path = Promise;
+			sourceTree = "<group>";
+		};
+		DDB0D7D62C46C49A000CF782 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				DDB0D7D42C46C496000CF782 /* PromiseInfoService.swift */,
+			);
+			name = Service;
+			path = "ㄴㄷㄱ퍛ㄷ";
+			sourceTree = "<group>";
+		};
+		DDB0D7D92C46C5FF000CF782 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DDB0D7D72C46C5FA000CF782 /* PromiseInfoViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		DDFA50782C4693BD000A62E2 /* Profile */ = {
@@ -1485,6 +1508,7 @@
 				DD3976892C41C2AD00E2A4C4 /* TodayEmptyView.swift in Sources */,
 				DD43937C2C412F4500EC1799 /* InviteCodeViewController.swift in Sources */,
 				DD4393782C412F4500EC1799 /* CheckInviteCodeView.swift in Sources */,
+				DDB0D7D82C46C5FA000CF782 /* PromiseInfoViewModel.swift in Sources */,
 				DD8626622C4606A300E4F980 /* ReadyStatusViewModel.swift in Sources */,
 				DE6D4D102C3F14D80005584B /* InvitationCodePopUpView.swift in Sources */,
 				DDFA50812C4693BD000A62E2 /* ProfileSetupViewController.swift in Sources */,
@@ -1506,6 +1530,7 @@
 				DEBA03312C3C2972002ED8F2 /* ViewController.swift in Sources */,
 				DD43937D2C412F4500EC1799 /* CheckInviteCodeViewController.swift in Sources */,
 				DD4393772C412F4500EC1799 /* CreateMeetingView.swift in Sources */,
+				DDB0D7D52C46C496000CF782 /* PromiseInfoService.swift in Sources */,
 				789873342C3D1A7B00435E96 /* LoginView.swift in Sources */,
 				782B40822C3E4925008B0CA7 /* NicknameViewModel.swift in Sources */,
 				A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */,
