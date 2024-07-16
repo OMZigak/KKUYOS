@@ -784,10 +784,10 @@
 		DD43936C2C412F4500EC1799 /* InviteCode */ = {
 			isa = PBXGroup;
 			children = (
+				DD3976702C41B54800E2A4C4 /* Service */,
 				DD4393872C41637D00EC1799 /* ViewController */,
 				DD4393882C41638500EC1799 /* View */,
 				DD4393892C41638A00EC1799 /* ViewModel */,
-				DD3976702C41B54800E2A4C4 /* Service */,
 			);
 			path = InviteCode;
 			sourceTree = "<group>";

@@ -30,8 +30,6 @@ class ReadyStatusViewModel {
     // 초기화
     init(readyStatusService: MockReadyStatusService) {
         self.readyStatusService = readyStatusService
-        
-        participantInfos.value = readyStatusService.getParticipantList(with: 1).participants 
     }
     
     // 우리들의 준비 현황 변동되었을 때

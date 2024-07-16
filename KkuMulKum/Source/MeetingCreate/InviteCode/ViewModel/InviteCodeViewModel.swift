@@ -19,11 +19,10 @@ class InviteCodeViewModel {
     
     // MARK: Property
 
+    let service: InviteCodeServiceType
     let inviteCode = ObservablePattern<String>("")
     let inviteCodeState = ObservablePattern<InviteCodeState>(.empty)
     let isNextButtonEnabled = ObservablePattern<Bool>(false)
-    
-    private let service: InviteCodeServiceType
     
     
     // MARK: Initialize
