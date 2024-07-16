@@ -95,8 +95,19 @@ final class AddPromiseViewController: BaseViewController {
         
         rootView.confirmButton.rx.tap
             .map { _ in }
-            .subscribe(with: self) { owner, temp in
-                // TODO: 다음화면으로 넘어가기
+            .subscribe(with: self) { owner, _ in
+                guard let place = owner.viewModel.place else { return }
+                
+                let viewController = SelectMemberViewController(
+                    viewModel: SelectMemberViewModel(
+                        meetingID: owner.viewModel.meetingID,
+                        name: owner.viewModel.name,
+                        place: place,
+                        promiseDateString: owner.viewModel.combinedDateTime,
+                        service: MockSelectMemberService()
+                    )
+                )
+                owner.navigationController?.pushViewController(viewController, animated: true)
             }
             .disposed(by: disposeBag)
     }

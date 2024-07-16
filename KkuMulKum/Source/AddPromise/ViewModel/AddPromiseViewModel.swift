@@ -17,16 +17,16 @@ enum TextFieldVailidationResult {
 final class AddPromiseViewModel {
     let meetingID: Int
     
+    var name: String { nameRelay.value }
     var place: Place? { placeRelay.value }
     var combinedDateTime: String { combinedDateTimeRelay.value }
     
-    private let service: AddPromiseServiceType
+    private let nameRelay = BehaviorRelay(value: "")
     private let combinedDateTimeRelay = BehaviorRelay(value: "")
     private let placeRelay = BehaviorRelay<Place?>(value: nil)
     
-    init(meetingID: Int, service: AddPromiseServiceType) {
+    init(meetingID: Int) {
         self.meetingID = meetingID
-        self.service = service
     }
 }
 
@@ -45,9 +45,17 @@ extension AddPromiseViewModel: ViewModelType {
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
+        input.promiseNameText
+            .bind(to: nameRelay)
+            .disposed(by: disposeBag)
+        
         let isValid = input.promiseNameText
             .map { [weak self] text in
-                return self?.isValid(text: text) ?? false
+                if text.isEmpty {
+                    return false
+                }
+                
+                return self?.validate(text: text) ?? false
             }
         
         let validationResultWhileEditing = input.promiseNameText
@@ -56,7 +64,7 @@ extension AddPromiseViewModel: ViewModelType {
                     return .basic
                 }
                 
-                if self.isValid(text: text) {
+                if self.validate(text: text) {
                     return .onWriting
                 }
                 
@@ -97,11 +105,7 @@ extension AddPromiseViewModel: ViewModelType {
 }
 
 private extension AddPromiseViewModel {
-    func isValid(text: String) -> Bool {
-        if text.isEmpty {
-            return true
-        }
-        
+    func validate(text: String) -> Bool {
         let regex = "^[가-힣a-zA-Z0-9 ]{1,10}$"
         let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
         

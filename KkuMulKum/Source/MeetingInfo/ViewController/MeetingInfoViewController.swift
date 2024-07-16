@@ -144,8 +144,7 @@ private extension MeetingInfoViewController {
     }
     
     func navigateToAddPromise() {
-        let service = MockAddPromiseService()
-        let viewModel = AddPromiseViewModel(meetingID: viewModel.meetingID, service: service)
+        let viewModel = AddPromiseViewModel(meetingID: viewModel.meetingID)
         let viewController = AddPromiseViewController(viewModel: viewModel)
         
         navigationController?.pushViewController(viewController, animated: true)

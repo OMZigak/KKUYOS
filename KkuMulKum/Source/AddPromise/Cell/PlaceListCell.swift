@@ -50,14 +50,14 @@ final class PlaceListCell: BaseCollectionViewCell {
     override var isSelected: Bool {
         didSet {
             let color: UIColor = isSelected ? .maincolor : .gray3
-            contentView.layer.borderColor = color.cgColor
+            layer.borderColor = color.cgColor
         }
     }
     
     private(set) var place: Place?
     
     override func setupView() {
-        contentView.do {
+        self.do {
             $0.layer.cornerRadius = 8
             $0.layer.borderColor = UIColor.gray3.cgColor
             $0.layer.borderWidth = 1
