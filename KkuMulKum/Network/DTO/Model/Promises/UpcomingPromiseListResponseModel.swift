@@ -15,6 +15,6 @@ struct UpcomingPromiseListModel: ResponseModelType {
 }
 
 struct UpcomingPromise: Codable {
-    let id, dDay: Int
+    let promiseId, dDay: Int
     let name, meetingName, dressUpLevel, date, time, placeName: String
 }

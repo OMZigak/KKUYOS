@@ -11,5 +11,6 @@
 import Foundation
 
 struct PromiseInfoModel: ResponseModelType {
+    let promiseId: Int
     let placeName, address, roadAddress, time, dressUpLevel, penalty: String
 }
