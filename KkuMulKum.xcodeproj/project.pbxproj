@@ -52,6 +52,10 @@
 		789873342C3D1A7B00435E96 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789873312C3D1A7B00435E96 /* LoginView.swift */; };
 		789AD4B32C3C0093002E2688 /* SocialLoginResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */; };
 		789AD4B52C3C0147002E2688 /* ResissueResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */; };
+		789D73A72C46AF4900C7077D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73A62C46AF4900C7077D /* KeychainService.swift */; };
+		789D73A92C46BBB000C7077D /* PagePromiseSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73A82C46BBB000C7077D /* PagePromiseSegmentedControl.swift */; };
+		789D73AB2C46BEFF00C7077D /* ProfileTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73AA2C46BEFF00C7077D /* ProfileTargetType.swift */; };
+		789D73AD2C46C19500C7077D /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73AC2C46C19500C7077D /* ProfileModel.swift */; };
 		78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1332C3D951F000AD80A /* NicknameViewController.swift */; };
 		78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1362C3D98D1000AD80A /* NicknameView.swift */; };
 		78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286B2C29402C006D9942 /* AppDelegate.swift */; };
@@ -62,8 +66,9 @@
 		78BD61272C446A97005752FD /* LoginTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61262C446A97005752FD /* LoginTargetType.swift */; };
 		78BD612B2C4550A6005752FD /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD612A2C4550A6005752FD /* Bundle.swift */; };
 		78BD612F2C4561B9005752FD /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD612E2C4561B9005752FD /* KeychainAccessible.swift */; };
-		78BD61312C456799005752FD /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61302C456799005752FD /* KeychainService.swift */; };
 		78BD61342C45B4A7005752FD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61332C45B4A7005752FD /* AuthService.swift */; };
+		78BD61362C463B82005752FD /* NicknameTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61352C463B82005752FD /* NicknameTargetType.swift */; };
+		78BD61382C463C8C005752FD /* NicknameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61372C463C8C005752FD /* NicknameModel.swift */; };
 		A3DD9C3D2C41BAD000E58A13 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */; };
 		A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */; };
 		A3DD9C402C41BAD000E58A13 /* MeetingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */; };
@@ -205,6 +210,10 @@
 		789873312C3D1A7B00435E96 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginResponseModel.swift; sourceTree = "<group>"; };
 		789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResissueResponseModel.swift; sourceTree = "<group>"; };
+		789D73A62C46AF4900C7077D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		789D73A82C46BBB000C7077D /* PagePromiseSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseSegmentedControl.swift; sourceTree = "<group>"; };
+		789D73AA2C46BEFF00C7077D /* ProfileTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTargetType.swift; sourceTree = "<group>"; };
+		789D73AC2C46C19500C7077D /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		78AED1312C3D94F2000AD80A /* KkuMulKum.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KkuMulKum.entitlements; sourceTree = "<group>"; };
 		78AED1332C3D951F000AD80A /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		78AED1362C3D98D1000AD80A /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
@@ -217,8 +226,9 @@
 		78BD61262C446A97005752FD /* LoginTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTargetType.swift; sourceTree = "<group>"; };
 		78BD612A2C4550A6005752FD /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		78BD612E2C4561B9005752FD /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
-		78BD61302C456799005752FD /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		78BD61332C45B4A7005752FD /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		78BD61352C463B82005752FD /* NicknameTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameTargetType.swift; sourceTree = "<group>"; };
+		78BD61372C463C8C005752FD /* NicknameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameModel.swift; sourceTree = "<group>"; };
 		A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
 		A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListView.swift; sourceTree = "<group>"; };
 		A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListViewController.swift; sourceTree = "<group>"; };
@@ -520,6 +530,8 @@
 			isa = PBXGroup;
 			children = (
 				78BD61262C446A97005752FD /* LoginTargetType.swift */,
+				78BD61352C463B82005752FD /* NicknameTargetType.swift */,
+				789D73AA2C46BEFF00C7077D /* ProfileTargetType.swift */,
 			);
 			path = TargetType;
 			sourceTree = "<group>";
@@ -536,17 +548,9 @@
 			isa = PBXGroup;
 			children = (
 				78BD612E2C4561B9005752FD /* KeychainAccessible.swift */,
-				78BD61302C456799005752FD /* KeychainService.swift */,
+				789D73A62C46AF4900C7077D /* KeychainService.swift */,
 			);
 			path = KeyChain;
-			sourceTree = "<group>";
-		};
-		78BD61322C45B4A7005752FD /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				78BD61332C45B4A7005752FD /* AuthService.swift */,
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 		A3DD9C372C41BAD000E58A13 /* View */ = {
@@ -587,6 +591,7 @@
 		A3DD9C642C45B30600E58A13 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				78BD61332C45B4A7005752FD /* AuthService.swift */,
 				A3DD9C612C455E3300E58A13 /* MeetingListService.swift */,
 			);
 			path = Service;
@@ -954,8 +959,8 @@
 		DD865B652C3920F600C351A2 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
-				DDFA50782C4693BD000A62E2 /* Profile */,
 				782B40762C3E389F008B0CA7 /* Welcome */,
+				DDFA50782C4693BD000A62E2 /* Profile */,
 				78AED1322C3D9514000AD80A /* Nickname */,
 				DD865B662C39210E00C351A2 /* Login */,
 			);
@@ -965,7 +970,6 @@
 		DD865B662C39210E00C351A2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				78BD61322C45B4A7005752FD /* Service */,
 				789873372C3D1B4800435E96 /* ViewController */,
 				789873362C3D1B3900435E96 /* VIewModel */,
 				789873352C3D1B3000435E96 /* View */,
@@ -1031,8 +1035,8 @@
 		DDFA50782C4693BD000A62E2 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				DDFA50792C4693BD000A62E2 /* ViewModel */,
 				DDFA507B2C4693BD000A62E2 /* View */,
+				DDFA50792C4693BD000A62E2 /* ViewModel */,
 				DDFA507D2C4693BD000A62E2 /* VIewController */,
 			);
 			path = Profile;
@@ -1298,6 +1302,8 @@
 				DE9E18912C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift */,
 				789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */,
 				789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */,
+				78BD61372C463C8C005752FD /* NicknameModel.swift */,
+				789D73AC2C46C19500C7077D /* ProfileModel.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1505,6 +1511,7 @@
 				DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */,
 				DE6D4D142C3F14D80005584B /* MeetingPromiseCell.swift in Sources */,
 				DD3976892C41C2AD00E2A4C4 /* TodayEmptyView.swift in Sources */,
+				789D73A72C46AF4900C7077D /* KeychainService.swift in Sources */,
 				DD43937C2C412F4500EC1799 /* InviteCodeViewController.swift in Sources */,
 				DD4393782C412F4500EC1799 /* CheckInviteCodeView.swift in Sources */,
 				DDB0D7D82C46C5FA000CF782 /* PromiseInfoViewModel.swift in Sources */,
@@ -1548,9 +1555,11 @@
 				DDAF1C922C3D6E3D008A37D3 /* PromiseInfoViewController.swift in Sources */,
 				78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */,
 				DE254AB42C31199B00A4015E /* UITextField+.swift in Sources */,
+				78BD61382C463C8C005752FD /* NicknameModel.swift in Sources */,
 				DDAF1C912C3D6E3D008A37D3 /* TardyViewController.swift in Sources */,
 				782B407D2C3E3984008B0CA7 /* WelcomeViewController.swift in Sources */,
 				DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */,
+				789D73A92C46BBB000C7077D /* PagePromiseSegmentedControl.swift in Sources */,
 				DDAF1C902C3D6E3D008A37D3 /* PagePromiseViewModel.swift in Sources */,
 				DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */,
 				DE159D362C406E1600425101 /* MyPageViewController.swift in Sources */,
@@ -1590,6 +1599,7 @@
 				78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */,
 				DD39766F2C41B54400E2A4C4 /* InviteCodeService.swift in Sources */,
 				DE6D4D172C3F14D80005584B /* MeetingInfoViewModel.swift in Sources */,
+				789D73AD2C46C19500C7077D /* ProfileModel.swift in Sources */,
 				78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */,
 				A3FB185B2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift in Sources */,
 				DD3072222C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift in Sources */,
@@ -1610,9 +1620,9 @@
 				DD39766B2C41995A00E2A4C4 /* FinishCreateNavigationView.swift in Sources */,
 				DD3072202C3C0D4500416D9F /* MyReadyStatusResponseModel.swift in Sources */,
 				DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */,
+				789D73AB2C46BEFF00C7077D /* ProfileTargetType.swift in Sources */,
 				DD3976882C41C2AD00E2A4C4 /* UpcomingEmptyView.swift in Sources */,
 				DD931B762C3DC16100526452 /* PromiseInfoView.swift in Sources */,
-				78BD61312C456799005752FD /* KeychainService.swift in Sources */,
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
 				DD3976872C41C2AD00E2A4C4 /* TodayPromiseView.swift in Sources */,
 				789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */,
@@ -1777,7 +1787,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = KkuMulKum/KkuMulKum.entitlements;
+				CODE_SIGN_ENTITLEMENTS = KkuMulKum/KkuMulKumDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;

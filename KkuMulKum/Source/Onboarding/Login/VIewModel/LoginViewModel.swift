@@ -23,16 +23,16 @@ class LoginViewModel: NSObject {
     var error: ObservablePattern<String> = ObservablePattern("")
     
     private let provider: MoyaProvider<LoginTargetType>
-    private var keychainService: KeychainService
+    private var authService: AuthServiceType
     
     init(
         provider: MoyaProvider<LoginTargetType> = MoyaProvider<LoginTargetType>(
             plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
         ),
-        keychainService: KeychainService = DefaultKeychainService.shared
+        authService: AuthServiceType = AuthService()
     ) {
         self.provider = provider
-        self.keychainService = keychainService
+        self.authService = authService
         super.init()
     }
     
@@ -83,9 +83,15 @@ class LoginViewModel: NSObject {
             case .success(let response):
                 print("Received response from server: \(response)")
                 do {
-                    let loginResponse = try response.map(ResponseBodyDTO<SocialLoginResponseModel>.self)
-                    print("Successfully mapped response: \(loginResponse)")
-                    self?.handleLoginResponse(loginResponse)
+                    let loginResponse = try response.map(
+                        ResponseBodyDTO<SocialLoginResponseModel>.self
+                    )
+                    print(
+                        "Successfully mapped response: \(loginResponse)"
+                    )
+                    self?.handleLoginResponse(
+                        loginResponse
+                    )
                 } catch {
                     print("Failed to decode response: \(error)")
                     self?.error.value = "Failed to decode response: \(error.localizedDescription)"
@@ -110,7 +116,10 @@ class LoginViewModel: NSObject {
                     loginState.value = .needOnboarding
                 }
                 
-                saveTokens(accessToken: data.jwtTokenDTO.accessToken, refreshToken: data.jwtTokenDTO.refreshToken)
+                saveTokens(
+                    accessToken: data.jwtTokenDTO.accessToken,
+                    refreshToken: data.jwtTokenDTO.refreshToken
+                )
             } else {
                 print("Warning: No data received in response")
                 error.value = "No data received"
@@ -125,67 +134,57 @@ class LoginViewModel: NSObject {
             }
         }
     }
+    
+    private func saveTokens(accessToken: String, refreshToken: String) {
+        print("Attempting to save tokens")
+        let accessTokenSaved = authService.saveAccessToken(accessToken)
+        let refreshTokenSaved = authService.saveRefreshToken(refreshToken)
         
-        private func saveTokens(accessToken: String, refreshToken: String) {
-            keychainService.accessToken = accessToken
-            keychainService.refreshToken = refreshToken
-            print("Tokens saved to keychain")
-        }
+        print("Access token saved: \(accessTokenSaved), Refresh token saved: \(refreshTokenSaved)")
         
-        func refreshToken() {
-            guard let refreshToken = keychainService.refreshToken else {
-                error.value = "No refresh token available"
-                return
-            }
-            
-            provider.request(.refreshToken(refreshToken: refreshToken)) { [weak self] result in
-                switch result {
-                case .success(let response):
-                    do {
-                        let refreshResponse = try response.map(ResponseBodyDTO<RefreshTokenResponseModel>.self)
-                        if refreshResponse.success, let data = refreshResponse.data {
-                            self?.saveTokens(accessToken: data.accessToken, refreshToken: data.refreshToken)
-                            self?.loginState.value = .login
-                        } else if let error = refreshResponse.error {
-                            self?.error.value = error.message
-                        }
-                    } catch {
-                        self?.error.value = "Failed to decode refresh token response"
-                    }
-                case .failure(let error):
-                    self?.error.value = "Token refresh failed: \(error.localizedDescription)"
-                }
-            }
+        if accessTokenSaved && refreshTokenSaved {
+            print("Tokens successfully saved")
+        } else {
+            print("Failed to save tokens")
         }
     }
+}
 
-
-extension LoginViewModel: ASAuthorizationControllerDelegate,
-                          ASAuthorizationControllerPresentationContextProviding {
+extension LoginViewModel: ASAuthorizationControllerDelegate, 
+                            ASAuthorizationControllerPresentationContextProviding {
     func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
-        print("Apple authorization completed")
+        print(
+            "Apple authorization completed"
+        )
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
               let identityToken = appleIDCredential.identityToken,
-              let tokenString = String(data: identityToken, encoding: .utf8) else {
-            print("Failed to get Apple ID Credential or identity token")
+              let tokenString = String(
+                data: identityToken,
+                encoding: .utf8
+              ) else {
+            print(
+                "Failed to get Apple ID Credential or identity token"
+            )
             return
         }
-        
+
         print("Apple Login Successful, identity token: \(tokenString)")
         loginToServer(with: .appleLogin(identityToken: tokenString, fcmToken: "dummy_fcm_token"))
     }
-    
+
     func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithError error: Error
     ) {
-        print("Apple authorization error: \(error.localizedDescription)")
+        print(
+            "Apple authorization error: \(error.localizedDescription)"
+        )
         self.error.value = error.localizedDescription
     }
-    
+
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         print("Providing presentation anchor for Apple Login")
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
