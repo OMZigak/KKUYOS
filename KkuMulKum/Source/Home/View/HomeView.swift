@@ -222,7 +222,7 @@ final class HomeView: BaseView {
         upcomingPromiseView.snp.makeConstraints {
             $0.top.equalTo(upcomingLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(216)
+            $0.height.equalTo(Screen.height(216))
         }
         
         upcomingEmptyView.snp.makeConstraints {

@@ -84,7 +84,7 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
         }
         
         meetingNameView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(48)
+            $0.top.equalTo(dDayLabel.snp.bottom).offset(8)
             $0.leading.equalToSuperview().offset(16)
         }
         
@@ -94,12 +94,12 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
         }
         
         nameLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(76)
+            $0.top.equalTo(meetingNameView.snp.bottom).offset(8)
             $0.leading.equalToSuperview().offset(16)
         }
         
         dateIcon.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(110)
+            $0.top.equalTo(nameLabel.snp.bottom).offset(16)
             $0.leading.equalToSuperview().offset(16)
             $0.size.equalTo(24)
         }
