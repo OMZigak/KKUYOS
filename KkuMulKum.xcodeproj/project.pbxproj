@@ -55,7 +55,7 @@
 		789873342C3D1A7B00435E96 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789873312C3D1A7B00435E96 /* LoginView.swift */; };
 		789AD4B32C3C0093002E2688 /* SocialLoginResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */; };
 		789AD4B52C3C0147002E2688 /* ResissueResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */; };
-		789D73A72C46AF4900C7077D /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73A62C46AF4900C7077D /* Keychain.swift */; };
+		789D73A72C46AF4900C7077D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73A62C46AF4900C7077D /* KeychainService.swift */; };
 		78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1332C3D951F000AD80A /* NicknameViewController.swift */; };
 		78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1362C3D98D1000AD80A /* NicknameView.swift */; };
 		78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286B2C29402C006D9942 /* AppDelegate.swift */; };
@@ -66,7 +66,6 @@
 		78BD61272C446A97005752FD /* LoginTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61262C446A97005752FD /* LoginTargetType.swift */; };
 		78BD612B2C4550A6005752FD /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD612A2C4550A6005752FD /* Bundle.swift */; };
 		78BD612F2C4561B9005752FD /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD612E2C4561B9005752FD /* KeychainAccessible.swift */; };
-		78BD61312C456799005752FD /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61302C456799005752FD /* KeychainService.swift */; };
 		78BD61342C45B4A7005752FD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61332C45B4A7005752FD /* AuthService.swift */; };
 		78BD61362C463B82005752FD /* NicknameTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61352C463B82005752FD /* NicknameTargetType.swift */; };
 		78BD61382C463C8C005752FD /* NicknameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61372C463C8C005752FD /* NicknameModel.swift */; };
@@ -205,7 +204,7 @@
 		789873312C3D1A7B00435E96 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginResponseModel.swift; sourceTree = "<group>"; };
 		789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResissueResponseModel.swift; sourceTree = "<group>"; };
-		789D73A62C46AF4900C7077D /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
+		789D73A62C46AF4900C7077D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		78AED1312C3D94F2000AD80A /* KkuMulKum.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KkuMulKum.entitlements; sourceTree = "<group>"; };
 		78AED1332C3D951F000AD80A /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		78AED1362C3D98D1000AD80A /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
@@ -218,7 +217,6 @@
 		78BD61262C446A97005752FD /* LoginTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTargetType.swift; sourceTree = "<group>"; };
 		78BD612A2C4550A6005752FD /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		78BD612E2C4561B9005752FD /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
-		78BD61302C456799005752FD /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		78BD61332C45B4A7005752FD /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		78BD61352C463B82005752FD /* NicknameTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameTargetType.swift; sourceTree = "<group>"; };
 		78BD61372C463C8C005752FD /* NicknameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameModel.swift; sourceTree = "<group>"; };
@@ -565,7 +563,7 @@
 			isa = PBXGroup;
 			children = (
 				78BD612E2C4561B9005752FD /* KeychainAccessible.swift */,
-				78BD61302C456799005752FD /* KeychainService.swift */,
+				789D73A62C46AF4900C7077D /* KeychainService.swift */,
 			);
 			path = KeyChain;
 			sourceTree = "<group>";
@@ -962,7 +960,6 @@
 		DD865B662C39210E00C351A2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				789D73A62C46AF4900C7077D /* Keychain.swift */,
 				789873372C3D1B4800435E96 /* ViewController */,
 				789873362C3D1B3900435E96 /* VIewModel */,
 				789873352C3D1B3000435E96 /* View */,
@@ -1465,7 +1462,7 @@
 				DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */,
 				DE6D4D142C3F14D80005584B /* MeetingPromiseCell.swift in Sources */,
 				DD3976892C41C2AD00E2A4C4 /* TodayEmptyView.swift in Sources */,
-				789D73A72C46AF4900C7077D /* Keychain.swift in Sources */,
+				789D73A72C46AF4900C7077D /* KeychainService.swift in Sources */,
 				DD43937C2C412F4500EC1799 /* InviteCodeViewController.swift in Sources */,
 				DD4393782C412F4500EC1799 /* CheckInviteCodeView.swift in Sources */,
 				DE6D4D102C3F14D80005584B /* InvitationCodePopUpView.swift in Sources */,
@@ -1573,7 +1570,6 @@
 				DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */,
 				DD3976882C41C2AD00E2A4C4 /* UpcomingEmptyView.swift in Sources */,
 				DD931B762C3DC16100526452 /* PromiseInfoView.swift in Sources */,
-				78BD61312C456799005752FD /* KeychainService.swift in Sources */,
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
 				DD3976872C41C2AD00E2A4C4 /* TodayPromiseView.swift in Sources */,
 				A3DD9C5A2C43F99800E58A13 /* SetReadyInfoView.swift in Sources */,

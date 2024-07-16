@@ -83,9 +83,15 @@ class LoginViewModel: NSObject {
             case .success(let response):
                 print("Received response from server: \(response)")
                 do {
-                    let loginResponse = try response.map(ResponseBodyDTO<SocialLoginResponseModel>.self)
-                    print("Successfully mapped response: \(loginResponse)")
-                    self?.handleLoginResponse(loginResponse)
+                    let loginResponse = try response.map(
+                        ResponseBodyDTO<SocialLoginResponseModel>.self
+                    )
+                    print(
+                        "Successfully mapped response: \(loginResponse)"
+                    )
+                    self?.handleLoginResponse(
+                        loginResponse
+                    )
                 } catch {
                     print("Failed to decode response: \(error)")
                     self?.error.value = "Failed to decode response: \(error.localizedDescription)"
@@ -110,7 +116,10 @@ class LoginViewModel: NSObject {
                     loginState.value = .needOnboarding
                 }
                 
-                saveTokens(accessToken: data.jwtTokenDTO.accessToken, refreshToken: data.jwtTokenDTO.refreshToken)
+                saveTokens(
+                    accessToken: data.jwtTokenDTO.accessToken,
+                    refreshToken: data.jwtTokenDTO.refreshToken
+                )
             } else {
                 print("Warning: No data received in response")
                 error.value = "No data received"
@@ -141,13 +150,24 @@ class LoginViewModel: NSObject {
     }
 }
 
-extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        print("Apple authorization completed")
+extension LoginViewModel: ASAuthorizationControllerDelegate, 
+                            ASAuthorizationControllerPresentationContextProviding {
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithAuthorization authorization: ASAuthorization
+    ) {
+        print(
+            "Apple authorization completed"
+        )
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
               let identityToken = appleIDCredential.identityToken,
-              let tokenString = String(data: identityToken, encoding: .utf8) else {
-            print("Failed to get Apple ID Credential or identity token")
+              let tokenString = String(
+                data: identityToken,
+                encoding: .utf8
+              ) else {
+            print(
+                "Failed to get Apple ID Credential or identity token"
+            )
             return
         }
 
@@ -155,8 +175,13 @@ extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationCont
         loginToServer(with: .appleLogin(identityToken: tokenString, fcmToken: "dummy_fcm_token"))
     }
 
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
-        print("Apple authorization error: \(error.localizedDescription)")
+    func authorizationController(
+        controller: ASAuthorizationController,
+        didCompleteWithError error: Error
+    ) {
+        print(
+            "Apple authorization error: \(error.localizedDescription)"
+        )
         self.error.value = error.localizedDescription
     }
 
