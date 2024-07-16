@@ -897,10 +897,10 @@
 		DD8626502C4606A300E4F980 /* ReadyStatus */ = {
 			isa = PBXGroup;
 			children = (
-				DD8626512C4606A300E4F980 /* ViewModel */,
-				DD8626542C4606A300E4F980 /* View */,
 				DD86265C2C4606A300E4F980 /* Service */,
 				DD86265E2C4606A300E4F980 /* ViewController */,
+				DD8626512C4606A300E4F980 /* ViewModel */,
+				DD8626542C4606A300E4F980 /* View */,
 			);
 			path = ReadyStatus;
 			sourceTree = "<group>";

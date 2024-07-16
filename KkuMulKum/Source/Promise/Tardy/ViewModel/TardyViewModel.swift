@@ -12,16 +12,15 @@ class TardyViewModel {
     
     // MARK: Property
 
+    let tardyService: MockTardyService
     var isPastDue: ObservablePattern<Bool>
     var hasTardy: ObservablePattern<Bool>
     
     
     // MARK: Initialize
 
-    init(
-        isPastDue: ObservablePattern<Bool>,
-        hasTardy: ObservablePattern<Bool>
-    ) {
+    init(tardyService: MockTardyService, isPastDue: ObservablePattern<Bool>, hasTardy: ObservablePattern<Bool>) {
+        self.tardyService = tardyService
         self.isPastDue = isPastDue
         self.hasTardy = hasTardy
     }
