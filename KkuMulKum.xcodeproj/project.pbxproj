@@ -55,6 +55,7 @@
 		789873342C3D1A7B00435E96 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789873312C3D1A7B00435E96 /* LoginView.swift */; };
 		789AD4B32C3C0093002E2688 /* SocialLoginResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */; };
 		789AD4B52C3C0147002E2688 /* ResissueResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */; };
+		789D73A72C46AF4900C7077D /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73A62C46AF4900C7077D /* Keychain.swift */; };
 		78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1332C3D951F000AD80A /* NicknameViewController.swift */; };
 		78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1362C3D98D1000AD80A /* NicknameView.swift */; };
 		78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286B2C29402C006D9942 /* AppDelegate.swift */; };
@@ -67,6 +68,8 @@
 		78BD612F2C4561B9005752FD /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD612E2C4561B9005752FD /* KeychainAccessible.swift */; };
 		78BD61312C456799005752FD /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61302C456799005752FD /* KeychainService.swift */; };
 		78BD61342C45B4A7005752FD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61332C45B4A7005752FD /* AuthService.swift */; };
+		78BD61362C463B82005752FD /* NicknameTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61352C463B82005752FD /* NicknameTargetType.swift */; };
+		78BD61382C463C8C005752FD /* NicknameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61372C463C8C005752FD /* NicknameModel.swift */; };
 		A3DD9C3D2C41BAD000E58A13 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */; };
 		A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */; };
 		A3DD9C402C41BAD000E58A13 /* MeetingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */; };
@@ -202,6 +205,7 @@
 		789873312C3D1A7B00435E96 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginResponseModel.swift; sourceTree = "<group>"; };
 		789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResissueResponseModel.swift; sourceTree = "<group>"; };
+		789D73A62C46AF4900C7077D /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		78AED1312C3D94F2000AD80A /* KkuMulKum.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KkuMulKum.entitlements; sourceTree = "<group>"; };
 		78AED1332C3D951F000AD80A /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		78AED1362C3D98D1000AD80A /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
@@ -216,6 +220,8 @@
 		78BD612E2C4561B9005752FD /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		78BD61302C456799005752FD /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		78BD61332C45B4A7005752FD /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
+		78BD61352C463B82005752FD /* NicknameTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameTargetType.swift; sourceTree = "<group>"; };
+		78BD61372C463C8C005752FD /* NicknameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameModel.swift; sourceTree = "<group>"; };
 		A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
 		A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListView.swift; sourceTree = "<group>"; };
 		A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListViewController.swift; sourceTree = "<group>"; };
@@ -542,6 +548,7 @@
 			isa = PBXGroup;
 			children = (
 				78BD61262C446A97005752FD /* LoginTargetType.swift */,
+				78BD61352C463B82005752FD /* NicknameTargetType.swift */,
 			);
 			path = TargetType;
 			sourceTree = "<group>";
@@ -561,30 +568,6 @@
 				78BD61302C456799005752FD /* KeychainService.swift */,
 			);
 			path = KeyChain;
-			sourceTree = "<group>";
-		};
-		78BD61322C45B4A7005752FD /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				78BD61332C45B4A7005752FD /* AuthService.swift */,
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
-		A3DD9C332C41BAD000E58A13 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		A3DD9C352C41BAD000E58A13 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A3DD9C342C41BAD000E58A13 /* MeetingDummyModel.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		A3DD9C372C41BAD000E58A13 /* View */ = {
@@ -633,6 +616,7 @@
 		A3DD9C642C45B30600E58A13 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				78BD61332C45B4A7005752FD /* AuthService.swift */,
 				A3DD9C612C455E3300E58A13 /* MeetingListService.swift */,
 			);
 			path = Service;
@@ -978,7 +962,7 @@
 		DD865B662C39210E00C351A2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				78BD61322C45B4A7005752FD /* Service */,
+				789D73A62C46AF4900C7077D /* Keychain.swift */,
 				789873372C3D1B4800435E96 /* ViewController */,
 				789873362C3D1B3900435E96 /* VIewModel */,
 				789873352C3D1B3000435E96 /* View */,
@@ -1271,6 +1255,7 @@
 				DE9E18912C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift */,
 				789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */,
 				789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */,
+				78BD61372C463C8C005752FD /* NicknameModel.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1480,6 +1465,7 @@
 				DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */,
 				DE6D4D142C3F14D80005584B /* MeetingPromiseCell.swift in Sources */,
 				DD3976892C41C2AD00E2A4C4 /* TodayEmptyView.swift in Sources */,
+				789D73A72C46AF4900C7077D /* Keychain.swift in Sources */,
 				DD43937C2C412F4500EC1799 /* InviteCodeViewController.swift in Sources */,
 				DD4393782C412F4500EC1799 /* CheckInviteCodeView.swift in Sources */,
 				DE6D4D102C3F14D80005584B /* InvitationCodePopUpView.swift in Sources */,
@@ -1501,6 +1487,7 @@
 				DD43937D2C412F4500EC1799 /* CheckInviteCodeViewController.swift in Sources */,
 				DD931B742C3DAB9A00526452 /* ReadyPlanInfoView.swift in Sources */,
 				DD4393772C412F4500EC1799 /* CreateMeetingView.swift in Sources */,
+				78BD61362C463B82005752FD /* NicknameTargetType.swift in Sources */,
 				789873342C3D1A7B00435E96 /* LoginView.swift in Sources */,
 				782B40822C3E4925008B0CA7 /* NicknameViewModel.swift in Sources */,
 				782B406F2C3DBF93008B0CA7 /* ProfileSetupViewController.swift in Sources */,
@@ -1520,6 +1507,7 @@
 				DDAF1C922C3D6E3D008A37D3 /* PromiseInfoViewController.swift in Sources */,
 				78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */,
 				DE254AB42C31199B00A4015E /* UITextField+.swift in Sources */,
+				78BD61382C463C8C005752FD /* NicknameModel.swift in Sources */,
 				DDAF1C912C3D6E3D008A37D3 /* TardyViewController.swift in Sources */,
 				782B407D2C3E3984008B0CA7 /* WelcomeViewController.swift in Sources */,
 				DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */,
@@ -1747,7 +1735,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = KkuMulKum/KkuMulKum.entitlements;
+				CODE_SIGN_ENTITLEMENTS = KkuMulKum/KkuMulKumDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
