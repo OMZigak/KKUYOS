@@ -8,42 +8,44 @@
 import UIKit
 
 class ReadyStatusProgressView: BaseView {
-    private let statusProgressView: UIProgressView = UIProgressView().then {
+    let statusProgressView: UIProgressView = UIProgressView().then {
         $0.trackTintColor = .gray2
         $0.progressTintColor = .maincolor
     }
     
-    private let readyStartTimeLabel: UILabel = UILabel().then {
+    let readyStartTimeLabel: UILabel = UILabel().then {
         $0.setText("AM hh:mm", style: .caption02, color: .gray8)
+        $0.isHidden = true
     }
     
-    private let readyStartCheckImageView: UIImageView = UIImageView(backgroundColor: .gray2).then {
+    let readyStartCheckImageView: UIImageView = UIImageView(backgroundColor: .gray2).then {
         $0.layer.cornerRadius = Screen.height(16 / 2)
         $0.clipsToBounds = true
     }
     
-    private let readyStartButton: ReadyStatusButton = ReadyStatusButton(
-        title: "준비 중",
-        readyStatus: .none
+    let readyStartButton: ReadyStatusButton = ReadyStatusButton(
+        title: "준비 시작",
+        readyStatus: .ready
     ).then {
         $0.layer.cornerRadius = 16
         $0.layer.borderWidth = 1
     }
     
-    private let readyStartTitleLabel: UILabel = UILabel().then {
+    let readyStartTitleLabel: UILabel = UILabel().then {
         $0.setText("준비를 시작 시 눌러주세요", style: .label02, color: .gray5)
     }
     
-    private let moveStartTimeLabel: UILabel = UILabel().then {
+    let moveStartTimeLabel: UILabel = UILabel().then {
         $0.setText("AM hh:mm", style: .caption02, color: .gray8)
+        $0.isHidden = true
     }
     
-    private let moveStartCheckImageView: UIImageView = UIImageView(backgroundColor: .gray2).then {
+    let moveStartCheckImageView: UIImageView = UIImageView(backgroundColor: .gray2).then {
         $0.layer.cornerRadius = Screen.height(16 / 2)
         $0.clipsToBounds = true
     }
     
-    private let moveStartButton: ReadyStatusButton = ReadyStatusButton(
+    let moveStartButton: ReadyStatusButton = ReadyStatusButton(
         title: "이동 시작",
         readyStatus: .none
     ).then {
@@ -51,20 +53,22 @@ class ReadyStatusProgressView: BaseView {
         $0.layer.borderWidth = 1
     }
     
-    private let moveStartTitleLabel: UILabel = UILabel().then {
+    let moveStartTitleLabel: UILabel = UILabel().then {
         $0.setText("이동을 시작 시 눌러주세요", style: .label02, color: .gray5)
+        $0.isHidden = true
     }
     
-    private let arrivalTimeLabel: UILabel = UILabel().then {
+    let arrivalTimeLabel: UILabel = UILabel().then {
         $0.setText("AM hh:mm", style: .caption02, color: .gray8)
+        $0.isHidden = true
     }
     
-    private let arrivalCheckImageView: UIImageView = UIImageView(backgroundColor: .gray2).then {
+     let arrivalCheckImageView: UIImageView = UIImageView(backgroundColor: .gray2).then {
         $0.layer.cornerRadius = Screen.height(16 / 2)
         $0.clipsToBounds = true
     }
     
-    private let arrivalButton: ReadyStatusButton = ReadyStatusButton(
+    let arrivalButton: ReadyStatusButton = ReadyStatusButton(
         title: "도착 완료",
         readyStatus: .none
     ).then {
@@ -72,8 +76,9 @@ class ReadyStatusProgressView: BaseView {
         $0.layer.borderWidth = 1
     }
     
-    private let arrivalTitleLabel: UILabel = UILabel().then {
+    let arrivalTitleLabel: UILabel = UILabel().then {
         $0.setText("도착 시작 시 눌러주세요", style: .label02, color: .gray5)
+        $0.isHidden = true
     }
     
     override func setupView() {
