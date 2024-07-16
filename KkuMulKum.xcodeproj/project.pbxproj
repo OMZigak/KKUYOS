@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		782B406F2C3DBF93008B0CA7 /* ProfileSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B406E2C3DBF93008B0CA7 /* ProfileSetupViewController.swift */; };
-		782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40712C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift */; };
 		782B40752C3DBFBA008B0CA7 /* ProfileSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40742C3DBFBA008B0CA7 /* ProfileSetupView.swift */; };
 		782B407B2C3E395A008B0CA7 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407A2C3E395A008B0CA7 /* WelcomeView.swift */; };
 		782B407D2C3E3984008B0CA7 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */; };
@@ -119,6 +118,8 @@
 		DD4909962C440CDC003ED304 /* ArriveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4909952C440CDC003ED304 /* ArriveView.swift */; };
 		DD4909982C441215003ED304 /* TardyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4909972C441215003ED304 /* TardyViewModel.swift */; };
 		DD49099C2C441719003ED304 /* TardyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD49099B2C441719003ED304 /* TardyService.swift */; };
+		DD86266D2C4658B500E4F980 /* ProfileSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40712C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift */; };
+		DD86266F2C4658E800E4F980 /* PagePromiseSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C892C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift */; };
 		DD931B6B2C3D9EBB00526452 /* ReadyStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B6A2C3D9EBB00526452 /* ReadyStatusView.swift */; };
 		DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */; };
 		DD931B722C3DA92700526452 /* EnterReadyInfoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B712C3DA92700526452 /* EnterReadyInfoButtonView.swift */; };
@@ -130,7 +131,6 @@
 		DDAF1C812C3D5BD5008A37D3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C802C3D5BD5008A37D3 /* Kingfisher */; };
 		DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */; };
 		DDAF1C8E2C3D6E3D008A37D3 /* ReadyStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C882C3D6E3D008A37D3 /* ReadyStatusViewController.swift */; };
-		DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C892C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift */; };
 		DDAF1C902C3D6E3D008A37D3 /* PagePromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8A2C3D6E3D008A37D3 /* PagePromiseViewModel.swift */; };
 		DDAF1C912C3D6E3D008A37D3 /* TardyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */; };
 		DDAF1C922C3D6E3D008A37D3 /* PromiseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */; };
@@ -569,22 +569,6 @@
 				78BD61332C45B4A7005752FD /* AuthService.swift */,
 			);
 			path = Service;
-			sourceTree = "<group>";
-		};
-		A3DD9C332C41BAD000E58A13 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		A3DD9C352C41BAD000E58A13 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A3DD9C342C41BAD000E58A13 /* MeetingDummyModel.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		A3DD9C372C41BAD000E58A13 /* View */ = {
@@ -1475,6 +1459,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD86266F2C4658E800E4F980 /* PagePromiseSegmentedControl.swift in Sources */,
+				DD86266D2C4658B500E4F980 /* ProfileSetupViewModel.swift in Sources */,
 				DDAF1C8E2C3D6E3D008A37D3 /* ReadyStatusViewController.swift in Sources */,
 				DED5DBF22C34534A006ECE7E /* BaseCollectionReusableView.swift in Sources */,
 				DED5DBEC2C345210006ECE7E /* BaseViewController.swift in Sources */,
@@ -1567,12 +1553,8 @@
 				DD3976862C41C2AD00E2A4C4 /* HomeView.swift in Sources */,
 				DD41BEFC2C41D54D0095A068 /* TardyPenaltyView.swift in Sources */,
 				789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */,
-				782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */,
-				DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */,
 				DD49099C2C441719003ED304 /* TardyService.swift in Sources */,
 				78BD61342C45B4A7005752FD /* AuthService.swift in Sources */,
-				782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */,
-				DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */,
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
 				DD931B6B2C3D9EBB00526452 /* ReadyStatusView.swift in Sources */,
