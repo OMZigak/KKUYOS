@@ -15,12 +15,25 @@ class HomeViewController: BaseViewController {
     // MARK: - Property
 
     private let rootView = HomeView()
-    private let viewModel = HomeViewModel()
+    
+    private let viewModel: HomeViewModel
     
     final let cellWidth: CGFloat = 200
     final let cellHeight: CGFloat = 216
     final let contentInterSpacing: CGFloat = 12
     final let contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+    
+    
+    // MARK: - Initializer
+    
+    init(viewModel: HomeViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
 
     // MARK: - LifeCycle
@@ -36,8 +49,9 @@ class HomeViewController: BaseViewController {
         
         register()
         updateUI()
+        
         updateUpcomingPromise()
-        viewModel.dummy()
+        viewModel.requestUpcomingPromise()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,7 +121,7 @@ extension HomeViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return viewModel.upcomingPromiseData.value.count
+        return viewModel.upcomingPromiseList.value?.promises.count ?? 0
     }
     
     func collectionView(
@@ -118,7 +132,9 @@ extension HomeViewController: UICollectionViewDataSource {
             withReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier, 
             for: indexPath
         ) as? UpcomingPromiseCollectionViewCell else { return UICollectionViewCell() }
-        cell.dataBind(viewModel.upcomingPromiseData.value[indexPath.item])
+        if let data = viewModel.upcomingPromiseList.value?.promises[indexPath.item] {
+            cell.dataBind(data)
+        }
         return cell
     }    
 }
@@ -190,7 +206,7 @@ private extension HomeViewController {
     }
     
     func updateUpcomingPromise() {
-        viewModel.upcomingPromiseData.bind { [weak self] _ in
+        viewModel.upcomingPromiseList.bind { [weak self] _ in
             DispatchQueue.main.async {
                 self?.rootView.upcomingPromiseView.reloadData()
             }

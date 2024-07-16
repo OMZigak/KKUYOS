@@ -62,10 +62,6 @@ class MeetingListViewController: BaseViewController {
         rootView.tableView.dataSource = self
     }
     
-    private func updateInfoLabel() {
-        
-    }
-    
     private func updateMeetingList() {
         viewModel.meetingList.bind { [weak self] _ in
             DispatchQueue.main.async {
@@ -104,7 +100,6 @@ extension MeetingListViewController: UITableViewDataSource {
         if let data = viewModel.meetingList.value?.meetings[indexPath.item] {
             cell.dataBind(data)
         }
-        //cell.dataBind(viewModel.meetingList.value?[indexPath.item])
         cell.selectionStyle = .none
         return cell
     }

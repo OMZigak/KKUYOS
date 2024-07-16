@@ -24,7 +24,10 @@ final class MainTabBarController: UITabBarController {
     
     
     private func setTabBar() {
-        let homeViewController: HomeViewController = HomeViewController().then {
+        let homeViewController: HomeViewController = HomeViewController(
+            viewModel: HomeViewModel(
+                service: MockHomeService()
+            )).then {
             $0.tabBarItem.title = "홈"
             $0.tabBarItem.image = .iconHome
         }

@@ -18,7 +18,16 @@ enum ReadyState {
 
 final class HomeViewModel {
     var currentState = ObservablePattern<ReadyState>(.none)
-    var upcomingPromiseData = ObservablePattern<[UpcomingPromiseModel]>([])
+    
+    var loginUser = ObservablePattern<LoginUserModel?>(nil)
+    var nearestPromise = ObservablePattern<NearestPromiseModel?>(nil)
+    var upcomingPromiseList = ObservablePattern<UpcomingPromiseListModel?>(nil)
+    
+    private let service: HomeServiceType
+    
+    init(service: HomeServiceType) {
+        self.service = service
+    }
     
     var homePrepareTime: String = ""
     var homeMoveTime: String = ""
@@ -45,12 +54,15 @@ final class HomeViewModel {
         }
     }
     
-    /// 더미 함수 이후에 삭제
-    func dummy() {
-        upcomingPromiseData.value = UpcomingPromiseModel.dummy()
+    func requestLoginUser() {
+        loginUser.value = service.fetchLoginUser()
     }
     
-    func updateContentData(newData: [UpcomingPromiseModel]) {
-        upcomingPromiseData.value = newData
+    func requestNearestPromise() {
+        nearestPromise.value = service.fetchNearestPromise()
+    }
+    
+    func requestUpcomingPromise() {
+        upcomingPromiseList.value = service.fetchUpcomingPromise()
     }
 }

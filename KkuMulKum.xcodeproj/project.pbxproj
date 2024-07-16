@@ -72,6 +72,7 @@
 		A3DD9C5C2C43F9A800E58A13 /* SetReadyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C5B2C43F9A800E58A13 /* SetReadyInfoViewController.swift */; };
 		A3DD9C5F2C441F8E00E58A13 /* SetReadyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C5E2C441F8E00E58A13 /* SetReadyInfoViewModel.swift */; };
 		A3DD9C622C455E3300E58A13 /* MeetingListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C612C455E3300E58A13 /* MeetingListService.swift */; };
+		A3DD9C682C45C78300E58A13 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C672C45C78300E58A13 /* HomeService.swift */; };
 		A3FB184D2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */; };
 		A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */; };
 		A3FB18512C3BF531001483E5 /* RegisterMeetingsResquestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18502C3BF531001483E5 /* RegisterMeetingsResquestModel.swift */; };
@@ -218,6 +219,7 @@
 		A3DD9C5B2C43F9A800E58A13 /* SetReadyInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReadyInfoViewController.swift; sourceTree = "<group>"; };
 		A3DD9C5E2C441F8E00E58A13 /* SetReadyInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReadyInfoViewModel.swift; sourceTree = "<group>"; };
 		A3DD9C612C455E3300E58A13 /* MeetingListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListService.swift; sourceTree = "<group>"; };
+		A3DD9C672C45C78300E58A13 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
 		A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsRequestModel.swift; sourceTree = "<group>"; };
 		A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsResponseModel.swift; sourceTree = "<group>"; };
 		A3FB18502C3BF531001483E5 /* RegisterMeetingsResquestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMeetingsResquestModel.swift; sourceTree = "<group>"; };
@@ -548,22 +550,6 @@
 			path = Bundle;
 			sourceTree = "<group>";
 		};
-		A3DD9C332C41BAD000E58A13 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		A3DD9C352C41BAD000E58A13 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A3DD9C342C41BAD000E58A13 /* MeetingDummyModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		A3DD9C372C41BAD000E58A13 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -611,6 +597,7 @@
 			isa = PBXGroup;
 			children = (
 				A3DD9C612C455E3300E58A13 /* MeetingListService.swift */,
+				A3DD9C672C45C78300E58A13 /* HomeService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -955,7 +942,6 @@
 		DD865B662C39210E00C351A2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				78BD61212C440AC8005752FD /* Service */,
 				789873372C3D1B4800435E96 /* ViewController */,
 				789873362C3D1B3900435E96 /* VIewModel */,
 				789873352C3D1B3000435E96 /* View */,
@@ -1464,7 +1450,6 @@
 				DE6D4D112C3F14D80005584B /* MeetingInfoBannerView.swift in Sources */,
 				DE6D4D122C3F14D80005584B /* MeetingInfoView.swift in Sources */,
 				DD30721E2C3C0CC800416D9F /* PromiseInfoResponseModel.swift in Sources */,
-				78BD61232C440AD5005752FD /* AuthService.swift in Sources */,
 				DD931B722C3DA92700526452 /* EnterReadyInfoButtonView.swift in Sources */,
 				DD41BEFF2C41DAA40095A068 /* TardyEmptyView.swift in Sources */,
 				A3FB18512C3BF531001483E5 /* RegisterMeetingsResquestModel.swift in Sources */,
@@ -1517,6 +1502,7 @@
 				DD3976832C41C2AD00E2A4C4 /* HomeViewModel.swift in Sources */,
 				DD41BF012C41DE4F0095A068 /* TardyCollectionViewCell.swift in Sources */,
 				DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */,
+				A3DD9C682C45C78300E58A13 /* HomeService.swift in Sources */,
 				782B407B2C3E395A008B0CA7 /* WelcomeView.swift in Sources */,
 				DD3072142C3BF87A00416D9F /* NearestPromiseResponseModel.swift in Sources */,
 				782B407F2C3E44B7008B0CA7 /* WelcomeViewModel.swift in Sources */,
@@ -1544,9 +1530,9 @@
 				DD41BEFC2C41D54D0095A068 /* TardyPenaltyView.swift in Sources */,
 				789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */,
 				782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */,
-				DDAF1C8F2C3D6E3D008A37D3 /* BasePromiseSegmentedControl.swift in Sources */,
+				DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */,
 				DD49099C2C441719003ED304 /* TardyService.swift in Sources */,
-				782B40722C3DBFA3008B0CA7 /* ProfileViewModel.swift in Sources */,
+				782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */,
 				DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */,
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
