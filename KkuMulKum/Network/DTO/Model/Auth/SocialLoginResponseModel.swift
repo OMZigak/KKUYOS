@@ -8,5 +8,21 @@
 import Foundation
 
 struct SocialLoginResponseModel: ResponseModelType {
-    let name, accessToken, refreshToken: String?
+    let name: String?
+    let jwtTokenDTO: JwtTokenDTO
+
+    enum CodingKeys: String, CodingKey {
+        case name
+        case jwtTokenDTO = "jwtTokenDto"
+    }
+}
+
+struct JwtTokenDTO: Codable {
+    let accessToken: String
+    let refreshToken: String
+}
+
+struct RefreshTokenResponseModel: ResponseModelType {
+    let accessToken: String
+    let refreshToken: String
 }

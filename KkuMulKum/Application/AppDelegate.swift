@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        // KakaoSDK 초기화
+       sleep(1) //런치스크린 작동용
+        // KakaoSDK 초기화 과정에서 앱 키를 동적으로 불러오기
         if let kakaoAppKey = fetchKakaoAppKeyFromPrivacyInfo() {
             KakaoSDK.initSDK(appKey: kakaoAppKey)
             print("Kakao SDK initialized with app key: \(kakaoAppKey)")
@@ -27,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Failed to load KAKAO_APP_KEY from PrivacyInfo.plist")
         }
         
-        // Firebase 초기화 및 FCM 설정
         setupFirebase(application: application)
         
         return true
@@ -43,7 +43,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // 카카오 로그인
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
         if AuthApi.isKakaoTalkLoginUrl(url) {
             return AuthController.handleOpenUrl(url: url)
         }

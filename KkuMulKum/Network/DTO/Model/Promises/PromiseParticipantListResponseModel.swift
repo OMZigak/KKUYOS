@@ -11,17 +11,20 @@ import Foundation
 // MARK: 약속 참여자 목록
 
 struct PromiseParticipantListModel: ResponseModelType {
+    let participantCount: Int
     let participants: [Participant]
 }
 
 struct Participant: Codable {
-    let id: Int
-    let name, profileImageURL, state: String
+    let participantId, memberId: Int
+    let name, state: String
+    let profileImageURL: String?
     
     enum CodingKeys: String, CodingKey {
-        case id
+        case participantId
+        case memberId
         case name
-        case profileImageURL = "profileImg"
         case state
+        case profileImageURL = "profileImg"
     }
 }

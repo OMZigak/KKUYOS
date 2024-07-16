@@ -2,8 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+<<<<<<< HEAD
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<string>No</string>
+=======
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!</string>
+	<key>NSCameraUsageDescription</key>
+	<string>정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!정혜진!</string>
+>>>>>>> suyeon
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
 	<key>CFBundleURLTypes</key>

@@ -11,5 +11,16 @@
 import Foundation
 
 struct PromiseInfoModel: ResponseModelType {
+    let promiseID: Int
     let placeName, address, roadAddress, time, dressUpLevel, penalty: String
+    
+    enum CodingKeys: String, CodingKey {
+        case promiseID = "promiseId"
+        case placeName
+        case address
+        case roadAddress
+        case time
+        case dressUpLevel
+        case penalty
+    }
 }

@@ -29,7 +29,10 @@ final class MainTabBarController: UITabBarController {
             $0.tabBarItem.image = .iconHome
         }
         
-        let groupListViewController: GroupListViewController = GroupListViewController().then {
+        let meetingListViewController = MeetingListViewController(
+            viewModel: MeetingListViewModel(
+                service: MockMeetingListService()
+            )).then {
             $0.tabBarItem.title = "내 모임"
             $0.tabBarItem.image = .iconGroup
         }
@@ -42,25 +45,28 @@ final class MainTabBarController: UITabBarController {
         tabBar.unselectedItemTintColor = .gray2
         tabBar.tintColor = .maincolor
         tabBar.backgroundColor = .white
+        tabBar.isTranslucent = false
         
-        let homeNavigationController = UINavigationController(rootViewController: homeViewController).then {
-            $0.navigationBar.topItem?.backButtonDisplayMode = .minimal
-            $0.navigationBar.tintColor = .black
-        }
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithTransparentBackground()
+        tabBar.standardAppearance = tabBarAppearance
+        tabBar.scrollEdgeAppearance = tabBarAppearance
         
-        let groupListNavigationController = UINavigationController(rootViewController: groupListViewController).then {
-            $0.navigationBar.topItem?.backButtonDisplayMode = .minimal
-            $0.navigationBar.tintColor = .black
-        }
+        let homeNavigationController = UINavigationController(
+            rootViewController: homeViewController
+        )
         
-        let myPageViewNavigationController = UINavigationController(rootViewController: myPageViewController).then {
-            $0.navigationBar.topItem?.backButtonDisplayMode = .minimal
-            $0.navigationBar.tintColor = .black
-        }
+        let meetingListNavigationController = UINavigationController(
+            rootViewController: meetingListViewController
+        )
+        
+        let myPageViewNavigationController = UINavigationController(
+            rootViewController: myPageViewController
+        )
         
         setViewControllers([
             homeNavigationController,
-            groupListNavigationController,
+            meetingListNavigationController,
             myPageViewNavigationController
         ], animated: true)
     }

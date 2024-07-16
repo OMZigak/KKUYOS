@@ -15,6 +15,17 @@ struct UpcomingPromiseListModel: ResponseModelType {
 }
 
 struct UpcomingPromise: Codable {
-    let id, dDay: Int
+    let promiseID, dDay: Int
     let name, meetingName, dressUpLevel, date, time, placeName: String
+    
+    enum CodingKeys: String, CodingKey {
+        case promiseID = "promiseId"
+        case dDay
+        case name
+        case meetingName
+        case dressUpLevel
+        case date
+        case time
+        case placeName
+    }
 }
