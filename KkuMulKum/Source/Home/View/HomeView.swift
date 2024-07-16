@@ -175,8 +175,8 @@ final class HomeView: BaseView {
         levelCaptionView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
             $0.top.equalToSuperview().offset(258)
-            $0.width.equalTo(186)
-            $0.height.equalTo(150)
+            $0.width.equalTo(Screen.width(186))
+            $0.height.equalTo(Screen.height(150))
         }
         
         levelCaptionLabel.snp.makeConstraints {
@@ -193,7 +193,7 @@ final class HomeView: BaseView {
         
         todayLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(16)
+            $0.top.equalToSuperview().offset(20)
         }
         
         todayButton.snp.makeConstraints {
@@ -205,18 +205,18 @@ final class HomeView: BaseView {
         todayPromiseView.snp.makeConstraints {
             $0.top.equalTo(todayLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(254)
+            $0.height.equalTo(Screen.height(254))
         }
         
         todayEmptyView.snp.makeConstraints {
             $0.top.equalTo(todayLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(254)
+            $0.height.equalTo(Screen.height(254))
         }
         
         upcomingLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(342)
+            $0.top.equalTo(todayPromiseView.snp.bottom).offset(32)
         }
         
         upcomingPromiseView.snp.makeConstraints {
