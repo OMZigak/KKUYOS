@@ -8,14 +8,18 @@
 import Foundation
 
 protocol InviteCodeServiceType {
-    func postMeetingInviteCode(with registerMeetingsModel: RegisterMeetingsModel) -> EmptyModel
+    func postMeetingInviteCode(with registerMeetingsModel: RegisterMeetingsModel) -> ResponseBodyDTO<EmptyModel>?
 }
 
 final class MockInviteCodeService: InviteCodeServiceType {
-    func postMeetingInviteCode(with registerMeetingsModel: RegisterMeetingsModel) -> EmptyModel {
+    func postMeetingInviteCode(with registerMeetingsModel: RegisterMeetingsModel) -> ResponseBodyDTO<EmptyModel>? {
         let mockData = EmptyModel()
         
-        return mockData
+        return ResponseBodyDTO<EmptyModel>.init(
+            success: true,
+            data: mockData,
+            error: nil
+        )
     }
     
     

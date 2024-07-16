@@ -8,11 +8,11 @@
 import Foundation
 
 protocol PromiseInfoServiceType {
-    func getPromiseInfo(with promiseId: Int) -> PromiseInfoModel?
+    func getPromiseInfo(with promiseId: Int) -> ResponseBodyDTO<PromiseInfoModel>?
 }
 
 class PromiseInfoService: PromiseInfoServiceType {
-    func getPromiseInfo(with promiseId: Int) -> PromiseInfoModel? {
+    func getPromiseInfo(with promiseId: Int) -> ResponseBodyDTO<PromiseInfoModel>? {
         let mockData = PromiseInfoModel(
             promiseID: 1,
             placeName: "홍대입구",
@@ -23,6 +23,10 @@ class PromiseInfoService: PromiseInfoServiceType {
             penalty: "맛있는 카페 쏘기"
         )
         
-        return mockData
+        return ResponseBodyDTO<PromiseInfoModel>.init(
+            success: true,
+            data: mockData,
+            error: nil
+        )
     }
 }
