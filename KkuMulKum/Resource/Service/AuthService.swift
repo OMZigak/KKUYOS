@@ -8,11 +8,11 @@
 import Foundation
 
 protocol AuthServiceType {
-    func saveAccessToken(_ token: String)
-    func saveRefreshToken(_ token: String)
+    func saveAccessToken(_ token: String) -> Bool
+    func saveRefreshToken(_ token: String) -> Bool
     func getAccessToken() -> String?
     func getRefreshToken() -> String?
-    func clearTokens()
+    func clearTokens() -> Bool
 }
 
 class AuthService: AuthServiceType {
@@ -22,12 +22,14 @@ class AuthService: AuthServiceType {
         self.keychainService = keychainService
     }
     
-    func saveAccessToken(_ token: String) {
+    func saveAccessToken(_ token: String) -> Bool {
         keychainService.accessToken = token
+        return keychainService.accessToken == token
     }
     
-    func saveRefreshToken(_ token: String) {
+    func saveRefreshToken(_ token: String) -> Bool {
         keychainService.refreshToken = token
+        return keychainService.refreshToken == token
     }
     
     func getAccessToken() -> String? {
@@ -38,9 +40,9 @@ class AuthService: AuthServiceType {
         return keychainService.refreshToken
     }
     
-    ///앱잼내 구현 X
-    func clearTokens() {
-//        keychainService.accessToken = nil
-//        keychainService.refreshToken = nil
+    func clearTokens() -> Bool {
+        keychainService.accessToken = nil
+        keychainService.refreshToken = nil
+        return keychainService.accessToken == nil && keychainService.refreshToken == nil
     }
 }

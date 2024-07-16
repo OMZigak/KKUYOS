@@ -4,6 +4,7 @@
 //
 //  Created by 이지훈 on 7/10/24.
 //
+// NicknameViewController.swift
 
 import UIKit
 
@@ -22,6 +23,15 @@ class NicknameViewController: BaseViewController {
         setupTextField()
         setupTapGesture()
         setupNavigationBarTitle(with: "닉네임 설정")
+        
+        print("---")
+        let keychainService = DefaultKeychainService.shared
+        
+        if let accessToken = keychainService.accessToken {
+            print("Access token is available in NicknameViewController: \(accessToken)")
+        } else {
+            print("No access token available in NicknameViewController. User may need to log in.")
+        }
     }
     
     override func setupAction() {
@@ -64,6 +74,12 @@ class NicknameViewController: BaseViewController {
         viewModel.characterCount.bind { [weak self] count in
             self?.nicknameView.characterCountLabel.text = count
         }
+        
+        viewModel.serverResponse.bind { response in
+            if let response = response {
+                print("서버 응답: \(response)")
+            }
+        }
     }
     
     private func setupTextField() {
@@ -81,16 +97,19 @@ class NicknameViewController: BaseViewController {
     }
     
     @objc private func nextButtonTapped() {
-        let profileSetupVC = ProfileSetupViewController(
-            viewModel: ProfileSetupViewModel(
-                nickname: viewModel.nickname.value
-            )
-        )
-//        profileSetupVC.modalPresentationStyle = .fullScreen
-//        present(profileSetupVC, animated: true, completion: nil)
-        // TODO: 온보딩 플로우 네비게이션으로 실행
-        navigationController?.pushViewController(profileSetupVC, animated: true)
-        
+        viewModel.updateNickname { [weak self] success in
+            if success {
+                print("닉네임이 성공적으로 서버에 등록되었습니다.")
+                let profileSetupVC = ProfileSetupViewController(
+                    viewModel: ProfileSetupViewModel(
+                        nickname: self?.viewModel.nickname.value ?? ""
+                    )
+                )
+                self?.navigationController?.pushViewController(profileSetupVC, animated: true)
+            } else {
+                print("닉네임 등록에 실패했습니다.")
+            }
+        }
     }
     
     @objc private func dismissKeyboard() {
