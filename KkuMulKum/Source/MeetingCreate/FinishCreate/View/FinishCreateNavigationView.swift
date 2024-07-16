@@ -8,11 +8,18 @@
 import UIKit
 
 class FinishCreateNavigationView: BaseView {
+    
+    
+    // MARK: Property
+
     let titleLabel = UILabel().then {
         $0.setText("내 모임 추가하기", style: .body03, color: .gray8)
     }
     
     let separatorView = UIView(backgroundColor: .gray1)
+
+    
+    // MARK: - Setup
 
     override func setupView() {
         backgroundColor = .white

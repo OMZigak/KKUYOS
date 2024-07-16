@@ -9,8 +9,17 @@ import Foundation
 
 
 class PagePromiseViewModel {
-    var currentPage = ObservablePattern<Int>(0)
     
+    
+    // MARK: Property
+
+    var currentPage = ObservablePattern<Int>(0)
+}
+
+
+// MARK: - Extension
+
+private extension PagePromiseViewModel {
     func didSegmentIndexChanged(index: Int) {
         currentPage.value = index
     }

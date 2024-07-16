@@ -19,7 +19,7 @@ final class MockTardyService: TardyServiceType {
             lateComers: [Comer(
                 participantId: 1,
                 name: "유짐이",
-                profileImg: ""
+                profileImageURL: ""
             )]
         )
         

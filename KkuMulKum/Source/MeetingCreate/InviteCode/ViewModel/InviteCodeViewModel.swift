@@ -15,16 +15,28 @@ enum InviteCodeState {
 }
 
 class InviteCodeViewModel {
+    
+    
+    // MARK: Property
+
     let inviteCode = ObservablePattern<String>("")
     let inviteCodeState = ObservablePattern<InviteCodeState>(.empty)
     let isNextButtonEnabled = ObservablePattern<Bool>(false)
     
     private let service: InviteCodeServiceType
     
+    
+    // MARK: Initialize
+
     init(service: InviteCodeServiceType) {
         self.service = service
     }
-    
+}
+
+
+// MARK: - Extension
+
+extension InviteCodeViewModel {
     func validateCode(_ code: String) {
         inviteCode.value = code
         
@@ -34,7 +46,7 @@ class InviteCodeViewModel {
         } else if code.count == 6 && code != "eeeeee" {
             inviteCodeState.value = .valid
             isNextButtonEnabled.value = true
-        } 
+        }
         // TODO: 서버 검증 성공했을 때 조건 변경
         else if code == "eeeeee" {
             inviteCodeState.value = .success
