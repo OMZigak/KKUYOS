@@ -14,10 +14,14 @@ class PagePromiseViewController: BaseViewController {
 
     private let promiseViewModel = PagePromiseViewModel()
     
+    // TODO: 서버 연결 시 데이터 바인딩 필요
     private let promiseViewControllerList: [BaseViewController] = [
         PromiseInfoViewController(),
-        ReadyStatusViewController(),
-        // TODO: 서버 연결 시 데이터 바인딩 필요
+        ReadyStatusViewController(
+            readyStatusViewModel: ReadyStatusViewModel(
+                readyStatusService: MockReadyStatusService()
+            )
+        ),
         TardyViewController(
             tardyViewModel: TardyViewModel(
                 isPastDue: ObservablePattern<Bool>(false),
