@@ -9,10 +9,6 @@ import UIKit
 
 class PromiseInfoViewController: BaseViewController {
     private let promiseInfoView: PromiseInfoView = PromiseInfoView()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
     
     override func setupView() {
         view.addSubview(promiseInfoView)
@@ -29,7 +25,6 @@ class PromiseInfoViewController: BaseViewController {
     }
 }
 
-
 extension PromiseInfoViewController: UICollectionViewDataSource {
     func collectionView(
         _ collectionView: UICollectionView,
@@ -38,7 +33,6 @@ extension PromiseInfoViewController: UICollectionViewDataSource {
         return 10
     }
 }
-
 
 extension PromiseInfoViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(

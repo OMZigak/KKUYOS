@@ -69,7 +69,9 @@ class FinishCreateViewController: BaseViewController {
             for: .touchUpInside
         )
     }
-    
+}
+
+private extension FinishCreateViewController {
     @objc func presentMeetingInfoViewControllerDidTapped() {
         // TODO: 모임 상세 화면 띄우기
     }

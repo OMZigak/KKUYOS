@@ -32,7 +32,9 @@ class CheckInviteCodeViewController: BaseViewController {
             action: #selector(createMeetingViewDidTap)
         ))
     }
-    
+}
+
+private extension CheckInviteCodeViewController {
     @objc private func inviteCodeViewDidTap() {
         let inviteCodeViewController = InviteCodeViewController(
             viewModel: InviteCodeViewModel(

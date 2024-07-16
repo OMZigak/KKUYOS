@@ -54,7 +54,9 @@ class InviteCodeViewController: BaseViewController {
         inviteCodeView.inviteCodeTextField.delegate = self
         inviteCodeView.inviteCodeTextField.returnKeyType = .done
     }
-    
+}
+
+extension InviteCodeViewController {
     private func setupBinding() {
         inviteCodeViewModel.inviteCodeState.bind(with: self) { owner, state in
             switch state {

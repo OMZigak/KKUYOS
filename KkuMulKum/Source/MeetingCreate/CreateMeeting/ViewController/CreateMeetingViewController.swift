@@ -14,6 +14,7 @@ class CreateMeetingViewController: BaseViewController {
     
     init(viewModel: CreateMeetingViewModel) {
         self.createMeetingViewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -37,6 +38,21 @@ class CreateMeetingViewController: BaseViewController {
         setupNavigationBarBackButton()
     }
     
+    override func setupAction() {
+        createMeetingView.nameTextField.addTarget(
+            self,
+            action: #selector(textFieldDidChange(_:)),
+            for: .editingChanged
+        )
+        createMeetingView.presentButton.addTarget(
+            self,
+            action: #selector(presentButtonDidTapped),
+            for: .touchUpInside
+        )
+    }
+}
+
+private extension CreateMeetingViewController {
     private func setupBinding() {
         createMeetingViewModel.inviteCodeState.bind(with: self) { owner, state in
             switch state {
@@ -50,19 +66,6 @@ class CreateMeetingViewController: BaseViewController {
                 owner.createMeetingView.characterLabel.text = count
             }
         }
-    }
-    
-    override func setupAction() {
-        createMeetingView.nameTextField.addTarget(
-            self,
-            action: #selector(textFieldDidChange(_:)),
-            for: .editingChanged
-        )
-        createMeetingView.presentButton.addTarget(
-            self,
-            action: #selector(presentButtonDidTapped),
-            for: .touchUpInside
-        )
     }
     
     private func setupTapGesture() {

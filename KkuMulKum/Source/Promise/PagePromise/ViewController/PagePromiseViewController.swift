@@ -71,7 +71,9 @@ class PagePromiseViewController: BaseViewController {
         promisePageViewController.delegate = self
         promisePageViewController.dataSource = self
     }
-    
+}
+
+extension PagePromiseViewController {
     @objc private func didSegmentedControlIndexUpdated() {
         let condition = promiseViewModel.currentPage.value <= promiseSegmentedControl.selectedSegmentIndex
         let direction: UIPageViewController.NavigationDirection = condition ? .forward : .reverse
@@ -94,7 +96,6 @@ class PagePromiseViewController: BaseViewController {
         ], direction: direction, animated: false)
     }
 }
-
 
 extension PagePromiseViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
     func pageViewController(

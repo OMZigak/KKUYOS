@@ -28,7 +28,9 @@ class PagePromiseSegmentedControl: UISegmentedControl {
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
+}
+
+private extension PagePromiseSegmentedControl {
     private func setupSegment() {
         addSubviews(backgroundLineView, selectedUnderLineView)
         
