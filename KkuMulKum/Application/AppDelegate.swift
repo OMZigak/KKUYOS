@@ -9,14 +9,16 @@ import UIKit
 
 import KakaoSDKCommon
 import KakaoSDKAuth
+import Firebase
+import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
+    
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        
        sleep(1) //런치스크린 작동용
         // KakaoSDK 초기화 과정에서 앱 키를 동적으로 불러오기
         if let kakaoAppKey = fetchKakaoAppKeyFromPrivacyInfo() {
@@ -25,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             print("Failed to load KAKAO_APP_KEY from PrivacyInfo.plist")
         }
+        
+        setupFirebase(application: application)
         
         return true
     }
@@ -67,4 +71,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didDiscardSceneSessions sceneSessions: Set<UISceneSession>
     ) {}
+}
+
+// MARK: - Firebase Setup
+
+extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
+    
+    func setupFirebase(application: UIApplication) {
+        FirebaseApp.configure()
+        FirebaseConfiguration.shared.setLoggerLevel(.min)
+        Analytics.logEvent(AnalyticsEventAppOpen, parameters: nil)
+           
+        Messaging.messaging().delegate = self
+        UNUserNotificationCenter.current().delegate = self
+        
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: { _, _ in }
+        )
+        
+        application.registerForRemoteNotifications()
+        
+        // FCM 토큰 가져오기
+        Messaging.messaging().token { token, error in
+            if let error = error {
+                print("Error fetching FCM registration token: \(error)")
+            } else if let token = token {
+                print("FCM Token: \(token)")
+                UserDefaults.standard.set(token, forKey: "FCMToken")
+            }
+        }
+    }
+    
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        print("Firebase registration token: \(String(describing: fcmToken))")
+        
+        if let token = fcmToken {
+            UserDefaults.standard.set(token, forKey: "FCMToken")
+        }
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+        
+        // APNS 토큰이 설정된 후 FCM 토큰 요청
+        Messaging.messaging().token { token, error in
+            if let error = error {
+                print("Error fetching FCM registration token: \(error)")
+            } else if let token = token {
+                print("FCM Token: \(token)")
+                UserDefaults.standard.set(token, forKey: "FCMToken")
+            }
+        }
+    }
 }

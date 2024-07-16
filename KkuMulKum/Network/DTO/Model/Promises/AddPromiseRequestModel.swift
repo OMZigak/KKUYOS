@@ -11,7 +11,8 @@
 import Foundation
 
 struct AddPromiseRequestModel: RequestModelType {
-    let name, placeName, x, y, address, roadAddress, time, dressUpLevel, penalty: String
+    let name, placeName, address, roadAddress, time, dressUpLevel, penalty: String
+    let x, y: Double
     let id: Int
     let participants: [Int]
 }

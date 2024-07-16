@@ -38,7 +38,7 @@ final class MeetingTableViewCell: BaseTableViewCell {
     override func setupAutoLayout() {
         cellView.snp.makeConstraints {
             $0.top.leading.trailing.equalToSuperview()
-            $0.height.equalTo(76)
+            $0.height.equalTo(Screen.height(76))
         }
         
         nameLabel.snp.makeConstraints {
@@ -62,8 +62,8 @@ final class MeetingTableViewCell: BaseTableViewCell {
 // MARK: - Data Bind
 
 extension MeetingTableViewCell {
-    func dataBind(_ contentData: MeetingDummyModel) {
+    func dataBind(_ contentData: Meeting) {
         nameLabel.setText(contentData.name, style: .body03, color: .gray8)
-        countLabel.setText("\(contentData.count)명 참여 중", style: .caption02, color: .gray5)
+        countLabel.setText("\(contentData.memberCount)명 참여 중", style: .caption02, color: .gray5)
     }
 }

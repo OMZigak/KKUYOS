@@ -8,6 +8,10 @@
 import UIKit
 
 class TardyPenaltyView: BaseView {
+    
+    
+    // MARK: Property
+
     private let penaltyImageView: UIImageView = UIImageView().then {
         $0.image = .iconPenalty
         $0.contentMode = .scaleAspectFit
@@ -21,6 +25,9 @@ class TardyPenaltyView: BaseView {
         $0.setText("탕후루 릴스 찍기", style: .body03, color: .gray8)
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         backgroundColor = .green1
         

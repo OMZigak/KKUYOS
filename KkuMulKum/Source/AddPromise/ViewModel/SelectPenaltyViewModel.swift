@@ -88,13 +88,13 @@ private extension SelectPenaltyViewModel {
         let addPromiseModel = AddPromiseRequestModel(
             name: name,
             placeName: place.location,
-            x: "\(place.x)",
-            y: "\(place.y)",
             address: place.address ?? "",
             roadAddress: place.roadAddress ?? "",
             time: dateString,
             dressUpLevel: levelRelay.value,
             penalty: penaltyRelay.value,
+            x: place.x,
+            y: place.y,
             id: meetingID,
             participants: members.map { $0.id }
         )

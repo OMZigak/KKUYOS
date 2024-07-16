@@ -8,10 +8,17 @@
 import UIKit
 
 class TardyViewController: BaseViewController {
+    
+    
+    // MARK: Property
+
     private let tardyViewModel: TardyViewModel
     private let tardyView: TardyView = TardyView()
     private let arriveView: ArriveView = ArriveView()
     
+    
+    // MARK: Initialize
+
     init(tardyViewModel: TardyViewModel) {
         self.tardyViewModel = tardyViewModel
         
@@ -22,6 +29,9 @@ class TardyViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    // MARK: - Setup
+
     override func loadView() {
         view = tardyViewModel.hasTardy.value ? tardyView : arriveView
     }
@@ -40,6 +50,8 @@ class TardyViewController: BaseViewController {
     }
 }
 
+
+// MARK: - Extension
 
 private extension TardyViewController {
     @objc

@@ -8,6 +8,10 @@
 import UIKit
 
 class JoinButtonView: BaseView {
+    
+    
+    // MARK: Property
+
     private let subTitleLabel: UILabel = UILabel().then {
         $0.setText("subTitleLabel", style: .caption02, color: .gray5)
     }
@@ -21,6 +25,9 @@ class JoinButtonView: BaseView {
         $0.contentMode = .scaleAspectFit
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         self.backgroundColor = .green1
         
@@ -50,7 +57,12 @@ class JoinButtonView: BaseView {
             $0.width.equalTo(chevronImageView.snp.height)
         }
     }
-    
+}
+
+
+// MARK: - Extension
+
+extension JoinButtonView {
     func setJoinButtonViewStatus(isReceived: Bool) {
         subTitleLabel.setText(
             isReceived ? "초대 코드를 받았다면" : "초대 코드가 없다면",

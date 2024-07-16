@@ -8,9 +8,16 @@
 import Foundation
 
 class TardyViewModel {
+    
+    
+    // MARK: Property
+
     var isPastDue: ObservablePattern<Bool>
     var hasTardy: ObservablePattern<Bool>
     
+    
+    // MARK: Initialize
+
     init(
         isPastDue: ObservablePattern<Bool>,
         hasTardy: ObservablePattern<Bool>

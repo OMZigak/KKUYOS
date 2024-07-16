@@ -8,16 +8,24 @@
 import UIKit
 
 class TardyCollectionViewCell: BaseCollectionViewCell {
+    
+    
+    // MARK: Property
+
     private let profileImageView: UIImageView = UIImageView().then {
         $0.image = .imgProfile
         $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = 67 / 2
+        $0.clipsToBounds = true
     }
     
     let nameLabel: UILabel = UILabel().then {
         $0.setText("이름", style: .body06, color: .gray6)
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         addSubviews(profileImageView, nameLabel)
         

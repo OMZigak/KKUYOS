@@ -33,10 +33,22 @@ class LoginViewController: BaseViewController {
     override func setupAction() {
         super.setupAction()
         
-        let appleTapGesture = UITapGestureRecognizer(target: self, action: #selector(appleLoginTapped))
-        loginView.appleLoginImageView.addGestureRecognizer(appleTapGesture)
+        let appleTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(
+                appleLoginTapped
+            )
+        )
+        loginView.appleLoginImageView.addGestureRecognizer(
+            appleTapGesture
+        )
         
-        let kakaoTapGesture = UITapGestureRecognizer(target: self, action: #selector(kakaoLoginTapped))
+        let kakaoTapGesture = UITapGestureRecognizer(
+            target: self,
+            action: #selector(
+                kakaoLoginTapped
+            )
+        )
         loginView.kakaoLoginImageView.addGestureRecognizer(kakaoTapGesture)
 
         loginView.dummyNextButton.addTarget(
@@ -51,9 +63,9 @@ class LoginViewController: BaseViewController {
             switch state {
             case .notLogin:
                 print("Login State: Not logged in")
-            case .login(let userInfo):
-                print("Login State: Logged in with user info: \(userInfo)")
-                owner.navigateToMainScreen()
+            case .login:
+                print("Login State: Logged in with user info: ")
+                owner.navigateToOnboardingScreen()
             case .needOnboarding:
                 print("Login State: Need onboarding")
                 owner.navigateToOnboardingScreen()
