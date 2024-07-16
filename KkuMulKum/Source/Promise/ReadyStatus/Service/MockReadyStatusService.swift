@@ -13,7 +13,11 @@ protocol ReadyStatusServiceType {
     func getParticipantList(with promiseID: Int) -> PromiseParticipantListModel?
 }
 
-final class MockReadyStatusService: CreateMeetingServiceType {
+final class MockReadyStatusService: ReadyStatusServiceType {
+    func patchMyReadyStatus(with myInfo: MyPromiseReadyInfoModel) {
+        
+    }
+    
     func getMyPromiseStatus(with promiseID: Int) -> MyReadyStatusModel? {
         let mockData = MyReadyStatusModel(
             preparationTime: 300,
@@ -26,7 +30,7 @@ final class MockReadyStatusService: CreateMeetingServiceType {
         return mockData
     }
     
-    func getParticipantList(with promiseID: Int) -> PromiseParticipantListModel {
+    func getParticipantList(with promiseID: Int) -> PromiseParticipantListModel? {
         let mockData = PromiseParticipantListModel(
             participantCount: 3,
             participants: [
