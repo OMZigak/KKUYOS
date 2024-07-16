@@ -19,6 +19,7 @@ final class AddPromiseViewController: BaseViewController {
     private let promiseNameTextFieldEndEditingRelay = PublishRelay<Void>()
     private let searchPlaceCompleted = PublishRelay<Place>()
     
+    
     // MARK: - Intializer
     
     init(viewModel: AddPromiseViewModel) {

@@ -88,11 +88,11 @@ private extension SelectPenaltyViewController {
             .disposed(by: disposeBag)
         
         output.isSucceedToCreate
-            .drive(with: self) { owner, flag in
-                
-                // TODO: 약속 생성 완료 화면으로
-                print(flag)
-                
+            .drive(with: self) { owner, result in
+                let (flag, promiseID) = result
+                guard flag else { return }
+                let viewController = AddPromiseCompleteViewController(promiseID: promiseID ?? 0)
+                owner.navigationController?.pushViewController(viewController, animated: true)
             }
             .disposed(by: disposeBag)
     }

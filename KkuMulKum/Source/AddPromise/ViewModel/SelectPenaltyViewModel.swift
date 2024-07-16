@@ -47,7 +47,7 @@ extension SelectPenaltyViewModel: ViewModelType {
     
     struct Output {
         let isEnabledConfirmButton: Observable<Bool>
-        let isSucceedToCreate: Driver<Bool>
+        let isSucceedToCreate: Driver<(Bool, Int?)>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -64,12 +64,15 @@ extension SelectPenaltyViewModel: ViewModelType {
             .disposed(by: disposeBag)
        
         let isSucceedToCreate = input.confirmButtonDidTap
-            .map { [weak self] _ -> Bool in
-                guard let self else { return false }
-                let result = service.requestCreateNewPromise(with: createAddPromiseModel())
-                return result.success
+            .map { [weak self] _ -> (Bool, Int?) in
+                guard let self else { return (false, nil) }
+                let result = service.requestAddingNewPromise(
+                    with: createAddPromiseModel(),
+                    meetingID: meetingID
+                )
+                return (result.success, result.data?.promiseID)
             }
-            .asDriver(onErrorJustReturn: false)
+            .asDriver(onErrorJustReturn: (false, nil))
         
         let output = Output(
             isEnabledConfirmButton: isEnabledConfirmButton,
@@ -81,8 +84,8 @@ extension SelectPenaltyViewModel: ViewModelType {
 }
 
 private extension SelectPenaltyViewModel {
-    func createAddPromiseModel() -> AddPromiseModel {
-        let addPromiseModel = AddPromiseModel(
+    func createAddPromiseModel() -> AddPromiseRequestModel {
+        let addPromiseModel = AddPromiseRequestModel(
             name: name,
             placeName: place.location,
             x: "\(place.x)",

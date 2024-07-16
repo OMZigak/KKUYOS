@@ -8,15 +8,19 @@
 import Foundation
 
 protocol SelectPenaltyServiceType {
-    func requestCreateNewPromise(with requestModel: AddPromiseModel) -> ResponseBodyDTO<EmptyModel>
+    func requestAddingNewPromise(
+        with requestModel: AddPromiseRequestModel,
+        meetingID: Int
+    ) -> ResponseBodyDTO<AddPromiseResponseModel>
 }
 
 final class MockSelectPenaltyService {}
 
 extension MockSelectPenaltyService: SelectPenaltyServiceType {
-    func requestCreateNewPromise(
-        with requestModel: AddPromiseModel
-    ) -> ResponseBodyDTO<EmptyModel> {
-        return ResponseBodyDTO<EmptyModel>(success: true, data: nil, error: nil)
+    func requestAddingNewPromise(
+        with requestModel: AddPromiseRequestModel,
+        meetingID: Int
+    ) -> ResponseBodyDTO<AddPromiseResponseModel> {
+        return ResponseBodyDTO<AddPromiseResponseModel>(success: true, data: nil, error: nil)
     }
 }
