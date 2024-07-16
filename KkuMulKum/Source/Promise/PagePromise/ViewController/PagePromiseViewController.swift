@@ -8,6 +8,10 @@
 import UIKit
 
 class PagePromiseViewController: BaseViewController {
+    
+    
+    // MARK: Property
+
     private let promiseViewModel = PagePromiseViewModel()
     
     private let promiseViewControllerList: [BaseViewController] = [
@@ -31,6 +35,9 @@ class PagePromiseViewController: BaseViewController {
         navigationOrientation: .vertical
     )
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         view.backgroundColor = .white
         
@@ -73,6 +80,9 @@ class PagePromiseViewController: BaseViewController {
     }
 }
 
+
+// MARK: - Extension
+
 extension PagePromiseViewController {
     @objc private func didSegmentedControlIndexUpdated() {
         let condition = promiseViewModel.currentPage.value <= promiseSegmentedControl.selectedSegmentIndex
@@ -97,7 +107,18 @@ extension PagePromiseViewController {
     }
 }
 
-extension PagePromiseViewController: UIPageViewControllerDelegate, UIPageViewControllerDataSource {
+
+
+// MARK: - UIPageViewControllerDelegate
+
+extension PagePromiseViewController: UIPageViewControllerDelegate {
+    
+}
+
+
+// MARK: - UIPageViewControllerDataSource
+
+extension PagePromiseViewController: UIPageViewControllerDataSource {
     func pageViewController(
         _ pageViewController: UIPageViewController,
         viewControllerAfter viewController: UIViewController

@@ -8,6 +8,10 @@
 import UIKit
 
 class ReadyStatusViewController: BaseViewController {
+    
+    
+    // MARK: Property
+
     private let readyStatusView: ReadyStatusView = ReadyStatusView()
 
     override func viewDidLoad() {

@@ -8,9 +8,16 @@
 import UIKit
 
 class CreateMeetingViewController: BaseViewController {
+    
+    
+    // MARK: Property
+
     private let createMeetingViewModel: CreateMeetingViewModel
     
     private let createMeetingView: CreateMeetingView = CreateMeetingView()
+    
+    
+    // MARK: Initialize
     
     init(viewModel: CreateMeetingViewModel) {
         self.createMeetingViewModel = viewModel
@@ -22,6 +29,9 @@ class CreateMeetingViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    // MARK: - LifeCycle
+
     override func loadView() {
         view = createMeetingView
     }
@@ -33,6 +43,9 @@ class CreateMeetingViewController: BaseViewController {
         setupTapGesture()
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         setupNavigationBarTitle(with: "내 모임 추가하기")
         setupNavigationBarBackButton()
@@ -52,8 +65,11 @@ class CreateMeetingViewController: BaseViewController {
     }
 }
 
+
+// MARK: - Extension
+
 private extension CreateMeetingViewController {
-    private func setupBinding() {
+    func setupBinding() {
         createMeetingViewModel.inviteCodeState.bind(with: self) { owner, state in
             switch state {
             case .empty, .invalid:
@@ -68,21 +84,24 @@ private extension CreateMeetingViewController {
         }
     }
     
-    private func setupTapGesture() {
+    func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
     }
     
-    @objc private func textFieldDidChange(_ textField: UITextField) {
+    @objc 
+    func textFieldDidChange(_ textField: UITextField) {
         createMeetingViewModel.validateName(textField.text ?? "")
     }
     
-    @objc private func dismissKeyboard() {
+    @objc 
+    func dismissKeyboard() {
         view.endEditing(true)
         createMeetingView.nameTextField.layer.borderColor = UIColor.gray3.cgColor
     }
     
-    @objc private func presentButtonDidTapped() {
+    @objc 
+    func presentButtonDidTapped() {
         // TODO: 서버 연결해서 초대 코드 받아올 수 있게 처리
         let inviteCodePopUpViewController = InvitationCodePopUpViewController(
             invitationCode: createMeetingViewModel.inviteCode.value

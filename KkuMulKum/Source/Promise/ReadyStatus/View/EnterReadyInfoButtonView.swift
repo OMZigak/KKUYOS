@@ -8,6 +8,10 @@
 import UIKit
 
 class EnterReadyInfoButtonView: BaseView {
+    
+    
+    // MARK: Property
+
     private let descriptionLabel: UILabel = UILabel().then {
         $0.setText("준비 정보 입력하기", style: .body03)
     }

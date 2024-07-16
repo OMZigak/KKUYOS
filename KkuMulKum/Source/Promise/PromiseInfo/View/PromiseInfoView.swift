@@ -8,6 +8,10 @@
 import UIKit
 
 class PromiseInfoView: BaseView {
+    
+    
+    // MARK: Property
+
     private let participantNumberLabel: UILabel = UILabel().then {
         $0.setText("약속 참여 인원 n명", style: .body01)
         $0.setHighlightText("n명", style: .body01, color: .maincolor)
@@ -93,6 +97,9 @@ class PromiseInfoView: BaseView {
         $0.setText("ssss하기", style: .body04, color: .gray7)
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         addSubviews(
             participantNumberLabel,

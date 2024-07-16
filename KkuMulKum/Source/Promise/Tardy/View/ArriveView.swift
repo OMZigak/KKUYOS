@@ -8,6 +8,10 @@
 import UIKit
 
 class ArriveView: BaseView {
+    
+    
+    // MARK: Property
+
     private let giftImageView: UIImageView = UIImageView().then {
         $0.image = .imgGift
         $0.contentMode = .scaleAspectFit
@@ -28,6 +32,9 @@ class ArriveView: BaseView {
         $0.backgroundColor = .maincolor
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         backgroundColor = .green1
         

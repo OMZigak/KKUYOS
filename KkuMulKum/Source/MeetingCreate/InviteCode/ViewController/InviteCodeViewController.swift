@@ -8,10 +8,17 @@
 import UIKit
 
 class InviteCodeViewController: BaseViewController {
+    
+    
+    // MARK: Property
+
     private let inviteCodeViewModel: InviteCodeViewModel
     
     private let inviteCodeView: InviteCodeView = InviteCodeView()
     
+    
+    // MARK: Initialize
+
     init(viewModel: InviteCodeViewModel) {
         self.inviteCodeViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -21,6 +28,9 @@ class InviteCodeViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    // MARK: - LifeCycle
+
     override func loadView() {
         view = inviteCodeView
     }
@@ -32,6 +42,9 @@ class InviteCodeViewController: BaseViewController {
         setupTapGesture()
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         setupNavigationBarTitle(with: "내 모임 추가하기")
         setupNavigationBarBackButton()
@@ -55,6 +68,9 @@ class InviteCodeViewController: BaseViewController {
         inviteCodeView.inviteCodeTextField.returnKeyType = .done
     }
 }
+
+
+// MARK: - Extension
 
 extension InviteCodeViewController {
     private func setupBinding() {

@@ -8,8 +8,15 @@
 import UIKit
 
 class PromiseInfoViewController: BaseViewController {
+    
+    
+    // MARK: Property
+
     private let promiseInfoView: PromiseInfoView = PromiseInfoView()
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         view.addSubview(promiseInfoView)
         self.navigationController?.navigationBar.shadowImage = nil
@@ -25,6 +32,9 @@ class PromiseInfoViewController: BaseViewController {
     }
 }
 
+
+// MARK: - UICollectionViewDataSource
+
 extension PromiseInfoViewController: UICollectionViewDataSource {
     func collectionView(
         _ collectionView: UICollectionView,
@@ -33,6 +43,9 @@ extension PromiseInfoViewController: UICollectionViewDataSource {
         return 10
     }
 }
+
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension PromiseInfoViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(

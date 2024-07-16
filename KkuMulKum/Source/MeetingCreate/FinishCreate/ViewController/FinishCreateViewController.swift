@@ -8,6 +8,10 @@
 import UIKit
 
 class FinishCreateViewController: BaseViewController {
+    
+    
+    // MARK: Property
+
     private let peopleImageView: UIImageView = UIImageView().then {
         $0.image = .imgCreateGroup
         $0.contentMode = .scaleAspectFit
@@ -25,6 +29,9 @@ class FinishCreateViewController: BaseViewController {
         $0.backgroundColor = .maincolor
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         view.backgroundColor = .green1
         
@@ -71,8 +78,12 @@ class FinishCreateViewController: BaseViewController {
     }
 }
 
+
+// MARK: - Extension
+
 private extension FinishCreateViewController {
-    @objc func presentMeetingInfoViewControllerDidTapped() {
+    @objc 
+    func presentMeetingInfoViewControllerDidTapped() {
         // TODO: 모임 상세 화면 띄우기
     }
 }
