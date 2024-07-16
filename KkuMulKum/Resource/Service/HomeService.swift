@@ -30,7 +30,7 @@ final class MockHomeService: HomeServiceType {
         let mockData = NearestPromiseModel(
             id: 1,
             dDay: 0,
-            name: "꾸물이들의 냐미한 밤",
+            name: "꾸물이들 대환장 파티",
             meetingName: "꾸물이들",
             dressUpLevel: "냐미",
             date: "2024.07.16",

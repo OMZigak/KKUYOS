@@ -22,13 +22,13 @@ final class TodayPromiseView: BaseView {
         $0.distribution = .fill
     }
     
-    private let meetingNameLabel = UILabel().then {
-        $0.setText("꾸물이들", style: .caption02, color: .green3)
-    }
+    let meetingNameLabel = UILabel()
     
-    private let nameLabel = UILabel().then {
-        $0.setText("리프레쉬 데이", style: .body03, color: .gray8)
-    }
+    let nameLabel = UILabel()
+    
+    let placeNameLabel = UILabel()
+    
+    let timeLabel = UILabel()
     
     private let placeView = UIStackView(axis: .horizontal).then {
         $0.spacing = 4
@@ -54,14 +54,6 @@ final class TodayPromiseView: BaseView {
     
     private let timeIcon = UIImageView().then {
         $0.image = .iconTime
-    }
-    
-    private let placeNameLabel = UILabel().then {
-        $0.setText("용산역", style: .body06, color: .gray7)
-    }
-    
-    private let timeLabel = UILabel().then {
-        $0.setText("PM 2:00", style: .body06, color: .gray7)
     }
     
     private let lineView = UIView(backgroundColor: .gray2)

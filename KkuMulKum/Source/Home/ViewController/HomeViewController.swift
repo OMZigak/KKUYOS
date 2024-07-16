@@ -51,8 +51,11 @@ class HomeViewController: BaseViewController {
         updateUI()
         
         updateUserInfo()
+        updateNearestPromise()
         updateUpcomingPromise()
+        
         viewModel.requestLoginUser()
+        viewModel.requestNearestPromise()
         viewModel.requestUpcomingPromise()
     }
     
@@ -226,6 +229,34 @@ private extension HomeViewController {
                 case 4: self?.rootView.levelCharacterImage.image = .imgLevel04
                 default: break
                 }
+            }
+        }
+    }
+    
+    func updateNearestPromise() {
+        viewModel.nearestPromise.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                let data = self?.viewModel.nearestPromise.value
+                self?.rootView.todayPromiseView.meetingNameLabel.setText(
+                    data?.meetingName ?? "",
+                    style: .caption02,
+                    color: .green3
+                )
+                self?.rootView.todayPromiseView.nameLabel.setText(
+                    data?.name ?? "",
+                    style: .body03,
+                    color: .gray8
+                )
+                self?.rootView.todayPromiseView.placeNameLabel.setText(
+                    data?.placeName ?? "",
+                    style: .body06,
+                    color: .gray7
+                )
+                self?.rootView.todayPromiseView.timeLabel.setText(
+                    data?.time ?? "",
+                    style: .body06,
+                    color: .gray7
+                )
             }
         }
     }
