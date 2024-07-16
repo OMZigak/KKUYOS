@@ -579,22 +579,6 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
-		A3DD9C332C41BAD000E58A13 /* Cell */ = {
-			isa = PBXGroup;
-			children = (
-				A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */,
-			);
-			path = Cell;
-			sourceTree = "<group>";
-		};
-		A3DD9C352C41BAD000E58A13 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				A3DD9C342C41BAD000E58A13 /* MeetingDummyModel.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
 		A3DD9C372C41BAD000E58A13 /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -1430,7 +1414,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1510;
-				LastUpgradeCheck = 1510;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					78B928672C29402C006D9942 = {
 						CreatedOnToolsVersion = 15.1;
@@ -1509,7 +1493,6 @@
 				DE6D4D112C3F14D80005584B /* MeetingInfoBannerView.swift in Sources */,
 				DE6D4D122C3F14D80005584B /* MeetingInfoView.swift in Sources */,
 				DD30721E2C3C0CC800416D9F /* PromiseInfoResponseModel.swift in Sources */,
-				DD931B722C3DA92700526452 /* EnterReadyInfoButtonView.swift in Sources */,
 				DD41BEFF2C41DAA40095A068 /* TardyEmptyView.swift in Sources */,
 				A3FB18512C3BF531001483E5 /* RegisterMeetingsResquestModel.swift in Sources */,
 				DD8626632C4606A300E4F980 /* EnterReadyInfoButtonView.swift in Sources */,
@@ -1593,8 +1576,6 @@
 				DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */,
 				DD49099C2C441719003ED304 /* TardyService.swift in Sources */,
 				78BD61342C45B4A7005752FD /* AuthService.swift in Sources */,
-				782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */,
-				DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */,
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,
 				DD8626692C4606A300E4F980 /* ReadyStatusProgressView.swift in Sources */,
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
@@ -1611,7 +1592,6 @@
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
 				DD3976872C41C2AD00E2A4C4 /* TodayPromiseView.swift in Sources */,
 				789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */,
-				782B40752C3DBFBA008B0CA7 /* ProfileSetupView.swift in Sources */,
 				782B40752C3DBFBA008B0CA7 /* ProfileSetupView.swift in Sources */,
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
 				A3DD9C402C41BAD000E58A13 /* MeetingListViewController.swift in Sources */,

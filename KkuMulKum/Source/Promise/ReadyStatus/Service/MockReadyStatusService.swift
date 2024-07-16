@@ -35,21 +35,21 @@ final class MockReadyStatusService: CreateMeetingServiceType {
                     memberId: 3,
                     name: "안꾸물이",
                     state: "도착", 
-                    profileImg: nil
+                    profileImageURL: nil
                 ),
                 Participant(
                     participantId: 2,
                     memberId: 4,
                     name: "꾸우우우웅물이",
                     state: "도착", 
-                    profileImg: nil
+                    profileImageURL: nil
                 ),
                 Participant(
                     participantId: 3,
                     memberId: 5,
                     name: "꾸물이",
                     state: "이동중", 
-                    profileImg: nil
+                    profileImageURL: nil
                 )
             ]
         )

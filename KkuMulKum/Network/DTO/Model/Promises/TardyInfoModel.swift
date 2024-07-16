@@ -20,7 +20,7 @@ struct Comer: Codable {
     let participantId: Int
     let name, profileImageURL: String
     
-    enum CodingKeys: CodingKey {
+    enum CodingKeys: String, CodingKey {
         case participantId
         case name
         case profileImageURL = "profileImg"

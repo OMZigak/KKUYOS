@@ -20,11 +20,11 @@ struct Participant: Codable {
     let name, state: String
     let profileImageURL: String?
     
-    enum CodingKeys: CodingKey {
+    enum CodingKeys: String, CodingKey {
         case participantId
         case memberId
         case name
         case state
-        case profileImageURL: "profileImg"
+        case profileImageURL = "profileImg"
     }
 }
