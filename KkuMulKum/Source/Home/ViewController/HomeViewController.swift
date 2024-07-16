@@ -50,7 +50,9 @@ class HomeViewController: BaseViewController {
         register()
         updateUI()
         
+        updateUserInfo()
         updateUpcomingPromise()
+        viewModel.requestLoginUser()
         viewModel.requestUpcomingPromise()
     }
     
@@ -166,6 +168,53 @@ private extension HomeViewController {
         )
     }
     
+    func updateUI() {
+        viewModel.currentState.bind { [weak self] state in
+            switch state {
+            case .prepare:
+                self?.setPrepareUI()
+            case .move:
+                self?.setMoveUI()
+            case .arrive:
+                self?.setArriveUI()
+            case .none:
+                break
+            }
+        }
+    }
+    
+    func updateUserInfo() {
+        viewModel.loginUser.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                let data = self?.viewModel.loginUser.value
+                self?.rootView.kkumulLabel.setText(
+                    "\(data?.name ?? "") 님,\n\(data?.promiseCount ?? 0)번의 약속에서\n\(data?.tardyCount ?? 0)번 꾸물거렸어요!",
+                    style: .title02,
+                    color: .white
+                )
+                self?.rootView.kkumulLabel.setHighlightText(
+                    "\(data?.name ?? "") 님,",
+                    style: .title00,
+                    color: .white
+                )
+                self?.rootView.kkumulLabel.setHighlightText(
+                    "\(data?.promiseCount ?? 0)번",
+                    "\(data?.tardyCount ?? 0)번",
+                    style: .title00,
+                    color: .lightGreen
+                )
+            }
+        }
+    }
+    
+    func updateUpcomingPromise() {
+        viewModel.upcomingPromiseList.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.rootView.upcomingPromiseView.reloadData()
+            }
+        }
+    }
+    
     func setDisableButton(_ sender: UIButton) {
         sender.setTitleColor(.gray3, for: .normal)
         sender.layer.borderColor = UIColor.gray3.cgColor
@@ -188,29 +237,6 @@ private extension HomeViewController {
         sender.setTitleColor(.white, for: .normal)
         sender.layer.borderColor = UIColor.maincolor.cgColor
         sender.backgroundColor = .maincolor
-    }
-    
-    func updateUI() {
-        viewModel.currentState.bind { [weak self] state in
-            switch state {
-            case .prepare:
-                self?.setPrepareUI()
-            case .move:
-                self?.setMoveUI()
-            case .arrive:
-                self?.setArriveUI()
-            case .none:
-                break
-            }
-        }
-    }
-    
-    func updateUpcomingPromise() {
-        viewModel.upcomingPromiseList.bind { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.rootView.upcomingPromiseView.reloadData()
-            }
-        }
     }
     
     func setPrepareUI() {

@@ -30,11 +30,7 @@ final class HomeView: BaseView {
         $0.image = .imgLogo
     }
     
-    private let kkumulLabel = UILabel().then {
-        $0.setText("꾸물리안 님,\n14번의 약속에서\n10번 꾸물거렸어요!", style: .title02, color: .white)
-        $0.setHighlightText("꾸물리안 님,", style: .title00, color: .white)
-        $0.setHighlightText("14번", "10번", style: .title00, color: .lightGreen)
-    }
+    let kkumulLabel = UILabel()
     
     private let levelView = UIStackView(axis: .horizontal).then {
         $0.backgroundColor = .white
@@ -43,7 +39,7 @@ final class HomeView: BaseView {
         $0.distribution = .fill
     }
     
-    private let levelLabel = UILabel().then {
+    let levelLabel = UILabel().then {
         $0.setText("Lv.0 새끼 꾸물이", style: .caption01, color: .gray6)
         $0.setHighlightText("Lv.0", style: .caption01, color: .maincolor)
     }
@@ -52,7 +48,7 @@ final class HomeView: BaseView {
         $0.image = .imgBoard
     }
     
-    private let levelCaptionLabel = UILabel().then {
+    let levelCaptionLabel = UILabel().then {
         $0.setText(
             "아직 한번도 정시에 도착하지 못했어요!\n정시 도착으로 캐릭터를 성장시켜 보세요",
             style: .label01,
@@ -235,3 +231,12 @@ final class HomeView: BaseView {
         }
     }
 }
+
+//extension HomeView {
+//    func dataBind(_ data: LoginUserModel) {
+//        kkumulLabel.setText("\(data.name) 님,\n\(data.promiseCount)번의 약속에서\n\(data.tardyCount)번 꾸물거렸어요!", style: .title02, color: .white)
+//        kkumulLabel.setHighlightText("\(data.name) 님,", style: .title00, color: .white)
+//        kkumulLabel.setHighlightText("\(data.promiseCount)번", "\(data.tardyCount)번", style: .title00, color: .lightGreen)
+//        levelLabel.setText("Lv.\(data.level) \(viewModel.levelName)", style: .caption01, color: .gray6)
+//    }
+//}
