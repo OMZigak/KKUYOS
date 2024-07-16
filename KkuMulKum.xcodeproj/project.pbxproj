@@ -716,7 +716,7 @@
 		DD3976912C41CAF900E2A4C4 /* PromiseInfo */ = {
 			isa = PBXGroup;
 			children = (
-				DDB0D7D62C46C49A000CF782 /* Service */,
+				DDB0D7DA2C46D43A000CF782 /* Service */,
 				DD3976922C41CBD900E2A4C4 /* ViewController */,
 				DDB0D7D92C46C5FF000CF782 /* ViewModel */,
 				DD3976932C41CBDF00E2A4C4 /* View */,
@@ -1012,21 +1012,20 @@
 			path = Promise;
 			sourceTree = "<group>";
 		};
-		DDB0D7D62C46C49A000CF782 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				DDB0D7D42C46C496000CF782 /* PromiseInfoService.swift */,
-			);
-			name = Service;
-			path = "ㄴㄷㄱ퍛ㄷ";
-			sourceTree = "<group>";
-		};
 		DDB0D7D92C46C5FF000CF782 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				DDB0D7D72C46C5FA000CF782 /* PromiseInfoViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DDB0D7DA2C46D43A000CF782 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				DDB0D7D42C46C496000CF782 /* PromiseInfoService.swift */,
+			);
+			path = Service;
 			sourceTree = "<group>";
 		};
 		DDFA50782C4693BD000A62E2 /* Profile */ = {
