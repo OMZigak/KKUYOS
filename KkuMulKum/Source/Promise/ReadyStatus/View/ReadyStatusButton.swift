@@ -15,7 +15,7 @@ enum ReadyStatus {
 }
 
 class ReadyStatusButton: UIButton {
-    init(title: String,readyStatus: ReadyStatus) {
+    init(title: String, readyStatus: ReadyStatus) {
         super.init(frame: .zero)
         
         setupButton(title, readyStatus)
@@ -30,7 +30,7 @@ class ReadyStatusButton: UIButton {
     }
 }
 
-private extension ReadyStatusButton {
+extension ReadyStatusButton {
     func setupButton(
         _ title: String,
         _ readyStatus: ReadyStatus
@@ -42,7 +42,7 @@ private extension ReadyStatusButton {
             setTitle(title, style: .body05, color: .gray3)
         case .ready:
             self.backgroundColor = .white
-            self.layer.borderColor = UIColor.gray3.cgColor
+            self.layer.borderColor = UIColor.maincolor.cgColor
             setTitle(title, style: .body05, color: .maincolor)
         case .move:
             self.backgroundColor = .green2
@@ -53,18 +53,5 @@ private extension ReadyStatusButton {
             self.layer.borderColor = UIColor.maincolor.cgColor
             setTitle(title, style: .body05, color: .white)
         }
-    }
-    
-    func updateButtonColor() {
-        backgroundColor = isEnabled ? .maincolor : .gray2
-    }
-    
-    @objc
-    func buttonPressed() {
-    }
-    
-    @objc
-    func buttonReleased() {
-        updateButtonColor()
     }
 }
