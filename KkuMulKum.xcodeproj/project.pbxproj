@@ -135,6 +135,7 @@
 		DDAF1C912C3D6E3D008A37D3 /* TardyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */; };
 		DDAF1C922C3D6E3D008A37D3 /* PromiseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */; };
 		DDAF1C932C3D6E3D008A37D3 /* PagePromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8D2C3D6E3D008A37D3 /* PagePromiseViewController.swift */; };
+		DDB0D7D32C469C77000CF782 /* PagePromiseSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB0D7D22C469C77000CF782 /* PagePromiseSegmentedControl.swift */; };
 		DDFA507F2C4693BD000A62E2 /* ProfileSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507A2C4693BD000A62E2 /* ProfileSetupViewModel.swift */; };
 		DDFA50802C4693BD000A62E2 /* ProfileSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507C2C4693BD000A62E2 /* ProfileSetupView.swift */; };
 		DDFA50812C4693BD000A62E2 /* ProfileSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507E2C4693BD000A62E2 /* ProfileSetupViewController.swift */; };
@@ -280,11 +281,11 @@
 		DD931B752C3DC16100526452 /* PromiseInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoView.swift; sourceTree = "<group>"; };
 		DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
-		DDAF1C892C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseSegmentedControl.swift; sourceTree = "<group>"; };
 		DDAF1C8A2C3D6E3D008A37D3 /* PagePromiseViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseViewModel.swift; sourceTree = "<group>"; };
 		DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TardyViewController.swift; sourceTree = "<group>"; };
 		DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseInfoViewController.swift; sourceTree = "<group>"; };
 		DDAF1C8D2C3D6E3D008A37D3 /* PagePromiseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseViewController.swift; sourceTree = "<group>"; };
+		DDB0D7D22C469C77000CF782 /* PagePromiseSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseSegmentedControl.swift; sourceTree = "<group>"; };
 		DDFA507A2C4693BD000A62E2 /* ProfileSetupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewModel.swift; sourceTree = "<group>"; };
 		DDFA507C2C4693BD000A62E2 /* ProfileSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupView.swift; sourceTree = "<group>"; };
 		DDFA507E2C4693BD000A62E2 /* ProfileSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewController.swift; sourceTree = "<group>"; };
@@ -703,7 +704,7 @@
 		DD3976902C41CACF00E2A4C4 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				DDAF1C892C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift */,
+				DDB0D7D22C469C77000CF782 /* PagePromiseSegmentedControl.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1561,6 +1562,7 @@
 				78BD612F2C4561B9005752FD /* KeychainAccessible.swift in Sources */,
 				DD39768A2C41C2AD00E2A4C4 /* HomeViewController.swift in Sources */,
 				DED5DBF42C34539A006ECE7E /* BaseTableViewCell.swift in Sources */,
+				DDB0D7D32C469C77000CF782 /* PagePromiseSegmentedControl.swift in Sources */,
 				78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */,
 				DD39766F2C41B54400E2A4C4 /* InviteCodeService.swift in Sources */,
 				DE6D4D172C3F14D80005584B /* MeetingInfoViewModel.swift in Sources */,
