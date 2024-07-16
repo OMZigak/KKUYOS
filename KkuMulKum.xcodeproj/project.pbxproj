@@ -64,6 +64,9 @@
 		78BD61202C43F557005752FD /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 78BD611F2C43F557005752FD /* SwiftKeychainWrapper */; };
 		78BD61272C446A97005752FD /* LoginTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61262C446A97005752FD /* LoginTargetType.swift */; };
 		78BD612B2C4550A6005752FD /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD612A2C4550A6005752FD /* Bundle.swift */; };
+		78BD612F2C4561B9005752FD /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD612E2C4561B9005752FD /* KeychainAccessible.swift */; };
+		78BD61312C456799005752FD /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61302C456799005752FD /* KeychainService.swift */; };
+		78BD61342C45B4A7005752FD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61332C45B4A7005752FD /* AuthService.swift */; };
 		A3DD9C3D2C41BAD000E58A13 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */; };
 		A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */; };
 		A3DD9C402C41BAD000E58A13 /* MeetingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */; };
@@ -214,6 +217,9 @@
 		78B928792C29402E006D9942 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78BD61262C446A97005752FD /* LoginTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTargetType.swift; sourceTree = "<group>"; };
 		78BD612A2C4550A6005752FD /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
+		78BD612E2C4561B9005752FD /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
+		78BD61302C456799005752FD /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		78BD61332C45B4A7005752FD /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
 		A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListView.swift; sourceTree = "<group>"; };
 		A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListViewController.swift; sourceTree = "<group>"; };
@@ -554,6 +560,39 @@
 				78BD612A2C4550A6005752FD /* Bundle.swift */,
 			);
 			path = Bundle;
+			sourceTree = "<group>";
+		};
+		78BD612D2C456162005752FD /* KeyChain */ = {
+			isa = PBXGroup;
+			children = (
+				78BD612E2C4561B9005752FD /* KeychainAccessible.swift */,
+				78BD61302C456799005752FD /* KeychainService.swift */,
+			);
+			path = KeyChain;
+			sourceTree = "<group>";
+		};
+		78BD61322C45B4A7005752FD /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				78BD61332C45B4A7005752FD /* AuthService.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		A3DD9C332C41BAD000E58A13 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		A3DD9C352C41BAD000E58A13 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				A3DD9C342C41BAD000E58A13 /* MeetingDummyModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		A3DD9C372C41BAD000E58A13 /* View */ = {
@@ -970,6 +1009,7 @@
 		DD865B662C39210E00C351A2 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				78BD61322C45B4A7005752FD /* Service */,
 				789873372C3D1B4800435E96 /* ViewController */,
 				789873362C3D1B3900435E96 /* VIewModel */,
 				789873352C3D1B3000435E96 /* View */,
@@ -1071,6 +1111,7 @@
 		DE254AA32C31107C00A4015E /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				78BD612D2C456162005752FD /* KeyChain */,
 				78BD612C2C455680005752FD /* Bundle */,
 				A3DD9C642C45B30600E58A13 /* Service */,
 				DEBA03302C3C2972002ED8F2 /* ViewController.swift */,
@@ -1468,6 +1509,7 @@
 				DE6D4D112C3F14D80005584B /* MeetingInfoBannerView.swift in Sources */,
 				DE6D4D122C3F14D80005584B /* MeetingInfoView.swift in Sources */,
 				DD30721E2C3C0CC800416D9F /* PromiseInfoResponseModel.swift in Sources */,
+				DD931B722C3DA92700526452 /* EnterReadyInfoButtonView.swift in Sources */,
 				DD41BEFF2C41DAA40095A068 /* TardyEmptyView.swift in Sources */,
 				A3FB18512C3BF531001483E5 /* RegisterMeetingsResquestModel.swift in Sources */,
 				DD8626632C4606A300E4F980 /* EnterReadyInfoButtonView.swift in Sources */,
@@ -1534,6 +1576,7 @@
 				DEBA032F2C3C24F2002ED8F2 /* ModelType.swift in Sources */,
 				789AD4B52C3C0147002E2688 /* ResissueResponseModel.swift in Sources */,
 				DE6D4D0F2C3F14D80005584B /* MeetingInfoService.swift in Sources */,
+				78BD612F2C4561B9005752FD /* KeychainAccessible.swift in Sources */,
 				DD39768A2C41C2AD00E2A4C4 /* HomeViewController.swift in Sources */,
 				DED5DBF42C34539A006ECE7E /* BaseTableViewCell.swift in Sources */,
 				78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */,
@@ -1549,6 +1592,7 @@
 				782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */,
 				DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */,
 				DD49099C2C441719003ED304 /* TardyService.swift in Sources */,
+				78BD61342C45B4A7005752FD /* AuthService.swift in Sources */,
 				782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */,
 				DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */,
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,
@@ -1563,6 +1607,7 @@
 				DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */,
 				DD3976882C41C2AD00E2A4C4 /* UpcomingEmptyView.swift in Sources */,
 				DD931B762C3DC16100526452 /* PromiseInfoView.swift in Sources */,
+				78BD61312C456799005752FD /* KeychainService.swift in Sources */,
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,
 				DD3976872C41C2AD00E2A4C4 /* TodayPromiseView.swift in Sources */,
 				789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */,
