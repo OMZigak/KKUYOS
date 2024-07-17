@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 특정 모임에 대한 약속 목록 (Response)
 struct MeetingPromisesModel: ResponseModelType {
     let promises: [MeetingPromise]
 }
