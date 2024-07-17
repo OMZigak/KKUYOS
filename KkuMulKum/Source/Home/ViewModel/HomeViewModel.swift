@@ -19,9 +19,9 @@ enum ReadyState {
 final class HomeViewModel {
     var currentState = ObservablePattern<ReadyState>(.none)
     
-    var loginUser = ObservablePattern<LoginUserModel?>(nil)
-    var nearestPromise = ObservablePattern<NearestPromiseModel?>(nil)
-    var upcomingPromiseList = ObservablePattern<UpcomingPromiseListModel?>(nil)
+    var loginUser = ObservablePattern<ResponseBodyDTO<LoginUserModel>?>(nil)
+    var nearestPromise = ObservablePattern<ResponseBodyDTO<NearestPromiseModel>?>(nil)
+    var upcomingPromiseList = ObservablePattern<ResponseBodyDTO<UpcomingPromiseListModel>?>(nil)
     
     var levelName = ObservablePattern<String>("")
     var levelCaption = ObservablePattern<String>("")
@@ -86,8 +86,8 @@ final class HomeViewModel {
     
     func requestLoginUser() {
         loginUser.value = service.fetchLoginUser()
-        levelName.value = getLevelName(level: loginUser.value?.level ?? 1)
-        levelCaption.value = getLevelCaption(level: loginUser.value?.level ?? 1)
+        levelName.value = getLevelName(level: loginUser.value?.data?.level ?? 1)
+        levelCaption.value = getLevelCaption(level: loginUser.value?.data?.level ?? 1)
     }
     
     func requestNearestPromise() {

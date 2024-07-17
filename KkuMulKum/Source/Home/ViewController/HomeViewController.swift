@@ -126,7 +126,7 @@ extension HomeViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return viewModel.upcomingPromiseList.value?.promises.count ?? 0
+        return viewModel.upcomingPromiseList.value?.data?.promises.count ?? 0
     }
     
     func collectionView(
@@ -137,7 +137,7 @@ extension HomeViewController: UICollectionViewDataSource {
             withReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier, 
             for: indexPath
         ) as? UpcomingPromiseCollectionViewCell else { return UICollectionViewCell() }
-        if let data = viewModel.upcomingPromiseList.value?.promises[indexPath.item] {
+        if let data = viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item] {
             cell.dataBind(data)
         }
         return cell
@@ -192,28 +192,28 @@ private extension HomeViewController {
                 let data = self?.viewModel.loginUser.value
                 
                 self?.rootView.kkumulLabel.setText(
-                    "\(data?.name ?? "") 님,\n\(data?.promiseCount ?? 0)번의 약속에서\n\(data?.tardyCount ?? 0)번 꾸물거렸어요!",
+                    "\(data?.data?.name ?? "") 님,\n\(data?.data?.promiseCount ?? 0)번의 약속에서\n\(data?.data?.tardyCount ?? 0)번 꾸물거렸어요!",
                     style: .title02,
                     color: .white
                 )
                 self?.rootView.kkumulLabel.setHighlightText(
-                    "\(data?.name ?? "") 님,",
+                    "\(data?.data?.name ?? "") 님,",
                     style: .title00,
                     color: .white
                 )
                 self?.rootView.kkumulLabel.setHighlightText(
-                    "\(data?.promiseCount ?? 0)번",
-                    "\(data?.tardyCount ?? 0)번",
+                    "\(data?.data?.promiseCount ?? 0)번",
+                    "\(data?.data?.tardyCount ?? 0)번",
                     style: .title00,
                     color: .lightGreen
                 )
                 self?.rootView.levelLabel.setText(
-                    "Lv.\(data?.level ?? 0) \(self?.viewModel.levelName.value ?? "")",
+                    "Lv.\(data?.data?.level ?? 0) \(self?.viewModel.levelName.value ?? "")",
                     style: .caption01,
                     color: .gray6
                 )
                 self?.rootView.levelLabel.setHighlightText(
-                    "Lv.\(data?.level ?? 0)",
+                    "Lv.\(data?.data?.level ?? 0)",
                     style: .caption01,
                     color: .maincolor
                 )
@@ -222,7 +222,7 @@ private extension HomeViewController {
                     style: .label01,
                     color: .white
                 )
-                switch data?.level {
+                switch data?.data?.level {
                 case 1: self?.rootView.levelCharacterImage.image = .imgLevel01
                 case 2: self?.rootView.levelCharacterImage.image = .imgLevel02
                 case 3: self?.rootView.levelCharacterImage.image = .imgLevel03
@@ -238,22 +238,22 @@ private extension HomeViewController {
             DispatchQueue.main.async {
                 let data = self?.viewModel.nearestPromise.value
                 self?.rootView.todayPromiseView.meetingNameLabel.setText(
-                    data?.meetingName ?? "",
+                    data?.data?.meetingName ?? "",
                     style: .caption02,
                     color: .green3
                 )
                 self?.rootView.todayPromiseView.nameLabel.setText(
-                    data?.name ?? "",
+                    data?.data?.name ?? "",
                     style: .body03,
                     color: .gray8
                 )
                 self?.rootView.todayPromiseView.placeNameLabel.setText(
-                    data?.placeName ?? "",
+                    data?.data?.placeName ?? "",
                     style: .body06,
                     color: .gray7
                 )
                 self?.rootView.todayPromiseView.timeLabel.setText(
-                    data?.time ?? "",
+                    data?.data?.time ?? "",
                     style: .body06,
                     color: .gray7
                 )

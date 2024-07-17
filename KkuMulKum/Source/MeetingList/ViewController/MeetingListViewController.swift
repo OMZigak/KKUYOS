@@ -67,7 +67,7 @@ class MeetingListViewController: BaseViewController {
             DispatchQueue.main.async {
                 self?.rootView.tableView.reloadData()
                 self?.rootView.infoLabel.setText(
-                    "꾸물리안이 가입한 모임은\n총 \(self?.viewModel.meetingList.value?.count ?? 0)개예요!",
+                    "꾸물리안이 가입한 모임은\n총 \(self?.viewModel.meetingList.value?.data?.count ?? 0)개예요!",
                     style: .head01,
                     color: .gray8
                 )
@@ -90,14 +90,14 @@ extension MeetingListViewController: UITableViewDelegate {
 
 extension MeetingListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.meetingList.value?.count ?? 0
+        return viewModel.meetingList.value?.data?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = rootView.tableView.dequeueReusableCell(
             withIdentifier: MeetingTableViewCell.reuseIdentifier, for: indexPath
         ) as? MeetingTableViewCell else { return UITableViewCell() }
-        if let data = viewModel.meetingList.value?.meetings[indexPath.item] {
+        if let data = viewModel.meetingList.value?.data?.meetings[indexPath.item] {
             cell.dataBind(data)
         }
         cell.selectionStyle = .none
