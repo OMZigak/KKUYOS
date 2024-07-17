@@ -87,6 +87,17 @@ extension MeetingListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return Screen.height(88)
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let viewController = MeetingInfoViewController(
+            viewModel: MeetingInfoViewModel(
+                meetingID: 1,
+                service: MockMeetingInfoService()
+            )
+        )
+        
+        tabBarController?.navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 
@@ -107,14 +118,5 @@ extension MeetingListViewController: UITableViewDataSource {
         //cell.dataBind(viewModel.meetingList.value?[indexPath.item])
         cell.selectionStyle = .none
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let basePromiseViewController = PagePromiseViewController()
-        
-        basePromiseViewController.modalPresentationStyle = .fullScreen
-        
-        // TODO: 추후 네비게이션 여부 정해지면 맞춰서 수정
-        present(basePromiseViewController, animated: false)
     }
 }

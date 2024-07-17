@@ -89,7 +89,8 @@ class LoginViewController: BaseViewController {
     }
    
     @objc private func dummyNextButtonTapped() {
-        let viewController = MainTabBarController()
+        let viewController = UINavigationController(rootViewController: MainTabBarController())
+        viewController.isNavigationBarHidden = true
         viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
     }

@@ -22,7 +22,6 @@ final class MainTabBarController: UITabBarController {
     
     // MARK: - Functions
     
-    
     private func setTabBar() {
         let homeViewController: HomeViewController = HomeViewController().then {
             $0.tabBarItem.title = "홈"

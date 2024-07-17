@@ -10,7 +10,7 @@
 
 import Foundation
 
-struct AddPromiseModel: RequestModelType {
+struct AddPromiseRequestModel: RequestModelType {
     let name, placeName, address, roadAddress, time, dressUpLevel, penalty: String
     let x, y: Double
     let id: Int
