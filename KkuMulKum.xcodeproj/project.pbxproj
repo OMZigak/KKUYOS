@@ -71,6 +71,7 @@
 		A3DD9C402C41BAD000E58A13 /* MeetingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */; };
 		A3DD9C412C41BAD000E58A13 /* MeetingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C3A2C41BAD000E58A13 /* MeetingListViewModel.swift */; };
 		A3DD9C622C455E3300E58A13 /* MeetingListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C612C455E3300E58A13 /* MeetingListService.swift */; };
+		A3DD9C682C45C78300E58A13 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C672C45C78300E58A13 /* HomeService.swift */; };
 		A3FB184D2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */; };
 		A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */; };
 		A3FB18512C3BF531001483E5 /* RegisterMeetingsResquestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18502C3BF531001483E5 /* RegisterMeetingsResquestModel.swift */; };
@@ -91,7 +92,6 @@
 		DD3976732C41B6C800E2A4C4 /* MockCreateMeetingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3976722C41B6C800E2A4C4 /* MockCreateMeetingService.swift */; };
 		DD3976832C41C2AD00E2A4C4 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3976772C41C2AD00E2A4C4 /* HomeViewModel.swift */; };
 		DD3976842C41C2AD00E2A4C4 /* UpcomingPromiseCollecitonViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3976792C41C2AD00E2A4C4 /* UpcomingPromiseCollecitonViewCell.swift */; };
-		DD3976852C41C2AD00E2A4C4 /* UpcomingPromiseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39767B2C41C2AD00E2A4C4 /* UpcomingPromiseModel.swift */; };
 		DD3976862C41C2AD00E2A4C4 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39767D2C41C2AD00E2A4C4 /* HomeView.swift */; };
 		DD3976872C41C2AD00E2A4C4 /* TodayPromiseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39767E2C41C2AD00E2A4C4 /* TodayPromiseView.swift */; };
 		DD3976882C41C2AD00E2A4C4 /* UpcomingEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39767F2C41C2AD00E2A4C4 /* UpcomingEmptyView.swift */; };
@@ -253,6 +253,7 @@
 		A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListViewController.swift; sourceTree = "<group>"; };
 		A3DD9C3A2C41BAD000E58A13 /* MeetingListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListViewModel.swift; sourceTree = "<group>"; };
 		A3DD9C612C455E3300E58A13 /* MeetingListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListService.swift; sourceTree = "<group>"; };
+		A3DD9C672C45C78300E58A13 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
 		A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsRequestModel.swift; sourceTree = "<group>"; };
 		A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsResponseModel.swift; sourceTree = "<group>"; };
 		A3FB18502C3BF531001483E5 /* RegisterMeetingsResquestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMeetingsResquestModel.swift; sourceTree = "<group>"; };
@@ -273,7 +274,6 @@
 		DD3976722C41B6C800E2A4C4 /* MockCreateMeetingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCreateMeetingService.swift; sourceTree = "<group>"; };
 		DD3976772C41C2AD00E2A4C4 /* HomeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		DD3976792C41C2AD00E2A4C4 /* UpcomingPromiseCollecitonViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpcomingPromiseCollecitonViewCell.swift; sourceTree = "<group>"; };
-		DD39767B2C41C2AD00E2A4C4 /* UpcomingPromiseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpcomingPromiseModel.swift; sourceTree = "<group>"; };
 		DD39767D2C41C2AD00E2A4C4 /* HomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		DD39767E2C41C2AD00E2A4C4 /* TodayPromiseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayPromiseView.swift; sourceTree = "<group>"; };
 		DD39767F2C41C2AD00E2A4C4 /* UpcomingEmptyView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpcomingEmptyView.swift; sourceTree = "<group>"; };
@@ -627,6 +627,7 @@
 			children = (
 				78BD61332C45B4A7005752FD /* AuthService.swift */,
 				A3DD9C612C455E3300E58A13 /* MeetingListService.swift */,
+				A3DD9C672C45C78300E58A13 /* HomeService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -677,7 +678,6 @@
 				DD3976762C41C2AD00E2A4C4 /* ViewModel */,
 				DD3976812C41C2AD00E2A4C4 /* ViewController */,
 				DD39767C2C41C2AD00E2A4C4 /* View */,
-				DD39767A2C41C2AD00E2A4C4 /* Model */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -688,14 +688,6 @@
 				DD3976772C41C2AD00E2A4C4 /* HomeViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		DD39767A2C41C2AD00E2A4C4 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				DD39767B2C41C2AD00E2A4C4 /* UpcomingPromiseModel.swift */,
-			);
-			path = Model;
 			sourceTree = "<group>";
 		};
 		DD39767C2C41C2AD00E2A4C4 /* View */ = {
@@ -1651,6 +1643,7 @@
 				DE6D4D112C3F14D80005584B /* MeetingInfoBannerView.swift in Sources */,
 				DE6D4D122C3F14D80005584B /* MeetingInfoView.swift in Sources */,
 				DD30721E2C3C0CC800416D9F /* PromiseInfoResponseModel.swift in Sources */,
+				DD931B722C3DA92700526452 /* EnterReadyInfoButtonView.swift in Sources */,
 				DD41BEFF2C41DAA40095A068 /* TardyEmptyView.swift in Sources */,
 				A3FB18512C3BF531001483E5 /* RegisterMeetingsResquestModel.swift in Sources */,
 				DD8626632C4606A300E4F980 /* EnterReadyInfoButtonView.swift in Sources */,
@@ -1707,6 +1700,8 @@
 				DD3976832C41C2AD00E2A4C4 /* HomeViewModel.swift in Sources */,
 				DE9E189A2C3BCCBE00DB76B4 /* PlaceModel.swift in Sources */,
 				DD41BF012C41DE4F0095A068 /* TardyCollectionViewCell.swift in Sources */,
+				DE9E189A2C3BCCBE00DB76B4 /* UtilsTemp.swift in Sources */,
+				A3DD9C682C45C78300E58A13 /* HomeService.swift in Sources */,
 				782B407B2C3E395A008B0CA7 /* WelcomeView.swift in Sources */,
 				DD8626612C4606A300E4F980 /* SetReadyInfoViewModel.swift in Sources */,
 				DD3072142C3BF87A00416D9F /* NearestPromiseResponseModel.swift in Sources */,
@@ -1745,6 +1740,11 @@
 				DD41BEFC2C41D54D0095A068 /* TardyPenaltyView.swift in Sources */,
 				789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */,
 				78BD61342C45B4A7005752FD /* AuthService.swift in Sources */,
+				782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */,
+				DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */,
+				DD49099C2C441719003ED304 /* TardyService.swift in Sources */,
+				782B40722C3DBFA3008B0CA7 /* ProfileSetupViewModel.swift in Sources */,
+				DDAF1C8F2C3D6E3D008A37D3 /* PagePromiseSegmentedControl.swift in Sources */,
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,
 				DD8626692C4606A300E4F980 /* ReadyStatusProgressView.swift in Sources */,
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
