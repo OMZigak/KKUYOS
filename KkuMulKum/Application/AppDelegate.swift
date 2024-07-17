@@ -77,10 +77,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
     
-    static func getFCMToken() -> String? {
-          return UserDefaults.standard.string(forKey: "FCMToken")
-      }
-    
     func setupFirebase(application: UIApplication) {
         FirebaseApp.configure()
         FirebaseConfiguration.shared.setLoggerLevel(.min)
@@ -108,14 +104,11 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
         }
     }
     
-    
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
         print("Firebase registration token: \(String(describing: fcmToken))")
         
         if let token = fcmToken {
             UserDefaults.standard.set(token, forKey: "FCMToken")
-            UserDefaults.standard.synchronize()
-            print("New FCM token saved: \(token)")
         }
     }
     

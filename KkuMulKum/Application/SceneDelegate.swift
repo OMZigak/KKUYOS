@@ -6,10 +6,12 @@
 //
 
 import UIKit
+
 import KakaoSDKAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
+    let loginViewModel = LoginViewModel()
     
     func scene(
         _ scene: UIScene,
@@ -18,8 +20,35 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
-        self.window?.rootViewController = LoginViewController()
-        self.window?.makeKeyAndVisible()
+        performAutoLogin()
+    }
+    
+    private func performAutoLogin() {
+        loginViewModel.autoLogin { [weak self] success in
+            DispatchQueue.main.async {
+                if success {
+                    self?.showMainScreen()
+                    print("showMainScreen")
+                } else {
+                    self?.showLoginScreen()
+                    print("showLoginScreen")
+                }
+            }
+        }
+    }
+    
+    private func showMainScreen() {
+        let mainTabBarController = MainTabBarController()
+        let navigationController = UINavigationController(rootViewController: mainTabBarController)
+        navigationController.isNavigationBarHidden = true
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
+    }
+    
+    private func showLoginScreen() {
+        let loginViewController = LoginViewController()
+        window?.rootViewController = loginViewController
+        window?.makeKeyAndVisible()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -28,17 +57,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 _ = AuthController.handleOpenUrl(url: url)
             }
         }
-    }
-    
-    func application(
-        _ app: UIApplication,
-        open url: URL,
-        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
-    ) -> Bool {
-        if (AuthApi.isKakaoTalkLoginUrl(url)) {
-            return AuthController.handleOpenUrl(url: url)
-        }
-        return false
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {}
