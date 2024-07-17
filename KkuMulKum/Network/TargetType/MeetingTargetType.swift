@@ -19,24 +19,26 @@ enum MeetingTargetType {
 
 extension MeetingTargetType: TargetType {
     var baseURL: URL {
-        guard let baseURL = URL(string: "/api/v1/meetings") else {
-            fatalError("Error: Invalid Meeting BaseURL")
+        guard let privacyInfo = Bundle.main.privacyInfo,
+              let urlString = privacyInfo["BASE_URL"] as? String,
+              let url = URL(string: urlString) else {
+            fatalError("Invalid BASE_URL in PrivacyInfo.plist")
         }
-        return baseURL
+        return url
     }
     
     var path: String {
         switch self {
         case .createMeeting:
-            return ""
+            return "/api/v1/meetings"
         case .joinMeeting:
-            return "/register"
+            return "/api/v1/meetings/register"
         case .fetchMeetingList:
-            return ""
+            return "/api/v1/meetings"
         case  .fetchMeetingInfo(meetingID: let meetingID):
-            return "/\(meetingID)"
+            return "/api/v1/meetings/\(meetingID)"
         case .fetchMeetingMember(meetingID: let meetingID):
-            return "/\(meetingID)/members"
+            return "/api/v1/meetings/\(meetingID)/members"
         }
     }
     

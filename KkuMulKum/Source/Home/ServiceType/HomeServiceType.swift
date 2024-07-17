@@ -1,11 +1,13 @@
 //
-//  HomeService.swift
+//  HomeServiceType.swift
 //  KkuMulKum
 //
-//  Created by 예삐 on 7/16/24.
+//  Created by YOUJIM on 7/18/24.
 //
 
 import Foundation
+
+import Moya
 
 protocol HomeServiceType {
     func fetchLoginUser() -> ResponseBodyDTO<LoginUserModel>
@@ -18,7 +20,7 @@ final class MockHomeService: HomeServiceType {
         let mockData = ResponseBodyDTO<LoginUserModel>(
             success: true,
             data: LoginUserModel(
-                userID: 1, 
+                userID: 1,
                 name: "꾸물리안",
                 level: 4,
                 promiseCount: 8,

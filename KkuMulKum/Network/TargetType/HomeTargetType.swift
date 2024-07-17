@@ -20,26 +20,28 @@ enum HomeTargetType {
 
 extension HomeTargetType: TargetType {
     var baseURL: URL {
-        guard let baseURL = URL(string: "/api/v1") else {
-            fatalError("Error: Invalid Meeting BaseURL")
+        guard let privacyInfo = Bundle.main.privacyInfo,
+              let urlString = privacyInfo["BASE_URL"] as? String,
+              let url = URL(string: urlString) else {
+            fatalError("Invalid BASE_URL in PrivacyInfo.plist")
         }
-        return baseURL
+        return url
     }
     
     var path: String {
         switch self {
         case .fetchLoginUser:
-            return "/users/me"
+            return "/api/v1/users/me"
         case .fetchNearestPromise:
-            return "/promises/today/next"
+            return "/api/v1/promises/today/next"
         case .fetchUpcomingPromise:
-            return "/promises/upcoming"
+            return "/api/v1/promises/upcoming"
         case .updatePreparationStatus(let promiseID):
-            return "/promises/\(promiseID)/preparation"
+            return "/api/v1/promises/\(promiseID)/preparation"
         case .updateDepartureStatus(let promiseID):
-            return "/promises/\(promiseID)/departure"
+            return "/api/v1/promises/\(promiseID)/departure"
         case .updateArrivalStatus(let promiseID):
-            return "/promises/\(promiseID)/arrival"
+            return "/api/v1/promises/\(promiseID)/arrival"
         }
     }
     
