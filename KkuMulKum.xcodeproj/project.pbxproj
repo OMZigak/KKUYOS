@@ -246,7 +246,6 @@
 		789D73AE2C46D99B00C7077D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		789D73B02C46DACD00C7077D /* KkuMulKum.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KkuMulKum.entitlements; sourceTree = "<group>"; };
 		789D73B22C47CC6D00C7077D /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
-		789D73BA2C47F1A100C7077D /* TardyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TardyService.swift; sourceTree = "<group>"; };
 		789D73BD2C47FE0F00C7077D /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		78AED1332C3D951F000AD80A /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		78AED1362C3D98D1000AD80A /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
@@ -553,14 +552,6 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
-		789D73C02C48441E00C7077D /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				789D73BA2C47F1A100C7077D /* TardyService.swift */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		78AED1322C3D9514000AD80A /* Nickname */ = {
 			isa = PBXGroup;
 			children = (
@@ -592,7 +583,6 @@
 			children = (
 				78B9286A2C29402C006D9942 /* KkuMulKum */,
 				78B928692C29402C006D9942 /* Products */,
-				789D73C02C48441E00C7077D /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
