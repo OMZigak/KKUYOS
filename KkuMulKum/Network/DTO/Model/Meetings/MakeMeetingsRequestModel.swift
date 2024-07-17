@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 모임 생성 (Request)
 struct MakeMeetingsRequestModel: RequestModelType {
     let name: String
 }

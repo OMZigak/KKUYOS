@@ -6,10 +6,12 @@
 //
 
 import UIKit
+
 import KakaoSDKAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
+    let loginViewModel = LoginViewModel()
     
     func scene(
         _ scene: UIScene,
@@ -18,9 +20,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
-        self.window?.rootViewController = LoginViewController()
+        
+        let launchScreenStoryboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+        let launchScreenViewController = launchScreenStoryboard.instantiateInitialViewController()
+        
+        self.window?.rootViewController = launchScreenViewController
         self.window?.makeKeyAndVisible()
+        
+        performAutoLogin()
     }
+    
+    private func performAutoLogin() {
+            print("Performing auto login")
+            loginViewModel.autoLogin { [weak self] success in
+                DispatchQueue.main.async {
+                    if success {
+                        print("Auto login successful, showing main screen")
+                        self?.showLoginScreen()
+                    } else {
+                        print("Auto login failed, showing login screen")
+                        self?.showLoginScreen()
+                    }
+                }
+            }
+        }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {
@@ -30,11 +53,42 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
     }
     
-    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+    func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
         if (AuthApi.isKakaoTalkLoginUrl(url)) {
             return AuthController.handleOpenUrl(url: url)
         }
         return false
+    }
+    
+    private func showMainScreen() {
+        let mainTabBarController = MainTabBarController()
+        let navigationController = UINavigationController(rootViewController: mainTabBarController)
+        navigationController.isNavigationBarHidden = true
+        
+        animateRootViewControllerChange(to: navigationController)
+    }
+    
+    private func showLoginScreen() {
+        let loginViewController = LoginViewController()
+        animateRootViewControllerChange(to: loginViewController)
+    }
+    
+    private func animateRootViewControllerChange(to newRootViewController: UIViewController) {
+        guard let window = self.window else { return }
+        
+        UIView.transition(with: window,
+                          duration: 0.3,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            let oldState = UIView.areAnimationsEnabled
+                            UIView.setAnimationsEnabled(false)
+                            window.rootViewController = newRootViewController
+                            UIView.setAnimationsEnabled(oldState)
+        })
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {}

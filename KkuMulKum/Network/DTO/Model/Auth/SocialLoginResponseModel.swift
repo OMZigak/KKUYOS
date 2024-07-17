@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 소셜 로그인 (Response)
 struct SocialLoginResponseModel: ResponseModelType {
     let name: String?
     let jwtTokenDTO: JwtTokenDTO

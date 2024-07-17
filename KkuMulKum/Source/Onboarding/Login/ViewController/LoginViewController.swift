@@ -50,12 +50,6 @@ class LoginViewController: BaseViewController {
             )
         )
         loginView.kakaoLoginImageView.addGestureRecognizer(kakaoTapGesture)
-
-        loginView.dummyNextButton.addTarget(
-            self,
-            action: #selector(dummyNextButtonTapped),
-            for: .touchUpInside
-        )
     }
     
     private func bindViewModel() {
@@ -65,7 +59,7 @@ class LoginViewController: BaseViewController {
                 print("Login State: Not logged in")
             case .login:
                 print("Login State: Logged in with user info: ")
-                owner.navigateToOnboardingScreen()
+                owner.navigateToMainScreen()
             case .needOnboarding:
                 print("Login State: Need onboarding")
                 owner.navigateToOnboardingScreen()
@@ -79,7 +73,8 @@ class LoginViewController: BaseViewController {
             }
         }
     }
-    
+
+
     @objc private func appleLoginTapped() {
         loginViewModel.performAppleLogin(presentationAnchor: view.window!)
     }
@@ -89,7 +84,8 @@ class LoginViewController: BaseViewController {
     }
    
     @objc private func dummyNextButtonTapped() {
-        let viewController = MainTabBarController()
+        let viewController = UINavigationController(rootViewController: MainTabBarController())
+        viewController.isNavigationBarHidden = true
         viewController.modalPresentationStyle = .fullScreen
         present(viewController, animated: true)
     }
