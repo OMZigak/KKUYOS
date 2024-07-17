@@ -34,7 +34,7 @@ final class MockHomeService: HomeServiceType {
         let mockData = ResponseBodyDTO<NearestPromiseModel>(
             success: true,
             data: NearestPromiseModel(
-                id: 1,
+                promiseID: 1,
                 dDay: 0,
                 name: "꾸물이들 대환장 파티",
                 meetingName: "꾸물이들",
@@ -54,7 +54,7 @@ final class MockHomeService: HomeServiceType {
             data: UpcomingPromiseListModel(
                 promises: [
                     UpcomingPromise(
-                        id: 1,
+                        promiseID: 1,
                         dDay: 1,
                         name: "누가 코코볼 다 먹었어?",
                         meetingName: "우마우스",
@@ -64,7 +64,7 @@ final class MockHomeService: HomeServiceType {
                         placeName: "가자하우스"
                     ),
                     UpcomingPromise(
-                        id: 2,
+                        promiseID: 2,
                         dDay: 1,
                         name: "누가 코코볼 다 먹었어?",
                         meetingName: "우마우스",
@@ -74,7 +74,7 @@ final class MockHomeService: HomeServiceType {
                         placeName: "가자하우스"
                     ),
                     UpcomingPromise(
-                        id: 3,
+                        promiseID: 3,
                         dDay: 1,
                         name: "누가 코코볼 다 먹었어?",
                         meetingName: "우마우스",
@@ -84,7 +84,7 @@ final class MockHomeService: HomeServiceType {
                         placeName: "가자하우스"
                     ),
                     UpcomingPromise(
-                        id: 4,
+                        promiseID: 4,
                         dDay: 1,
                         name: "누가 코코볼 다 먹었어?",
                         meetingName: "우마우스",
