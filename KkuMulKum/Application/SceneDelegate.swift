@@ -20,35 +20,24 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     ) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
-        performAutoLogin()
-    }
-    
-    private func performAutoLogin() {
-        loginViewModel.autoLogin { [weak self] success in
-            DispatchQueue.main.async {
-                if success {
-                    self?.showMainScreen()
-                    print("showMainScreen")
-                } else {
-                    self?.showLoginScreen()
-                    print("showLoginScreen")
+        
+        let launchScreenStoryboard = UIStoryboard(name: "LaunchScreen", bundle: nil)
+        let launchScreenViewController = launchScreenStoryboard.instantiateInitialViewController()
+        
+        self.window?.rootViewController = launchScreenViewController
+        self.window?.makeKeyAndVisible()
+        
+        DispatchQueue.global(qos: .userInitiated).async {
+            self.loginViewModel.autoLogin { success in
+                DispatchQueue.main.async {
+                    if success {
+                        self.showMainScreen()
+                    } else {
+                        self.showLoginScreen()
+                    }
                 }
             }
         }
-    }
-    
-    private func showMainScreen() {
-        let mainTabBarController = MainTabBarController()
-        let navigationController = UINavigationController(rootViewController: mainTabBarController)
-        navigationController.isNavigationBarHidden = true
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
-    }
-    
-    private func showLoginScreen() {
-        let loginViewController = LoginViewController()
-        window?.rootViewController = loginViewController
-        window?.makeKeyAndVisible()
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
@@ -57,6 +46,44 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 _ = AuthController.handleOpenUrl(url: url)
             }
         }
+    }
+    
+    func application(
+        _ app: UIApplication,
+        open url: URL,
+        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+    ) -> Bool {
+        if (AuthApi.isKakaoTalkLoginUrl(url)) {
+            return AuthController.handleOpenUrl(url: url)
+        }
+        return false
+    }
+    
+    private func showMainScreen() {
+        let mainTabBarController = MainTabBarController()
+        let navigationController = UINavigationController(rootViewController: mainTabBarController)
+        navigationController.isNavigationBarHidden = true
+        
+        animateRootViewControllerChange(to: navigationController)
+    }
+    
+    private func showLoginScreen() {
+        let loginViewController = LoginViewController()
+        animateRootViewControllerChange(to: loginViewController)
+    }
+    
+    private func animateRootViewControllerChange(to newRootViewController: UIViewController) {
+        guard let window = self.window else { return }
+        
+        UIView.transition(with: window,
+                          duration: 0.3,
+                          options: .transitionCrossDissolve,
+                          animations: {
+                            let oldState = UIView.areAnimationsEnabled
+                            UIView.setAnimationsEnabled(false)
+                            window.rootViewController = newRootViewController
+                            UIView.setAnimationsEnabled(oldState)
+        })
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {}
