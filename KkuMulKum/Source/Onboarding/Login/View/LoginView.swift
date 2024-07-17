@@ -17,14 +17,6 @@ class LoginView: BaseView {
         $0.image = .imgLogin
     }
     
-    // TODO: 서버 연결후 삭제예정
-    let dummyNextButton = UIButton().then {
-        $0.setTitle("다음 화면으로 (서버연결후 삭제예정)", for: .normal)
-        $0.setTitleColor(.white, for: .normal)
-        $0.backgroundColor = .blue
-        $0.layer.cornerRadius = 8
-    }
-    
     let appleLoginImageView = UIImageView().then {
         $0.contentMode = .scaleAspectFit
         $0.image = UIImage(named: "appleLogin")
@@ -38,7 +30,7 @@ class LoginView: BaseView {
     }
     
     override func setupView() {
-        addSubviews(backgroundImageView, appleLoginImageView, kakaoLoginImageView, dummyNextButton)
+        addSubviews(backgroundImageView, appleLoginImageView, kakaoLoginImageView)
     }
     
     override func setupAutoLayout() {
@@ -59,12 +51,6 @@ class LoginView: BaseView {
             $0.horizontalEdges.equalToSuperview().inset(14)
             $0.height.equalTo(Screen.height(54))
         }
-        
-        dummyNextButton.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalTo(kakaoLoginImageView.snp.bottom).offset(20)
-            $0.width.equalTo(200)
-            $0.height.equalTo(44)
-        }
+     
     }
 }
