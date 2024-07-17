@@ -5,10 +5,10 @@
 //  Created by YOUJIM on 7/8/24.
 //
 
+import Foundation
+
 
 // MARK: 다가올 약속 목록 조회 (4개)
-
-import Foundation
 
 struct UpcomingPromiseListModel: ResponseModelType {
     let promises: [UpcomingPromise]
