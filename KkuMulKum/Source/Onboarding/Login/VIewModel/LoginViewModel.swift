@@ -27,7 +27,6 @@ class LoginViewModel: NSObject {
     private var authService: AuthServiceType
     private let authInterceptor: AuthInterceptor
     
-    
     init(
         provider: MoyaProvider<LoginTargetType> = MoyaProvider<LoginTargetType>(
             plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
@@ -64,8 +63,6 @@ class LoginViewModel: NSObject {
             }
         }
     }
-    
-   
     
     private func getFCMToken(completion: @escaping (String) -> Void) {
         Messaging.messaging().token { token, error in
@@ -152,36 +149,50 @@ class LoginViewModel: NSObject {
        }
     
     func autoLogin(completion: @escaping (Bool) -> Void) {
-        guard let refreshToken = authService.getRefreshToken() else {
-            print("No refresh token found")
-            completion(false)
-            return
-        }
-        
-        provider.request(.refreshToken(refreshToken: refreshToken)) { [weak self] result in
-            switch result {
-            case .success(let response):
-                do {
-                    let reissueResponse = try response.map(ResponseBodyDTO<ReissueModel>.self)
-                    if reissueResponse.success, let data = reissueResponse.data,
-                       let newAccessToken = data.accessToken,
-                       let newRefreshToken = data.refreshToken {
-                        self?.saveTokens(accessToken: newAccessToken, refreshToken: newRefreshToken)
-                        completion(true)
-                    } else {
-                        print("Token refresh failed: \(reissueResponse.error?.message ?? "Unknown error")")
-                        completion(false)
-                    }
-                } catch {
-                    print("Token refresh failed: \(error)")
-                    completion(false)
-                }
-            case .failure(let error):
-                print("Token refresh failed: \(error)")
-                completion(false)
-            }
-        }
-    }
+         guard let refreshToken = authService.getRefreshToken() else {
+             print("No refresh token found")
+             loginState.value = .notLogin
+             completion(false)
+             return
+         }
+         
+         print("Attempting auto login with refresh token")
+         provider.request(.refreshToken(refreshToken: refreshToken)) { [weak self] result in
+             switch result {
+             case .success(let response):
+                 do {
+                     let reissueResponse = try response.map(ResponseBodyDTO<ReissueModel>.self)
+                     if reissueResponse.success, let data = reissueResponse.data {
+                         let newAccessToken = data.accessToken
+                         let newRefreshToken = data.refreshToken
+                         self?.saveTokens(accessToken: newAccessToken, refreshToken: newRefreshToken)
+                         self?.loginState.value = .login
+                         print("Auto login successful")
+                         completion(true)
+                     } else {
+                         print("Token refresh failed: \(reissueResponse.error?.message ?? "Unknown error")")
+                         self?.clearTokensAndHandleError()
+                         completion(false)
+                     }
+                 } catch {
+                     print("Token refresh failed: \(error)")
+                     self?.clearTokensAndHandleError()
+                     completion(false)
+                 }
+             case .failure(let error):
+                 print("Network error during auto login: \(error)")
+                 self?.clearTokensAndHandleError()
+                 completion(false)
+             }
+         }
+     }
+
+     private func clearTokensAndHandleError() {
+         authService.clearTokens()
+         loginState.value = .notLogin
+         error.value = "자동 로그인 실패. 다시 로그인해주세요."
+         print("Tokens cleared, login state set to notLogin")
+     }
     
     private func saveTokens(accessToken: String, refreshToken: String) {
         print("Attempting to save tokens")

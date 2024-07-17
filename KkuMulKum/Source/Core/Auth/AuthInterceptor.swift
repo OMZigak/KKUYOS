@@ -10,6 +10,10 @@ import Foundation
 import Moya
 import Alamofire
 
+enum AuthError: Error {
+    case tokenRefreshFailed
+}
+
 class AuthInterceptor: RequestInterceptor {
     let authService: AuthServiceType
     let provider: MoyaProvider<LoginTargetType>
@@ -19,13 +23,7 @@ class AuthInterceptor: RequestInterceptor {
         self.provider = provider
     }
     
-    func adapt(
-        _ urlRequest: URLRequest,
-        for session: Session,
-        completion: @escaping (
-            Result<URLRequest,Error>
-        ) -> Void
-    ) {
+    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         guard let accessToken = authService.getAccessToken() else {
             completion(.success(urlRequest))
             return
@@ -36,22 +34,14 @@ class AuthInterceptor: RequestInterceptor {
         completion(.success(urlRequest))
     }
     
-    func retry(
-        _ request: Request,
-        for session: Session,
-        dueTo error: Error,
-        completion: @escaping (
-            RetryResult
-        ) -> Void
-    ) {
+    func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 else {
-            completion(
-                .doNotRetry
-            )
+            completion(.doNotRetry)
             return
         }
         
         guard let refreshToken = authService.getRefreshToken() else {
+            authService.clearTokens()
             completion(.doNotRetry)
             return
         }
@@ -61,21 +51,25 @@ class AuthInterceptor: RequestInterceptor {
             case .success(let response):
                 do {
                     let reissueResponse = try response.map(ResponseBodyDTO<ReissueModel>.self)
-                    if reissueResponse.success, let data = reissueResponse.data,
-                       let newAccessToken = data.accessToken,
-                       let newRefreshToken = data.refreshToken {
+                    if reissueResponse.success, let data = reissueResponse.data {
+                        let newAccessToken = data.accessToken
+                        let newRefreshToken = data.refreshToken
                         self?.authService.saveAccessToken(newAccessToken)
                         self?.authService.saveRefreshToken(newRefreshToken)
+                        print("Token refreshed successfully in interceptor")
                         completion(.retry)
                     } else {
+                        print("Token refresh failed in interceptor: \(reissueResponse.error?.message ?? "Unknown error")")
                         self?.authService.clearTokens()
                         completion(.doNotRetry)
                     }
                 } catch {
+                    print("Token refresh failed in interceptor: \(error)")
                     self?.authService.clearTokens()
                     completion(.doNotRetry)
                 }
-            case .failure:
+            case .failure(let error):
+                print("Network error during token refresh in interceptor: \(error)")
                 self?.authService.clearTokens()
                 completion(.doNotRetry)
             }

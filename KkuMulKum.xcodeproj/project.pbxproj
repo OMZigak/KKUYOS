@@ -55,7 +55,6 @@
 		789D73A72C46AF4900C7077D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73A62C46AF4900C7077D /* KeychainService.swift */; };
 		789D73AF2C46D99B00C7077D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 789D73AE2C46D99B00C7077D /* GoogleService-Info.plist */; };
 		789D73B32C47CC6D00C7077D /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73B22C47CC6D00C7077D /* LocalNotificationManager.swift */; };
-		789D73BB2C47F1A100C7077D /* TardyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73BA2C47F1A100C7077D /* TardyService.swift */; };
 		789D73BE2C47FE0F00C7077D /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73BD2C47FE0F00C7077D /* AuthInterceptor.swift */; };
 		78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1332C3D951F000AD80A /* NicknameViewController.swift */; };
 		78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1362C3D98D1000AD80A /* NicknameView.swift */; };
@@ -544,6 +543,14 @@
 			path = Auth;
 			sourceTree = "<group>";
 		};
+		789D73C02C48441E00C7077D /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				789D73BA2C47F1A100C7077D /* TardyService.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
 		78AED1322C3D9514000AD80A /* Nickname */ = {
 			isa = PBXGroup;
 			children = (
@@ -575,6 +582,7 @@
 			children = (
 				78B9286A2C29402C006D9942 /* KkuMulKum */,
 				78B928692C29402C006D9942 /* Products */,
+				789D73C02C48441E00C7077D /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1734,7 +1742,6 @@
 				DD4393792C412F4500EC1799 /* JoinButtonView.swift in Sources */,
 				DD3976832C41C2AD00E2A4C4 /* HomeViewModel.swift in Sources */,
 				DD41BF012C41DE4F0095A068 /* TardyCollectionViewCell.swift in Sources */,
-				DE9E189A2C3BCCBE00DB76B4 /* PlaceModel.swift in Sources */,
 				A3DD9C682C45C78300E58A13 /* HomeService.swift in Sources */,
 				782B407B2C3E395A008B0CA7 /* WelcomeView.swift in Sources */,
 				DD8626612C4606A300E4F980 /* SetReadyInfoViewModel.swift in Sources */,
@@ -1792,7 +1799,6 @@
 				A39F2B192C47BF83008DA5F5 /* SetReadyCompletedView.swift in Sources */,
 				DD3976882C41C2AD00E2A4C4 /* UpcomingEmptyView.swift in Sources */,
 				DECB84642C44655A0022A003 /* PlaceListCell.swift in Sources */,
-				789D73BB2C47F1A100C7077D /* TardyService.swift in Sources */,
 				DD931B762C3DC16100526452 /* PromiseInfoView.swift in Sources */,
 				DEA89B832C45C5CA00AF4924 /* SelectMemberViewModel.swift in Sources */,
 				DD3072242C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift in Sources */,

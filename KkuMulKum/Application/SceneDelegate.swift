@@ -27,18 +27,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.rootViewController = launchScreenViewController
         self.window?.makeKeyAndVisible()
         
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.loginViewModel.autoLogin { success in
+        performAutoLogin()
+    }
+    
+    private func performAutoLogin() {
+            print("Performing auto login")
+            loginViewModel.autoLogin { [weak self] success in
                 DispatchQueue.main.async {
                     if success {
-                        self.showMainScreen()
+                        print("Auto login successful, showing main screen")
+                        self?.showMainScreen()
                     } else {
-                        self.showLoginScreen()
+                        print("Auto login failed, showing login screen")
+                        self?.showLoginScreen()
                     }
                 }
             }
         }
-    }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {

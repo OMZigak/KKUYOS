@@ -63,6 +63,7 @@ class LoginViewController: BaseViewController {
             switch state {
             case .notLogin:
                 print("Login State: Not logged in")
+                owner.showLoginScreen()
             case .login:
                 print("Login State: Logged in with user info: ")
                 owner.navigateToMainScreen()
@@ -76,6 +77,17 @@ class LoginViewController: BaseViewController {
             if !error.isEmpty {
                 print("Login Error: \(error)")
                 owner.showErrorAlert(message: error)
+            }
+        }
+    }
+
+    private func showLoginScreen() {
+        DispatchQueue.main.async {
+            // 현재 화면이 이미 LoginViewController라면 아무것도 하지 않습니다.
+            if !(self.presentedViewController is LoginViewController) {
+                let loginViewController = LoginViewController()
+                loginViewController.modalPresentationStyle = .fullScreen
+                self.present(loginViewController, animated: true, completion: nil)
             }
         }
     }
