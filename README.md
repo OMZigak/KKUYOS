@@ -3,6 +3,8 @@
 이 세상 모든 지각 꾸물이들의 정시 도착 꿈을 이뤄줄 꿈같은 서비스, 꾸물꿈 ⏰💤
 34기 NOW SOPT AppJam 꾸물꿈 프로젝트입니다.
 ```
+[꾸물꿈에 대해 더 자세히 알고 싶다면? 프로젝트 설계 및 주요 기능 소개 보기✔️](https://arrow-frog-4b9.notion.site/9c6895231a2346d0b5b9a15570f47b22?pvs=4)
+
 </br>
 
 ![Frame 1000002423](https://github.com/OMZigak/iOS/assets/144984293/e8373f56-2bf7-4f99-ba68-a8eb94c31c9e)

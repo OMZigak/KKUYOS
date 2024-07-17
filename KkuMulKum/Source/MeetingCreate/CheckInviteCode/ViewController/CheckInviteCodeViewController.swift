@@ -8,11 +8,21 @@
 import UIKit
 
 class CheckInviteCodeViewController: BaseViewController {
+    
+    
+    // MARK: Property
+
     private let checkInviteCodeView: CheckInviteCodeView = CheckInviteCodeView()
     
+    
+    // MARK: LifeCycle
+
     override func loadView() {
         view = checkInviteCodeView
     }
+    
+    
+    // MARK: Setup
     
     override func setupView() {
         view.backgroundColor = .white
@@ -32,8 +42,14 @@ class CheckInviteCodeViewController: BaseViewController {
             action: #selector(createMeetingViewDidTap)
         ))
     }
-    
-    @objc private func inviteCodeViewDidTap() {
+}
+
+
+// MARK: Extension
+
+private extension CheckInviteCodeViewController {
+    @objc 
+    func inviteCodeViewDidTap() {
         let inviteCodeViewController = InviteCodeViewController(
             viewModel: InviteCodeViewModel(
                 service: MockInviteCodeService()
@@ -46,10 +62,11 @@ class CheckInviteCodeViewController: BaseViewController {
         navigationController?.pushViewController(inviteCodeViewController, animated: true)
     }
     
-    @objc private func createMeetingViewDidTap() {
+    @objc 
+    private func createMeetingViewDidTap() {
         let createMeetingViewController = CreateMeetingViewController(
             viewModel: CreateMeetingViewModel(
-                service: CreateMeetingService()
+                createMeetingService: MockCreateMeetingService()
             )
         )
         

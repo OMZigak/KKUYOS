@@ -8,6 +8,10 @@
 import UIKit
 
 class TardyView: BaseView {
+    
+    
+    // MARK: Property
+
     private let tardyPenaltyView: TardyPenaltyView = TardyPenaltyView().then {
         $0.layer.cornerRadius = 8
     }
@@ -40,6 +44,9 @@ class TardyView: BaseView {
         $0.backgroundColor = .maincolor
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         backgroundColor = .white
         

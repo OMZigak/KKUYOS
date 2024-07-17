@@ -10,12 +10,19 @@ import UIKit
 import SnapKit
 
 class PagePromiseSegmentedControl: UISegmentedControl {
+    
+    
+    // MARK: Property
+
     private let backgroundLineView: UIView = UIView(backgroundColor: .gray2)
     
     let selectedUnderLineView: UIView = UIView(backgroundColor: .black).then {
         $0.layer.cornerRadius = 1
     }
     
+    
+    // MARK: Initialize
+
     override init(items: [Any]?) {
         super.init(items: items)
         
@@ -28,14 +35,19 @@ class PagePromiseSegmentedControl: UISegmentedControl {
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
-    private func setupSegment() {
+}
+
+
+// MARK: - Extension
+
+private extension PagePromiseSegmentedControl {
+    func setupSegment() {
         addSubviews(backgroundLineView, selectedUnderLineView)
         
         selectedSegmentIndex = 0
     }
     
-    private func setupBackgroundAndDivider() {
+    func setupBackgroundAndDivider() {
         setBackgroundImage(UIImage(), for: .normal, barMetrics: .default)
         setBackgroundImage(UIImage(), for: .selected, barMetrics: .default)
         setBackgroundImage(UIImage(), for: .highlighted, barMetrics: .default)
@@ -48,7 +60,7 @@ class PagePromiseSegmentedControl: UISegmentedControl {
         )
     }
     
-    private func setupTextAttribute() {
+    func setupTextAttribute() {
         setTitleTextAttributes([
             NSAttributedString.Key.foregroundColor: UIColor.gray3,
             NSAttributedString.Key.font: UIFont.pretendard(.body05)
@@ -59,7 +71,7 @@ class PagePromiseSegmentedControl: UISegmentedControl {
         ], for: .selected)
     }
     
-    private func setupBackgroundLineView() {
+    func setupBackgroundLineView() {
         backgroundLineView.snp.makeConstraints {
             $0.bottom.leading.trailing.equalToSuperview()
             $0.height.equalTo(2)

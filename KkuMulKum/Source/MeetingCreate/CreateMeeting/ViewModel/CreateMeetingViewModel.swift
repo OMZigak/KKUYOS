@@ -14,18 +14,30 @@ enum MeetingNameState {
 }
 
 class CreateMeetingViewModel {
+    
+    
+    // MARK: Property
+    
+    let createMeetingService: CreateMeetingServiceType
+
     let meetingName = ObservablePattern<String>("")
     let inviteCodeState = ObservablePattern<MeetingNameState>(.empty)
     let inviteCode = ObservablePattern<String>("")
     let isNextButtonEnabled = ObservablePattern<Bool>(false)
     let characterCount = ObservablePattern<String>("0/5")
     
-    private let service: CreateMeetingServiceType
     
-    init(service: CreateMeetingServiceType) {
-        self.service = service
+    // MARK: Initialize
+
+    init(createMeetingService: CreateMeetingServiceType) {
+        self.createMeetingService = createMeetingService
     }
-    
+}
+
+
+// MARK: - Extension
+
+extension CreateMeetingViewModel {
     func validateName(_ name: String) {
         meetingName.value = name
         characterCount.value = "\(name.count)/10"
@@ -42,4 +54,3 @@ class CreateMeetingViewModel {
         }
     }
 }
-
