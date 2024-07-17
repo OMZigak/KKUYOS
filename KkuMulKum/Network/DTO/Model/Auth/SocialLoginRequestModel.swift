@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 소셜 로그인 (Request)
 struct SocialLoginRequestModel: RequestModelType {
     let provider: String
     let fcmToken: String

@@ -18,6 +18,7 @@ final class MockHomeService: HomeServiceType {
         let mockData = ResponseBodyDTO<LoginUserModel>(
             success: true,
             data: LoginUserModel(
+                userID: 1, 
                 name: "꾸물리안",
                 level: 4,
                 promiseCount: 8,

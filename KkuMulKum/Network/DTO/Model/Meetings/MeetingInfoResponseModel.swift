@@ -7,9 +7,19 @@
 
 import Foundation
 
+/// 특정 모임 정보를 조회 (Response)
 struct MeetingInfoModel: ResponseModelType {
-    let id: Int
-    let name, createdAt: String
+    let meetingID: Int
+    let name: String
+    let createdAt: String
     let metCount: Int
     let invitationCode: String
+    
+    enum CodingKeys: String, CodingKey {
+        case meetingID = "meetingId"
+        case name
+        case createdAt
+        case metCount
+        case invitationCode
+    }
 }

@@ -7,13 +7,20 @@
 
 import Foundation
 
+/// 가입한 모임 목록 조회 (Response)
 struct MeetingListModel: ResponseModelType {
     let count: Int
     let meetings: [Meeting]
 }
 
 struct Meeting: Codable {
-    let id: Int
+    let meetingID: Int
     let name: String
     let memberCount: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case meetingID = "meetingId"
+        case name
+        case memberCount
+    }
 }

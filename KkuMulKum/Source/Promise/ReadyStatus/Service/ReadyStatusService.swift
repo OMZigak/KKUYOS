@@ -20,6 +20,7 @@ final class ReadyStatusService: ReadyStatusServiceType {
     
     func getMyPromiseStatus(with promiseID: Int) -> ResponseBodyDTO<MyReadyStatusModel>? {
         let mockData = MyReadyStatusModel(
+            promiseTime: "",
             preparationTime: 300,
             travelTime: 230,
             preparationStartAt: "AM 11:00",
