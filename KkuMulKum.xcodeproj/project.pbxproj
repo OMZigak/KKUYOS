@@ -145,7 +145,6 @@
 		DDE7D2C32C470A58005A921F /* ProfileTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE7D2C02C470A58005A921F /* ProfileTargetType.swift */; };
 		DDE7D2C42C470A58005A921F /* NicknameTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE7D2C12C470A58005A921F /* NicknameTargetType.swift */; };
 		DDE7D2C62C47D2BB005A921F /* MeetingTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE7D2C52C47D2BB005A921F /* MeetingTargetType.swift */; };
-		DDE7D2C82C47DE5B005A921F /* TardyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE7D2C72C47DE5B005A921F /* TardyService.swift */; };
 		DDE7D2CA2C47EE81005A921F /* PromiseTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE7D2C92C47EE81005A921F /* PromiseTargetType.swift */; };
 		DDE7D2CC2C47F073005A921F /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18992C3BCCBE00DB76B4 /* PlaceModel.swift */; };
 		DDFA507F2C4693BD000A62E2 /* ProfileSetupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507A2C4693BD000A62E2 /* ProfileSetupViewModel.swift */; };
@@ -328,7 +327,6 @@
 		DDE7D2C02C470A58005A921F /* ProfileTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTargetType.swift; sourceTree = "<group>"; };
 		DDE7D2C12C470A58005A921F /* NicknameTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NicknameTargetType.swift; sourceTree = "<group>"; };
 		DDE7D2C52C47D2BB005A921F /* MeetingTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingTargetType.swift; sourceTree = "<group>"; };
-		DDE7D2C72C47DE5B005A921F /* TardyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TardyService.swift; sourceTree = "<group>"; };
 		DDE7D2C92C47EE81005A921F /* PromiseTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTargetType.swift; sourceTree = "<group>"; };
 		DDFA507A2C4693BD000A62E2 /* ProfileSetupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewModel.swift; sourceTree = "<group>"; };
 		DDFA507C2C4693BD000A62E2 /* ProfileSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupView.swift; sourceTree = "<group>"; };
@@ -563,7 +561,6 @@
 			children = (
 				78B9286A2C29402C006D9942 /* KkuMulKum */,
 				78B928692C29402C006D9942 /* Products */,
-				DD1B12E42C47F12C0007EFCC /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -647,14 +644,6 @@
 				A3DD9C672C45C78300E58A13 /* HomeService.swift */,
 			);
 			path = Service;
-			sourceTree = "<group>";
-		};
-		DD1B12E42C47F12C0007EFCC /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				DDE7D2C72C47DE5B005A921F /* TardyService.swift */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		DD3976692C41769900E2A4C4 /* ViewModel */ = {
@@ -1698,7 +1687,6 @@
 				DE9E18842C3BA84500DB76B4 /* CustomTextField.swift in Sources */,
 				A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */,
 				DDE7D2C42C470A58005A921F /* NicknameTargetType.swift in Sources */,
-				DDE7D2C82C47DE5B005A921F /* TardyService.swift in Sources */,
 				DEF725DB2C3F3BBF008C87C7 /* Toast.swift in Sources */,
 				DD43937A2C412F4500EC1799 /* FinishCreateViewController.swift in Sources */,
 				DE254AAC2C31192400A4015E /* UILabel+.swift in Sources */,
@@ -1729,7 +1717,6 @@
 				DD4393792C412F4500EC1799 /* JoinButtonView.swift in Sources */,
 				DD3976832C41C2AD00E2A4C4 /* HomeViewModel.swift in Sources */,
 				DD41BF012C41DE4F0095A068 /* TardyCollectionViewCell.swift in Sources */,
-				DE9E189A2C3BCCBE00DB76B4 /* PlaceModel.swift in Sources */,
 				A3DD9C682C45C78300E58A13 /* HomeService.swift in Sources */,
 				782B407B2C3E395A008B0CA7 /* WelcomeView.swift in Sources */,
 				DD8626612C4606A300E4F980 /* SetReadyInfoViewModel.swift in Sources */,

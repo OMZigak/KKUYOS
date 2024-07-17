@@ -45,9 +45,9 @@ extension PromiseTargetType: TargetType {
             return "/\(promiseID)/departure"
         case .updateArrivalStatus(let promiseID):
             return "/\(promiseID)/arrival"
-        case .fetchmeetingPromiseList(let meetingID, let request):
+        case .fetchmeetingPromiseList(let meetingID, _):
             return "/\(meetingID)/promises"
-        case .addPromise(let meetingID, let request):
+        case .addPromise(let meetingID, _):
             return "/\(meetingID)/promises"
         case .fetchPromiseInfo(let promiseID):
             return "/\(promiseID)"
@@ -85,9 +85,9 @@ extension PromiseTargetType: TargetType {
                 .fetchMyReadyStatus, .fetchPromiseParticipantList, .updateMyPromiseReadyStatus,
                 .fetchTardyInfo, .updatePromiseCompletion:
             return .requestPlain
-        case .fetchmeetingPromiseList(meetingID: let meetingID, request: let request):
+        case .fetchmeetingPromiseList(meetingID: _, request: let request):
             return .requestJSONEncodable(request)
-        case .addPromise(meetingID: let meetingID, request: let request):
+        case .addPromise(meetingID: _, request: let request):
             return .requestJSONEncodable(request)
         }
     }
