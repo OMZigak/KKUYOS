@@ -1,11 +1,13 @@
 //
-//  MeetingListService.swift
+//  MeetingListServiceType.swift
 //  KkuMulKum
 //
-//  Created by 예삐 on 7/15/24.
+//  Created by YOUJIM on 7/18/24.
 //
 
 import Foundation
+
+import Moya
 
 protocol MeetingListServiceType {
     func fetchMeetingList() -> ResponseBodyDTO<MeetingListModel>
@@ -25,7 +27,7 @@ final class MockMeetingListService: MeetingListServiceType {
                     Meeting(meetingID: 5, name: "캔디팟", memberCount: 24),
                     Meeting(meetingID: 6, name: "열기팟", memberCount: 24)
                 ]
-            ),            
+            ),
             error: nil
         )
         return mockData

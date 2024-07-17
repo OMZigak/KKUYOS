@@ -11,7 +11,7 @@ protocol PromiseInfoServiceType {
     func getPromiseInfo(with promiseId: Int) -> ResponseBodyDTO<PromiseInfoModel>?
 }
 
-class PromiseInfoService: PromiseInfoServiceType {
+class MockPromiseInfoService: PromiseInfoServiceType {
     func getPromiseInfo(with promiseId: Int) -> ResponseBodyDTO<PromiseInfoModel>? {
         let mockData = PromiseInfoModel(
             promiseID: 1,
