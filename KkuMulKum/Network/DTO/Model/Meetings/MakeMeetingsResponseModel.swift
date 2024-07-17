@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 모임 생성 (Response)
 struct MakeMeetingsResponseModel: ResponseModelType {
     let invitationCode: String
 }
