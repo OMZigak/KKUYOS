@@ -51,9 +51,8 @@
 		789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789873302C3D1A7B00435E96 /* LoginViewModel.swift */; };
 		789873342C3D1A7B00435E96 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789873312C3D1A7B00435E96 /* LoginView.swift */; };
 		789AD4B32C3C0093002E2688 /* SocialLoginResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */; };
-		789AD4B52C3C0147002E2688 /* ResissueResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */; };
+		789AD4B52C3C0147002E2688 /* ReissueModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AD4B42C3C0147002E2688 /* ReissueModel.swift */; };
 		789D73A72C46AF4900C7077D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73A62C46AF4900C7077D /* KeychainService.swift */; };
-		789D73AD2C46C19500C7077D /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73AC2C46C19500C7077D /* ProfileModel.swift */; };
 		789D73AF2C46D99B00C7077D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 789D73AE2C46D99B00C7077D /* GoogleService-Info.plist */; };
 		78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1332C3D951F000AD80A /* NicknameViewController.swift */; };
 		78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1362C3D98D1000AD80A /* NicknameView.swift */; };
@@ -230,9 +229,8 @@
 		789873302C3D1A7B00435E96 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		789873312C3D1A7B00435E96 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginResponseModel.swift; sourceTree = "<group>"; };
-		789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResissueResponseModel.swift; sourceTree = "<group>"; };
+		789AD4B42C3C0147002E2688 /* ReissueModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReissueModel.swift; sourceTree = "<group>"; };
 		789D73A62C46AF4900C7077D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
-		789D73AC2C46C19500C7077D /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		789D73AE2C46D99B00C7077D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		789D73B02C46DACD00C7077D /* KkuMulKum.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KkuMulKum.entitlements; sourceTree = "<group>"; };
 		78AED1332C3D951F000AD80A /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
@@ -1344,9 +1342,8 @@
 			children = (
 				DE9E18912C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift */,
 				789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */,
-				789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */,
+				789AD4B42C3C0147002E2688 /* ReissueModel.swift */,
 				78BD61372C463C8C005752FD /* NicknameModel.swift */,
-				789D73AC2C46C19500C7077D /* ProfileModel.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -1721,7 +1718,7 @@
 				DECB84602C4446930022A003 /* FindPlaceService.swift in Sources */,
 				DEFBEBD52C46C86600437188 /* SelectPenaltyService.swift in Sources */,
 				DEBA032F2C3C24F2002ED8F2 /* ModelType.swift in Sources */,
-				789AD4B52C3C0147002E2688 /* ResissueResponseModel.swift in Sources */,
+				789AD4B52C3C0147002E2688 /* ReissueModel.swift in Sources */,
 				DECB845E2C4442AF0022A003 /* FindPlaceView.swift in Sources */,
 				DE6D4D0F2C3F14D80005584B /* MeetingInfoService.swift in Sources */,
 				DDE7D2C32C470A58005A921F /* ProfileTargetType.swift in Sources */,
@@ -1732,7 +1729,6 @@
 				78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */,
 				DD39766F2C41B54400E2A4C4 /* InviteCodeService.swift in Sources */,
 				DE6D4D172C3F14D80005584B /* MeetingInfoViewModel.swift in Sources */,
-				789D73AD2C46C19500C7077D /* ProfileModel.swift in Sources */,
 				78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */,
 				DECB845A2C43FC140022A003 /* AddPromiseView.swift in Sources */,
 				A3FB185B2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift in Sources */,
