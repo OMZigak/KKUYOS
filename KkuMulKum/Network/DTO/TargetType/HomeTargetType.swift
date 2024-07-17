@@ -13,12 +13,15 @@ enum HomeTargetType {
     case fetchLoginUser
     case fetchNearestPromise
     case fetchUpcomingPromise
+    case updatePreparationStatus(promiseID: Int)
+    case updateDepartureStatus(promiseID: Int)
+    case updateArrivalStatus(promiseID: Int)
 }
 
 extension HomeTargetType: TargetType {
     var baseURL: URL {
         guard let baseURL = URL(string: "/api/v1") else {
-            fatalError("Error: Invalid Meeting BaseURL") 
+            fatalError("Error: Invalid Meeting BaseURL")
         }
         return baseURL
     }
@@ -31,11 +34,22 @@ extension HomeTargetType: TargetType {
             return "/promises/today/next"
         case .fetchUpcomingPromise:
             return "/promises/upcoming"
+        case .updatePreparationStatus(let promiseID):
+            return "/promises/\(promiseID)/preparation"
+        case .updateDepartureStatus(let promiseID):
+            return "/promises/\(promiseID)/departure"
+        case .updateArrivalStatus(let promiseID):
+            return "/promises/\(promiseID)/arrival"
         }
     }
     
     var method: Moya.Method {
-        return .get
+        switch self {
+        case .fetchLoginUser, .fetchNearestPromise, .fetchUpcomingPromise:
+            return .get
+        case .updatePreparationStatus, .updateDepartureStatus, .updateArrivalStatus:
+            return .patch
+        }
     }
     
     var task: Task {
