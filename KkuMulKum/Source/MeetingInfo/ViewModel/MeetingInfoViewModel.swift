@@ -74,7 +74,7 @@ extension MeetingInfoViewModel: ViewModelType {
         let members = meetingMemberModelRelay
             .compactMap { $0?.members }
             .map { members -> [Member] in
-                let mockData = Member(id: 0, name: "", profileImageURL: "")
+                let mockData = Member(memberID: 0, name: "", profileImageURL: "")
                 var newMembers = members
                 newMembers.insert(mockData, at: 0)
                 return newMembers

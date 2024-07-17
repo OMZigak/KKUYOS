@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 모임 가입 (Request)
 struct RegisterMeetingsModel: RequestModelType {
     let invitationCode: String
 }

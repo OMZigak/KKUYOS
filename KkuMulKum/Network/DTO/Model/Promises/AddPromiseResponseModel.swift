@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// 약속 추가 (Response)
 struct AddPromiseResponseModel: ResponseModelType {
     let promiseID: Int
     let placeName: String

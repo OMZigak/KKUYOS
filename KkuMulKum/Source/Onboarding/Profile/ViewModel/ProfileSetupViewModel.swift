@@ -50,7 +50,7 @@ class ProfileSetupViewModel {
                 print("서버 응답 데이터: \(String(data: response.data, encoding: .utf8) ?? "디코딩 불가")")
                 do {
                     let decodedResponse = try JSONDecoder().decode(
-                        ResponseBodyDTO<ProfileImageResponseModel>.self,
+                        ResponseBodyDTO<EmptyModel>.self,
                         from: response.data
                     )
                     if decodedResponse.success {

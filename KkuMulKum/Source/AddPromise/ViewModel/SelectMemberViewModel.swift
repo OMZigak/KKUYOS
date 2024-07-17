@@ -64,7 +64,7 @@ extension SelectMemberViewModel: ViewModelType {
         input.memberSelected
             .subscribe(with: self) { owner, member in
                 var selectedMembers = owner.selectedMemberListRelay.value
-                guard !selectedMembers.contains(where: { $0.id == member.id }) else { return }
+                guard !selectedMembers.contains(where: { $0.memberID == member.memberID }) else { return }
                 selectedMembers.append(member)
                 owner.selectedMemberListRelay.accept(selectedMembers)
             }
@@ -73,8 +73,8 @@ extension SelectMemberViewModel: ViewModelType {
         input.memberDeselected
             .subscribe(with: self) { owner, member in
                 var selectedMembers = owner.selectedMemberListRelay.value
-                guard selectedMembers.contains(where: { $0.id == member.id }) else { return }
-                selectedMembers.removeAll { $0.id == member.id }
+                guard selectedMembers.contains(where: { $0.memberID == member.memberID }) else { return }
+                selectedMembers.removeAll { $0.memberID == member.memberID }
                 owner.selectedMemberListRelay.accept(selectedMembers)
             }
             .disposed(by: disposeBag)
