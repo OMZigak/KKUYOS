@@ -20,7 +20,7 @@ enum MeetingTargetType {
 extension MeetingTargetType: TargetType {
     var baseURL: URL {
         guard let baseURL = URL(string: "/api/v1/meetings") else {
-            print("Error: Invalid Meeting BaseURL")
+            fatalError("Error: Invalid Meeting BaseURL")
         }
         return baseURL
     }
@@ -33,9 +33,9 @@ extension MeetingTargetType: TargetType {
             return "/register"
         case .fetchMeetingList:
             return ""
-        case let .fetchMeetingInfo(meetingID):
+        case  .fetchMeetingInfo(meetingID: let meetingID):
             return "/\(meetingID)"
-        case let .fetchMeetingMember(meetingID):
+        case .fetchMeetingMember(meetingID: let meetingID):
             return "/\(meetingID)/members"
         }
     }
@@ -51,11 +51,24 @@ extension MeetingTargetType: TargetType {
     
     var task: Task {
         switch self {
+        case .createMeeting(request: let request):
+            return .requestJSONEncodable(request)
+        case .joinMeeting(request: let request):
+            return .requestJSONEncodable(request)
+        case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember:
+            return .requestPlain
         }
     }
     
     var headers: [String : String]? {
+        guard let token = DefaultKeychainService.shared.accessToken else {
+            return ["Content-Type" : "application/json"]
+        }
         
+        return [
+            "Content-Type" : "application/json",
+            "Authorization" : "Bearer \(token)"
+        ]
     }
 }
 
