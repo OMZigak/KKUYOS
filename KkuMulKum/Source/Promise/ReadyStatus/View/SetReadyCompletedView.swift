@@ -22,7 +22,7 @@ final class SetReadyCompletedView: BaseView {
     }
     
     private let subtitleLabel = UILabel().then {
-        $0.setText("설정하신 시간에 맞춰서\n준비 및 이동 시간에 알림을 울려들리게요", style: .body06, color: .gray6)
+        $0.setText("설정하신 시간에 맞춰서\n준비 및 이동 시간에 알림을 울려 드릴게요", style: .body06, color: .gray6)
     }
     
     let confirmButton = CustomButton(title: "확인", isEnabled: true)
