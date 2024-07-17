@@ -14,7 +14,6 @@ enum NicknameTargetType {
 }
 
 extension NicknameTargetType: TargetType {
-    
     var baseURL: URL {
         guard let privacyInfo = Bundle.main.privacyInfo,
               let urlString = privacyInfo["BASE_URL"] as? String,
@@ -41,7 +40,10 @@ extension NicknameTargetType: TargetType {
     var task: Task {
         switch self {
         case .updateName(let name):
-            return .requestParameters(parameters: ["name": name], encoding: JSONEncoding.default)
+            return .requestParameters(
+                parameters: ["name": name],
+                encoding: JSONEncoding.default
+            )
         }
     }
     
@@ -49,6 +51,9 @@ extension NicknameTargetType: TargetType {
         guard let token = DefaultKeychainService.shared.accessToken else {
             fatalError("No access token available")
         }
-        return ["Content-Type": "application/json", "Authorization": "Bearer \(token)"]
+        return [
+            "Content-Type": "application/json",
+            "Authorization": "Bearer \(token)"
+        ]
     }
 }

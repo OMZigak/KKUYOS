@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Moya
 
 protocol SelectPenaltyServiceType {
     func requestAddingNewPromise(
@@ -14,9 +15,7 @@ protocol SelectPenaltyServiceType {
     ) -> ResponseBodyDTO<AddPromiseResponseModel>
 }
 
-final class MockSelectPenaltyService {}
-
-extension MockSelectPenaltyService: SelectPenaltyServiceType {
+final class MockSelectPenaltyService: SelectPenaltyServiceType {
     func requestAddingNewPromise(
         with requestModel: AddPromiseRequestModel,
         meetingID: Int

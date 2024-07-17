@@ -27,40 +27,42 @@ enum PromiseTargetType {
 
 extension PromiseTargetType: TargetType {
     var baseURL: URL {
-        guard let baseURL = URL(string: "/api/v1/promises") else {
-            fatalError("Error: Invalid Meeting BaseURL")
+        guard let privacyInfo = Bundle.main.privacyInfo,
+              let urlString = privacyInfo["BASE_URL"] as? String,
+              let url = URL(string: urlString) else {
+            fatalError("Invalid BASE_URL in PrivacyInfo.plist")
         }
-        return baseURL
+        return url
     }
     
     var path: String {
         switch self {
         case .fetchTodayNextPromise:
-            return "/today/next"
+            return "/api/v1/promises/today/next"
         case .fetchUpcomingPromiseList:
-            return "/upcoming"
+            return "/api/v1/promises/upcoming"
         case .updatePreparationStatus(let promiseID):
-            return "/\(promiseID)/preparation"
+            return "/api/v1/promises/\(promiseID)/preparation"
         case .updateDepartureStatus(let promiseID):
-            return "/\(promiseID)/departure"
+            return "/api/v1/promises/\(promiseID)/departure"
         case .updateArrivalStatus(let promiseID):
-            return "/\(promiseID)/arrival"
+            return "/api/v1/promises/\(promiseID)/arrival"
         case .fetchmeetingPromiseList(let meetingID, _):
-            return "/\(meetingID)/promises"
+            return "/api/v1/promises/\(meetingID)/promises"
         case .addPromise(let meetingID, _):
-            return "/\(meetingID)/promises"
+            return "/api/v1/promises/\(meetingID)/promises"
         case .fetchPromiseInfo(let promiseID):
-            return "/\(promiseID)"
+            return "/api/v1/promises/\(promiseID)"
         case .fetchMyReadyStatus(let promiseID):
-            return "/\(promiseID)/status"
+            return "/api/v1/promises/\(promiseID)/status"
         case .fetchPromiseParticipantList(let promiseID):
-            return "/\(promiseID)/participants"
+            return "/api/v1/promises/\(promiseID)/participants"
         case .updateMyPromiseReadyStatus(let promiseID):
-            return "/\(promiseID)/times"
+            return "/api/v1/promises/\(promiseID)/times"
         case .fetchTardyInfo(let promiseID):
-            return "/\(promiseID)/tardy"
+            return "/api/v1/promises/\(promiseID)/tardy"
         case .updatePromiseCompletion(let promiseID):
-            return "/\(promiseID)/completion"
+            return "/api/v1/promises/\(promiseID)/completion"
         }
     }
     
