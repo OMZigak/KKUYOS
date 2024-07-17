@@ -26,6 +26,7 @@ class LoginViewModel: NSObject {
     private let provider: MoyaProvider<LoginTargetType>
     private var authService: AuthServiceType
     private let authInterceptor: AuthInterceptor
+    private let keychainAccessible: KeychainAccessible
     
     init(
         provider: MoyaProvider<LoginTargetType> = MoyaProvider<LoginTargetType>(
@@ -37,6 +38,7 @@ class LoginViewModel: NSObject {
         self.provider = provider
         self.authService = authService
         self.authInterceptor = AuthInterceptor(authService: authService, provider: provider)
+        self.keychainAccessible = keychainAccessible
         super.init()
         
         // 초기화 시 FCM 토큰 출력
