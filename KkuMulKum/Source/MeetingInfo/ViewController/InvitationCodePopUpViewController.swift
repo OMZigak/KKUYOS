@@ -71,7 +71,7 @@ final class InvitationCodePopUpViewController: BaseViewController {
                 
                 let toast = Toast()
                 toast.show(
-                    message: "클립보드에 복사되었슈",
+                    message: "클립보드에 복사가 완료되었어요!",
                     view: owner.view,
                     position: .bottom,
                     inset: 100
