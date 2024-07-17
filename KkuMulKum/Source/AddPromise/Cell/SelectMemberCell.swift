@@ -63,7 +63,7 @@ extension SelectMemberCell {
     func configure(with member: Member) {
         self.member = member
         
-        nameLabel.setText(member.name, style: .body06, color: .gray6)
+        nameLabel.setText(member.name ?? " ", style: .body06, color: .gray6)
         profileImageView.image = .imgProfile.withRenderingMode(.alwaysOriginal)
         guard let imageURL = URL(string: member.profileImageURL ?? "") else { return }
         profileImageView.kf.setImage(with: imageURL)

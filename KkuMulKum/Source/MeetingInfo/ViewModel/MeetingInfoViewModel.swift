@@ -42,27 +42,12 @@ extension MeetingInfoViewModel: ViewModelType {
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
-        let meetingID = self.meetingID
-        
         input.viewWillAppear
-            .map { [weak self] _ in
-                self?.service.fetchMeetingInfo(with: meetingID)
+            .subscribe(with: self) { owner, _ in
+                owner.fetchMeetingInfo()
+                owner.fetchMeetingMembers()
+                owner.fetchMeetingPromises()
             }
-            .bind(to: infoRelay)
-            .disposed(by: disposeBag)
-        
-        input.viewWillAppear
-            .map { [weak self] _ in
-                self?.service.fetchMeetingMemberList(with: meetingID)
-            }
-            .bind(to: meetingMemberModelRelay)
-            .disposed(by: disposeBag)
-        
-        input.viewWillAppear
-            .map { [weak self] _ in
-                self?.service.fetchMeetingPromiseList(with: meetingID)
-            }
-            .bind(to: meetingPromisesModelRelay)
             .disposed(by: disposeBag)
         
         let info = infoRelay.asDriver(onErrorJustReturn: nil)
@@ -72,18 +57,22 @@ extension MeetingInfoViewModel: ViewModelType {
             .asDriver(onErrorJustReturn: 0)
         
         let members = meetingMemberModelRelay
-            .compactMap { $0?.members }
-            .map { members -> [Member] in
+            .map { model -> [Member] in
                 let mockData = Member(memberID: 0, name: "", profileImageURL: "")
-                var newMembers = members
+                
+                guard let model else { return [mockData] }
+                
+                var newMembers = model.members
                 newMembers.insert(mockData, at: 0)
                 return newMembers
             }
             .asDriver(onErrorJustReturn: [])
         
         let promises = meetingPromisesModelRelay
-            .compactMap { $0?.promises }
-            .map { $0.sorted { $0.dDay < $1.dDay }}
+            .map { model -> [MeetingPromise] in
+                guard let model else { return [] }
+                return model.promises
+            }
             .asDriver(onErrorJustReturn: [])
         
         let isPossibleToCreatePromise = input.createPromiseButtonDidTap
@@ -107,5 +96,40 @@ extension MeetingInfoViewModel: ViewModelType {
         )
         
         return output
+    }
+}
+
+private extension MeetingInfoViewModel {
+    func fetchMeetingInfo() {
+        Task {
+            do {
+                let responseBody = try await service.fetchMeetingInfo(with: meetingID)
+                infoRelay.accept(responseBody?.data)
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+    }
+    
+    func fetchMeetingMembers() {
+        Task {
+            do {
+                let responseBody = try await service.fetchMeetingMemberList(with: meetingID)
+                meetingMemberModelRelay.accept(responseBody?.data)
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+    }
+    
+    func fetchMeetingPromises() {
+        Task {
+            do {
+                let responseBody = try await service.fetchMeetingPromiseList(with: meetingID)
+                meetingPromisesModelRelay.accept(responseBody?.data)
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
     }
 }
