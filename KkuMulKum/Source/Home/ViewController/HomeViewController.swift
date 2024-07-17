@@ -15,12 +15,25 @@ class HomeViewController: BaseViewController {
     // MARK: - Property
 
     private let rootView = HomeView()
-    private let viewModel = HomeViewModel()
     
-    final let cellWidth: CGFloat = 200
-    final let cellHeight: CGFloat = 216
+    private let viewModel: HomeViewModel
+    
+    final let cellWidth: CGFloat = Screen.width(200)
+    final let cellHeight: CGFloat = Screen.height(216)
     final let contentInterSpacing: CGFloat = 12
     final let contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+    
+    
+    // MARK: - Initializer
+    
+    init(viewModel: HomeViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
 
     // MARK: - LifeCycle
@@ -33,11 +46,17 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .white
-        
         register()
+        
         updateUI()
+        
+        updateUserInfo()
+        updateNearestPromise()
         updateUpcomingPromise()
-        viewModel.dummy()
+        
+        viewModel.requestLoginUser()
+        viewModel.requestNearestPromise()
+        viewModel.requestUpcomingPromise()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -107,7 +126,7 @@ extension HomeViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return viewModel.upcomingPromiseData.value.count
+        return viewModel.upcomingPromiseList.value?.data?.promises.count ?? 0
     }
     
     func collectionView(
@@ -118,7 +137,9 @@ extension HomeViewController: UICollectionViewDataSource {
             withReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier, 
             for: indexPath
         ) as? UpcomingPromiseCollectionViewCell else { return UICollectionViewCell() }
-        cell.dataBind(viewModel.upcomingPromiseData.value[indexPath.item])
+        if let data = viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item] {
+            cell.dataBind(data)
+        }
         return cell
     }    
 }
@@ -150,6 +171,104 @@ private extension HomeViewController {
         )
     }
     
+    func updateUI() {
+        viewModel.currentState.bind { [weak self] state in
+            switch state {
+            case .prepare:
+                self?.setPrepareUI()
+            case .move:
+                self?.setMoveUI()
+            case .arrive:
+                self?.setArriveUI()
+            case .none:
+                break
+            }
+        }
+    }
+    
+    func updateUserInfo() {
+        viewModel.loginUser.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                let data = self?.viewModel.loginUser.value
+                
+                self?.rootView.kkumulLabel.setText(
+                    "\(data?.data?.name ?? "") 님,\n\(data?.data?.promiseCount ?? 0)번의 약속에서\n\(data?.data?.tardyCount ?? 0)번 꾸물거렸어요!",
+                    style: .title02,
+                    color: .white
+                )
+                self?.rootView.kkumulLabel.setHighlightText(
+                    "\(data?.data?.name ?? "") 님,",
+                    style: .title00,
+                    color: .white
+                )
+                self?.rootView.kkumulLabel.setHighlightText(
+                    "\(data?.data?.promiseCount ?? 0)번",
+                    "\(data?.data?.tardyCount ?? 0)번",
+                    style: .title00,
+                    color: .lightGreen
+                )
+                self?.rootView.levelLabel.setText(
+                    "Lv.\(data?.data?.level ?? 0) \(self?.viewModel.levelName.value ?? "")",
+                    style: .caption01,
+                    color: .gray6
+                )
+                self?.rootView.levelLabel.setHighlightText(
+                    "Lv.\(data?.data?.level ?? 0)",
+                    style: .caption01,
+                    color: .maincolor
+                )
+                self?.rootView.levelCaptionLabel.setText(
+                    self?.viewModel.levelCaption.value ?? "",
+                    style: .label01,
+                    color: .white
+                )
+                switch data?.data?.level {
+                case 1: self?.rootView.levelCharacterImage.image = .imgLevel01
+                case 2: self?.rootView.levelCharacterImage.image = .imgLevel02
+                case 3: self?.rootView.levelCharacterImage.image = .imgLevel03
+                case 4: self?.rootView.levelCharacterImage.image = .imgLevel04
+                default: break
+                }
+            }
+        }
+    }
+    
+    func updateNearestPromise() {
+        viewModel.nearestPromise.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                let data = self?.viewModel.nearestPromise.value
+                self?.rootView.todayPromiseView.meetingNameLabel.setText(
+                    data?.data?.meetingName ?? "",
+                    style: .caption02,
+                    color: .green3
+                )
+                self?.rootView.todayPromiseView.nameLabel.setText(
+                    data?.data?.name ?? "",
+                    style: .body03,
+                    color: .gray8
+                )
+                self?.rootView.todayPromiseView.placeNameLabel.setText(
+                    data?.data?.placeName ?? "",
+                    style: .body06,
+                    color: .gray7
+                )
+                self?.rootView.todayPromiseView.timeLabel.setText(
+                    data?.data?.time ?? "",
+                    style: .body06,
+                    color: .gray7
+                )
+            }
+        }
+    }
+    
+    func updateUpcomingPromise() {
+        viewModel.upcomingPromiseList.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                self?.rootView.upcomingPromiseView.reloadData()
+            }
+        }
+    }
+    
     func setDisableButton(_ sender: UIButton) {
         sender.setTitleColor(.gray3, for: .normal)
         sender.layer.borderColor = UIColor.gray3.cgColor
@@ -172,29 +291,6 @@ private extension HomeViewController {
         sender.setTitleColor(.white, for: .normal)
         sender.layer.borderColor = UIColor.maincolor.cgColor
         sender.backgroundColor = .maincolor
-    }
-    
-    func updateUI() {
-        viewModel.currentState.bind { [weak self] state in
-            switch state {
-            case .prepare:
-                self?.setPrepareUI()
-            case .move:
-                self?.setMoveUI()
-            case .arrive:
-                self?.setArriveUI()
-            case .none:
-                break
-            }
-        }
-    }
-    
-    func updateUpcomingPromise() {
-        viewModel.upcomingPromiseData.bind { [weak self] _ in
-            DispatchQueue.main.async {
-                self?.rootView.upcomingPromiseView.reloadData()
-            }
-        }
     }
     
     func setPrepareUI() {

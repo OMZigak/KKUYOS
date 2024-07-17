@@ -10,7 +10,7 @@ import UIKit
 import Then
 
 final class MeetingListViewModel {
-    var meetingList = ObservablePattern<MeetingListModel?>(nil)
+    var meetingList = ObservablePattern<ResponseBodyDTO<MeetingListModel>?>(nil)
     
     private let service: MeetingListServiceType
     
