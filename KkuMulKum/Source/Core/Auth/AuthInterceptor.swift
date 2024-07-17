@@ -41,7 +41,7 @@ class AuthInterceptor: RequestInterceptor {
         }
         
         guard let refreshToken = authService.getRefreshToken() else {
-            authService.clearTokens()
+            _ = authService.clearTokens()
             completion(.doNotRetry)
             return
         }
@@ -54,23 +54,23 @@ class AuthInterceptor: RequestInterceptor {
                     if reissueResponse.success, let data = reissueResponse.data {
                         let newAccessToken = data.accessToken
                         let newRefreshToken = data.refreshToken
-                        self?.authService.saveAccessToken(newAccessToken)
-                        self?.authService.saveRefreshToken(newRefreshToken)
+                        _ = self?.authService.saveAccessToken(newAccessToken)
+                        _ = self?.authService.saveRefreshToken(newRefreshToken)
                         print("Token refreshed successfully in interceptor")
                         completion(.retry)
                     } else {
                         print("Token refresh failed in interceptor: \(reissueResponse.error?.message ?? "Unknown error")")
-                        self?.authService.clearTokens()
+                        _ = self?.authService.clearTokens()
                         completion(.doNotRetry)
                     }
                 } catch {
                     print("Token refresh failed in interceptor: \(error)")
-                    self?.authService.clearTokens()
+                    _ = self?.authService.clearTokens()
                     completion(.doNotRetry)
                 }
             case .failure(let error):
                 print("Network error during token refresh in interceptor: \(error)")
-                self?.authService.clearTokens()
+                _ = self?.authService.clearTokens()
                 completion(.doNotRetry)
             }
         }

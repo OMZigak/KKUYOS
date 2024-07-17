@@ -208,7 +208,7 @@ class LoginViewModel: NSObject {
      }
 
      private func clearTokensAndHandleError() {
-         authService.clearTokens()
+         _ = authService.clearTokens()
          loginState.value = .notLogin
          error.value = "자동 로그인 실패. 다시 로그인해주세요."
          print("Tokens cleared, login state set to notLogin")
