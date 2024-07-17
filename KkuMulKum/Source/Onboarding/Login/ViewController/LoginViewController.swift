@@ -50,12 +50,6 @@ class LoginViewController: BaseViewController {
             )
         )
         loginView.kakaoLoginImageView.addGestureRecognizer(kakaoTapGesture)
-
-        loginView.dummyNextButton.addTarget(
-            self,
-            action: #selector(dummyNextButtonTapped),
-            for: .touchUpInside
-        )
     }
     
     private func bindViewModel() {
