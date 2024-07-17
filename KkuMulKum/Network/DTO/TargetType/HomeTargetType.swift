@@ -18,7 +18,7 @@ enum HomeTargetType {
 extension HomeTargetType: TargetType {
     var baseURL: URL {
         guard let baseURL = URL(string: "/api/v1") else {
-            fatalError("Error: Invalid Meeting BaseURL")
+            fatalError("Error: Invalid Meeting BaseURL") 
         }
         return baseURL
     }
