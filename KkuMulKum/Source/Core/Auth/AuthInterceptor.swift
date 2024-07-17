@@ -19,7 +19,13 @@ class AuthInterceptor: RequestInterceptor {
         self.provider = provider
     }
     
-    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+    func adapt(
+        _ urlRequest: URLRequest,
+        for session: Session,
+        completion: @escaping (
+            Result<URLRequest,Error>
+        ) -> Void
+    ) {
         guard let accessToken = authService.getAccessToken() else {
             completion(.success(urlRequest))
             return
@@ -30,9 +36,18 @@ class AuthInterceptor: RequestInterceptor {
         completion(.success(urlRequest))
     }
     
-    func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
+    func retry(
+        _ request: Request,
+        for session: Session,
+        dueTo error: Error,
+        completion: @escaping (
+            RetryResult
+        ) -> Void
+    ) {
         guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 else {
-            completion(.doNotRetry)
+            completion(
+                .doNotRetry
+            )
             return
         }
         

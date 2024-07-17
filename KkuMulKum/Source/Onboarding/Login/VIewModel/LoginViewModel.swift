@@ -128,7 +128,10 @@ class LoginViewModel: NSObject {
     private func handleLoginResponse(_ response: ResponseBodyDTO<SocialLoginResponseModel>) {
            print("Handling login response")
            if response.success, let data = response.data {
-               saveTokens(accessToken: data.jwtTokenDTO.accessToken, refreshToken: data.jwtTokenDTO.refreshToken)
+               saveTokens(
+                accessToken: data.jwtTokenDTO.accessToken,
+                refreshToken: data.jwtTokenDTO.refreshToken
+               )
                if data.name != nil {
                    print("Login successful")
                    loginState.value = .login
@@ -167,17 +170,14 @@ class LoginViewModel: NSObject {
                         completion(true)
                     } else {
                         print("Token refresh failed: \(reissueResponse.error?.message ?? "Unknown error")")
-                        self?.authService.clearTokens()
                         completion(false)
                     }
                 } catch {
                     print("Token refresh failed: \(error)")
-                    self?.authService.clearTokens()
                     completion(false)
                 }
             case .failure(let error):
                 print("Token refresh failed: \(error)")
-                self?.authService.clearTokens()
                 completion(false)
             }
         }
