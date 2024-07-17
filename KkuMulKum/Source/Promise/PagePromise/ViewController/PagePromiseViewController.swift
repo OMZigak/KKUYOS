@@ -19,11 +19,12 @@ class PagePromiseViewController: BaseViewController {
         PromiseInfoViewController(),
         ReadyStatusViewController(
             readyStatusViewModel: ReadyStatusViewModel(
-                readyStatusService: MockReadyStatusService()
+                readyStatusService: ReadyStatusService()
             )
         ),
         TardyViewController(
             tardyViewModel: TardyViewModel(
+                tardyService: MockTardyService(),
                 isPastDue: ObservablePattern<Bool>(false),
                 hasTardy: ObservablePattern<Bool>(false)
             )

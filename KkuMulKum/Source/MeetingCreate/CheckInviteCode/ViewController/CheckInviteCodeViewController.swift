@@ -66,7 +66,7 @@ private extension CheckInviteCodeViewController {
     private func createMeetingViewDidTap() {
         let createMeetingViewController = CreateMeetingViewController(
             viewModel: CreateMeetingViewModel(
-                service: CreateMeetingService()
+                createMeetingService: MockCreateMeetingService()
             )
         )
         
