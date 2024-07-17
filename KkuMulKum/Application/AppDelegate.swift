@@ -114,6 +114,8 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
         
         if let token = fcmToken {
             UserDefaults.standard.set(token, forKey: "FCMToken")
+            UserDefaults.standard.synchronize()
+            print("New FCM token saved: \(token)")
         }
     }
     

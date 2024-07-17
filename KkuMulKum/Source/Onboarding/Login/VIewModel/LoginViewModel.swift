@@ -11,6 +11,7 @@ import AuthenticationServices
 import KakaoSDKUser
 import KakaoSDKAuth
 import Moya
+import FirebaseMessaging
 
 enum LoginState {
     case notLogin
@@ -60,11 +61,21 @@ class LoginViewModel: NSObject {
             }
         }
     }
-
-    private func getFCMToken() -> String {
-        let fcmToken = UserDefaults.standard.string(forKey: "FCMToken") ?? "fcm_token_not_available"
-        print("FCM Token: \(fcmToken)")
-        return fcmToken
+    
+    private func getFCMToken(completion: @escaping (String) -> Void) {
+        Messaging.messaging().token { token, error in
+            if let error = error {
+                print("Error fetching FCM registration token: \(error)")
+                completion("fcm_token_not_available")
+            } else if let token = token {
+                print("Current FCM Token: \(token)")
+                UserDefaults.standard.set(token, forKey: "FCMToken")
+                UserDefaults.standard.synchronize()
+                completion(token)
+            } else {
+                completion("fcm_token_not_available")
+            }
+        }
     }
     
     private func handleKakaoLoginResult(oauthToken: OAuthToken?, error: Error?) {
@@ -76,14 +87,15 @@ class LoginViewModel: NSObject {
         
         if let token = oauthToken?.accessToken {
             print("Kakao Login Successful, access token: \(token)")
-            let fcmToken = getFCMToken()
-            loginToServer(with: .kakaoLogin(accessToken: token, fcmToken: fcmToken))
+            getFCMToken { [weak self] fcmToken in
+                self?.loginToServer(with: .kakaoLogin(accessToken: token, fcmToken: fcmToken))
+            }
         } else {
             print("Kakao Login Error: No access token")
             self.error.value = "No access token received"
         }
     }
-
+    
     private func loginToServer(with loginTarget: LoginTargetType) {
         provider.request(loginTarget) { [weak self] result in
             switch result {
@@ -107,7 +119,7 @@ class LoginViewModel: NSObject {
             }
         }
     }
-
+    
     private func handleLoginResponse(_ response: ResponseBodyDTO<SocialLoginResponseModel>) {
         print("Handling login response")
         if response.success {
@@ -155,23 +167,24 @@ class LoginViewModel: NSObject {
 }
 
 extension LoginViewModel: ASAuthorizationControllerDelegate,
-                            ASAuthorizationControllerPresentationContextProviding {
+                          ASAuthorizationControllerPresentationContextProviding {
     func authorizationController(
-        controller: ASAuthorizationController,
-        didCompleteWithAuthorization authorization: ASAuthorization
-    ) {
-        print("Apple authorization completed")
-        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
-              let identityToken = appleIDCredential.identityToken,
-              let tokenString = String(data: identityToken, encoding: .utf8) else {
-            print("Failed to get Apple ID Credential or identity token")
-            return
-        }
+            controller: ASAuthorizationController,
+            didCompleteWithAuthorization authorization: ASAuthorization
+        ) {
+            print("Apple authorization completed")
+            guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+                  let identityToken = appleIDCredential.identityToken,
+                  let tokenString = String(data: identityToken, encoding: .utf8) else {
+                print("Failed to get Apple ID Credential or identity token")
+                return
+            }
 
-        print("Apple Login Successful, identity token: \(tokenString)")
-        let fcmToken = getFCMToken()
-        loginToServer(with: .appleLogin(identityToken: tokenString, fcmToken: fcmToken))
-    }
+            print("Apple Login Successful, identity token: \(tokenString)")
+            getFCMToken { [weak self] fcmToken in
+                self?.loginToServer(with: .appleLogin(identityToken: tokenString, fcmToken: fcmToken))
+            }
+        }
 
     func authorizationController(
         controller: ASAuthorizationController,
@@ -182,7 +195,7 @@ extension LoginViewModel: ASAuthorizationControllerDelegate,
         )
         self.error.value = error.localizedDescription
     }
-
+    
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
         print("Providing presentation anchor for Apple Login")
         let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
