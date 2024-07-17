@@ -11,6 +11,10 @@ import Foundation
 // MARK: 내 준비 현황
 
 struct MyReadyStatusModel: ResponseModelType {
-    let preparationTime, travelTime: Int
-    let preparationStartAt, departureAt, arrivalAt: String
+    let promiseTime: String
+    let preparationTime: Int
+    let travelTime: Int
+    let preparationStartAt: String
+    let departureAt: String
+    let arrivalAt: String
 }
