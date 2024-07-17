@@ -31,12 +31,22 @@ class LoginViewModel: NSObject {
         provider: MoyaProvider<LoginTargetType> = MoyaProvider<LoginTargetType>(
             plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
         ),
-        authService: AuthServiceType = AuthService()
+        authService: AuthServiceType = AuthService(),
+        keychainAccessible: KeychainAccessible = DefaultKeychainAccessible()
     ) {
         self.provider = provider
         self.authService = authService
         self.authInterceptor = AuthInterceptor(authService: authService, provider: provider)
         super.init()
+        
+        // 초기화 시 FCM 토큰 출력
+        print("Initial FCM Token: \(getFCMToken())")
+    }
+    
+    private func getFCMToken() -> String {
+        let token = keychainAccessible.getToken("FCMToken") ?? "fcm_token_not_available"
+        print("Retrieved FCM Token: \(token)")
+        return token
     }
     
     func performAppleLogin(presentationAnchor: ASPresentationAnchor) {
@@ -99,6 +109,14 @@ class LoginViewModel: NSObject {
     }
     
     private func loginToServer(with loginTarget: LoginTargetType) {
+        // FCM 토큰 출력
+        switch loginTarget {
+        case .appleLogin(_, let fcmToken), .kakaoLogin(_, let fcmToken):
+            print("Sending FCM Token to server: \(fcmToken)")
+        default:
+            break
+        }
+        
         provider.request(loginTarget) { [weak self] result in
             switch result {
             case .success(let response):
