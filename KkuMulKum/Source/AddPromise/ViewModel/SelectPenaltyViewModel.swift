@@ -96,7 +96,7 @@ private extension SelectPenaltyViewModel {
             x: place.x,
             y: place.y,
             id: meetingID,
-            participants: members.map { $0.id }
+            participants: members.map { $0.memberID }
         )
         
         return addPromiseModel
