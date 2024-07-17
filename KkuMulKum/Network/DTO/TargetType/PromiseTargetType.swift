@@ -85,9 +85,9 @@ extension PromiseTargetType: TargetType {
                 .fetchMyReadyStatus, .fetchPromiseParticipantList, .updateMyPromiseReadyStatus,
                 .fetchTardyInfo, .updatePromiseCompletion:
             return .requestPlain
-        case .fetchmeetingPromiseList(meetingID: _, request: let request):
+        case .fetchmeetingPromiseList(_, let request):
             return .requestJSONEncodable(request)
-        case .addPromise(meetingID: _, request: let request):
+        case .addPromise(_, let request):
             return .requestJSONEncodable(request)
         }
     }
