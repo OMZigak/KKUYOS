@@ -52,11 +52,12 @@
 		789873342C3D1A7B00435E96 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789873312C3D1A7B00435E96 /* LoginView.swift */; };
 		789AD4B32C3C0093002E2688 /* SocialLoginResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */; };
 		789AD4B52C3C0147002E2688 /* ResissueResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */; };
-		789D73AF2C46D99B00C7077D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 789D73AE2C46D99B00C7077D /* GoogleService-Info.plist */; };
 		789D73A72C46AF4900C7077D /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73A62C46AF4900C7077D /* KeychainService.swift */; };
 		789D73A92C46BBB000C7077D /* PagePromiseSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73A82C46BBB000C7077D /* PagePromiseSegmentedControl.swift */; };
 		789D73AB2C46BEFF00C7077D /* ProfileTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73AA2C46BEFF00C7077D /* ProfileTargetType.swift */; };
 		789D73AD2C46C19500C7077D /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73AC2C46C19500C7077D /* ProfileModel.swift */; };
+		789D73AF2C46D99B00C7077D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 789D73AE2C46D99B00C7077D /* GoogleService-Info.plist */; };
+		789D73B32C47CC6D00C7077D /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73B22C47CC6D00C7077D /* LocalNotificationManager.swift */; };
 		78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1332C3D951F000AD80A /* NicknameViewController.swift */; };
 		78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1362C3D98D1000AD80A /* NicknameView.swift */; };
 		78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286B2C29402C006D9942 /* AppDelegate.swift */; };
@@ -208,12 +209,13 @@
 		789873312C3D1A7B00435E96 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		789AD4B22C3C0093002E2688 /* SocialLoginResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialLoginResponseModel.swift; sourceTree = "<group>"; };
 		789AD4B42C3C0147002E2688 /* ResissueResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResissueResponseModel.swift; sourceTree = "<group>"; };
-		789D73AE2C46D99B00C7077D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
-		789D73B02C46DACD00C7077D /* KkuMulKum.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KkuMulKum.entitlements; sourceTree = "<group>"; };
 		789D73A62C46AF4900C7077D /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
 		789D73A82C46BBB000C7077D /* PagePromiseSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseSegmentedControl.swift; sourceTree = "<group>"; };
 		789D73AA2C46BEFF00C7077D /* ProfileTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTargetType.swift; sourceTree = "<group>"; };
 		789D73AC2C46C19500C7077D /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		789D73AE2C46D99B00C7077D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		789D73B02C46DACD00C7077D /* KkuMulKum.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KkuMulKum.entitlements; sourceTree = "<group>"; };
+		789D73B22C47CC6D00C7077D /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		78AED1332C3D951F000AD80A /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		78AED1362C3D98D1000AD80A /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
 		78B928682C29402C006D9942 /* KkuMulKum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KkuMulKum.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -466,6 +468,14 @@
 				7898732F2C3D1A7B00435E96 /* LoginViewController.swift */,
 			);
 			path = ViewController;
+			sourceTree = "<group>";
+		};
+		789D73B12C47C81400C7077D /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				789D73B22C47CC6D00C7077D /* LocalNotificationManager.swift */,
+			);
+			path = Notification;
 			sourceTree = "<group>";
 		};
 		78AED1322C3D9514000AD80A /* Nickname */ = {
@@ -1099,6 +1109,7 @@
 		DE254AA32C31107C00A4015E /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				789D73B12C47C81400C7077D /* Notification */,
 				78BD612D2C456162005752FD /* KeyChain */,
 				78BD612C2C455680005752FD /* Bundle */,
 				A3DD9C642C45B30600E58A13 /* Service */,
@@ -1477,7 +1488,6 @@
 				DE254AC92C311DC200A4015E /* Pretendard-SemiBold.otf in Resources */,
 				DE254AC42C311DC200A4015E /* Pretendard-ExtraBold.otf in Resources */,
 				789D73AF2C46D99B00C7077D /* GoogleService-Info.plist in Resources */,
-				DE254AA52C31131600A4015E /* Color.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1548,6 +1558,7 @@
 				DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */,
 				DE6D4D132C3F14D80005584B /* MeetingMemberCell.swift in Sources */,
 				DDAF1C932C3D6E3D008A37D3 /* PagePromiseViewController.swift in Sources */,
+				789D73B32C47CC6D00C7077D /* LocalNotificationManager.swift in Sources */,
 				DE9E18922C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift in Sources */,
 				DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */,
 				DD3976732C41B6C800E2A4C4 /* CreateMeetingService.swift in Sources */,
