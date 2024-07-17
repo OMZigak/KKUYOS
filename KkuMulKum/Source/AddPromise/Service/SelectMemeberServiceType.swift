@@ -8,11 +8,11 @@
 import Foundation
 
 protocol SelectMemeberServiceType {
-    func fetchMeetingMemberList(with meetingID: Int) -> MeetingMembersModel
+    func fetchMeetingMemberList(with meetingID: Int) -> ResponseBodyDTO<MeetingMembersModel>
 }
 
 final class MockSelectMemberService: SelectMemeberServiceType {
-    func fetchMeetingMemberList(with meetingID: Int) -> MeetingMembersModel {
+    func fetchMeetingMemberList(with meetingID: Int) -> ResponseBodyDTO<MeetingMembersModel> {
         let mockData = MeetingMembersModel(
             memberCount: 14,
             members: [
@@ -89,6 +89,6 @@ final class MockSelectMemberService: SelectMemeberServiceType {
             ]
         )
         
-        return mockData
+        return ResponseBodyDTO(success: true, data: mockData, error: nil)
     }
 }

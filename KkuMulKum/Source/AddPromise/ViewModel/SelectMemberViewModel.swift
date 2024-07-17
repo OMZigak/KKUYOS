@@ -54,8 +54,9 @@ extension SelectMemberViewModel: ViewModelType {
         input.viewDidLoad
             .map { [weak self] _ -> [Member] in
                 guard let self else { return [] }
-                let meetingMember = service.fetchMeetingMemberList(with: meetingID)
-                return meetingMember.members
+                let responseBodyDTO = service.fetchMeetingMemberList(with: meetingID)
+                guard let data = responseBodyDTO.data else { return [] }
+                return data.members
             }
             .bind(to: memberListRelay)
             .disposed(by: disposeBag)

@@ -46,11 +46,12 @@ extension FindPlaceViewModel: ViewModelType {
             .map { [weak self] text -> [Place] in
                 guard let text,
                       !text.isEmpty,
-                      let placeModel = self?.service.fetchPlaceList(with: text)
+                      let responseBodyDTO = self?.service.fetchPlaceList(with: text),
+                      let data = responseBodyDTO.data
                 else {
                     return []
                 }
-                return placeModel.places
+                return data.places
             }
             .bind(to: placeListRelay)
             .disposed(by: disposeBag)
@@ -58,7 +59,7 @@ extension FindPlaceViewModel: ViewModelType {
         let placeList = placeListRelay
             .compactMap { $0 }
             .asDriver(onErrorJustReturn: [])
-            
+        
         input.cellIsSelected
             .bind(to: selectedPlaceRelay)
             .disposed(by: disposeBag)

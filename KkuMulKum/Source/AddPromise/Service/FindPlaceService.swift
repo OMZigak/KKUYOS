@@ -8,11 +8,11 @@
 import Foundation
 
 protocol FindPlaceServiceType {
-    func fetchPlaceList(with input: String) -> PlaceModel?
+    func fetchPlaceList(with input: String) -> ResponseBodyDTO<PlaceModel>
 }
 
 final class MockFindPlaceService: FindPlaceServiceType {
-    func fetchPlaceList(with input: String) -> PlaceModel? {
+    func fetchPlaceList(with input: String) -> ResponseBodyDTO<PlaceModel> {
         let mockData: PlaceModel = PlaceModel(
             places: [
                 Place(
@@ -39,6 +39,6 @@ final class MockFindPlaceService: FindPlaceServiceType {
             ]
         )
         
-        return mockData
+        return ResponseBodyDTO(success: true, data: mockData, error: nil)
     }
 }
