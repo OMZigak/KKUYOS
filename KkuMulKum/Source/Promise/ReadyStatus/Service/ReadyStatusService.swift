@@ -8,13 +8,17 @@
 import Foundation
 
 protocol ReadyStatusServiceType {
-    func getMyPromiseStatus(with promiseID: Int) -> MyReadyStatusModel?
+    func getMyPromiseStatus(with promiseID: Int) -> ResponseBodyDTO<MyReadyStatusModel>?
     func patchMyReadyStatus(with myInfo: MyPromiseReadyInfoModel)
-    func getParticipantList(with promiseID: Int) -> PromiseParticipantListModel?
+    func getParticipantList(with promiseID: Int) -> ResponseBodyDTO<PromiseParticipantListModel>?
 }
 
-final class MockReadyStatusService: CreateMeetingServiceType {
-    func getMyPromiseStatus(with promiseID: Int) -> MyReadyStatusModel? {
+final class ReadyStatusService: ReadyStatusServiceType {
+    func patchMyReadyStatus(with myInfo: MyPromiseReadyInfoModel) {
+        
+    }
+    
+    func getMyPromiseStatus(with promiseID: Int) -> ResponseBodyDTO<MyReadyStatusModel>? {
         let mockData = MyReadyStatusModel(
             preparationTime: 300,
             travelTime: 230,
@@ -23,10 +27,14 @@ final class MockReadyStatusService: CreateMeetingServiceType {
             arrivalAt: "PM 2:00"
         )
         
-        return mockData
+        return ResponseBodyDTO<MyReadyStatusModel>.init(
+            success: true,
+            data: mockData,
+            error: nil
+        )
     }
     
-    func getParticipantList(with promiseID: Int) -> PromiseParticipantListModel {
+    func getParticipantList(with promiseID: Int) -> ResponseBodyDTO<PromiseParticipantListModel>? {
         let mockData = PromiseParticipantListModel(
             participantCount: 3,
             participants: [
@@ -54,6 +62,10 @@ final class MockReadyStatusService: CreateMeetingServiceType {
             ]
         )
         
-        return mockData
+        return ResponseBodyDTO<PromiseParticipantListModel>.init(
+            success: true,
+            data: mockData,
+            error: nil
+        )
     }
 }

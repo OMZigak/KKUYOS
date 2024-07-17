@@ -9,7 +9,7 @@ import Foundation
 
 class ReadyStatusViewModel {
     // 서비스 객체
-    var readyStatusService: MockReadyStatusService
+    var readyStatusService: ReadyStatusServiceType
     
     // 준비 정보가 입력되었는지 여부
     var isReadyInfoEntered = ObservablePattern<Bool>(false)
@@ -28,10 +28,8 @@ class ReadyStatusViewModel {
     }
     
     // 초기화
-    init(readyStatusService: MockReadyStatusService) {
+    init(readyStatusService: ReadyStatusServiceType) {
         self.readyStatusService = readyStatusService
-        
-        participantInfos.value = readyStatusService.getParticipantList(with: 1).participants 
     }
     
     // 우리들의 준비 현황 변동되었을 때

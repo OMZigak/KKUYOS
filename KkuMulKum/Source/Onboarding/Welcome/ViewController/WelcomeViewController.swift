@@ -60,5 +60,4 @@ class WelcomeViewController: BaseViewController {
         
         self.present(navigationController, animated: true, completion: nil)
     }
-    
 }

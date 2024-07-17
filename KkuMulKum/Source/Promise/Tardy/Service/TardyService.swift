@@ -8,11 +8,11 @@
 import Foundation
 
 protocol TardyServiceType {
-    func getPromiseTardyInfo(with promiseID: Int) -> TardyInfoModel?
+    func getPromiseTardyInfo(with promiseID: Int) -> ResponseBodyDTO<TardyInfoModel>?
 }
 
 final class MockTardyService: TardyServiceType {
-    func getPromiseTardyInfo(with promiseID: Int) -> TardyInfoModel? {
+    func getPromiseTardyInfo(with promiseID: Int) -> ResponseBodyDTO<TardyInfoModel>? {
         let mockData = TardyInfoModel(
             penalty: "티라미수 케익 릴스",
             isPastDue: true,
@@ -23,6 +23,10 @@ final class MockTardyService: TardyServiceType {
             )]
         )
         
-        return mockData
+        return ResponseBodyDTO<TardyInfoModel>.init(
+            success: true,
+            data: mockData,
+            error: nil
+        )
     }
 }
