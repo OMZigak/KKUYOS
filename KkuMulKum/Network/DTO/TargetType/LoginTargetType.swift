@@ -4,7 +4,6 @@
 //
 //  Created by 이지훈 on 7/15/24.
 //
-
 import Foundation
 
 import Moya
@@ -16,7 +15,6 @@ enum LoginTargetType {
 }
 
 extension LoginTargetType: TargetType {
-    
     var method: Moya.Method {
         .post
     }
@@ -42,15 +40,9 @@ extension LoginTargetType: TargetType {
     var task: Task {
         switch self {
         case let .appleLogin(_, fcmToken):
-            return .requestParameters(
-                parameters: ["provider": "APPLE", "fcmToken": fcmToken],
-                encoding: JSONEncoding.default
-            )
+            return .requestJSONEncodable(SocialLoginRequestModel(provider: "APPLE", fcmToken: fcmToken))
         case let .kakaoLogin(_, fcmToken):
-            return .requestParameters(
-                parameters: ["provider": "KAKAO", "fcmToken": fcmToken],
-                encoding: JSONEncoding.default
-            )
+            return .requestJSONEncodable(SocialLoginRequestModel(provider: "KAKAO", fcmToken: fcmToken))
         case .refreshToken:
             return .requestPlain
         }
@@ -67,4 +59,3 @@ extension LoginTargetType: TargetType {
         }
     }
 }
-

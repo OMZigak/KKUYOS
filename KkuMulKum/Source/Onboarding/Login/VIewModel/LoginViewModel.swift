@@ -60,6 +60,12 @@ class LoginViewModel: NSObject {
             }
         }
     }
+
+    private func getFCMToken() -> String {
+        let fcmToken = UserDefaults.standard.string(forKey: "FCMToken") ?? "fcm_token_not_available"
+        print("FCM Token: \(fcmToken)")
+        return fcmToken
+    }
     
     private func handleKakaoLoginResult(oauthToken: OAuthToken?, error: Error?) {
         if let error = error {
@@ -70,28 +76,26 @@ class LoginViewModel: NSObject {
         
         if let token = oauthToken?.accessToken {
             print("Kakao Login Successful, access token: \(token)")
-            loginToServer(with: .kakaoLogin(accessToken: token, fcmToken: "dummy_fcm_token"))
+            let fcmToken = getFCMToken()
+            loginToServer(with: .kakaoLogin(accessToken: token, fcmToken: fcmToken))
         } else {
             print("Kakao Login Error: No access token")
             self.error.value = "No access token received"
         }
     }
-    
+
     private func loginToServer(with loginTarget: LoginTargetType) {
         provider.request(loginTarget) { [weak self] result in
             switch result {
             case .success(let response):
                 print("Received response from server: \(response)")
+                print("Response body: \(String(data: response.data, encoding: .utf8) ?? "")")
                 do {
                     let loginResponse = try response.map(
                         ResponseBodyDTO<SocialLoginResponseModel>.self
                     )
-                    print(
-                        "Successfully mapped response: \(loginResponse)"
-                    )
-                    self?.handleLoginResponse(
-                        loginResponse
-                    )
+                    print("Successfully mapped response: \(loginResponse)")
+                    self?.handleLoginResponse(loginResponse)
                 } catch {
                     print("Failed to decode response: \(error)")
                     self?.error.value = "Failed to decode response: \(error.localizedDescription)"
@@ -103,7 +107,7 @@ class LoginViewModel: NSObject {
             }
         }
     }
-    
+
     private func handleLoginResponse(_ response: ResponseBodyDTO<SocialLoginResponseModel>) {
         print("Handling login response")
         if response.success {
@@ -150,29 +154,23 @@ class LoginViewModel: NSObject {
     }
 }
 
-extension LoginViewModel: ASAuthorizationControllerDelegate, 
+extension LoginViewModel: ASAuthorizationControllerDelegate,
                             ASAuthorizationControllerPresentationContextProviding {
     func authorizationController(
         controller: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
-        print(
-            "Apple authorization completed"
-        )
+        print("Apple authorization completed")
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
               let identityToken = appleIDCredential.identityToken,
-              let tokenString = String(
-                data: identityToken,
-                encoding: .utf8
-              ) else {
-            print(
-                "Failed to get Apple ID Credential or identity token"
-            )
+              let tokenString = String(data: identityToken, encoding: .utf8) else {
+            print("Failed to get Apple ID Credential or identity token")
             return
         }
 
         print("Apple Login Successful, identity token: \(tokenString)")
-        loginToServer(with: .appleLogin(identityToken: tokenString, fcmToken: "dummy_fcm_token"))
+        let fcmToken = getFCMToken()
+        loginToServer(with: .appleLogin(identityToken: tokenString, fcmToken: fcmToken))
     }
 
     func authorizationController(
