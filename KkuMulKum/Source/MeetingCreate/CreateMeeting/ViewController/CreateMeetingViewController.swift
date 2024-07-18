@@ -31,6 +31,18 @@ class CreateMeetingViewController: BaseViewController {
     
     
     // MARK: - LifeCycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
+    }
 
     override func loadView() {
         view = createMeetingView

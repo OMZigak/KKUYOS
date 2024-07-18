@@ -30,6 +30,18 @@ class InviteCodeViewController: BaseViewController {
     
     
     // MARK: - LifeCycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
+    }
 
     override func loadView() {
         view = inviteCodeView
@@ -107,7 +119,7 @@ extension InviteCodeViewController {
         // TODO: 서버 연결할 때 데이터 바인딩해서 화면 전환 시키기
         let basePromiseViewController = PagePromiseViewController()
         
-        navigationController?.pushViewController(basePromiseViewController, animated: true)
+        tabBarController?.navigationController?.pushViewController(basePromiseViewController, animated: true)
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {

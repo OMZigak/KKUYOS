@@ -48,6 +48,10 @@ class MeetingListViewController: BaseViewController {
         viewModel.requestMeetingList()
     }
     
+    override func setupAction() {
+        rootView.addButton.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
+    }
+    
     
     // MARK: - Function
     
@@ -76,6 +80,20 @@ class MeetingListViewController: BaseViewController {
     }
 }
 
+
+// MARK: - Extension
+
+extension MeetingListViewController {
+    @objc
+    func addButtonDidTap() {
+        let checkInviteCodeViewController = CheckInviteCodeViewController()
+        
+        tabBarController?.navigationController?.pushViewController(
+            checkInviteCodeViewController,
+            animated: true
+        )
+    }
+}
 
 // MARK: - UITableViewDelegate
 

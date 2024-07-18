@@ -16,6 +16,18 @@ class CheckInviteCodeViewController: BaseViewController {
     
     
     // MARK: LifeCycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
+    }
 
     override func loadView() {
         view = checkInviteCodeView
@@ -26,7 +38,6 @@ class CheckInviteCodeViewController: BaseViewController {
     
     override func setupView() {
         view.backgroundColor = .white
-        self.tabBarController?.tabBar.isHidden = true
         
         setupNavigationBarTitle(with: "내 모임 추가하기")
         setupNavigationBarBackButton()
@@ -56,9 +67,6 @@ private extension CheckInviteCodeViewController {
             )
         )
         
-        inviteCodeViewController.modalTransitionStyle = .crossDissolve
-        inviteCodeViewController.modalPresentationStyle = .fullScreen
-        
         navigationController?.pushViewController(inviteCodeViewController, animated: true)
     }
     
@@ -69,9 +77,6 @@ private extension CheckInviteCodeViewController {
                 createMeetingService: MockCreateMeetingService()
             )
         )
-        
-        createMeetingViewController.modalTransitionStyle = .crossDissolve
-        createMeetingViewController.modalPresentationStyle = .fullScreen
         
         navigationController?.pushViewController(createMeetingViewController, animated: true)
     }
