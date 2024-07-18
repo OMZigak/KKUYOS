@@ -55,12 +55,7 @@ class AuthService: AuthServiceType {
     
     func performRequest<T: ResponseModelType>(
         _ target: AuthTargetType,
-        completion: @escaping (
-            Result<
-            T,
-            NetworkError
-            >
-        ) -> Void
+        completion: @escaping (Result<T, NetworkError>) -> Void
     ) {
         provider.request(target) { result in
             switch result {
