@@ -12,10 +12,11 @@ import Foundation
 
 struct PromiseInfoModel: ResponseModelType {
     let promiseID: Int
-    let placeName, address, roadAddress, time, dressUpLevel, penalty: String
+    let promiseName, placeName, address, roadAddress, time, dressUpLevel, penalty: String
     
     enum CodingKeys: String, CodingKey {
         case promiseID = "promiseId"
+        case promiseName
         case placeName
         case address
         case roadAddress
