@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Kingfisher
+
 class PromiseInfoViewController: BaseViewController {
     
     
@@ -14,9 +16,6 @@ class PromiseInfoViewController: BaseViewController {
     
     private let promiseInfoViewModel: PromiseInfoViewModel
     private let promiseInfoView: PromiseInfoView = PromiseInfoView()
-    
-    
-    // MARK: - Setup
     
     init(promiseInfoViewModel: PromiseInfoViewModel) {
         self.promiseInfoViewModel = promiseInfoViewModel
@@ -28,24 +27,71 @@ class PromiseInfoViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func loadView() {
+        view = promiseInfoView
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // TODO: 서버 통신하고 데이터 바인딩
-    }
-    
-    override func setupView() {
-        view.addSubview(promiseInfoView)
-        self.navigationController?.navigationBar.shadowImage = nil
-        
-        promiseInfoView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-        }
+        setupBinding()
+        promiseInfoViewModel.fetchPromiseParticipantList()
     }
     
     override func setupDelegate() {
         promiseInfoView.participantCollectionView.delegate = self
         promiseInfoView.participantCollectionView.dataSource = self
+    }
+}
+
+
+// MARK: - Extension
+
+extension PromiseInfoViewController {
+    func setupBinding() {
+        promiseInfoViewModel.promiseInfo.bind(with: self) { owner, info in
+            owner.promiseInfoView.timeContentLabel.setText(
+                info?.time ?? "설정되지 않음",
+                style: .body04,
+                color: .gray7
+            )
+            
+            owner.promiseInfoView.readyLevelContentLabel.setText(
+                info?.dressUpLevel ?? "설정되지 않음",
+                style: .body04,
+                color: .gray7
+            )
+            
+            owner.promiseInfoView.locationContentLabel.setText(
+                info?.address ?? "설정되지 않음",
+                style: .body04,
+                color: .gray7
+            )
+            
+            owner.promiseInfoView.penaltyLevelContentLabel.setText(
+                info?.penalty ?? "설정되지 않음",
+                style: .body04,
+                color: .gray7
+            )
+        }
+        
+        promiseInfoViewModel.participantsInfo.bind(with: self) {
+            owner,
+            participantsInfo in
+            DispatchQueue.main.async {
+                owner.promiseInfoView.participantNumberLabel.setText(
+                    "약속 참여 인원 \(participantsInfo?.count ?? 0)명",
+                    style: .body01
+                )
+                owner.promiseInfoView.participantNumberLabel.setHighlightText(
+                    "\(participantsInfo?.count ?? 0)명",
+                    style: .body01,
+                    color: .maincolor
+                )
+                
+                owner.promiseInfoView.participantCollectionView.reloadData()
+            }
+        }
     }
 }
 
@@ -57,8 +103,7 @@ extension PromiseInfoViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        // TODO: 데이터 바인딩 필요
-        return 10
+        return ((promiseInfoViewModel.participantsInfo.value?.count ?? 0) + 1)
     }
 }
 
@@ -75,12 +120,27 @@ extension PromiseInfoViewController: UICollectionViewDelegateFlowLayout {
             for: indexPath) as? ParticipantCollectionViewCell 
         else { return UICollectionViewCell() }
         
-        // TODO: 데이터 바인딩 필요
-        
         if indexPath.row == 0 {
             cell.profileImageView.image = .imgEmptyCell
             cell.profileImageView.contentMode = .scaleAspectFill
+            cell.userNameLabel.isHidden = true
+            
+            return cell
         }
+        
+        guard let info = promiseInfoViewModel.participantsInfo.value?[indexPath.row - 1] else {
+            return cell
+        }
+        
+        cell.userNameLabel.setText(info.name, style: .caption02, color: .gray6)
+        
+        guard let image = URL(string: info.profileImageURL ?? "") else {
+            cell.profileImageView.image = .imgProfile
+            
+            return cell
+        }
+                
+        cell.profileImageView.kf.setImage(with: image)
         
         return cell
     }

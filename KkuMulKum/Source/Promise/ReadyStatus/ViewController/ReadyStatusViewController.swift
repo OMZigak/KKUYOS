@@ -40,11 +40,8 @@ class ReadyStatusViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         // TODO: 서버 통신해서
-        readyStatusViewModel.isReadyInfoEntered.bind { [weak self] flag in
-            DispatchQueue.main.async {
-                self?.updateReadyInfoView(flag: flag)
-            }
-        }
+        readyStatusViewModel.fetchMyReadyStatus()
+        readyStatusViewModel.fetchPromiseParticipantList()
     }
     
     override func setupDelegate() {
@@ -79,31 +76,37 @@ class ReadyStatusViewController: BaseViewController {
     @objc
     func readyStartButtonDidTapped() {
         // TODO: 늦었을 때 꾸물거릴 시간이 없어요 팝업 뜨도록 설정
-        readyStatusViewModel.myReadyStatus.value = .ready
+        readyStatusViewModel.myReadyProgressStatus.value = .ready
         rootView.myReadyStatusProgressView.readyStartButton.isEnabled.toggle()
     }
     
     @objc
     func moveStartButtonDidTapped() {
         // TODO: 늦었을 때 꾸물거릴 시간이 없어요 팝업 뜨도록 설정
-        readyStatusViewModel.myReadyStatus.value = .move
+        readyStatusViewModel.myReadyProgressStatus.value = .move
         rootView.myReadyStatusProgressView.moveStartButton.isEnabled.toggle()
     }
     
     @objc
     func arrivalButtonDidTapped() {
-        readyStatusViewModel.myReadyStatus.value = .done
+        readyStatusViewModel.myReadyProgressStatus.value = .done
         rootView.myReadyStatusProgressView.arrivalButton.isEnabled.toggle()
     }
     
     /// 눌렀을 때 준비 정보 입력하기 화면으로 넘어가도록 설정
     @objc
     func enterReadyButtonDidTapped() {
-        // TODO: 유진이가 promiseID, promiseTime 를 전달하면 됩니다.
+        // TODO: 유진이가 promiseID, promiseName, promiseTime 를 전달하면 됩니다.
+        
+        guard !readyStatusViewModel.promiseName.value.isEmpty else { return }
+        
+        guard let readyStatusInfo = readyStatusViewModel.myReadyStatus.value else { return }
+        
         let setReadyInfoViewController = SetReadyInfoViewController(
             viewModel: SetReadyInfoViewModel(
-                promiseID: 1,
-                promiseTime: "",
+                promiseID: readyStatusViewModel.promiseID,
+                promiseTime: readyStatusInfo.promiseTime,
+                promiseName: readyStatusViewModel.promiseName.value,
                 service: PromiseService()
             )
         )
@@ -168,21 +171,18 @@ private extension ReadyStatusViewController {
     func setupBinding() {
         readyStatusViewModel.isReadyInfoEntered.bind(with: self) { owner, status in
             DispatchQueue.main.async {
-                owner.readyStatusViewModel.isReadyInfoEntered.value = status
                 owner.updateReadyInfoView(flag: status)
             }
         }
         
-        readyStatusViewModel.myReadyStatus.bind(with: self) { owner, status in
+        readyStatusViewModel.myReadyProgressStatus.bind(with: self) { owner, status in
             DispatchQueue.main.async {
-                owner.readyStatusViewModel.myReadyStatus.value = status
                 owner.updateReadyStartButton(status: status)
             }
         }
         
         readyStatusViewModel.participantInfos.bind(with: self) { owner, participants in
             DispatchQueue.main.async {
-                owner.readyStatusViewModel.participantInfos.value = participants
                 owner.rootView.ourReadyStatusCollectionView.reloadData()
             }
         }
@@ -206,7 +206,7 @@ private extension ReadyStatusViewController {
         rootView.popUpImageView.isHidden = !isLate
     }
     
-    func updateReadyStartButton(status: ReadyStatus) {
+    func updateReadyStartButton(status: ReadyProgressStatus) {
         switch status {
         case .none:
             rootView.myReadyStatusProgressView.readyStartButton.setupButton(

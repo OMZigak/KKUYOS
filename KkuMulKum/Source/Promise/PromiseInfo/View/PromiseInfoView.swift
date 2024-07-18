@@ -12,7 +12,7 @@ class PromiseInfoView: BaseView {
     
     // MARK: Property
 
-    private let participantNumberLabel: UILabel = UILabel().then {
+    let participantNumberLabel: UILabel = UILabel().then {
         $0.setText("약속 참여 인원 n명", style: .body01)
         $0.setHighlightText("n명", style: .body01, color: .maincolor)
     }
@@ -57,7 +57,7 @@ class PromiseInfoView: BaseView {
         $0.setText("위치", style: .caption01, color: .maincolor)
     }
     
-    private let locationContentLabel: UILabel = UILabel().then {
+    let locationContentLabel: UILabel = UILabel().then {
         $0.setText("sss역 s번 출구", style: .body04, color: .gray7)
     }
     
@@ -69,7 +69,7 @@ class PromiseInfoView: BaseView {
         $0.setText("약속시간", style: .caption01, color: .maincolor)
     }
     
-    private let timeContentLabel: UILabel = UILabel().then {
+    let timeContentLabel: UILabel = UILabel().then {
         $0.setText("mm월 dd일 hh:mm", style: .body04, color: .gray7)
     }
     
@@ -81,7 +81,7 @@ class PromiseInfoView: BaseView {
         $0.setText("준비레벨", style: .caption01, color: .maincolor)
     }
     
-    private let readyLevelContentLabel: UILabel = UILabel().then {
+    let readyLevelContentLabel: UILabel = UILabel().then {
         $0.setText("LV n. sss", style: .body04, color: .gray7)
     }
     
@@ -93,7 +93,7 @@ class PromiseInfoView: BaseView {
         $0.setText("벌칙", style: .caption01, color: .maincolor)
     }
     
-    private let penaltyLevelContentLabel: UILabel = UILabel().then {
+    let penaltyLevelContentLabel: UILabel = UILabel().then {
         $0.setText("ssss하기", style: .body04, color: .gray7)
     }
     
