@@ -12,7 +12,7 @@ class PagePromiseViewController: BaseViewController {
     
     // MARK: Property
 
-    private let promiseViewModel = PagePromiseViewModel()
+    private let promiseViewModel: PagePromiseViewModel
     
     // TODO: 서버 연결 시 데이터 바인딩 필요
     private let promiseViewControllerList: [BaseViewController] = [
@@ -42,7 +42,17 @@ class PagePromiseViewController: BaseViewController {
     
     
     // MARK: - Setup
-
+    
+    init(promiseViewModel: PagePromiseViewModel) {
+        self.promiseViewModel = promiseViewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func setupView() {
         view.backgroundColor = .white
         
@@ -102,7 +112,7 @@ extension PagePromiseViewController {
             $0.leading.equalToSuperview().offset((width / CGFloat(count)) * CGFloat(selectedIndex))
         }
         
-        promiseViewModel.didSegmentIndexChanged(
+        promiseViewModel.segmentIndexDidChanged(
             index: promiseSegmentedControl.selectedSegmentIndex
         )
         
