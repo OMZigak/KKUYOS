@@ -104,24 +104,26 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
     }
     
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
-        print("Firebase registration token: \(String(describing: fcmToken))")
-        
-        if let token = fcmToken {
-            UserDefaults.standard.set(token, forKey: "FCMToken")
-        }
-    }
-    
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        Messaging.messaging().apnsToken = deviceToken
-        
-        // APNS 토큰이 설정된 후 FCM 토큰 요청
-        Messaging.messaging().token { token, error in
-            if let error = error {
-                print("Error fetching FCM registration token: \(error)")
-            } else if let token = token {
-                print("FCM Token: \(token)")
-                UserDefaults.standard.set(token, forKey: "FCMToken")
-            }
-        }
-    }
+           print("Firebase registration token: \(String(describing: fcmToken))")
+           
+           if let token = fcmToken {
+               let keychainAccessible: KeychainAccessible = DefaultKeychainAccessible()
+               _ = keychainAccessible.saveToken("FCMToken", token)
+               NotificationCenter.default.post(name: Notification.Name("FCMTokenReceived"), object: nil)
+           }
+       }
+       
+       func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+           Messaging.messaging().apnsToken = deviceToken
+           
+           Messaging.messaging().token { [weak self] token, error in
+               if let error = error {
+                   print("Error fetching FCM registration token: \(error)")
+               } else if let token = token {
+                   print("FCM Token: \(token)")
+                   let keychainAccessible: KeychainAccessible = DefaultKeychainAccessible()
+                   _ = keychainAccessible.saveToken("FCMToken", token)
+               }
+           }
+       }
 }

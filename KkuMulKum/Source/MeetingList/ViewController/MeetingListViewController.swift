@@ -85,13 +85,13 @@ extension MeetingListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // TODO: MeetingID를 넘겨받기
         let viewController = MeetingInfoViewController(
             viewModel: MeetingInfoViewModel(
                 meetingID: viewModel.meetingList.value?.data?.meetings[indexPath.item].meetingID ?? 0,
-                service: MockMeetingInfoService()
+                service: MeetingService()
             )
         )
-        
         tabBarController?.navigationController?.pushViewController(viewController, animated: true)
     }
 }

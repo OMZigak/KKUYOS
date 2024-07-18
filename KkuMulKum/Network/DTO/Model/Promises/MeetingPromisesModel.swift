@@ -13,10 +13,19 @@ struct MeetingPromisesModel: ResponseModelType {
 }
 
 struct MeetingPromise: Codable {
-    let id: Int
+    let promiseID: Int
     let name: String
     let dDay: Int
     let date: String
     let time: String
     let placeName: String
+    
+    enum CodingKeys: String, CodingKey {
+        case promiseID = "promiseId"
+        case name
+        case dDay
+        case date
+        case time
+        case placeName
+    }
 }

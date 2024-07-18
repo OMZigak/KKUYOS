@@ -79,7 +79,6 @@ private extension MeetingInfoViewController {
         output.info
             .drive(with: self) { owner, meetingInfo in
                 guard let info = meetingInfo else { return }
-                
                 owner.title = info.name
                 owner.rootView.configureInfo(
                     createdAt: info.createdAt,
@@ -109,6 +108,10 @@ private extension MeetingInfoViewController {
             .disposed(by: disposeBag)
         
         output.promises
+            .map { [weak self] promises in
+                self?.rootView.configureEmptyView(with: !promises.isEmpty)
+                return promises
+            }
             .drive(rootView.promiseListView.rx.items(
                 cellIdentifier: MeetingPromiseCell.reuseIdentifier,
                 cellType: MeetingPromiseCell.self
@@ -135,18 +138,14 @@ private extension MeetingInfoViewController {
                     )
                     return
                 }
-                
                 owner.navigateToAddPromise()
             }
             .disposed(by: disposeBag)
-        
-        rootView.configureEmptyView(with: viewModel.meetingPromises.count == 0)
     }
     
     func navigateToAddPromise() {
         let viewModel = AddPromiseViewModel(meetingID: viewModel.meetingID)
         let viewController = AddPromiseViewController(viewModel: viewModel)
-        
         navigationController?.pushViewController(viewController, animated: true)
     }
 }

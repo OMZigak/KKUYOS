@@ -26,17 +26,29 @@ class LoginViewModel: NSObject {
     private let provider: MoyaProvider<LoginTargetType>
     private var authService: AuthServiceType
     private let authInterceptor: AuthInterceptor
+    private let keychainAccessible: KeychainAccessible
     
     init(
         provider: MoyaProvider<LoginTargetType> = MoyaProvider<LoginTargetType>(
             plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
         ),
-        authService: AuthServiceType = AuthService()
+        authService: AuthServiceType = AuthService(),
+        keychainAccessible: KeychainAccessible = DefaultKeychainAccessible()
     ) {
         self.provider = provider
         self.authService = authService
         self.authInterceptor = AuthInterceptor(authService: authService, provider: provider)
+        self.keychainAccessible = keychainAccessible
         super.init()
+        
+        // 초기화 시 FCM 토큰 출력
+        print("Initial FCM Token: \(getFCMToken())")
+    }
+    
+    private func getFCMToken() -> String {
+        let token = keychainAccessible.getToken("FCMToken") ?? "fcm_token_not_available"
+        print("Retrieved FCM Token: \(token)")
+        return token
     }
     
     func performAppleLogin(presentationAnchor: ASPresentationAnchor) {
@@ -99,6 +111,14 @@ class LoginViewModel: NSObject {
     }
     
     private func loginToServer(with loginTarget: LoginTargetType) {
+        // FCM 토큰 출력
+        switch loginTarget {
+        case .appleLogin(_, let fcmToken), .kakaoLogin(_, let fcmToken):
+            print("Sending FCM Token to server: \(fcmToken)")
+        default:
+            break
+        }
+        
         provider.request(loginTarget) { [weak self] result in
             switch result {
             case .success(let response):
@@ -188,7 +208,7 @@ class LoginViewModel: NSObject {
      }
 
      private func clearTokensAndHandleError() {
-         authService.clearTokens()
+         _ = authService.clearTokens()
          loginState.value = .notLogin
          error.value = "자동 로그인 실패. 다시 로그인해주세요."
          print("Tokens cleared, login state set to notLogin")

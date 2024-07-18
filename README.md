@@ -11,8 +11,8 @@
 
 |김진웅</br>[@JinUng41](https://github.com/JinUng41)|이지훈</br>[@hooni0918](https://github.com/hooni0918)|이유진</br>[@youz2me](https://github.com/youz2me)|김수연</br>[@mmaybei](https://github.com/mmaybei)|
 |:---:|:---:|:---:|:---:|
-|<img src = "https://github.com/OMZigak/iOS/assets/144984293/c3548e84-629e-4dbd-b839-c2bb44c870bf" width ="250">|<img src = "https://github.com/OMZigak/iOS/assets/144984293/c3548e84-629e-4dbd-b839-c2bb44c870bf" width ="250">|<img src = "https://github.com/OMZigak/iOS/assets/144984293/c3548e84-629e-4dbd-b839-c2bb44c870bf" width ="250">|<img src = "https://github.com/OMZigak/iOS/assets/144984293/c3548e84-629e-4dbd-b839-c2bb44c870bf" width ="250">|
-|`무슨뷰`|`무슨뷰`|`무슨뷰`|`무슨뷰`|
+|<img src = "https://github.com/user-attachments/assets/9ec0d2f4-3515-4d2c-8433-b0326a06b6ac" width ="250">|<img src = "https://github.com/user-attachments/assets/513a88e4-db78-4e11-9c42-6dda99bfe6fa" width ="250">|<img src = "https://github.com/user-attachments/assets/566a0a8c-c673-4650-b9f4-3b74d7443aa9" width ="250">|<img src = "https://github.com/user-attachments/assets/0c785026-a0c1-4e1a-bc28-fc12072b724e" width ="250">|
+|`약속 추가 플로우`, `모임 상세`|`푸시 알림`, `온보딩`, `마이페이지`|`모임 추가 플로우`, `약속 상세`|`홈`, `내 모임`, `준비 정보 입력`|
 </br>
 
 ![Frame 1000002428](https://github.com/OMZigak/iOS/assets/144984293/8c3ba259-6b8d-47b9-9f5d-97e8bc48ccd7)

@@ -15,7 +15,7 @@ struct MeetingMembersModel: ResponseModelType {
 
 struct Member: Codable {
     let memberID: Int
-    let name: String
+    let name: String?
     let profileImageURL: String?
     
     enum CodingKeys: String, CodingKey {
