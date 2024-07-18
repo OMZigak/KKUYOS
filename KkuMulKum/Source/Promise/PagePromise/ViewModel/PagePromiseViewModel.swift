@@ -14,13 +14,26 @@ class PagePromiseViewModel {
     // MARK: Property
 
     var currentPage = ObservablePattern<Int>(0)
+    var promiseID: ObservablePattern<Int>
+    let promiseName: String = "Test"
+    
+    
+    // MARK: Initialize
+
+    init(promiseID: Int) {
+        self.promiseID = ObservablePattern<Int>(promiseID)
+    }
 }
 
 
 // MARK: - Extension
 
 extension PagePromiseViewModel {
-    func didSegmentIndexChanged(index: Int) {
+    func segmentIndexDidChanged(index: Int) {
         currentPage.value = index
+    }
+    
+    func promiseIDDidChanged(id: Int) {
+        promiseID.value = id
     }
 }

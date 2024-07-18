@@ -15,7 +15,7 @@ import Then
 final class InvitationCodePopUpViewController: BaseViewController {
     private let invitationCode: String
     private let disposeBag = DisposeBag()
-    private let rootView = InvitationCodePopUpView()
+    let rootView = InvitationCodePopUpView()
     
     
     // MARK: - Initializer
@@ -76,6 +76,10 @@ final class InvitationCodePopUpViewController: BaseViewController {
                     position: .bottom,
                     inset: 100
                 )
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                    owner.dismiss(animated: true)
+                }
             }
             .disposed(by: disposeBag)
     }

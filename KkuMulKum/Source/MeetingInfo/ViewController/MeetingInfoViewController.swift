@@ -73,9 +73,13 @@ final class MeetingInfoViewController: BaseViewController {
 
 extension MeetingInfoViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // TODO: promiseID를 모임 상세로 전달
-        /// viewModel.meetingPromises[indexPath.item]을 전달
-        print(">>> \(viewModel.meetingPromises[indexPath.item]) : \(#function)")
+        let pagePromiseViewController = PagePromiseViewController(
+            promiseViewModel: PagePromiseViewModel(
+                promiseID: viewModel.meetingPromises[indexPath.item].promiseID
+            )
+        )
+        
+        navigationController?.pushViewController(pagePromiseViewController, animated: true)
     }
 }
 

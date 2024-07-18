@@ -12,24 +12,14 @@ class PagePromiseViewController: BaseViewController {
     
     // MARK: Property
 
-    private let promiseViewModel = PagePromiseViewModel()
+    private let promiseViewModel: PagePromiseViewModel
     
     // TODO: 서버 연결 시 데이터 바인딩 필요
-    private let promiseViewControllerList: [BaseViewController] = [
-        PromiseInfoViewController(),
-        ReadyStatusViewController(
-            readyStatusViewModel: ReadyStatusViewModel(
-                readyStatusService: ReadyStatusService()
-            )
-        ),
-        TardyViewController(
-            tardyViewModel: TardyViewModel(
-                tardyService: MockTardyService(),
-                isPastDue: ObservablePattern<Bool>(false),
-                hasTardy: ObservablePattern<Bool>(false)
-            )
-        )
-    ]
+    private var promiseViewControllerList: [BaseViewController] = []
+    
+    private let promiseInfoViewController: PromiseInfoViewController
+    private let readyStatusViewController: ReadyStatusViewController
+    private let tardyViewController: TardyViewController
     
     private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(
         items: ["약속 정보", "준비 현황", "지각 꾸물이"]
@@ -46,10 +36,13 @@ class PagePromiseViewController: BaseViewController {
         setupNavigationBarBackButton()
     }
     
+    // MARK: - LifeCycle
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         navigationController?.isNavigationBarHidden = false
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -58,10 +51,56 @@ class PagePromiseViewController: BaseViewController {
         navigationController?.isNavigationBarHidden = true
     }
     
+    
+    // MARK: Initialize
+
+    init(promiseViewModel: PagePromiseViewModel) {
+        self.promiseViewModel = promiseViewModel
+        
+        // TODO: 네트워크 통신 필요
+        
+        promiseInfoViewController = PromiseInfoViewController(
+            promiseInfoViewModel: PromiseInfoViewModel(
+                promiseInfoService: MockPromiseInfoService(),
+                promiseID: promiseViewModel.promiseID.value
+            )
+        )
+        
+        readyStatusViewController = ReadyStatusViewController(
+            readyStatusViewModel: ReadyStatusViewModel(
+                readyStatusService: MockReadyStatusService(),
+                promiseID: promiseViewModel.promiseID.value
+            )
+        )
+        
+        tardyViewController = TardyViewController(
+            tardyViewModel: TardyViewModel(
+                tardyService: MockTardyService(),
+                promiseID: promiseViewModel.promiseID.value
+            )
+        )
+        
+        promiseViewControllerList = [
+            promiseInfoViewController,
+            readyStatusViewController,
+            tardyViewController
+        ]
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
     // MARK: - Setup
 
     override func setupView() {
         view.backgroundColor = .white
+        
+        setupNavigationBarBackButton()
+        setupNavigationBarTitle(with: promiseViewModel.promiseName)
         
         addChild(promisePageViewController)
         
@@ -94,6 +133,18 @@ class PagePromiseViewController: BaseViewController {
             action: #selector(didSegmentedControlIndexUpdated),
             for: .valueChanged
         )
+        
+        tardyViewController.tardyView.finishMeetingButton.addTarget(
+            self,
+            action: #selector(finishMeetingButtonDidTapped),
+            for: .touchUpInside
+        )
+        
+        tardyViewController.arriveView.finishMeetingButton.addTarget(
+            self,
+            action: #selector(finishMeetingButtonDidTapped),
+            for: .touchUpInside
+        )
     }
     
     override func setupDelegate() {
@@ -119,13 +170,18 @@ extension PagePromiseViewController {
             $0.leading.equalToSuperview().offset((width / CGFloat(count)) * CGFloat(selectedIndex))
         }
         
-        promiseViewModel.didSegmentIndexChanged(
+        promiseViewModel.segmentIndexDidChanged(
             index: promiseSegmentedControl.selectedSegmentIndex
         )
         
         promisePageViewController.setViewControllers([
             promiseViewControllerList[promiseViewModel.currentPage.value]
         ], direction: direction, animated: false)
+    }
+    
+    @objc
+    func finishMeetingButtonDidTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

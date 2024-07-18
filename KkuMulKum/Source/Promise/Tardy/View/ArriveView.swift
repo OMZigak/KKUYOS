@@ -25,7 +25,7 @@ class ArriveView: BaseView {
         $0.setText("약속 시간까지 아무도 꾸물거리지 않았네요!", style: .body06, color: .gray6)
     }
     
-    private let finishMeetingButton: CustomButton = CustomButton(
+    let finishMeetingButton: CustomButton = CustomButton(
         title: "약속 마치기",
         isEnabled: true
     ).then {

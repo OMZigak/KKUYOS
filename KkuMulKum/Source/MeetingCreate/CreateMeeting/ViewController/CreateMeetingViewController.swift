@@ -31,6 +31,19 @@ class CreateMeetingViewController: BaseViewController {
     
     
     // MARK: - LifeCycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
+    }
 
     override func loadView() {
         view = createMeetingView
@@ -111,6 +124,33 @@ private extension CreateMeetingViewController {
         inviteCodePopUpViewController.modalTransitionStyle = .crossDissolve
         inviteCodePopUpViewController.view.backgroundColor = .black.withAlphaComponent(0.7)
         
+        inviteCodePopUpViewController.rootView.copyButton.addTarget(
+            self,
+            action: #selector(copyButtonDidTapped),
+            for: .touchUpInside
+        )
+        inviteCodePopUpViewController.rootView.inviteLaterButton.addTarget(
+            self,
+            action: #selector(inviteLaterButtonDidTapped),
+            for: .touchUpInside
+        )
+        
         present(inviteCodePopUpViewController, animated: true, completion: nil)
+    }
+    
+    @objc
+    private func copyButtonDidTapped() {
+        let finishCreateViewController = FinishCreateViewController()
+        
+        navigationController?.pushViewController(finishCreateViewController, animated: true)
+    }
+    
+    @objc
+    private func inviteLaterButtonDidTapped() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+            let finishCreateViewController = FinishCreateViewController()
+            
+            self.navigationController?.pushViewController(finishCreateViewController, animated: true)
+        }
     }
 }

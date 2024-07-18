@@ -14,12 +14,15 @@ class ParticipantCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: Property
 
-    private lazy var profileImageView: UIImageView = UIImageView().then {
+    let profileImageView: UIImageView = UIImageView().then {
+        $0.backgroundColor = .gray1
         $0.image = .imgProfile
         $0.contentMode = .scaleAspectFit
+        $0.layer.cornerRadius = Screen.height(68) / 2
+        $0.clipsToBounds = true
     }
     
-    private let userNameLabel: UILabel = UILabel().then {
+    let userNameLabel: UILabel = UILabel().then {
         $0.setText("userName", style: .caption02, color: .gray6)
     }
     

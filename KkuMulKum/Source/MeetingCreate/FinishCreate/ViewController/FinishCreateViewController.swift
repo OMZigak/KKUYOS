@@ -23,12 +23,22 @@ class FinishCreateViewController: BaseViewController {
     
     private let subTitleLabel: UILabel = UILabel().then {
         $0.setText("모임 내에서 약속과 인원을\n추가해보세요", style: .body06, color: .gray6)
+    }.then {
+        $0.textAlignment = .center
     }
     
     private let confirmButton: CustomButton = CustomButton(title: "확인", isEnabled: true).then {
         $0.backgroundColor = .maincolor
     }
     
+    // MARK: - LifeCycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+        self.navigationItem.hidesBackButton = true
+    }
     
     // MARK: - Setup
 
@@ -36,6 +46,7 @@ class FinishCreateViewController: BaseViewController {
         view.backgroundColor = .green1
         
         setupNavigationBarTitle(with: "내 모임 추가하기")
+        navigationController?.navigationItem.hidesBackButton = true
         
         view.addSubviews(
             peopleImageView,
@@ -84,6 +95,26 @@ class FinishCreateViewController: BaseViewController {
 private extension FinishCreateViewController {
     @objc 
     func presentMeetingInfoViewControllerDidTapped() {
-        // TODO: 모임 상세 화면 띄우기
+        // TODO: 서버 연결할 때 데이터 바인딩해서 화면 전환 시키기
+        let meetingInfoViewController = MeetingInfoViewController(
+            viewModel: MeetingInfoViewModel(
+                meetingID: 1,
+                service: MeetingService()
+            )
+        )
+        
+        guard let rootViewController = navigationController?.viewControllers.first as? MainTabBarController else {
+            return
+        }
+        
+        navigationController?.popToViewController(
+            rootViewController,
+            animated: false
+        )
+        
+        rootViewController.navigationController?.pushViewController(
+            meetingInfoViewController,
+            animated: true
+        )
     }
 }

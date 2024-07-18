@@ -18,14 +18,29 @@ final class SetReadyInfoViewController: BaseViewController {
     
     // MARK: - LifeCycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
+    }
+    
     override func loadView() {
         self.view = rootView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         view.backgroundColor = .white
+        
+        setupNavigationBarBackButton()
+        setupNavigationBarTitle(with: "준비 정보 입력하기")
+        
         bindViewModel()
     }
     

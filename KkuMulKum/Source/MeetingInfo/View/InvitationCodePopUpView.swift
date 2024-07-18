@@ -39,13 +39,13 @@ final class InvitationCodePopUpView: BaseView {
     
     private let invitationCodeLabel = UILabel()
     
-    private let inviteLaterButton = UIButton(backgroundColor: .gray3).then {
+    let inviteLaterButton = UIButton(backgroundColor: .gray3).then {
         $0.setTitle("나중에 초대하기", style: .body05, color: .white)
         $0.layer.cornerRadius = 8
         $0.layer.maskedCorners = [.layerMinXMaxYCorner]
     }
     
-    private let copyButton = UIButton(backgroundColor: .gray7).then {
+    let copyButton = UIButton(backgroundColor: .gray7).then {
         $0.setTitle("복사하기", style: .body05, color: .white)
         $0.backgroundColor = .gray7
         $0.layer.cornerRadius = 8

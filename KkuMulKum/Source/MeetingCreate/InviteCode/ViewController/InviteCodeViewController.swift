@@ -30,6 +30,18 @@ class InviteCodeViewController: BaseViewController {
     
     
     // MARK: - LifeCycle
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
+    }
 
     override func loadView() {
         view = inviteCodeView
@@ -80,14 +92,17 @@ extension InviteCodeViewController {
                 owner.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
                 owner.inviteCodeView.errorLabel.isHidden = true
                 owner.inviteCodeView.checkImageView.isHidden = true
+                owner.inviteCodeView.presentButton.isEnabled = false
             case .invalid:
                 owner.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.mainred.cgColor
                 owner.inviteCodeView.errorLabel.isHidden = false
                 owner.inviteCodeView.checkImageView.isHidden = true
+                owner.inviteCodeView.presentButton.isEnabled = false
             case .valid:
                 owner.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
                 owner.inviteCodeView.errorLabel.isHidden = true
                 owner.inviteCodeView.checkImageView.isHidden = true
+                owner.inviteCodeView.presentButton.isEnabled = true
             case .success:
                 owner.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
                 owner.inviteCodeView.errorLabel.isHidden = true
@@ -105,9 +120,26 @@ extension InviteCodeViewController {
     
     @objc private func nextButtonTapped() {
         // TODO: 서버 연결할 때 데이터 바인딩해서 화면 전환 시키기
-        let basePromiseViewController = PagePromiseViewController()
+        let meetingInfoViewController = MeetingInfoViewController(
+            viewModel: MeetingInfoViewModel(
+                meetingID: 1,
+                service: MeetingService()
+            )
+        )
         
-        navigationController?.pushViewController(basePromiseViewController, animated: true)
+        guard let rootViewController = navigationController?.viewControllers.first as? MainTabBarController else {
+            return
+        }
+        
+        navigationController?.popToViewController(
+            rootViewController,
+            animated: false
+        )
+        
+        rootViewController.navigationController?.pushViewController(
+            meetingInfoViewController,
+            animated: true
+        )
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
