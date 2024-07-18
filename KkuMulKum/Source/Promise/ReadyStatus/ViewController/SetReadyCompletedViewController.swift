@@ -17,6 +17,7 @@ final class SetReadyCompletedViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .green1
         
         setupNavigationBarTitle(with: "준비 정보 입력하기")
         navigationItem.hidesBackButton = true
