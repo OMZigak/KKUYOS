@@ -28,6 +28,12 @@ class PromiseInfoViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // TODO: 서버 통신하고 데이터 바인딩
+    }
+    
     override func setupView() {
         view.addSubview(promiseInfoView)
         self.navigationController?.navigationBar.shadowImage = nil

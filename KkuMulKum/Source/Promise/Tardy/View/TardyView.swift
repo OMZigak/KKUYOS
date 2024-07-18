@@ -39,7 +39,7 @@ class TardyView: BaseView {
     
     let finishMeetingButton: CustomButton = CustomButton(
         title: "약속 마치기",
-        isEnabled: false
+        isEnabled: true
     ).then {
         $0.backgroundColor = .maincolor
     }

@@ -13,8 +13,9 @@ class TardyViewModel {
     // MARK: Property
 
     let tardyService: TardyServiceType
-    var isPastDue: ObservablePattern<Bool> = ObservablePattern<Bool>(false)
-    var hasTardy: ObservablePattern<Bool> = ObservablePattern<Bool>(false)
+    var isPastDue: ObservablePattern<Bool> = ObservablePattern<Bool>(true)
+    var hasTardy: ObservablePattern<Bool> = ObservablePattern<Bool>(true)
+    var isFinishButtonEnabled: ObservablePattern<Bool> = ObservablePattern<Bool>(true)
     let promiseID: ObservablePattern<Int>
     
     

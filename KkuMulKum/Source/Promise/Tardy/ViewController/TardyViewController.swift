@@ -33,7 +33,20 @@ class TardyViewController: BaseViewController {
     // MARK: - Setup
 
     override func loadView() {
-        view = tardyViewModel.hasTardy.value ? tardyView : arriveView
+        let state = !tardyViewModel.hasTardy.value && tardyViewModel.isPastDue.value
+        view = state ? tardyView : arriveView
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // TODO: 서버 통신하고 데이터 바인딩
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupBinding()
     }
     
     override func setupDelegate() {
@@ -42,6 +55,23 @@ class TardyViewController: BaseViewController {
     }
 }
 
+
+// MARK: - Extension
+
+private extension TardyViewController {
+    func setupBinding() {
+        /// 시간이 지나고 지각자가 없을 때 arriveView로 띄워짐
+        tardyViewModel.hasTardy.bind(with: self) { owner, flag in
+            let state = !flag && owner.tardyViewModel.isPastDue.value
+            owner.view = state ? owner.tardyView : owner.arriveView
+        }
+        
+        /// isFinishButtonEnabled에 따라서 버튼 활성화 상태 변경
+        tardyViewModel.isFinishButtonEnabled.bind(with: self) { owner, flag in
+            self.tardyView.finishMeetingButton.isEnabled = flag
+        }
+    }
+}
 
 // MARK: UICollectionViewDelegate
 
@@ -57,6 +87,7 @@ extension TardyViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
+        // TODO: 데이터 바인딩
         return 10
     }
     
