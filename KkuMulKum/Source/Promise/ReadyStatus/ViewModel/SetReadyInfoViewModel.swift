@@ -20,7 +20,6 @@ final class SetReadyInfoViewModel {
     let moveMinute = ObservablePattern<String>("")
     let isSucceedToSave = ObservablePattern<Bool>(false)
     
-    // TODO: 준비 및 이동 시간 분 단위로 계산
     var readyTime: Int = 0
     var moveTime: Int = 0
     

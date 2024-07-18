@@ -17,7 +17,7 @@ enum ReadyState {
 }
 
 final class HomeViewModel {
-    var currentState = ObservablePattern<ReadyState>(.none)
+    var promiseID = ObservablePattern<Int>?(nil)
     
     var loginUser = ObservablePattern<ResponseBodyDTO<LoginUserModel>?>(nil)
     var nearestPromise = ObservablePattern<ResponseBodyDTO<NearestPromiseModel>?>(nil)
@@ -25,6 +25,10 @@ final class HomeViewModel {
     
     var levelName = ObservablePattern<String>("")
     var levelCaption = ObservablePattern<String>("")
+    
+    var isPreapreSucceedToSave = ObservablePattern<Bool>(false)
+    var isMoveSucceedToSave = ObservablePattern<Bool>(false)
+    var isArriveSucceedToSave = ObservablePattern<Bool>(false)
     
     private let service: HomeServiceType
     
@@ -42,8 +46,7 @@ final class HomeViewModel {
         $0.pmSymbol = "PM"
     }
     
-    func updateState(newState: ReadyState) {
-        currentState.value = newState
+    private func updateState(newState: ReadyState) {
         let currentTimeString = dateFormatter.string(from: Date())
         switch newState {
         case .prepare:
@@ -81,6 +84,54 @@ final class HomeViewModel {
             return "드디어 ‘꾸물꿈’ 레벨을 달성했네요.\n지각 꾸물이에서 탈출한 것을 축하해요!"
         default:
             return ""
+        }
+    }
+    
+    func updatePrepareStatus() {
+        Task {
+            do {
+                guard let responseBody = try await service.updatePreparationStatus(with: nearestPromise.value?.data?.promiseID ?? 1) 
+                else {
+                    isPreapreSucceedToSave.value = false
+                    return
+                }
+                isPreapreSucceedToSave.value = responseBody.success
+                updateState(newState: .prepare)
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+    }
+    
+    func updateMoveStatus() {
+        Task {
+            do {
+                guard let responseBody = try await service.updateDepartureStatus(with: nearestPromise.value?.data?.promiseID ?? 1) 
+                else {
+                    isMoveSucceedToSave.value = false
+                    return
+                }
+                isMoveSucceedToSave.value = responseBody.success
+                updateState(newState: .move)
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+    }
+    
+    func updateArriveStatus() {
+        Task {
+            do {
+                guard let responseBody = try await service.updateArrivalStatus(with: nearestPromise.value?.data?.promiseID ?? 1)
+                else {
+                    isArriveSucceedToSave.value = false
+                    return
+                }
+                isArriveSucceedToSave.value = responseBody.success
+                updateState(newState: .arrive)
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
         }
     }
     

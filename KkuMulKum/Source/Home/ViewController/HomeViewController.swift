@@ -48,8 +48,6 @@ class HomeViewController: BaseViewController {
         view.backgroundColor = .maincolor
         register()
         
-        updateUI()
-        
         updateUserInfo()
         updateNearestPromise()
         updateUpcomingPromise()
@@ -57,6 +55,8 @@ class HomeViewController: BaseViewController {
         viewModel.requestLoginUser()
         viewModel.requestNearestPromise()
         viewModel.requestUpcomingPromise()
+        
+        bindViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -188,17 +188,43 @@ private extension HomeViewController {
         )
     }
     
-    func updateUI() {
-        viewModel.currentState.bind { [weak self] state in
-            switch state {
-            case .prepare:
-                self?.setPrepareUI()
-            case .move:
-                self?.setMoveUI()
-            case .arrive:
-                self?.setArriveUI()
-            case .none:
-                break
+    func bindViewModel() {
+        viewModel.isPreapreSucceedToSave.bind { [weak self] _ in
+            if self?.viewModel.isPreapreSucceedToSave.value == true {
+                DispatchQueue.main.async {
+                    self?.setPrepareUI()
+                    self?.rootView.todayPromiseView.prepareTimeLabel.setText(
+                        self?.viewModel.homePrepareTime ?? "",
+                        style: .caption02,
+                        color: .gray8
+                    )
+                }
+            }
+        }
+        
+        viewModel.isMoveSucceedToSave.bind { [weak self] _ in
+            if self?.viewModel.isMoveSucceedToSave.value == true {
+                DispatchQueue.main.async {
+                    self?.setMoveUI()
+                    self?.rootView.todayPromiseView.moveTimeLabel.setText(
+                        self?.viewModel.homeMoveTime ?? "",
+                        style: .caption02,
+                        color: .gray8
+                    )
+                }
+            }
+        }
+        
+        viewModel.isArriveSucceedToSave.bind { [weak self] _ in
+            if self?.viewModel.isArriveSucceedToSave.value == true {
+                DispatchQueue.main.async {
+                    self?.setArriveUI()
+                    self?.rootView.todayPromiseView.arriveTimeLabel.setText(
+                        self?.viewModel.homeArriveTime ?? "",
+                        style: .caption02,
+                        color: .gray8
+                    )
+                }
             }
         }
     }
@@ -402,31 +428,16 @@ private extension HomeViewController {
     
     @objc
     func prepareButtonDidTap(_ sender: UIButton) {
-        viewModel.updateState(newState: .prepare)
-        rootView.todayPromiseView.prepareTimeLabel.setText(
-            viewModel.homePrepareTime,
-            style: .caption02,
-            color: .gray8
-        )
+        viewModel.updatePrepareStatus()
     }
     
     @objc
     func moveButtonDidTap(_ sender: UIButton) {
-        viewModel.updateState(newState: .move)
-        rootView.todayPromiseView.moveTimeLabel.setText(
-            viewModel.homeMoveTime,
-            style: .caption02,
-            color: .gray8
-        )
+        viewModel.updateMoveStatus()
     }
     
     @objc
     func arriveButtonDidTap(_ sender: UIButton) {
-        viewModel.updateState(newState: .arrive)
-        rootView.todayPromiseView.arriveTimeLabel.setText(
-            viewModel.homeArriveTime,
-            style: .caption02,
-            color: .gray8
-        )
+        viewModel.updateArriveStatus()
     }
 }
