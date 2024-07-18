@@ -54,7 +54,9 @@ final class AddPromiseCompleteViewController: BaseViewController {
     
     override func setupAction() {
         rootView.confirmButton.rx.tap
-            .subscribe(with: self) { owner, _ in
+            .subscribe(with: self) {
+                owner,
+                _ in
                 // TODO: 약속 상세 화면으로 이동하기
                 /// 생성된 약속 ID, 약속 이름 전달
                 guard let rootViewController = owner.navigationController?.viewControllers.first as? MainTabBarController else {
@@ -65,7 +67,11 @@ final class AddPromiseCompleteViewController: BaseViewController {
                     animated: false
                 )
                 rootViewController.navigationController?.pushViewController(
-                    PagePromiseViewController(),
+                    PagePromiseViewController(
+                        promiseViewModel: PagePromiseViewModel(
+                            promiseID: self.promiseID
+                        )
+                    ),
                     animated: true
                 )
             }

@@ -13,19 +13,18 @@ class TardyViewModel {
     // MARK: Property
 
     let tardyService: TardyServiceType
-    var isPastDue: ObservablePattern<Bool>
-    var hasTardy: ObservablePattern<Bool>
+    var isPastDue: ObservablePattern<Bool> = ObservablePattern<Bool>(false)
+    var hasTardy: ObservablePattern<Bool> = ObservablePattern<Bool>(false)
+    let promiseID: ObservablePattern<Int>
     
     
     // MARK: Initialize
 
     init(
         tardyService: TardyServiceType,
-        isPastDue: ObservablePattern<Bool>,
-        hasTardy: ObservablePattern<Bool>
+        promiseID: Int
     ) {
         self.tardyService = tardyService
-        self.isPastDue = isPastDue
-        self.hasTardy = hasTardy
+        self.promiseID = ObservablePattern<Int>(promiseID)
     }
 }

@@ -11,6 +11,9 @@ class ReadyStatusViewModel {
     // 서비스 객체
     var readyStatusService: ReadyStatusServiceType
     
+    // 서버 통신을 위한 promiseID
+    var promiseID: ObservablePattern<Int>
+    
     // 준비 정보가 입력되었는지 여부
     var isReadyInfoEntered = ObservablePattern<Bool>(false)
     
@@ -28,8 +31,9 @@ class ReadyStatusViewModel {
     }
     
     // 초기화
-    init(readyStatusService: ReadyStatusServiceType) {
+    init(readyStatusService: ReadyStatusServiceType, promiseID: Int) {
         self.readyStatusService = readyStatusService
+        self.promiseID = ObservablePattern<Int>(promiseID)
     }
     
     // 우리들의 준비 현황 변동되었을 때

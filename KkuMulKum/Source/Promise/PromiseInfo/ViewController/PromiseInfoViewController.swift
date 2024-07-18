@@ -11,12 +11,23 @@ class PromiseInfoViewController: BaseViewController {
     
     
     // MARK: Property
-
+    
+    private let promiseInfoViewModel: PromiseInfoViewModel
     private let promiseInfoView: PromiseInfoView = PromiseInfoView()
     
     
     // MARK: - Setup
-
+    
+    init(promiseInfoViewModel: PromiseInfoViewModel) {
+        self.promiseInfoViewModel = promiseInfoViewModel
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func setupView() {
         view.addSubview(promiseInfoView)
         self.navigationController?.navigationBar.shadowImage = nil

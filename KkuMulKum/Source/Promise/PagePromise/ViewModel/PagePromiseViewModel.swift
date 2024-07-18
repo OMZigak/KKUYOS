@@ -19,8 +19,8 @@ class PagePromiseViewModel {
     
     // MARK: Initialize
 
-    init(promiseID: ObservablePattern<Int>) {
-        self.promiseID = promiseID
+    init(promiseID: Int) {
+        self.promiseID = ObservablePattern<Int>(promiseID)
     }
 }
 

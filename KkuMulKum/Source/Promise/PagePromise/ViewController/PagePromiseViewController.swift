@@ -15,21 +15,7 @@ class PagePromiseViewController: BaseViewController {
     private let promiseViewModel: PagePromiseViewModel
     
     // TODO: 서버 연결 시 데이터 바인딩 필요
-    private let promiseViewControllerList: [BaseViewController] = [
-        PromiseInfoViewController(),
-        ReadyStatusViewController(
-            readyStatusViewModel: ReadyStatusViewModel(
-                readyStatusService: ReadyStatusService()
-            )
-        ),
-        TardyViewController(
-            tardyViewModel: TardyViewModel(
-                tardyService: MockTardyService(),
-                isPastDue: ObservablePattern<Bool>(false),
-                hasTardy: ObservablePattern<Bool>(false)
-            )
-        )
-    ]
+    private var promiseViewControllerList: [BaseViewController] = []
     
     private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(
         items: ["약속 정보", "준비 현황", "지각 꾸물이"]
@@ -45,6 +31,29 @@ class PagePromiseViewController: BaseViewController {
     
     init(promiseViewModel: PagePromiseViewModel) {
         self.promiseViewModel = promiseViewModel
+        
+        // TODO: 네트워크 통신 필요
+        
+        promiseViewControllerList = [
+            PromiseInfoViewController(
+                promiseInfoViewModel: PromiseInfoViewModel(
+                    promiseInfoService: MockPromiseInfoService(),
+                    promiseID: promiseViewModel.promiseID.value
+                )
+            ),
+            ReadyStatusViewController(
+                readyStatusViewModel: ReadyStatusViewModel(
+                    readyStatusService: MockReadyStatusService(),
+                    promiseID: promiseViewModel.promiseID.value
+                )
+            ),
+            TardyViewController(
+                tardyViewModel: TardyViewModel(
+                    tardyService: MockTardyService(),
+                    promiseID: promiseViewModel.promiseID.value
+                )
+            )
+        ]
         
         super.init(nibName: nil, bundle: nil)
     }
