@@ -5,10 +5,8 @@
 //  Created by 이지훈 on 7/10/24.
 //
 
-import UIKit
 
-import Moya
-import MobileCoreServices
+import UIKit
 
 class ProfileSetupViewModel {
     let profileImage = ObservablePattern<UIImage?>(UIImage.imgProfile)
@@ -16,10 +14,11 @@ class ProfileSetupViewModel {
     let nickname: String
     let serverResponse = ObservablePattern<String?>(nil)
     
-    private let provider = MoyaProvider<ProfileTargetType>()
+    private let authService: AuthServiceType
     
-    init(nickname: String) {
+    init(nickname: String, authService: AuthServiceType = AuthService()) {
         self.nickname = nickname
+        self.authService = authService
     }
     
     func updateProfileImage(_ image: UIImage?) {
@@ -42,49 +41,16 @@ class ProfileSetupViewModel {
         let fileName = "profile_image.jpg"
         let mimeType = "image/jpeg"
         
-        provider.request(.updateProfileImage(image: imageData, fileName: fileName, mimeType: mimeType)) { [weak self] result in
+        authService.performRequest(.updateProfileImage(image: imageData, fileName: fileName, mimeType: mimeType)) { [weak self] (result: Result<EmptyModel, NetworkError>) in
             print("네트워크 요청 완료")
             switch result {
-            case .success(let response):
-                print("서버 응답 상태 코드: \(response.statusCode)")
-                print("서버 응답 데이터: \(String(data: response.data, encoding: .utf8) ?? "디코딩 불가")")
-                do {
-                    let decodedResponse = try JSONDecoder().decode(
-                        ResponseBodyDTO<EmptyModel>.self,
-                        from: response.data
-                    )
-                    if decodedResponse.success {
-                        self?.serverResponse.value = "프로필 이미지가 성공적으로 업로드되었습니다."
-                        print("프로필 이미지 업로드 성공")
-                        completion(true)
-                    } else {
-                        if let errorCode = decodedResponse.error?.code {
-                            switch errorCode {
-                            case 40080:
-                                self?.serverResponse.value = "이미지 확장자는 jpg, png, webp만 가능합니다."
-                            case 40081:
-                                self?.serverResponse.value = "이미지 사이즈는 5MB를 넘을 수 없습니다."
-                            case 40420:
-                                self?.serverResponse.value = "유저를 찾을 수 없습니다."
-                            default:
-                                self?.serverResponse.value = decodedResponse.error?.message ??
-                                "알 수 없는 오류가 발생했습니다."
-                            }
-                        } else {
-                            self?.serverResponse.value = decodedResponse.error?.message ??
-                            "알 수 없는 오류가 발생했습니다."
-                        }
-                        print("프로필 이미지 업로드 실패: \(self?.serverResponse.value ?? "")")
-                        completion(false)
-                    }
-                } catch {
-                    self?.serverResponse.value = "데이터 디코딩 중 오류가 발생했습니다."
-                    print("데이터 디코딩 오류: \(error)")
-                    completion(false)
-                }
+            case .success:
+                self?.serverResponse.value = "프로필 이미지가 성공적으로 업로드되었습니다."
+                print("프로필 이미지 업로드 성공")
+                completion(true)
             case .failure(let error):
-                self?.serverResponse.value = "네트워크 오류: \(error.localizedDescription)"
-                print("네트워크 오류: \(error.localizedDescription)")
+                self?.serverResponse.value = error.message
+                print("프로필 이미지 업로드 실패: \(error.message)")
                 completion(false)
             }
         }

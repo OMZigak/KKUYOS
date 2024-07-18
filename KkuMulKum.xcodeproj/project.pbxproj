@@ -47,6 +47,7 @@
 		785AE1BE2C2E878600677CA0 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BD2C2E878600677CA0 /* FirebaseStorageCombine-Community */; };
 		785AE1C02C2E878600677CA0 /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BF2C2E878600677CA0 /* FirebaseVertexAI-Preview */; };
 		785AE1D12C3B07A600677CA0 /* PrivacyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */; };
+		789196362C492F8600FF8CDF /* AuthTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196352C492F8600FF8CDF /* AuthTargetType.swift */; };
 		789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7898732F2C3D1A7B00435E96 /* LoginViewController.swift */; };
 		789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789873302C3D1A7B00435E96 /* LoginViewModel.swift */; };
 		789873342C3D1A7B00435E96 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789873312C3D1A7B00435E96 /* LoginView.swift */; };
@@ -237,6 +238,7 @@
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.plist; sourceTree = "<group>"; };
+		789196352C492F8600FF8CDF /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
 		7898732F2C3D1A7B00435E96 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		789873302C3D1A7B00435E96 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		789873312C3D1A7B00435E96 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -1120,6 +1122,7 @@
 		DDE7D2BE2C470A58005A921F /* TargetType */ = {
 			isa = PBXGroup;
 			children = (
+				789196352C492F8600FF8CDF /* AuthTargetType.swift */,
 				DDE7D2BF2C470A58005A921F /* LoginTargetType.swift */,
 				DDE7D2C02C470A58005A921F /* ProfileTargetType.swift */,
 				DDE7D2C12C470A58005A921F /* NicknameTargetType.swift */,
@@ -1805,6 +1808,7 @@
 				DD3976862C41C2AD00E2A4C4 /* HomeView.swift in Sources */,
 				DD8626672C4606A300E4F980 /* SetReadyInfoView.swift in Sources */,
 				DD41BEFC2C41D54D0095A068 /* TardyPenaltyView.swift in Sources */,
+				789196362C492F8600FF8CDF /* AuthTargetType.swift in Sources */,
 				789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */,
 				78BD61342C45B4A7005752FD /* AuthService.swift in Sources */,
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,
