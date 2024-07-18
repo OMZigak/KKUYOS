@@ -110,7 +110,46 @@ extension InviteCodeViewController {
                 owner.inviteCodeView.presentButton.isEnabled = true
             }
         }
+        
+        inviteCodeViewModel.meetingID.bind { [weak self] id in
+            guard let id else { return }
+            
+            DispatchQueue.main.async {
+                self?.inviteCodeViewModel.inviteCodeState.value = .success
+            }
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
+                let meetingInfoViewController = MeetingInfoViewController(
+                    viewModel: MeetingInfoViewModel(
+                        meetingID: id,
+                        service: MeetingService()
+                    )
+                )
+                
+                guard let rootViewController = self?.navigationController?.viewControllers.first as? MainTabBarController else {
+                    return
+                }
+                
+                self?.navigationController?.popToViewController(
+                    rootViewController,
+                    animated: false
+                )
+                
+                rootViewController.navigationController?.pushViewController(
+                    meetingInfoViewController,
+                    animated: true
+                )
+            }
+        }
+        
+        inviteCodeViewModel.errorDescription.bind(with: self) { owner, error in
+            DispatchQueue.main.async {
+                owner.inviteCodeView.errorLabel.setText(error, style: .caption02, color: .mainred)
+                owner.inviteCodeViewModel.inviteCodeState.value = .invalid
+            }
+        }
     }
+    
     
     private func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
@@ -119,27 +158,7 @@ extension InviteCodeViewController {
     }
     
     @objc private func nextButtonTapped() {
-        // TODO: 서버 연결할 때 데이터 바인딩해서 화면 전환 시키기
-        let meetingInfoViewController = MeetingInfoViewController(
-            viewModel: MeetingInfoViewModel(
-                meetingID: 1,
-                service: MeetingService()
-            )
-        )
-        
-        guard let rootViewController = navigationController?.viewControllers.first as? MainTabBarController else {
-            return
-        }
-        
-        navigationController?.popToViewController(
-            rootViewController,
-            animated: false
-        )
-        
-        rootViewController.navigationController?.pushViewController(
-            meetingInfoViewController,
-            animated: true
-        )
+        inviteCodeViewModel.joinMeeting(inviteCode: inviteCodeViewModel.inviteCode.value)
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
@@ -175,4 +194,3 @@ extension InviteCodeViewController: UITextFieldDelegate {
         return true
     }
 }
-

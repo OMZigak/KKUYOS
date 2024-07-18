@@ -37,7 +37,7 @@ private extension CustomTextField {
             textColor: .black,
             backgroundColor: .white,
             placeholderColor: .gray3,
-            style: .body02
+            style: .body04
         )
         addPadding(left: 18)
         setLayer(borderWidth: 1, borderColor: .gray3, cornerRadius: 8)

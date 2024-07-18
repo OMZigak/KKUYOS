@@ -115,7 +115,6 @@ private extension CreateMeetingViewController {
     
     @objc 
     func presentButtonDidTapped() {
-        // TODO: 서버 연결해서 초대 코드 받아올 수 있게 처리
         let inviteCodePopUpViewController = InvitationCodePopUpViewController(
             invitationCode: createMeetingViewModel.inviteCode.value
         )
@@ -135,7 +134,17 @@ private extension CreateMeetingViewController {
             for: .touchUpInside
         )
         
-        present(inviteCodePopUpViewController, animated: true, completion: nil)
+        createMeetingViewModel.createMeeting(
+            name: createMeetingViewModel.meetingName.value
+        )
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            inviteCodePopUpViewController.rootView.setInvitationCodeText(
+                self.createMeetingViewModel.inviteCode.value
+            )
+            
+            self.present(inviteCodePopUpViewController, animated: true, completion: nil)
+        }
     }
     
     @objc
