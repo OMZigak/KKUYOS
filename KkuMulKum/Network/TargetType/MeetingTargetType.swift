@@ -15,7 +15,7 @@ enum MeetingTargetType {
     case fetchMeetingList
     case fetchMeetingInfo(meetingID: Int)
     case fetchMeetingMember(meetingID: Int)
-    case fetchmeetingPromiseList(meetingID: Int)
+    case fetchMeetingPromiseList(meetingID: Int)
 }
 
 extension MeetingTargetType: TargetType {
@@ -40,7 +40,7 @@ extension MeetingTargetType: TargetType {
             return "/api/v1/meetings/\(meetingID)"
         case .fetchMeetingMember(meetingID: let meetingID):
             return "/api/v1/meetings/\(meetingID)/members"
-        case .fetchmeetingPromiseList(let meetingID):
+        case .fetchMeetingPromiseList(let meetingID):
             return "/api/v1/meetings/\(meetingID)/promises"
         }
     }
@@ -49,7 +49,7 @@ extension MeetingTargetType: TargetType {
         switch self {
         case .createMeeting, .joinMeeting:
             return .post
-        case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember, .fetchmeetingPromiseList:
+        case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember, .fetchMeetingPromiseList:
             return .get
         }
     }
@@ -60,7 +60,7 @@ extension MeetingTargetType: TargetType {
             return .requestJSONEncodable(request)
         case .joinMeeting(request: let request):
             return .requestJSONEncodable(request)
-        case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember, .fetchmeetingPromiseList:
+        case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember, .fetchMeetingPromiseList:
             return .requestPlain
         }
     }

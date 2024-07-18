@@ -15,7 +15,7 @@ enum PromiseTargetType {
     case updatePreparationStatus(promiseID: Int)
     case updateDepartureStatus(promiseID: Int)
     case updateArrivalStatus(promiseID: Int)
-    case fetchmeetingPromiseList(meetingID: Int)
+    case fetchMeetingPromiseList(meetingID: Int)
     case addPromise(meetingID: Int, request: AddPromiseRequestModel)
     case fetchPromiseInfo(promiseID: Int)
     case fetchMyReadyStatus(promiseID: Int)
@@ -47,7 +47,7 @@ extension PromiseTargetType: TargetType {
             return "/api/v1/promises/\(promiseID)/departure"
         case .updateArrivalStatus(let promiseID):
             return "/api/v1/promises/\(promiseID)/arrival"
-        case .fetchmeetingPromiseList(let meetingID):
+        case .fetchMeetingPromiseList(let meetingID):
             return "/api/v1/meetings/\(meetingID)/promises"
         case .addPromise(let meetingID, _):
             return "/api/v1/meetings/\(meetingID)/promises"
@@ -68,7 +68,7 @@ extension PromiseTargetType: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .fetchTodayNextPromise, .fetchUpcomingPromiseList, .fetchmeetingPromiseList, 
+        case .fetchTodayNextPromise, .fetchUpcomingPromiseList, .fetchMeetingPromiseList, 
                 .fetchPromiseInfo, .fetchMyReadyStatus, .fetchPromiseParticipantList,
                 .fetchTardyInfo:
             return .get
@@ -85,7 +85,7 @@ extension PromiseTargetType: TargetType {
         case .fetchTodayNextPromise, .fetchUpcomingPromiseList, .updatePreparationStatus,
                 .updateDepartureStatus, .updateArrivalStatus, .fetchPromiseInfo,
                 .fetchMyReadyStatus, .fetchPromiseParticipantList, .updateMyPromiseReadyStatus,
-                .fetchTardyInfo, .updatePromiseCompletion, .fetchmeetingPromiseList:
+                .fetchTardyInfo, .updatePromiseCompletion, .fetchMeetingPromiseList:
             return .requestPlain
         case .addPromise(_, let request):
             return .requestJSONEncodable(request)

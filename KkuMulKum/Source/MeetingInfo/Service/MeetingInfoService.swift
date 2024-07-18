@@ -31,7 +31,7 @@ extension MeetingService: MeetingInfoServiceType {
     func fetchMeetingPromiseList(
         with meetingID: Int
     ) async throws -> ResponseBodyDTO<MeetingPromisesModel>? {
-        return try await request(with: .fetchmeetingPromiseList(meetingID: meetingID))
+        return try await request(with: .fetchMeetingPromiseList(meetingID: meetingID))
     }    
 }
 
