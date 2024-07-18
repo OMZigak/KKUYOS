@@ -65,6 +65,11 @@ class HomeViewController: BaseViewController {
     }
     
     override func setupAction() {
+        rootView.todayButton.addTarget(
+            self,
+            action: #selector(todayButtonDidTap),
+            for: .touchUpInside
+        )
         rootView.todayPromiseView.prepareButton.addTarget(
             self,
             action: #selector(prepareButtonDidTap),
@@ -367,6 +372,18 @@ private extension HomeViewController {
     
     
     // MARK: - Action
+    
+    @objc
+    func todayButtonDidTap(_ sender: UIButton) {
+        // TODO: promiseID를 모임 상세로 전달
+//        let viewController = PromiseInfoViewController(
+//            viewModel: PromiseInfoViewModel(
+//                promiseID: viewModel.nearestPromise.value?.data?.promiseID ?? 0,
+//                service: PromiseService()
+//            )
+//        )
+        //tabBarController?.navigationController?.pushViewController(viewController, animated: true)
+    }
     
     @objc
     func prepareButtonDidTap(_ sender: UIButton) {
