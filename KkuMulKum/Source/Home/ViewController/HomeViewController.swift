@@ -379,11 +379,6 @@ private extension HomeViewController {
     
     @objc
     func todayButtonDidTap(_ sender: UIButton) {
-        print(
-            "promiseID: ",
-            viewModel.nearestPromise.value?.data?.promiseID ?? 0
-        )
-        
         let viewController = PagePromiseViewController(
             promiseViewModel: PagePromiseViewModel(
                 promiseID: viewModel.nearestPromise.value?.data?.promiseID ?? 0
