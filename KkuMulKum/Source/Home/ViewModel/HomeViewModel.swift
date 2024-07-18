@@ -94,9 +94,6 @@ final class HomeViewModel {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
         }
-//        loginUser.value = service.fetchLoginUser()
-//        levelName.value = getLevelName(level: loginUser.value?.data?.level ?? 1)
-//        levelCaption.value = getLevelCaption(level: loginUser.value?.data?.level ?? 1)
     }
     
     func requestNearestPromise() {
@@ -107,7 +104,6 @@ final class HomeViewModel {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
         }
-//        nearestPromise.value = service.fetchNearestPromise()
     }
     
     func requestUpcomingPromise() {
@@ -118,6 +114,5 @@ final class HomeViewModel {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
         }
-//        upcomingPromiseList.value = service.fetchUpcomingPromise()
     }
 }
