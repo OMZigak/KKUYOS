@@ -87,7 +87,7 @@ class NicknameViewModel {
     
     private func updateNickname(nickname: String) -> Observable<Result<ResponseBodyDTO<NameResponseModel>, Error>> {
         return Observable.create { [weak self] observer in
-            guard let self = self, let accessToken = self.authService.getAccessToken() else {
+            guard let self = self, let _ = self.authService.getAccessToken() else {
                 observer.onNext(.failure(NSError(domain: "No access token available", code: 0, userInfo: nil)))
                 observer.onCompleted()
                 return Disposables.create()
