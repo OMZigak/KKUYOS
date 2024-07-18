@@ -47,6 +47,8 @@
 		785AE1BE2C2E878600677CA0 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BD2C2E878600677CA0 /* FirebaseStorageCombine-Community */; };
 		785AE1C02C2E878600677CA0 /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BF2C2E878600677CA0 /* FirebaseVertexAI-Preview */; };
 		785AE1D12C3B07A600677CA0 /* PrivacyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */; };
+		789196362C492F8600FF8CDF /* AuthTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196352C492F8600FF8CDF /* AuthTargetType.swift */; };
+		789196382C49697B00FF8CDF /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196372C49697B00FF8CDF /* AuthError.swift */; };
 		789196342C486F6B00FF8CDF /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196332C486F6B00FF8CDF /* KeychainAccessible.swift */; };
 		789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7898732F2C3D1A7B00435E96 /* LoginViewController.swift */; };
 		789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789873302C3D1A7B00435E96 /* LoginViewModel.swift */; };
@@ -237,6 +239,8 @@
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.plist; sourceTree = "<group>"; };
+		789196352C492F8600FF8CDF /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
+		789196372C49697B00FF8CDF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
 		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		7898732F2C3D1A7B00435E96 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		789873302C3D1A7B00435E96 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -510,6 +514,15 @@
 				782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		789196392C49697F00FF8CDF /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				789196372C49697B00FF8CDF /* AuthError.swift */,
+				789196352C492F8600FF8CDF /* AuthTargetType.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 		789873352C3D1B3000435E96 /* View */ = {
@@ -1120,6 +1133,7 @@
 		DDE7D2BE2C470A58005A921F /* TargetType */ = {
 			isa = PBXGroup;
 			children = (
+				789196392C49697F00FF8CDF /* Auth */,
 				DDE7D2BF2C470A58005A921F /* LoginTargetType.swift */,
 				DDE7D2C02C470A58005A921F /* ProfileTargetType.swift */,
 				DDE7D2C12C470A58005A921F /* NicknameTargetType.swift */,
@@ -1700,6 +1714,7 @@
 				DD8626622C4606A300E4F980 /* ReadyStatusViewModel.swift in Sources */,
 				DD3F9DC22C481ED5008E1FF7 /* MeetingService.swift in Sources */,
 				DE6D4D102C3F14D80005584B /* InvitationCodePopUpView.swift in Sources */,
+				789196382C49697B00FF8CDF /* AuthError.swift in Sources */,
 				A39F2B1B2C47C206008DA5F5 /* SetReadyCompletedViewController.swift in Sources */,
 				DDFA50812C4693BD000A62E2 /* ProfileSetupViewController.swift in Sources */,
 				DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */,
@@ -1804,6 +1819,7 @@
 				DD3976862C41C2AD00E2A4C4 /* HomeView.swift in Sources */,
 				DD8626672C4606A300E4F980 /* SetReadyInfoView.swift in Sources */,
 				DD41BEFC2C41D54D0095A068 /* TardyPenaltyView.swift in Sources */,
+				789196362C492F8600FF8CDF /* AuthTargetType.swift in Sources */,
 				789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */,
 				78BD61342C45B4A7005752FD /* AuthService.swift in Sources */,
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,

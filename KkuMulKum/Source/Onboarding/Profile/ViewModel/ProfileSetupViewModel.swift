@@ -5,6 +5,7 @@
 //  Created by 이지훈 on 7/10/24.
 //
 
+
 import UIKit
 
 import RxSwift
@@ -25,8 +26,30 @@ class ProfileSetupViewModel {
     private let disposeBag = DisposeBag()
     private let provider = MoyaProvider<ProfileTargetType>()
     
-    init(nickname: String) {
+    init(nickname: String, authService: AuthServiceType = AuthService()) {
         self.nickname = nickname
+        self.authService = authService
+    }
+    
+    func updateProfileImage(_ image: UIImage?) {
+        profileImage.value = image
+        isConfirmButtonEnabled.value = image != nil
+    }
+    
+    func uploadProfileImage(completion: @escaping (Bool) -> Void) {
+        print("uploadProfileImage 함수 호출됨")
+        guard let image = profileImage.value,
+              let imageData = image.jpegData(compressionQuality: 0.8) else {
+            print("이미지 변환 실패")
+            serverResponse.value = "이미지 변환 중 오류가 발생했습니다."
+            completion(false)
+            return
+        }
+        
+        print("이미지 데이터 크기: \(imageData.count) bytes")
+        
+        let fileName = "profile_image.jpg"
+        let mimeType = "image/jpeg"
         
         updateProfileImageTrigger
             .withLatestFrom(profileImage)
