@@ -63,7 +63,7 @@ private extension CheckInviteCodeViewController {
     func inviteCodeViewDidTap() {
         let inviteCodeViewController = InviteCodeViewController(
             viewModel: InviteCodeViewModel(
-                service: MockInviteCodeService()
+                service: MeetingService()
             )
         )
         

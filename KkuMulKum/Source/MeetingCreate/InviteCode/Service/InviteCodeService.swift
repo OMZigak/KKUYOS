@@ -10,11 +10,13 @@ import Foundation
 protocol InviteCodeServiceType {
     func joinMeeting(
         with request: RegisterMeetingsModel
-    ) async throws -> ResponseBodyDTO<EmptyModel>?
+    ) async throws -> ResponseBodyDTO<RegisterMeetingsResponseModel>?
 }
 
 extension MeetingService: InviteCodeServiceType {
-    func joinMeeting(with request: RegisterMeetingsModel) async throws -> ResponseBodyDTO<EmptyModel>? {
+    func joinMeeting(
+        with request: RegisterMeetingsModel
+    ) async throws -> ResponseBodyDTO<RegisterMeetingsResponseModel>? {
         return try await self.request(
             with: .joinMeeting(
                 request: request
@@ -24,10 +26,12 @@ extension MeetingService: InviteCodeServiceType {
 }
 
 final class MockInviteCodeService: InviteCodeServiceType {
-    func joinMeeting(with request: RegisterMeetingsModel) -> ResponseBodyDTO<EmptyModel>? {
-        let mockData = EmptyModel()
+    func joinMeeting(with request: RegisterMeetingsModel) -> ResponseBodyDTO<RegisterMeetingsResponseModel>? {
+        let mockData = RegisterMeetingsResponseModel(
+            meetingID: 1
+        )
         
-        return ResponseBodyDTO<EmptyModel>.init(
+        return ResponseBodyDTO<RegisterMeetingsResponseModel>.init(
             success: true,
             data: mockData,
             error: nil

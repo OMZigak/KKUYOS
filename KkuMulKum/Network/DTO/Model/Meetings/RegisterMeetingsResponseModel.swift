@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+/// 모임 가입 (Response)
+struct RegisterMeetingsResponseModel: ResponseModelType {
+    let meetingID: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case meetingID = "meetingId"
+    }
+}

@@ -10,7 +10,9 @@ import Foundation
 import Moya
 
 protocol CreateMeetingServiceType {
-    func createMeeting(request: MakeMeetingsRequestModel) async throws -> ResponseBodyDTO<MakeMeetingsResponseModel>?
+    func createMeeting(
+        request: MakeMeetingsRequestModel
+    ) async throws -> ResponseBodyDTO<MakeMeetingsResponseModel>?
 }
 
 extension MeetingService: CreateMeetingServiceType {

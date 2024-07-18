@@ -11,7 +11,7 @@ import Kingfisher
 
 class ReadyStatusViewController: BaseViewController {
     private let readyStatusViewModel: ReadyStatusViewModel
-    
+
     private let rootView: ReadyStatusView = ReadyStatusView()
     
     init(readyStatusViewModel: ReadyStatusViewModel) {
@@ -51,7 +51,6 @@ class ReadyStatusViewController: BaseViewController {
     
     override func setupDelegate() {
         rootView.ourReadyStatusCollectionView.dataSource = self
-        rootView.ourReadyStatusCollectionView.delegate = self
     }
     
     override func setupAction() {
@@ -111,9 +110,8 @@ class ReadyStatusViewController: BaseViewController {
     }
 }
 
-extension ReadyStatusViewController: UICollectionViewDelegate {
-    
-}
+
+// MARK: - UICollectionViewDataSource
 
 extension ReadyStatusViewController: UICollectionViewDataSource {
     func collectionView(
