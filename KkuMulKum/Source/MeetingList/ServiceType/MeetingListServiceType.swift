@@ -13,6 +13,12 @@ protocol MeetingListServiceType {
     func fetchMeetingList() -> ResponseBodyDTO<MeetingListModel>
 }
 
+//extension MeetingService: MeetingListServiceType {
+//    func fetchMeetingList() -> ResponseBodyDTO<MeetingListModel> {
+//        <#code#>
+//    }
+//}
+
 final class MockMeetingListService: MeetingListServiceType {
     func fetchMeetingList() -> ResponseBodyDTO<MeetingListModel> {
         let mockData = ResponseBodyDTO<MeetingListModel>(

@@ -64,7 +64,7 @@ final class HomeView: BaseView {
         $0.setText("다가올 나의 약속은?", style: .body01, color: .gray8)
     }
     
-    private let todayButton = UIButton().then {
+    let todayButton = UIButton().then {
         let icon = UIImage(resource: .iconRight)
         $0.setImage(icon, for: .normal)
     }
