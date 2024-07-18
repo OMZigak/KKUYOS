@@ -20,6 +20,9 @@ class ReadyStatusViewModel {
     // 현재 준비 상태
     var myReadyStatus = ObservablePattern<ReadyStatus>(.none)
     
+    // 꾸물거림 여부
+    var isLate = ObservablePattern<Bool>(false)
+    
     // 우리들의 준비 현황 스택 뷰에 들어갈 정보들
     var participantInfos = ObservablePattern<[Participant]>([])
     

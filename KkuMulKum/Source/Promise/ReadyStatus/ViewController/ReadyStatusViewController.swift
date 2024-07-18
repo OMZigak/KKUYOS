@@ -186,6 +186,12 @@ private extension ReadyStatusViewController {
                 owner.rootView.ourReadyStatusCollectionView.reloadData()
             }
         }
+        
+        readyStatusViewModel.isLate.bind(with: self) { owner, status in
+            DispatchQueue.main.async {
+                self.updatePopUpImageView(isLate: !status)
+            }
+        }
     }
     
     /// flag에 따라 준비 정보 입력 버튼 표시 유무 변경
