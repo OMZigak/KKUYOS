@@ -172,10 +172,6 @@ extension HomeViewController: UICollectionViewDataSource {
 
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if rootView.scrollView.contentOffset.y < 0 {
-//            rootView.scrollView.contentOffset.y = 0
-//        }
-        
         let maxOffsetY = rootView.scrollView.contentSize.height - rootView.scrollView.bounds.height
         if rootView.scrollView.contentOffset.y > maxOffsetY {
             rootView.scrollView.contentOffset.y = maxOffsetY
