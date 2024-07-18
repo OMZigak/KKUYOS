@@ -19,6 +19,13 @@ final class MeetingListViewModel {
     }
     
     func requestMeetingList() {
-        meetingList.value = service.fetchMeetingList()
+        Task {
+            do {
+                meetingList.value = try await service.fetchMeetingList()
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+//        meetingList.value = service.fetchMeetingList()
     }
 }

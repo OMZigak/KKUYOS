@@ -10,17 +10,17 @@ import Foundation
 import Moya
 
 protocol MeetingListServiceType {
-    func fetchMeetingList() -> ResponseBodyDTO<MeetingListModel>
+    func fetchMeetingList() async throws -> ResponseBodyDTO<MeetingListModel>?
 }
 
-//extension MeetingService: MeetingListServiceType {
-//    func fetchMeetingList() -> ResponseBodyDTO<MeetingListModel> {
-//        <#code#>
-//    }
-//}
+extension MeetingService: MeetingListServiceType {
+    func fetchMeetingList() async throws -> ResponseBodyDTO<MeetingListModel>? {
+        return try await request(with: .fetchMeetingList)
+    }
+}
 
 final class MockMeetingListService: MeetingListServiceType {
-    func fetchMeetingList() -> ResponseBodyDTO<MeetingListModel> {
+    func fetchMeetingList() async throws -> ResponseBodyDTO<MeetingListModel>? {
         let mockData = ResponseBodyDTO<MeetingListModel>(
             success: true,
             data: MeetingListModel(

@@ -10,13 +10,27 @@ import Foundation
 import Moya
 
 protocol HomeServiceType {
-    func fetchLoginUser() -> ResponseBodyDTO<LoginUserModel>
-    func fetchNearestPromise() -> ResponseBodyDTO<NearestPromiseModel>
-    func fetchUpcomingPromise() -> ResponseBodyDTO<UpcomingPromiseListModel>
+    func fetchLoginUser() async throws -> ResponseBodyDTO<LoginUserModel>?
+    func fetchNearestPromise() async throws -> ResponseBodyDTO<NearestPromiseModel>?
+    func fetchUpcomingPromise() async throws -> ResponseBodyDTO<UpcomingPromiseListModel>?
+}
+
+extension HomeService: HomeServiceType {
+    func fetchLoginUser() async throws -> ResponseBodyDTO<LoginUserModel>? {
+        return try await request(with: .fetchLoginUser)
+    }
+    
+    func fetchNearestPromise() async throws -> ResponseBodyDTO<NearestPromiseModel>? {
+        return try await request(with: .fetchNearestPromise)
+    }
+    
+    func fetchUpcomingPromise() async throws -> ResponseBodyDTO<UpcomingPromiseListModel>? {
+        return try await request(with: .fetchUpcomingPromise)
+    }
 }
 
 final class MockHomeService: HomeServiceType {
-    func fetchLoginUser() -> ResponseBodyDTO<LoginUserModel> {
+    func fetchLoginUser() async throws -> ResponseBodyDTO<LoginUserModel>? {
         let mockData = ResponseBodyDTO<LoginUserModel>(
             success: true,
             data: LoginUserModel(
@@ -33,7 +47,7 @@ final class MockHomeService: HomeServiceType {
         return mockData
     }
     
-    func fetchNearestPromise() -> ResponseBodyDTO<NearestPromiseModel> {
+    func fetchNearestPromise() async throws -> ResponseBodyDTO<NearestPromiseModel>? {
         let mockData = ResponseBodyDTO<NearestPromiseModel>(
             success: true,
             data: NearestPromiseModel(
@@ -51,7 +65,7 @@ final class MockHomeService: HomeServiceType {
         return mockData
     }
     
-    func fetchUpcomingPromise() -> ResponseBodyDTO<UpcomingPromiseListModel> {
+    func fetchUpcomingPromise() async throws -> ResponseBodyDTO<UpcomingPromiseListModel>? {
         let mockData = ResponseBodyDTO<UpcomingPromiseListModel>(
             success: true,
             data: UpcomingPromiseListModel(

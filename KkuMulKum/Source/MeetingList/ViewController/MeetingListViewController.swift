@@ -69,12 +69,21 @@ class MeetingListViewController: BaseViewController {
     private func updateMeetingList() {
         viewModel.meetingList.bind { [weak self] _ in
             DispatchQueue.main.async {
-                self?.rootView.tableView.reloadData()
-                self?.rootView.infoLabel.setText(
-                    "꾸물리안이 가입한 모임은\n총 \(self?.viewModel.meetingList.value?.data?.count ?? 0)개예요!",
+                guard let self = self else { return }
+                let data = self.viewModel.meetingList.value
+                
+                self.rootView.infoLabel.setText(
+                    "꾸물리안이 가입한 모임은\n총 \(self.viewModel.meetingList.value?.data?.count ?? 0)개예요!",
                     style: .head01,
                     color: .gray8
                 )
+                
+                if data?.data?.count == 0 {
+                    self.rootView.emptyLabel.isHidden = false
+                    self.rootView.emptyCharacter.isHidden = false
+                } else {
+                    self.rootView.tableView.reloadData()
+                }
             }
         }
     }

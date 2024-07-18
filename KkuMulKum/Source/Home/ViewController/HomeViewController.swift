@@ -45,7 +45,7 @@ class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .white
+        view.backgroundColor = .maincolor
         register()
         
         updateUI()
@@ -170,10 +170,6 @@ extension HomeViewController: UICollectionViewDataSource {
 
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if rootView.scrollView.contentOffset.y < 0 {
-            rootView.scrollView.contentOffset.y = 0
-        }
-        
         let maxOffsetY = rootView.scrollView.contentSize.height - rootView.scrollView.bounds.height
         if rootView.scrollView.contentOffset.y > maxOffsetY {
             rootView.scrollView.contentOffset.y = maxOffsetY
@@ -257,27 +253,34 @@ private extension HomeViewController {
     func updateNearestPromise() {
         viewModel.nearestPromise.bind { [weak self] _ in
             DispatchQueue.main.async {
-                let data = self?.viewModel.nearestPromise.value
-                self?.rootView.todayPromiseView.meetingNameLabel.setText(
-                    data?.data?.meetingName ?? "",
-                    style: .caption02,
-                    color: .green3
-                )
-                self?.rootView.todayPromiseView.nameLabel.setText(
-                    data?.data?.name ?? "",
-                    style: .body03,
-                    color: .gray8
-                )
-                self?.rootView.todayPromiseView.placeNameLabel.setText(
-                    data?.data?.placeName ?? "",
-                    style: .body06,
-                    color: .gray7
-                )
-                self?.rootView.todayPromiseView.timeLabel.setText(
-                    data?.data?.time ?? "",
-                    style: .body06,
-                    color: .gray7
-                )
+                guard let self = self else { return }
+                let data = self.viewModel.nearestPromise.value
+                
+                if data?.data == nil {
+                    self.rootView.todayPromiseView.isHidden = true
+                    self.rootView.todayEmptyView.isHidden = false
+                } else {
+                    self.rootView.todayPromiseView.meetingNameLabel.setText(
+                        data?.data?.meetingName ?? "",
+                        style: .caption02,
+                        color: .green3
+                    )
+                    self.rootView.todayPromiseView.nameLabel.setText(
+                        data?.data?.name ?? "",
+                        style: .body03,
+                        color: .gray8
+                    )
+                    self.rootView.todayPromiseView.placeNameLabel.setText(
+                        data?.data?.placeName ?? "",
+                        style: .body06,
+                        color: .gray7
+                    )
+                    self.rootView.todayPromiseView.timeLabel.setText(
+                        data?.data?.time ?? "",
+                        style: .body06,
+                        color: .gray7
+                    )
+                }
             }
         }
     }
@@ -285,7 +288,15 @@ private extension HomeViewController {
     func updateUpcomingPromise() {
         viewModel.upcomingPromiseList.bind { [weak self] _ in
             DispatchQueue.main.async {
-                self?.rootView.upcomingPromiseView.reloadData()
+                guard let self = self else { return }
+                let data = self.viewModel.nearestPromise.value
+                
+                if data?.data == nil {
+                    self.rootView.upcomingPromiseView.isHidden = true
+                    self.rootView.upcomingEmptyView.isHidden = false
+                } else {
+                    self.rootView.upcomingPromiseView.reloadData()
+                }
             }
         }
     }
