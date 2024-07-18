@@ -12,7 +12,21 @@ protocol SelectPenaltyServiceType {
     func requestAddingNewPromise(
         with requestModel: AddPromiseRequestModel,
         meetingID: Int
-    ) -> ResponseBodyDTO<AddPromiseResponseModel>
+    ) async throws -> ResponseBodyDTO<AddPromiseResponseModel>?
+}
+
+extension PromiseService: SelectPenaltyServiceType {
+    func requestAddingNewPromise(
+        with requestModel: AddPromiseRequestModel,
+        meetingID: Int
+    ) async throws -> ResponseBodyDTO<AddPromiseResponseModel>? {
+        return try await request(
+            with: .addPromise(
+                meetingID: meetingID,
+                request: requestModel
+            )
+        )
+    }
 }
 
 final class MockSelectPenaltyService: SelectPenaltyServiceType {

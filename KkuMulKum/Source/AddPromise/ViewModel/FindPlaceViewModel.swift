@@ -83,8 +83,10 @@ private extension FindPlaceViewModel {
         Task {
             do {
                 guard let responseBody = try await self.service.fetchPlaceList(with: input),
-                      let places = responseBody.data
+                      responseBody.success,
+                      let places = responseBody.data?.places
                 else {
+                    placeListRelay.accept([])
                     return
                 }
                 placeListRelay.accept(places)

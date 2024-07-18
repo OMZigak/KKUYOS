@@ -52,13 +52,9 @@ extension SelectMemberViewModel: ViewModelType {
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
         input.viewDidLoad
-            .map { [weak self] _ -> [Member] in
-                guard let self else { return [] }
-                let responseBodyDTO = service.fetchMeetingMemberList(with: meetingID)
-                guard let data = responseBodyDTO.data else { return [] }
-                return data.members
+            .subscribe(with: self) { owner, _ in
+                owner.fetchMeetingMembers()
             }
-            .bind(to: memberListRelay)
             .disposed(by: disposeBag)
         
         input.memberSelected
@@ -69,7 +65,7 @@ extension SelectMemberViewModel: ViewModelType {
                 owner.selectedMemberListRelay.accept(selectedMembers)
             }
             .disposed(by: disposeBag)
-    
+        
         input.memberDeselected
             .subscribe(with: self) { owner, member in
                 var selectedMembers = owner.selectedMemberListRelay.value
@@ -89,5 +85,23 @@ extension SelectMemberViewModel: ViewModelType {
         )
         
         return output
+    }
+}
+
+private extension SelectMemberViewModel {
+    func fetchMeetingMembers() {
+        Task {
+            do {
+                guard let responseBody = try await service.fetchMeetingMemberList(with: meetingID),
+                      responseBody.success
+                else {
+                    memberListRelay.accept([])
+                    return
+                }
+                memberListRelay.accept(responseBody.data?.members ?? [])
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
     }
 }
