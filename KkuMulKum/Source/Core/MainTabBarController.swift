@@ -25,7 +25,7 @@ final class MainTabBarController: UITabBarController {
     private func setTabBar() {
         let homeViewController: HomeViewController = HomeViewController(
             viewModel: HomeViewModel(
-                service: MockHomeService()
+                service: HomeService()
             )).then {
             $0.tabBarItem.title = "홈"
             $0.tabBarItem.image = .iconHome
@@ -33,7 +33,7 @@ final class MainTabBarController: UITabBarController {
         
         let meetingListViewController = MeetingListViewController(
             viewModel: MeetingListViewModel(
-                service: MockMeetingListService()
+                service: MeetingService()
             )).then {
             $0.tabBarItem.title = "내 모임"
             $0.tabBarItem.image = .iconGroup

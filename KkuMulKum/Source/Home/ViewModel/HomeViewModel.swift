@@ -85,16 +85,39 @@ final class HomeViewModel {
     }
     
     func requestLoginUser() {
-        loginUser.value = service.fetchLoginUser()
-        levelName.value = getLevelName(level: loginUser.value?.data?.level ?? 1)
-        levelCaption.value = getLevelCaption(level: loginUser.value?.data?.level ?? 1)
+        Task {
+            do {
+                loginUser.value = try await service.fetchLoginUser()
+                levelName.value = getLevelName(level: loginUser.value?.data?.level ?? 1)
+                levelCaption.value = getLevelCaption(level: loginUser.value?.data?.level ?? 1)
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+//        loginUser.value = service.fetchLoginUser()
+//        levelName.value = getLevelName(level: loginUser.value?.data?.level ?? 1)
+//        levelCaption.value = getLevelCaption(level: loginUser.value?.data?.level ?? 1)
     }
     
     func requestNearestPromise() {
-        nearestPromise.value = service.fetchNearestPromise()
+        Task  {
+            do {
+                nearestPromise.value = try await service.fetchNearestPromise()
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+//        nearestPromise.value = service.fetchNearestPromise()
     }
     
     func requestUpcomingPromise() {
-        upcomingPromiseList.value = service.fetchUpcomingPromise()
+        Task {
+            do {
+                upcomingPromiseList.value = try await service.fetchUpcomingPromise()
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+//        upcomingPromiseList.value = service.fetchUpcomingPromise()
     }
 }
