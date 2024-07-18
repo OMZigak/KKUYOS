@@ -59,7 +59,7 @@ class LoginViewController: BaseViewController {
                 print("Login State: Not logged in")
             case .login:
                 print("Login State: Logged in with user info: ")
-                owner.navigateToMainScreen()
+                owner.navigateToOnboardingScreen()
             case .needOnboarding:
                 print("Login State: Need onboarding")
                 owner.navigateToOnboardingScreen()

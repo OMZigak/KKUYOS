@@ -61,7 +61,7 @@ final class FindPlaceView: BaseView {
 }
 
 extension FindPlaceView {
-    var placeTextFieldDidChange: Observable<String?> { placeTextField.rx.text.asObservable() }
+    var placeTextFieldDidChange: Observable<String> { placeTextField.rx.text.orEmpty.asObservable() }
     var confirmButtonDidTap: Observable<Void> { confirmButton.rx.tap.asObservable() }
     
     func configureTextField(flag: Bool) {

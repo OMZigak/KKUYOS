@@ -86,7 +86,7 @@ final class AddPromiseViewController: BaseViewController {
             .subscribe(with: self) { owner, _ in
                 let viewController = FindPlaceViewController(
                     viewModel: FindPlaceViewModel(
-                        service: MockFindPlaceService()
+                        service: UtilService()
                     )
                 )
                 viewController.delegate = owner

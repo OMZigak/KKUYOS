@@ -20,6 +20,7 @@ final class SelectPenaltyViewModel {
     private let service: SelectPenaltyServiceType
     private let levelRelay = BehaviorRelay(value: "")
     private let penaltyRelay = BehaviorRelay(value: "")
+    private let newPromiseRelay = BehaviorRelay<AddPromiseResponseModel?>(value: nil)
     
     init(
         meetingID: Int,
@@ -62,15 +63,19 @@ extension SelectPenaltyViewModel: ViewModelType {
         input.selectedPenaltyButton
             .bind(to: penaltyRelay)
             .disposed(by: disposeBag)
+        
+        input.confirmButtonDidTap
+            .subscribe(with: self) { owner, _ in
+                owner.requestAddNewPromise()
+            }
+            .disposed(by: disposeBag)
        
-        let isSucceedToCreate = input.confirmButtonDidTap
-            .map { [weak self] _ -> (Bool, Int?) in
-                guard let self else { return (false, nil) }
-                let result = service.requestAddingNewPromise(
-                    with: createAddPromiseModel(),
-                    meetingID: meetingID
-                )
-                return (result.success, result.data?.promiseID)
+        let isSucceedToCreate = newPromiseRelay
+            .map { promise -> (Bool, Int?) in
+                guard let promise else {
+                    return (false, nil)
+                }
+                return (true, promise.promiseID)
             }
             .asDriver(onErrorJustReturn: (false, nil))
         
@@ -100,5 +105,24 @@ private extension SelectPenaltyViewModel {
         )
         
         return addPromiseModel
+    }
+    
+    func requestAddNewPromise() {
+        Task {
+            do {
+                guard let responseBody = try await service.requestAddingNewPromise(
+                    with: createAddPromiseModel(),
+                    meetingID: meetingID
+                ),
+                      responseBody.success
+                else {
+                    newPromiseRelay.accept(nil)
+                    return
+                }
+                newPromiseRelay.accept(responseBody.data)
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
     }
 }

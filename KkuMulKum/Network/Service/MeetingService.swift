@@ -16,7 +16,7 @@ final class MeetingService {
         self.provider = provider
     }
     
-    func request<T: Decodable>(
+    func request<T: ResponseModelType>(
         with request: MeetingTargetType
     ) async throws -> ResponseBodyDTO<T>? {
         return try await withCheckedThrowingContinuation { continuation in
