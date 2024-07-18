@@ -39,8 +39,12 @@ class ReadyStatusViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // TODO: 서버 통신해서 데이터 바인딩 필요
+        
         DispatchQueue.main.async {
-            self.updateReadyInfoView(flag: self.readyStatusViewModel.isReadyInfoEntered.value)
+            self.updateReadyInfoView(
+                flag: self.readyStatusViewModel.isReadyInfoEntered.value
+            )
             self.rootView.ourReadyStatusCollectionView.reloadData()
         }
     }
@@ -51,6 +55,7 @@ class ReadyStatusViewController: BaseViewController {
     }
     
     override func setupAction() {
+        // TODO: 각 함수에서 서버 통신 할 수 있도록 설정
         rootView.myReadyStatusProgressView.readyStartButton.addTarget(
             self,
             action: #selector(readyStartButtonDidTapped),
@@ -66,16 +71,24 @@ class ReadyStatusViewController: BaseViewController {
             action: #selector(arrivalButtonDidTapped),
             for: .touchUpInside
         )
+        rootView.enterReadyButtonView.addGestureRecognizer(
+            UITapGestureRecognizer(
+                target: self,
+                action: #selector(enterReadyButtonDidTapped)
+            )
+        )
     }
     
     @objc
     func readyStartButtonDidTapped() {
+        // TODO: 늦었을 때 꾸물거릴 시간이 없어요 팝업 뜨도록 설정
         readyStatusViewModel.myReadyStatus.value = .ready
         rootView.myReadyStatusProgressView.readyStartButton.isEnabled.toggle()
     }
     
     @objc
     func moveStartButtonDidTapped() {
+        // TODO: 늦었을 때 꾸물거릴 시간이 없어요 팝업 뜨도록 설정
         readyStatusViewModel.myReadyStatus.value = .move
         rootView.myReadyStatusProgressView.moveStartButton.isEnabled.toggle()
     }
@@ -84,6 +97,17 @@ class ReadyStatusViewController: BaseViewController {
     func arrivalButtonDidTapped() {
         readyStatusViewModel.myReadyStatus.value = .done
         rootView.myReadyStatusProgressView.arrivalButton.isEnabled.toggle()
+    }
+    
+    /// 눌렀을 때 준비 정보 입력하기 화면으로 넘어가도록 설정
+    @objc
+    func enterReadyButtonDidTapped() {
+        let setReadyInfoViewController = SetReadyInfoViewController()
+        
+        navigationController?.pushViewController(
+            setReadyInfoViewController,
+            animated: true
+        )
     }
 }
 
@@ -161,9 +185,16 @@ private extension ReadyStatusViewController {
         }
     }
     
+    /// flag에 따라 준비 정보 입력 버튼 표시 유무 변경
     func updateReadyInfoView(flag: Bool) {
         rootView.enterReadyButtonView.isHidden = flag
         rootView.readyPlanInfoView.isHidden = !flag
+    }
+    
+    // TODO: 버튼 눌렀을 때 연결될 수 있도록 설정
+    /// 준비 시작이나 이동 시작 시간이 늦었을 때 팝업 표시 여부 변경
+    func updatePopUpImageView(isLate: Bool) {
+        rootView.popUpImageView.isHidden = !isLate
     }
     
     func updateReadyStartButton(status: ReadyStatus) {

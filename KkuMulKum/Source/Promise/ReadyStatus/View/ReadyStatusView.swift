@@ -42,8 +42,9 @@ class ReadyStatusView: BaseView {
         $0.clipsToBounds = true
     }
     
-    private let popUpImageView: UIImageView = UIImageView(image: .imgTextPopup).then {
+    let popUpImageView: UIImageView = UIImageView(image: .imgTextPopup).then {
         $0.contentMode = .scaleAspectFit
+        $0.isHidden = true
     }
     
     private let ourReadyStatusLabel: UILabel = UILabel().then {
