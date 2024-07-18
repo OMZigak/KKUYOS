@@ -27,8 +27,24 @@ class PagePromiseViewController: BaseViewController {
     )
     
     
-    // MARK: - Setup
+    // MARK: - LifeCycle
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
+    }
+    
+    
+    // MARK: Initialize
+
     init(promiseViewModel: PagePromiseViewModel) {
         self.promiseViewModel = promiseViewModel
         
@@ -62,8 +78,14 @@ class PagePromiseViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         view.backgroundColor = .white
+        
+        setupNavigationBarBackButton()
+        setupNavigationBarTitle(with: promiseViewModel.promiseName)
         
         addChild(promisePageViewController)
         

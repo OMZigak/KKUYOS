@@ -51,6 +51,7 @@ extension PromiseInfoViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
+        // TODO: 데이터 바인딩 필요
         return 10
     }
 }
@@ -67,6 +68,13 @@ extension PromiseInfoViewController: UICollectionViewDelegateFlowLayout {
             withReuseIdentifier: ParticipantCollectionViewCell.reuseIdentifier,
             for: indexPath) as? ParticipantCollectionViewCell 
         else { return UICollectionViewCell() }
+        
+        // TODO: 데이터 바인딩 필요
+        
+        if indexPath.row == 0 {
+            cell.profileImageView.image = .imgEmptyCell
+            cell.profileImageView.contentMode = .scaleAspectFill
+        }
         
         return cell
     }

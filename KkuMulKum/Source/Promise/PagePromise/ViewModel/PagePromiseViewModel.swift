@@ -15,6 +15,7 @@ class PagePromiseViewModel {
 
     var currentPage = ObservablePattern<Int>(0)
     var promiseID: ObservablePattern<Int>
+    let promiseName: String = "Test"
     
     
     // MARK: Initialize

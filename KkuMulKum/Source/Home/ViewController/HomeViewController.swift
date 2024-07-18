@@ -383,14 +383,17 @@ private extension HomeViewController {
             "promiseID: ",
             viewModel.nearestPromise.value?.data?.promiseID ?? 0
         )
-        // TODO: promiseID를 모임 상세로 전달
-//        let viewController = PromiseInfoViewController(
-//            viewModel: PromiseInfoViewModel(
-//                promiseID: viewModel.nearestPromise.value?.data?.promiseID ?? 0,
-//                service: PromiseService()
-//            )
-//        )
-        //tabBarController?.navigationController?.pushViewController(viewController, animated: true)
+        
+        let viewController = PagePromiseViewController(
+            promiseViewModel: PagePromiseViewModel(
+                promiseID: viewModel.nearestPromise.value?.data?.promiseID ?? 0
+            )
+        )
+        
+        tabBarController?.navigationController?.pushViewController(
+            viewController,
+            animated: true
+        )
     }
     
     @objc
