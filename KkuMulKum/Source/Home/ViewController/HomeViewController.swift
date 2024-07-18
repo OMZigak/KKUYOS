@@ -126,18 +126,16 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        // TODO: promiseID를 모임 상세로 전달
-        print(
-            "promiseID: ",
-            viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item].promiseID ?? 0
+        let pagePromiseViewController = PagePromiseViewController(
+            promiseViewModel: PagePromiseViewModel(
+                promiseID: viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item].promiseID ?? 0
+            )
         )
-//        let viewController = PromiseInfoViewController(
-//            viewModel: PromiseInfoViewModel(
-//                promiseID: viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item].promiseID ?? 0,
-//                service: PromiseService()
-//            )
-//        )
-        //tabBarController?.navigationController?.pushViewController(viewController, animated: true)
+        
+        tabBarController?.navigationController?.pushViewController(
+            pagePromiseViewController,
+            animated: true
+        )
     }
 }
 
