@@ -29,6 +29,16 @@ final class SetReadyInfoViewModel {
         }
     }
     
+    private func calculateTimes() {
+        let readyHours = Int(readyHour.value) ?? 0
+        let readyMinutes = Int(readyMinute.value) ?? 0
+        let moveHours = Int(moveHour.value) ?? 0
+        let moveMinutes = Int(moveMinute.value) ?? 0
+        
+        readyTime = readyHours * 60 + readyMinutes
+        moveTime = moveHours * 60 + moveMinutes
+    }
+    
     func updateTime(textField: String, time: String) {
         guard let time = Int(time) else { return }
         
@@ -44,6 +54,8 @@ final class SetReadyInfoViewModel {
         default:
             break
         }
+        
+        calculateTimes()
     }
     
     func checkValid(

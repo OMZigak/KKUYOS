@@ -93,7 +93,7 @@ final class MeetingPromiseCell: BaseCollectionViewCell {
 
 extension MeetingPromiseCell {
     func configure(dDay: Int, name: String, date: String, time: String, place: String) {
-        let dDayText = dDay == 0 ? "day" : "\(dDay)"
+        let dDayText = dDay == 0 ? "Day" : "\(dDay)"
         dDayLabel.setText("D-\(dDayText)", style: .body05, color: dDay == 0 ? .mainorange : .gray5)
         nameLabel.setText(name, style: .body03, color: .gray8)
         dateLabel.setText(date, style: .body06, color: .gray7)
