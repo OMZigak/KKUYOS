@@ -8,11 +8,17 @@
 import Foundation
 
 protocol FindPlaceServiceType {
-    func fetchPlaceList(with input: String) -> ResponseBodyDTO<PlaceModel>
+    func fetchPlaceList(with input: String) async throws -> ResponseBodyDTO<PlaceModel>?
+}
+
+extension UtilService: FindPlaceServiceType {
+    func fetchPlaceList(with input: String) async throws-> ResponseBodyDTO<PlaceModel>? {
+        return try await request(with: .searchPlaceList(query: input))
+    }
 }
 
 final class MockFindPlaceService: FindPlaceServiceType {
-    func fetchPlaceList(with input: String) -> ResponseBodyDTO<PlaceModel> {
+    func fetchPlaceList(with input: String) async throws -> ResponseBodyDTO<PlaceModel>? {
         let mockData: PlaceModel = PlaceModel(
             places: [
                 Place(

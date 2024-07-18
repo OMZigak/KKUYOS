@@ -16,7 +16,7 @@ final class UtilService {
         self.provider = provider
     }
     
-    func request<T: Decodable>(
+    func request<T: ResponseModelType>(
         with request: UtilTargetType
     ) async throws -> ResponseBodyDTO<T>? {
         return try await withCheckedThrowingContinuation { continuation in

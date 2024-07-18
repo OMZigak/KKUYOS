@@ -4,14 +4,26 @@
 //
 //  Created by 이지훈 on 7/10/24.
 //
-// NicknameViewController.swift
 
 import UIKit
+
+import RxSwift
+import RxCocoa
 
 class NicknameViewController: BaseViewController {
     
     private let nicknameView = NicknameView()
-    private let viewModel = NicknameViewModel()
+    private let viewModel: NicknameViewModel
+    private let disposeBag = DisposeBag()
+    
+    init(viewModel: NicknameViewModel = NicknameViewModel()) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         view = nicknameView
@@ -23,63 +35,90 @@ class NicknameViewController: BaseViewController {
         setupTextField()
         setupTapGesture()
         setupNavigationBarTitle(with: "닉네임 설정")
-        
-        print("---")
-        let keychainService = DefaultKeychainService.shared
-        
-        if let accessToken = keychainService.accessToken {
-            print("Access token is available in NicknameViewController: \(accessToken)")
-        } else {
-            print("No access token available in NicknameViewController. User may need to log in.")
-        }
-    }
-    
-    override func setupAction() {
-        nicknameView.nicknameTextField.addTarget(
-            self,
-            action: #selector(textFieldDidChange(_:)),
-            for: .editingChanged
-        )
-        nicknameView.nextButton.addTarget(
-            self,
-            action: #selector(nextButtonTapped),
-            for: .touchUpInside
-        )
     }
     
     private func setupBindings() {
-        viewModel.nicknameState.bind { [weak self] state in
-            switch state {
-            case .empty:
-                self?.nicknameView.nicknameTextField.layer.borderColor = UIColor.gray3.cgColor
-                self?.nicknameView.errorLabel.isHidden = true
-            case .valid:
-                self?.nicknameView.nicknameTextField.layer.borderColor = UIColor.maincolor.cgColor
-                self?.nicknameView.errorLabel.isHidden = true
-            case .invalid:
-                self?.nicknameView.nicknameTextField.layer.borderColor = UIColor.red.cgColor
-                self?.nicknameView.errorLabel.isHidden = false
-            }
-        }
+        nicknameView.nicknameTextField.rx.text.orEmpty
+            .bind(to: viewModel.nicknameText)
+            .disposed(by: disposeBag)
         
-        viewModel.errorMessage.bind { [weak self] errorMessage in
-            self?.nicknameView.errorLabel.text = errorMessage
-        }
+        viewModel.nicknameState
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] state in
+                self?.updateUIForNicknameState(state)
+            })
+            .disposed(by: disposeBag)
         
-        viewModel.isNextButtonEnabled.bind { [weak self] isEnabled in
-            self?.nicknameView.nextButton.isEnabled = isEnabled
-            self?.nicknameView.nextButton.backgroundColor = isEnabled ? .maincolor : .gray2
-        }
+        viewModel.errorMessage
+            .bind(to: nicknameView.errorLabel.rx.text)
+            .disposed(by: disposeBag)
         
-        viewModel.characterCount.bind { [weak self] count in
-            self?.nicknameView.characterCountLabel.text = count
-        }
+        viewModel.isNextButtonEnabled
+            .bind(to: nicknameView.nextButton.rx.isEnabled)
+            .disposed(by: disposeBag)
         
-        viewModel.serverResponse.bind { response in
-            if let response = response {
-                print("서버 응답: \(response)")
-            }
-        }
+        viewModel.isNextButtonValid
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] isValid in
+                self?.updateNextButtonAppearance(isValid: isValid)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.characterCount
+            .bind(to: nicknameView.characterCountLabel.rx.text)
+            .disposed(by: disposeBag)
+        
+        nicknameView.nextButton.rx.tap
+            .bind(to: viewModel.updateNicknameTrigger)
+            .disposed(by: disposeBag)
+        
+        viewModel.nicknameUpdateSuccess
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] nickname in
+                self?.navigateToProfileSetup(with: nickname)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.serverResponse
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { response in
+                print("서버 응답: \(response ?? "")")
+            })
+            .disposed(by: disposeBag)
+        
+        nicknameView.nicknameTextField.rx.controlEvent(.editingDidEnd)
+            .withLatestFrom(viewModel.nicknameState)
+            .subscribe(onNext: { [weak self] state in
+                self?.updateUIForNicknameState(state)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func updateUIForNicknameState(_ state: NicknameState) {
+           switch state {
+           case .empty:
+               nicknameView.nicknameTextField.layer.borderColor = UIColor.gray3.cgColor
+               nicknameView.errorLabel.isHidden = true
+           case .valid:
+               nicknameView.nicknameTextField.layer.borderColor = UIColor.maincolor.cgColor
+               nicknameView.errorLabel.isHidden = true
+           case .invalid:
+               nicknameView.nicknameTextField.layer.borderColor = UIColor.red.cgColor
+               nicknameView.errorLabel.isHidden = false
+           }
+           updateNextButtonAppearance(isValid: state == .valid)
+       }
+
+       private func updateNextButtonAppearance(isValid: Bool) {
+           nicknameView.nextButton.backgroundColor = isValid ? .maincolor : .gray2
+           nicknameView.nextButton.isEnabled = isValid
+       }
+
+    
+    private func navigateToProfileSetup(with nickname: String) {
+        let profileSetupVM = ProfileSetupViewModel(nickname: nickname)
+        let profileSetupVC = ProfileSetupViewController(viewModel: profileSetupVM)
+        navigationController?.pushViewController(profileSetupVC, animated: true)
     }
     
     private func setupTextField() {
@@ -88,40 +127,21 @@ class NicknameViewController: BaseViewController {
     }
     
     private func setupTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        let tapGesture = UITapGestureRecognizer()
+        tapGesture.rx.event
+            .subscribe(onNext: { [weak self] _ in
+                self?.view.endEditing(true)
+                self?.updateUIForNicknameState(self?.viewModel.nicknameState.value ?? .empty)
+            })
+            .disposed(by: disposeBag)
         view.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc private func textFieldDidChange(_ textField: UITextField) {
-        viewModel.validateNickname(textField.text ?? "")
-    }
-    
-    @objc private func nextButtonTapped() {
-        viewModel.updateNickname { [weak self] success in
-            if success {
-                print("닉네임이 성공적으로 서버에 등록되었습니다.")
-                let profileSetupVC = ProfileSetupViewController(
-                    viewModel: ProfileSetupViewModel(
-                        nickname: self?.viewModel.nickname.value ?? ""
-                    )
-                )
-                self?.navigationController?.pushViewController(profileSetupVC, animated: true)
-            } else {
-                print("닉네임 등록에 실패했습니다.")
-            }
-        }
-    }
-    
-    @objc private func dismissKeyboard() {
-        view.endEditing(true)
-        nicknameView.nicknameTextField.layer.borderColor = UIColor.gray3.cgColor
     }
 }
 
 extension NicknameViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        nicknameView.nicknameTextField.layer.borderColor = UIColor.gray3.cgColor
+        updateUIForNicknameState(viewModel.nicknameState.value)
         return true
     }
 }
