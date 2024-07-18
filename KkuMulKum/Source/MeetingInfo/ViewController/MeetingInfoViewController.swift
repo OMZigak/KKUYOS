@@ -65,6 +65,18 @@ final class MeetingInfoViewController: BaseViewController {
     override func setupView() {
         setupNavigationBarBackButton()
     }
+    
+    override func setupDelegate() {
+        rootView.promiseListView.delegate = self
+    }
+}
+
+extension MeetingInfoViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // TODO: promiseID를 모임 상세로 전달
+        /// viewModel.meetingPromises[indexPath.item]을 전달
+        print(">>> \(viewModel.meetingPromises[indexPath.item]) : \(#function)")
+    }
 }
 
 private extension MeetingInfoViewController {
