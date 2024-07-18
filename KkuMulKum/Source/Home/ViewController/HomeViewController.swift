@@ -127,6 +127,10 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         didSelectItemAt indexPath: IndexPath
     ) {
         // TODO: promiseID를 모임 상세로 전달
+        print(
+            "promiseID: ",
+            viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item].promiseID ?? 0
+        )
 //        let viewController = PromiseInfoViewController(
 //            viewModel: PromiseInfoViewModel(
 //                promiseID: viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item].promiseID ?? 0,
@@ -375,6 +379,10 @@ private extension HomeViewController {
     
     @objc
     func todayButtonDidTap(_ sender: UIButton) {
+        print(
+            "promiseID: ",
+            viewModel.nearestPromise.value?.data?.promiseID ?? 0
+        )
         // TODO: promiseID를 모임 상세로 전달
 //        let viewController = PromiseInfoViewController(
 //            viewModel: PromiseInfoViewModel(
