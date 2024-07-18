@@ -20,7 +20,10 @@ enum PromiseTargetType {
     case fetchPromiseInfo(promiseID: Int)
     case fetchMyReadyStatus(promiseID: Int)
     case fetchPromiseParticipantList(promiseID: Int)
-    case updateMyPromiseReadyStatus(promiseID: Int)
+    case updateMyPromiseReadyStatus(
+        promiseID: Int,
+        requestModel: MyPromiseReadyInfoModel
+    )
     case fetchTardyInfo(promiseID: Int)
     case updatePromiseCompletion(promiseID: Int)
 }
@@ -57,7 +60,7 @@ extension PromiseTargetType: TargetType {
             return "/api/v1/promises/\(promiseID)/status"
         case .fetchPromiseParticipantList(let promiseID):
             return "/api/v1/promises/\(promiseID)/participants"
-        case .updateMyPromiseReadyStatus(let promiseID):
+        case .updateMyPromiseReadyStatus(let promiseID, _):
             return "/api/v1/promises/\(promiseID)/times"
         case .fetchTardyInfo(let promiseID):
             return "/api/v1/promises/\(promiseID)/tardy"
@@ -84,9 +87,11 @@ extension PromiseTargetType: TargetType {
         switch self {
         case .fetchTodayNextPromise, .fetchUpcomingPromiseList, .updatePreparationStatus,
                 .updateDepartureStatus, .updateArrivalStatus, .fetchPromiseInfo,
-                .fetchMyReadyStatus, .fetchPromiseParticipantList, .updateMyPromiseReadyStatus,
+                .fetchMyReadyStatus, .fetchPromiseParticipantList,
                 .fetchTardyInfo, .updatePromiseCompletion, .fetchMeetingPromiseList:
             return .requestPlain
+        case .updateMyPromiseReadyStatus(_, let request):
+            return .requestJSONEncodable(request)
         case .addPromise(_, let request):
             return .requestJSONEncodable(request)
         }

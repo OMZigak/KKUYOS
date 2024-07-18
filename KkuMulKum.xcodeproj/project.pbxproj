@@ -47,9 +47,9 @@
 		785AE1BE2C2E878600677CA0 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BD2C2E878600677CA0 /* FirebaseStorageCombine-Community */; };
 		785AE1C02C2E878600677CA0 /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BF2C2E878600677CA0 /* FirebaseVertexAI-Preview */; };
 		785AE1D12C3B07A600677CA0 /* PrivacyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */; };
+		789196342C486F6B00FF8CDF /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196332C486F6B00FF8CDF /* KeychainAccessible.swift */; };
 		789196362C492F8600FF8CDF /* AuthTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196352C492F8600FF8CDF /* AuthTargetType.swift */; };
 		789196382C49697B00FF8CDF /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196372C49697B00FF8CDF /* AuthError.swift */; };
-		789196342C486F6B00FF8CDF /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196332C486F6B00FF8CDF /* KeychainAccessible.swift */; };
 		789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7898732F2C3D1A7B00435E96 /* LoginViewController.swift */; };
 		789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789873302C3D1A7B00435E96 /* LoginViewModel.swift */; };
 		789873342C3D1A7B00435E96 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789873312C3D1A7B00435E96 /* LoginView.swift */; };
@@ -72,6 +72,7 @@
 		A39F2B192C47BF83008DA5F5 /* SetReadyCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39F2B182C47BF83008DA5F5 /* SetReadyCompletedView.swift */; };
 		A39F2B1B2C47C206008DA5F5 /* SetReadyCompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39F2B1A2C47C206008DA5F5 /* SetReadyCompletedViewController.swift */; };
 		A39F2B1D2C47F3D0008DA5F5 /* HomeTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39F2B1C2C47F3D0008DA5F5 /* HomeTargetType.swift */; };
+		A39F2B212C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39F2B202C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift */; };
 		A3DD9C3D2C41BAD000E58A13 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */; };
 		A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */; };
 		A3DD9C402C41BAD000E58A13 /* MeetingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */; };
@@ -239,9 +240,9 @@
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.plist; sourceTree = "<group>"; };
+		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		789196352C492F8600FF8CDF /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
 		789196372C49697B00FF8CDF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
-		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		7898732F2C3D1A7B00435E96 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		789873302C3D1A7B00435E96 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		789873312C3D1A7B00435E96 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -266,6 +267,7 @@
 		A39F2B182C47BF83008DA5F5 /* SetReadyCompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReadyCompletedView.swift; sourceTree = "<group>"; };
 		A39F2B1A2C47C206008DA5F5 /* SetReadyCompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReadyCompletedViewController.swift; sourceTree = "<group>"; };
 		A39F2B1C2C47F3D0008DA5F5 /* HomeTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTargetType.swift; sourceTree = "<group>"; };
+		A39F2B202C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReadyStatusInfoServiceType.swift; sourceTree = "<group>"; };
 		A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
 		A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListView.swift; sourceTree = "<group>"; };
 		A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListViewController.swift; sourceTree = "<group>"; };
@@ -1039,6 +1041,7 @@
 			isa = PBXGroup;
 			children = (
 				DD86265D2C4606A300E4F980 /* MockReadyStatusService.swift */,
+				A39F2B202C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1768,6 +1771,7 @@
 				DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */,
 				DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */,
 				DD3F9DD02C48571A008E1FF7 /* MeetingListServiceType.swift in Sources */,
+				A39F2B212C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift in Sources */,
 				DE6D4D132C3F14D80005584B /* MeetingMemberCell.swift in Sources */,
 				DDAF1C932C3D6E3D008A37D3 /* PagePromiseViewController.swift in Sources */,
 				789D73BE2C47FE0F00C7077D /* AuthInterceptor.swift in Sources */,
@@ -1856,7 +1860,7 @@
 				DD4909962C440CDC003ED304 /* ArriveView.swift in Sources */,
 				DD86266A2C4606A300E4F980 /* MockReadyStatusService.swift in Sources */,
 				789196342C486F6B00FF8CDF /* KeychainAccessible.swift in Sources */,
-				DD86266A2C4606A300E4F980 /* ReadyStatusService.swift in Sources */,
+				DD86266A2C4606A300E4F980 /* MockReadyStatusService.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
 				DD43937B2C412F4500EC1799 /* CreateMeetingViewController.swift in Sources */,
 				DD86266C2C4606A300E4F980 /* SetReadyInfoViewController.swift in Sources */,

@@ -26,6 +26,5 @@ final class MeetingListViewModel {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
         }
-//        meetingList.value = service.fetchMeetingList()
     }
 }

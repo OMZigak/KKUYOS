@@ -13,8 +13,19 @@ final class SetReadyInfoViewController: BaseViewController {
     // MARK: - Property
     
     private let rootView = SetReadyInfoView()
-    private let viewModel = SetReadyInfoViewModel()
+    private let viewModel: SetReadyInfoViewModel
     
+    
+    // MARK: - Initializer
+    
+    init(viewModel: SetReadyInfoViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     // MARK: - LifeCycle
     
@@ -22,12 +33,6 @@ final class SetReadyInfoViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         navigationController?.isNavigationBarHidden = false
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        navigationController?.isNavigationBarHidden = true
     }
     
     override func loadView() {
@@ -69,6 +74,11 @@ final class SetReadyInfoViewController: BaseViewController {
             action: #selector(textFieldDidChange),
             for: .editingChanged
         )
+        rootView.doneButton.addTarget(
+            self,
+            action: #selector(doneButtonDidTap),
+            for: .touchUpInside
+        )
     }
     
     @objc
@@ -79,6 +89,11 @@ final class SetReadyInfoViewController: BaseViewController {
             moveHourText: rootView.moveHourTextField.text ?? "",
             moveMinuteText: rootView.moveMinuteTextField.text ?? ""
         )
+    }
+    
+    @objc
+    private func doneButtonDidTap(_ sender: UIButton) {
+        viewModel.updateReadyInfo()
     }
 }
 
@@ -160,6 +175,18 @@ private extension SetReadyInfoViewController {
         viewModel.errMessage.bind { [weak self] err in
             if !err.isEmpty {
                 self?.showToast(err)
+            }
+        }
+        
+        viewModel.isSucceedToSave.bind { [weak self] _ in
+            if self?.viewModel.isSucceedToSave.value == true {
+                DispatchQueue.main.async {
+                    let viewController = SetReadyCompletedViewController()
+                    self?.navigationController?.pushViewController(
+                        viewController,
+                        animated: true
+                    )
+                }
             }
         }
     }
