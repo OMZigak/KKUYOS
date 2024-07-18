@@ -116,6 +116,20 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     ) -> UIEdgeInsets {
         return contentInset
     }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        // TODO: promiseID를 모임 상세로 전달
+//        let viewController = PromiseInfoViewController(
+//            viewModel: PromiseInfoViewModel(
+//                promiseID: viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item].promiseID ?? 0,
+//                service: PromiseService()
+//            )
+//        )
+        //tabBarController?.navigationController?.pushViewController(viewController, animated: true)
+    }
 }
 
 
