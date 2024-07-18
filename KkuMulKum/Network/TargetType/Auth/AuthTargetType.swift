@@ -58,15 +58,8 @@ extension AuthTargetType: TargetType {
         case .refreshToken:
             return .requestPlain
         case let .updateProfileImage(imageData, fileName, mimeType):
-            let formData: [MultipartFormData] = [
-                MultipartFormData(
-                    provider: .data(imageData),
-                    name: "image",
-                    fileName: fileName,
-                    mimeType: mimeType
-                )
-            ]
-            return .uploadMultipart(formData)
+            let formData = MultipartFormData(provider: .data(imageData), name: "image", fileName: fileName, mimeType: mimeType)
+            return .uploadMultipart([formData])
         case let .updateName(name):
             return .requestParameters(
                 parameters: ["name": name],
