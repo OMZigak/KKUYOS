@@ -7,9 +7,13 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 class ProfileSetupViewController: BaseViewController {
     private let rootView = ProfileSetupView()
     private let viewModel: ProfileSetupViewModel
+    private let disposeBag = DisposeBag()
 
     init(viewModel: ProfileSetupViewModel) {
         self.viewModel = viewModel
@@ -26,57 +30,78 @@ class ProfileSetupViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupNavigationBarTitle(with: "프로필 설정")
         setupNavigationBarBackButton()
         setupBindings()
     }
     
-    override func setupAction() {
-        rootView.confirmButton.addTarget(self, action: #selector(confirmButtonTapped), for: .touchUpInside)
-        rootView.skipButton.addTarget(self, action: #selector(skipButtonTapped), for: .touchUpInside)
-        rootView.cameraButton.addTarget(self, action: #selector(cameraButtonTapped), for: .touchUpInside)
-    }
-    
     private func setupBindings() {
-        viewModel.profileImage.bind { [weak self] image in
-            self?.rootView.profileImageView.image = image
-        }
+        viewModel.profileImage
+            .bind(to: rootView.profileImageView.rx.image)
+            .disposed(by: disposeBag)
         
-        viewModel.isConfirmButtonEnabled.bind { [weak self] isEnabled in
-            self?.rootView.confirmButton.isEnabled = isEnabled
-            self?.rootView.confirmButton.alpha = isEnabled ? 1.0 : 0.5
-        }
+        viewModel.isConfirmButtonEnabled
+            .bind(to: rootView.confirmButton.rx.isEnabled)
+            .disposed(by: disposeBag)
+        
+        viewModel.isConfirmButtonEnabled
+            .map { $0 ? 1.0 : 0.5 }
+            .bind(to: rootView.confirmButton.rx.alpha)
+            .disposed(by: disposeBag)
+        
+        rootView.confirmButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.viewModel.uploadProfileImage()
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.skipButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.navigateToWelcome()
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.cameraButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.showImagePicker()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.uploadSuccess
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                self?.navigateToWelcome()
+            })
+            .disposed(by: disposeBag)
     }
     
-    @objc private func confirmButtonTapped() {
-           viewModel.uploadProfileImage { [weak self] success in
-               if success {
-                   DispatchQueue.main.async {
-                       let welcomeVC = WelcomeViewController(
-                           viewModel: WelcomeViewModel(nickname: self?.viewModel.nickname ?? "")
-                       )
-                       welcomeVC.modalPresentationStyle = .fullScreen
-                       self?.present(welcomeVC, animated: true, completion: nil)
-                   }
-               }
-           }
-       }
-    
-    @objc private func skipButtonTapped() {
-        let welcomeVC = WelcomeViewController(
-            viewModel: WelcomeViewModel(nickname: viewModel.nickname)
-        )
-        welcomeVC.modalPresentationStyle = .fullScreen
-        present(welcomeVC, animated: true, completion: nil)
-    }
-    
-    @objc private func cameraButtonTapped() {
+    private func showImagePicker() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = true
         present(imagePicker, animated: true)
+    }
+    
+    private func navigateToWelcome() {
+        let welcomeVM = WelcomeViewModel(nickname: viewModel.nickname)
+        let welcomeVC = WelcomeViewController(viewModel: welcomeVM)
+        welcomeVC.modalPresentationStyle = .fullScreen
+        present(welcomeVC, animated: true, completion: nil)
+    }
+}
+   
+extension ProfileSetupViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let editedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
+            let croppedImage = cropToCircle(image: editedImage)
+            viewModel.updateProfileImage(croppedImage)
+        }
+        dismiss(animated: true)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true)
     }
     
     private func cropToCircle(image: UIImage) -> UIImage {
@@ -92,20 +117,4 @@ class ProfileSetupViewController: BaseViewController {
         return circleImage
     }
 }
-
-extension ProfileSetupViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(
-        _ picker: UIImagePickerController,
-        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
-    ) {
-        if let editedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
-            let croppedImage = cropToCircle(image: editedImage)
-            viewModel.updateProfileImage(croppedImage)
-        }
-        dismiss(animated: true)
-    }
     
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true)
-    }
-}

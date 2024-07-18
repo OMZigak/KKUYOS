@@ -47,6 +47,7 @@
 		785AE1BE2C2E878600677CA0 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BD2C2E878600677CA0 /* FirebaseStorageCombine-Community */; };
 		785AE1C02C2E878600677CA0 /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BF2C2E878600677CA0 /* FirebaseVertexAI-Preview */; };
 		785AE1D12C3B07A600677CA0 /* PrivacyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */; };
+		789196342C486F6B00FF8CDF /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196332C486F6B00FF8CDF /* KeychainAccessible.swift */; };
 		789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7898732F2C3D1A7B00435E96 /* LoginViewController.swift */; };
 		789873332C3D1A7B00435E96 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789873302C3D1A7B00435E96 /* LoginViewModel.swift */; };
 		789873342C3D1A7B00435E96 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789873312C3D1A7B00435E96 /* LoginView.swift */; };
@@ -64,7 +65,6 @@
 		78B928782C29402E006D9942 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 78B928762C29402E006D9942 /* LaunchScreen.storyboard */; };
 		78BD61202C43F557005752FD /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 78BD611F2C43F557005752FD /* SwiftKeychainWrapper */; };
 		78BD612B2C4550A6005752FD /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD612A2C4550A6005752FD /* Bundle.swift */; };
-		78BD612F2C4561B9005752FD /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD612E2C4561B9005752FD /* KeychainAccessible.swift */; };
 		78BD61342C45B4A7005752FD /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61332C45B4A7005752FD /* AuthService.swift */; };
 		78BD61382C463C8C005752FD /* NicknameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78BD61372C463C8C005752FD /* NicknameModel.swift */; };
 		A39F2B192C47BF83008DA5F5 /* SetReadyCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39F2B182C47BF83008DA5F5 /* SetReadyCompletedView.swift */; };
@@ -237,6 +237,7 @@
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.plist; sourceTree = "<group>"; };
+		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		7898732F2C3D1A7B00435E96 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		789873302C3D1A7B00435E96 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		789873312C3D1A7B00435E96 /* LoginView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -256,7 +257,6 @@
 		78B928772C29402E006D9942 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		78B928792C29402E006D9942 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78BD612A2C4550A6005752FD /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
-		78BD612E2C4561B9005752FD /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		78BD61332C45B4A7005752FD /* AuthService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		78BD61372C463C8C005752FD /* NicknameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameModel.swift; sourceTree = "<group>"; };
 		A39F2B182C47BF83008DA5F5 /* SetReadyCompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReadyCompletedView.swift; sourceTree = "<group>"; };
@@ -555,19 +555,19 @@
 		78AED1322C3D9514000AD80A /* Nickname */ = {
 			isa = PBXGroup;
 			children = (
-				782B40802C3E48BD008B0CA7 /* ViewModel */,
 				78AED1382C3D98DB000AD80A /* ViewController */,
-				78AED1352C3D98C1000AD80A /* NicknameView */,
+				782B40802C3E48BD008B0CA7 /* ViewModel */,
+				78AED1352C3D98C1000AD80A /* View */,
 			);
 			path = Nickname;
 			sourceTree = "<group>";
 		};
-		78AED1352C3D98C1000AD80A /* NicknameView */ = {
+		78AED1352C3D98C1000AD80A /* View */ = {
 			isa = PBXGroup;
 			children = (
 				78AED1362C3D98D1000AD80A /* NicknameView.swift */,
 			);
-			path = NicknameView;
+			path = View;
 			sourceTree = "<group>";
 		};
 		78AED1382C3D98DB000AD80A /* ViewController */ = {
@@ -617,8 +617,8 @@
 		78BD612D2C456162005752FD /* KeyChain */ = {
 			isa = PBXGroup;
 			children = (
-				78BD612E2C4561B9005752FD /* KeychainAccessible.swift */,
 				789D73A62C46AF4900C7077D /* KeychainService.swift */,
+				789196332C486F6B00FF8CDF /* KeychainAccessible.swift */,
 			);
 			path = KeyChain;
 			sourceTree = "<group>";
@@ -1790,7 +1790,6 @@
 				DE6D4D0F2C3F14D80005584B /* MeetingInfoService.swift in Sources */,
 				DDE7D2C32C470A58005A921F /* ProfileTargetType.swift in Sources */,
 				DD3F9DCC2C485614008E1FF7 /* HomeServiceType.swift in Sources */,
-				78BD612F2C4561B9005752FD /* KeychainAccessible.swift in Sources */,
 				DD39768A2C41C2AD00E2A4C4 /* HomeViewController.swift in Sources */,
 				DED5DBF42C34539A006ECE7E /* BaseTableViewCell.swift in Sources */,
 				DDE7D2CA2C47EE81005A921F /* PromiseTargetType.swift in Sources */,
@@ -1839,6 +1838,7 @@
 				DE0137D32C43C5E50088C777 /* MyPageView.swift in Sources */,
 				DE558C592C45954B008DAC4A /* SelectMemberViewController.swift in Sources */,
 				DD4909962C440CDC003ED304 /* ArriveView.swift in Sources */,
+				789196342C486F6B00FF8CDF /* KeychainAccessible.swift in Sources */,
 				DD86266A2C4606A300E4F980 /* ReadyStatusService.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
 				DD43937B2C412F4500EC1799 /* CreateMeetingViewController.swift in Sources */,
