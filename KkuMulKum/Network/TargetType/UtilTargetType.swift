@@ -10,7 +10,7 @@ import Foundation
 import Moya
 
 enum UtilTargetType {
-    case searchPlaceList(keyword: String)
+    case searchPlaceList(query: String)
 }
 
 extension UtilTargetType: TargetType {
@@ -25,8 +25,8 @@ extension UtilTargetType: TargetType {
     
     var path: String {
         switch self {
-        case .searchPlaceList(let keyword):
-            return "/api/v1/locations?q=\(keyword)"
+        case .searchPlaceList:
+            return "/api/v1/locations"
         }
     }
     
@@ -35,7 +35,10 @@ extension UtilTargetType: TargetType {
     }
     
     var task: Moya.Task {
-        .requestPlain
+        switch self {
+        case .searchPlaceList(let query):
+            return .requestParameters(parameters: ["q": query], encoding: URLEncoding.queryString)
+        }
     }
     
     var headers: [String : String]? {

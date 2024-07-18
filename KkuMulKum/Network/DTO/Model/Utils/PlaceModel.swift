@@ -8,9 +8,9 @@
 import Foundation
 
 /// 네이버 지역 검색 API (Response)
-struct PlaceModel: ResponseModelType {
-    let places: [Place]
-}
+extension Array: ResponseModelType where Element == Place {}
+
+typealias PlaceModel = [Place]
 
 struct Place: Codable {
     let location: String
