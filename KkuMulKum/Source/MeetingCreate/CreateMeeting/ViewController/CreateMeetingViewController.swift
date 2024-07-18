@@ -125,12 +125,12 @@ private extension CreateMeetingViewController {
         
         inviteCodePopUpViewController.rootView.copyButton.addTarget(
             self,
-            action: #selector(self.copyButtonDidTapped),
+            action: #selector(copyButtonDidTapped),
             for: .touchUpInside
         )
         inviteCodePopUpViewController.rootView.inviteLaterButton.addTarget(
             self,
-            action: #selector(self.inviteLaterButtonDidTapped),
+            action: #selector(inviteLaterButtonDidTapped),
             for: .touchUpInside
         )
         

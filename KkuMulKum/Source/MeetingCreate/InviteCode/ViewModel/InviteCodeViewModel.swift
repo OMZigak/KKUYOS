@@ -83,6 +83,6 @@ private extension InviteCodeViewModel {
             return
         }
         
-        errorDescription.value = error.message // bind를 통해서 정의한 내용을 didSet으로 실행
+        errorDescription.value = error.message
     }
 }
