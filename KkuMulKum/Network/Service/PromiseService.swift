@@ -16,7 +16,7 @@ final class PromiseService {
         self.provider = provider
     }
     
-    func request<T: Decodable>(
+    func request<T: ResponseModelType>(
         with request: PromiseTargetType
     ) async throws -> ResponseBodyDTO<T>? {
         return try await withCheckedThrowingContinuation { continuation in
@@ -38,5 +38,4 @@ final class PromiseService {
             }
         }
     }
-
 }

@@ -19,7 +19,8 @@ extension UtilService: FindPlaceServiceType {
 
 final class MockFindPlaceService: FindPlaceServiceType {
     func fetchPlaceList(with input: String) async throws -> ResponseBodyDTO<PlaceModel>? {
-        let mockData: PlaceModel = PlaceModel([
+        let mockData: PlaceModel = PlaceModel(
+            places: [
                 Place(
                     location: "동국대학교 서울캠퍼스",
                     address: "서울 중구 필동3가 26-1",

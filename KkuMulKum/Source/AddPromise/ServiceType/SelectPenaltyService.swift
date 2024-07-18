@@ -19,7 +19,16 @@ final class MockSelectPenaltyService: SelectPenaltyServiceType {
     func requestAddingNewPromise(
         with requestModel: AddPromiseRequestModel,
         meetingID: Int
-    ) -> ResponseBodyDTO<AddPromiseResponseModel> {
-        return ResponseBodyDTO<AddPromiseResponseModel>(success: true, data: nil, error: nil)
+    ) async throws -> ResponseBodyDTO<AddPromiseResponseModel>? {
+        let mockData = AddPromiseResponseModel(
+            promiseID: 1,
+            placeName: "홍대입구",
+            address: "주소",
+            roadAddress: "도로명주소",
+            time: "",
+            dressUpLevel: "",
+            penalty: ""
+        )
+        return ResponseBodyDTO<AddPromiseResponseModel>(success: true, data: mockData, error: nil)
     }
 }
