@@ -17,6 +17,10 @@ class PagePromiseViewController: BaseViewController {
     // TODO: 서버 연결 시 데이터 바인딩 필요
     private var promiseViewControllerList: [BaseViewController] = []
     
+    private let promiseInfoViewController: PromiseInfoViewController
+    private let readyStatusViewController: ReadyStatusViewController
+    private let tardyViewController: TardyViewController
+    
     private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(
         items: ["약속 정보", "준비 현황", "지각 꾸물이"]
     )
@@ -50,25 +54,31 @@ class PagePromiseViewController: BaseViewController {
         
         // TODO: 네트워크 통신 필요
         
-        promiseViewControllerList = [
-            PromiseInfoViewController(
-                promiseInfoViewModel: PromiseInfoViewModel(
-                    promiseInfoService: MockPromiseInfoService(),
-                    promiseID: promiseViewModel.promiseID.value
-                )
-            ),
-            ReadyStatusViewController(
-                readyStatusViewModel: ReadyStatusViewModel(
-                    readyStatusService: MockReadyStatusService(),
-                    promiseID: promiseViewModel.promiseID.value
-                )
-            ),
-            TardyViewController(
-                tardyViewModel: TardyViewModel(
-                    tardyService: MockTardyService(),
-                    promiseID: promiseViewModel.promiseID.value
-                )
+        promiseInfoViewController = PromiseInfoViewController(
+            promiseInfoViewModel: PromiseInfoViewModel(
+                promiseInfoService: MockPromiseInfoService(),
+                promiseID: promiseViewModel.promiseID.value
             )
+        )
+        
+        readyStatusViewController = ReadyStatusViewController(
+            readyStatusViewModel: ReadyStatusViewModel(
+                readyStatusService: MockReadyStatusService(),
+                promiseID: promiseViewModel.promiseID.value
+            )
+        )
+        
+        tardyViewController = TardyViewController(
+            tardyViewModel: TardyViewModel(
+                tardyService: MockTardyService(),
+                promiseID: promiseViewModel.promiseID.value
+            )
+        )
+        
+        promiseViewControllerList = [
+            promiseInfoViewController,
+            readyStatusViewController,
+            tardyViewController
         ]
         
         super.init(nibName: nil, bundle: nil)
@@ -118,6 +128,18 @@ class PagePromiseViewController: BaseViewController {
             action: #selector(didSegmentedControlIndexUpdated),
             for: .valueChanged
         )
+        
+        tardyViewController.tardyView.finishMeetingButton.addTarget(
+            self,
+            action: #selector(finishMeetingButtonDidTapped),
+            for: .touchUpInside
+        )
+        
+        tardyViewController.arriveView.finishMeetingButton.addTarget(
+            self,
+            action: #selector(finishMeetingButtonDidTapped),
+            for: .touchUpInside
+        )
     }
     
     override func setupDelegate() {
@@ -150,6 +172,11 @@ extension PagePromiseViewController {
         promisePageViewController.setViewControllers([
             promiseViewControllerList[promiseViewModel.currentPage.value]
         ], direction: direction, animated: false)
+    }
+    
+    @objc
+    func finishMeetingButtonDidTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
 

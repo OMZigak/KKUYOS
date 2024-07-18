@@ -13,8 +13,8 @@ class TardyViewController: BaseViewController {
     // MARK: Property
 
     private let tardyViewModel: TardyViewModel
-    private let tardyView: TardyView = TardyView()
-    private let arriveView: ArriveView = ArriveView()
+    let tardyView: TardyView = TardyView()
+    let arriveView: ArriveView = ArriveView()
     
     
     // MARK: Initialize
@@ -36,27 +36,9 @@ class TardyViewController: BaseViewController {
         view = tardyViewModel.hasTardy.value ? tardyView : arriveView
     }
     
-    override func setupAction() {
-        tardyView.finishMeetingButton.addTarget(
-            self,
-            action: #selector(finishMeetingButtonDidTapped),
-            for: .touchUpInside
-        )
-    }
-    
     override func setupDelegate() {
         tardyView.tardyCollectionView.delegate = self
         tardyView.tardyCollectionView.dataSource = self
-    }
-}
-
-
-// MARK: - Extension
-
-private extension TardyViewController {
-    @objc
-    func finishMeetingButtonDidTapped() {
-        
     }
 }
 
