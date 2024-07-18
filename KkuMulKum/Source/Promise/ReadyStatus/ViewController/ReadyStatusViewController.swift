@@ -39,13 +39,11 @@ class ReadyStatusViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // TODO: 서버 통신해서 데이터 바인딩 필요
-        
-        DispatchQueue.main.async {
-            self.updateReadyInfoView(
-                flag: self.readyStatusViewModel.isReadyInfoEntered.value
-            )
-            self.rootView.ourReadyStatusCollectionView.reloadData()
+        // TODO: 서버 통신해서
+        readyStatusViewModel.isReadyInfoEntered.bind { [weak self] flag in
+            DispatchQueue.main.async {
+                self?.updateReadyInfoView(flag: flag)
+            }
         }
     }
     
@@ -102,7 +100,14 @@ class ReadyStatusViewController: BaseViewController {
     /// 눌렀을 때 준비 정보 입력하기 화면으로 넘어가도록 설정
     @objc
     func enterReadyButtonDidTapped() {
-        let setReadyInfoViewController = SetReadyInfoViewController()
+        // TODO: 유진이가 promiseID, promiseTime 를 전달하면 됩니다.
+        let setReadyInfoViewController = SetReadyInfoViewController(
+            viewModel: SetReadyInfoViewModel(
+                promiseID: 1,
+                promiseTime: "",
+                service: PromiseService()
+            )
+        )
         
         navigationController?.pushViewController(
             setReadyInfoViewController,

@@ -18,8 +18,8 @@ class HomeViewController: BaseViewController {
     
     private let viewModel: HomeViewModel
     
-    final let cellWidth: CGFloat = Screen.width(200)
-    final let cellHeight: CGFloat = Screen.height(216)
+    final let cellWidth: CGFloat = 200
+    final let cellHeight: CGFloat = 216
     final let contentInterSpacing: CGFloat = 12
     final let contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
     
@@ -225,7 +225,7 @@ private extension HomeViewController {
                     color: .lightGreen
                 )
                 self?.rootView.levelLabel.setText(
-                    "Lv.\(data?.data?.level ?? 0) \(self?.viewModel.levelName.value ?? "")",
+                    "Lv.\(data?.data?.level ?? 0)  \(self?.viewModel.levelName.value ?? "")",
                     style: .caption01,
                     color: .gray6
                 )

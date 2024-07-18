@@ -72,6 +72,7 @@
 		A39F2B192C47BF83008DA5F5 /* SetReadyCompletedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39F2B182C47BF83008DA5F5 /* SetReadyCompletedView.swift */; };
 		A39F2B1B2C47C206008DA5F5 /* SetReadyCompletedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39F2B1A2C47C206008DA5F5 /* SetReadyCompletedViewController.swift */; };
 		A39F2B1D2C47F3D0008DA5F5 /* HomeTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39F2B1C2C47F3D0008DA5F5 /* HomeTargetType.swift */; };
+		A39F2B212C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = A39F2B202C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift */; };
 		A3DD9C3D2C41BAD000E58A13 /* MeetingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */; };
 		A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */; };
 		A3DD9C402C41BAD000E58A13 /* MeetingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */; };
@@ -263,6 +264,7 @@
 		A39F2B182C47BF83008DA5F5 /* SetReadyCompletedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReadyCompletedView.swift; sourceTree = "<group>"; };
 		A39F2B1A2C47C206008DA5F5 /* SetReadyCompletedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReadyCompletedViewController.swift; sourceTree = "<group>"; };
 		A39F2B1C2C47F3D0008DA5F5 /* HomeTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTargetType.swift; sourceTree = "<group>"; };
+		A39F2B202C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetReadyStatusInfoServiceType.swift; sourceTree = "<group>"; };
 		A3DD9C322C41BAD000E58A13 /* MeetingTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingTableViewCell.swift; sourceTree = "<group>"; };
 		A3DD9C362C41BAD000E58A13 /* MeetingListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListView.swift; sourceTree = "<group>"; };
 		A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListViewController.swift; sourceTree = "<group>"; };
@@ -1033,6 +1035,7 @@
 			isa = PBXGroup;
 			children = (
 				DD86265D2C4606A300E4F980 /* MockReadyStatusService.swift */,
+				A39F2B202C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1758,6 +1761,7 @@
 				DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */,
 				DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */,
 				DD3F9DD02C48571A008E1FF7 /* MeetingListServiceType.swift in Sources */,
+				A39F2B212C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift in Sources */,
 				DE6D4D132C3F14D80005584B /* MeetingMemberCell.swift in Sources */,
 				DDAF1C932C3D6E3D008A37D3 /* PagePromiseViewController.swift in Sources */,
 				789D73BE2C47FE0F00C7077D /* AuthInterceptor.swift in Sources */,
