@@ -186,7 +186,7 @@ final class HomeView: BaseView {
         
         promiseView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(646)
+            $0.height.equalTo(Screen.height(630))
             $0.top.equalToSuperview().offset(396)
             $0.bottom.equalTo(contentView)
         }
