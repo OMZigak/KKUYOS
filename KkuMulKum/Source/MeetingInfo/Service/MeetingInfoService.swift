@@ -19,71 +19,20 @@ protocol MeetingInfoServiceType {
 
 extension MeetingService: MeetingInfoServiceType {
     func fetchMeetingInfo(with meetingID: Int) async throws -> ResponseBodyDTO<MeetingInfoModel>? {
-        try await withCheckedThrowingContinuation { continuation in
-            provider.request(.fetchMeetingInfo(meetingID: meetingID)) { result in
-                switch result {
-                case .success(let response):
-                    do {
-                        let decodedData = try JSONDecoder().decode(
-                            ResponseBodyDTO<MeetingInfoModel>.self,
-                            from: response.data
-                        )
-                        continuation.resume(returning: decodedData)
-                    } catch {
-                        continuation.resume(throwing: error)
-                    }
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
+        return try await request(with: .fetchMeetingInfo(meetingID: meetingID))
     }
     
     func fetchMeetingMemberList(
         with meetingID: Int
     ) async throws -> ResponseBodyDTO<MeetingMembersModel>? {
-        try await withCheckedThrowingContinuation { continuation in
-            provider.request(.fetchMeetingMember(meetingID: meetingID)) { result in
-                switch result {
-                case .success(let response):
-                    do {
-                        let decodedData = try JSONDecoder().decode(
-                            ResponseBodyDTO<MeetingMembersModel>.self,
-                            from: response.data
-                        )
-                        continuation.resume(returning: decodedData)
-                    } catch {
-                        continuation.resume(throwing: error)
-                    }
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
+        return try await request(with: .fetchMeetingMember(meetingID: meetingID))
     }
     
     func fetchMeetingPromiseList(
         with meetingID: Int
     ) async throws -> ResponseBodyDTO<MeetingPromisesModel>? {
-        try await withCheckedThrowingContinuation { continuation in
-            provider.request(.fetchmeetingPromiseList(meetingID: meetingID)) { result in
-                switch result {
-                case .success(let response):
-                    do {
-                        let decodedData = try JSONDecoder().decode(
-                            ResponseBodyDTO<MeetingPromisesModel>.self,
-                            from: response.data
-                        )
-                        continuation.resume(returning: decodedData)
-                    } catch {
-                        continuation.resume(throwing: error)
-                    }
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
-        }
-    }
+        return try await request(with: .fetchmeetingPromiseList(meetingID: meetingID))
+    }    
 }
 
 final class MockMeetingInfoService: MeetingInfoServiceType {
