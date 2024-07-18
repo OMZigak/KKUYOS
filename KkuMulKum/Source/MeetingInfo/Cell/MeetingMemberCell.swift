@@ -102,7 +102,7 @@ private extension MeetingMemberCell {
         let name = member.name
         let imageURL = member.profileImageURL
         
-        nameLabel.setText(name, style: .caption02, color: .gray6)
+        nameLabel.setText(name ?? " ", style: .caption02, color: .gray6)
         profileImageButton.setImage(
             .imgProfile.withRenderingMode(.alwaysOriginal),
             for: .normal
