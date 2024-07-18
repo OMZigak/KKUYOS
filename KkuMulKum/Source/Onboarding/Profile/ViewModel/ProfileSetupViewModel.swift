@@ -5,7 +5,6 @@
 //  Created by 이지훈 on 7/10/24.
 //
 
-
 import UIKit
 
 class ProfileSetupViewModel {
@@ -25,11 +24,11 @@ class ProfileSetupViewModel {
     func updateProfileImage(_ image: UIImage?) {
         profileImage.value = image
         if let image = image {
-            compressImage(image, maxSizeInBytes: 5 * 1024 * 1024)
+            compressImage(image, maxSizeInBytes: 2 * 1024 * 1024)  // 2MB로 변경
         } else {
             compressedImageData = nil
         }
-        isConfirmButtonEnabled.value = image != nil
+        isConfirmButtonEnabled.value = compressedImageData != nil
     }
     
     func uploadProfileImage(completion: @escaping (Bool) -> Void) {
@@ -52,7 +51,7 @@ class ProfileSetupViewModel {
                 fileName: fileName,
                 mimeType: mimeType
             )
-        ) { [weak self] (result: Result<EmptyModel?, NetworkError>) in
+        ) { [weak self] (result: Result<EmptyModel, NetworkError>) in
             print("네트워크 요청 완료")
             switch result {
             case .success(_):
@@ -67,28 +66,9 @@ class ProfileSetupViewModel {
     }
     
     private func handleError(_ error: NetworkError) {
-        switch error {
-        case .apiError(let code, let message):
-            switch code {
-            case 40080:
-                serverResponse.value = "이미지 확장자는 jpg, png, webp만 가능합니다."
-            case 40081:
-                serverResponse.value = "이미지 사이즈는 5MB를 넘을 수 없습니다."
-            case 40420:
-                serverResponse.value = "유저를 찾을 수 없습니다."
-            default:
-                serverResponse.value = message
-            }
-        case .networkError:
-            serverResponse.value = "네트워크 오류: \(error.localizedDescription)"
-        case .decodingError:
-            serverResponse.value = "데이터 디코딩 오류: \(error.localizedDescription)"
-        case .unknownError(let message):
-            serverResponse.value = "알 수 없는 오류: \(message)"
-        }
-        print("프로필 이미지 업로드 실패: \(serverResponse.value ?? "")")
+        serverResponse.value = error.message
+        print("프로필 이미지 업로드 실패: \(error.message)")
     }
-    
 
     private func compressImage(_ image: UIImage, maxSizeInBytes: Int) {
         guard let originalImageData = image.jpegData(compressionQuality: 1.0) else {
