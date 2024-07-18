@@ -8,11 +8,17 @@
 import Foundation
 
 protocol SelectMemeberServiceType {
-    func fetchMeetingMemberList(with meetingID: Int) -> ResponseBodyDTO<MeetingMembersModel>
+    func fetchMeetingMemberList(
+        with meetingID: Int
+    ) async throws -> ResponseBodyDTO<MeetingMembersModel>?
 }
 
+extension MeetingService: SelectMemeberServiceType {}
+
 final class MockSelectMemberService: SelectMemeberServiceType {
-    func fetchMeetingMemberList(with meetingID: Int) -> ResponseBodyDTO<MeetingMembersModel> {
+    func fetchMeetingMemberList(
+        with meetingID: Int
+    ) async throws -> ResponseBodyDTO<MeetingMembersModel>? {
         let mockData = MeetingMembersModel(
             memberCount: 14,
             members: [

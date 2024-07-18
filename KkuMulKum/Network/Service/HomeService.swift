@@ -16,7 +16,7 @@ final class HomeService {
         self.provider = provider
     }
     
-    func request<T: Decodable>(
+    func request<T: ResponseModelType>(
         with request: HomeTargetType
     ) async throws -> ResponseBodyDTO<T>? {
         return try await withCheckedThrowingContinuation { continuation in

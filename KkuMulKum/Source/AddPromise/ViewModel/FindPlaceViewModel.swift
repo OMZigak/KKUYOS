@@ -23,7 +23,7 @@ final class FindPlaceViewModel {
 
 extension FindPlaceViewModel: ViewModelType {
     struct Input {
-        let textFieldDidChange: Observable<String?>
+        let textFieldDidChange: Observable<String>
         let textFieldEndEditing: PublishRelay<Void>
         let cellIsSelected: PublishRelay<Place?>
         let confirmButtonDidTap: Observable<Void>
@@ -43,17 +43,9 @@ extension FindPlaceViewModel: ViewModelType {
         
         input.textFieldEndEditing
             .withLatestFrom(input.textFieldDidChange)
-            .map { [weak self] text -> [Place] in
-                guard let text,
-                      !text.isEmpty,
-                      let responseBodyDTO = self?.service.fetchPlaceList(with: text),
-                      let data = responseBodyDTO.data
-                else {
-                    return []
-                }
-                return data.places
+            .subscribe(with: self) { owner, text in
+                owner.fetchPlaceList(with: text)
             }
-            .bind(to: placeListRelay)
             .disposed(by: disposeBag)
         
         let placeList = placeListRelay
@@ -83,5 +75,24 @@ extension FindPlaceViewModel: ViewModelType {
         )
         
         return output
+    }
+}
+
+private extension FindPlaceViewModel {
+    func fetchPlaceList(with input: String) {
+        Task {
+            do {
+                guard let responseBody = try await self.service.fetchPlaceList(with: input),
+                      responseBody.success,
+                      let places = responseBody.data?.places
+                else {
+                    placeListRelay.accept([])
+                    return
+                }
+                placeListRelay.accept(places)
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
     }
 }

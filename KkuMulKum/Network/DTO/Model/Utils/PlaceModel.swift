@@ -10,6 +10,10 @@ import Foundation
 /// 네이버 지역 검색 API (Response)
 struct PlaceModel: ResponseModelType {
     let places: [Place]
+    
+    enum CodingKeys: String, CodingKey {
+        case places = "locations"
+    }
 }
 
 struct Place: Codable {
