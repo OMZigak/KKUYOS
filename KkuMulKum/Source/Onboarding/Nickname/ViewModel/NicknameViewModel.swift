@@ -31,10 +31,10 @@ class NicknameViewModel {
     
     private let disposeBag = DisposeBag()
     private let nicknameRegex = "^[가-힣a-zA-Z]{1,5}$"
-    private let provider: MoyaProvider<NicknameTargetType>
+    private let provider: MoyaProvider<AuthTargetType>
     private let authService: AuthServiceType
     
-    init(provider: MoyaProvider<NicknameTargetType> = MoyaProvider<NicknameTargetType>(),
+    init(provider: MoyaProvider<AuthTargetType> = MoyaProvider<AuthTargetType>(),
          authService: AuthServiceType = AuthService()) {
         self.provider = provider
         self.authService = authService

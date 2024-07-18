@@ -151,9 +151,6 @@
 		DDB0D7D32C469C77000CF782 /* PagePromiseSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB0D7D22C469C77000CF782 /* PagePromiseSegmentedControl.swift */; };
 		DDB0D7D52C46C496000CF782 /* PromiseInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB0D7D42C46C496000CF782 /* PromiseInfoService.swift */; };
 		DDB0D7D82C46C5FA000CF782 /* PromiseInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB0D7D72C46C5FA000CF782 /* PromiseInfoViewModel.swift */; };
-		DDE7D2C22C470A58005A921F /* LoginTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE7D2BF2C470A58005A921F /* LoginTargetType.swift */; };
-		DDE7D2C32C470A58005A921F /* ProfileTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE7D2C02C470A58005A921F /* ProfileTargetType.swift */; };
-		DDE7D2C42C470A58005A921F /* NicknameTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE7D2C12C470A58005A921F /* NicknameTargetType.swift */; };
 		DDE7D2C62C47D2BB005A921F /* MeetingTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE7D2C52C47D2BB005A921F /* MeetingTargetType.swift */; };
 		DDE7D2CA2C47EE81005A921F /* PromiseTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE7D2C92C47EE81005A921F /* PromiseTargetType.swift */; };
 		DDE7D2CC2C47F073005A921F /* PlaceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9E18992C3BCCBE00DB76B4 /* PlaceModel.swift */; };
@@ -343,9 +340,6 @@
 		DDB0D7D22C469C77000CF782 /* PagePromiseSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseSegmentedControl.swift; sourceTree = "<group>"; };
 		DDB0D7D42C46C496000CF782 /* PromiseInfoService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoService.swift; sourceTree = "<group>"; };
 		DDB0D7D72C46C5FA000CF782 /* PromiseInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoViewModel.swift; sourceTree = "<group>"; };
-		DDE7D2BF2C470A58005A921F /* LoginTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTargetType.swift; sourceTree = "<group>"; };
-		DDE7D2C02C470A58005A921F /* ProfileTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTargetType.swift; sourceTree = "<group>"; };
-		DDE7D2C12C470A58005A921F /* NicknameTargetType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NicknameTargetType.swift; sourceTree = "<group>"; };
 		DDE7D2C52C47D2BB005A921F /* MeetingTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingTargetType.swift; sourceTree = "<group>"; };
 		DDE7D2C92C47EE81005A921F /* PromiseTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseTargetType.swift; sourceTree = "<group>"; };
 		DDFA507A2C4693BD000A62E2 /* ProfileSetupViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewModel.swift; sourceTree = "<group>"; };
@@ -1136,9 +1130,6 @@
 			isa = PBXGroup;
 			children = (
 				789196392C49697F00FF8CDF /* Auth */,
-				DDE7D2BF2C470A58005A921F /* LoginTargetType.swift */,
-				DDE7D2C02C470A58005A921F /* ProfileTargetType.swift */,
-				DDE7D2C12C470A58005A921F /* NicknameTargetType.swift */,
 				DDE7D2C52C47D2BB005A921F /* MeetingTargetType.swift */,
 				DDE7D2C92C47EE81005A921F /* PromiseTargetType.swift */,
 				A39F2B1C2C47F3D0008DA5F5 /* HomeTargetType.swift */,
@@ -1750,7 +1741,6 @@
 				DE159D342C406E1600425101 /* MyPageEtcSettingView.swift in Sources */,
 				DE9E18842C3BA84500DB76B4 /* CustomTextField.swift in Sources */,
 				A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */,
-				DDE7D2C42C470A58005A921F /* NicknameTargetType.swift in Sources */,
 				DEF725DB2C3F3BBF008C87C7 /* Toast.swift in Sources */,
 				DD43937A2C412F4500EC1799 /* FinishCreateViewController.swift in Sources */,
 				DE254AAC2C31192400A4015E /* UILabel+.swift in Sources */,
@@ -1791,7 +1781,6 @@
 				DD86266B2C4606A300E4F980 /* ReadyStatusViewController.swift in Sources */,
 				782B407F2C3E44B7008B0CA7 /* WelcomeViewModel.swift in Sources */,
 				DD41BEFA2C41D4160095A068 /* TardyView.swift in Sources */,
-				DDE7D2C22C470A58005A921F /* LoginTargetType.swift in Sources */,
 				DD3072162C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift in Sources */,
 				A3FB18572C3BF704001483E5 /* MeetingListResponseModel.swift in Sources */,
 				DE254AB22C31197B00A4015E /* UIButton+.swift in Sources */,

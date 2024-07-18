@@ -16,9 +16,9 @@ enum AuthError: Error {
 
 class AuthInterceptor: RequestInterceptor {
     let authService: AuthServiceType
-    let provider: MoyaProvider<LoginTargetType>
+    let provider: MoyaProvider<AuthTargetType>
     
-    init(authService: AuthServiceType, provider: MoyaProvider<LoginTargetType>) {
+    init(authService: AuthServiceType, provider: MoyaProvider<AuthTargetType>) {
         self.authService = authService
         self.provider = provider
     }

@@ -23,13 +23,13 @@ class LoginViewModel: NSObject {
     var loginState: ObservablePattern<LoginState> = ObservablePattern(.notLogin)
     var error: ObservablePattern<String> = ObservablePattern("")
     
-    private let provider: MoyaProvider<LoginTargetType>
+    private let provider: MoyaProvider<AuthTargetType>
     private var authService: AuthServiceType
     private let authInterceptor: AuthInterceptor
     private let keychainAccessible: KeychainAccessible
     
     init(
-        provider: MoyaProvider<LoginTargetType> = MoyaProvider<LoginTargetType>(
+        provider: MoyaProvider<AuthTargetType> = MoyaProvider<AuthTargetType>(
             plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
         ),
         authService: AuthServiceType = AuthService(),
@@ -110,7 +110,7 @@ class LoginViewModel: NSObject {
         }
     }
     
-    private func loginToServer(with loginTarget: LoginTargetType) {
+    private func loginToServer(with loginTarget: AuthTargetType) {
         // FCM 토큰 출력
         switch loginTarget {
         case .appleLogin(_, let fcmToken), .kakaoLogin(_, let fcmToken):
