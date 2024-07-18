@@ -40,12 +40,6 @@ class FinishCreateViewController: BaseViewController {
         self.navigationItem.hidesBackButton = true
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        navigationController?.isNavigationBarHidden = true
-    }
-    
     // MARK: - Setup
 
     override func setupView() {
@@ -101,7 +95,6 @@ class FinishCreateViewController: BaseViewController {
 private extension FinishCreateViewController {
     @objc 
     func presentMeetingInfoViewControllerDidTapped() {
-        // TODO: 모임 상세 화면 띄우기
         // TODO: 서버 연결할 때 데이터 바인딩해서 화면 전환 시키기
         let meetingInfoViewController = MeetingInfoViewController(
             viewModel: MeetingInfoViewModel(
