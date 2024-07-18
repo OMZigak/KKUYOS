@@ -87,7 +87,7 @@ extension MeetingListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let viewController = MeetingInfoViewController(
             viewModel: MeetingInfoViewModel(
-                meetingID: 1,
+                meetingID: viewModel.meetingList.value?.data?.meetings[indexPath.item].meetingID ?? 0,
                 service: MockMeetingInfoService()
             )
         )
