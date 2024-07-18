@@ -141,7 +141,7 @@ class NicknameViewController: BaseViewController {
 extension NicknameViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        updateUIForNicknameState(viewModel.nicknameState.value ?? .empty)
+        updateUIForNicknameState(viewModel.nicknameState.value)
         return true
     }
 }
