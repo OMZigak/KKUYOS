@@ -19,6 +19,7 @@ class CreateMeetingViewModel {
     // MARK: Property
     
     let createMeetingService: CreateMeetingServiceType
+    var createMeetingResponse = ObservablePattern<MakeMeetingsResponseModel?>(nil)
 
     let meetingName = ObservablePattern<String>("")
     let inviteCodeState = ObservablePattern<MeetingNameState>(.empty)
@@ -51,6 +52,24 @@ extension CreateMeetingViewModel {
         } else {
             inviteCodeState.value = .valid
             isNextButtonEnabled.value = true
+        }
+    }
+    
+    /// 모임 생성 네트워크 통신
+    func createMeeting(name: String) {
+        Task {
+            do {
+                let request = MakeMeetingsRequestModel(name: name)
+                
+                createMeetingResponse.value = try await createMeetingService.createMeeting(request: request)?.data
+                
+                guard let code = createMeetingResponse.value?.invitationCode else { return }
+                
+                inviteCode.value = code
+            }
+            catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
         }
     }
 }

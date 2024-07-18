@@ -37,7 +37,7 @@ final class InvitationCodePopUpView: BaseView {
         $0.setText("초대코드", style: .body06, color: .gray8)
     }
     
-    private let invitationCodeLabel = UILabel()
+    let invitationCodeLabel = UILabel()
     
     let inviteLaterButton = UIButton(backgroundColor: .gray3).then {
         $0.setTitle("나중에 초대하기", style: .body05, color: .white)

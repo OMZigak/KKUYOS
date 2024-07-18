@@ -38,17 +38,4 @@ class EnterReadyInfoButtonView: BaseView {
             $0.bottom.equalToSuperview().inset(21)
         }
     }
-    
-    
-    // TODO: 빼야됨
-    
-    private func setupAction() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(didTapped))
-        
-        self.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc private func didTapped() {
-        
-    }
 }
