@@ -187,6 +187,7 @@ final class HomeViewModel {
         Task  {
             do {
                 nearestPromise.value = try await service.fetchNearestPromise()
+                requestMyReadyStatus()
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }

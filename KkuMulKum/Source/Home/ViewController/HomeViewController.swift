@@ -67,7 +67,7 @@ class HomeViewController: BaseViewController {
         viewModel.requestLoginUser()
         viewModel.requestNearestPromise()
         viewModel.requestUpcomingPromise()
-        viewModel.requestMyReadyStatus()
+//        viewModel.requestMyReadyStatus()
         
 //        bindViewModel()
     }
