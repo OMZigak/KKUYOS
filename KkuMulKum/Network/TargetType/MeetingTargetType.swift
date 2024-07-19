@@ -60,10 +60,16 @@ extension MeetingTargetType: TargetType {
             return .requestJSONEncodable(request)
         case .joinMeeting(let request):
             return .requestJSONEncodable(request)
-        case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember, .fetchMeetingPromiseList:
+        case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember:
             return .requestPlain
+        case .fetchMeetingPromiseList:
+            return .requestParameters(
+                parameters: ["done": "false"],
+                encoding: URLEncoding.queryString
+            )
         }
     }
+    
     
     var headers: [String : String]? {
         guard let token = DefaultKeychainService.shared.accessToken else {
