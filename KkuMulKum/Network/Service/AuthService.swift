@@ -4,9 +4,7 @@
 //
 //  Created by 이지훈 on 7/14/24.
 //
-
 import Foundation
-
 import Moya
 
 protocol AuthServiceType {

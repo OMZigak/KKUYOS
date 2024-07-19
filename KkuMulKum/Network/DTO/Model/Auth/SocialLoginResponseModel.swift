@@ -27,3 +27,13 @@ struct RefreshTokenResponseModel: ResponseModelType {
     let accessToken: String
     let refreshToken: String
 }
+
+struct UserInfoModel: ResponseModelType {
+    let userId: Int
+    let name: String
+    let level: Int
+    let promiseCount: Int
+    let tardyCount: Int
+    let tardySum: Int
+    let profileImg: String?
+}
