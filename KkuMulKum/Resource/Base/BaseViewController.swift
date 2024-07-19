@@ -19,6 +19,12 @@ class BaseViewController: UIViewController {
         setupDelegate()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+    
     /// 네비게이션 바 등 추가적으로 UI와 관련한 작업
     func setupView() {}
     
@@ -63,8 +69,13 @@ extension BaseViewController {
         ).then {
             $0.tintColor = .black
         }
-        
         navigationItem.leftBarButtonItem = backButton
+    }
+}
+
+extension BaseViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        return navigationController?.viewControllers.count ?? 0 > 1
     }
 }
 
