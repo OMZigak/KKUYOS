@@ -27,7 +27,6 @@ extension PromiseInfoViewModel {
     func fetchPromiseParticipantList() {
         Task {
             do {
-                
                 let responseBody = try await promiseInfoService.fetchPromiseParticipantList(with: promiseID)
                 
                 guard let success = responseBody?.success, success == true else {
