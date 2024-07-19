@@ -149,6 +149,8 @@ private extension CreateMeetingViewController {
     
     @objc
     private func copyButtonDidTapped() {
+        UIPasteboard.general.string = createMeetingViewModel.inviteCode.value
+        
         let finishCreateViewController = FinishCreateViewController(meetingID: createMeetingViewModel.meetingID)
         
         navigationController?.pushViewController(finishCreateViewController, animated: true)

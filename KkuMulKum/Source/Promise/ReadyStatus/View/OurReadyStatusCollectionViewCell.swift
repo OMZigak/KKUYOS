@@ -10,6 +10,8 @@ import UIKit
 class OurReadyStatusCollectionViewCell: BaseCollectionViewCell {
     var profileImageView: UIImageView = UIImageView(image: .imgProfile).then {
         $0.contentMode = .scaleAspectFill
+        $0.layer.cornerRadius = Screen.height(44) / 2
+        $0.clipsToBounds = true
     }
     
     let nameLabel: UILabel = UILabel().then {

@@ -65,6 +65,12 @@ class ReadyStatusViewModel {
     
     // 준비 현황 버튼 클릭했을 때
     func updateReadyStatusTime() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "a h:mm"
+        dateFormatter.amSymbol = "AM"
+        dateFormatter.pmSymbol = "PM"
+        
         let currentTimeString = dateFormatter.string(from: Date())
         
         return currentTimeString
@@ -111,8 +117,8 @@ extension ReadyStatusViewModel {
         print("이동 시간: \(moveTime) 분")
         print("총 준비 시간: \(totalPrepTime / 60) 분")
         
-        let readyStartTime = promiseDate.addingTimeInterval(-TimeInterval(readyTime + moveTime) * 60)
-        let moveStartTime = promiseDate.addingTimeInterval(-TimeInterval(moveTime) * 60)
+        let readyStartTime = promiseDate.addingTimeInterval(-TimeInterval(readyTime + moveTime + 10) * 60)
+        let moveStartTime = promiseDate.addingTimeInterval(-TimeInterval(moveTime + 10) * 60)
         
         self.readyStartTime.value = timeFormatter.string(from: readyStartTime)
         print("준비 시작 시간: \(self.readyStartTime.value)")
@@ -153,6 +159,54 @@ extension ReadyStatusViewModel {
                     return
                 }
                 participantInfos.value = participants
+            }
+        }
+    }
+    
+    func updatePreparationStatus() {
+        Task {
+            do {
+                let responseBody = try await readyStatusService.updatePreparationStatus(
+                    with: promiseID
+                )
+                
+                guard let success = responseBody?.success,
+                      success == true
+                else {
+                    return
+                }
+            }
+        }
+    }
+    
+    func updateDepartureStatus() {
+        Task {
+            do {
+                let responseBody = try await readyStatusService.updateDepartureStatus(
+                    with: promiseID
+                )
+                
+                guard let success = responseBody?.success,
+                      success == true
+                else {
+                    return
+                }
+            }
+        }
+    }
+    
+    func updateArrivalStatus() {
+        Task {
+            do {
+                let responseBody = try await readyStatusService.updateArrivalStatus(
+                    with: promiseID
+                )
+                
+                guard let success = responseBody?.success,
+                      success == true
+                else {
+                    return
+                }
             }
         }
     }
