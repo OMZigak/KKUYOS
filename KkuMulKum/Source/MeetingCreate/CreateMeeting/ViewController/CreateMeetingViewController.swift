@@ -149,7 +149,7 @@ private extension CreateMeetingViewController {
     
     @objc
     private func copyButtonDidTapped() {
-        let finishCreateViewController = FinishCreateViewController()
+        let finishCreateViewController = FinishCreateViewController(meetingID: createMeetingViewModel.meetingID)
         
         navigationController?.pushViewController(finishCreateViewController, animated: true)
     }
@@ -157,7 +157,7 @@ private extension CreateMeetingViewController {
     @objc
     private func inviteLaterButtonDidTapped() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-            let finishCreateViewController = FinishCreateViewController()
+            let finishCreateViewController = FinishCreateViewController(meetingID: self.createMeetingViewModel.meetingID)
             
             self.navigationController?.pushViewController(finishCreateViewController, animated: true)
         }
