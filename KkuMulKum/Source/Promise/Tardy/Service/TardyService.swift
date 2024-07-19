@@ -39,7 +39,27 @@ final class MockTardyService: TardyServiceType {
                 participantId: 1,
                 name: "유짐이",
                 profileImageURL: ""
-            )]
+            ),
+                         Comer(
+                            participantId: 1,
+                            name: "유짐이",
+                            profileImageURL: ""
+                         ),
+                         Comer(
+                            participantId: 1,
+                            name: "유짐이",
+                            profileImageURL: ""
+                         ),
+                         Comer(
+                            participantId: 1,
+                            name: "유짐이",
+                            profileImageURL: ""
+                         ),
+                         Comer(
+                            participantId: 1,
+                            name: "유짐이",
+                            profileImageURL: ""
+                         )]
         )
         
         return ResponseBodyDTO<TardyInfoModel>.init(

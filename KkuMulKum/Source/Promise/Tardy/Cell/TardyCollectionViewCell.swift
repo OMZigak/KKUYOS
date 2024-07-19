@@ -38,14 +38,13 @@ class TardyCollectionViewCell: BaseCollectionViewCell {
         profileImageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(13.5)
             $0.leading.trailing.equalToSuperview().inset(18.5)
-            $0.height.equalTo(Screen.height(67))
-            $0.width.equalTo(profileImageView.snp.height)
+            $0.height.equalTo(profileImageView.snp.width)
         }
         
         nameLabel.snp.makeConstraints {
-            $0.top.equalTo(profileImageView.snp.bottom).offset(16.5)
+            $0.top.equalTo(profileImageView.snp.bottom).offset(12)
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().inset(19)
+            $0.bottom.equalToSuperview().inset(13.5)
         }
     }
 }
