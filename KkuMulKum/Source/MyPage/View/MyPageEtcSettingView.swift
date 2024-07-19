@@ -23,7 +23,7 @@ class MyPageEtcSettingView: BaseView {
         layer.cornerRadius = 8
         
         stackView.addArrangedSubviews(
-            createRow(title: "버전정보", subtitle: "0.1.0"),
+            createRow(title: "버전정보", subtitle: "1.0.0"),
             createRow(title: "이용약관"),
             createRow(title: "로그아웃"),
             createRow(title: "탈퇴하기")
