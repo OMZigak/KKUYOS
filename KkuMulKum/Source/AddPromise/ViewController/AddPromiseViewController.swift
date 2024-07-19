@@ -170,6 +170,12 @@ private extension AddPromiseViewController {
                 owner.rootView.confirmButton.isEnabled = flag
             }
             .disposed(by: disposeBag)
+        
+        output.adjustedDate
+            .subscribe(with: self) { owner, date in
+                owner.rootView.datePicker.date = date
+            }
+            .disposed(by: disposeBag)
     }
     
     func configurePromiseName(result: TextFieldVailidationResult) {

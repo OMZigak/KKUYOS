@@ -45,7 +45,6 @@ private extension SelectCapsuleButton {
         let titleColor: UIColor = isSelected ? .green3 : .gray5
         let borderColor: UIColor = isSelected ? .green3 : .gray2
         
-        
         self.backgroundColor = backgroundColor
         setTitleColor(titleColor, for: .normal)
         layer.borderColor = borderColor.cgColor

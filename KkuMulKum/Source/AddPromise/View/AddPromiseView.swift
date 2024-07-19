@@ -86,9 +86,7 @@ final class AddPromiseView: BaseView {
         $0.datePickerMode = .time
         $0.preferredDatePickerStyle = .compact
         $0.locale = Locale(identifier: "ko_KR")
-        let date = Date()
-        $0.minimumDate = date
-        $0.date = date
+        $0.date = Date()
     }
     
     let confirmButton = CustomButton(title: "다음")
