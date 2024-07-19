@@ -62,7 +62,12 @@ class HomeViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-
+        
+        updateUI()
+        
+        updateUserInfo()
+        updateNearestPromise()
+        updateUpcomingPromise()
         viewModel.requestLoginUser()
         viewModel.requestNearestPromise()
         viewModel.requestUpcomingPromise()
