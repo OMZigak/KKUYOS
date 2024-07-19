@@ -6,18 +6,13 @@
 //
 
 import UIKit
-
 import KakaoSDKAuth
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     let loginViewModel = LoginViewModel()
     
-    func scene(
-        _ scene: UIScene,
-        willConnectTo session: UISceneSession,
-        options connectionOptions: UIScene.ConnectionOptions
-    ) {
+    func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         self.window = UIWindow(windowScene: windowScene)
         
@@ -31,19 +26,19 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
      
     private func performAutoLogin() {
-            print("Performing auto login")
-            loginViewModel.autoLogin { [weak self] success in
-                DispatchQueue.main.async {
-                    if success {
-                        print("Auto login successful, showing main screen")
-                        self?.showMainScreen()
-                    } else {
-                        print("Auto login failed, showing login screen")
-                        self?.showLoginScreen()
-                    }
+        print("Performing auto login")
+        loginViewModel.autoLogin { [weak self] success in
+            DispatchQueue.main.async {
+                if success {
+                    print("Auto login successful, showing main screen")
+                    self?.showMainScreen()
+                } else {
+                    print("Auto login failed, showing login screen")
+                    self?.showLoginScreen()
                 }
             }
         }
+    }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         if let url = URLContexts.first?.url {
@@ -73,7 +68,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     private func showLoginScreen() {
-        let loginViewController = LoginViewController()
+        let loginViewController = LoginViewController(viewModel: loginViewModel)
         animateRootViewControllerChange(to: loginViewController)
     }
     
