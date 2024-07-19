@@ -42,6 +42,7 @@ extension AddPromiseViewModel: ViewModelType {
     struct Output {
         let validationPromiseNameResult: Observable<TextFieldVailidationResult>
         let isEnabledConfirmButton: Observable<Bool>
+        let adjustedDate: Observable<Date>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -99,9 +100,19 @@ extension AddPromiseViewModel: ViewModelType {
                 return flag && place != nil
             }
         
+        let adjustedDate = Observable.combineLatest(input.date, input.time)
+            .map { date, time -> Date in
+                let currentDate = Date()
+                if date < currentDate, time < currentDate {
+                    return Calendar.current.date(byAdding: .day, value: 1, to: date) ?? date
+                }
+                return date
+            }
+        
         return Output(
             validationPromiseNameResult: validationPromiseNameResult,
-            isEnabledConfirmButton: isEnabledConfirmButton
+            isEnabledConfirmButton: isEnabledConfirmButton, 
+            adjustedDate: adjustedDate
         )
     }
 }
@@ -127,6 +138,8 @@ private extension AddPromiseViewModel {
         guard let combinedDate = calendar.date(from: combinedComponents) else { return "" }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         return dateFormatter.string(from: combinedDate)
     }
 }
