@@ -27,40 +27,11 @@ final class HomeViewModel {
     var levelName = ObservablePattern<String>("")
     var levelCaption = ObservablePattern<String>("")
     
-    var isPreapreSucceedToSave = ObservablePattern<Bool>(false)
-    var isMoveSucceedToSave = ObservablePattern<Bool>(false)
-    var isArriveSucceedToSave = ObservablePattern<Bool>(false)
-    
     private let service: HomeServiceType
     
     init(service: HomeServiceType) {
         self.service = service
     }
-    
-//    var homePrepareTime: String = ""
-//    var homeMoveTime: String = ""
-//    var homeArriveTime: String = ""
-    
-//    private let dateFormatter = DateFormatter().then {
-//        $0.dateFormat = "a hh:mm"
-//        $0.amSymbol = "AM"
-//        $0.pmSymbol = "PM"
-//    }
-    
-//    private func updateState(newState: ReadyState) {
-//        currentState.value = newState
-//        let currentTimeString = dateFormatter.string(from: Date())
-//        switch newState {
-//        case .prepare:
-//            homePrepareTime = currentTimeString
-//        case .move:
-//            homeMoveTime = currentTimeString
-//        case .arrive:
-//            homeArriveTime = currentTimeString
-//        case .none:
-//            break
-//        }
-//    }
     
     ///서버에서 보내주는 level Int 값에 따른 levelName
     private func getLevelName(level: Int) -> String {
@@ -124,10 +95,8 @@ final class HomeViewModel {
                     with: nearestPromise.value?.data?.promiseID ?? 1
                 ) 
                 else {
-                    isPreapreSucceedToSave.value = false
                     return
                 }
-                isPreapreSucceedToSave.value = responseBody.success
                 currentState.value = .prepare
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
@@ -142,10 +111,8 @@ final class HomeViewModel {
                     with: nearestPromise.value?.data?.promiseID ?? 1
                 ) 
                 else {
-                    isMoveSucceedToSave.value = false
                     return
                 }
-                isMoveSucceedToSave.value = responseBody.success
                 currentState.value = .move
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
@@ -160,10 +127,8 @@ final class HomeViewModel {
                     with: nearestPromise.value?.data?.promiseID ?? 1
                 )
                 else {
-                    isArriveSucceedToSave.value = false
                     return
                 }
-                isArriveSucceedToSave.value = responseBody.success
                 currentState.value = .arrive
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
