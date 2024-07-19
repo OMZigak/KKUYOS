@@ -268,7 +268,7 @@ private extension ReadyStatusViewController {
                 
                 owner.rootView.ourReadyStatusCollectionView.snp.updateConstraints {
                     $0.height.equalTo(
-                        CGFloat(participants.count) * Screen.height(72)
+                        CGFloat(participants.count) * Screen.height(80)
                     )
                 }
             }

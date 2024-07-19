@@ -91,12 +91,10 @@ class PagePromiseViewController: BaseViewController {
         setupBindings()
     }
     
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         navigationController?.isNavigationBarHidden = false
-        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -115,6 +113,7 @@ class PagePromiseViewController: BaseViewController {
         setupNavigationBarTitle(with: promiseViewModel.promiseName)
         
         addChild(promisePageViewController)
+        
         
         view.addSubviews(
             promiseSegmentedControl,
@@ -192,6 +191,8 @@ extension PagePromiseViewController {
     
     @objc
     func finishMeetingButtonDidTapped() {
+        tardyViewController.tardyViewModel.updatePromiseCompletion()
+        
         navigationController?.popViewController(animated: true)
     }
 }

@@ -12,7 +12,7 @@ class TardyViewController: BaseViewController {
     
     // MARK: Property
     
-    private let tardyViewModel: TardyViewModel
+    let tardyViewModel: TardyViewModel
     let tardyView: TardyView = TardyView()
     let arriveView: ArriveView = ArriveView()
     
@@ -40,7 +40,6 @@ class TardyViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         tardyViewModel.fetchTardyInfo()
-        tardyViewModel.updatePromiseCompletion()
     }
     
     override func viewDidLoad() {
