@@ -29,7 +29,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         performAutoLogin()
     }
-    
+     
     private func performAutoLogin() {
             print("Performing auto login")
             loginViewModel.autoLogin { [weak self] success in

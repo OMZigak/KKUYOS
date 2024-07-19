@@ -86,26 +86,16 @@ class ProfileSetupViewModel {
         
         var compression: CGFloat = 1.0
         var imageData = originalImageData
-        var bestImageData = originalImageData
-        var iterationCount = 0
         
-        while compression > 0.01 {
+        while imageData.count > maxSizeInBytes && compression > 0.0 {
+            compression -= 0.1
             if let compressedData = image.jpegData(compressionQuality: compression) {
                 imageData = compressedData
-                iterationCount += 1
-                print("압축 시도 #\(iterationCount): 크기 \(imageData.count) bytes (압축률: \(compression))")
-                
-                if imageData.count <= maxSizeInBytes {
-                    bestImageData = imageData
-                    break
-                } else if imageData.count < bestImageData.count {
-                    bestImageData = imageData
-                }
+                print("압축 시도: 크기 \(imageData.count) bytes (압축률: \(compression))")
             }
-            compression -= 0.1
         }
         
-        compressedImageData = bestImageData
-        print("최종 압축 결과: \(bestImageData.count) bytes (원본 대비 \(Int((Double(bestImageData.count) / Double(originalImageData.count)) * 100))% 크기)")
+        compressedImageData = imageData
+        print("최종 압축 결과: \(imageData.count) bytes (원본 대비 \(Int((Double(imageData.count) / Double(originalImageData.count)) * 100))% 크기)")
     }
 }

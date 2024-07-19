@@ -43,6 +43,11 @@ class ReadyStatusViewController: BaseViewController {
         readyStatusViewModel.fetchPromiseParticipantList()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        rootView.updateCollectionViewHeight()
+    }
+    
     override func setupDelegate() {
         rootView.ourReadyStatusCollectionView.dataSource = self
     }
