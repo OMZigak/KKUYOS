@@ -111,8 +111,8 @@ extension ReadyStatusViewModel {
         print("이동 시간: \(moveTime) 분")
         print("총 준비 시간: \(totalPrepTime / 60) 분")
         
-        let readyStartTime = promiseDate.addingTimeInterval(-TimeInterval(readyTime + moveTime) * 60)
-        let moveStartTime = promiseDate.addingTimeInterval(-TimeInterval(moveTime) * 60)
+        let readyStartTime = promiseDate.addingTimeInterval(-TimeInterval(readyTime + moveTime + 10) * 60)
+        let moveStartTime = promiseDate.addingTimeInterval(-TimeInterval(moveTime + 10) * 60)
         
         self.readyStartTime.value = timeFormatter.string(from: readyStartTime)
         print("준비 시작 시간: \(self.readyStartTime.value)")
@@ -169,6 +169,8 @@ extension ReadyStatusViewModel {
                 else {
                     return
                 }
+                
+                //myReadyStatus.value?.preparationStartAt = 
             }
         }
     }
