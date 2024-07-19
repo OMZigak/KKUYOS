@@ -262,7 +262,9 @@ private extension HomeViewController {
                 if data?.data == nil {
                     self.rootView.todayPromiseView.isHidden = true
                     self.rootView.todayEmptyView.isHidden = false
+                    self.rootView.todayButton.isHidden = true
                 } else {
+                    self.rootView.todayButton.isHidden = false
                     self.rootView.todayPromiseView.meetingNameLabel.setText(
                         data?.data?.meetingName ?? "",
                         style: .caption02,
