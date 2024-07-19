@@ -56,7 +56,7 @@ final class SelectMemberViewController: BaseViewController {
                         name: owner.viewModel.name,
                         place: owner.viewModel.place,
                         dateString: owner.viewModel.promiseDateString,
-                        members: owner.viewModel.members,
+                        members: owner.viewModel.selectedMembers,
                         service: PromiseService()
                     )
                 )
