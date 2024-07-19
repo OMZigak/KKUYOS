@@ -11,27 +11,27 @@ class TardyViewController: BaseViewController {
     
     
     // MARK: Property
-
+    
     private let tardyViewModel: TardyViewModel
     let tardyView: TardyView = TardyView()
     let arriveView: ArriveView = ArriveView()
     
     
     // MARK: Initialize
-
+    
     init(tardyViewModel: TardyViewModel) {
         self.tardyViewModel = tardyViewModel
         
         super.init(nibName: nil, bundle: nil)
     }
-       
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     
     // MARK: - Setup
-
+    
     override func loadView() {
         view = tardyViewModel.isPastDue.value ? arriveView : tardyView
     }
@@ -117,13 +117,11 @@ extension TardyViewController: UICollectionViewDataSource {
         
         cell.nameLabel.setText(data.name ?? " " , style: .body06, color: .gray6)
         
-        guard let image = URL(string: data.profileImageURL ?? " ") else {
+        guard let imageURL = URL(string: data.profileImageURL ?? "") else {
             cell.profileImageView.image = .imgProfile
-            
             return cell
         }
-        
-        cell.profileImageView.kf.setImage(with: image)
+        cell.profileImageView.kf.setImage(with: imageURL)
         
         return cell
     }
