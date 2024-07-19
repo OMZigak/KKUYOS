@@ -129,6 +129,7 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
         placeNameLabel.snp.makeConstraints {
             $0.centerY.equalTo(placeIcon.snp.centerY)
             $0.leading.equalToSuperview().offset(48)
+            $0.trailing.equalToSuperview().offset(-8)
         }
     }
 }
@@ -148,6 +149,11 @@ extension UpcomingPromiseCollectionViewCell {
         nameLabel.setText(contentData.name, style: .body03, color: .gray8)
         dateLabel.setText(contentData.date, style: .body06, color: .gray7)
         timeLabel.setText(contentData.time, style: .body06, color: .gray7)
-        placeNameLabel.setText(contentData.placeName, style: .body06, color: .gray7)
+        placeNameLabel.setText(
+            contentData.placeName,
+            style: .body06,
+            color: .gray7,
+            isSingleLine: true
+        )
     }
 }

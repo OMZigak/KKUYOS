@@ -8,10 +8,23 @@
 import UIKit
 
 extension UILabel {
-    func setText(_ text: String, style: UIFont.Pretendard, color: UIColor = .black) {
-        attributedText = .pretendardString(text, style: style)
+    func setText(
+        _ text: String,
+        style: UIFont.Pretendard,
+        color: UIColor = .black,
+        isSingleLine: Bool = false
+    ) {
+        attributedText = .pretendardString(
+            text,
+            style: style
+        )
         textColor = color
-        numberOfLines = 0
+        if isSingleLine {
+            numberOfLines = 1
+            lineBreakMode = .byTruncatingTail
+        } else {
+            numberOfLines = 0
+        }
     }
     
     func setHighlightText(_ words: String..., style: UIFont.Pretendard, color: UIColor? = nil) {

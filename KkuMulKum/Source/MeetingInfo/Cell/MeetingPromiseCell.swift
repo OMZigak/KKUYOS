@@ -84,6 +84,21 @@ final class MeetingPromiseCell: BaseCollectionViewCell {
     }
     
     override func setupAutoLayout() {
+        dateIconView.snp.makeConstraints {
+            $0.height.equalTo(Screen.height(24))
+            $0.width.equalTo(dateIconView.snp.height)
+        }
+        
+        timeIconView.snp.makeConstraints {
+            $0.height.equalTo(Screen.height(24))
+            $0.width.equalTo(timeIconView.snp.height)
+        }
+        
+        placeIconView.snp.makeConstraints {
+            $0.height.equalTo(Screen.height(24))
+            $0.width.equalTo(placeIconView.snp.height)
+        }
+        
         contentStackView.snp.makeConstraints {
             $0.verticalEdges.equalToSuperview().inset(18)
             $0.horizontalEdges.equalToSuperview().inset(16)
@@ -93,11 +108,11 @@ final class MeetingPromiseCell: BaseCollectionViewCell {
 
 extension MeetingPromiseCell {
     func configure(dDay: Int, name: String, date: String, time: String, place: String) {
-        let dDayText = dDay == 0 ? "Day" : "\(dDay)"
+        let dDayText = dDay == 0 ? "DAY" : "\(dDay)"
         dDayLabel.setText("D-\(dDayText)", style: .body05, color: dDay == 0 ? .mainorange : .gray5)
         nameLabel.setText(name, style: .body03, color: .gray8)
         dateLabel.setText(date, style: .body06, color: .gray7)
         timeLabel.setText(time, style: .body06, color: .gray7)
-        placeLabel.setText(place, style: .body06, color: .gray7)
+        placeLabel.setText(place, style: .body06, color: .gray7, isSingleLine: true)
     }
 }

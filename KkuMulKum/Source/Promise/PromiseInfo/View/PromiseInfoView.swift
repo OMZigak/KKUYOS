@@ -168,6 +168,7 @@ class PromiseInfoView: BaseView {
         locationContentLabel.snp.makeConstraints {
             $0.top.equalTo(locationInfoLabel.snp.bottom).offset(8)
             $0.leading.equalTo(locationInfoLabel)
+            $0.trailing.equalToSuperview().offset(-8)
         }
         
         locationDivideView.snp.makeConstraints {

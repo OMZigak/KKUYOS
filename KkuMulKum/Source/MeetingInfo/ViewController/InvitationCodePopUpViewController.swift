@@ -84,9 +84,3 @@ final class InvitationCodePopUpViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
 }
-
-private extension InvitationCodePopUpViewController {
-    func copyInvitationCode() {
-        UIPasteboard.general.string = invitationCode
-    }
-}

@@ -87,6 +87,7 @@ final class PlaceListCell: BaseCollectionViewCell {
         
         roadAddressNameLabel.snp.makeConstraints {
             $0.leading.equalTo(roadAddressTitleLabel.snp.trailing).offset(8)
+            $0.trailing.equalToSuperview().inset(8)
             $0.centerY.equalTo(roadAddressTitleLabel)
         }
         
@@ -99,6 +100,7 @@ final class PlaceListCell: BaseCollectionViewCell {
         
         addressNameLabel.snp.makeConstraints {
             $0.leading.equalTo(addressTitleLabel.snp.trailing).offset(8)
+            $0.trailing.equalToSuperview().inset(8)
             $0.centerY.equalTo(addressTitleLabel)
         }
     }
@@ -115,7 +117,17 @@ extension PlaceListCell {
 private extension PlaceListCell {
     func configureCell(title: String, roadAddress: String?, address: String?) {
         titleLabel.setText(title, style: .body05, color: .gray8)
-        roadAddressNameLabel.setText(roadAddress ?? " ", style: .caption02, color: .gray6)
-        addressNameLabel.setText(address ?? " ", style: .caption02, color: .gray6)
+        roadAddressNameLabel.setText(
+            roadAddress ?? " ",
+            style: .caption02,
+            color: .gray6,
+            isSingleLine: true
+        )
+        addressNameLabel.setText(
+            address ?? " ",
+            style: .caption02,
+            color: .gray6,
+            isSingleLine: true
+        )
     }
 }

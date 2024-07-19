@@ -65,7 +65,8 @@ extension PromiseInfoViewController {
             owner.promiseInfoView.locationContentLabel.setText(
                 info?.address ?? "설정되지 않음",
                 style: .body04,
-                color: .gray7
+                color: .gray7,
+                isSingleLine: true
             )
             
             owner.promiseInfoView.penaltyLevelContentLabel.setText(

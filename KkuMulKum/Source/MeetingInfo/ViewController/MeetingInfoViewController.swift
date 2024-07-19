@@ -71,6 +71,9 @@ final class MeetingInfoViewController: BaseViewController {
     }
 }
 
+
+// MARK: - UICollectionViewDelegate
+
 extension MeetingInfoViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let pagePromiseViewController = PagePromiseViewController(
