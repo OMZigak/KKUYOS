@@ -19,6 +19,7 @@ class TardyViewModel {
     var isPastDue: ObservablePattern<Bool> = ObservablePattern<Bool>(false)
     var penalty: ObservablePattern<String> = ObservablePattern<String>("")
     var comers: ObservablePattern<[Comer]?> = ObservablePattern<[Comer]?>(nil)
+    var errorMessage: ObservablePattern<String> = ObservablePattern<String>("")
     
     
     // MARK: Initialize
@@ -62,16 +63,35 @@ extension TardyViewModel {
     func updatePromiseCompletion() {
         Task {
             do {
-                let responseBody = try await
-                tardyService.updatePromiseCompletion(with: promiseID)
+                let responseBody = try await tardyService.updatePromiseCompletion(with: promiseID)
                 
-                guard let success = responseBody?.success, success == true
+                guard let success = responseBody?.success,
+                      success == true
                 else {
+                    handleError(errorResponse: responseBody?.error)
+                    
                     return
                 }
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
+        }
+    }
+}
+
+private extension TardyViewModel {
+    func handleError(errorResponse: ErrorResponse?) {
+        guard let error = errorResponse else {
+            errorMessage.value = "알 수 없는 에러"
+            return
+        }
+        
+        switch error.code {
+        case 40051:
+            errorMessage.value = "도착하지 않은 참여자가 있습니다."
+            
+        default:
+            errorMessage.value = "알 수 없는 에러"
         }
     }
 }
