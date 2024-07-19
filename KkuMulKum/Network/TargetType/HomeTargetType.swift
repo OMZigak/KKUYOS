@@ -16,6 +16,7 @@ enum HomeTargetType {
     case updatePreparationStatus(promiseID: Int)
     case updateDepartureStatus(promiseID: Int)
     case updateArrivalStatus(promiseID: Int)
+    case fetchMyReadyStatus(promiseID: Int)
 }
 
 extension HomeTargetType: TargetType {
@@ -42,12 +43,14 @@ extension HomeTargetType: TargetType {
             return "/api/v1/promises/\(promiseID)/departure"
         case .updateArrivalStatus(let promiseID):
             return "/api/v1/promises/\(promiseID)/arrival"
+        case .fetchMyReadyStatus(let promiseID):
+            return "/api/v1/promises/\(promiseID)/status"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .fetchLoginUser, .fetchNearestPromise, .fetchUpcomingPromise:
+        case .fetchLoginUser, .fetchNearestPromise, .fetchUpcomingPromise, .fetchMyReadyStatus:
             return .get
         case .updatePreparationStatus, .updateDepartureStatus, .updateArrivalStatus:
             return .patch

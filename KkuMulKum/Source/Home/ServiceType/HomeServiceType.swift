@@ -13,6 +13,7 @@ protocol HomeServiceType {
     func fetchLoginUser() async throws -> ResponseBodyDTO<LoginUserModel>?
     func fetchNearestPromise() async throws -> ResponseBodyDTO<NearestPromiseModel>?
     func fetchUpcomingPromise() async throws -> ResponseBodyDTO<UpcomingPromiseListModel>?
+    func fetchMyReadyStatus(with promiseID: Int) async throws -> ResponseBodyDTO<MyReadyStatusModel>?
     
     func updatePreparationStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
     func updateDepartureStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
@@ -20,6 +21,10 @@ protocol HomeServiceType {
 }
 
 extension HomeService: HomeServiceType {
+    func fetchMyReadyStatus(with promiseID: Int) async throws -> ResponseBodyDTO<MyReadyStatusModel>? {
+        return try await request(with: .fetchMyReadyStatus(promiseID: promiseID))
+    }
+    
     func updatePreparationStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
         return try await request(
             with: .updatePreparationStatus(promiseID: promiseID)
@@ -52,6 +57,10 @@ extension HomeService: HomeServiceType {
 }
 
 final class MockHomeService: HomeServiceType {
+    func fetchMyReadyStatus(with promiseID: Int) async throws -> ResponseBodyDTO<MyReadyStatusModel>? {
+        return nil
+    }
+    
     func updatePreparationStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
         return nil
     }

@@ -12,9 +12,9 @@ import Foundation
 
 struct MyReadyStatusModel: ResponseModelType {
     let promiseTime: String
-    let preparationTime: Int
-    let travelTime: Int
-    let preparationStartAt: String
-    let departureAt: String
-    let arrivalAt: String
+    let preparationTime: Int?
+    let travelTime: Int?
+    let preparationStartAt: String?
+    let departureAt: String?
+    let arrivalAt: String?
 }
