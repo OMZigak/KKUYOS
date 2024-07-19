@@ -13,9 +13,36 @@ protocol HomeServiceType {
     func fetchLoginUser() async throws -> ResponseBodyDTO<LoginUserModel>?
     func fetchNearestPromise() async throws -> ResponseBodyDTO<NearestPromiseModel>?
     func fetchUpcomingPromise() async throws -> ResponseBodyDTO<UpcomingPromiseListModel>?
+    func fetchMyReadyStatus(with promiseID: Int) async throws -> ResponseBodyDTO<MyReadyStatusModel>?
+    
+    func updatePreparationStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
+    func updateDepartureStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
+    func updateArrivalStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
 }
 
 extension HomeService: HomeServiceType {
+    func fetchMyReadyStatus(with promiseID: Int) async throws -> ResponseBodyDTO<MyReadyStatusModel>? {
+        return try await request(with: .fetchMyReadyStatus(promiseID: promiseID))
+    }
+    
+    func updatePreparationStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return try await request(
+            with: .updatePreparationStatus(promiseID: promiseID)
+        )
+    }
+    
+    func updateDepartureStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return try await request(
+            with: .updateDepartureStatus(promiseID: promiseID)
+        )
+    }
+    
+    func updateArrivalStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return try await request(
+            with: .updateArrivalStatus(promiseID: promiseID)
+        )
+    }
+    
     func fetchLoginUser() async throws -> ResponseBodyDTO<LoginUserModel>? {
         return try await request(with: .fetchLoginUser)
     }
@@ -30,6 +57,22 @@ extension HomeService: HomeServiceType {
 }
 
 final class MockHomeService: HomeServiceType {
+    func fetchMyReadyStatus(with promiseID: Int) async throws -> ResponseBodyDTO<MyReadyStatusModel>? {
+        return nil
+    }
+    
+    func updatePreparationStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return nil
+    }
+    
+    func updateDepartureStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return nil
+    }
+    
+    func updateArrivalStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return nil
+    }
+    
     func fetchLoginUser() async throws -> ResponseBodyDTO<LoginUserModel>? {
         let mockData = ResponseBodyDTO<LoginUserModel>(
             success: true,

@@ -53,15 +53,15 @@ class HomeViewController: BaseViewController {
         updateUserInfo()
         updateNearestPromise()
         updateUpcomingPromise()
-        
-        viewModel.requestLoginUser()
-        viewModel.requestNearestPromise()
-        viewModel.requestUpcomingPromise()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+
+        viewModel.requestLoginUser()
+        viewModel.requestNearestPromise()
+        viewModel.requestUpcomingPromise()
     }
     
     override func setupAction() {
@@ -191,15 +191,17 @@ private extension HomeViewController {
     
     func updateUI() {
         viewModel.currentState.bind { [weak self] state in
-            switch state {
-            case .prepare:
-                self?.setPrepareUI()
-            case .move:
-                self?.setMoveUI()
-            case .arrive:
-                self?.setArriveUI()
-            case .none:
-                break
+            DispatchQueue.main.async {
+                switch state {
+                case .prepare:
+                    self?.setPrepareUI()
+                case .move:
+                    self?.setMoveUI()
+                case .arrive:
+                    self?.setArriveUI()
+                case .none:
+                    break
+                }
             }
         }
     }
@@ -341,6 +343,10 @@ private extension HomeViewController {
         rootView.todayPromiseView.moveLabel.isHidden = false
         
         rootView.todayPromiseView.prepareLineView.isHidden = false
+        
+        rootView.todayPromiseView.prepareTimeLabel.setText(
+            self.viewModel.myReadyStatus.value?.data?.preparationStartAt ?? "", style: .caption02, color: .gray8
+        )
     }
     
     func setMoveUI() {
@@ -349,6 +355,7 @@ private extension HomeViewController {
         setProgressButton(rootView.todayPromiseView.moveButton)
         setEnableButton(rootView.todayPromiseView.arriveButton)
         
+        rootView.todayPromiseView.prepareButton.isEnabled = false
         rootView.todayPromiseView.moveButton.isEnabled = false
         rootView.todayPromiseView.arriveButton.isEnabled = true
         
@@ -360,7 +367,16 @@ private extension HomeViewController {
         rootView.todayPromiseView.arriveLabel.isHidden = false
         
         rootView.todayPromiseView.prepareCheckView.isHidden = false
+        
+        rootView.todayPromiseView.prepareLineView.isHidden = false
         rootView.todayPromiseView.moveLineView.isHidden = false
+        
+        rootView.todayPromiseView.prepareTimeLabel.setText(
+            self.viewModel.myReadyStatus.value?.data?.preparationStartAt ?? "", style: .caption02, color: .gray8
+        )
+        rootView.todayPromiseView.moveTimeLabel.setText(
+            self.viewModel.myReadyStatus.value?.data?.departureAt ?? "", style: .caption02, color: .gray8
+        )
     }
     
     func setArriveUI() {
@@ -368,6 +384,7 @@ private extension HomeViewController {
         setCompleteButton(rootView.todayPromiseView.moveButton)
         setCompleteButton(rootView.todayPromiseView.arriveButton)
         
+        rootView.todayPromiseView.prepareButton.isEnabled = false
         rootView.todayPromiseView.moveButton.isEnabled = false
         rootView.todayPromiseView.arriveButton.isEnabled = false
         
@@ -379,9 +396,23 @@ private extension HomeViewController {
         rootView.todayPromiseView.moveLabel.isHidden = true
         rootView.todayPromiseView.arriveLabel.isHidden = true
         
+        rootView.todayPromiseView.prepareCheckView.isHidden = false
         rootView.todayPromiseView.moveCheckView.isHidden = false
         rootView.todayPromiseView.arriveCheckView.isHidden = false
+        
+        rootView.todayPromiseView.prepareLineView.isHidden = false
+        rootView.todayPromiseView.moveLineView.isHidden = false
         rootView.todayPromiseView.arriveLineView.isHidden = false
+        
+        rootView.todayPromiseView.prepareTimeLabel.setText(
+            self.viewModel.myReadyStatus.value?.data?.preparationStartAt ?? "", style: .caption02, color: .gray8
+        )
+        rootView.todayPromiseView.moveTimeLabel.setText(
+            self.viewModel.myReadyStatus.value?.data?.departureAt ?? "", style: .caption02, color: .gray8
+        )
+        rootView.todayPromiseView.arriveTimeLabel.setText(
+            self.viewModel.myReadyStatus.value?.data?.arrivalAt ?? "", style: .caption02, color: .gray8
+        )
     }
     
     
@@ -404,31 +435,16 @@ private extension HomeViewController {
     
     @objc
     func prepareButtonDidTap(_ sender: UIButton) {
-        viewModel.updateState(newState: .prepare)
-        rootView.todayPromiseView.prepareTimeLabel.setText(
-            viewModel.homePrepareTime,
-            style: .caption02,
-            color: .gray8
-        )
+        viewModel.updatePrepareStatus()
     }
     
     @objc
     func moveButtonDidTap(_ sender: UIButton) {
-        viewModel.updateState(newState: .move)
-        rootView.todayPromiseView.moveTimeLabel.setText(
-            viewModel.homeMoveTime,
-            style: .caption02,
-            color: .gray8
-        )
+        viewModel.updateMoveStatus()
     }
     
     @objc
     func arriveButtonDidTap(_ sender: UIButton) {
-        viewModel.updateState(newState: .arrive)
-        rootView.todayPromiseView.arriveTimeLabel.setText(
-            viewModel.homeArriveTime,
-            style: .caption02,
-            color: .gray8
-        )
+        viewModel.updateArriveStatus()
     }
 }

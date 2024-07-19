@@ -22,6 +22,7 @@ final class HomeViewModel {
     var loginUser = ObservablePattern<ResponseBodyDTO<LoginUserModel>?>(nil)
     var nearestPromise = ObservablePattern<ResponseBodyDTO<NearestPromiseModel>?>(nil)
     var upcomingPromiseList = ObservablePattern<ResponseBodyDTO<UpcomingPromiseListModel>?>(nil)
+    var myReadyStatus = ObservablePattern<ResponseBodyDTO<MyReadyStatusModel>?>(nil)
     
     var levelName = ObservablePattern<String>("")
     var levelCaption = ObservablePattern<String>("")
@@ -32,33 +33,8 @@ final class HomeViewModel {
         self.service = service
     }
     
-    var homePrepareTime: String = ""
-    var homeMoveTime: String = ""
-    var homeArriveTime: String = ""
-    
-    private let dateFormatter = DateFormatter().then {
-        $0.dateFormat = "a hh:mm"
-        $0.amSymbol = "AM"
-        $0.pmSymbol = "PM"
-    }
-    
-    func updateState(newState: ReadyState) {
-        currentState.value = newState
-        let currentTimeString = dateFormatter.string(from: Date())
-        switch newState {
-        case .prepare:
-            homePrepareTime = currentTimeString
-        case .move:
-            homeMoveTime = currentTimeString
-        case .arrive:
-            homeArriveTime = currentTimeString
-        case .none:
-            break
-        }
-    }
-    
     ///서버에서 보내주는 level Int 값에 따른 levelName
-    func getLevelName(level: Int) -> String {
+    private func getLevelName(level: Int) -> String {
         switch level {
             case 1: return "빼꼼 꾸물이"
             case 2: return "밍기적 꾸물이"
@@ -69,7 +45,7 @@ final class HomeViewModel {
     }
     
     ///서버에서 보내주는 level Int 값에 따른 levelCaption
-    func getLevelCaption(level: Int) -> String {
+    private func getLevelCaption(level: Int) -> String {
         switch level {
         case 1:
             return "꾸물꿈에 오신 것을 환영해요!\n정시 도착으로 캐릭터를 성장시켜 보세요."
@@ -81,6 +57,82 @@ final class HomeViewModel {
             return "드디어 ‘꾸물꿈’ 레벨을 달성했네요.\n지각 꾸물이에서 탈출한 것을 축하해요!"
         default:
             return ""
+        }
+    }
+    
+    private func judgeReadyStatus() {
+        let data = myReadyStatus.value?.data
+        if data?.preparationStartAt == nil && data?.departureAt == nil && data?.arrivalAt == nil {
+            currentState.value = .none
+        } else if data?.preparationStartAt != nil && data?.departureAt == nil && data?.arrivalAt == nil {
+            currentState.value = .prepare
+        } else if data?.departureAt != nil && data?.arrivalAt == nil {
+            currentState.value = .move
+        } else if data?.arrivalAt != nil {
+            currentState.value = .arrive
+        }
+    }
+    
+    func requestMyReadyStatus() {
+        Task  {
+            do {
+                print(currentState.value)
+                myReadyStatus.value = try await service.fetchMyReadyStatus(
+                    with: nearestPromise.value?.data?.promiseID ?? 1
+                )
+                judgeReadyStatus()
+                print(currentState.value)
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+    }
+    
+    func updatePrepareStatus() {
+        Task {
+            do {
+                guard let responseBody = try await service.updatePreparationStatus(
+                    with: nearestPromise.value?.data?.promiseID ?? 1
+                ) 
+                else {
+                    return
+                }
+                currentState.value = .prepare
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+    }
+    
+    func updateMoveStatus() {
+        Task {
+            do {
+                guard let responseBody = try await service.updateDepartureStatus(
+                    with: nearestPromise.value?.data?.promiseID ?? 1
+                ) 
+                else {
+                    return
+                }
+                currentState.value = .move
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+    }
+    
+    func updateArriveStatus() {
+        Task {
+            do {
+                guard let responseBody = try await service.updateArrivalStatus(
+                    with: nearestPromise.value?.data?.promiseID ?? 1
+                )
+                else {
+                    return
+                }
+                currentState.value = .arrive
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
         }
     }
     
@@ -100,6 +152,7 @@ final class HomeViewModel {
         Task  {
             do {
                 nearestPromise.value = try await service.fetchNearestPromise()
+                requestMyReadyStatus()
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
