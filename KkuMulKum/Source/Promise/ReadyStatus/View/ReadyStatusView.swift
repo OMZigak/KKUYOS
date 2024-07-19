@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import SnapKit
+
 
 class ReadyStatusView: BaseView {
     private let scrollView: UIScrollView = UIScrollView().then {
@@ -13,6 +15,8 @@ class ReadyStatusView: BaseView {
     }
     
     private let contentView: UIView = UIView()
+    
+    private var collectionViewHeightConstraint: Constraint?
     
     private let baseStackView: UIStackView = UIStackView(axis: .vertical).then {
         $0.spacing = 24
@@ -95,6 +99,13 @@ class ReadyStatusView: BaseView {
         
     }
     
+    func updateCollectionViewHeight() {
+            ourReadyStatusCollectionView.layoutIfNeeded()
+            let contentHeight = ourReadyStatusCollectionView.collectionViewLayout.collectionViewContentSize.height
+            collectionViewHeightConstraint?.update(offset: contentHeight)
+            layoutIfNeeded()
+        }
+    
     override func setupAutoLayout() {
         scrollView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -113,11 +124,13 @@ class ReadyStatusView: BaseView {
         ourReadyStatusCollectionView.snp.makeConstraints {
             $0.top.equalTo(baseStackView.snp.bottom).offset(22)
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(Screen.height(72) * 2)
+            self.collectionViewHeightConstraint = $0.height.equalTo(0).constraint
         }
         
         contentView.snp.makeConstraints {
             $0.bottom.equalTo(ourReadyStatusCollectionView.snp.bottom).offset(20)
         }
     }
+    
+  
 }
