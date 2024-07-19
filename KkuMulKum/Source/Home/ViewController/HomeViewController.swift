@@ -48,6 +48,10 @@ class HomeViewController: BaseViewController {
         view.backgroundColor = .maincolor
         register()
         
+        viewModel.requestLoginUser()
+        viewModel.requestNearestPromise()
+        viewModel.requestUpcomingPromise()
+        
         updateUI()
         
         updateUserInfo()
@@ -265,6 +269,8 @@ private extension HomeViewController {
                     self.rootView.todayButton.isHidden = true
                 } else {
                     self.rootView.todayButton.isHidden = false
+                    self.rootView.todayPromiseView.isHidden = false
+                    self.rootView.todayEmptyView.isHidden = true
                     self.rootView.todayPromiseView.meetingNameLabel.setText(
                         data?.data?.meetingName ?? "",
                         style: .caption02,
@@ -304,6 +310,8 @@ private extension HomeViewController {
                     self.rootView.upcomingPromiseView.isHidden = true
                     self.rootView.upcomingEmptyView.isHidden = false
                 } else {
+                    self.rootView.upcomingPromiseView.isHidden = false
+                    self.rootView.upcomingEmptyView.isHidden = true
                     self.rootView.upcomingPromiseView.reloadData()
                 }
             }
