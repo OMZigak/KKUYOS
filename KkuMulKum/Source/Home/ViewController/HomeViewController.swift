@@ -290,11 +290,15 @@ private extension HomeViewController {
     
     func updateUpcomingPromise() {
         viewModel.upcomingPromiseList.bind { [weak self] _ in
+            guard let self,
+                  let responseBody = viewModel.upcomingPromiseList.value,
+                  let data = responseBody.data
+            else {
+                return
+            }
+            
             DispatchQueue.main.async {
-                guard let self = self else { return }
-                let data = self.viewModel.nearestPromise.value
-                
-                if data?.data == nil {
+                if data.promises.isEmpty {
                     self.rootView.upcomingPromiseView.isHidden = true
                     self.rootView.upcomingEmptyView.isHidden = false
                 } else {
