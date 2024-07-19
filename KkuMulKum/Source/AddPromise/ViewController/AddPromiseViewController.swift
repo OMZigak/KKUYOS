@@ -105,7 +105,7 @@ final class AddPromiseViewController: BaseViewController {
                         name: owner.viewModel.name,
                         place: place,
                         promiseDateString: owner.viewModel.combinedDateTime,
-                        service: MockSelectMemberService()
+                        service: MeetingService()
                     )
                 )
                 owner.navigationController?.pushViewController(viewController, animated: true)

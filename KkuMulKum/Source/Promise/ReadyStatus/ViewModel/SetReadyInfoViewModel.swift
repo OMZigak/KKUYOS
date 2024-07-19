@@ -21,22 +21,24 @@ final class SetReadyInfoViewModel {
     let moveMinute = ObservablePattern<String>("")
     let isSucceedToSave = ObservablePattern<Bool>(false)
     
-    // TODO: 준비 및 이동 시간 분 단위로 계산
     var readyTime: Int = 0
     var moveTime: Int = 0
     
     private let service: SetReadyStatusInfoServiceType
+    private let notificationManager: LocalNotificationManager
     
     init(
         promiseID: Int,
         promiseTime: String,
         promiseName: String,
-        service: SetReadyStatusInfoServiceType
+        service: SetReadyStatusInfoServiceType,
+        notificationManager: LocalNotificationManager = LocalNotificationManager()
     ) {
         self.promiseID = promiseID
         self.promiseName = promiseName
         self.promiseTime = promiseTime
         self.service = service
+        self.notificationManager = notificationManager
     }
     
     private func validTime(time: Int, range: ClosedRange<Int>, defaultValue: String) -> String {
@@ -92,11 +94,10 @@ final class SetReadyInfoViewModel {
     }
     
     func updateReadyInfo() {
-        // 확인 버튼이 눌렸을 때
-        // 1. 로컬 알림 만들기
-        // 2. 서버에 입력받은 거 전송하기
-        // TODO: 지훈이가 만들어준 로컬 알림 만드는 객체에 요청하기 <- 객체가 필요 <- 생성자 주입
-        /// 생성자 또는 메서드 전달인자 - promiseID, promiseTime, readyTime, moveTime
+        calculateTimes()
+        
+        // 로컬 알림 설정
+        scheduleLocalNotification()
         
         Task {
             let model = MyPromiseReadyInfoModel(
@@ -115,6 +116,31 @@ final class SetReadyInfoViewModel {
                 isSucceedToSave.value = responseBody.success
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+    }
+    
+    private func scheduleLocalNotification() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        
+        guard let promiseDate = dateFormatter.date(from: promiseTime) else {
+            print("Invalid date format")
+            return
+        }
+        
+        let totalPrepTime = TimeInterval((readyTime + moveTime) * 60)
+        let notificationDate = promiseDate.addingTimeInterval(-totalPrepTime)
+        
+        notificationManager.requestAuthorization { granted in
+            if granted {
+                self.notificationManager.scheduleNotification(
+                    title: "준비 시작",
+                    body: "\(self.promiseName) 약속 준비를 시작할 시간입니다!",
+                    triggerDate: notificationDate
+                )
+            } else {
+                print("Notification permission not granted")
             }
         }
     }
