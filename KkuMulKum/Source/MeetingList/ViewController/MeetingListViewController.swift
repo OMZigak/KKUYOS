@@ -87,6 +87,8 @@ class MeetingListViewController: BaseViewController {
                     self.rootView.emptyLabel.isHidden = false
                     self.rootView.emptyCharacter.isHidden = false
                 } else {
+                    elf.rootView.emptyLabel.isHidden = true
+                    self.rootView.emptyCharacter.isHidden = true
                     self.rootView.tableView.reloadData()
                 }
             }
