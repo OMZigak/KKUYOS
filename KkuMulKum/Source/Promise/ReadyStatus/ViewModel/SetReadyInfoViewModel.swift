@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UserNotifications
 
 final class SetReadyInfoViewModel {
     let promiseID: Int
@@ -32,7 +33,7 @@ final class SetReadyInfoViewModel {
         promiseTime: String,
         promiseName: String,
         service: SetReadyStatusInfoServiceType,
-        notificationManager: LocalNotificationManager = LocalNotificationManager()
+        notificationManager: LocalNotificationManager = LocalNotificationManager.shared
     ) {
         self.promiseID = promiseID
         self.promiseName = promiseName
@@ -79,8 +80,7 @@ final class SetReadyInfoViewModel {
         calculateTimes()
     }
     
-    func checkValid(
-        readyHourText: String,
+    func checkValid(readyHourText: String,
         readyMinuteText: String,
         moveHourText: String,
         moveMinuteText: String
@@ -122,25 +122,78 @@ final class SetReadyInfoViewModel {
     
     private func scheduleLocalNotification() {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        
-        guard let promiseDate = dateFormatter.date(from: promiseTime) else {
-            print("Invalid date format")
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+       
+        guard let promiseDate = dateFormatter.date(from: self.promiseTime) else {
+            print("Invalid date format: \(self.promiseTime)")
             return
         }
         
-        let totalPrepTime = TimeInterval((readyTime + moveTime) * 60)
-        let notificationDate = promiseDate.addingTimeInterval(-totalPrepTime)
+        let totalPrepTime = TimeInterval((self.readyTime + self.moveTime) * 60)
         
-        notificationManager.requestAuthorization { granted in
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH:mm:ss"
+        timeFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        
+        print("약속 시간: \(timeFormatter.string(from: promiseDate))")
+        print("준비 시간: \(self.readyTime) 분")
+        print("이동 시간: \(self.moveTime) 분")
+        print("총 준비 시간: \(totalPrepTime / 60) 분")
+        
+        let readyStartTime = promiseDate.addingTimeInterval(-TimeInterval(self.readyTime + self.moveTime) * 60)
+        let moveStartTime = promiseDate.addingTimeInterval(-TimeInterval(self.moveTime) * 60)
+        
+        print("준비 시작 시간: \(timeFormatter.string(from: readyStartTime))")
+        print("이동 시작 시간: \(timeFormatter.string(from: moveStartTime))")
+        
+        self.notificationManager.requestAuthorization { [weak self] granted in
+            guard let self = self else { return }
             if granted {
+                UNUserNotificationCenter.current().getNotificationSettings { settings in
+                    print("현재 알림 설정: \(settings)")
+                }
+                
+                self.notificationManager.removeAllPendingNotifications()
+                
                 self.notificationManager.scheduleNotification(
                     title: "준비 시작",
                     body: "\(self.promiseName) 약속 준비를 시작할 시간입니다!",
-                    triggerDate: notificationDate
-                )
+                    triggerDate: readyStartTime,
+                    identifier: "readyStart_\(self.promiseID)"
+                ) { error in
+                    if let error = error {
+                        print("준비 시작 알림 설정 실패: \(error)")
+                    } else {
+                        print("준비 시작 알림이 \(timeFormatter.string(from: readyStartTime))에 설정되었습니다.")
+                    }
+                }
+                
+                self.notificationManager.scheduleNotification(
+                    title: "이동 시작",
+                    body: "\(self.promiseName) 약속 장소로 이동할 시간입니다!",
+                    triggerDate: moveStartTime,
+                    identifier: "moveStart_\(self.promiseID)"
+                ) { error in
+                    if let error = error {
+                        print("이동 시작 알림 설정 실패: \(error)")
+                    } else {
+                        print("이동 시작 알림이 \(timeFormatter.string(from: moveStartTime))에 설정되었습니다.")
+                    }
+                }
+                
+                self.notificationManager.getPendingNotifications { requests in
+                    print("예정된 알림 수: \(requests.count)")
+                    for request in requests {
+                        if let trigger = request.trigger as? UNCalendarNotificationTrigger,
+                           let nextTriggerDate = trigger.nextTriggerDate() {
+                            print("알림 ID: \(request.identifier), 예정 시간: \(timeFormatter.string(from: nextTriggerDate))")
+                        }
+                    }
+                }
             } else {
-                print("Notification permission not granted")
+                print("알림 권한이 허용되지 않았습니다.")
             }
         }
     }
