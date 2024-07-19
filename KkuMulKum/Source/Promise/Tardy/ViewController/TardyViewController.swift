@@ -115,9 +115,9 @@ extension TardyViewController: UICollectionViewDataSource {
         
         guard let data = tardyViewModel.comers.value?[indexPath.row] else { return cell }
         
-        cell.nameLabel.setText(data.name, style: .body06, color: .gray6)
+        cell.nameLabel.setText(data.name ?? "", style: .body06, color: .gray6)
         
-        guard let image = URL(string: data.profileImageURL) else {
+        guard let image = URL(string: data.profileImageURL ?? "") else {
             cell.profileImageView.image = .imgProfile
             
             return cell
