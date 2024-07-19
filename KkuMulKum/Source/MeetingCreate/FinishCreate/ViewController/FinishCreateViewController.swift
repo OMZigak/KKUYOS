@@ -11,6 +11,8 @@ class FinishCreateViewController: BaseViewController {
     
     
     // MARK: Property
+    
+    let meetingID: Int
 
     private let peopleImageView: UIImageView = UIImageView().then {
         $0.image = .imgCreateGroup
@@ -29,6 +31,19 @@ class FinishCreateViewController: BaseViewController {
     
     private let confirmButton: CustomButton = CustomButton(title: "확인", isEnabled: true).then {
         $0.backgroundColor = .maincolor
+    }
+    
+    
+    // MARK: - Initialize
+    
+    init(meetingID: Int) {
+        self.meetingID = meetingID
+        
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - LifeCycle
@@ -98,7 +113,7 @@ private extension FinishCreateViewController {
         // TODO: 서버 연결할 때 데이터 바인딩해서 화면 전환 시키기
         let meetingInfoViewController = MeetingInfoViewController(
             viewModel: MeetingInfoViewModel(
-                meetingID: 1,
+                meetingID: self.meetingID,
                 service: MeetingService()
             )
         )

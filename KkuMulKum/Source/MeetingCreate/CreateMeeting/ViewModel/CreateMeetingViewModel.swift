@@ -24,6 +24,7 @@ class CreateMeetingViewModel {
     let meetingName = ObservablePattern<String>("")
     let inviteCodeState = ObservablePattern<MeetingNameState>(.empty)
     let inviteCode = ObservablePattern<String>("")
+    var meetingID: Int = 0
     let isNextButtonEnabled = ObservablePattern<Bool>(false)
     let characterCount = ObservablePattern<String>("0/5")
     
@@ -63,9 +64,15 @@ extension CreateMeetingViewModel {
                 
                 createMeetingResponse.value = try await createMeetingService.createMeeting(request: request)?.data
                 
-                guard let code = createMeetingResponse.value?.invitationCode else { return }
+                guard let code = self.createMeetingResponse.value?.invitationCode else {
+                    return
+                }
+                guard let meetingID = self.createMeetingResponse.value?.meetingID else {
+                    return
+                }
                 
                 inviteCode.value = code
+                self.meetingID = meetingID
             }
             catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
