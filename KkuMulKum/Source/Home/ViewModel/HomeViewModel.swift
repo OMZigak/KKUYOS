@@ -128,7 +128,7 @@ final class HomeViewModel {
                     return
                 }
                 isPreapreSucceedToSave.value = responseBody.success
-//                updateState(newState: .prepare)
+                currentState.value = .prepare
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
@@ -146,7 +146,7 @@ final class HomeViewModel {
                     return
                 }
                 isMoveSucceedToSave.value = responseBody.success
-//                updateState(newState: .move)
+                currentState.value = .move
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
@@ -164,7 +164,7 @@ final class HomeViewModel {
                     return
                 }
                 isArriveSucceedToSave.value = responseBody.success
-//                updateState(newState: .arrive)
+                currentState.value = .arrive
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }

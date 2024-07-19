@@ -48,15 +48,21 @@ class HomeViewController: BaseViewController {
         view.backgroundColor = .maincolor
         register()
         
+        updateUI()
+        
         updateUserInfo()
         updateNearestPromise()
         updateUpcomingPromise()
-        updateUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        
+//        updateUserInfo()
+//        updateNearestPromise()
+//        updateUpcomingPromise()
+//        updateUI()
         
         viewModel.requestLoginUser()
         viewModel.requestNearestPromise()
@@ -397,6 +403,7 @@ private extension HomeViewController {
         setProgressButton(rootView.todayPromiseView.moveButton)
         setEnableButton(rootView.todayPromiseView.arriveButton)
         
+        rootView.todayPromiseView.prepareButton.isEnabled = false
         rootView.todayPromiseView.moveButton.isEnabled = false
         rootView.todayPromiseView.arriveButton.isEnabled = true
         
@@ -425,6 +432,7 @@ private extension HomeViewController {
         setCompleteButton(rootView.todayPromiseView.moveButton)
         setCompleteButton(rootView.todayPromiseView.arriveButton)
         
+        rootView.todayPromiseView.prepareButton.isEnabled = false
         rootView.todayPromiseView.moveButton.isEnabled = false
         rootView.todayPromiseView.arriveButton.isEnabled = false
         
