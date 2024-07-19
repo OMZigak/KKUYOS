@@ -11,7 +11,7 @@ class LoginViewController: BaseViewController {
     private let loginView = LoginView()
     private let loginViewModel: LoginViewModel
 
-    init(viewModel: LoginViewModel = LoginViewModel()) {
+    init(viewModel: LoginViewModel) {
         self.loginViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
@@ -35,19 +35,13 @@ class LoginViewController: BaseViewController {
         
         let appleTapGesture = UITapGestureRecognizer(
             target: self,
-            action: #selector(
-                appleLoginTapped
-            )
+            action: #selector(appleLoginTapped)
         )
-        loginView.appleLoginImageView.addGestureRecognizer(
-            appleTapGesture
-        )
+        loginView.appleLoginImageView.addGestureRecognizer(appleTapGesture)
         
         let kakaoTapGesture = UITapGestureRecognizer(
             target: self,
-            action: #selector(
-                kakaoLoginTapped
-            )
+            action: #selector(kakaoLoginTapped)
         )
         loginView.kakaoLoginImageView.addGestureRecognizer(kakaoTapGesture)
     }
@@ -58,10 +52,18 @@ class LoginViewController: BaseViewController {
             case .notLogin:
                 print("Login State: Not logged in")
             case .login:
-                print("Login State: Logged in with user info: ")
-                owner.navigateToOnboardingScreen()
+                print("Login State: Logged in")
+                owner.navigateToMainScreen()
             case .needOnboarding:
                 print("Login State: Need onboarding")
+                owner.navigateToOnboardingScreen()
+            }
+        }
+        
+        loginViewModel.userName.bind(with: self) { owner, name in
+            if name != nil {
+                owner.navigateToMainScreen()
+            } else {
                 owner.navigateToOnboardingScreen()
             }
         }
@@ -74,7 +76,6 @@ class LoginViewController: BaseViewController {
         }
     }
 
-
     @objc private func appleLoginTapped() {
         loginViewModel.performAppleLogin(presentationAnchor: view.window!)
     }
@@ -83,13 +84,6 @@ class LoginViewController: BaseViewController {
         loginViewModel.performKakaoLogin()
     }
    
-    @objc private func dummyNextButtonTapped() {
-        let viewController = UINavigationController(rootViewController: MainTabBarController())
-        viewController.isNavigationBarHidden = true
-        viewController.modalPresentationStyle = .fullScreen
-        present(viewController, animated: true)
-    }
-    
     private func navigateToMainScreen() {
         DispatchQueue.main.async {
             let mainTabBarController = MainTabBarController()

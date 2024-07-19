@@ -4,9 +4,7 @@
 //
 //  Created by 이지훈 on 7/18/24.
 //
-
 import Foundation
-
 import Moya
 
 enum AuthTargetType {
@@ -15,6 +13,7 @@ enum AuthTargetType {
     case refreshToken(refreshToken: String)
     case updateProfileImage(image: Data, fileName: String, mimeType: String)
     case updateName(name: String)
+    case getUserInfo
 }
 
 extension AuthTargetType: TargetType {
@@ -37,6 +36,8 @@ extension AuthTargetType: TargetType {
             return "/api/v1/users/me/image"
         case .updateName:
             return "/api/v1/users/me/name"
+        case .getUserInfo:
+            return "/api/v1/users/me"
         }
     }
     
@@ -46,6 +47,8 @@ extension AuthTargetType: TargetType {
             return .post
         case .updateProfileImage, .updateName:
             return .patch
+        case .getUserInfo:
+            return .get
         }
     }
     
@@ -65,6 +68,8 @@ extension AuthTargetType: TargetType {
                 parameters: ["name": name],
                 encoding: JSONEncoding.default
             )
+        case .getUserInfo:
+            return .requestPlain
         }
     }
     
@@ -84,7 +89,7 @@ extension AuthTargetType: TargetType {
                 "Authorization": "Bearer \(token)",
                 "Content-Type": "multipart/form-data"
             ]
-        case .updateName:
+        case .updateName, .getUserInfo:
             guard let token = DefaultKeychainService.shared.accessToken else {
                 fatalError("No access token available")
             }

@@ -14,7 +14,7 @@ class ProfileSetupViewModel {
     let serverResponse = ObservablePattern<String?>(nil)
     
     private let authService: AuthServiceType
-    private var compressedImageData: Data?
+    private var imageData: Data?
     
     init(nickname: String, authService: AuthServiceType = AuthService()) {
         self.nickname = nickname
@@ -23,31 +23,32 @@ class ProfileSetupViewModel {
     
     func updateProfileImage(_ image: UIImage?) {
         profileImage.value = image
-        if let image = image {
-            compressImage(image, maxSizeInBytes: 2 * 1024 * 1024)  // 2MB로 변경
+        if let image = image, let data = image.jpegData(compressionQuality: 1.0) {
+            imageData = data
+            print("이미지 크기: \(data.count) bytes")
         } else {
-            compressedImageData = nil
+            imageData = nil
         }
-        isConfirmButtonEnabled.value = compressedImageData != nil
+        isConfirmButtonEnabled.value = imageData != nil
     }
     
     func uploadProfileImage(completion: @escaping (Bool) -> Void) {
         print("uploadProfileImage 함수 호출됨")
-        guard let compressedImageData = compressedImageData else {
-            print("압축된 이미지 데이터가 없습니다.")
+        guard let imageData = imageData else {
+            print("이미지 데이터가 없습니다.")
             serverResponse.value = "이미지 데이터가 없습니다."
             completion(false)
             return
         }
         
-        print("업로드할 이미지 데이터 크기: \(compressedImageData.count) bytes")
+        print("업로드할 이미지 데이터 크기: \(imageData.count) bytes")
         
         let fileName = "profile_image.jpg"
         let mimeType = "image/jpeg"
         
         authService.performRequest(
             .updateProfileImage(
-                image: compressedImageData,
+                image: imageData,
                 fileName: fileName,
                 mimeType: mimeType
             )
@@ -68,34 +69,5 @@ class ProfileSetupViewModel {
     private func handleError(_ error: NetworkError) {
         serverResponse.value = error.message
         print("프로필 이미지 업로드 실패: \(error.message)")
-    }
-
-    private func compressImage(_ image: UIImage, maxSizeInBytes: Int) {
-        guard let originalImageData = image.jpegData(compressionQuality: 1.0) else {
-            print("원본 이미지 데이터를 생성할 수 없습니다.")
-            return
-        }
-        
-        print("원본 이미지 크기: \(originalImageData.count) bytes")
-        
-        if originalImageData.count <= maxSizeInBytes {
-            print("원본 이미지가 이미 \(maxSizeInBytes) bytes 이하입니다. 압축이 필요하지 않습니다.")
-            compressedImageData = originalImageData
-            return
-        }
-        
-        var compression: CGFloat = 1.0
-        var imageData = originalImageData
-        
-        while imageData.count > maxSizeInBytes && compression > 0.0 {
-            compression -= 0.1
-            if let compressedData = image.jpegData(compressionQuality: compression) {
-                imageData = compressedData
-                print("압축 시도: 크기 \(imageData.count) bytes (압축률: \(compression))")
-            }
-        }
-        
-        compressedImageData = imageData
-        print("최종 압축 결과: \(imageData.count) bytes (원본 대비 \(Int((Double(imageData.count) / Double(originalImageData.count)) * 100))% 크기)")
     }
 }
