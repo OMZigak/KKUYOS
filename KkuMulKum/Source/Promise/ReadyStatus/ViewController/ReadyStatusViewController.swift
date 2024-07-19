@@ -156,7 +156,6 @@ extension ReadyStatusViewController: UICollectionViewDataSource {
             cell.readyStatusButton.setupButton("이동중", .move)
         case "준비중":
             cell.readyStatusButton.setupButton("준비중", .ready)
-            cell.readyStatusButton.layer.borderWidth = 0
         default:
             cell.readyStatusButton.setupButton("꾸물중", .none)
         }
