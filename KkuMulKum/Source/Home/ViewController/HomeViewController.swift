@@ -128,7 +128,8 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
     ) {
         let pagePromiseViewController = PagePromiseViewController(
             promiseViewModel: PagePromiseViewModel(
-                promiseID: viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item].promiseID ?? 0
+                promiseID: viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item].promiseID ?? 0, 
+                service: PromiseService()
             )
         )
         
@@ -390,7 +391,8 @@ private extension HomeViewController {
     func todayButtonDidTap(_ sender: UIButton) {
         let viewController = PagePromiseViewController(
             promiseViewModel: PagePromiseViewModel(
-                promiseID: viewModel.nearestPromise.value?.data?.promiseID ?? 0
+                promiseID: viewModel.nearestPromise.value?.data?.promiseID ?? 0, 
+                service: PromiseService()
             )
         )
         

@@ -15,6 +15,7 @@ class MockPromiseInfoService: PromiseInfoServiceType {
     func getPromiseInfo(with promiseId: Int) -> ResponseBodyDTO<PromiseInfoModel>? {
         let mockData = PromiseInfoModel(
             promiseID: 1,
+            promiseName: "dd", 
             placeName: "홍대입구",
             address: "대현동 90-35",
             roadAddress: "서울 서대문구 이화여대1길 28",

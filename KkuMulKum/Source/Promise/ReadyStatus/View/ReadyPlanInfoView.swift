@@ -69,3 +69,7 @@ class ReadyPlanInfoView: BaseView {
         }
     }
 }
+
+extension ReadyPlanInfoView {
+    func configure() {}
+}

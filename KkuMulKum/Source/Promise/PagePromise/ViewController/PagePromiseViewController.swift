@@ -14,11 +14,16 @@ class PagePromiseViewController: BaseViewController {
 
     private let promiseViewModel: PagePromiseViewModel
     
-    // TODO: 서버 연결 시 데이터 바인딩 필요
     private var promiseViewControllerList: [BaseViewController] = []
     
     private let promiseInfoViewController: PromiseInfoViewController
+    
+    private let promiseInfoViewModel: PromiseInfoViewModel
+    
     private let readyStatusViewController: ReadyStatusViewController
+    
+    private let readyStatusViewModel: ReadyStatusViewModel
+    
     private let tardyViewController: TardyViewController
     
     private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(
@@ -30,53 +35,36 @@ class PagePromiseViewController: BaseViewController {
         navigationOrientation: .vertical
     )
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupNavigationBarBackButton()
-    }
     
-    // MARK: - LifeCycle
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navigationController?.isNavigationBarHidden = false
-        
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        navigationController?.isNavigationBarHidden = true
-    }
-    
-    
-    // MARK: Initialize
+    // MARK: Initializer
 
     init(promiseViewModel: PagePromiseViewModel) {
         self.promiseViewModel = promiseViewModel
         
-        // TODO: 네트워크 통신 필요
+        promiseViewModel.fetchPromiseInfo(promiseID: promiseViewModel.promiseID)
+        
+        promiseInfoViewModel = PromiseInfoViewModel(
+            promiseID: promiseViewModel.promiseID,
+            promiseInfoService: PromiseService()
+        )
         
         promiseInfoViewController = PromiseInfoViewController(
-            promiseInfoViewModel: PromiseInfoViewModel(
-                promiseInfoService: MockPromiseInfoService(),
-                promiseID: promiseViewModel.promiseID.value
-            )
+            promiseInfoViewModel: promiseInfoViewModel
+        )
+        
+        readyStatusViewModel = ReadyStatusViewModel(
+            readyStatusService: PromiseService(),
+            promiseID: promiseViewModel.promiseID
         )
         
         readyStatusViewController = ReadyStatusViewController(
-            readyStatusViewModel: ReadyStatusViewModel(
-                readyStatusService: MockReadyStatusService(),
-                promiseID: promiseViewModel.promiseID.value
-            )
+            readyStatusViewModel: readyStatusViewModel
         )
         
         tardyViewController = TardyViewController(
             tardyViewModel: TardyViewModel(
                 tardyService: MockTardyService(),
-                promiseID: promiseViewModel.promiseID.value
+                promiseID: promiseViewModel.promiseID
             )
         )
         
@@ -91,6 +79,30 @@ class PagePromiseViewController: BaseViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+    // MARK: - LifeCycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupNavigationBarBackButton()
+        setupBindings()
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        navigationController?.isNavigationBarHidden = true
     }
     
     
@@ -148,7 +160,6 @@ class PagePromiseViewController: BaseViewController {
     }
     
     override func setupDelegate() {
-        promisePageViewController.delegate = self
         promisePageViewController.dataSource = self
     }
 }
@@ -186,14 +197,6 @@ extension PagePromiseViewController {
 }
 
 
-
-// MARK: - UIPageViewControllerDelegate
-
-extension PagePromiseViewController: UIPageViewControllerDelegate {
-    
-}
-
-
 // MARK: - UIPageViewControllerDataSource
 
 extension PagePromiseViewController: UIPageViewControllerDataSource {
@@ -209,5 +212,18 @@ extension PagePromiseViewController: UIPageViewControllerDataSource {
         viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
         return nil
+    }
+}
+
+private extension PagePromiseViewController {
+    func setupBindings() {
+        promiseViewModel.promiseInfo.bind { [weak self] model in
+            guard let model else { return }
+            DispatchQueue.main.async {
+                self?.setupNavigationBarTitle(with: model.promiseName)
+                self?.promiseInfoViewModel.promiseInfo.value = model
+                self?.readyStatusViewModel.promiseName.value = model.promiseName
+            }
+        }
     }
 }

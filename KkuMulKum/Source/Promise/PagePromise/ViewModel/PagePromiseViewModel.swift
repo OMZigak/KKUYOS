@@ -12,16 +12,20 @@ class PagePromiseViewModel {
     
     
     // MARK: Property
+    
+    private let service: PagePromiseServiceType
 
-    var currentPage = ObservablePattern<Int>(0)
-    var promiseID: ObservablePattern<Int>
+    let promiseID: Int
+    let currentPage = ObservablePattern<Int>(0)
+    let promiseInfo = ObservablePattern<PromiseInfoModel?>(nil)
     let promiseName: String = "Test"
     
     
     // MARK: Initialize
 
-    init(promiseID: Int) {
-        self.promiseID = ObservablePattern<Int>(promiseID)
+    init(promiseID: Int, service: PagePromiseServiceType) {
+        self.service = service
+        self.promiseID = promiseID
     }
 }
 
@@ -33,7 +37,19 @@ extension PagePromiseViewModel {
         currentPage.value = index
     }
     
-    func promiseIDDidChanged(id: Int) {
-        promiseID.value = id
+    func fetchPromiseInfo(promiseID: Int) {
+        Task {
+            do {
+                let result = try await service.fetchPromiseInfo(with: promiseID)
+                
+                guard let success = result?.success,
+                        success == true
+                else {
+                    return
+                }
+                
+                promiseInfo.value = result?.data
+            }
+        }
     }
 }

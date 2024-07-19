@@ -12,7 +12,7 @@ import SnapKit
 class ParticipantCollectionViewCell: BaseCollectionViewCell {
     
     
-    // MARK: Property
+    // MARK: - Property
 
     let profileImageView: UIImageView = UIImageView().then {
         $0.backgroundColor = .gray1

@@ -60,8 +60,10 @@ class ReadyStatusView: BaseView {
         collectionViewLayout: UICollectionViewFlowLayout().then {
             $0.scrollDirection = .vertical
             $0.estimatedItemSize = .init(width: Screen.width(335), height: Screen.height(72))
+            $0.minimumInteritemSpacing = 10
         }).then {
             $0.backgroundColor = .clear
+            $0.isScrollEnabled = false
             $0.register(
                 OurReadyStatusCollectionViewCell.self,
                 forCellWithReuseIdentifier: OurReadyStatusCollectionViewCell.reuseIdentifier
@@ -98,7 +100,8 @@ class ReadyStatusView: BaseView {
         }
         
         contentView.snp.makeConstraints {
-            $0.edges.width.height.equalToSuperview()
+            $0.edges.width.equalToSuperview()
+            $0.height.greaterThanOrEqualToSuperview()
         }
         
         baseStackView.snp.makeConstraints {

@@ -9,6 +9,7 @@ import Foundation
 
 final class SetReadyInfoViewModel {
     let promiseID: Int
+    let promiseName: String
     let promiseTime: String
     
     let isValid = ObservablePattern<Bool>(false)
@@ -29,9 +30,11 @@ final class SetReadyInfoViewModel {
     init(
         promiseID: Int,
         promiseTime: String,
+        promiseName: String,
         service: SetReadyStatusInfoServiceType
     ) {
         self.promiseID = promiseID
+        self.promiseName = promiseName
         self.promiseTime = promiseTime
         self.service = service
     }

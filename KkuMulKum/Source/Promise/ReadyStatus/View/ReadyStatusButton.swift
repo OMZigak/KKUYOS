@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum ReadyStatus {
+enum ReadyProgressStatus {
     case none
     case ready
     case move
@@ -15,7 +15,7 @@ enum ReadyStatus {
 }
 
 class ReadyStatusButton: UIButton {
-    init(title: String, readyStatus: ReadyStatus) {
+    init(title: String, readyStatus: ReadyProgressStatus) {
         super.init(frame: .zero)
         
         setupButton(title, readyStatus)
@@ -23,7 +23,7 @@ class ReadyStatusButton: UIButton {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-    }
+}
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -33,7 +33,7 @@ class ReadyStatusButton: UIButton {
 extension ReadyStatusButton {
     func setupButton(
         _ title: String,
-        _ readyStatus: ReadyStatus
+        _ readyStatus: ReadyProgressStatus
     ) {
         switch readyStatus {
         case .none:

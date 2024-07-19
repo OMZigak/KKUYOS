@@ -8,17 +8,30 @@
 import Foundation
 
 protocol ReadyStatusServiceType {
-    func getMyPromiseStatus(with promiseID: Int) -> ResponseBodyDTO<MyReadyStatusModel>?
-    func patchMyReadyStatus(with myInfo: MyPromiseReadyInfoModel)
-    func getParticipantList(with promiseID: Int) -> ResponseBodyDTO<PromiseParticipantListModel>?
+    func fetchMyReadyStatus(with promiseID: Int) async throws -> ResponseBodyDTO<MyReadyStatusModel>?
+    func fetchPromiseParticipantList(with promiseID: Int) async throws -> ResponseBodyDTO<PromiseParticipantListModel>?
+}
+
+extension PromiseService: ReadyStatusServiceType {
+    func fetchMyReadyStatus(with promiseID: Int) async throws -> ResponseBodyDTO<MyReadyStatusModel>? {
+        return try await request(
+            with: .fetchMyReadyStatus(
+                promiseID: promiseID
+            )
+        )
+    }
+    
+    func fetchPromiseParticipantList(with promiseID: Int) async throws -> ResponseBodyDTO<PromiseParticipantListModel>? {
+        return try await request(
+            with: .fetchPromiseParticipantList(
+                promiseID: promiseID
+            )
+        )
+    }
 }
 
 final class MockReadyStatusService: ReadyStatusServiceType {
-    func patchMyReadyStatus(with myInfo: MyPromiseReadyInfoModel) {
-        
-    }
-    
-    func getMyPromiseStatus(with promiseID: Int) -> ResponseBodyDTO<MyReadyStatusModel>? {
+    func fetchMyReadyStatus(with promiseID: Int) -> ResponseBodyDTO<MyReadyStatusModel>? {
         let mockData = MyReadyStatusModel(
             promiseTime: "",
             preparationTime: 300,
@@ -35,7 +48,7 @@ final class MockReadyStatusService: ReadyStatusServiceType {
         )
     }
     
-    func getParticipantList(with promiseID: Int) -> ResponseBodyDTO<PromiseParticipantListModel>? {
+    func fetchPromiseParticipantList(with promiseID: Int) -> ResponseBodyDTO<PromiseParticipantListModel>? {
         let mockData = PromiseParticipantListModel(
             participantCount: 3,
             participants: [
