@@ -27,6 +27,7 @@ final class SetReadyInfoViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    
     // MARK: - LifeCycle
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,6 +48,7 @@ final class SetReadyInfoViewController: BaseViewController {
         setupNavigationBarTitle(with: "준비 정보 입력하기")
         
         bindViewModel()
+        setupTapGesture()
     }
     
     override func setupDelegate() {
@@ -94,6 +96,18 @@ final class SetReadyInfoViewController: BaseViewController {
     @objc
     private func doneButtonDidTap(_ sender: UIButton) {
         viewModel.updateReadyInfo()
+    }
+    
+    
+    // MARK: - Keyboard Dismissal
+    
+    private func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 }
 
@@ -148,10 +162,9 @@ private extension SetReadyInfoViewController {
         Toast().show(message: message, view: view, position: .bottom, inset: bottomInset)
     }
     
-    
     // MARK: - Data Bind
     
-    func bindViewModel() {       
+    func bindViewModel() {
         viewModel.readyHour.bind { [weak self] readyHour in
             self?.rootView.readyHourTextField.text = readyHour
         }

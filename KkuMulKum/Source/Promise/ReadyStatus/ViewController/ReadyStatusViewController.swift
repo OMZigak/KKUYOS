@@ -189,6 +189,12 @@ private extension ReadyStatusViewController {
         readyStatusViewModel.participantInfos.bind(with: self) { owner, participants in
             DispatchQueue.main.async {
                 owner.rootView.ourReadyStatusCollectionView.reloadData()
+                
+                owner.rootView.ourReadyStatusCollectionView.snp.updateConstraints {
+                    $0.height.equalTo(
+                        CGFloat(participants.count) * Screen.height(72)
+                    )
+                }
             }
         }
         

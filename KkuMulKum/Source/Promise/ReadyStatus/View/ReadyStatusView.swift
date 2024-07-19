@@ -92,6 +92,7 @@ class ReadyStatusView: BaseView {
         scrollView.addSubview(contentView)
         
         addSubviews(scrollView)
+        
     }
     
     override func setupAutoLayout() {
@@ -100,19 +101,23 @@ class ReadyStatusView: BaseView {
         }
         
         contentView.snp.makeConstraints {
-            $0.edges.width.equalToSuperview()
-            $0.height.greaterThanOrEqualToSuperview()
+            $0.edges.equalTo(scrollView.contentLayoutGuide)
+            $0.width.equalTo(scrollView.frameLayoutGuide)
         }
         
         baseStackView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24)
-            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         
         ourReadyStatusCollectionView.snp.makeConstraints {
             $0.top.equalTo(baseStackView.snp.bottom).offset(22)
-            $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(Screen.height(72) * 2)
+        }
+        
+        contentView.snp.makeConstraints {
+            $0.bottom.equalTo(ourReadyStatusCollectionView.snp.bottom).offset(20)
         }
     }
 }

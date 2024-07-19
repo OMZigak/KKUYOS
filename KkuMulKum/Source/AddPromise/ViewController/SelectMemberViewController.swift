@@ -57,7 +57,7 @@ final class SelectMemberViewController: BaseViewController {
                         place: owner.viewModel.place,
                         dateString: owner.viewModel.promiseDateString,
                         members: owner.viewModel.members,
-                        service: MockSelectPenaltyService()
+                        service: PromiseService()
                     )
                 )
                 owner.navigationController?.pushViewController(viewController, animated: true)
