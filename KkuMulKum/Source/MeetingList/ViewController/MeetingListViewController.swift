@@ -45,6 +45,11 @@ class MeetingListViewController: BaseViewController {
         register()
         
         updateMeetingList()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         viewModel.requestMeetingList()
     }
     
