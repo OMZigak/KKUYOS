@@ -65,6 +65,12 @@ class ReadyStatusViewModel {
     
     // 준비 현황 버튼 클릭했을 때
     func updateReadyStatusTime() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "a h:mm"
+        dateFormatter.amSymbol = "AM"
+        dateFormatter.pmSymbol = "PM"
+        
         let currentTimeString = dateFormatter.string(from: Date())
         
         return currentTimeString
@@ -169,8 +175,6 @@ extension ReadyStatusViewModel {
                 else {
                     return
                 }
-                
-                //myReadyStatus.value?.preparationStartAt = 
             }
         }
     }
