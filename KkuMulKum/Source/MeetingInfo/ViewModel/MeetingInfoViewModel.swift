@@ -78,7 +78,7 @@ extension MeetingInfoViewModel: ViewModelType {
         let isPossibleToCreatePromise = input.createPromiseButtonDidTap
             .map { [weak self] _ in
                 guard let count = self?.meetingMemberModelRelay.value?.memberCount,
-                      count != 0
+                      count > 1
                 else {
                     return false
                 }
