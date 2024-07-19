@@ -37,7 +37,7 @@ class ReadyStatusViewModel {
     let myReadyProgressStatus = ObservablePattern<ReadyProgressStatus>(.none)
     
     // 꾸물거림 여부
-    let isLate = ObservablePattern<Bool>(false)
+    var isLate = ObservablePattern<Bool>(false)
     
     // 우리들의 준비 현황 스택 뷰에 들어갈 정보들
     let participantInfos = ObservablePattern<[Participant]>([])
@@ -126,6 +126,29 @@ extension ReadyStatusViewModel {
         self.moveStartTime.value = timeFormatter.string(from: moveStartTime)
         print("이동 시작 시간: \(self.moveStartTime.value)")
     }
+
+    func checkLate(settingTime: String, realTime: String) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.dateFormat = "HH시 mm분"
+        
+        let readyStartDate = dateFormatter.date(from: settingTime)
+        
+        dateFormatter.dateFormat = "a h:mm"
+        
+        let preparationStartDate = dateFormatter.date(from: realTime)
+
+        if let readyStartDate = readyStartDate, let preparationStartDate = preparationStartDate {
+            if preparationStartDate.compare(readyStartDate) == .orderedDescending {
+                self.isLate.value = true
+            } else {
+                self.isLate.value = true
+            }
+        } else {
+            self.isLate.value = false
+        }
+    }
+
     
     func fetchMyReadyStatus() {
         Task {
@@ -175,6 +198,12 @@ extension ReadyStatusViewModel {
                 else {
                     return
                 }
+                DispatchQueue.main.async {
+                    self.checkLate(
+                        settingTime: self.moveStartTime.value,
+                        realTime: self.myReadyStatus.value?.departureAt ?? ""
+                    )
+                }
             }
         }
     }
@@ -190,6 +219,12 @@ extension ReadyStatusViewModel {
                       success == true
                 else {
                     return
+                }
+                DispatchQueue.main.async {
+                    self.checkLate(
+                        settingTime: self.moveTime.value,
+                        realTime: self.myReadyStatus.value?.preparationStartAt ?? ""
+                    )
                 }
             }
         }
