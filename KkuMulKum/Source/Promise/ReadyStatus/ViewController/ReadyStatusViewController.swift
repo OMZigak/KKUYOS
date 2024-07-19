@@ -73,7 +73,6 @@ class ReadyStatusViewController: BaseViewController {
     
     @objc
     func readyStartButtonDidTapped() {
-        // TODO: 늦었을 때 꾸물거릴 시간이 없어요 팝업 뜨도록 설정
         readyStatusViewModel.myReadyProgressStatus.value = .ready
         rootView.myReadyStatusProgressView.readyStartButton.isEnabled.toggle()
     }
@@ -174,9 +173,32 @@ private extension ReadyStatusViewController {
                     owner.updateReadyInfoView(flag: false)
                     return
                 }
-                // TODO: 시간 계산 로직 필요..
+                
                 owner.updateReadyInfoView(flag: true)
-                owner.rootView.readyPlanInfoView.configure()
+                owner.readyStatusViewModel.calculatePrepareTime()
+                owner.readyStatusViewModel.convertMinute()
+            }
+        }
+        
+        readyStatusViewModel.moveTime.bind(with: self) { owner, moveTime in
+            owner.rootView.readyPlanInfoView.requestMoveTimeLabel.setText("이동 소요 시간: \(moveTime)", style: .label02, color: .gray8)
+        }
+        
+        readyStatusViewModel.readyTime.bind(with: self) { owner, readyTime in
+            owner.rootView.readyPlanInfoView.requestReadyTimeLabel.setText("준비 소요 시간: \(readyTime)", style: .label02, color: .gray8)
+        }
+        
+        readyStatusViewModel.readyStartTime.bind(with: self) { owner, readyStartTime in
+            DispatchQueue.main.async {
+                owner.rootView.readyPlanInfoView.readyTimeLabel.setText("\(readyStartTime)에 준비하고,\n\(owner.readyStatusViewModel.moveStartTime.value)에 이동을 시작해야 해요", style: .body03)
+                owner.rootView.readyPlanInfoView.readyTimeLabel.setHighlightText(readyStartTime, owner.readyStatusViewModel.moveStartTime.value, style: .body03, color: .maincolor)
+            }
+        }
+        
+        readyStatusViewModel.moveStartTime.bind(with: self) { owner, moveStartTime in
+            DispatchQueue.main.async {
+                owner.rootView.readyPlanInfoView.readyTimeLabel.setText("\(owner.readyStatusViewModel.readyStartTime.value)에 준비하고,\n\(moveStartTime)에 이동을 시작해야 해요", style: .body03)
+                owner.rootView.readyPlanInfoView.readyTimeLabel.setHighlightText(owner.readyStatusViewModel.readyStartTime.value, moveStartTime, style: .body03, color: .maincolor)
             }
         }
         
@@ -217,7 +239,7 @@ private extension ReadyStatusViewController {
     }
     
     func updateReadyStartButton(status: ReadyProgressStatus) {
-        /// 버튼 누를 때 서버 통신하게 설정
+        // TODO: 버튼 누를 때 서버 통신하게 설정
         switch status {
         case .none:
             rootView.myReadyStatusProgressView.readyStartButton.setupButton(

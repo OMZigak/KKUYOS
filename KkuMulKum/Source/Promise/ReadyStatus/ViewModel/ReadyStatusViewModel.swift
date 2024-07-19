@@ -17,12 +17,21 @@ class ReadyStatusViewModel {
     /// bind를 사용하라는 말이 아님
     let promiseName = ObservablePattern<String>("")
     
-    // 준비 정보가 입력되었는지 여부
-//    let isReadyInfoEntered = ObservablePattern<Bool>(false)
-    
     /// 나의 준비현황이 담긴 정보
     /// 설령 데이터가 없다하더라도 약속 시간은 담겨있음.
     let myReadyStatus = ObservablePattern<MyReadyStatusModel?>(nil)
+    
+    // 준비 시작 시간
+    var readyStartTime = ObservablePattern<String>("")
+    
+    // 준비 소요 시간
+    var readyTime = ObservablePattern<String>("")
+    
+    // 이동 시작 시간
+    var moveStartTime = ObservablePattern<String>("")
+    
+    // 이동 소요 시간
+    var moveTime = ObservablePattern<String>("")
     
     // 현재 준비 상태에 대한 버튼 처리
     let myReadyProgressStatus = ObservablePattern<ReadyProgressStatus>(.none)
@@ -63,6 +72,55 @@ class ReadyStatusViewModel {
 }
 
 extension ReadyStatusViewModel {
+    func convertMinute() {
+        let preparationHours = (self.myReadyStatus.value?.preparationTime ?? 0) / 60
+        let preparationMinutes = (self.myReadyStatus.value?.preparationTime ?? 0) % 60
+        
+        readyTime.value = preparationHours == 0 ? "\(preparationMinutes)분" : "\(preparationHours)시간 \(preparationMinutes)분"
+        
+        let travelHours = (self.myReadyStatus.value?.travelTime ?? 0) / 60
+        let travelMinutes = (self.myReadyStatus.value?.travelTime ?? 0) % 60
+        
+        moveTime.value = travelHours == 0 ? "\(travelMinutes)분" : "\(travelHours)시간 \(travelMinutes)분"
+    }
+    
+    func calculatePrepareTime() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        
+        let promiseTime = self.myReadyStatus.value?.promiseTime ?? ""
+        let readyTime = self.myReadyStatus.value?.preparationTime ?? 0
+        let moveTime = self.myReadyStatus.value?.travelTime ?? 0
+        
+        
+        guard let promiseDate = dateFormatter.date(from: promiseTime) else {
+            print("Invalid date format: \(promiseTime)")
+            return
+        }
+        
+        let totalPrepTime = TimeInterval((readyTime + moveTime) * 60)
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH시 mm분"
+        timeFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        
+        print("약속 시간: \(timeFormatter.string(from: promiseDate))")
+        print("준비 시간: \(readyTime) 분")
+        print("이동 시간: \(moveTime) 분")
+        print("총 준비 시간: \(totalPrepTime / 60) 분")
+        
+        let readyStartTime = promiseDate.addingTimeInterval(-TimeInterval(readyTime + moveTime) * 60)
+        let moveStartTime = promiseDate.addingTimeInterval(-TimeInterval(moveTime) * 60)
+        
+        self.readyStartTime.value = timeFormatter.string(from: readyStartTime)
+        print("준비 시작 시간: \(self.readyStartTime.value)")
+
+        self.moveStartTime.value = timeFormatter.string(from: moveStartTime)
+        print("이동 시작 시간: \(self.moveStartTime.value)")
+    }
+    
     func fetchMyReadyStatus() {
         Task {
             do {

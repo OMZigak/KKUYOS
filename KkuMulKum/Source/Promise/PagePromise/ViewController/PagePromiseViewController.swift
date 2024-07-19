@@ -63,7 +63,7 @@ class PagePromiseViewController: BaseViewController {
         
         tardyViewController = TardyViewController(
             tardyViewModel: TardyViewModel(
-                tardyService: MockTardyService(),
+                tardyService: PromiseService(),
                 promiseID: promiseViewModel.promiseID
             )
         )

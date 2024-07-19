@@ -19,6 +19,8 @@ class TardyEmptyView: BaseView {
     
     private let emptyContentLabel: UILabel = UILabel().then {
         $0.setText("꾸물이들이 도착하길\n기다리는 중이에요", style: .body05, color: .gray3)
+    }.then {
+        $0.textAlignment = .center
     }
     
     

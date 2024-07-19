@@ -21,7 +21,7 @@ class TardyPenaltyView: BaseView {
         $0.setText("벌칙", style: .caption02, color: .gray8)
     }
     
-    private let contentLabel: UILabel = UILabel().then {
+    let contentLabel: UILabel = UILabel().then {
         $0.setText("탕후루 릴스 찍기", style: .body03, color: .gray8)
     }
     

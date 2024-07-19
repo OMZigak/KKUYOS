@@ -12,10 +12,10 @@ class TardyCollectionViewCell: BaseCollectionViewCell {
     
     // MARK: Property
 
-    private let profileImageView: UIImageView = UIImageView().then {
+    let profileImageView: UIImageView = UIImageView().then {
         $0.image = .imgProfile
         $0.contentMode = .scaleAspectFill
-        $0.layer.cornerRadius = 67 / 2
+        $0.layer.cornerRadius = Screen.height(67) / 2
         $0.clipsToBounds = true
     }
     
