@@ -38,20 +38,19 @@ class OurReadyStatusCollectionViewCell: BaseCollectionViewCell {
     
     override func setupAutoLayout() {
         profileImageView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(14)
-            $0.bottom.equalToSuperview().inset(14)
+            $0.top.bottom.equalToSuperview().inset(14)
             $0.leading.equalToSuperview().offset(12)
             $0.height.equalTo(Screen.height(44))
             $0.width.equalTo(profileImageView.snp.height)
         }
         
         nameLabel.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.centerY.equalTo(profileImageView)
             $0.leading.equalTo(profileImageView.snp.trailing).offset(13)
         }
         
         readyStatusButton.snp.makeConstraints {
-            $0.centerY.equalToSuperview()
+            $0.centerY.equalTo(profileImageView)
             $0.trailing.equalToSuperview().inset(12)
             $0.height.equalTo(Screen.height(28))
             $0.width.equalTo(Screen.width(68))

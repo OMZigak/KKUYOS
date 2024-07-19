@@ -53,7 +53,7 @@ class PagePromiseViewController: BaseViewController {
         )
         
         readyStatusViewModel = ReadyStatusViewModel(
-            readyStatusService: MockReadyStatusService(),
+            readyStatusService: PromiseService(),
             promiseID: promiseViewModel.promiseID
         )
         

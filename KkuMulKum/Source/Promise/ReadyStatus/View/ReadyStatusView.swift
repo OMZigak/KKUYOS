@@ -62,6 +62,7 @@ class ReadyStatusView: BaseView {
             $0.estimatedItemSize = .init(width: Screen.width(335), height: Screen.height(72))
         }).then {
             $0.backgroundColor = .clear
+            $0.isScrollEnabled = false
             $0.register(
                 OurReadyStatusCollectionViewCell.self,
                 forCellWithReuseIdentifier: OurReadyStatusCollectionViewCell.reuseIdentifier
@@ -98,7 +99,8 @@ class ReadyStatusView: BaseView {
         }
         
         contentView.snp.makeConstraints {
-            $0.edges.width.height.equalToSuperview()
+            $0.edges.width.equalToSuperview()
+            $0.height.greaterThanOrEqualToSuperview()
         }
         
         baseStackView.snp.makeConstraints {

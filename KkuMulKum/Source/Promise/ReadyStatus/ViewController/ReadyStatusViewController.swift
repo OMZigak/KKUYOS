@@ -39,7 +39,6 @@ class ReadyStatusViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // TODO: 서버 통신해서
         readyStatusViewModel.fetchMyReadyStatus()
         readyStatusViewModel.fetchPromiseParticipantList()
     }
@@ -49,7 +48,6 @@ class ReadyStatusViewController: BaseViewController {
     }
     
     override func setupAction() {
-        // TODO: 각 함수에서 서버 통신 할 수 있도록 설정
         rootView.myReadyStatusProgressView.readyStartButton.addTarget(
             self,
             action: #selector(readyStartButtonDidTapped),
@@ -82,7 +80,6 @@ class ReadyStatusViewController: BaseViewController {
     
     @objc
     func moveStartButtonDidTapped() {
-        // TODO: 늦었을 때 꾸물거릴 시간이 없어요 팝업 뜨도록 설정
         readyStatusViewModel.myReadyProgressStatus.value = .move
         rootView.myReadyStatusProgressView.moveStartButton.isEnabled.toggle()
     }
@@ -93,11 +90,8 @@ class ReadyStatusViewController: BaseViewController {
         rootView.myReadyStatusProgressView.arrivalButton.isEnabled.toggle()
     }
     
-    /// 눌렀을 때 준비 정보 입력하기 화면으로 넘어가도록 설정
     @objc
     func enterReadyButtonDidTapped() {
-        // TODO: 유진이가 promiseID, promiseName, promiseTime 를 전달하면 됩니다.
-        
         guard !readyStatusViewModel.promiseName.value.isEmpty else { return }
         
         guard let readyStatusInfo = readyStatusViewModel.myReadyStatus.value else { return }
@@ -169,9 +163,20 @@ extension ReadyStatusViewController: UICollectionViewDataSource {
 
 private extension ReadyStatusViewController {
     func setupBinding() {
-        readyStatusViewModel.isReadyInfoEntered.bind(with: self) { owner, status in
+        readyStatusViewModel.myReadyStatus.bind(with: self) { owner, model in
             DispatchQueue.main.async {
-                owner.updateReadyInfoView(flag: status)
+                guard let model else {
+                    owner.updateReadyInfoView(flag: false)
+                    return
+                }
+                
+                if model.preparationTime == nil {
+                    owner.updateReadyInfoView(flag: false)
+                    return
+                }
+                // TODO: 시간 계산 로직 필요..
+                owner.updateReadyInfoView(flag: true)
+                owner.rootView.readyPlanInfoView.configure()
             }
         }
         
@@ -200,13 +205,13 @@ private extension ReadyStatusViewController {
         rootView.readyPlanInfoView.isHidden = !flag
     }
     
-    // TODO: 버튼 눌렀을 때 연결될 수 있도록 설정
     /// 준비 시작이나 이동 시작 시간이 늦었을 때 팝업 표시 여부 변경
     func updatePopUpImageView(isLate: Bool) {
         rootView.popUpImageView.isHidden = !isLate
     }
     
     func updateReadyStartButton(status: ReadyProgressStatus) {
+        /// 버튼 누를 때 서버 통신하게 설정
         switch status {
         case .none:
             rootView.myReadyStatusProgressView.readyStartButton.setupButton(

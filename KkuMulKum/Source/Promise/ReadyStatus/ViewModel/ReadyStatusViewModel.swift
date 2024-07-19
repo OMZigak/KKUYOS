@@ -18,7 +18,7 @@ class ReadyStatusViewModel {
     let promiseName = ObservablePattern<String>("")
     
     // 준비 정보가 입력되었는지 여부
-    let isReadyInfoEntered = ObservablePattern<Bool>(false)
+//    let isReadyInfoEntered = ObservablePattern<Bool>(false)
     
     /// 나의 준비현황이 담긴 정보
     /// 설령 데이터가 없다하더라도 약속 시간은 담겨있음.
