@@ -134,6 +134,10 @@ private extension CreateMeetingViewController {
             for: .touchUpInside
         )
         
+        inviteCodePopUpViewController.rootView.removeGestureRecognizer(
+            inviteCodePopUpViewController.rootView.gestureRecognizers![0]
+        )
+        
         createMeetingViewModel.createMeeting(
             name: createMeetingViewModel.meetingName.value
         )
