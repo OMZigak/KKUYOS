@@ -10,9 +10,36 @@ import Foundation
 protocol ReadyStatusServiceType {
     func fetchMyReadyStatus(with promiseID: Int) async throws -> ResponseBodyDTO<MyReadyStatusModel>?
     func fetchPromiseParticipantList(with promiseID: Int) async throws -> ResponseBodyDTO<PromiseParticipantListModel>?
+    func updatePreparationStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
+    func updateDepartureStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
+    func updateArrivalStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
 }
 
 extension PromiseService: ReadyStatusServiceType {
+    func updatePreparationStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return try await request(
+            with: .updatePreparationStatus(
+                promiseID: promiseID
+            )
+        )
+    }
+    
+    func updateDepartureStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return try await request(
+            with: .updateDepartureStatus(
+                promiseID: promiseID
+            )
+        )
+    }
+    
+    func updateArrivalStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return try await request(
+            with: .updateArrivalStatus(
+                promiseID: promiseID
+            )
+        )
+    }
+    
     func fetchMyReadyStatus(with promiseID: Int) async throws -> ResponseBodyDTO<MyReadyStatusModel>? {
         return try await request(
             with: .fetchMyReadyStatus(
@@ -31,6 +58,36 @@ extension PromiseService: ReadyStatusServiceType {
 }
 
 final class MockReadyStatusService: ReadyStatusServiceType {
+    func updatePreparationStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        let mockData = EmptyModel()
+        
+        return ResponseBodyDTO(
+            success: true,
+            data: mockData,
+            error: nil
+        )
+    }
+    
+    func updateDepartureStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        let mockData = EmptyModel()
+        
+        return ResponseBodyDTO(
+            success: true,
+            data: mockData,
+            error: nil
+        )
+    }
+    
+    func updateArrivalStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        let mockData = EmptyModel()
+        
+        return ResponseBodyDTO(
+            success: true,
+            data: mockData,
+            error: nil
+        )
+    }
+    
     func fetchMyReadyStatus(with promiseID: Int) -> ResponseBodyDTO<MyReadyStatusModel>? {
         let mockData = MyReadyStatusModel(
             promiseTime: "",

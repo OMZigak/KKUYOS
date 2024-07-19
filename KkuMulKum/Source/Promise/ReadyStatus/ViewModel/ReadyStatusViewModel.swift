@@ -156,4 +156,52 @@ extension ReadyStatusViewModel {
             }
         }
     }
+    
+    func updatePreparationStatus() {
+        Task {
+            do {
+                let responseBody = try await readyStatusService.updatePreparationStatus(
+                    with: promiseID
+                )
+                
+                guard let success = responseBody?.success,
+                      success == true
+                else {
+                    return
+                }
+            }
+        }
+    }
+    
+    func updateDepartureStatus() {
+        Task {
+            do {
+                let responseBody = try await readyStatusService.updateDepartureStatus(
+                    with: promiseID
+                )
+                
+                guard let success = responseBody?.success,
+                      success == true
+                else {
+                    return
+                }
+            }
+        }
+    }
+    
+    func updateArrivalStatus() {
+        Task {
+            do {
+                let responseBody = try await readyStatusService.updateArrivalStatus(
+                    with: promiseID
+                )
+                
+                guard let success = responseBody?.success,
+                      success == true
+                else {
+                    return
+                }
+            }
+        }
+    }
 }
