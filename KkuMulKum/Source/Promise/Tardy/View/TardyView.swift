@@ -12,7 +12,7 @@ class TardyView: BaseView {
     
     // MARK: Property
 
-    private let tardyPenaltyView: TardyPenaltyView = TardyPenaltyView().then {
+    let tardyPenaltyView: TardyPenaltyView = TardyPenaltyView().then {
         $0.layer.cornerRadius = 8
     }
     
@@ -20,7 +20,7 @@ class TardyView: BaseView {
         $0.setText("이번 약속의 지각 꾸물이는?", style: .head01, color: .gray8)
     }
     
-    private let tardyEmptyView: TardyEmptyView = TardyEmptyView()
+    let tardyEmptyView: TardyEmptyView = TardyEmptyView()
     
     let tardyCollectionView: UICollectionView = UICollectionView(
         frame: .zero,
@@ -74,7 +74,7 @@ class TardyView: BaseView {
         tardyEmptyView.snp.makeConstraints {
             $0.top.equalTo(titleLabel.snp.bottom).offset(108)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(Screen.height(192))
+            $0.height.equalTo(Screen.height(210))
             $0.width.equalTo(Screen.width(112))
         }
         

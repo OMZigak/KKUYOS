@@ -33,14 +33,14 @@ class TardyViewController: BaseViewController {
     // MARK: - Setup
 
     override func loadView() {
-        let state = !tardyViewModel.hasTardy.value && tardyViewModel.isPastDue.value
-        view = state ? tardyView : arriveView
+        view = tardyViewModel.isPastDue.value ? arriveView : tardyView
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // TODO: 서버 통신하고 데이터 바인딩
+        tardyViewModel.fetchTardyInfo()
+        tardyViewModel.updatePromiseCompletion()
     }
     
     override func viewDidLoad() {
@@ -50,7 +50,6 @@ class TardyViewController: BaseViewController {
     }
     
     override func setupDelegate() {
-        tardyView.tardyCollectionView.delegate = self
         tardyView.tardyCollectionView.dataSource = self
     }
 }
@@ -61,24 +60,39 @@ class TardyViewController: BaseViewController {
 private extension TardyViewController {
     func setupBinding() {
         /// 시간이 지나고 지각자가 없을 때 arriveView로 띄워짐
-        tardyViewModel.hasTardy.bind(with: self) { owner, flag in
-            let state = !flag && owner.tardyViewModel.isPastDue.value
-            owner.view = state ? owner.tardyView : owner.arriveView
+        tardyViewModel.isPastDue.bind(with: self) { owner, isPastDue in
+            DispatchQueue.main.async {
+                owner.tardyView.tardyCollectionView.isHidden = !isPastDue
+                owner.tardyView.tardyEmptyView.isHidden = isPastDue
+                owner.tardyView.finishMeetingButton.isEnabled = isPastDue
+            }
         }
         
-        /// isFinishButtonEnabled에 따라서 버튼 활성화 상태 변경
-        tardyViewModel.isFinishButtonEnabled.bind(with: self) { owner, flag in
-            self.tardyView.finishMeetingButton.isEnabled = flag
+        tardyViewModel.penalty.bind(with: self) {
+            owner,
+            penalty in
+            DispatchQueue.main.async {
+                owner.tardyView.tardyPenaltyView.contentLabel.setText(
+                    penalty,
+                    style: .body03,
+                    color: .gray8
+                )
+            }
+        }
+        
+        tardyViewModel.hasTardy.bind(with: self) { owner, hasTardy in
+            DispatchQueue.main.async {
+                owner.view = hasTardy && owner.tardyViewModel.isPastDue.value ? owner.arriveView : owner.tardyView
+            }
+        }
+        
+        tardyViewModel.comers.bind(with: self) { owner, comers in
+            DispatchQueue.main.async {
+                owner.tardyView.tardyCollectionView.reloadData()
+            }
         }
     }
 }
-
-// MARK: UICollectionViewDelegate
-
-extension TardyViewController: UICollectionViewDelegate {
-    
-}
-
 
 // MARK: UICollectionViewDataSource
 
@@ -87,8 +101,7 @@ extension TardyViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        // TODO: 데이터 바인딩
-        return 10
+        return tardyViewModel.comers.value?.count ?? 0
     }
     
     func collectionView(
@@ -99,6 +112,18 @@ extension TardyViewController: UICollectionViewDataSource {
             withReuseIdentifier: TardyCollectionViewCell.reuseIdentifier,
             for: indexPath
         ) as? TardyCollectionViewCell else { return UICollectionViewCell() }
+        
+        guard let data = tardyViewModel.comers.value?[indexPath.row] else { return cell }
+        
+        cell.nameLabel.setText(data.name, style: .body06, color: .gray6)
+        
+        guard let image = URL(string: data.profileImageURL) else {
+            cell.profileImageView.image = .imgProfile
+            
+            return cell
+        }
+        
+        cell.profileImageView.kf.setImage(with: image)
         
         return cell
     }
