@@ -15,6 +15,7 @@ enum PromiseTargetType {
     case updatePreparationStatus(promiseID: Int)
     case updateDepartureStatus(promiseID: Int)
     case updateArrivalStatus(promiseID: Int)
+    case fetchMeetingMemberExcludeMe(meetingID: Int)
     case fetchMeetingPromiseList(meetingID: Int)
     case addPromise(meetingID: Int, request: AddPromiseRequestModel)
     case fetchPromiseInfo(promiseID: Int)
@@ -50,6 +51,8 @@ extension PromiseTargetType: TargetType {
             return "/api/v1/promises/\(promiseID)/departure"
         case .updateArrivalStatus(let promiseID):
             return "/api/v1/promises/\(promiseID)/arrival"
+        case .fetchMeetingMemberExcludeMe(let meetingID):
+            return "/api/v1/meetings/\(meetingID)/members"
         case .fetchMeetingPromiseList(let meetingID):
             return "/api/v1/meetings/\(meetingID)/promises"
         case .addPromise(let meetingID, _):
@@ -71,9 +74,9 @@ extension PromiseTargetType: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .fetchTodayNextPromise, .fetchUpcomingPromiseList, .fetchMeetingPromiseList, 
-                .fetchPromiseInfo, .fetchMyReadyStatus, .fetchPromiseParticipantList,
-                .fetchTardyInfo:
+        case .fetchTodayNextPromise, .fetchUpcomingPromiseList, .fetchMeetingMemberExcludeMe,
+                .fetchMeetingPromiseList, .fetchPromiseInfo, .fetchMyReadyStatus,
+                .fetchPromiseParticipantList, .fetchTardyInfo:
             return .get
         case .addPromise:
             return .post
@@ -94,6 +97,11 @@ extension PromiseTargetType: TargetType {
             return .requestJSONEncodable(request)
         case .addPromise(_, let request):
             return .requestJSONEncodable(request)
+        case .fetchMeetingMemberExcludeMe:
+            return .requestParameters(
+                parameters: ["exclude": "me"],
+                encoding: URLEncoding.queryString
+            )
         }
     }
     

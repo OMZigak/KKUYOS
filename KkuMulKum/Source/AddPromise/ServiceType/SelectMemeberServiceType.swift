@@ -8,15 +8,25 @@
 import Foundation
 
 protocol SelectMemeberServiceType {
-    func fetchMeetingMemberList(
+    func fetchMeetingMemberListExcludeLoginUser(
         with meetingID: Int
     ) async throws -> ResponseBodyDTO<MeetingMembersModel>?
 }
 
-extension MeetingService: SelectMemeberServiceType {}
+extension PromiseService: SelectMemeberServiceType {
+    func fetchMeetingMemberListExcludeLoginUser(
+        with meetingID: Int
+    ) async throws -> ResponseBodyDTO<MeetingMembersModel>? {
+        return try await request(
+            with: .fetchMeetingMemberExcludeMe(
+                meetingID: meetingID
+            )
+        )
+    }
+}
 
 final class MockSelectMemberService: SelectMemeberServiceType {
-    func fetchMeetingMemberList(
+    func fetchMeetingMemberListExcludeLoginUser(
         with meetingID: Int
     ) async throws -> ResponseBodyDTO<MeetingMembersModel>? {
         let mockData = MeetingMembersModel(

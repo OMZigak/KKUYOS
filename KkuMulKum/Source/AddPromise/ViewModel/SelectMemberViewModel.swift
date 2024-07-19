@@ -92,7 +92,9 @@ private extension SelectMemberViewModel {
     func fetchMeetingMembers() {
         Task {
             do {
-                guard let responseBody = try await service.fetchMeetingMemberList(with: meetingID),
+                guard let responseBody = try await service.fetchMeetingMemberListExcludeLoginUser(
+                    with: meetingID
+                ),
                       responseBody.success
                 else {
                     memberListRelay.accept([])

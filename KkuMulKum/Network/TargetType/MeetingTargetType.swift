@@ -36,9 +36,9 @@ extension MeetingTargetType: TargetType {
             return "/api/v1/meetings/register"
         case .fetchMeetingList:
             return "/api/v1/meetings"
-        case  .fetchMeetingInfo(meetingID: let meetingID):
+        case  .fetchMeetingInfo(let meetingID):
             return "/api/v1/meetings/\(meetingID)"
-        case .fetchMeetingMember(meetingID: let meetingID):
+        case .fetchMeetingMember(let meetingID):
             return "/api/v1/meetings/\(meetingID)/members"
         case .fetchMeetingPromiseList(let meetingID):
             return "/api/v1/meetings/\(meetingID)/promises"
@@ -56,9 +56,9 @@ extension MeetingTargetType: TargetType {
     
     var task: Task {
         switch self {
-        case .createMeeting(request: let request):
+        case .createMeeting(let request):
             return .requestJSONEncodable(request)
-        case .joinMeeting(request: let request):
+        case .joinMeeting(let request):
             return .requestJSONEncodable(request)
         case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember, .fetchMeetingPromiseList:
             return .requestPlain
