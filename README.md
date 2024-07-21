@@ -1,4 +1,5 @@
 ![Frame 1000002424](https://github.com/OMZigak/iOS/assets/144984293/d5e851a7-4ecf-467f-a09a-7cb3433b996d)
+![표지](https://github.com/user-attachments/assets/f1982348-39cd-45c4-bb73-3266637734be)
 ```
 이 세상 모든 지각 꾸물이들의 정시 도착 꿈을 이뤄줄 꿈같은 서비스, 꾸물꿈 ⏰💤
 34기 NOW SOPT AppJam 꾸물꿈 프로젝트입니다.
