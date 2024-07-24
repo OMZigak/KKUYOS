@@ -12,7 +12,7 @@ class TardyViewModel {
     
     // MARK: Property
 
-    private let tardyService: TardyServiceType
+    private let tardyService: PromiseServiceType
     let promiseID: Int
     
     var hasTardy: ObservablePattern<Bool> = ObservablePattern<Bool>(false)
@@ -25,7 +25,7 @@ class TardyViewModel {
     // MARK: Initialize
 
     init(
-        tardyService: TardyServiceType,
+        tardyService: PromiseServiceType,
         promiseID: Int
     ) {
         self.tardyService = tardyService

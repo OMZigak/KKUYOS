@@ -158,7 +158,6 @@
 		DDFA50802C4693BD000A62E2 /* ProfileSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507C2C4693BD000A62E2 /* ProfileSetupView.swift */; };
 		DDFA50812C4693BD000A62E2 /* ProfileSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507E2C4693BD000A62E2 /* ProfileSetupViewController.swift */; };
 		DE0137D32C43C5E50088C777 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0137D22C43C5E50088C777 /* MyPageView.swift */; };
-		DE12F79B2C47D84700C7059D /* TardyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE12F79A2C47D84700C7059D /* TardyService.swift */; };
 		DE159D322C406E1600425101 /* MyPageAlarmSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2A2C406E1600425101 /* MyPageAlarmSettingView.swift */; };
 		DE159D332C406E1600425101 /* MyPageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2B2C406E1600425101 /* MyPageContentView.swift */; };
 		DE159D342C406E1600425101 /* MyPageEtcSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2C2C406E1600425101 /* MyPageEtcSettingView.swift */; };
@@ -346,7 +345,6 @@
 		DDFA507C2C4693BD000A62E2 /* ProfileSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupView.swift; sourceTree = "<group>"; };
 		DDFA507E2C4693BD000A62E2 /* ProfileSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewController.swift; sourceTree = "<group>"; };
 		DE0137D22C43C5E50088C777 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
-		DE12F79A2C47D84700C7059D /* TardyService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TardyService.swift; sourceTree = "<group>"; };
 		DE159D2A2C406E1600425101 /* MyPageAlarmSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageAlarmSettingView.swift; sourceTree = "<group>"; };
 		DE159D2B2C406E1600425101 /* MyPageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageContentView.swift; sourceTree = "<group>"; };
 		DE159D2C2C406E1600425101 /* MyPageEtcSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageEtcSettingView.swift; sourceTree = "<group>"; };
@@ -762,7 +760,7 @@
 		DD39768D2C41CA0700E2A4C4 /* PagePromise */ = {
 			isa = PBXGroup;
 			children = (
-				DD3F9DD92C49CF05008E1FF7 /* Service */,
+				DD3F9DD92C49CF05008E1FF7 /* ServiceType */,
 				DD39768E2C41CABE00E2A4C4 /* ViewController */,
 				DD39768F2C41CAC700E2A4C4 /* ViewModel */,
 				DD3976902C41CACF00E2A4C4 /* View */,
@@ -853,12 +851,12 @@
 			path = ServiceType;
 			sourceTree = "<group>";
 		};
-		DD3F9DD92C49CF05008E1FF7 /* Service */ = {
+		DD3F9DD92C49CF05008E1FF7 /* ServiceType */ = {
 			isa = PBXGroup;
 			children = (
 				DD3F9DD72C49C25D008E1FF7 /* PromiseServiceType.swift */,
 			);
-			path = Service;
+			path = ServiceType;
 			sourceTree = "<group>";
 		};
 		DD41BEFD2C41D85F0095A068 /* View */ = {
@@ -996,14 +994,6 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		DD49099A2C441709003ED304 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				DE12F79A2C47D84700C7059D /* TardyService.swift */,
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
 		DD7AB15F2C513B66008308DE /* SetReadyInfo */ = {
 			isa = PBXGroup;
 			children = (
@@ -1112,7 +1102,6 @@
 		DD931B682C3D9DAD00526452 /* Tardy */ = {
 			isa = PBXGroup;
 			children = (
-				DD49099A2C441709003ED304 /* Service */,
 				DD3976972C41CC3300E2A4C4 /* ViewController */,
 				DD41BEFD2C41D85F0095A068 /* View */,
 				DD4909992C441228003ED304 /* ViewModel */,
@@ -1768,7 +1757,6 @@
 				A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */,
 				DD4909982C441215003ED304 /* TardyViewModel.swift in Sources */,
 				DEA932182C3F180800FDF637 /* MeetingPromisesModel.swift in Sources */,
-				DE12F79B2C47D84700C7059D /* TardyService.swift in Sources */,
 				DE159D342C406E1600425101 /* MyPageEtcSettingView.swift in Sources */,
 				DE9E18842C3BA84500DB76B4 /* CustomTextField.swift in Sources */,
 				A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */,

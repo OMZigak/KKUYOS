@@ -22,6 +22,22 @@ protocol PromiseServiceType {
 }
 
 extension PromiseService: PromiseServiceType {
+    func fetchTardyInfo(with promiseID: Int) async throws -> ResponseBodyDTO<TardyInfoModel>? {
+        return try await request(
+            with: .fetchTardyInfo(
+                promiseID: promiseID
+            )
+        )
+    }
+    
+    func updatePromiseCompletion(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return try await request(
+            with: .updatePromiseCompletion(
+                promiseID: promiseID
+            )
+        )
+    }
+    
     func fetchPromiseInfo(with promiseId: Int) async throws -> ResponseBodyDTO<PromiseInfoModel>? {
         return try await request(
             with: .fetchPromiseInfo(
