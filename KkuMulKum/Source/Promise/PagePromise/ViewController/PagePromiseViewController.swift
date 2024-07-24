@@ -53,7 +53,7 @@ class PagePromiseViewController: BaseViewController {
         )
         
         readyStatusViewModel = ReadyStatusViewModel(
-            readyStatusService: PromiseService(),
+            promiseService: PromiseService(),
             promiseID: promiseViewModel.promiseID
         )
         

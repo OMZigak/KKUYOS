@@ -13,7 +13,7 @@ class PagePromiseViewModel {
     
     // MARK: Property
     
-    private let service: PagePromiseServiceType
+    private let service: PromiseServiceType
 
     let promiseID: Int
     let currentPage = ObservablePattern<Int>(0)
@@ -23,7 +23,7 @@ class PagePromiseViewModel {
     
     // MARK: Initialize
 
-    init(promiseID: Int, service: PagePromiseServiceType) {
+    init(promiseID: Int, service: PromiseServiceType) {
         self.service = service
         self.promiseID = promiseID
     }

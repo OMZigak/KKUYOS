@@ -15,9 +15,9 @@ class PromiseInfoViewModel {
     let promiseInfo = ObservablePattern<PromiseInfoModel?>(nil)
     
     /// 굳이 서비스 하나 더 만들 필요 없을 것 같아서 같은 API 사용하는 ReadyStatusServiceType 가져옴
-    private let promiseInfoService: ReadyStatusServiceType
+    private let promiseInfoService: PromiseServiceType
     
-    init(promiseID: Int, promiseInfoService: ReadyStatusServiceType) {
+    init(promiseID: Int, promiseInfoService: PromiseServiceType) {
         self.promiseID = promiseID
         self.promiseInfoService = promiseInfoService
     }

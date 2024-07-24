@@ -43,7 +43,7 @@ class ReadyStatusViewModel {
     let participantInfos = ObservablePattern<[Participant]>([])
     
     // 서비스 객체
-    private let readyStatusService: ReadyStatusServiceType
+    private let promiseService: PromiseServiceType
     
     // 현재 시간 받아오기 위한 dateFormatter 구헌
     private let dateFormatter = DateFormatter().then {
@@ -53,8 +53,8 @@ class ReadyStatusViewModel {
     }
     
     // 초기화
-    init(readyStatusService: ReadyStatusServiceType, promiseID: Int) {
-        self.readyStatusService = readyStatusService
+    init(promiseService: PromiseServiceType, promiseID: Int) {
+        self.promiseService = promiseService
         self.promiseID = promiseID
     }
     
@@ -153,7 +153,7 @@ extension ReadyStatusViewModel {
     func fetchMyReadyStatus() {
         Task {
             do {
-                let responseBody = try await readyStatusService.fetchMyReadyStatus(with: promiseID)
+                let responseBody = try await promiseService.fetchMyReadyStatus(with: promiseID)
                 
                 guard let success = responseBody?.success,
                       success == true
@@ -170,7 +170,7 @@ extension ReadyStatusViewModel {
     func fetchPromiseParticipantList() {
         Task {
             do {
-                let responseBody = try await readyStatusService.fetchPromiseParticipantList(
+                let responseBody = try await promiseService.fetchPromiseParticipantList(
                     with: promiseID
                 )
                 
@@ -189,7 +189,7 @@ extension ReadyStatusViewModel {
     func updatePreparationStatus() {
         Task {
             do {
-                let responseBody = try await readyStatusService.updatePreparationStatus(
+                let responseBody = try await promiseService.updatePreparationStatus(
                     with: promiseID
                 )
                 
@@ -211,7 +211,7 @@ extension ReadyStatusViewModel {
     func updateDepartureStatus() {
         Task {
             do {
-                let responseBody = try await readyStatusService.updateDepartureStatus(
+                let responseBody = try await promiseService.updateDepartureStatus(
                     with: promiseID
                 )
                 
@@ -233,7 +233,7 @@ extension ReadyStatusViewModel {
     func updateArrivalStatus() {
         Task {
             do {
-                let responseBody = try await readyStatusService.updateArrivalStatus(
+                let responseBody = try await promiseService.updateArrivalStatus(
                     with: promiseID
                 )
                 
