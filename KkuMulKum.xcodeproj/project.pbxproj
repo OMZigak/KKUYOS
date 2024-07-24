@@ -148,7 +148,7 @@
 		DDAF1C902C3D6E3D008A37D3 /* PagePromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8A2C3D6E3D008A37D3 /* PagePromiseViewModel.swift */; };
 		DDAF1C912C3D6E3D008A37D3 /* TardyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */; };
 		DDAF1C922C3D6E3D008A37D3 /* PromiseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */; };
-		DDAF1C932C3D6E3D008A37D3 /* PagePromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8D2C3D6E3D008A37D3 /* PagePromiseViewController.swift */; };
+		DDAF1C932C3D6E3D008A37D3 /* PromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDAF1C8D2C3D6E3D008A37D3 /* PromiseViewController.swift */; };
 		DDB0D7D32C469C77000CF782 /* PagePromiseSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB0D7D22C469C77000CF782 /* PagePromiseSegmentedControl.swift */; };
 		DDB0D7D82C46C5FA000CF782 /* PromiseInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB0D7D72C46C5FA000CF782 /* PromiseInfoViewModel.swift */; };
 		DDE7D2C62C47D2BB005A921F /* MeetingTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDE7D2C52C47D2BB005A921F /* MeetingTargetType.swift */; };
@@ -337,7 +337,7 @@
 		DDAF1C8A2C3D6E3D008A37D3 /* PagePromiseViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseViewModel.swift; sourceTree = "<group>"; };
 		DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TardyViewController.swift; sourceTree = "<group>"; };
 		DDAF1C8C2C3D6E3D008A37D3 /* PromiseInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseInfoViewController.swift; sourceTree = "<group>"; };
-		DDAF1C8D2C3D6E3D008A37D3 /* PagePromiseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseViewController.swift; sourceTree = "<group>"; };
+		DDAF1C8D2C3D6E3D008A37D3 /* PromiseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseViewController.swift; sourceTree = "<group>"; };
 		DDB0D7D22C469C77000CF782 /* PagePromiseSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PagePromiseSegmentedControl.swift; sourceTree = "<group>"; };
 		DDB0D7D72C46C5FA000CF782 /* PromiseInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoViewModel.swift; sourceTree = "<group>"; };
 		DDE7D2C52C47D2BB005A921F /* MeetingTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingTargetType.swift; sourceTree = "<group>"; };
@@ -773,7 +773,7 @@
 		DD39768E2C41CABE00E2A4C4 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
-				DDAF1C8D2C3D6E3D008A37D3 /* PagePromiseViewController.swift */,
+				DDAF1C8D2C3D6E3D008A37D3 /* PromiseViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1052,7 +1052,6 @@
 		DD8626502C4606A300E4F980 /* ReadyStatus */ = {
 			isa = PBXGroup;
 			children = (
-				DD86265C2C4606A300E4F980 /* Service */,
 				DD86265E2C4606A300E4F980 /* ViewController */,
 				DD8626512C4606A300E4F980 /* ViewModel */,
 				DD8626542C4606A300E4F980 /* View */,
@@ -1079,13 +1078,6 @@
 				DD86265B2C4606A300E4F980 /* ReadyStatusProgressView.swift */,
 			);
 			path = View;
-			sourceTree = "<group>";
-		};
-		DD86265C2C4606A300E4F980 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Service;
 			sourceTree = "<group>";
 		};
 		DD86265E2C4606A300E4F980 /* ViewController */ = {
@@ -1803,7 +1795,7 @@
 				A39F2B212C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift in Sources */,
 				DE6D4D132C3F14D80005584B /* MeetingMemberCell.swift in Sources */,
 				DD3F9DD82C49C25D008E1FF7 /* PromiseServiceType.swift in Sources */,
-				DDAF1C932C3D6E3D008A37D3 /* PagePromiseViewController.swift in Sources */,
+				DDAF1C932C3D6E3D008A37D3 /* PromiseViewController.swift in Sources */,
 				789D73BE2C47FE0F00C7077D /* AuthInterceptor.swift in Sources */,
 				789D73B32C47CC6D00C7077D /* LocalNotificationManager.swift in Sources */,
 				DE9E18922C3BCC9D00DB76B4 /* SocialLoginRequestModel.swift in Sources */,

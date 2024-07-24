@@ -76,7 +76,7 @@ final class MeetingInfoViewController: BaseViewController {
 
 extension MeetingInfoViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let pagePromiseViewController = PagePromiseViewController(
+        let pagePromiseViewController = PromiseViewController(
             promiseViewModel: PagePromiseViewModel(
                 promiseID: viewModel.meetingPromises[indexPath.item].promiseID, 
                 service: PromiseService()

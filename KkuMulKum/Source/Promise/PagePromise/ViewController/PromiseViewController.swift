@@ -7,7 +7,7 @@
 
 import UIKit
 
-class PagePromiseViewController: BaseViewController {
+class PromiseViewController: BaseViewController {
     
     
     // MARK: Property
@@ -166,7 +166,7 @@ class PagePromiseViewController: BaseViewController {
 
 // MARK: - Extension
 
-extension PagePromiseViewController {
+extension PromiseViewController {
     @objc private func didSegmentedControlIndexUpdated() {
         let condition = promiseViewModel.currentPage.value <= promiseSegmentedControl.selectedSegmentIndex
         let direction: UIPageViewController.NavigationDirection = condition ? .forward : .reverse
@@ -200,7 +200,7 @@ extension PagePromiseViewController {
 
 // MARK: - UIPageViewControllerDataSource
 
-extension PagePromiseViewController: UIPageViewControllerDataSource {
+extension PromiseViewController: UIPageViewControllerDataSource {
     func pageViewController(
         _ pageViewController: UIPageViewController,
         viewControllerAfter viewController: UIViewController
@@ -216,7 +216,7 @@ extension PagePromiseViewController: UIPageViewControllerDataSource {
     }
 }
 
-private extension PagePromiseViewController {
+private extension PromiseViewController {
     func setupBindings() {
         promiseViewModel.promiseInfo.bind { [weak self] model in
             guard let model else { return }
