@@ -1007,8 +1007,46 @@
 		DD7AB15F2C513B66008308DE /* SetReadyInfo */ = {
 			isa = PBXGroup;
 			children = (
+				DD7AB1612C513BD8008308DE /* ViewController */,
+				DD7AB1632C513BEE008308DE /* View */,
+				DD7AB1622C513BE3008308DE /* ViewModel */,
+				DD7AB1602C513BCE008308DE /* Service */,
 			);
 			path = SetReadyInfo;
+			sourceTree = "<group>";
+		};
+		DD7AB1602C513BCE008308DE /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				A39F2B202C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		DD7AB1612C513BD8008308DE /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DD8626602C4606A300E4F980 /* SetReadyInfoViewController.swift */,
+				A39F2B1A2C47C206008DA5F5 /* SetReadyCompletedViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		DD7AB1622C513BE3008308DE /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				DD8626522C4606A300E4F980 /* SetReadyInfoViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		DD7AB1632C513BEE008308DE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DD8626592C4606A300E4F980 /* SetReadyInfoView.swift */,
+				A39F2B182C47BF83008DA5F5 /* SetReadyCompletedView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		DD8626502C4606A300E4F980 /* ReadyStatus */ = {
@@ -1025,7 +1063,6 @@
 		DD8626512C4606A300E4F980 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				DD8626522C4606A300E4F980 /* SetReadyInfoViewModel.swift */,
 				DD8626532C4606A300E4F980 /* ReadyStatusViewModel.swift */,
 			);
 			path = ViewModel;
@@ -1038,8 +1075,6 @@
 				DD8626562C4606A300E4F980 /* ReadyPlanInfoView.swift */,
 				DD8626572C4606A300E4F980 /* OurReadyStatusCollectionViewCell.swift */,
 				DD8626582C4606A300E4F980 /* ReadyStatusView.swift */,
-				DD8626592C4606A300E4F980 /* SetReadyInfoView.swift */,
-				A39F2B182C47BF83008DA5F5 /* SetReadyCompletedView.swift */,
 				DD86265A2C4606A300E4F980 /* ReadyStatusButton.swift */,
 				DD86265B2C4606A300E4F980 /* ReadyStatusProgressView.swift */,
 			);
@@ -1049,7 +1084,6 @@
 		DD86265C2C4606A300E4F980 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				A39F2B202C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1058,8 +1092,6 @@
 			isa = PBXGroup;
 			children = (
 				DD86265F2C4606A300E4F980 /* ReadyStatusViewController.swift */,
-				DD8626602C4606A300E4F980 /* SetReadyInfoViewController.swift */,
-				A39F2B1A2C47C206008DA5F5 /* SetReadyCompletedViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1117,8 +1149,8 @@
 		DDAF1C872C3D6E3D008A37D3 /* Promise */ = {
 			isa = PBXGroup;
 			children = (
-				DD7AB15F2C513B66008308DE /* SetReadyInfo */,
 				DD39768D2C41CA0700E2A4C4 /* PagePromise */,
+				DD7AB15F2C513B66008308DE /* SetReadyInfo */,
 				DD3976912C41CAF900E2A4C4 /* PromiseInfo */,
 				DD8626502C4606A300E4F980 /* ReadyStatus */,
 				DD931B682C3D9DAD00526452 /* Tardy */,
