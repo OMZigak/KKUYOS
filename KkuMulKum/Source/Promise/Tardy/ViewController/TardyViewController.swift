@@ -12,15 +12,15 @@ class TardyViewController: BaseViewController {
     
     // MARK: Property
     
-    let tardyViewModel: TardyViewModel
+    let viewModel: PromiseViewModel
     let tardyView: TardyView = TardyView()
     let arriveView: ArriveView = ArriveView()
     
     
     // MARK: Initialize
     
-    init(tardyViewModel: TardyViewModel) {
-        self.tardyViewModel = tardyViewModel
+    init(tardyViewModel: PromiseViewModel) {
+        self.viewModel = tardyViewModel
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -33,13 +33,13 @@ class TardyViewController: BaseViewController {
     // MARK: - Setup
     
     override func loadView() {
-        view = tardyViewModel.isPastDue.value ? arriveView : tardyView
+        view = viewModel.isPastDue.value ? arriveView : tardyView
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        tardyViewModel.fetchTardyInfo()
+        
     }
     
     override func viewDidLoad() {
@@ -59,7 +59,7 @@ class TardyViewController: BaseViewController {
 private extension TardyViewController {
     func setupBinding() {
         /// 시간이 지나고 지각자가 없을 때 arriveView로 띄워짐
-        tardyViewModel.isPastDue.bind(with: self) { owner, isPastDue in
+        viewModel.isPastDue.bind(with: self) { owner, isPastDue in
             DispatchQueue.main.async {
                 owner.tardyView.tardyCollectionView.isHidden = !isPastDue
                 owner.tardyView.tardyEmptyView.isHidden = isPastDue
@@ -67,7 +67,7 @@ private extension TardyViewController {
             }
         }
         
-        tardyViewModel.penalty.bind(with: self) {
+        viewModel.penalty.bind(with: self) {
             owner,
             penalty in
             DispatchQueue.main.async {
@@ -79,13 +79,13 @@ private extension TardyViewController {
             }
         }
         
-        tardyViewModel.hasTardy.bind(with: self) { owner, hasTardy in
+        viewModel.hasTardy.bind(with: self) { owner, hasTardy in
             DispatchQueue.main.async {
-                owner.view = hasTardy && owner.tardyViewModel.isPastDue.value ? owner.arriveView : owner.tardyView
+                owner.view = hasTardy && owner.viewModel.isPastDue.value ? owner.arriveView : owner.tardyView
             }
         }
         
-        tardyViewModel.comers.bind(with: self) { owner, comers in
+        viewModel.comers.bind(with: self) { owner, comers in
             DispatchQueue.main.async {
                 owner.tardyView.tardyCollectionView.reloadData()
             }
@@ -100,7 +100,7 @@ extension TardyViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return tardyViewModel.comers.value?.count ?? 0
+        return viewModel.comers.value?.count ?? 0
     }
     
     func collectionView(
@@ -112,7 +112,7 @@ extension TardyViewController: UICollectionViewDataSource {
             for: indexPath
         ) as? TardyCollectionViewCell else { return UICollectionViewCell() }
         
-        guard let data = tardyViewModel.comers.value?[indexPath.row] else { return cell }
+        guard let data = viewModel.comers.value?[indexPath.row] else { return cell }
         
         cell.nameLabel.setText(data.name ?? " " , style: .body06, color: .gray6)
         
