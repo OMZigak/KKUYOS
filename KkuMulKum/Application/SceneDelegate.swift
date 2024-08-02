@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             DispatchQueue.main.async {
                 if success {
                     print("Auto login successful, showing main screen")
-                    self?.showMainScreen()
+                    self?.showLoginScreen()
                 } else {
                     print("Auto login failed, showing login screen")
                     self?.showLoginScreen()

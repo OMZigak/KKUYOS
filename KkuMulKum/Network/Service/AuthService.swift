@@ -20,8 +20,12 @@ class AuthService: AuthServiceType {
     private var keychainService: KeychainService
     private let provider = MoyaProvider<AuthTargetType>()
     
+    init(provider: MoyaProvider<AuthTargetType> = MoyaProvider(plugins: [MoyaLoggingPlugin()])) {
+    }
     init(keychainService: KeychainService = DefaultKeychainService.shared) {
         self.keychainService = keychainService
+        let plugin = MoyaLoggingPlugin()
+        self.provider = MoyaProvider<AuthTargetType>(plugins: [plugin])
     }
     
     func saveAccessToken(_ token: String) -> Bool {
