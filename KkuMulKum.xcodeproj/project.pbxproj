@@ -84,6 +84,8 @@
 		A3FB18572C3BF704001483E5 /* MeetingListResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18562C3BF704001483E5 /* MeetingListResponseModel.swift */; };
 		A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18582C3BF77D001483E5 /* MeetingInfoResponseModel.swift */; };
 		A3FB185B2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB185A2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift */; };
+		DD1FD0302C5CCB4400D0A72C /* ReadyStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1FD02F2C5CCB4400D0A72C /* ReadyStatusViewController.swift */; };
+		DD1FD0352C5CCF9F00D0A72C /* PromiseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1FD0342C5CCF9F00D0A72C /* PromiseInfoViewController.swift */; };
 		DD3072142C3BF87A00416D9F /* NearestPromiseResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072132C3BF87A00416D9F /* NearestPromiseResponseModel.swift */; };
 		DD3072162C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072152C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift */; };
 		DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072192C3C011600416D9F /* AddPromiseRequestModel.swift */; };
@@ -270,6 +272,8 @@
 		A3FB18562C3BF704001483E5 /* MeetingListResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListResponseModel.swift; sourceTree = "<group>"; };
 		A3FB18582C3BF77D001483E5 /* MeetingInfoResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingInfoResponseModel.swift; sourceTree = "<group>"; };
 		A3FB185A2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingMembersResponseModel.swift; sourceTree = "<group>"; };
+		DD1FD02F2C5CCB4400D0A72C /* ReadyStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusViewController.swift; sourceTree = "<group>"; };
+		DD1FD0342C5CCF9F00D0A72C /* PromiseInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseInfoViewController.swift; sourceTree = "<group>"; };
 		DD3072132C3BF87A00416D9F /* NearestPromiseResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearestPromiseResponseModel.swift; sourceTree = "<group>"; };
 		DD3072152C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingPromiseListResponseModel.swift; sourceTree = "<group>"; };
 		DD3072192C3C011600416D9F /* AddPromiseRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseRequestModel.swift; sourceTree = "<group>"; };
@@ -668,6 +672,71 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		DD1FD02C2C5CC6DE00D0A72C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DD41BEF92C41D4160095A068 /* TardyView.swift */,
+				DD41BEFB2C41D54D0095A068 /* TardyPenaltyView.swift */,
+				DD41BEFE2C41DAA40095A068 /* TardyEmptyView.swift */,
+				DD4909952C440CDC003ED304 /* ArriveView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DD1FD02D2C5CCB1E00D0A72C /* ReadyStatus */ = {
+			isa = PBXGroup;
+			children = (
+				DD1FD02E2C5CCB2E00D0A72C /* ViewController */,
+				DD1FD0312C5CCEC300D0A72C /* View */,
+			);
+			path = ReadyStatus;
+			sourceTree = "<group>";
+		};
+		DD1FD02E2C5CCB2E00D0A72C /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DD1FD02F2C5CCB4400D0A72C /* ReadyStatusViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		DD1FD0312C5CCEC300D0A72C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DD8626582C4606A300E4F980 /* ReadyStatusView.swift */,
+				DD86265B2C4606A300E4F980 /* ReadyStatusProgressView.swift */,
+				DD8626552C4606A300E4F980 /* EnterReadyInfoButtonView.swift */,
+				DD8626562C4606A300E4F980 /* ReadyPlanInfoView.swift */,
+				DD86265A2C4606A300E4F980 /* ReadyStatusButton.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		DD1FD0322C5CCF7700D0A72C /* PromiseInfo */ = {
+			isa = PBXGroup;
+			children = (
+				DD1FD0332C5CCF8E00D0A72C /* ViewController */,
+				DD1FD0362C5CD00300D0A72C /* View */,
+			);
+			path = PromiseInfo;
+			sourceTree = "<group>";
+		};
+		DD1FD0332C5CCF8E00D0A72C /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DD1FD0342C5CCF9F00D0A72C /* PromiseInfoViewController.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		DD1FD0362C5CD00300D0A72C /* View */ = {
+			isa = PBXGroup;
+			children = (
+				DD931B752C3DC16100526452 /* PromiseInfoView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		DD3976692C41769900E2A4C4 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -750,9 +819,7 @@
 		DD39768D2C41CA0700E2A4C4 /* PagePromise */ = {
 			isa = PBXGroup;
 			children = (
-				DD3F9DD92C49CF05008E1FF7 /* ServiceType */,
 				DD39768E2C41CABE00E2A4C4 /* ViewController */,
-				DD39768F2C41CAC700E2A4C4 /* ViewModel */,
 				DD3976902C41CACF00E2A4C4 /* View */,
 				DDECC5252C53DAEB002E3D12 /* Cell */,
 			);
@@ -779,9 +846,6 @@
 			isa = PBXGroup;
 			children = (
 				DDB0D7D22C469C77000CF782 /* PagePromiseSegmentedControl.swift */,
-				DDECC5262C53DB1F002E3D12 /* PromiseInfo */,
-				DDECC5272C53DB2D002E3D12 /* ReadyStatus */,
-				DDECC5282C53DBA6002E3D12 /* Tardy */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -995,6 +1059,7 @@
 		DD931B682C3D9DAD00526452 /* Tardy */ = {
 			isa = PBXGroup;
 			children = (
+				DD1FD02C2C5CC6DE00D0A72C /* View */,
 				DD3976972C41CC3300E2A4C4 /* ViewController */,
 			);
 			path = Tardy;
@@ -1020,7 +1085,11 @@
 		DDAF1C872C3D6E3D008A37D3 /* Promise */ = {
 			isa = PBXGroup;
 			children = (
+				DD3F9DD92C49CF05008E1FF7 /* ServiceType */,
+				DD39768F2C41CAC700E2A4C4 /* ViewModel */,
 				DD39768D2C41CA0700E2A4C4 /* PagePromise */,
+				DD1FD0322C5CCF7700D0A72C /* PromiseInfo */,
+				DD1FD02D2C5CCB1E00D0A72C /* ReadyStatus */,
 				DD931B682C3D9DAD00526452 /* Tardy */,
 			);
 			path = Promise;
@@ -1046,37 +1115,6 @@
 				DD8626572C4606A300E4F980 /* OurReadyStatusCollectionViewCell.swift */,
 			);
 			path = Cell;
-			sourceTree = "<group>";
-		};
-		DDECC5262C53DB1F002E3D12 /* PromiseInfo */ = {
-			isa = PBXGroup;
-			children = (
-				DD931B752C3DC16100526452 /* PromiseInfoView.swift */,
-			);
-			path = PromiseInfo;
-			sourceTree = "<group>";
-		};
-		DDECC5272C53DB2D002E3D12 /* ReadyStatus */ = {
-			isa = PBXGroup;
-			children = (
-				DD8626582C4606A300E4F980 /* ReadyStatusView.swift */,
-				DD86265B2C4606A300E4F980 /* ReadyStatusProgressView.swift */,
-				DD8626552C4606A300E4F980 /* EnterReadyInfoButtonView.swift */,
-				DD8626562C4606A300E4F980 /* ReadyPlanInfoView.swift */,
-				DD86265A2C4606A300E4F980 /* ReadyStatusButton.swift */,
-			);
-			path = ReadyStatus;
-			sourceTree = "<group>";
-		};
-		DDECC5282C53DBA6002E3D12 /* Tardy */ = {
-			isa = PBXGroup;
-			children = (
-				DD41BEF92C41D4160095A068 /* TardyView.swift */,
-				DD41BEFB2C41D54D0095A068 /* TardyPenaltyView.swift */,
-				DD41BEFE2C41DAA40095A068 /* TardyEmptyView.swift */,
-				DD4909952C440CDC003ED304 /* ArriveView.swift */,
-			);
-			path = Tardy;
 			sourceTree = "<group>";
 		};
 		DDFA50782C4693BD000A62E2 /* Profile */ = {
@@ -1686,6 +1724,7 @@
 				78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */,
 				DE254AB42C31199B00A4015E /* UITextField+.swift in Sources */,
 				78BD61382C463C8C005752FD /* NicknameModel.swift in Sources */,
+				DD1FD0352C5CCF9F00D0A72C /* PromiseInfoViewController.swift in Sources */,
 				DDAF1C912C3D6E3D008A37D3 /* TardyViewController.swift in Sources */,
 				782B407D2C3E3984008B0CA7 /* WelcomeViewController.swift in Sources */,
 				DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */,
@@ -1737,6 +1776,7 @@
 				DD39768A2C41C2AD00E2A4C4 /* HomeViewController.swift in Sources */,
 				DED5DBF42C34539A006ECE7E /* BaseTableViewCell.swift in Sources */,
 				DDE7D2CA2C47EE81005A921F /* PromiseTargetType.swift in Sources */,
+				DD1FD0302C5CCB4400D0A72C /* ReadyStatusViewController.swift in Sources */,
 				DDB0D7D32C469C77000CF782 /* PagePromiseSegmentedControl.swift in Sources */,
 				78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */,
 				DD39766F2C41B54400E2A4C4 /* InviteCodeService.swift in Sources */,

@@ -63,8 +63,9 @@ final class AddPromiseCompleteViewController: BaseViewController {
                     animated: false
                 )
                 rootViewController.navigationController?.pushViewController(
+                    
                     PromiseViewController(
-                        promiseViewModel: PromiseViewModel(
+                        viewModel: PromiseViewModel(
                             promiseID: owner.promiseID,
                             service: PromiseService()
                         )

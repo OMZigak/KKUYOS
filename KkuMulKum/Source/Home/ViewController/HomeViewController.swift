@@ -135,15 +135,15 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
-        let pagePromiseViewController = PromiseViewController(
-            promiseViewModel: PromiseViewModel(
+        let promiseViewController = PromiseViewController(
+            viewModel: PromiseViewModel(
                 promiseID: viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item].promiseID ?? 0, 
                 service: PromiseService()
             )
         )
         
         tabBarController?.navigationController?.pushViewController(
-            pagePromiseViewController,
+            promiseViewController,
             animated: true
         )
     }
@@ -440,7 +440,7 @@ private extension HomeViewController {
     @objc
     func todayButtonDidTap(_ sender: UIButton) {
         let viewController = PromiseViewController(
-            promiseViewModel: PromiseViewModel(
+            viewModel: PromiseViewModel(
                 promiseID: viewModel.nearestPromise.value?.data?.promiseID ?? 0, 
                 service: PromiseService()
             )

@@ -19,8 +19,8 @@ class TardyViewController: BaseViewController {
     
     // MARK: Initialize
     
-    init(tardyViewModel: PromiseViewModel) {
-        self.viewModel = tardyViewModel
+    init(viewModel: PromiseViewModel) {
+        self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
     }
