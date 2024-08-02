@@ -11,6 +11,9 @@ import SnapKit
 import Then
 
 class MyPageEtcSettingView: BaseView {
+    
+    let kakaoShareTapped = ObservablePattern<Void?>(nil)
+    
     let stackView = UIStackView(axis: .vertical).then {
         $0.spacing = 24
         $0.distribution = .fillEqually
@@ -74,7 +77,7 @@ class MyPageEtcSettingView: BaseView {
         
         switch index {
         case 0:
-            print("버전정보 탭됨")
+            kakaoShareTapped.value = ()
         case 1:
             print("이용약관 탭됨")
         case 2:
