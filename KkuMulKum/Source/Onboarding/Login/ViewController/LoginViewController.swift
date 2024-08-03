@@ -10,7 +10,7 @@ import UIKit
 class LoginViewController: BaseViewController {
     private let loginView = LoginView()
     private let loginViewModel: LoginViewModel
-
+    
     init(viewModel: LoginViewModel) {
         self.loginViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -48,44 +48,55 @@ class LoginViewController: BaseViewController {
     
     private func bindViewModel() {
         loginViewModel.loginState.bind(with: self) { owner, state in
-            switch state {
-            case .notLogin:
-                print("Login State: Not logged in")
-            case .login:
-                print("Login State: Logged in")
-                owner.navigateToMainScreen()
-            case .needOnboarding:
-                print("Login State: Need onboarding")
-                owner.navigateToOnboardingScreen()
+            
+            Task {
+                switch state {
+                case .notLogin:
+                    print("Login State: Not logged in")
+                case .login:
+                    print("Login State: Logged in")
+                  await owner.navigateToMainScreen()
+                case .needOnboarding:
+                    print("Login State: Need onboarding")
+                    await owner.navigateToOnboardingScreen()
+                }
             }
         }
         
         loginViewModel.userName.bind(with: self) { owner, name in
-            if name != nil {
-                owner.navigateToMainScreen()
-            } else {
-                owner.navigateToOnboardingScreen()
+            Task {
+                if name != nil {
+                    await owner.navigateToOnboardingScreen()
+                } else {
+                    await owner.navigateToOnboardingScreen()
+                }
             }
         }
         
         loginViewModel.error.bind(with: self) { owner, error in
-            if !error.isEmpty {
-                print("Login Error: \(error)")
-                owner.showErrorAlert(message: error)
+            Task {
+                if !error.isEmpty {
+                    print("Login Error: \(error)")
+                    await owner.showErrorAlert(message: error)
+                }
             }
         }
     }
-
+    
     @objc private func appleLoginTapped() {
-        loginViewModel.performAppleLogin(presentationAnchor: view.window!)
+        Task {
+            loginViewModel.performAppleLogin(presentationAnchor: view.window!)
+        }
     }
     
     @objc private func kakaoLoginTapped() {
-        loginViewModel.performKakaoLogin()
+        Task {
+            loginViewModel.performKakaoLogin()
+        }
     }
-   
-    private func navigateToMainScreen() {
-        DispatchQueue.main.async {
+    
+    private func navigateToMainScreen() async {
+        await MainActor.run {
             let mainTabBarController = MainTabBarController()
             let navigationController = UINavigationController(rootViewController: mainTabBarController)
             navigationController.isNavigationBarHidden = true
@@ -95,8 +106,9 @@ class LoginViewController: BaseViewController {
         }
     }
     
-    private func navigateToOnboardingScreen() {
-        DispatchQueue.main.async {
+    private func navigateToOnboardingScreen() async {
+        await MainActor.run {
+            
             let nicknameViewController = NicknameViewController()
             if let navigationController = self.navigationController {
                 navigationController.pushViewController(nicknameViewController, animated: true)
@@ -109,10 +121,12 @@ class LoginViewController: BaseViewController {
         }
     }
     
-    private func showErrorAlert(message: String) {
-        print("Showing error alert with message: \(message)")
-        let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
-        present(alert, animated: true)
+    private func showErrorAlert(message: String) async {
+        await MainActor.run {
+            print("Showing error alert with message: \(message)")
+            let alert = UIAlertController(title: "Error", message: message, preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            present(alert, animated: true)
+        }
     }
 }

@@ -238,6 +238,7 @@ class LoginViewModel: NSObject {
             }
         }
     }
+    
     private func clearTokensAndHandleError() {
         _ = authService.clearTokens()
         loginState.value = .notLogin

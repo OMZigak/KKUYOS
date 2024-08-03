@@ -32,39 +32,35 @@ class ProfileSetupViewModel {
         isConfirmButtonEnabled.value = imageData != nil
     }
     
-    func uploadProfileImage(completion: @escaping (Bool) -> Void) {
-        print("uploadProfileImage 함수 호출됨")
-        guard let imageData = imageData else {
-            print("이미지 데이터가 없습니다.")
-            serverResponse.value = "이미지 데이터가 없습니다."
-            completion(false)
-            return
-        }
-        
-        print("업로드할 이미지 데이터 크기: \(imageData.count) bytes")
-        
-        let fileName = "profile_image.jpg"
-        let mimeType = "image/jpeg"
-        
-        authService.performRequest(
-            .updateProfileImage(
-                image: imageData,
-                fileName: fileName,
-                mimeType: mimeType
-            )
-        ) { [weak self] (result: Result<EmptyModel, NetworkError>) in
-            print("네트워크 요청 완료")
-            switch result {
-            case .success(_):
-                self?.serverResponse.value = "프로필 이미지가 성공적으로 업로드되었습니다."
-                print("프로필 이미지 업로드 성공")
-                completion(true)
-            case .failure(let error):
-                self?.handleError(error)
-                completion(false)
-            }
-        }
-    }
+    func uploadProfileImage() async -> Bool {
+          print("uploadProfileImage 함수 호출됨")
+          guard let imageData = imageData else {
+              print("이미지 데이터가 없습니다.")
+              serverResponse.value = "이미지 데이터가 없습니다."
+              return false
+          }
+          
+          print("업로드할 이미지 데이터 크기: \(imageData.count) bytes")
+          
+          let fileName = "profile_image.jpg"
+          let mimeType = "image/jpeg"
+          
+          do {
+              let _: EmptyModel = try await authService.performRequest(
+                  .updateProfileImage(
+                      image: imageData,
+                      fileName: fileName,
+                      mimeType: mimeType
+                  )
+              )
+              serverResponse.value = "프로필 이미지가 성공적으로 업로드되었습니다."
+              print("프로필 이미지 업로드 성공")
+              return true
+          } catch {
+              handleError(error as? NetworkError ?? .unknownError("알 수 없는 오류가 발생했습니다."))
+              return false
+          }
+      }
     
     private func handleError(_ error: NetworkError) {
         serverResponse.value = error.message
