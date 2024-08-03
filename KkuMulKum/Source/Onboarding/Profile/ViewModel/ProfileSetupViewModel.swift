@@ -24,23 +24,25 @@ class ProfileSetupViewModel {
     }
     
     func updateProfileImage(_ image: UIImage?) {
-        if let image = image {
-            if let compressedData = compressImage(image, maxSizeInBytes: maxImageSizeBytes) {
-                imageData = compressedData
-                profileImage.value = UIImage(data: compressedData)
-                print("압축된 이미지 크기: \(compressedData.count) bytes")
-                isConfirmButtonEnabled.value = true
-            } else {
-                imageData = nil
-                isConfirmButtonEnabled.value = false
-                print("이미지 압축 실패")
-            }
-        } else {
+        guard let image = image else {
             profileImage.value = nil
             imageData = nil
             isConfirmButtonEnabled.value = false
+            return
         }
+        guard let compressedData = compressImage(image, maxSizeInBytes: maxImageSizeBytes) else {
+            imageData = nil
+            profileImage.value = nil
+            isConfirmButtonEnabled.value = false
+            print("이미지 압축 실패")
+            return
+        }
+        imageData = compressedData
+        profileImage.value = UIImage(data: compressedData)
+        print("압축된 이미지 크기: \(compressedData.count) bytes")
+        isConfirmButtonEnabled.value = true
     }
+
     
     private func compressImage(_ image: UIImage, maxSizeInBytes: Int) -> Data? {
         let resizedImage = image.kf.resize(to: image.size, for: .aspectFit)
@@ -48,13 +50,11 @@ class ProfileSetupViewModel {
         guard let data = resizedImage.jpegData(compressionQuality: 0.8) else {
             return nil
         }
-        
         if data.count <= maxSizeInBytes {
             return data
         }
-        
-        // If still too large, reduce quality
         var quality: CGFloat = 0.8
+        
         while data.count > maxSizeInBytes && quality > 0.1 {
             quality -= 0.1
             guard let reducedData = resizedImage.jpegData(compressionQuality: quality) else {
@@ -65,7 +65,6 @@ class ProfileSetupViewModel {
             }
         }
         
-        // If still too large, reduce size
         var newSize = image.size
         while data.count > maxSizeInBytes {
             newSize = CGSize(width: newSize.width * 0.9, height: newSize.height * 0.9)
@@ -76,7 +75,6 @@ class ProfileSetupViewModel {
                 }
             }
         }
-        
         return nil
     }
     
