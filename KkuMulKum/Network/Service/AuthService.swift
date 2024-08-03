@@ -18,14 +18,12 @@ protocol AuthServiceType {
 
 class AuthService: AuthServiceType {
     private var keychainService: KeychainService
-    private let provider = MoyaProvider<AuthTargetType>()
+    private var provider = MoyaProvider<AuthTargetType>()
     
-    init(provider: MoyaProvider<AuthTargetType> = MoyaProvider(plugins: [MoyaLoggingPlugin()])) {
-    }
-    init(keychainService: KeychainService = DefaultKeychainService.shared) {
+    init(keychainService: KeychainService = DefaultKeychainService.shared,
+         provider: MoyaProvider<AuthTargetType> = MoyaProvider(plugins: [MoyaLoggingPlugin()])) {
         self.keychainService = keychainService
-        let plugin = MoyaLoggingPlugin()
-        self.provider = MoyaProvider<AuthTargetType>(plugins: [plugin])
+        self.provider = provider
     }
     
     func saveAccessToken(_ token: String) -> Bool {
@@ -79,7 +77,11 @@ class AuthService: AuthServiceType {
                     completion(.failure(.decodingError))
                 }
             case .failure(let error):
-                completion(.failure(.networkError(error)))
+                if let response = error.response, response.statusCode == 413 {
+                    completion(.failure(.apiError(code: 413, message: "이미지 사이즈가 너무 큽니다.")))
+                } else {
+                    completion(.failure(.networkError(error)))
+                }
             }
         }
     }

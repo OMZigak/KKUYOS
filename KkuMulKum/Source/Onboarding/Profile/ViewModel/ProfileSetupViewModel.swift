@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ProfileSetupViewModel {
     let profileImage = ObservablePattern<UIImage?>(UIImage.imgProfile)
@@ -15,104 +16,120 @@ class ProfileSetupViewModel {
     
     private let authService: AuthServiceType
     private var imageData: Data?
-    private let maxImageSizeBytes = 5 * 1024 * 1024
+    private let maxImageSizeBytes = 4 * 1024 * 1024
 
-    
     init(nickname: String, authService: AuthServiceType = AuthService()) {
         self.nickname = nickname
         self.authService = authService
     }
     
     func updateProfileImage(_ image: UIImage?) {
-           if let image = image {
-               let compressedImage = compressImage(image)
-               profileImage.value = compressedImage
-               if let data = compressedImage.jpegData(compressionQuality: 1.0) {
-                   imageData = data
-                   print("압축된 이미지 크기: \(data.count) bytes")
-                   isConfirmButtonEnabled.value = true
-               } else {
-                   imageData = nil
-                   isConfirmButtonEnabled.value = false
-                   print("이미지 데이터 변환 실패")
-               }
-           } else {
-               profileImage.value = nil
-               imageData = nil
-               isConfirmButtonEnabled.value = false
-           }
-       }
+        if let image = image {
+            if let compressedData = compressImage(image, maxSizeInBytes: maxImageSizeBytes) {
+                imageData = compressedData
+                profileImage.value = UIImage(data: compressedData)
+                print("압축된 이미지 크기: \(compressedData.count) bytes")
+                isConfirmButtonEnabled.value = true
+            } else {
+                imageData = nil
+                isConfirmButtonEnabled.value = false
+                print("이미지 압축 실패")
+            }
+        } else {
+            profileImage.value = nil
+            imageData = nil
+            isConfirmButtonEnabled.value = false
+        }
+    }
     
-    private func compressImage(_ image: UIImage) -> UIImage {
-        var compression: CGFloat = 0.9
-        var imageData = image.jpegData(compressionQuality: compression)
+    private func compressImage(_ image: UIImage, maxSizeInBytes: Int) -> Data? {
+        let resizedImage = image.kf.resize(to: image.size, for: .aspectFit)
         
-        while (imageData?.count ?? 0) > maxImageSizeBytes && compression > 0.1 {
-            compression -= 0.1
-            imageData = image.jpegData(compressionQuality: compression)
+        guard let data = resizedImage.jpegData(compressionQuality: 0.8) else {
+            return nil
         }
         
-        if (imageData?.count ?? 0) > maxImageSizeBytes {
-            let scale = sqrt(Double(maxImageSizeBytes) / Double(imageData?.count ?? 1))
-            let newSize = CGSize(width: image.size.width * CGFloat(scale),
-                                 height: image.size.height * CGFloat(scale))
-            UIGraphicsBeginImageContextWithOptions(newSize, false, image.scale)
-            image.draw(in: CGRect(origin: .zero, size: newSize))
-            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
-            
-            return resizedImage ?? image
+        if data.count <= maxSizeInBytes {
+            return data
         }
         
-        return UIImage(data: imageData!) ?? image
+        // If still too large, reduce quality
+        var quality: CGFloat = 0.8
+        while data.count > maxSizeInBytes && quality > 0.1 {
+            quality -= 0.1
+            guard let reducedData = resizedImage.jpegData(compressionQuality: quality) else {
+                continue
+            }
+            if reducedData.count <= maxSizeInBytes {
+                return reducedData
+            }
+        }
+        
+        // If still too large, reduce size
+        var newSize = image.size
+        while data.count > maxSizeInBytes {
+            newSize = CGSize(width: newSize.width * 0.9, height: newSize.height * 0.9)
+            let reducedImage = image.kf.resize(to: newSize, for: .aspectFit)
+            if let reducedData = reducedImage.jpegData(compressionQuality: quality) {
+                if reducedData.count <= maxSizeInBytes {
+                    return reducedData
+                }
+            }
+        }
+        
+        return nil
     }
     
     func uploadProfileImage(completion: @escaping (Bool) -> Void) {
-           print("uploadProfileImage 함수 호출됨")
-           guard let imageData = imageData else {
-               print("이미지 데이터가 없습니다.")
-               serverResponse.value = "이미지 데이터가 없습니다."
-               completion(false)
-               return
-           }
+        guard let imageData = imageData else {
+            print("이미지 데이터가 없습니다.")
+            serverResponse.value = "이미지 데이터가 없습니다."
+            completion(false)
+            return
+        }
 
-           print("업로드할 이미지 데이터 크기: \(imageData.count) bytes")
-           
-           // 추가된 부분: 이미지 크기 검사
-           if imageData.count > maxImageSizeBytes {
-               print("이미지 크기가 5MB를 초과합니다.")
-               serverResponse.value = "이미지 크기가 너무 큽니다. 5MB 이하의 이미지를 선택해주세요."
-               completion(false)
-               return
-           }
+        print("업로드할 이미지 데이터 크기: \(imageData.count) bytes")
 
-           let fileName = "profile_image.jpg"
-           let mimeType = "image/jpeg"
+        let fileName = "profile_image.jpg"
+        let mimeType = "image/jpeg"
 
-           authService.performRequest(
-               .updateProfileImage(
-                   image: imageData,
-                   fileName: fileName,
-                   mimeType: mimeType
-               )
-           ) { [weak self] (result: Result<EmptyModel, NetworkError>) in
-               print("네트워크 요청 완료")
-               DispatchQueue.main.async {
-                   switch result {
-                   case .success(_):
-                       self?.serverResponse.value = "프로필 이미지가 성공적으로 업로드되었습니다."
-                       print("프로필 이미지 업로드 성공")
-                       completion(true)
-                   case .failure(let error):
-                       self?.handleError(error)
-                       completion(false)
-                   }
-               }
-           }
-       }
+        authService.performRequest(
+            .updateProfileImage(
+                image: imageData,
+                fileName: fileName,
+                mimeType: mimeType
+            )
+        ) { [weak self] (result: Result<EmptyModel, NetworkError>) in
+            print("네트워크 요청 완료")
+            DispatchQueue.main.async {
+                switch result {
+                case .success(_):
+                    self?.serverResponse.value = "프로필 이미지가 성공적으로 업로드되었습니다."
+                    print("프로필 이미지 업로드 성공")
+                    completion(true)
+                case .failure(let error):
+                    self?.handleError(error)
+                    completion(false)
+                }
+            }
+        }
+    }
     
     private func handleError(_ error: NetworkError) {
-        serverResponse.value = error.message
+        switch error {
+        case .apiError(let code, let message):
+            if code == 413 {
+                serverResponse.value = "이미지 크기가 너무 큽니다. 더 작은 이미지를 선택해주세요."
+            } else {
+                serverResponse.value = "업로드 실패: \(message)"
+            }
+        case .networkError(let error):
+            serverResponse.value = "네트워크 오류: \(error.localizedDescription)"
+        case .decodingError:
+            serverResponse.value = "데이터 처리 중 오류가 발생했습니다."
+        default:
+            serverResponse.value = "알 수 없는 오류가 발생했습니다."
+        }
         print("프로필 이미지 업로드 실패: \(error.message)")
     }
 }

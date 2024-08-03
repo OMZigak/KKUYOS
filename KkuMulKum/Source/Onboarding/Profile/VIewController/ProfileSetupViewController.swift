@@ -90,8 +90,7 @@ class ProfileSetupViewController: BaseViewController {
             let circleImage = UIGraphicsGetImageFromCurrentImageContext()!
             UIGraphicsEndImageContext()
             return circleImage
-        }
-
+        }ㅋ
 }
 
 extension ProfileSetupViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
