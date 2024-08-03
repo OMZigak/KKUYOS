@@ -11,8 +11,6 @@ class PromiseViewModel {
     
     
     // MARK: Property
-    
-    private let service: PromiseServiceType
 
     /// 서버 통신을 위해 생성자로 주입받을 약속 ID
     let promiseID: Int
@@ -70,6 +68,8 @@ class PromiseViewModel {
         $0.pmSymbol = "PM"
     }
     
+    private let service: PromiseServiceType
+    
     
     // MARK: Initialize
 
@@ -117,15 +117,9 @@ extension PromiseViewModel {
         dateFormatter.dateFormat = "a h:mm"
         
         let preparationStartDate = dateFormatter.date(from: realTime)
-
+        
         if let readyStartDate = readyStartDate, let preparationStartDate = preparationStartDate {
-            if preparationStartDate.compare(readyStartDate) == .orderedDescending {
-                self.isLate.value = true
-            } else {
-                self.isLate.value = true
-            }
-        } else {
-            self.isLate.value = false
+            self.isLate.value = preparationStartDate.compare(readyStartDate) == .orderedDescending
         }
     }
     
@@ -203,7 +197,9 @@ extension PromiseViewModel {
             do {
                 let responseBody = try await service.fetchPromiseParticipantList(with: promiseID)
                 
-                guard let success = responseBody?.success, success == true else {
+                guard let success = responseBody?.success, 
+                        success == true
+                else {
                     return
                 }
                 
@@ -302,7 +298,8 @@ extension PromiseViewModel {
                 let responseBody = try await
                 service.fetchTardyInfo(with: promiseID)
                 
-                guard let success = responseBody?.success, success == true
+                guard let success = responseBody?.success,
+                      success == true
                 else {
                     return
                 }

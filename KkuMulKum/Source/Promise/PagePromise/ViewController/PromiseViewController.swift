@@ -205,7 +205,6 @@ private extension PromiseViewController {
             guard let model else { return }
             DispatchQueue.main.async {
                 self?.setupNavigationBarTitle(with: model.promiseName)
-                self?.viewModel.promiseInfo.value = model
             }
         }
     }

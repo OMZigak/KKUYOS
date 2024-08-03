@@ -96,8 +96,7 @@ class ReadyStatusViewController: BaseViewController {
     
     @objc
     func enterReadyButtonDidTapped() {
-        guard !(viewModel.promiseInfo.value?.promiseName == nil) else { return }
-        
+        guard let _ = viewModel.promiseInfo.value?.promiseName else { return }
         guard let readyStatusInfo = viewModel.myReadyStatus.value else { return }
         
         let setReadyInfoViewController = SetReadyInfoViewController(
@@ -143,10 +142,8 @@ extension ReadyStatusViewController: UICollectionViewDataSource {
             color: .gray8
         )
         
-        if let imageURL = viewModel.participantsInfo.value?[indexPath.row].profileImageURL {
-            cell.profileImageView.kf.setImage(with: URL(string: imageURL))
-        } else {
-            cell.profileImageView.image = .imgProfile
+        if let imageURL = URL(string: viewModel.participantsInfo.value?[indexPath.row].profileImageURL ?? "") {
+            cell.profileImageView.kf.setImage(with: imageURL, placeholder: UIImage.imgProfile)
         }
         
         switch viewModel.participantsInfo.value?[indexPath.row].state {
@@ -292,10 +289,11 @@ private extension ReadyStatusViewController {
         rootView.popUpImageView.isHidden = !isLate
     }
     
+    /// 준비 상태에 따라 버튼 상태 변경
     func updateReadyStartButton(status: ReadyProgressStatus) {
         switch status {
         case .none:
-            DispatchQueue.main.async { [self] in
+            DispatchQueue.main.async {
                 self.rootView.myReadyStatusProgressView.readyStartButton.setupButton(
                     "준비 시작",
                     .ready
@@ -314,7 +312,7 @@ private extension ReadyStatusViewController {
                 )
             }
         case .ready:
-            DispatchQueue.main.async { [self] in
+            DispatchQueue.main.async {
                 self.rootView.myReadyStatusProgressView.readyStartButton.setupButton(
                     "준비 중",
                     .move
@@ -360,10 +358,11 @@ private extension ReadyStatusViewController {
                     )
                 }
             }
+            
             /// 준비 시작 네트워크 통신
             viewModel.updatePreparationStatus()
         case .move:
-            DispatchQueue.main.async { [self] in
+            DispatchQueue.main.async {
                 self.rootView.myReadyStatusProgressView.readyStartButton.setupButton(
                     "준비 중",
                     .done
@@ -418,7 +417,7 @@ private extension ReadyStatusViewController {
             /// 이동 시작 네트워크 통신
             viewModel.updateDepartureStatus()
         case .done:
-            DispatchQueue.main.async { [self] in
+            DispatchQueue.main.async {
                 self.rootView.myReadyStatusProgressView.readyStartButton.setupButton(
                     "준비 중",
                     .done
@@ -436,21 +435,26 @@ private extension ReadyStatusViewController {
                     animated: false
                 )
                 
-                self.rootView.myReadyStatusProgressView.arrivalTitleLabel.isHidden = true
-                self.rootView.myReadyStatusProgressView.moveStartTitleLabel.isHidden = true
-                self.rootView.myReadyStatusProgressView.readyStartTitleLabel.isHidden = true
-                self.rootView.myReadyStatusProgressView.arrivalTimeLabel.isHidden = false
-                self.rootView.myReadyStatusProgressView.moveStartTimeLabel.isHidden = false
-                self.rootView.myReadyStatusProgressView.readyStartTimeLabel.isHidden = false
+                [
+                    self.rootView.myReadyStatusProgressView.arrivalTitleLabel,
+                    self.rootView.myReadyStatusProgressView.moveStartTitleLabel,
+                    self.rootView.myReadyStatusProgressView.readyStartTitleLabel
+                ].forEach { $0.isHidden = true }
                 
+                [
+                    self.rootView.myReadyStatusProgressView.arrivalTimeLabel,
+                    self.rootView.myReadyStatusProgressView.moveStartTimeLabel,
+                    self.rootView.myReadyStatusProgressView.readyStartTimeLabel
+                ].forEach { $0.isHidden = false }
                 
-                self.rootView.myReadyStatusProgressView.readyStartCheckImageView.image = .iconCheck
-                self.rootView.myReadyStatusProgressView.moveStartCheckImageView.image = .iconCheck
-                self.rootView.myReadyStatusProgressView.arrivalCheckImageView.image = .iconCheck
+                [
+                    self.rootView.myReadyStatusProgressView.readyStartCheckImageView,
+                    self.rootView.myReadyStatusProgressView.moveStartCheckImageView,
+                    self.rootView.myReadyStatusProgressView.arrivalCheckImageView
+                ].forEach { $0.image = .iconCheck }
                 
                 /// myReadyStatus의 arrivalAt 값이 있으면 그 값으로 업데이트
                 if let preparationStartAt = self.viewModel.myReadyStatus.value?.preparationStartAt {
-                    print("myReadyStatus의 preparationStartAt 값이 있어서 그 값으로 업데이트")
                     self.rootView.myReadyStatusProgressView.readyStartTimeLabel.setText(
                         preparationStartAt,
                         style: .caption02,
@@ -458,7 +462,6 @@ private extension ReadyStatusViewController {
                     )
                 }
                 if let departureAt = self.viewModel.myReadyStatus.value?.departureAt {
-                    print("myReadyStatus의 departureAt 값이 있으면 그 값으로 업데이트")
                     self.rootView.myReadyStatusProgressView.moveStartTimeLabel.setText(
                         departureAt,
                         style: .caption02,
@@ -466,7 +469,6 @@ private extension ReadyStatusViewController {
                     )
                 }
                 if let arrivalAt = self.viewModel.myReadyStatus.value?.arrivalAt {
-                    print("myReadyStatus의 arrivalAt 값이 있으면 그 값으로 업데이트")
                     self.rootView.myReadyStatusProgressView.arrivalTimeLabel.setText(
                         arrivalAt,
                         style: .caption02,
@@ -475,7 +477,7 @@ private extension ReadyStatusViewController {
                 }
                 else {
                     self.rootView.myReadyStatusProgressView.arrivalTimeLabel.setText(
-                        viewModel.updateReadyStatusTime(),
+                        self.viewModel.updateReadyStatusTime(),
                         style: .caption02,
                         color: .gray8
                     )
