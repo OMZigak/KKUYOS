@@ -7,22 +7,18 @@
 
 import UIKit
 
-class PagePromiseViewController: BaseViewController {
+class PromiseViewController: BaseViewController {
     
     
     // MARK: Property
 
-    private let promiseViewModel: PagePromiseViewModel
+    private let viewModel: PromiseViewModel
     
     private var promiseViewControllerList: [BaseViewController] = []
     
     private let promiseInfoViewController: PromiseInfoViewController
     
-    private let promiseInfoViewModel: PromiseInfoViewModel
-    
     private let readyStatusViewController: ReadyStatusViewController
-    
-    private let readyStatusViewModel: ReadyStatusViewModel
     
     private let tardyViewController: TardyViewController
     
@@ -38,34 +34,21 @@ class PagePromiseViewController: BaseViewController {
     
     // MARK: Initializer
 
-    init(promiseViewModel: PagePromiseViewModel) {
-        self.promiseViewModel = promiseViewModel
+    init(viewModel: PromiseViewModel) {
+        self.viewModel = viewModel
         
-        promiseViewModel.fetchPromiseInfo(promiseID: promiseViewModel.promiseID)
-        
-        promiseInfoViewModel = PromiseInfoViewModel(
-            promiseID: promiseViewModel.promiseID,
-            promiseInfoService: PromiseService()
-        )
+        viewModel.fetchPromiseInfo(promiseID: viewModel.promiseID)
         
         promiseInfoViewController = PromiseInfoViewController(
-            promiseInfoViewModel: promiseInfoViewModel
-        )
-        
-        readyStatusViewModel = ReadyStatusViewModel(
-            readyStatusService: PromiseService(),
-            promiseID: promiseViewModel.promiseID
+            viewModel: viewModel
         )
         
         readyStatusViewController = ReadyStatusViewController(
-            readyStatusViewModel: readyStatusViewModel
+            viewModel: viewModel
         )
         
         tardyViewController = TardyViewController(
-            tardyViewModel: TardyViewModel(
-                tardyService: PromiseService(),
-                promiseID: promiseViewModel.promiseID
-            )
+            viewModel: viewModel
         )
         
         promiseViewControllerList = [
@@ -110,7 +93,7 @@ class PagePromiseViewController: BaseViewController {
         view.backgroundColor = .white
         
         setupNavigationBarBackButton()
-        setupNavigationBarTitle(with: promiseViewModel.promiseName)
+        setupNavigationBarTitle(with: viewModel.promiseInfo.value?.promiseName ?? "")
         
         addChild(promisePageViewController)
         
@@ -166,9 +149,9 @@ class PagePromiseViewController: BaseViewController {
 
 // MARK: - Extension
 
-extension PagePromiseViewController {
+extension PromiseViewController {
     @objc private func didSegmentedControlIndexUpdated() {
-        let condition = promiseViewModel.currentPage.value <= promiseSegmentedControl.selectedSegmentIndex
+        let condition = viewModel.currentPage.value <= promiseSegmentedControl.selectedSegmentIndex
         let direction: UIPageViewController.NavigationDirection = condition ? .forward : .reverse
         let (width, count, selectedIndex) = (
             promiseSegmentedControl.bounds.width,
@@ -180,18 +163,18 @@ extension PagePromiseViewController {
             $0.leading.equalToSuperview().offset((width / CGFloat(count)) * CGFloat(selectedIndex))
         }
         
-        promiseViewModel.segmentIndexDidChanged(
+        viewModel.segmentIndexDidChanged(
             index: promiseSegmentedControl.selectedSegmentIndex
         )
         
         promisePageViewController.setViewControllers([
-            promiseViewControllerList[promiseViewModel.currentPage.value]
+            promiseViewControllerList[viewModel.currentPage.value]
         ], direction: direction, animated: false)
     }
     
     @objc
     func finishMeetingButtonDidTapped() {
-        tardyViewController.tardyViewModel.updatePromiseCompletion()
+        tardyViewController.viewModel.updatePromiseCompletion()
         
         navigationController?.popViewController(animated: true)
     }
@@ -200,7 +183,7 @@ extension PagePromiseViewController {
 
 // MARK: - UIPageViewControllerDataSource
 
-extension PagePromiseViewController: UIPageViewControllerDataSource {
+extension PromiseViewController: UIPageViewControllerDataSource {
     func pageViewController(
         _ pageViewController: UIPageViewController,
         viewControllerAfter viewController: UIViewController
@@ -216,14 +199,12 @@ extension PagePromiseViewController: UIPageViewControllerDataSource {
     }
 }
 
-private extension PagePromiseViewController {
+private extension PromiseViewController {
     func setupBindings() {
-        promiseViewModel.promiseInfo.bind { [weak self] model in
+        viewModel.promiseInfo.bind { [weak self] model in
             guard let model else { return }
             DispatchQueue.main.async {
                 self?.setupNavigationBarTitle(with: model.promiseName)
-                self?.promiseInfoViewModel.promiseInfo.value = model
-                self?.readyStatusViewModel.promiseName.value = model.promiseName
             }
         }
     }
