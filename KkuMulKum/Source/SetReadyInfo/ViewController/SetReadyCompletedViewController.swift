@@ -33,7 +33,7 @@ private extension SetReadyCompletedViewController {
     func confirmButtonDidTap() {
         guard let viewControllers = navigationController?.viewControllers else { return }
         for viewController in viewControllers {
-            if let pagePromiseViewController = viewController as? PagePromiseViewController {
+            if let pagePromiseViewController = viewController as? PromiseViewController {
                 navigationController?.popToViewController(pagePromiseViewController, animated: true)
                 break
             }

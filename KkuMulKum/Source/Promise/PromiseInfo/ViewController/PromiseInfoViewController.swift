@@ -14,11 +14,11 @@ class PromiseInfoViewController: BaseViewController {
     
     // MARK: Property
     
-    private let promiseInfoViewModel: PromiseInfoViewModel
+    private let viewModel: PromiseViewModel
     private let promiseInfoView: PromiseInfoView = PromiseInfoView()
     
-    init(promiseInfoViewModel: PromiseInfoViewModel) {
-        self.promiseInfoViewModel = promiseInfoViewModel
+    init(viewModel: PromiseViewModel) {
+        self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -35,7 +35,7 @@ class PromiseInfoViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         setupBinding()
-        promiseInfoViewModel.fetchPromiseParticipantList()
+        viewModel.fetchPromiseParticipantList()
     }
     
     override func setupDelegate() {
@@ -49,7 +49,7 @@ class PromiseInfoViewController: BaseViewController {
 
 extension PromiseInfoViewController {
     func setupBinding() {
-        promiseInfoViewModel.promiseInfo.bind(with: self) { owner, info in
+        viewModel.promiseInfo.bind(with: self) { owner, info in
             owner.promiseInfoView.timeContentLabel.setText(
                 info?.time ?? "설정되지 않음",
                 style: .body04,
@@ -76,7 +76,7 @@ extension PromiseInfoViewController {
             )
         }
         
-        promiseInfoViewModel.participantsInfo.bind(with: self) {
+        viewModel.participantsInfo.bind(with: self) {
             owner,
             participantsInfo in
             DispatchQueue.main.async {
@@ -104,7 +104,7 @@ extension PromiseInfoViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return ((promiseInfoViewModel.participantsInfo.value?.count ?? 0) + 1)
+        return ((viewModel.participantsInfo.value?.count ?? 0) + 1)
     }
 }
 
@@ -129,7 +129,7 @@ extension PromiseInfoViewController: UICollectionViewDelegateFlowLayout {
             return cell
         }
         
-        guard let info = promiseInfoViewModel.participantsInfo.value?[indexPath.row - 1] else {
+        guard let info = viewModel.participantsInfo.value?[indexPath.row - 1] else {
             return cell
         }
         

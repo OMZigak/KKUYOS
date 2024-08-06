@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class ProfileSetupViewModel {
     let profileImage = ObservablePattern<UIImage?>(UIImage.imgProfile)
@@ -15,7 +16,8 @@ class ProfileSetupViewModel {
     
     private let authService: AuthServiceType
     private var imageData: Data?
-    
+    private let maxImageSizeBytes = 4 * 1024 * 1024
+
     init(nickname: String, authService: AuthServiceType = AuthService()) {
         self.nickname = nickname
         self.authService = authService
@@ -63,7 +65,20 @@ class ProfileSetupViewModel {
       }
     
     private func handleError(_ error: NetworkError) {
-        serverResponse.value = error.message
+        switch error {
+        case .apiError(let code, let message):
+            if code == 413 {
+                serverResponse.value = "이미지 크기가 너무 큽니다. 더 작은 이미지를 선택해주세요."
+            } else {
+                serverResponse.value = "업로드 실패: \(message)"
+            }
+        case .networkError(let error):
+            serverResponse.value = "네트워크 오류: \(error.localizedDescription)"
+        case .decodingError:
+            serverResponse.value = "데이터 처리 중 오류가 발생했습니다."
+        default:
+            serverResponse.value = "알 수 없는 오류가 발생했습니다."
+        }
         print("프로필 이미지 업로드 실패: \(error.message)")
     }
 }

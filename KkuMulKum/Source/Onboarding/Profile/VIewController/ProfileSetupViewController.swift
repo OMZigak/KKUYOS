@@ -81,32 +81,28 @@ class ProfileSetupViewController: BaseViewController {
     }
     
     private func cropToCircle(image: UIImage) -> UIImage {
-        let shorterSide = min(image.size.width, image.size.height)
-        let imageBounds = CGRect(x: 0, y: 0, width: shorterSide, height: shorterSide)
-        UIGraphicsBeginImageContextWithOptions(imageBounds.size, false, UIScreen.main.scale)
-        let context = UIGraphicsGetCurrentContext()!
-        context.addEllipse(in: imageBounds)
-        context.clip()
-        image.draw(in: imageBounds)
-        let circleImage = UIGraphicsGetImageFromCurrentImageContext()!
-        UIGraphicsEndImageContext()
-        return circleImage
-    }
+            let shorterSide = min(image.size.width, image.size.height)
+            let imageBounds = CGRect(x: 0, y: 0, width: shorterSide, height: shorterSide)
+            UIGraphicsBeginImageContextWithOptions(imageBounds.size, false, UIScreen.main.scale)
+            let context = UIGraphicsGetCurrentContext()!
+            context.addEllipse(in: imageBounds)
+            context.clip()
+            image.draw(in: imageBounds)
+            let circleImage = UIGraphicsGetImageFromCurrentImageContext()!
+            UIGraphicsEndImageContext()
+            return circleImage
+        }
 }
 
 extension ProfileSetupViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(
-        _ picker: UIImagePickerController,
-        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
-    ) {
-        if let editedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
-            let croppedImage = cropToCircle(image: editedImage)
-            viewModel.updateProfileImage(croppedImage)
-        }
-        dismiss(animated: true)
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true)
-    }
+           _ picker: UIImagePickerController,
+           didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+       ) {
+           if let editedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
+               let croppedImage = cropToCircle(image: editedImage)
+               viewModel.updateProfileImage(croppedImage)
+           }
+           dismiss(animated: true)
+       }
 }
