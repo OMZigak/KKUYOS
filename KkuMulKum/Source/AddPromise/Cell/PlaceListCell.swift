@@ -117,12 +117,14 @@ extension PlaceListCell {
 private extension PlaceListCell {
     func configureCell(title: String, roadAddress: String?, address: String?) {
         titleLabel.setText(title, style: .body05, color: .gray8)
+        
         roadAddressNameLabel.setText(
             roadAddress ?? " ",
             style: .caption02,
             color: .gray6,
             isSingleLine: true
         )
+        
         addressNameLabel.setText(
             address ?? " ",
             style: .caption02,
