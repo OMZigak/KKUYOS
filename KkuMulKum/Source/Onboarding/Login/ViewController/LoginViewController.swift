@@ -53,7 +53,7 @@ class LoginViewController: BaseViewController {
                 print("Login State: Not logged in")
             case .login:
                 print("Login State: Logged in")
-                owner.navigateToMainScreen()
+                owner.navigateToOnboardingScreen()
             case .needOnboarding:
                 print("Login State: Need onboarding")
                 owner.navigateToOnboardingScreen()
@@ -62,7 +62,7 @@ class LoginViewController: BaseViewController {
         
         loginViewModel.userName.bind(with: self) { owner, name in
             if name != nil {
-                owner.navigateToMainScreen()
+                owner.navigateToOnboardingScreen()
             } else {
                 owner.navigateToOnboardingScreen()
             }
