@@ -78,12 +78,7 @@ class AuthService: AuthServiceType {
                 case .failure(let error):
                     continuation.resume(throwing: NetworkError.networkError(error))
                 }
-            case .failure(let error):
-                if let response = error.response, response.statusCode == 413 {
-                    completion(.failure(.apiError(code: 413, message: "이미지 사이즈가 너무 큽니다.")))
-                } else {
-                    completion(.failure(.networkError(error)))
-                }
+       
             }
         }
     }
