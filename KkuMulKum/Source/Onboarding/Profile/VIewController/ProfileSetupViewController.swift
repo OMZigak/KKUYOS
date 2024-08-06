@@ -50,18 +50,19 @@ class ProfileSetupViewController: BaseViewController {
     }
     
     @objc private func confirmButtonTapped() {
-           viewModel.uploadProfileImage { [weak self] success in
-               if success {
-                   DispatchQueue.main.async {
-                       let welcomeVC = WelcomeViewController(
-                           viewModel: WelcomeViewModel(nickname: self?.viewModel.nickname ?? "")
-                       )
-                       welcomeVC.modalPresentationStyle = .fullScreen
-                       self?.present(welcomeVC, animated: true, completion: nil)
-                   }
-               }
-           }
-       }
+        Task {
+            let success = await viewModel.uploadProfileImage()
+            if success {
+                DispatchQueue.main.async {
+                    let welcomeVC = WelcomeViewController(
+                        viewModel: WelcomeViewModel(nickname: self.viewModel.nickname)
+                    )
+                    welcomeVC.modalPresentationStyle = .fullScreen
+                    self.present(welcomeVC, animated: true, completion: nil)
+                }
+            }
+        }
+    }
     
     @objc private func skipButtonTapped() {
         let welcomeVC = WelcomeViewController(

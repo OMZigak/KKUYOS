@@ -14,7 +14,7 @@ class MyPageView: BaseView {
     private let topBackgroundView = UIView(backgroundColor: .white)
     private let contentView = MyPageContentView()
     private let alarmView = MyPageAlarmSettingView()
-    private let etcSettingView = MyPageEtcSettingView()
+     let etcSettingView = MyPageEtcSettingView()
     
     override func setupView() {
         backgroundColor = .green1
