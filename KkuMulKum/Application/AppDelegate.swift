@@ -28,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             print("Failed to load KAKAO_APP_KEY from PrivacyInfo.plist")
         }
-        
         setupFirebase(application: application)
         
         return true
