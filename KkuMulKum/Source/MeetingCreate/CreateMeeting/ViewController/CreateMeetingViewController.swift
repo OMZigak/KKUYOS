@@ -13,7 +13,6 @@ class CreateMeetingViewController: BaseViewController {
     // MARK: Property
 
     private let createMeetingViewModel: CreateMeetingViewModel
-    
     private let createMeetingView: CreateMeetingView = CreateMeetingView()
     
     
@@ -53,7 +52,6 @@ class CreateMeetingViewController: BaseViewController {
         super.viewDidLoad()
         
         setupBinding()
-        setupTapGesture()
     }
     
     
@@ -74,6 +72,12 @@ class CreateMeetingViewController: BaseViewController {
             self,
             action: #selector(presentButtonDidTapped),
             for: .touchUpInside
+        )
+        view.addGestureRecognizer(
+            UITapGestureRecognizer(
+                target: self,
+                action: #selector(dismissKeyboard)
+            )
         )
     }
 }
@@ -97,11 +101,6 @@ private extension CreateMeetingViewController {
         }
     }
     
-    func setupTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
-    }
-    
     @objc 
     func textFieldDidChange(_ textField: UITextField) {
         createMeetingViewModel.validateName(textField.text ?? "")
@@ -119,35 +118,17 @@ private extension CreateMeetingViewController {
             invitationCode: createMeetingViewModel.inviteCode.value
         )
         
-        inviteCodePopUpViewController.modalPresentationStyle = .overFullScreen
-        inviteCodePopUpViewController.modalTransitionStyle = .crossDissolve
-        inviteCodePopUpViewController.view.backgroundColor = .black.withAlphaComponent(0.7)
+        setupPopUpViewController(viewController: inviteCodePopUpViewController)
+        setupPopUpAction(view: inviteCodePopUpViewController.rootView)
+        removeDismissGesture(view: inviteCodePopUpViewController.rootView)
+        createMeetingViewModel.createMeeting(name: createMeetingViewModel.meetingName.value)
         
-        inviteCodePopUpViewController.rootView.copyButton.addTarget(
-            self,
-            action: #selector(copyButtonDidTapped),
-            for: .touchUpInside
-        )
-        inviteCodePopUpViewController.rootView.inviteLaterButton.addTarget(
-            self,
-            action: #selector(inviteLaterButtonDidTapped),
-            for: .touchUpInside
-        )
-        
-        inviteCodePopUpViewController.rootView.removeGestureRecognizer(
-            inviteCodePopUpViewController.rootView.gestureRecognizers![0]
-        )
-        
-        createMeetingViewModel.createMeeting(
-            name: createMeetingViewModel.meetingName.value
-        )
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             inviteCodePopUpViewController.rootView.setInvitationCodeText(
                 self.createMeetingViewModel.inviteCode.value
             )
             
-            self.present(inviteCodePopUpViewController, animated: true, completion: nil)
+            self.present(inviteCodePopUpViewController, animated: true)
         }
     }
     
@@ -166,6 +147,32 @@ private extension CreateMeetingViewController {
             let finishCreateViewController = FinishCreateViewController(meetingID: self.createMeetingViewModel.meetingID)
             
             self.navigationController?.pushViewController(finishCreateViewController, animated: true)
+        }
+    }
+    
+    private func setupPopUpViewController(viewController: BaseViewController) {
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.modalTransitionStyle = .crossDissolve
+        viewController.view.backgroundColor = .black.withAlphaComponent(0.7)
+    }
+    
+    private func setupPopUpAction(view: InvitationCodePopUpView) {
+        view.copyButton.addTarget(
+            self,
+            action: #selector(copyButtonDidTapped),
+            for: .touchUpInside
+        )
+        
+        view.inviteLaterButton.addTarget(
+            self,
+            action: #selector(inviteLaterButtonDidTapped),
+            for: .touchUpInside
+        )
+    }
+    
+    private func removeDismissGesture(view: BaseView) {
+        if let gesture = view.gestureRecognizers?.first {
+            view.removeGestureRecognizer(gesture)
         }
     }
 }

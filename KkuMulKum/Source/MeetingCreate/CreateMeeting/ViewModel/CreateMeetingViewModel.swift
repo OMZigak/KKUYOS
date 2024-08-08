@@ -19,12 +19,13 @@ class CreateMeetingViewModel {
     // MARK: Property
     
     var createMeetingResponse = ObservablePattern<MakeMeetingsResponseModel?>(nil)
-    let createMeetingService: CreateMeetingServiceType
     let isNextButtonEnabled = ObservablePattern<Bool>(false)
     let meetingName = ObservablePattern<String>("")
     let inviteCode = ObservablePattern<String>("")
-    let characterCount = ObservablePattern<String>("0/5")
+    let characterCount = ObservablePattern<String>("0/10")
     let inviteCodeState = ObservablePattern<MeetingNameState>(.empty)
+    let createMeetingService: CreateMeetingServiceType
+    
     private (set) var meetingID: Int = 0
     
     
