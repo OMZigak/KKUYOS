@@ -27,7 +27,18 @@ class JoinButtonView: BaseView {
     
     
     // MARK: - Setup
-
+    
+    init(mainTitle: String, subTitle: String) {
+        super.init(frame: .zero)
+        
+        mainTitleLabel.setText(mainTitle, style: .body03, color: .gray8)
+        subTitleLabel.setText(subTitle, style: .caption02, color: .gray5)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func setupView() {
         self.backgroundColor = .green1
         
@@ -56,24 +67,5 @@ class JoinButtonView: BaseView {
             $0.height.equalTo(Screen.height(24))
             $0.width.equalTo(chevronImageView.snp.height)
         }
-    }
-}
-
-
-// MARK: - Extension
-
-extension JoinButtonView {
-    func setJoinButtonViewStatus(isReceived: Bool) {
-        subTitleLabel.setText(
-            isReceived ? "초대 코드를 받았다면" : "초대 코드가 없다면",
-            style: .caption02,
-            color: .gray5
-        )
-        
-        mainTitleLabel.setText(
-            isReceived ? "초대 코드 입력하기" : "직접 모임 추가하기",
-            style: .body03,
-            color: .gray8
-        )
     }
 }
