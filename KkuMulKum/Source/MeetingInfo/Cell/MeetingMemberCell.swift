@@ -17,7 +17,6 @@ protocol MeetingMemberCellDelegate: AnyObject {
 
 final class MeetingMemberCell: BaseCollectionViewCell {
     private let profileImageButton = UIButton().then {
-        $0.backgroundColor = .gray2
         $0.layer.cornerRadius = Screen.height(64) / 2
         $0.isEnabled = false
         $0.clipsToBounds = true
@@ -35,7 +34,7 @@ final class MeetingMemberCell: BaseCollectionViewCell {
         
         profileImageButton.do {
             $0.imageView?.image = nil
-            $0.backgroundColor = .gray2
+            $0.backgroundColor = .clear
             $0.isEnabled = false
         }
         
@@ -100,21 +99,15 @@ private extension MeetingMemberCell {
     
     func configureForProfile(with member: Member) {
         let name = member.name
-        let imageURL = member.profileImageURL
+        let imageURL = member.profileImageURL.flatMap { URL(string: $0) }
         
         nameLabel.setText(name ?? " ", style: .caption02, color: .gray6)
-        profileImageButton.setImage(
-            .imgProfile.withRenderingMode(.alwaysOriginal),
-            for: .normal
-        )
         
-        setProfileImage(urlString: imageURL ?? "")
-    }
-    
-    func setProfileImage(urlString: String) {
-        guard let url = URL(string: urlString) else { return }
-
-        profileImageButton.kf.setImage(with: url, for: .normal)
+        profileImageButton.kf.setImage(
+            with: imageURL,
+            for: .disabled,
+            placeholder: .imgProfile.withRenderingMode(.alwaysOriginal)
+        )
     }
     
     @objc
