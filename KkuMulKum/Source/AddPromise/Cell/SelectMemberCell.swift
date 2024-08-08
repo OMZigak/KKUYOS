@@ -63,8 +63,8 @@ extension SelectMemberCell {
         self.member = member
         
         nameLabel.setText(member.name ?? " ", style: .body06, color: .gray6)
-        profileImageView.image = .imgProfile.withRenderingMode(.alwaysOriginal)
-        guard let imageURL = URL(string: member.profileImageURL ?? "") else { return }
-        profileImageView.kf.setImage(with: imageURL)
+        
+        let imageURL = member.profileImageURL.flatMap { URL(string: $0) }
+        profileImageView.kf.setImage(with: imageURL, placeholder: UIImage.imgProfile.withRenderingMode(.alwaysOriginal))
     }
 }
