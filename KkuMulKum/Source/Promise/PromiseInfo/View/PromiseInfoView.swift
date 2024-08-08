@@ -17,11 +17,6 @@ class PromiseInfoView: BaseView {
         $0.setHighlightText("n명", style: .body01, color: .maincolor)
     }
     
-    private let chevronButton: UIButton = UIButton().then {
-        $0.setImage(.iconRight.withTintColor(.gray4), for: .normal)
-        $0.contentMode = .scaleAspectFill
-    }
-    
     let participantCollectionView: UICollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout().then {
@@ -35,6 +30,27 @@ class PromiseInfoView: BaseView {
             ParticipantCollectionViewCell.self,
             forCellWithReuseIdentifier: ParticipantCollectionViewCell.reuseIdentifier
         )
+    }
+    
+    let locationContentLabel: UILabel = UILabel().then {
+        $0.setText("sss역 s번 출구", style: .body04, color: .gray7)
+    }
+    
+    let timeContentLabel: UILabel = UILabel().then {
+        $0.setText("mm월 dd일 hh:mm", style: .body04, color: .gray7)
+    }
+    
+    let readyLevelContentLabel: UILabel = UILabel().then {
+        $0.setText("LV n. sss", style: .body04, color: .gray7)
+    }
+    
+    let penaltyLevelContentLabel: UILabel = UILabel().then {
+        $0.setText("ssss하기", style: .body04, color: .gray7)
+    }
+    
+    private let chevronButton: UIButton = UIButton().then {
+        $0.setImage(.iconRight.withTintColor(.gray4), for: .normal)
+        $0.contentMode = .scaleAspectFill
     }
     
     private let backgroundView: UIView = UIView().then {
@@ -57,20 +73,12 @@ class PromiseInfoView: BaseView {
         $0.setText("위치", style: .caption01, color: .maincolor)
     }
     
-    let locationContentLabel: UILabel = UILabel().then {
-        $0.setText("sss역 s번 출구", style: .body04, color: .gray7)
-    }
-    
     private let locationDivideView: UIView = UIView().then {
         $0.backgroundColor = .gray2
     }
     
     private let timeInfoLabel: UILabel = UILabel().then {
         $0.setText("약속시간", style: .caption01, color: .maincolor)
-    }
-    
-    let timeContentLabel: UILabel = UILabel().then {
-        $0.setText("mm월 dd일 hh:mm", style: .body04, color: .gray7)
     }
     
     private let timeDivideView: UIView = UIView().then {
@@ -81,20 +89,12 @@ class PromiseInfoView: BaseView {
         $0.setText("준비레벨", style: .caption01, color: .maincolor)
     }
     
-    let readyLevelContentLabel: UILabel = UILabel().then {
-        $0.setText("LV n. sss", style: .body04, color: .gray7)
-    }
-    
     private let readyLevelDivideView: UIView = UIView().then {
         $0.backgroundColor = .gray2
     }
     
     private let penaltyLevelInfoLabel: UILabel = UILabel().then {
         $0.setText("벌칙", style: .caption01, color: .maincolor)
-    }
-    
-    let penaltyLevelContentLabel: UILabel = UILabel().then {
-        $0.setText("ssss하기", style: .body04, color: .gray7)
     }
     
     

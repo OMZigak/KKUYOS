@@ -12,13 +12,13 @@ class CheckInviteCodeViewController: BaseViewController {
     
     // MARK: Property
 
-    private let checkInviteCodeView: CheckInviteCodeView = CheckInviteCodeView()
+    private let rootView: CheckInviteCodeView = CheckInviteCodeView()
     
     
     // MARK: LifeCycle
     
     override func loadView() {
-        view = checkInviteCodeView
+        view = rootView
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,11 +44,11 @@ class CheckInviteCodeViewController: BaseViewController {
     }
     
     override func setupAction() {
-        checkInviteCodeView.enterInviteCodeView.addGestureRecognizer(UITapGestureRecognizer(
+        rootView.enterInviteCodeView.addGestureRecognizer(UITapGestureRecognizer(
             target: self,
             action: #selector(inviteCodeViewDidTap)
         ))
-        checkInviteCodeView.createMeetingView.addGestureRecognizer(UITapGestureRecognizer(
+        rootView.createMeetingView.addGestureRecognizer(UITapGestureRecognizer(
             target: self,
             action: #selector(createMeetingViewDidTap)
         ))

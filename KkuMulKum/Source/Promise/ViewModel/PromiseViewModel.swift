@@ -28,6 +28,9 @@ class PromiseViewModel {
     /// 설령 데이터가 없다하더라도 약속 시간은 담겨있음.
     let myReadyStatus = ObservablePattern<MyReadyStatusModel?>(nil)
     
+    /// 현재 준비 상태에 대한 버튼 처리
+    let myReadyProgressStatus = ObservablePattern<ReadyProgressStatus>(.none)
+    
     /// 준비 시작 시간
     var readyStartTime = ObservablePattern<String>("")
     
@@ -39,9 +42,6 @@ class PromiseViewModel {
     
     /// 이동 소요 시간
     var moveTime = ObservablePattern<String>("")
-    
-    /// 현재 준비 상태에 대한 버튼 처리
-    let myReadyProgressStatus = ObservablePattern<ReadyProgressStatus>(.none)
     
     /// 꾸물거림 여부
     var isLate = ObservablePattern<Bool>(false)

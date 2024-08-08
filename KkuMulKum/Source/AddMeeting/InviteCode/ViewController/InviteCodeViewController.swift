@@ -12,15 +12,14 @@ class InviteCodeViewController: BaseViewController {
     
     // MARK: Property
 
-    private let inviteCodeViewModel: InviteCodeViewModel
-    
-    private let inviteCodeView: InviteCodeView = InviteCodeView()
+    private let viewModel: InviteCodeViewModel
+    private let rootView: InviteCodeView = InviteCodeView()
     
     
     // MARK: - LifeCycle
     
     init(viewModel: InviteCodeViewModel) {
-        self.inviteCodeViewModel = viewModel
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -29,7 +28,7 @@ class InviteCodeViewController: BaseViewController {
     }
     
     override func loadView() {
-        view = inviteCodeView
+        view = rootView
     }
     
     override func viewDidLoad() {
@@ -60,12 +59,12 @@ class InviteCodeViewController: BaseViewController {
     }
     
     override func setupAction() {
-        inviteCodeView.inviteCodeTextField.addTarget(
+        rootView.inviteCodeTextField.addTarget(
             self,
             action: #selector(textFieldDidChange(_:)),
             for: .editingChanged
         )
-        inviteCodeView.presentButton.addTarget(
+        rootView.presentButton.addTarget(
             self,
             action: #selector(nextButtonTapped),
             for: .touchUpInside
@@ -73,8 +72,8 @@ class InviteCodeViewController: BaseViewController {
     }
     
     override func setupDelegate() {
-        inviteCodeView.inviteCodeTextField.delegate = self
-        inviteCodeView.inviteCodeTextField.returnKeyType = .done
+        rootView.inviteCodeTextField.delegate = self
+        rootView.inviteCodeTextField.returnKeyType = .done
     }
 }
 
@@ -83,36 +82,36 @@ class InviteCodeViewController: BaseViewController {
 
 extension InviteCodeViewController {
     private func setupBinding() {
-        inviteCodeViewModel.inviteCodeState.bind(with: self) { owner, state in
+        viewModel.inviteCodeState.bind(with: self) { owner, state in
             switch state {
             case .empty:
-                owner.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
-                owner.inviteCodeView.errorLabel.isHidden = true
-                owner.inviteCodeView.checkImageView.isHidden = true
-                owner.inviteCodeView.presentButton.isEnabled = false
+                owner.rootView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
+                owner.rootView.errorLabel.isHidden = true
+                owner.rootView.checkImageView.isHidden = true
+                owner.rootView.presentButton.isEnabled = false
             case .invalid:
-                owner.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.mainred.cgColor
-                owner.inviteCodeView.errorLabel.isHidden = false
-                owner.inviteCodeView.checkImageView.isHidden = true
-                owner.inviteCodeView.presentButton.isEnabled = false
+                owner.rootView.inviteCodeTextField.layer.borderColor = UIColor.mainred.cgColor
+                owner.rootView.errorLabel.isHidden = false
+                owner.rootView.checkImageView.isHidden = true
+                owner.rootView.presentButton.isEnabled = false
             case .valid:
-                owner.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
-                owner.inviteCodeView.errorLabel.isHidden = true
-                owner.inviteCodeView.checkImageView.isHidden = true
-                owner.inviteCodeView.presentButton.isEnabled = true
+                owner.rootView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
+                owner.rootView.errorLabel.isHidden = true
+                owner.rootView.checkImageView.isHidden = true
+                owner.rootView.presentButton.isEnabled = true
             case .success:
-                owner.inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
-                owner.inviteCodeView.errorLabel.isHidden = true
-                owner.inviteCodeView.checkImageView.isHidden = false
-                owner.inviteCodeView.presentButton.isEnabled = true
+                owner.rootView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
+                owner.rootView.errorLabel.isHidden = true
+                owner.rootView.checkImageView.isHidden = false
+                owner.rootView.presentButton.isEnabled = true
             }
         }
         
-        inviteCodeViewModel.meetingID.bind { [weak self] id in
+        viewModel.meetingID.bind { [weak self] id in
             guard let id else { return }
             
             DispatchQueue.main.async {
-                self?.inviteCodeViewModel.inviteCodeState.value = .success
+                self?.viewModel.inviteCodeState.value = .success
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
@@ -139,10 +138,10 @@ extension InviteCodeViewController {
             }
         }
         
-        inviteCodeViewModel.errorDescription.bind(with: self) { owner, error in
+        viewModel.errorDescription.bind(with: self) { owner, error in
             DispatchQueue.main.async {
-                owner.inviteCodeView.errorLabel.setText(error, style: .caption02, color: .mainred)
-                owner.inviteCodeViewModel.inviteCodeState.value = .invalid
+                owner.rootView.errorLabel.setText(error, style: .caption02, color: .mainred)
+                owner.viewModel.inviteCodeState.value = .invalid
             }
         }
     }
@@ -155,16 +154,16 @@ extension InviteCodeViewController {
     }
     
     @objc private func nextButtonTapped() {
-        inviteCodeViewModel.joinMeeting(inviteCode: inviteCodeViewModel.inviteCode.value)
+        viewModel.joinMeeting(inviteCode: viewModel.inviteCode.value)
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        inviteCodeViewModel.validateCode(textField.text ?? "")
+        viewModel.validateCode(textField.text ?? "")
     }
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
-        inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
+        rootView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
     }
 }
 
@@ -173,19 +172,19 @@ extension InviteCodeViewController {
 
 extension InviteCodeViewController: UITextFieldDelegate {
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
-        inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
+        rootView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
         
         return true
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        switch inviteCodeViewModel.inviteCodeState.value {
+        switch viewModel.inviteCodeState.value {
         case .empty:
-            inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
+            rootView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
         case .valid, .success:
-            inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
+            rootView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
         case .invalid:
-            inviteCodeView.inviteCodeTextField.layer.borderColor = UIColor.mainred.cgColor
+            rootView.inviteCodeTextField.layer.borderColor = UIColor.mainred.cgColor
         }
         
         return true

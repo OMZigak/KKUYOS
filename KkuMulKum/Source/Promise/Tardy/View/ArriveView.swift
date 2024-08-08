@@ -11,6 +11,13 @@ class ArriveView: BaseView {
     
     
     // MARK: Property
+    
+    let finishMeetingButton: CustomButton = CustomButton(
+        title: "약속 마치기",
+        isEnabled: true
+    ).then {
+        $0.backgroundColor = .maincolor
+    }
 
     private let giftImageView: UIImageView = UIImageView().then {
         $0.image = .imgGift
@@ -23,13 +30,6 @@ class ArriveView: BaseView {
     
     private let subTitleLabel: UILabel = UILabel().then {
         $0.setText("약속 시간까지 아무도 꾸물거리지 않았네요!", style: .body06, color: .gray6)
-    }
-    
-    let finishMeetingButton: CustomButton = CustomButton(
-        title: "약속 마치기",
-        isEnabled: true
-    ).then {
-        $0.backgroundColor = .maincolor
     }
     
     

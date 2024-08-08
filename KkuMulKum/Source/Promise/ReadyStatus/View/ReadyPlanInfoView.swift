@@ -34,6 +34,9 @@ class ReadyPlanInfoView: BaseView {
         $0.clipsToBounds = true
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         backgroundColor = .white
         

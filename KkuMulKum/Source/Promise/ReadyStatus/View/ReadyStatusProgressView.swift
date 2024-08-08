@@ -8,6 +8,10 @@
 import UIKit
 
 class ReadyStatusProgressView: BaseView {
+    
+    
+    // MARK: Property
+
     let statusProgressView: UIProgressView = UIProgressView().then {
         $0.trackTintColor = .gray2
         $0.progressTintColor = .maincolor
@@ -63,7 +67,7 @@ class ReadyStatusProgressView: BaseView {
         $0.isHidden = true
     }
     
-     let arrivalCheckImageView: UIImageView = UIImageView(backgroundColor: .gray2).then {
+    let arrivalCheckImageView: UIImageView = UIImageView(backgroundColor: .gray2).then {
         $0.layer.cornerRadius = Screen.height(16 / 2)
         $0.clipsToBounds = true
     }
@@ -81,6 +85,9 @@ class ReadyStatusProgressView: BaseView {
         $0.isHidden = true
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         backgroundColor = .white
         

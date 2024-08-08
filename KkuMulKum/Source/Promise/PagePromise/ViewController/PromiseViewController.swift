@@ -13,22 +13,18 @@ class PromiseViewController: BaseViewController {
     // MARK: Property
 
     private let viewModel: PromiseViewModel
-    
-    private var promiseViewControllerList: [BaseViewController] = []
-    
     private let promiseInfoViewController: PromiseInfoViewController
-    
     private let readyStatusViewController: ReadyStatusViewController
-    
     private let tardyViewController: TardyViewController
-    
-    private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(
-        items: ["약속 정보", "준비 현황", "지각 꾸물이"]
-    )
-    
     private let promisePageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .vertical
+    )
+    
+    private var promiseViewControllerList: [BaseViewController] = []
+    
+    private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(
+        items: ["약속 정보", "준비 현황", "지각 꾸물이"]
     )
     
     
@@ -86,7 +82,6 @@ class PromiseViewController: BaseViewController {
         
         addChild(promisePageViewController)
         
-        
         view.addSubviews(
             promiseSegmentedControl,
             promisePageViewController.view
@@ -138,7 +133,16 @@ class PromiseViewController: BaseViewController {
 
 // MARK: - Extension
 
-extension PromiseViewController {
+private extension PromiseViewController {
+    func setupBindings() {
+        viewModel.promiseInfo.bind { [weak self] model in
+            guard let model else { return }
+            DispatchQueue.main.async {
+                self?.setupNavigationBarTitle(with: model.promiseName)
+            }
+        }
+    }
+    
     @objc private func didSegmentedControlIndexUpdated() {
         let condition = viewModel.currentPage.value <= promiseSegmentedControl.selectedSegmentIndex
         let direction: UIPageViewController.NavigationDirection = condition ? .forward : .reverse
@@ -185,16 +189,5 @@ extension PromiseViewController: UIPageViewControllerDataSource {
         viewControllerBefore viewController: UIViewController
     ) -> UIViewController? {
         return nil
-    }
-}
-
-private extension PromiseViewController {
-    func setupBindings() {
-        viewModel.promiseInfo.bind { [weak self] model in
-            guard let model else { return }
-            DispatchQueue.main.async {
-                self?.setupNavigationBarTitle(with: model.promiseName)
-            }
-        }
     }
 }

@@ -13,12 +13,12 @@ class PagePromiseSegmentedControl: UISegmentedControl {
     
     
     // MARK: Property
-
-    private let backgroundLineView: UIView = UIView(backgroundColor: .gray2)
     
     let selectedUnderLineView: UIView = UIView(backgroundColor: .black).then {
         $0.layer.cornerRadius = 1
     }
+    
+    private let backgroundLineView: UIView = UIView(backgroundColor: .gray2)
     
     
     // MARK: Initialize

@@ -11,10 +11,6 @@ class CreateMeetingView: BaseView {
     
     
     // MARK: Property
-
-    private let mainTitleLabel: UILabel = UILabel().then {
-        $0.setText("모임 이름을\n입력해 주세요", style: .head01)
-    }
     
     let nameTextField: CustomTextField = CustomTextField(
         placeHolder: "모임 이름을 입력해 주세요"
@@ -28,6 +24,10 @@ class CreateMeetingView: BaseView {
         title: "다음",
         isEnabled: false
     )
+    
+    private let mainTitleLabel: UILabel = UILabel().then {
+        $0.setText("모임 이름을\n입력해 주세요", style: .head01)
+    }
     
     
     // MARK: - Setup

@@ -12,14 +12,14 @@ class CreateMeetingViewController: BaseViewController {
     
     // MARK: Property
 
-    private let createMeetingViewModel: CreateMeetingViewModel
-    private let createMeetingView: CreateMeetingView = CreateMeetingView()
+    private let viewModel: CreateMeetingViewModel
+    private let rootView: CreateMeetingView = CreateMeetingView()
     
     
     // MARK: - LifeCycle
     
     init(viewModel: CreateMeetingViewModel) {
-        self.createMeetingViewModel = viewModel
+        self.viewModel = viewModel
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -29,7 +29,7 @@ class CreateMeetingViewController: BaseViewController {
     }
     
     override func loadView() {
-        view = createMeetingView
+        view = rootView
     }
     
     override func viewDidLoad() {
@@ -60,12 +60,12 @@ class CreateMeetingViewController: BaseViewController {
     }
     
     override func setupAction() {
-        createMeetingView.nameTextField.addTarget(
+        rootView.nameTextField.addTarget(
             self,
             action: #selector(textFieldDidChange(_:)),
             for: .editingChanged
         )
-        createMeetingView.presentButton.addTarget(
+        rootView.presentButton.addTarget(
             self,
             action: #selector(presentButtonDidTap),
             for: .touchUpInside
@@ -84,45 +84,45 @@ class CreateMeetingViewController: BaseViewController {
 
 private extension CreateMeetingViewController {
     func setupBinding() {
-        createMeetingViewModel.inviteCodeState.bind(with: self) { owner, state in
+        viewModel.inviteCodeState.bind(with: self) { owner, state in
             switch state {
             case .empty, .invalid:
-                owner.createMeetingView.presentButton.isEnabled = false
+                owner.rootView.presentButton.isEnabled = false
             case .valid:
-                owner.createMeetingView.presentButton.isEnabled = true
+                owner.rootView.presentButton.isEnabled = true
             }
             
-            owner.createMeetingViewModel.characterCount.bind(with: self) { owner, count in
-                owner.createMeetingView.characterLabel.text = count
+            owner.viewModel.characterCount.bind(with: self) { owner, count in
+                owner.rootView.characterLabel.text = count
             }
         }
     }
     
     @objc 
     func textFieldDidChange(_ textField: UITextField) {
-        createMeetingViewModel.validateName(textField.text ?? "")
+        viewModel.validateName(textField.text ?? "")
     }
     
     @objc 
     func dismissKeyboard() {
         view.endEditing(true)
-        createMeetingView.nameTextField.layer.borderColor = UIColor.gray3.cgColor
+        rootView.nameTextField.layer.borderColor = UIColor.gray3.cgColor
     }
     
     @objc 
     func presentButtonDidTap() {
         let inviteCodePopUpViewController = InvitationCodePopUpViewController(
-            invitationCode: createMeetingViewModel.inviteCode.value
+            invitationCode: viewModel.inviteCode.value
         )
         
         setupPopUpViewController(viewController: inviteCodePopUpViewController)
         setupPopUpAction(view: inviteCodePopUpViewController.rootView)
         removeDismissGesture(view: inviteCodePopUpViewController.rootView)
-        createMeetingViewModel.createMeeting(name: createMeetingViewModel.meetingName.value)
+        viewModel.createMeeting(name: viewModel.meetingName.value)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
             inviteCodePopUpViewController.rootView.setInvitationCodeText(
-                self.createMeetingViewModel.inviteCode.value
+                self.viewModel.inviteCode.value
             )
             
             self.present(inviteCodePopUpViewController, animated: true)
@@ -131,9 +131,9 @@ private extension CreateMeetingViewController {
     
     @objc
     private func copyButtonDidTap() {
-        UIPasteboard.general.string = createMeetingViewModel.inviteCode.value
+        UIPasteboard.general.string = viewModel.inviteCode.value
         
-        let finishCreateViewController = FinishCreateViewController(meetingID: createMeetingViewModel.meetingID)
+        let finishCreateViewController = FinishCreateViewController(meetingID: viewModel.meetingID)
         
         navigationController?.pushViewController(finishCreateViewController, animated: true)
     }
@@ -141,7 +141,7 @@ private extension CreateMeetingViewController {
     @objc
     private func inviteLaterButtonDidTap() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-            let finishCreateViewController = FinishCreateViewController(meetingID: self.createMeetingViewModel.meetingID)
+            let finishCreateViewController = FinishCreateViewController(meetingID: self.viewModel.meetingID)
             
             self.navigationController?.pushViewController(finishCreateViewController, animated: true)
         }
