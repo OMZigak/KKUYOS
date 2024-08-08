@@ -25,11 +25,11 @@ class InviteCodeViewModel {
     let inviteCodeState = ObservablePattern<InviteCodeState>(.empty)
     let isNextButtonEnabled = ObservablePattern<Bool>(false)
     
-    private let service: InviteCodeServiceType
+    private let service: InviteCodeServiceProtocol
     
     // MARK: Initialize
 
-    init(service: InviteCodeServiceType) {
+    init(service: InviteCodeServiceProtocol) {
         self.service = service
     }
 }

@@ -24,14 +24,14 @@ class CreateMeetingViewModel {
     let inviteCode = ObservablePattern<String>("")
     let characterCount = ObservablePattern<String>("0/10")
     let inviteCodeState = ObservablePattern<MeetingNameState>(.empty)
-    let createMeetingService: CreateMeetingServiceType
+    let createMeetingService: CreateMeetingServiceProtocol
     
     private (set) var meetingID: Int = 0
     
     
     // MARK: Initialize
 
-    init(createMeetingService: CreateMeetingServiceType) {
+    init(createMeetingService: CreateMeetingServiceProtocol) {
         self.createMeetingService = createMeetingService
     }
 }

@@ -110,7 +110,6 @@ class FinishCreateViewController: BaseViewController {
 private extension FinishCreateViewController {
     @objc 
     func presentMeetingInfoViewControllerDidTapped() {
-        // TODO: 서버 연결할 때 데이터 바인딩해서 화면 전환 시키기
         let meetingInfoViewController = MeetingInfoViewController(
             viewModel: MeetingInfoViewModel(
                 meetingID: self.meetingID,

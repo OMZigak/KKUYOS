@@ -68,12 +68,12 @@ class PromiseViewModel {
         $0.pmSymbol = "PM"
     }
     
-    private let service: PromiseServiceType
+    private let service: PromiseServiceProtocol
     
     
     // MARK: Initialize
 
-    init(promiseID: Int, service: PromiseServiceType) {
+    init(promiseID: Int, service: PromiseServiceProtocol) {
         self.service = service
         self.promiseID = promiseID
     }

@@ -39,3 +39,41 @@ final class MeetingService {
         }
     }
 }
+
+extension MeetingService: CreateMeetingServiceProtocol {
+    func createMeeting(
+        request: MakeMeetingsRequestModel
+    ) async throws -> ResponseBodyDTO<MakeMeetingsResponseModel>? {
+        return try await self.request(
+            with: .createMeeting(
+                request: request
+            )
+        )
+    }
+}
+
+extension MeetingService: InviteCodeServiceProtocol {
+    func joinMeeting(
+        with request: RegisterMeetingsModel
+    ) async throws -> ResponseBodyDTO<RegisterMeetingsResponseModel>? {
+        return try await self.request(
+            with: .joinMeeting(
+                request: request
+            )
+        )
+    }
+}
+
+final class MockInviteCodeService: InviteCodeServiceProtocol {
+    func joinMeeting(with request: RegisterMeetingsModel) -> ResponseBodyDTO<RegisterMeetingsResponseModel>? {
+        let mockData = RegisterMeetingsResponseModel(
+            meetingID: 1
+        )
+        
+        return ResponseBodyDTO<RegisterMeetingsResponseModel>.init(
+            success: true,
+            data: mockData,
+            error: nil
+        )
+    }
+}
