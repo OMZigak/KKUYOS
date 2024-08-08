@@ -86,15 +86,15 @@ private extension CreateMeetingViewController {
     func setupBinding() {
         viewModel.inviteCodeState.bind(with: self) { owner, state in
             switch state {
-            case .empty, .invalid:
-                owner.rootView.presentButton.isEnabled = false
             case .valid:
                 owner.rootView.presentButton.isEnabled = true
+            case .empty, .invalid:
+                owner.rootView.presentButton.isEnabled = false
             }
-            
-            owner.viewModel.characterCount.bind(with: self) { owner, count in
-                owner.rootView.characterLabel.text = count
-            }
+        }
+        
+        viewModel.characterCount.bind(with: self) { owner, count in
+            owner.rootView.characterLabel.text = "\(count)/10"
         }
     }
     
@@ -121,9 +121,7 @@ private extension CreateMeetingViewController {
         viewModel.createMeeting(name: viewModel.meetingName.value)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            inviteCodePopUpViewController.rootView.setInvitationCodeText(
-                self.viewModel.inviteCode.value
-            )
+            inviteCodePopUpViewController.rootView.setInvitationCodeText(self.viewModel.inviteCode.value)
             
             self.present(inviteCodePopUpViewController, animated: true)
         }
