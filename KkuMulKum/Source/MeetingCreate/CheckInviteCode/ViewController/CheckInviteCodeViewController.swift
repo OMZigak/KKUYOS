@@ -17,6 +17,10 @@ class CheckInviteCodeViewController: BaseViewController {
     
     // MARK: LifeCycle
     
+    override func loadView() {
+        view = checkInviteCodeView
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -27,10 +31,6 @@ class CheckInviteCodeViewController: BaseViewController {
         super.viewWillDisappear(animated)
         
         navigationController?.isNavigationBarHidden = true
-    }
-
-    override func loadView() {
-        view = checkInviteCodeView
     }
     
     
