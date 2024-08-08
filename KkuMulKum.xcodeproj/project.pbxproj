@@ -1083,8 +1083,8 @@
 		DD931B682C3D9DAD00526452 /* Tardy */ = {
 			isa = PBXGroup;
 			children = (
-				DD1FD02C2C5CC6DE00D0A72C /* View */,
 				DD3976972C41CC3300E2A4C4 /* ViewController */,
+				DD1FD02C2C5CC6DE00D0A72C /* View */,
 			);
 			path = Tardy;
 			sourceTree = "<group>";

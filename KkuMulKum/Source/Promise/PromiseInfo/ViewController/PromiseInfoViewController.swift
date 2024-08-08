@@ -17,6 +17,9 @@ class PromiseInfoViewController: BaseViewController {
     private let viewModel: PromiseViewModel
     private let promiseInfoView: PromiseInfoView = PromiseInfoView()
     
+    
+    // MARK: - LifeCycle
+
     init(viewModel: PromiseViewModel) {
         self.viewModel = viewModel
         
@@ -37,6 +40,9 @@ class PromiseInfoViewController: BaseViewController {
         setupBinding()
         viewModel.fetchPromiseParticipantList()
     }
+    
+    
+    // MARK: - Setup
     
     override func setupDelegate() {
         promiseInfoView.participantCollectionView.delegate = self

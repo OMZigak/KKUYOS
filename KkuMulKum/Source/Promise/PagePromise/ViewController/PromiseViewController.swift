@@ -32,24 +32,16 @@ class PromiseViewController: BaseViewController {
     )
     
     
-    // MARK: Initializer
-
+    // MARK: - LifeCycle
+    
     init(viewModel: PromiseViewModel) {
         self.viewModel = viewModel
         
         viewModel.fetchPromiseInfo(promiseID: viewModel.promiseID)
         
-        promiseInfoViewController = PromiseInfoViewController(
-            viewModel: viewModel
-        )
-        
-        readyStatusViewController = ReadyStatusViewController(
-            viewModel: viewModel
-        )
-        
-        tardyViewController = TardyViewController(
-            viewModel: viewModel
-        )
+        promiseInfoViewController = PromiseInfoViewController(viewModel: viewModel)
+        readyStatusViewController = ReadyStatusViewController(viewModel: viewModel)
+        tardyViewController = TardyViewController(viewModel: viewModel)
         
         promiseViewControllerList = [
             promiseInfoViewController,
@@ -63,9 +55,6 @@ class PromiseViewController: BaseViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
-    // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,13 +119,13 @@ class PromiseViewController: BaseViewController {
         
         tardyViewController.tardyView.finishMeetingButton.addTarget(
             self,
-            action: #selector(finishMeetingButtonDidTapped),
+            action: #selector(finishMeetingButtonDidTap),
             for: .touchUpInside
         )
         
         tardyViewController.arriveView.finishMeetingButton.addTarget(
             self,
-            action: #selector(finishMeetingButtonDidTapped),
+            action: #selector(finishMeetingButtonDidTap),
             for: .touchUpInside
         )
     }
@@ -173,7 +162,7 @@ extension PromiseViewController {
     }
     
     @objc
-    func finishMeetingButtonDidTapped() {
+    func finishMeetingButtonDidTap() {
         tardyViewController.viewModel.updatePromiseCompletion()
         
         navigationController?.popViewController(animated: true)

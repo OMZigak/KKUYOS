@@ -16,7 +16,7 @@ class CreateMeetingViewController: BaseViewController {
     private let createMeetingView: CreateMeetingView = CreateMeetingView()
     
     
-    // MARK: Initialize
+    // MARK: - LifeCycle
     
     init(viewModel: CreateMeetingViewModel) {
         self.createMeetingViewModel = viewModel
@@ -28,8 +28,15 @@ class CreateMeetingViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func loadView() {
+        view = createMeetingView
+    }
     
-    // MARK: - LifeCycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupBinding()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -42,16 +49,6 @@ class CreateMeetingViewController: BaseViewController {
         super.viewWillDisappear(animated)
         
         navigationController?.isNavigationBarHidden = true
-    }
-
-    override func loadView() {
-        view = createMeetingView
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupBinding()
     }
     
     
@@ -70,7 +67,7 @@ class CreateMeetingViewController: BaseViewController {
         )
         createMeetingView.presentButton.addTarget(
             self,
-            action: #selector(presentButtonDidTapped),
+            action: #selector(presentButtonDidTap),
             for: .touchUpInside
         )
         view.addGestureRecognizer(
@@ -113,7 +110,7 @@ private extension CreateMeetingViewController {
     }
     
     @objc 
-    func presentButtonDidTapped() {
+    func presentButtonDidTap() {
         let inviteCodePopUpViewController = InvitationCodePopUpViewController(
             invitationCode: createMeetingViewModel.inviteCode.value
         )
@@ -133,7 +130,7 @@ private extension CreateMeetingViewController {
     }
     
     @objc
-    private func copyButtonDidTapped() {
+    private func copyButtonDidTap() {
         UIPasteboard.general.string = createMeetingViewModel.inviteCode.value
         
         let finishCreateViewController = FinishCreateViewController(meetingID: createMeetingViewModel.meetingID)
@@ -142,7 +139,7 @@ private extension CreateMeetingViewController {
     }
     
     @objc
-    private func inviteLaterButtonDidTapped() {
+    private func inviteLaterButtonDidTap() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
             let finishCreateViewController = FinishCreateViewController(meetingID: self.createMeetingViewModel.meetingID)
             
@@ -159,13 +156,13 @@ private extension CreateMeetingViewController {
     private func setupPopUpAction(view: InvitationCodePopUpView) {
         view.copyButton.addTarget(
             self,
-            action: #selector(copyButtonDidTapped),
+            action: #selector(copyButtonDidTap),
             for: .touchUpInside
         )
         
         view.inviteLaterButton.addTarget(
             self,
-            action: #selector(inviteLaterButtonDidTapped),
+            action: #selector(inviteLaterButtonDidTap),
             for: .touchUpInside
         )
     }

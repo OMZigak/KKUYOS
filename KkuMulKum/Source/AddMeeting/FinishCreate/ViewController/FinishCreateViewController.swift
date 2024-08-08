@@ -34,7 +34,7 @@ class FinishCreateViewController: BaseViewController {
     }
     
     
-    // MARK: - Initialize
+    // MARK: - LifeCycle
     
     init(meetingID: Int) {
         self.meetingID = meetingID
@@ -46,14 +46,13 @@ class FinishCreateViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - LifeCycle
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         navigationController?.isNavigationBarHidden = false
         self.navigationItem.hidesBackButton = true
     }
+    
     
     // MARK: - Setup
 
@@ -98,7 +97,7 @@ class FinishCreateViewController: BaseViewController {
     override func setupAction() {
         confirmButton.addTarget(
             self,
-            action: #selector(presentMeetingInfoViewControllerDidTapped),
+            action: #selector(presentMeetingInfoViewControllerDidTap),
             for: .touchUpInside
         )
     }
@@ -109,7 +108,7 @@ class FinishCreateViewController: BaseViewController {
 
 private extension FinishCreateViewController {
     @objc 
-    func presentMeetingInfoViewControllerDidTapped() {
+    func presentMeetingInfoViewControllerDidTap() {
         let meetingInfoViewController = MeetingInfoViewController(
             viewModel: MeetingInfoViewModel(
                 meetingID: self.meetingID,

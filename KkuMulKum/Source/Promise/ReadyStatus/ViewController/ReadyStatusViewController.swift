@@ -10,10 +10,16 @@ import UIKit
 import Kingfisher
 
 class ReadyStatusViewController: BaseViewController {
-    private let viewModel: PromiseViewModel
+    
+    
+    // MARK: Property
 
+    private let viewModel: PromiseViewModel
     private let rootView: ReadyStatusView = ReadyStatusView()
     
+    
+    // MARK: - LifeCycle
+
     init(viewModel: PromiseViewModel) {
         self.viewModel = viewModel
         
@@ -48,6 +54,9 @@ class ReadyStatusViewController: BaseViewController {
         rootView.updateCollectionViewHeight()
     }
     
+    
+    // MARK: - Setup
+
     override func setupDelegate() {
         rootView.ourReadyStatusCollectionView.dataSource = self
     }
@@ -55,47 +64,52 @@ class ReadyStatusViewController: BaseViewController {
     override func setupAction() {
         rootView.myReadyStatusProgressView.readyStartButton.addTarget(
             self,
-            action: #selector(readyStartButtonDidTapped),
+            action: #selector(readyStartButtonDidTap),
             for: .touchUpInside
         )
         rootView.myReadyStatusProgressView.moveStartButton.addTarget(
             self,
-            action: #selector(moveStartButtonDidTapped),
+            action: #selector(moveStartButtonDidTap),
             for: .touchUpInside
         )
         rootView.myReadyStatusProgressView.arrivalButton.addTarget(
             self,
-            action: #selector(arrivalButtonDidTapped),
+            action: #selector(arrivalButtonDidTap),
             for: .touchUpInside
         )
         rootView.enterReadyButtonView.addGestureRecognizer(
             UITapGestureRecognizer(
                 target: self,
-                action: #selector(enterReadyButtonDidTapped)
+                action: #selector(enterReadyButtonDidTap)
             )
         )
     }
-    
+}
+
+
+// MARK: - Extension
+
+extension ReadyStatusViewController {
     @objc
-    func readyStartButtonDidTapped() {
+    func readyStartButtonDidTap() {
         viewModel.myReadyProgressStatus.value = .ready
         rootView.myReadyStatusProgressView.readyStartButton.isEnabled.toggle()
     }
     
     @objc
-    func moveStartButtonDidTapped() {
+    func moveStartButtonDidTap() {
         viewModel.myReadyProgressStatus.value = .move
         rootView.myReadyStatusProgressView.moveStartButton.isEnabled.toggle()
     }
     
     @objc
-    func arrivalButtonDidTapped() {
+    func arrivalButtonDidTap() {
         viewModel.myReadyProgressStatus.value = .done
         rootView.myReadyStatusProgressView.arrivalButton.isEnabled.toggle()
     }
     
     @objc
-    func enterReadyButtonDidTapped() {
+    func enterReadyButtonDidTap() {
         guard let _ = viewModel.promiseInfo.value?.promiseName else { return }
         guard let readyStatusInfo = viewModel.myReadyStatus.value else { return }
         

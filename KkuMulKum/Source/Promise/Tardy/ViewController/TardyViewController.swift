@@ -17,8 +17,8 @@ class TardyViewController: BaseViewController {
     let arriveView: ArriveView = ArriveView()
     
     
-    // MARK: Initialize
-    
+    // MARK: - LifeCycle
+
     init(viewModel: PromiseViewModel) {
         self.viewModel = viewModel
         
@@ -29,17 +29,8 @@ class TardyViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    // MARK: - Setup
-    
     override func loadView() {
         view = viewModel.isPastDue.value ? arriveView : tardyView
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        
     }
     
     override func viewDidLoad() {
@@ -48,6 +39,13 @@ class TardyViewController: BaseViewController {
         setupBinding()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    
+    // MARK: - Setup
+
     override func setupDelegate() {
         tardyView.tardyCollectionView.dataSource = self
     }

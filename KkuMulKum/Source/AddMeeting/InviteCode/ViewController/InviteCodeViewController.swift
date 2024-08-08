@@ -17,8 +17,8 @@ class InviteCodeViewController: BaseViewController {
     private let inviteCodeView: InviteCodeView = InviteCodeView()
     
     
-    // MARK: Initialize
-
+    // MARK: - LifeCycle
+    
     init(viewModel: InviteCodeViewModel) {
         self.inviteCodeViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -28,8 +28,16 @@ class InviteCodeViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func loadView() {
+        view = inviteCodeView
+    }
     
-    // MARK: - LifeCycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupBinding()
+        setupTapGesture()
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -43,17 +51,6 @@ class InviteCodeViewController: BaseViewController {
         navigationController?.isNavigationBarHidden = true
     }
 
-    override func loadView() {
-        view = inviteCodeView
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        setupBinding()
-        setupTapGesture()
-    }
-    
     
     // MARK: - Setup
 
