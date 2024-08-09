@@ -131,7 +131,7 @@ private extension CreateMeetingViewController {
     private func copyButtonDidTap() {
         UIPasteboard.general.string = viewModel.inviteCode.value
         
-        let finishCreateViewController = FinishCreateViewController(meetingID: viewModel.meetingID)
+        let finishCreateViewController = CreateSuccessViewController(meetingID: viewModel.meetingID)
         
         navigationController?.pushViewController(finishCreateViewController, animated: true)
     }
@@ -139,7 +139,7 @@ private extension CreateMeetingViewController {
     @objc
     private func inviteLaterButtonDidTap() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7) {
-            let finishCreateViewController = FinishCreateViewController(meetingID: self.viewModel.meetingID)
+            let finishCreateViewController = CreateSuccessViewController(meetingID: self.viewModel.meetingID)
             
             self.navigationController?.pushViewController(finishCreateViewController, animated: true)
         }

@@ -1,5 +1,5 @@
 //
-//  FinishCreateViewController.swift
+//  CreateSuccessViewController.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 7/12/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FinishCreateViewController: BaseViewController {
+class CreateSuccessViewController: BaseViewController {
     
     
     // MARK: Property
@@ -106,7 +106,7 @@ class FinishCreateViewController: BaseViewController {
 
 // MARK: - Extension
 
-private extension FinishCreateViewController {
+private extension CreateSuccessViewController {
     @objc 
     func presentMeetingInfoViewControllerDidTap() {
         let meetingInfoViewController = MeetingInfoViewController(
