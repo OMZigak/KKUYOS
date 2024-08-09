@@ -33,6 +33,7 @@ class InviteCodeView: BaseView {
         $0.setText("모임 초대 코드를\n입력해 주세요", style: .head01)
     }
     
+    
     // MARK: - Setup
 
     override func setupView() {

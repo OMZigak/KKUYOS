@@ -20,6 +20,7 @@ class InviteCodeViewController: BaseViewController {
     
     init(viewModel: InviteCodeViewModel) {
         self.viewModel = viewModel
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -83,25 +84,21 @@ class InviteCodeViewController: BaseViewController {
 extension InviteCodeViewController {
     private func setupBinding() {
         viewModel.inviteCodeState.bind(with: self) { owner, state in
+            owner.rootView.errorLabel.isHidden = true
+            owner.rootView.checkImageView.isHidden = true
+            owner.rootView.presentButton.isEnabled = false
+            
             switch state {
             case .empty:
                 owner.rootView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
-                owner.rootView.errorLabel.isHidden = true
-                owner.rootView.checkImageView.isHidden = true
-                owner.rootView.presentButton.isEnabled = false
             case .invalid:
                 owner.rootView.inviteCodeTextField.layer.borderColor = UIColor.mainred.cgColor
                 owner.rootView.errorLabel.isHidden = false
-                owner.rootView.checkImageView.isHidden = true
-                owner.rootView.presentButton.isEnabled = false
             case .valid:
                 owner.rootView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
-                owner.rootView.errorLabel.isHidden = true
-                owner.rootView.checkImageView.isHidden = true
                 owner.rootView.presentButton.isEnabled = true
             case .success:
                 owner.rootView.inviteCodeTextField.layer.borderColor = UIColor.maincolor.cgColor
-                owner.rootView.errorLabel.isHidden = true
                 owner.rootView.checkImageView.isHidden = false
                 owner.rootView.presentButton.isEnabled = true
             }
@@ -122,19 +119,12 @@ extension InviteCodeViewController {
                     )
                 )
                 
-                guard let rootViewController = self?.navigationController?.viewControllers.first as? MainTabBarController else {
+                guard let navigationController = self?.navigationController,
+                      let rootViewController = navigationController.viewControllers.first as? MainTabBarController else {
                     return
                 }
-                
-                self?.navigationController?.popToViewController(
-                    rootViewController,
-                    animated: false
-                )
-                
-                rootViewController.navigationController?.pushViewController(
-                    meetingInfoViewController,
-                    animated: true
-                )
+
+                navigationController.setViewControllers([rootViewController, meetingInfoViewController], animated: true)
             }
         }
         
@@ -143,6 +133,10 @@ extension InviteCodeViewController {
                 owner.rootView.errorLabel.setText(error, style: .caption02, color: .mainred)
                 owner.viewModel.inviteCodeState.value = .invalid
             }
+        }
+        
+        viewModel.inviteCode.bind { code in
+            self.viewModel.validateInviteCode()
         }
     }
     
@@ -154,15 +148,16 @@ extension InviteCodeViewController {
     }
     
     @objc private func nextButtonTapped() {
-        viewModel.joinMeeting(inviteCode: viewModel.inviteCode.value)
+        viewModel.joinMeeting()
     }
     
     @objc private func textFieldDidChange(_ textField: UITextField) {
-        viewModel.validateCode(textField.text ?? "")
+        viewModel.updateInviteCode(textField.text ?? "")
     }
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
+        
         rootView.inviteCodeTextField.layer.borderColor = UIColor.gray3.cgColor
     }
 }
