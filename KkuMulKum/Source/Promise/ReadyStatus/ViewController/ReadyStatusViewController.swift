@@ -187,7 +187,7 @@ private extension ReadyStatusViewController {
                 }
             
                 /// 준비 시간을 계산해 UI에 표시
-                owner.viewModel.calculateTakenTime()
+                owner.viewModel.calculateDuration()
                 owner.viewModel.calculateStartTime()
                 
                 /// myReadyStatus의 바인딩 부분에 조건을 통해 myReadyProgressStatus 값을 업데이트
@@ -213,7 +213,7 @@ private extension ReadyStatusViewController {
             }
         }
         
-        viewModel.moveTime.bind(with: self) {
+        viewModel.moveDuration.bind(with: self) {
             owner,
             moveTime in
             owner.rootView.readyPlanInfoView.requestMoveTimeLabel.setText(
@@ -223,7 +223,7 @@ private extension ReadyStatusViewController {
             )
         }
         
-        viewModel.readyTime.bind(with: self) {
+        viewModel.readyDuration.bind(with: self) {
             owner,
             readyTime in
             owner.rootView.readyPlanInfoView.requestReadyTimeLabel.setText(

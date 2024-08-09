@@ -21,7 +21,7 @@ class PagePromiseSegmentedControl: UISegmentedControl {
     private let backgroundLineView: UIView = UIView(backgroundColor: .gray2)
     
     
-    // MARK: Initialize
+    // MARK: LifeCycle
 
     override init(items: [Any]?) {
         super.init(items: items)
@@ -42,7 +42,10 @@ class PagePromiseSegmentedControl: UISegmentedControl {
 
 private extension PagePromiseSegmentedControl {
     func setupSegment() {
-        addSubviews(backgroundLineView, selectedUnderLineView)
+        addSubviews(
+            backgroundLineView,
+            selectedUnderLineView
+        )
         
         selectedSegmentIndex = 0
     }
@@ -74,7 +77,7 @@ private extension PagePromiseSegmentedControl {
     func setupBackgroundLineView() {
         backgroundLineView.snp.makeConstraints {
             $0.bottom.leading.trailing.equalToSuperview()
-            $0.height.equalTo(2)
+            $0.height.equalTo(Screen.height(2))
         }
         
         selectedUnderLineView.snp.makeConstraints {

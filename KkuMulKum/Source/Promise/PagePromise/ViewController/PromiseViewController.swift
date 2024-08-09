@@ -14,8 +14,8 @@ class PromiseViewController: BaseViewController {
 
     private let viewModel: PromiseViewModel
     private let promiseInfoViewController: PromiseInfoViewController
-    private let readyStatusViewController: ReadyStatusViewController
-    private let tardyViewController: TardyViewController
+    private let promiseReadyStatusViewController: ReadyStatusViewController
+    private let promiseTardyViewController: TardyViewController
     private let promisePageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .vertical
@@ -36,13 +36,13 @@ class PromiseViewController: BaseViewController {
         viewModel.fetchPromiseInfo(promiseID: viewModel.promiseID)
         
         promiseInfoViewController = PromiseInfoViewController(viewModel: viewModel)
-        readyStatusViewController = ReadyStatusViewController(viewModel: viewModel)
-        tardyViewController = TardyViewController(viewModel: viewModel)
+        promiseReadyStatusViewController = ReadyStatusViewController(viewModel: viewModel)
+        promiseTardyViewController = TardyViewController(viewModel: viewModel)
         
         promiseViewControllerList = [
             promiseInfoViewController,
-            readyStatusViewController,
-            tardyViewController
+            promiseReadyStatusViewController,
+            promiseTardyViewController
         ]
         
         super.init(nibName: nil, bundle: nil)
@@ -78,7 +78,6 @@ class PromiseViewController: BaseViewController {
         view.backgroundColor = .white
         
         setupNavigationBarBackButton()
-        setupNavigationBarTitle(with: viewModel.promiseInfo.value?.promiseName ?? "")
         
         addChild(promisePageViewController)
         
@@ -112,13 +111,13 @@ class PromiseViewController: BaseViewController {
             for: .valueChanged
         )
         
-        tardyViewController.tardyView.finishMeetingButton.addTarget(
+        promiseTardyViewController.tardyView.finishMeetingButton.addTarget(
             self,
             action: #selector(finishMeetingButtonDidTap),
             for: .touchUpInside
         )
         
-        tardyViewController.arriveView.finishMeetingButton.addTarget(
+        promiseTardyViewController.arriveView.finishMeetingButton.addTarget(
             self,
             action: #selector(finishMeetingButtonDidTap),
             for: .touchUpInside
@@ -135,16 +134,15 @@ class PromiseViewController: BaseViewController {
 
 private extension PromiseViewController {
     func setupBindings() {
-        viewModel.promiseInfo.bind { [weak self] model in
-            guard let model else { return }
+        viewModel.promiseInfo.bind { info in
             DispatchQueue.main.async {
-                self?.setupNavigationBarTitle(with: model.promiseName)
+                self.setupNavigationBarTitle(with: info?.promiseName ?? "")
             }
         }
     }
     
     @objc private func didSegmentedControlIndexUpdated() {
-        let condition = viewModel.currentPage.value <= promiseSegmentedControl.selectedSegmentIndex
+        let condition = viewModel.currentPageIndex.value <= promiseSegmentedControl.selectedSegmentIndex
         let direction: UIPageViewController.NavigationDirection = condition ? .forward : .reverse
         let (width, count, selectedIndex) = (
             promiseSegmentedControl.bounds.width,
@@ -156,18 +154,18 @@ private extension PromiseViewController {
             $0.leading.equalToSuperview().offset((width / CGFloat(count)) * CGFloat(selectedIndex))
         }
         
-        viewModel.segmentIndexDidChanged(
+        viewModel.segmentIndexDidChange(
             index: promiseSegmentedControl.selectedSegmentIndex
         )
         
         promisePageViewController.setViewControllers([
-            promiseViewControllerList[viewModel.currentPage.value]
+            promiseViewControllerList[viewModel.currentPageIndex.value]
         ], direction: direction, animated: false)
     }
     
     @objc
     func finishMeetingButtonDidTap() {
-        tardyViewController.viewModel.updatePromiseCompletion()
+        promiseTardyViewController.viewModel.updatePromiseCompletion()
         
         navigationController?.popViewController(animated: true)
     }

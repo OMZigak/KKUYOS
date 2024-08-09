@@ -57,39 +57,38 @@ extension PromiseInfoViewController {
     func setupBinding() {
         viewModel.promiseInfo.bind(with: self) { owner, info in
             owner.rootView.timeContentLabel.setText(
-                info?.time ?? "설정되지 않음",
+                info?.time ?? "시간이 설정되지 않았어요!",
                 style: .body04,
                 color: .gray7
             )
             
             owner.rootView.readyLevelContentLabel.setText(
-                info?.dressUpLevel ?? "설정되지 않음",
+                info?.dressUpLevel ?? "꾸밈 난이도가 설정되지 않았어요!",
                 style: .body04,
                 color: .gray7
             )
             
             owner.rootView.locationContentLabel.setText(
-                info?.address ?? "설정되지 않음",
+                info?.address ?? "위치 정보가 설정되지 않았어요!",
                 style: .body04,
                 color: .gray7,
                 isSingleLine: true
             )
             
             owner.rootView.penaltyLevelContentLabel.setText(
-                info?.penalty ?? "설정되지 않음",
+                info?.penalty ?? "벌칙이 설정되지 않았어요!",
                 style: .body04,
                 color: .gray7
             )
         }
         
-        viewModel.participantsInfo.bind(with: self) {
-            owner,
-            participantsInfo in
+        viewModel.participantsInfo.bind(with: self) { owner, participantsInfo in
             DispatchQueue.main.async {
                 owner.rootView.participantNumberLabel.setText(
                     "약속 참여 인원 \(participantsInfo?.count ?? 0)명",
                     style: .body01
                 )
+                
                 owner.rootView.participantNumberLabel.setHighlightText(
                     "\(participantsInfo?.count ?? 0)명",
                     style: .body01,

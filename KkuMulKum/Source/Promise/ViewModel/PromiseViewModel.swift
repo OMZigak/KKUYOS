@@ -16,7 +16,7 @@ class PromiseViewModel {
     let promiseID: Int
     
     /// 현재 페이지 인덱스
-    let currentPage = ObservablePattern<Int>(0)
+    let currentPageIndex = ObservablePattern<Int>(0)
     
     /// 약속 정보
     let promiseInfo = ObservablePattern<PromiseInfoModel?>(nil)
@@ -35,13 +35,13 @@ class PromiseViewModel {
     var readyStartTime = ObservablePattern<String>("")
     
     /// 준비 소요 시간
-    var readyTime = ObservablePattern<String>("")
+    var readyDuration = ObservablePattern<String>("")
     
     /// 이동 시작 시간
     var moveStartTime = ObservablePattern<String>("")
     
     /// 이동 소요 시간
-    var moveTime = ObservablePattern<String>("")
+    var moveDuration = ObservablePattern<String>("")
     
     /// 꾸물거림 여부
     var isLate = ObservablePattern<Bool>(false)
@@ -56,14 +56,15 @@ class PromiseViewModel {
     var penalty: ObservablePattern<String> = ObservablePattern<String>("")
     
     /// 지각자 목록
-    var comers: ObservablePattern<[Comer]?> = ObservablePattern<[Comer]?>(nil)
+    var comers: ObservablePattern<[Comer]> = ObservablePattern<[Comer]>([])
     
     /// 서버로부터 받아올 에러 메시지
     var errorMessage: ObservablePattern<String> = ObservablePattern<String>("")
     
     /// 현재 시간 받아오기 위한 dateFormatter 구헌
     private let dateFormatter = DateFormatter().then {
-        $0.dateFormat = "a hh:mm"
+        $0.locale = Locale(identifier: "ko_KR")
+        $0.timeZone = TimeZone(identifier: "Asia/Seoul")
         $0.amSymbol = "AM"
         $0.pmSymbol = "PM"
     }
@@ -84,8 +85,8 @@ class PromiseViewModel {
 
 extension PromiseViewModel {
     /// segmentedControl 인덱스 바뀌었을 때 호출되는 함수
-    func segmentIndexDidChanged(index: Int) {
-        currentPage.value = index
+    func segmentIndexDidChange(index: Int) {
+        currentPageIndex.value = index
     }
     
     /// 우리들의 준비 현황 변동되었을 때 호출되는 함수
@@ -93,30 +94,22 @@ extension PromiseViewModel {
         participantsInfo.value = infos
     }
     
-    /// 준비 현황 버튼 클릭했을 때 호출되는 함수
+    /// 준비 현황 버튼 클릭했을 때 현재 시간 반환하는 함수
     func updateReadyStatusTime() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.dateFormat = "a h:mm"
-        dateFormatter.amSymbol = "AM"
-        dateFormatter.pmSymbol = "PM"
+        dateFormatter.dateFormat = "a hh:mm"
         
-        let currentTimeString = dateFormatter.string(from: Date())
-        
-        return currentTimeString
+        return dateFormatter.string(from: Date())
     }
     
     /// 꾸물거릴 시간이 없어요 팝업 표시를 위해 지각 여부를 판단하는 함수
-    func checkLate(settingTime: String, realTime: String) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_KR")
+    func checkLate(settingTime: String, arriveTime: String) {
         dateFormatter.dateFormat = "HH시 mm분"
         
         let readyStartDate = dateFormatter.date(from: settingTime)
         
         dateFormatter.dateFormat = "a h:mm"
         
-        let preparationStartDate = dateFormatter.date(from: realTime)
+        let preparationStartDate = dateFormatter.date(from: arriveTime)
         
         if let readyStartDate = readyStartDate, let preparationStartDate = preparationStartDate {
             self.isLate.value = preparationStartDate.compare(readyStartDate) == .orderedDescending
@@ -124,24 +117,22 @@ extension PromiseViewModel {
     }
     
     /// 준비 or 이동 소요 시간 계산하는 함수
-    func calculateTakenTime() {
+    func calculateDuration() {
         let preparationHours = (self.myReadyStatus.value?.preparationTime ?? 0) / 60
         let preparationMinutes = (self.myReadyStatus.value?.preparationTime ?? 0) % 60
         
-        readyTime.value = preparationHours == 0 ? "\(preparationMinutes)분" : "\(preparationHours)시간 \(preparationMinutes)분"
+        readyDuration.value = preparationHours == 0 ? "\(preparationMinutes)분" : "\(preparationHours)시간 \(preparationMinutes)분"
         
         let travelHours = (self.myReadyStatus.value?.travelTime ?? 0) / 60
         let travelMinutes = (self.myReadyStatus.value?.travelTime ?? 0) % 60
         
-        moveTime.value = travelHours == 0 ? "\(travelMinutes)분" : "\(travelHours)시간 \(travelMinutes)분"
+        moveDuration.value = travelHours == 0 ? "\(travelMinutes)분" : "\(travelHours)시간 \(travelMinutes)분"
     }
     
     /// 준비 or 이동 시작 시간 계산하는 함수
     func calculateStartTime() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        dateFormatter.locale = Locale(identifier: "ko_KR")
-        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         
         let promiseTime = self.myReadyStatus.value?.promiseTime ?? ""
         let readyTime = self.myReadyStatus.value?.preparationTime ?? 0
@@ -244,7 +235,7 @@ extension PromiseViewModel {
                 DispatchQueue.main.async {
                     self.checkLate(
                         settingTime: self.moveStartTime.value,
-                        realTime: self.myReadyStatus.value?.departureAt ?? ""
+                        arriveTime: self.myReadyStatus.value?.departureAt ?? ""
                     )
                 }
             }
@@ -266,8 +257,8 @@ extension PromiseViewModel {
                 }
                 DispatchQueue.main.async {
                     self.checkLate(
-                        settingTime: self.moveTime.value,
-                        realTime: self.myReadyStatus.value?.preparationStartAt ?? ""
+                        settingTime: self.moveDuration.value,
+                        arriveTime: self.myReadyStatus.value?.preparationStartAt ?? ""
                     )
                 }
             }
