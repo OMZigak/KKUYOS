@@ -14,10 +14,7 @@ extension UILabel {
         color: UIColor = .black,
         isSingleLine: Bool = false
     ) {
-        attributedText = .pretendardString(
-            text,
-            style: style
-        )
+        attributedText = .pretendardString(text, style: style)
         textColor = color
         if isSingleLine {
             numberOfLines = 1
