@@ -24,6 +24,14 @@ extension UILabel {
         }
     }
     
+    func updateText(_ text: String) {
+        guard let currentAttributes = attributedText?.attributes(at: 0, effectiveRange: nil) else {
+            self.text = text
+            return
+        }
+        attributedText = NSAttributedString(string: text, attributes: currentAttributes)
+    }
+    
     func setHighlightText(_ words: String..., style: UIFont.Pretendard, color: UIColor? = nil) {
         guard let currentText = attributedText?.string else { return }
         let mutableAttributedString = NSMutableAttributedString(
