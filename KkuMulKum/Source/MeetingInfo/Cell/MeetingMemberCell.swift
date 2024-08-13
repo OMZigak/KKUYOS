@@ -23,7 +23,7 @@ final class MeetingMemberCell: BaseCollectionViewCell {
     }
     
     private let nameLabel = UILabel().then {
-        $0.setText(" ", style: .caption02, color: .gray6)
+        $0.setText(style: .caption02, color: .gray6)
         $0.textAlignment = .center
     }
     
@@ -38,7 +38,7 @@ final class MeetingMemberCell: BaseCollectionViewCell {
             $0.isEnabled = false
         }
         
-        nameLabel.setText(" ", style: .caption02, color: .gray6)
+        nameLabel.setText(style: .caption02, color: .gray6)
     }
     
     override func setupView() {
@@ -94,7 +94,7 @@ private extension MeetingMemberCell {
             $0.isEnabled = true
         }
         
-        nameLabel.setText(" ", style: .caption02, color: .gray6)
+        nameLabel.setText(style: .caption02, color: .gray6)
     }
     
     func configureForProfile(with member: Member) {

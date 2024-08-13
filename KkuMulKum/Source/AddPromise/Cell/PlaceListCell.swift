@@ -15,7 +15,7 @@ final class PlaceListCell: BaseCollectionViewCell {
     static let defaultHeight = Screen.height(118)
     
     private let titleLabel = UILabel().then {
-        $0.setText("", style: .body05, color: .gray8)
+        $0.setText(style: .body05, color: .gray8)
     }
     
     private let roadAddressTitleLabel = UILabel().then {
@@ -28,7 +28,7 @@ final class PlaceListCell: BaseCollectionViewCell {
     }
     
     private let roadAddressNameLabel = UILabel().then {
-        $0.setText(" ", style: .caption02, color: .gray6)
+        $0.setText(style: .caption02, color: .gray6, isSingleLine: true)
     }
     
     private let addressTitleLabel = UILabel().then {
@@ -41,7 +41,7 @@ final class PlaceListCell: BaseCollectionViewCell {
     }
     
     private let addressNameLabel = UILabel().then {
-        $0.setText(" ", style: .caption02, color: .gray6)
+        $0.setText(style: .caption02, color: .gray6, isSingleLine: true)
     }
     
     
@@ -116,20 +116,8 @@ extension PlaceListCell {
 
 private extension PlaceListCell {
     func configureCell(title: String, roadAddress: String?, address: String?) {
-        titleLabel.setText(title, style: .body05, color: .gray8)
-        
-        roadAddressNameLabel.setText(
-            roadAddress ?? " ",
-            style: .caption02,
-            color: .gray6,
-            isSingleLine: true
-        )
-        
-        addressNameLabel.setText(
-            address ?? " ",
-            style: .caption02,
-            color: .gray6,
-            isSingleLine: true
-        )
+        titleLabel.updateText(title)
+        roadAddressNameLabel.updateText(roadAddress)
+        addressNameLabel.updateText(address)
     }
 }
