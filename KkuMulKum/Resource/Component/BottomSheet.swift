@@ -72,12 +72,12 @@ class BottomSheetViewController: UIViewController {
         self.configureLayout()
         self.configureDimmedTapGesture()
         self.dragIndicatorView.alpha = 1
-        }
-    
+        self.bottomSheetView.transform = CGAffineTransform(translationX: 0, y: self.defaultHeight)
+        
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         self.showBottomSheet()
     }
     
@@ -101,8 +101,9 @@ class BottomSheetViewController: UIViewController {
             }
         }
         
-        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
+        UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseOut, animations: {
             self.dimmedView.alpha = self.dimmedAlpha
+            self.bottomSheetView.transform = .identity
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
@@ -118,7 +119,7 @@ extension BottomSheetViewController {
         bottomSheetView.addSubview(dragIndicatorView)
         contentViewController.didMove(toParent: self)
         dragIndicatorView.backgroundColor = .black
-
+        
     }
     
     private func configureLayout() {
@@ -149,7 +150,6 @@ extension BottomSheetViewController {
         dimmedView.addGestureRecognizer(dimmedTap)
         dimmedView.isUserInteractionEnabled = true
     }
-
 }
 
 // MARK: Gesture
@@ -157,18 +157,15 @@ extension BottomSheetViewController {
     @objc private func dimmedViewTapped(_ tapRecognizer: UITapGestureRecognizer) {
         self.hideBottomSheetAndGoBack()
     }
-    
-
 }
 
 extension BottomSheetViewController {
     private func hideBottomSheetAndGoBack() {
-        bottomSheetView.snp.updateConstraints {
-            $0.height.equalTo(0)
-        }
+        let hideTransform = CGAffineTransform(translationX: 0, y: self.defaultHeight)
         
         UIView.animate(withDuration: 0.25, delay: 0, options: .curveEaseIn, animations: {
             self.dimmedView.alpha = 0.0
+            self.bottomSheetView.transform = hideTransform
             self.view.layoutIfNeeded()
         }) { _ in
             if self.presentingViewController != nil {
@@ -183,21 +180,4 @@ extension BottomSheetViewController {
         return nearestVal
     }
     
-    private func dimAlphaWithBottomSheetTopConstraint(value: CGFloat) -> CGFloat {
-        let fullDimAlpha: CGFloat = self.dimmedAlpha
-        let safeAreaHeight = view.safeAreaLayoutGuide.layoutFrame.height
-        let bottomPadding = view.safeAreaInsets.bottom
-        let fullDimPosition = (safeAreaHeight + bottomPadding - defaultHeight) / 2
-        let noDimPosition = safeAreaHeight + bottomPadding
-        
-        if value < fullDimPosition {
-            return fullDimAlpha
-        }
-        
-        if value > noDimPosition {
-            return 0.0
-        }
-        
-        return fullDimAlpha * (1 - ((value - fullDimPosition) / (noDimPosition - fullDimPosition)))
-    }
 }
