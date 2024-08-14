@@ -29,6 +29,9 @@ class MyPageViewController: BaseViewController {
            rootView.etcSettingView.kakaoShareTapped.bind { [weak self] _ in
                self?.shareKakaoTemplate()
            }
+           rootView.etcSettingView.onWithdrawTapped = { [weak self] in
+                      self?.showWithdrawBottomSheet()
+                  }
        }
        
        private func shareKakaoTemplate() {
@@ -59,4 +62,30 @@ class MyPageViewController: BaseViewController {
            alertController.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
            present(alertController, animated: true, completion: nil)
        }
+    
+    private func showWithdrawBottomSheet() {
+           let contentVC = WithdrawContentViewController()
+           let bottomSheetVC = BottomSheetViewController(contentViewController: contentVC, defaultHeight: 300)
+           
+           self.present(bottomSheetVC, animated: false, completion: nil)
+       }
+}
+
+class WithdrawContentViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .white
+        
+        let label = UILabel()
+        label.text = "정말로 탈퇴하시겠습니까?"
+        label.textAlignment = .center
+        
+        view.addSubview(label)
+        label.snp.makeConstraints {
+            $0.center.equalToSuperview()
+        }
+        
+        // 여기에 탈퇴 확인 버튼 등 추가 UI 요소를 구현할 수 있습니다.
+    }
 }

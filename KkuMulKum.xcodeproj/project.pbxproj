@@ -19,6 +19,7 @@
 		780E898C2C5D22B90009D27E /* KakaoSDKTalk in Frameworks */ = {isa = PBXBuildFile; productRef = 780E898B2C5D22B90009D27E /* KakaoSDKTalk */; };
 		780E898E2C5D22B90009D27E /* KakaoSDKTemplate in Frameworks */ = {isa = PBXBuildFile; productRef = 780E898D2C5D22B90009D27E /* KakaoSDKTemplate */; };
 		780E89902C5D22B90009D27E /* KakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 780E898F2C5D22B90009D27E /* KakaoSDKUser */; };
+		782965C92C6CCDEF000C7537 /* BottomSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782965C82C6CCDEF000C7537 /* BottomSheet.swift */; };
 		782B407B2C3E395A008B0CA7 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407A2C3E395A008B0CA7 /* WelcomeView.swift */; };
 		782B407D2C3E3984008B0CA7 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */; };
 		782B407F2C3E44B7008B0CA7 /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */; };
@@ -240,6 +241,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		782965C82C6CCDEF000C7537 /* BottomSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheet.swift; sourceTree = "<group>"; };
 		782B407A2C3E395A008B0CA7 /* WelcomeView.swift */ = {isa = PBXFileReference; indentWidth = 5; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
@@ -1362,6 +1364,7 @@
 		DE9E187E2C3BA49B00DB76B4 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				782965C82C6CCDEF000C7537 /* BottomSheet.swift */,
 				DE9E187F2C3BA4AA00DB76B4 /* CustomButton.swift */,
 				DE9E18832C3BA84500DB76B4 /* CustomTextField.swift */,
 			);
@@ -1763,6 +1766,7 @@
 				DD1FD0352C5CCF9F00D0A72C /* PromiseInfoViewController.swift in Sources */,
 				DDAF1C912C3D6E3D008A37D3 /* TardyViewController.swift in Sources */,
 				782B407D2C3E3984008B0CA7 /* WelcomeViewController.swift in Sources */,
+				782965C92C6CCDEF000C7537 /* BottomSheet.swift in Sources */,
 				DE8248002C36E857000601BC /* ObservablePattern.swift in Sources */,
 				DDAF1C902C3D6E3D008A37D3 /* PromiseViewModel.swift in Sources */,
 				DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */,
