@@ -141,7 +141,8 @@ private extension PromiseViewController {
         }
     }
     
-    @objc private func didSegmentedControlIndexUpdated() {
+    @objc
+    func didSegmentedControlIndexUpdated() {
         let condition = viewModel.currentPageIndex.value <= promiseSegmentedControl.selectedSegmentIndex
         let direction: UIPageViewController.NavigationDirection = condition ? .forward : .reverse
         let (width, count, selectedIndex) = (

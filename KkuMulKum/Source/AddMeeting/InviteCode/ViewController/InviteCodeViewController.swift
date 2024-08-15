@@ -81,8 +81,8 @@ class InviteCodeViewController: BaseViewController {
 
 // MARK: - Extension
 
-extension InviteCodeViewController {
-    private func setupBinding() {
+private extension InviteCodeViewController {
+    func setupBinding() {
         viewModel.inviteCodeState.bind(with: self) { owner, state in
             owner.rootView.errorLabel.isHidden = true
             owner.rootView.checkImageView.isHidden = true
@@ -120,10 +120,11 @@ extension InviteCodeViewController {
                 )
                 
                 guard let navigationController = self?.navigationController,
-                      let rootViewController = navigationController.viewControllers.first as? MainTabBarController else {
+                      let rootViewController = navigationController.viewControllers.first as? MainTabBarController
+                else {
                     return
                 }
-
+                
                 navigationController.setViewControllers([rootViewController, meetingInfoViewController], animated: true)
             }
         }
@@ -140,8 +141,7 @@ extension InviteCodeViewController {
         }
     }
     
-    
-    private func setupTapGesture() {
+    func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         
         view.addGestureRecognizer(tapGesture)

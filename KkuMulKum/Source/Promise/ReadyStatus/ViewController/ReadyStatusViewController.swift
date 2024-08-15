@@ -13,13 +13,13 @@ class ReadyStatusViewController: BaseViewController {
     
     
     // MARK: Property
-
+    
     private let viewModel: PromiseViewModel
     private let rootView: ReadyStatusView = ReadyStatusView()
     
     
     // MARK: - LifeCycle
-
+    
     init(viewModel: PromiseViewModel) {
         self.viewModel = viewModel
         
@@ -56,7 +56,7 @@ class ReadyStatusViewController: BaseViewController {
     
     
     // MARK: - Setup
-
+    
     override func setupDelegate() {
         rootView.ourReadyStatusCollectionView.dataSource = self
     }
@@ -99,7 +99,7 @@ extension ReadyStatusViewController {
                     owner.updateReadyInfoView(flag: false)
                     return
                 }
-            
+                
                 /// 준비 시간을 계산해 UI에 표시
                 owner.viewModel.calculateDuration()
                 owner.viewModel.calculateStartTime()

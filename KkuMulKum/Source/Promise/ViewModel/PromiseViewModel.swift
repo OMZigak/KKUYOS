@@ -122,6 +122,7 @@ extension PromiseViewModel {
                                       : myReadyStatus.value?.arrivalAt == nil ? .move
                                       : .done
         
+        // TODO: 리팩토링 끝나면 삭제
         print(">>>>> \(myReadyProgressStatus.value) : \(#function)")
     }
     

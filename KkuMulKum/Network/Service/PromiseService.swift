@@ -42,67 +42,35 @@ final class PromiseService {
 
 extension PromiseService: PromiseServiceProtocol {
     func fetchTardyInfo(with promiseID: Int) async throws -> ResponseBodyDTO<TardyInfoModel>? {
-        return try await request(
-            with: .fetchTardyInfo(
-                promiseID: promiseID
-            )
-        )
+        return try await request(with: .fetchTardyInfo(promiseID: promiseID))
     }
     
     func updatePromiseCompletion(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
-        return try await request(
-            with: .updatePromiseCompletion(
-                promiseID: promiseID
-            )
-        )
+        return try await request(with: .updatePromiseCompletion(promiseID: promiseID))
     }
     
-    func fetchPromiseInfo(with promiseId: Int) async throws -> ResponseBodyDTO<PromiseInfoModel>? {
-        return try await request(
-            with: .fetchPromiseInfo(
-                promiseID: promiseId
-            )
-        )
+    func fetchPromiseInfo(with promiseID: Int) async throws -> ResponseBodyDTO<PromiseInfoModel>? {
+        return try await request(with: .fetchPromiseInfo(promiseID: promiseID))
     }
     
     func updatePreparationStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
-        return try await request(
-            with: .updatePreparationStatus(
-                promiseID: promiseID
-            )
-        )
+        return try await request(with: .updatePreparationStatus(promiseID: promiseID))
     }
     
     func updateDepartureStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
-        return try await request(
-            with: .updateDepartureStatus(
-                promiseID: promiseID
-            )
-        )
+        return try await request(with: .updateDepartureStatus(promiseID: promiseID))
     }
     
     func updateArrivalStatus(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
-        return try await request(
-            with: .updateArrivalStatus(
-                promiseID: promiseID
-            )
-        )
+        return try await request(with: .updateArrivalStatus(promiseID: promiseID))
     }
     
     func fetchMyReadyStatus(with promiseID: Int) async throws -> ResponseBodyDTO<MyReadyStatusModel>? {
-        return try await request(
-            with: .fetchMyReadyStatus(
-                promiseID: promiseID
-            )
-        )
+        return try await request(with: .fetchMyReadyStatus(promiseID: promiseID))
     }
     
     func fetchPromiseParticipantList(with promiseID: Int) async throws -> ResponseBodyDTO<PromiseParticipantListModel>? {
-        return try await request(
-            with: .fetchPromiseParticipantList(
-                promiseID: promiseID
-            )
-        )
+        return try await request(with: .fetchPromiseParticipantList(promiseID: promiseID))
     }
 }
 
@@ -130,31 +98,13 @@ final class MockPromiseService: PromiseServiceProtocol {
         let mockData = TardyInfoModel(
             penalty: "티라미수 케익 릴스",
             isPastDue: true,
-            lateComers: [Comer(
-                participantId: 1,
-                name: "유짐이",
-                profileImageURL: ""
-            ),
-                         Comer(
-                            participantId: 1,
-                            name: "유짐이",
-                            profileImageURL: ""
-                         ),
-                         Comer(
-                            participantId: 1,
-                            name: "유짐이",
-                            profileImageURL: ""
-                         ),
-                         Comer(
-                            participantId: 1,
-                            name: "유짐이",
-                            profileImageURL: ""
-                         ),
-                         Comer(
-                            participantId: 1,
-                            name: "유짐이",
-                            profileImageURL: ""
-                         )]
+            lateComers: [
+                Comer(participantId: 1, name: "유짐이", profileImageURL: ""),
+                Comer(participantId: 1, name: "유짐이", profileImageURL: ""),
+                Comer(participantId: 1, name: "유짐이", profileImageURL: ""),
+                Comer(participantId: 1, name: "유짐이", profileImageURL: ""),
+                Comer(participantId: 1, name: "유짐이",profileImageURL: "")
+            ]
         )
         
         return ResponseBodyDTO<TardyInfoModel>.init(
