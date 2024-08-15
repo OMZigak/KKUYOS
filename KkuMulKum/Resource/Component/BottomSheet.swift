@@ -14,7 +14,7 @@ enum BottomSheetViewState {
     case normal
 }
 
-class BottomSheetViewController: UIViewController {
+class BottomSheetViewController: BaseViewController {
     private lazy var dimmedView = UIView().then {
         $0.backgroundColor = UIColor.darkGray.withAlphaComponent(self.dimmedAlpha)
         $0.alpha = 0
@@ -22,7 +22,7 @@ class BottomSheetViewController: UIViewController {
     
     private lazy var bottomSheetView = UIView().then {
         $0.backgroundColor = .white
-        $0.layer.cornerRadius = self.cornerRedius
+        $0.layer.cornerRadius = self.cornerRadius
         $0.layer.cornerCurve = .continuous
         $0.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         $0.clipsToBounds = true
@@ -35,25 +35,31 @@ class BottomSheetViewController: UIViewController {
         $0.alpha = 0
     }
     
-    // 열린 BottomSheet의 기본 높이를 지정하기 위한 프로퍼티
-    var defaultHeight: CGFloat = 500
+    let defaultHeight: CGFloat
     // bottomSheetView의 상단 CornerRadius 값
-    var cornerRedius: CGFloat = 8
+    let cornerRadius: CGFloat
     // dimmedView의 alpha값
-    var dimmedAlpha: CGFloat = 0.6
-    // Bottom Sheet과 safe Area Top 사이의 최소값을 지정하기 위한 프로퍼티
-    var bottomSheetPanMinTopConstant: CGFloat = 40
+    let dimmedAlpha: CGFloat
     // pannedGesture 활성화 여부
-    var isPannedable: Bool = false
+    let isPannedable: Bool
+    
+    // Bottom Sheet과 safe Area Top 사이의 최소값을 지정하기 위한 프로퍼티
+    private let bottomSheetPanMinTopConstant: CGFloat = 40
     // 드래그 하기 전에 Bottom Sheet의 top Constraint value를 저장하기 위한 프로퍼티
     private lazy var bottomSheetPanStartingTopConstant: CGFloat = bottomSheetPanMinTopConstant
     
     private let contentViewController: UIViewController
     
-    init(contentViewController: UIViewController, defaultHeight: CGFloat, cornerRadius: CGFloat = 8, dimmedAlpha: CGFloat = 0.6, isPannedable: Bool = false) {
+    init(
+        contentViewController: UIViewController,
+        defaultHeight: CGFloat,
+        cornerRadius: CGFloat = 8,
+        dimmedAlpha: CGFloat = 0.6,
+        isPannedable: Bool = false
+    ) {
         self.contentViewController = contentViewController
         self.defaultHeight = defaultHeight
-        self.cornerRedius = cornerRadius
+        self.cornerRadius = cornerRadius
         self.dimmedAlpha = dimmedAlpha
         self.isPannedable = isPannedable
         
@@ -73,7 +79,6 @@ class BottomSheetViewController: UIViewController {
         self.configureDimmedTapGesture()
         self.dragIndicatorView.alpha = 1
         self.bottomSheetView.transform = CGAffineTransform(translationX: 0, y: self.defaultHeight)
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -86,6 +91,25 @@ class BottomSheetViewController: UIViewController {
         coordinator.animate { [weak self] _ in
             self?.showBottomSheet()
         }
+    }
+    
+    override func setupView() {
+        super.setupView()
+        
+        view.backgroundColor = .clear
+        configureUI()
+        configureLayout()
+        self.dragIndicatorView.alpha = 1
+        self.bottomSheetView.transform = CGAffineTransform(translationX: 0, y: self.defaultHeight)
+    }
+    
+    private func configureUI() {
+        view.addSubviews(dimmedView, bottomSheetView, dragIndicatorView)
+        addChild(contentViewController)
+        bottomSheetView.addSubview(contentViewController.view)
+        bottomSheetView.addSubview(dragIndicatorView)
+        contentViewController.didMove(toParent: self)
+        dragIndicatorView.backgroundColor = .black
     }
     
     private func showBottomSheet(atState: BottomSheetViewState = .normal) {
@@ -107,21 +131,11 @@ class BottomSheetViewController: UIViewController {
             self.view.layoutIfNeeded()
         }, completion: nil)
     }
+    
 }
 
 // MARK: Configure
 extension BottomSheetViewController {
-    private func configureUI() {
-        view.addSubviews(dimmedView, bottomSheetView, dragIndicatorView)
-        
-        addChild(contentViewController)
-        bottomSheetView.addSubview(contentViewController.view)
-        bottomSheetView.addSubview(dragIndicatorView)
-        contentViewController.didMove(toParent: self)
-        dragIndicatorView.backgroundColor = .black
-        
-    }
-    
     private func configureLayout() {
         dimmedView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -179,5 +193,4 @@ extension BottomSheetViewController {
         else { return number }
         return nearestVal
     }
-    
 }
