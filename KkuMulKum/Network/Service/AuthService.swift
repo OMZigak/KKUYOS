@@ -24,8 +24,8 @@ enum NetworkErrorMapper {
 }
 
 class AuthService: AuthServiceType {
-    var keychainService: KeychainService
-    var provider = MoyaProvider<AuthTargetType>()
+    private var keychainService: KeychainService
+    private var provider = MoyaProvider<AuthTargetType>()
     
     init(keychainService: KeychainService = DefaultKeychainService.shared,
          provider: MoyaProvider<AuthTargetType> = MoyaProvider(plugins: [MoyaLoggingPlugin()])) {
