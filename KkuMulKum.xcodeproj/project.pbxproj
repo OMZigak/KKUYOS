@@ -58,7 +58,6 @@
 		785AE1BC2C2E878600677CA0 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BB2C2E878600677CA0 /* FirebaseStorage */; };
 		785AE1BE2C2E878600677CA0 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BD2C2E878600677CA0 /* FirebaseStorageCombine-Community */; };
 		785AE1C02C2E878600677CA0 /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BF2C2E878600677CA0 /* FirebaseVertexAI-Preview */; };
-		785AE1D12C3B07A600677CA0 /* PrivacyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */; };
 		789196342C486F6B00FF8CDF /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196332C486F6B00FF8CDF /* KeychainAccessible.swift */; };
 		789196362C492F8600FF8CDF /* AuthTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196352C492F8600FF8CDF /* AuthTargetType.swift */; };
 		789196382C49697B00FF8CDF /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196372C49697B00FF8CDF /* AuthError.swift */; };
@@ -98,6 +97,7 @@
 		A3FB185B2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB185A2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift */; };
 		DD1FD0302C5CCB4400D0A72C /* ReadyStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1FD02F2C5CCB4400D0A72C /* ReadyStatusViewController.swift */; };
 		DD1FD0352C5CCF9F00D0A72C /* PromiseInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1FD0342C5CCF9F00D0A72C /* PromiseInfoViewController.swift */; };
+		DD228AA22C69313500B440AF /* PrivacyInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = DD228AA12C69313500B440AF /* PrivacyInfo.plist */; };
 		DD3072142C3BF87A00416D9F /* NearestPromiseResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072132C3BF87A00416D9F /* NearestPromiseResponseModel.swift */; };
 		DD3072162C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072152C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift */; };
 		DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072192C3C011600416D9F /* AddPromiseRequestModel.swift */; };
@@ -243,7 +243,6 @@
 		782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
-		785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.plist; sourceTree = "<group>"; };
 		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		789196352C492F8600FF8CDF /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
 		789196372C49697B00FF8CDF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
@@ -285,6 +284,7 @@
 		A3FB185A2C3BF7DF001483E5 /* MeetingMembersResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingMembersResponseModel.swift; sourceTree = "<group>"; };
 		DD1FD02F2C5CCB4400D0A72C /* ReadyStatusViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusViewController.swift; sourceTree = "<group>"; };
 		DD1FD0342C5CCF9F00D0A72C /* PromiseInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseInfoViewController.swift; sourceTree = "<group>"; };
+		DD228AA12C69313500B440AF /* PrivacyInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PrivacyInfo.plist; sourceTree = "<group>"; };
 		DD3072132C3BF87A00416D9F /* NearestPromiseResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NearestPromiseResponseModel.swift; sourceTree = "<group>"; };
 		DD3072152C3BFE4E00416D9F /* UpcomingPromiseListResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingPromiseListResponseModel.swift; sourceTree = "<group>"; };
 		DD3072192C3C011600416D9F /* AddPromiseRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseRequestModel.swift; sourceTree = "<group>"; };
@@ -1228,7 +1228,7 @@
 				DD39768B2C41C36B00E2A4C4 /* Color.xcassets */,
 				78B928742C29402E006D9942 /* Assets.xcassets */,
 				78B928762C29402E006D9942 /* LaunchScreen.storyboard */,
-				785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */,
+				DD228AA12C69313500B440AF /* PrivacyInfo.plist */,
 				789D73AE2C46D99B00C7077D /* GoogleService-Info.plist */,
 				78B928792C29402E006D9942 /* Info.plist */,
 				DE9E187E2C3BA49B00DB76B4 /* Component */,
@@ -1680,8 +1680,8 @@
 				DE254AC72C311DC200A4015E /* Pretendard-Bold.otf in Resources */,
 				DE254ACC2C311DC200A4015E /* Pretendard-Thin.otf in Resources */,
 				DE254ACA2C311DC200A4015E /* Pretendard-Light.otf in Resources */,
-				785AE1D12C3B07A600677CA0 /* PrivacyInfo.plist in Resources */,
 				DE254AC82C311DC200A4015E /* Pretendard-Medium.otf in Resources */,
+				DD228AA22C69313500B440AF /* PrivacyInfo.plist in Resources */,
 				78B928752C29402E006D9942 /* Assets.xcassets in Resources */,
 				DE254ACB2C311DC200A4015E /* Pretendard-Black.otf in Resources */,
 				DE254AC52C311DC200A4015E /* Pretendard-Regular.otf in Resources */,

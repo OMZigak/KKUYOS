@@ -90,92 +90,6 @@ class ReadyStatusViewController: BaseViewController {
 // MARK: - Extension
 
 extension ReadyStatusViewController {
-    @objc
-    func readyStartButtonDidTap() {
-        viewModel.myReadyProgressStatus.value = .ready
-        rootView.myReadyStatusProgressView.readyStartButton.isEnabled.toggle()
-    }
-    
-    @objc
-    func moveStartButtonDidTap() {
-        viewModel.myReadyProgressStatus.value = .move
-        rootView.myReadyStatusProgressView.moveStartButton.isEnabled.toggle()
-    }
-    
-    @objc
-    func arrivalButtonDidTap() {
-        viewModel.myReadyProgressStatus.value = .done
-        rootView.myReadyStatusProgressView.arrivalButton.isEnabled.toggle()
-    }
-    
-    @objc
-    func enterReadyButtonDidTap() {
-        guard let _ = viewModel.promiseInfo.value?.promiseName else { return }
-        guard let readyStatusInfo = viewModel.myReadyStatus.value else { return }
-        
-        let setReadyInfoViewController = SetReadyInfoViewController(
-            viewModel: SetReadyInfoViewModel(
-                promiseID: viewModel.promiseID,
-                promiseTime: readyStatusInfo.promiseTime,
-                promiseName: viewModel.promiseInfo.value?.promiseName ?? "",
-                service: PromiseService()
-            )
-        )
-        
-        navigationController?.pushViewController(
-            setReadyInfoViewController,
-            animated: true
-        )
-    }
-}
-
-
-// MARK: - UICollectionViewDataSource
-
-extension ReadyStatusViewController: UICollectionViewDataSource {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        numberOfItemsInSection section: Int
-    ) -> Int {
-        return viewModel.participantsInfo.value?.count ?? 0
-    }
-    
-    func collectionView(
-        _ collectionView: UICollectionView,
-        cellForItemAt indexPath: IndexPath
-    ) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: OurReadyStatusCollectionViewCell.reuseIdentifier,
-            for: indexPath
-        ) as? OurReadyStatusCollectionViewCell
-        else { return UICollectionViewCell() }
-        
-        cell.nameLabel.setText(
-            viewModel.participantsInfo.value?[indexPath.row].name ?? "",
-            style: .body03,
-            color: .gray8
-        )
-        
-        if let imageURL = URL(string: viewModel.participantsInfo.value?[indexPath.row].profileImageURL ?? "") {
-            cell.profileImageView.kf.setImage(with: imageURL, placeholder: UIImage.imgProfile)
-        }
-        
-        switch viewModel.participantsInfo.value?[indexPath.row].state {
-        case "도착":
-            cell.readyStatusButton.setupButton("도착", .done)
-        case "이동중":
-            cell.readyStatusButton.setupButton("이동중", .move)
-        case "준비중":
-            cell.readyStatusButton.setupButton("준비중", .ready)
-        default:
-            cell.readyStatusButton.setupButton("꾸물중", .none)
-        }
-        
-        return cell
-    }
-}
-
-private extension ReadyStatusViewController {
     func setupBinding() {
         viewModel.myReadyStatus.bind(with: self) {
             owner,
@@ -501,5 +415,91 @@ private extension ReadyStatusViewController {
             /// 도착 완료 네트워크 통신
             viewModel.updateArrivalStatus()
         }
+    }
+    
+    @objc
+    func readyStartButtonDidTap() {
+        viewModel.myReadyProgressStatus.value = .ready
+        rootView.myReadyStatusProgressView.readyStartButton.isEnabled = false
+        rootView.myReadyStatusProgressView.moveStartButton.isEnabled = true
+    }
+    
+    @objc
+    func moveStartButtonDidTap() {
+        viewModel.myReadyProgressStatus.value = .move
+        rootView.myReadyStatusProgressView.moveStartButton.isEnabled = false
+        rootView.myReadyStatusProgressView.arrivalButton.isEnabled = true
+    }
+    
+    @objc
+    func arrivalButtonDidTap() {
+        viewModel.myReadyProgressStatus.value = .done
+        rootView.myReadyStatusProgressView.arrivalButton.isEnabled = false
+    }
+    
+    @objc
+    func enterReadyButtonDidTap() {
+        guard let _ = viewModel.promiseInfo.value?.promiseName else { return }
+        guard let readyStatusInfo = viewModel.myReadyStatus.value else { return }
+        
+        let setReadyInfoViewController = SetReadyInfoViewController(
+            viewModel: SetReadyInfoViewModel(
+                promiseID: viewModel.promiseID,
+                promiseTime: readyStatusInfo.promiseTime,
+                promiseName: viewModel.promiseInfo.value?.promiseName ?? "",
+                service: PromiseService()
+            )
+        )
+        
+        navigationController?.pushViewController(
+            setReadyInfoViewController,
+            animated: true
+        )
+    }
+}
+
+
+// MARK: - UICollectionViewDataSource
+
+extension ReadyStatusViewController: UICollectionViewDataSource {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        numberOfItemsInSection section: Int
+    ) -> Int {
+        return viewModel.participantsInfo.value?.count ?? 0
+    }
+    
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: OurReadyStatusCollectionViewCell.reuseIdentifier,
+            for: indexPath
+        ) as? OurReadyStatusCollectionViewCell
+        else { return UICollectionViewCell() }
+        
+        cell.nameLabel.setText(
+            viewModel.participantsInfo.value?[indexPath.row].name ?? "",
+            style: .body03,
+            color: .gray8
+        )
+        
+        if let imageURL = URL(string: viewModel.participantsInfo.value?[indexPath.row].profileImageURL ?? "") {
+            cell.profileImageView.kf.setImage(with: imageURL, placeholder: UIImage.imgProfile)
+        }
+        
+        switch viewModel.participantsInfo.value?[indexPath.row].state {
+        case "도착":
+            cell.readyStatusButton.setupButton("도착", .done)
+        case "이동중":
+            cell.readyStatusButton.setupButton("이동중", .move)
+        case "준비중":
+            cell.readyStatusButton.setupButton("준비중", .ready)
+        default:
+            cell.readyStatusButton.setupButton("꾸물중", .none)
+        }
+        
+        return cell
     }
 }

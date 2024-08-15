@@ -116,6 +116,15 @@ extension PromiseViewModel {
         }
     }
     
+    func updateMyReadyProgressStatus() {
+        myReadyProgressStatus.value = myReadyStatus.value?.preparationStartAt == nil ? .none
+                                      : myReadyStatus.value?.departureAt == nil ? .ready
+                                      : myReadyStatus.value?.arrivalAt == nil ? .move
+                                      : .done
+        
+        print(">>>>> \(myReadyProgressStatus.value) : \(#function)")
+    }
+    
     /// 준비 or 이동 소요 시간 계산하는 함수
     func calculateDuration() {
         let preparationHours = (self.myReadyStatus.value?.preparationTime ?? 0) / 60
@@ -232,12 +241,11 @@ extension PromiseViewModel {
                 else {
                     return
                 }
-                DispatchQueue.main.async {
-                    self.checkLate(
-                        settingTime: self.moveStartTime.value,
-                        arriveTime: self.myReadyStatus.value?.departureAt ?? ""
-                    )
-                }
+                
+                self.checkLate(
+                    settingTime: self.moveStartTime.value,
+                    arriveTime: self.myReadyStatus.value?.departureAt ?? ""
+                )
             }
         }
     }
@@ -255,12 +263,11 @@ extension PromiseViewModel {
                 else {
                     return
                 }
-                DispatchQueue.main.async {
-                    self.checkLate(
-                        settingTime: self.moveDuration.value,
-                        arriveTime: self.myReadyStatus.value?.preparationStartAt ?? ""
-                    )
-                }
+                
+                self.checkLate(
+                    settingTime: self.moveDuration.value,
+                    arriveTime: self.myReadyStatus.value?.preparationStartAt ?? ""
+                )
             }
         }
     }

@@ -53,6 +53,7 @@ class ReadyStatusProgressView: BaseView {
         title: "이동 시작",
         readyStatus: .none
     ).then {
+        $0.isEnabled = false
         $0.layer.cornerRadius = 16
         $0.layer.borderWidth = 1
     }
@@ -76,6 +77,7 @@ class ReadyStatusProgressView: BaseView {
         title: "도착 완료",
         readyStatus: .none
     ).then {
+        $0.isEnabled = false
         $0.layer.cornerRadius = 16
         $0.layer.borderWidth = 1
     }
