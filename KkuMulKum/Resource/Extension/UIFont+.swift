@@ -57,6 +57,6 @@ extension UIFont {
             }
         }
         
-        var baselineOffset: CGFloat { return (lineHeight - size) / 4 }
+        var baselineOffset: CGFloat { return (lineHeight - size) / 3 }
     }
 }

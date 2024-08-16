@@ -13,7 +13,6 @@ extension NSAttributedString {
         style: UIFont.Pretendard
     ) -> NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
-//        paragraphStyle.paragraphSpacing = style.leading
         paragraphStyle.maximumLineHeight = style.lineHeight
         paragraphStyle.minimumLineHeight = style.lineHeight
         
