@@ -27,11 +27,14 @@ class TardyCollectionViewCell: BaseCollectionViewCell {
     // MARK: - Setup
 
     override func setupView() {
-        addSubviews(profileImageView, nameLabel)
+        addSubviews(
+            profileImageView,
+            nameLabel
+        )
         
-        self.layer.cornerRadius = 8
-        self.layer.borderWidth = 1
-        self.layer.borderColor = UIColor.gray2.cgColor
+        layer.cornerRadius = Screen.height(8)
+        layer.borderWidth = 1
+        layer.borderColor = UIColor.gray2.cgColor
     }
     
     override func setupAutoLayout() {

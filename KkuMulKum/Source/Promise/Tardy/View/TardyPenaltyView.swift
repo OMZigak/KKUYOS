@@ -11,6 +11,10 @@ class TardyPenaltyView: BaseView {
     
     
     // MARK: Property
+    
+    let contentLabel: UILabel = UILabel().then {
+        $0.setText("탕후루 릴스 찍기", style: .body03, color: .gray8)
+    }
 
     private let penaltyImageView: UIImageView = UIImageView().then {
         $0.image = .iconPenalty
@@ -19,10 +23,6 @@ class TardyPenaltyView: BaseView {
     
     private let penaltyLabel: UILabel = UILabel().then {
         $0.setText("벌칙", style: .caption02, color: .gray8)
-    }
-    
-    let contentLabel: UILabel = UILabel().then {
-        $0.setText("탕후루 릴스 찍기", style: .body03, color: .gray8)
     }
     
     

@@ -18,19 +18,20 @@ class CreateMeetingViewModel {
     
     // MARK: Property
     
-    var createMeetingResponse = ObservablePattern<MakeMeetingsResponseModel?>(nil)
-    let createMeetingService: CreateMeetingServiceType
-    let isNextButtonEnabled = ObservablePattern<Bool>(false)
     let meetingName = ObservablePattern<String>("")
     let inviteCode = ObservablePattern<String>("")
-    let characterCount = ObservablePattern<String>("0/5")
+    let characterCount = ObservablePattern<String>("0/10")
     let inviteCodeState = ObservablePattern<MeetingNameState>(.empty)
+    let createMeetingService: CreateMeetingServiceProtocol
+    
+    var createMeetingResponse = ObservablePattern<MakeMeetingsResponseModel?>(nil)
+    
     private (set) var meetingID: Int = 0
     
     
     // MARK: Initialize
 
-    init(createMeetingService: CreateMeetingServiceType) {
+    init(createMeetingService: CreateMeetingServiceProtocol) {
         self.createMeetingService = createMeetingService
     }
 }
@@ -41,17 +42,15 @@ class CreateMeetingViewModel {
 extension CreateMeetingViewModel {
     func validateName(_ name: String) {
         meetingName.value = name
-        characterCount.value = "\(name.count)/10"
+        characterCount.value = String(name.count)
         
-        if name.isEmpty {
+        switch name.count {
+        case 0:
             inviteCodeState.value = .empty
-            isNextButtonEnabled.value = false
-        } else if name.count > 10 {
-            inviteCodeState.value = .invalid
-            isNextButtonEnabled.value = false
-        } else {
+        case 1...10:
             inviteCodeState.value = .valid
-            isNextButtonEnabled.value = true
+        default:
+            inviteCodeState.value = .invalid
         }
     }
     

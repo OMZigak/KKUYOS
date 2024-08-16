@@ -23,7 +23,7 @@ class ParticipantCollectionViewCell: BaseCollectionViewCell {
     }
     
     let userNameLabel: UILabel = UILabel().then {
-        $0.setText("userName", style: .caption02, color: .gray6)
+        $0.setText("꾸물이", style: .caption02, color: .gray6)
     }
     
     

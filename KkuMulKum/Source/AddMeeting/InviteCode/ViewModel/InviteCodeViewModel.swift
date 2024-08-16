@@ -23,13 +23,13 @@ class InviteCodeViewModel {
     let inviteCode = ObservablePattern<String>("")
     let errorDescription = ObservablePattern<String>("")
     let inviteCodeState = ObservablePattern<InviteCodeState>(.empty)
-    let isNextButtonEnabled = ObservablePattern<Bool>(false)
     
-    private let service: InviteCodeServiceType
+    private let service: InviteCodeServiceProtocol
     
-    // MARK: Initialize
+    
+    // MARK: - LifeCycle
 
-    init(service: InviteCodeServiceType) {
+    init(service: InviteCodeServiceProtocol) {
         self.service = service
     }
 }
@@ -38,28 +38,26 @@ class InviteCodeViewModel {
 // MARK: - Extension
 
 extension InviteCodeViewModel {
-    func validateCode(_ code: String) {
-        inviteCode.value = code
-        
-        if code.isEmpty {
+    func updateInviteCode(_ code: String) {
+        self.inviteCode.value = code
+    }
+    
+    func validateInviteCode() {
+        if inviteCode.value.isEmpty {
             inviteCodeState.value = .empty
-            isNextButtonEnabled.value = false
-        } else if code.count == 6 {
+        } else if inviteCode.value.count == 6 {
             inviteCodeState.value = .valid
-            isNextButtonEnabled.value = true
         } else {
             inviteCodeState.value = .invalid
-            isNextButtonEnabled.value = false
         }
     }
     
-    func joinMeeting(inviteCode: String) {
+    func joinMeeting() {
         Task {
             do {
-                let request = RegisterMeetingsModel(invitationCode: inviteCode)
+                let request = RegisterMeetingsModel(invitationCode: inviteCode.value)
                 let responseBody = try await service.joinMeeting(with: request)
                 
-                /// 네트워크 자체가 성공인가..
                 guard let success = responseBody?.success,
                       success == true
                 else {
@@ -67,7 +65,6 @@ extension InviteCodeViewModel {
                     return
                 }
                 
-                /// 성공인 경우
                 meetingID.value = responseBody?.data?.meetingID
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")

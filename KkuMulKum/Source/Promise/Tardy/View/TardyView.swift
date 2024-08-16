@@ -16,10 +16,6 @@ class TardyView: BaseView {
         $0.layer.cornerRadius = 8
     }
     
-    private let titleLabel: UILabel = UILabel().then {
-        $0.setText("이번 약속의 지각 꾸물이는?", style: .head01, color: .gray8)
-    }
-    
     let tardyEmptyView: TardyEmptyView = TardyEmptyView()
     
     let tardyCollectionView: UICollectionView = UICollectionView(
@@ -42,6 +38,10 @@ class TardyView: BaseView {
         isEnabled: true
     ).then {
         $0.backgroundColor = .maincolor
+    }
+    
+    private let titleLabel: UILabel = UILabel().then {
+        $0.setText("이번 약속의 지각 꾸물이는?", style: .head01, color: .gray8)
     }
     
     

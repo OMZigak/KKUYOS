@@ -11,10 +11,6 @@ class InviteCodeView: BaseView {
     
     
     // MARK: Property
-
-    private let mainTitleLabel: UILabel = UILabel().then {
-        $0.setText("모임 초대 코드를\n입력해 주세요", style: .head01)
-    }
     
     let inviteCodeTextField: CustomTextField = CustomTextField(
         placeHolder: "모임 초대 코드를 입력해 주세요"
@@ -32,6 +28,10 @@ class InviteCodeView: BaseView {
     }
     
     let presentButton: CustomButton = CustomButton(title: "모임 가입하기", isEnabled: false)
+    
+    private let mainTitleLabel: UILabel = UILabel().then {
+        $0.setText("모임 초대 코드를\n입력해 주세요", style: .head01)
+    }
     
     
     // MARK: - Setup

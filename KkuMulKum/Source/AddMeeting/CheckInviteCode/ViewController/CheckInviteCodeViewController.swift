@@ -12,10 +12,14 @@ class CheckInviteCodeViewController: BaseViewController {
     
     // MARK: Property
 
-    private let checkInviteCodeView: CheckInviteCodeView = CheckInviteCodeView()
+    private let rootView: CheckInviteCodeView = CheckInviteCodeView()
     
     
     // MARK: LifeCycle
+    
+    override func loadView() {
+        view = rootView
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -27,10 +31,6 @@ class CheckInviteCodeViewController: BaseViewController {
         super.viewWillDisappear(animated)
         
         navigationController?.isNavigationBarHidden = true
-    }
-
-    override func loadView() {
-        view = checkInviteCodeView
     }
     
     
@@ -44,11 +44,11 @@ class CheckInviteCodeViewController: BaseViewController {
     }
     
     override func setupAction() {
-        checkInviteCodeView.enterInviteCodeView.addGestureRecognizer(UITapGestureRecognizer(
+        rootView.enterInviteCodeView.addGestureRecognizer(UITapGestureRecognizer(
             target: self,
             action: #selector(inviteCodeViewDidTap)
         ))
-        checkInviteCodeView.createMeetingView.addGestureRecognizer(UITapGestureRecognizer(
+        rootView.createMeetingView.addGestureRecognizer(UITapGestureRecognizer(
             target: self,
             action: #selector(createMeetingViewDidTap)
         ))

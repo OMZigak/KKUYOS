@@ -1,5 +1,5 @@
 //
-//  FinishCreateViewController.swift
+//  CreateSuccessViewController.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 7/12/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FinishCreateViewController: BaseViewController {
+class CreateSuccessViewController: BaseViewController {
     
     
     // MARK: Property
@@ -34,7 +34,7 @@ class FinishCreateViewController: BaseViewController {
     }
     
     
-    // MARK: - Initialize
+    // MARK: - LifeCycle
     
     init(meetingID: Int) {
         self.meetingID = meetingID
@@ -46,14 +46,13 @@ class FinishCreateViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - LifeCycle
-    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         navigationController?.isNavigationBarHidden = false
         self.navigationItem.hidesBackButton = true
     }
+    
     
     // MARK: - Setup
 
@@ -98,7 +97,7 @@ class FinishCreateViewController: BaseViewController {
     override func setupAction() {
         confirmButton.addTarget(
             self,
-            action: #selector(presentMeetingInfoViewControllerDidTapped),
+            action: #selector(presentMeetingInfoViewControllerDidTap),
             for: .touchUpInside
         )
     }
@@ -107,10 +106,9 @@ class FinishCreateViewController: BaseViewController {
 
 // MARK: - Extension
 
-private extension FinishCreateViewController {
+private extension CreateSuccessViewController {
     @objc 
-    func presentMeetingInfoViewControllerDidTapped() {
-        // TODO: 서버 연결할 때 데이터 바인딩해서 화면 전환 시키기
+    func presentMeetingInfoViewControllerDidTap() {
         let meetingInfoViewController = MeetingInfoViewController(
             viewModel: MeetingInfoViewModel(
                 meetingID: self.meetingID,

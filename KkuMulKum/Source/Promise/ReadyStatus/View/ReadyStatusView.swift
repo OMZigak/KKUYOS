@@ -6,22 +6,13 @@
 //
 
 import UIKit
+
 import SnapKit
 
-
 class ReadyStatusView: BaseView {
-    private let scrollView: UIScrollView = UIScrollView().then {
-        $0.showsVerticalScrollIndicator = false
-    }
     
-    private let contentView: UIView = UIView()
     
-    private var collectionViewHeightConstraint: Constraint?
-    
-    private let baseStackView: UIStackView = UIStackView(axis: .vertical).then {
-        $0.spacing = 24
-        $0.backgroundColor = .gray0
-    }
+    // MARK: Property
     
     let enterReadyButtonView: EnterReadyInfoButtonView = EnterReadyInfoButtonView().then {
         $0.layer.cornerRadius = 8
@@ -33,14 +24,6 @@ class ReadyStatusView: BaseView {
         $0.clipsToBounds = true
     }
     
-    private let myReadyStatusTitleLabel: UILabel = UILabel().then {
-        $0.setText("나의 준비 현황", style: .body01, color: .gray8)
-    }
-    
-    private let readyBaseView: UIStackView = UIStackView(axis: .vertical).then {
-        $0.spacing = 4
-    }
-    
     let myReadyStatusProgressView: ReadyStatusProgressView = ReadyStatusProgressView().then {
         $0.layer.cornerRadius = 8
         $0.clipsToBounds = true
@@ -49,14 +32,6 @@ class ReadyStatusView: BaseView {
     let popUpImageView: UIImageView = UIImageView(image: .imgTextPopup).then {
         $0.contentMode = .scaleAspectFit
         $0.isHidden = true
-    }
-    
-    private let ourReadyStatusLabel: UILabel = UILabel().then {
-        $0.setText(
-            "우리들의 준비 현황",
-            style: .body01,
-            color: .gray8
-        )
     }
     
     let ourReadyStatusCollectionView: UICollectionView = UICollectionView(
@@ -73,6 +48,38 @@ class ReadyStatusView: BaseView {
                 forCellWithReuseIdentifier: OurReadyStatusCollectionViewCell.reuseIdentifier
             )
         }
+    
+    private let scrollView: UIScrollView = UIScrollView().then {
+        $0.showsVerticalScrollIndicator = false
+    }
+    
+    private let contentView: UIView = UIView()
+    
+    private let baseStackView: UIStackView = UIStackView(axis: .vertical).then {
+        $0.spacing = 24
+        $0.backgroundColor = .gray0
+    }
+    
+    private let myReadyStatusTitleLabel: UILabel = UILabel().then {
+        $0.setText("나의 준비 현황", style: .body01, color: .gray8)
+    }
+    
+    private let readyBaseView: UIStackView = UIStackView(axis: .vertical).then {
+        $0.spacing = 4
+    }
+    
+    private let ourReadyStatusLabel: UILabel = UILabel().then {
+        $0.setText(
+            "우리들의 준비 현황",
+            style: .body01,
+            color: .gray8
+        )
+    }
+    
+    private var collectionViewHeightConstraint: Constraint?
+    
+    
+    // MARK: - Setup
     
     override func setupView() {
         readyBaseView.addArrangedSubviews(
@@ -99,13 +106,6 @@ class ReadyStatusView: BaseView {
         
     }
     
-    func updateCollectionViewHeight() {
-            ourReadyStatusCollectionView.layoutIfNeeded()
-            let contentHeight = ourReadyStatusCollectionView.collectionViewLayout.collectionViewContentSize.height
-            collectionViewHeightConstraint?.update(offset: contentHeight)
-            layoutIfNeeded()
-        }
-    
     override func setupAutoLayout() {
         scrollView.snp.makeConstraints {
             $0.edges.equalToSuperview()
@@ -131,6 +131,16 @@ class ReadyStatusView: BaseView {
             $0.bottom.equalTo(ourReadyStatusCollectionView.snp.bottom).offset(20)
         }
     }
-    
-  
+}
+
+
+// MARK: - Extension
+
+extension ReadyStatusView {
+    func updateCollectionViewHeight() {
+        ourReadyStatusCollectionView.layoutIfNeeded()
+        let contentHeight = ourReadyStatusCollectionView.collectionViewLayout.collectionViewContentSize.height
+        collectionViewHeightConstraint?.update(offset: contentHeight)
+        layoutIfNeeded()
+    }
 }

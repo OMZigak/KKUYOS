@@ -11,17 +11,19 @@ class CheckInviteCodeView: BaseView {
     
     
     // MARK: Property
+    
+    let enterInviteCodeView: JoinButtonView = JoinButtonView(
+        mainTitle: "초대 코드를 받았다면",
+        subTitle: "초대 코드가 없다면"
+    )
+    
+    let createMeetingView: JoinButtonView = JoinButtonView(
+        mainTitle: "초대 코드 입력하기",
+        subTitle: "직접 모임 추가하기"
+    )
 
     private let checkInviteLabel: UILabel = UILabel().then {
         $0.setText("친구에게 받은\n모임 초대 코드가 있으신가요?", style: .head01, color: .gray8)
-    }
-    
-    let enterInviteCodeView: JoinButtonView = JoinButtonView().then {
-        $0.setJoinButtonViewStatus(isReceived: true)
-    }
-    
-    let createMeetingView: JoinButtonView = JoinButtonView().then {
-        $0.setJoinButtonViewStatus(isReceived: false)
     }
     
     

@@ -15,6 +15,10 @@ enum ReadyProgressStatus {
 }
 
 class ReadyStatusButton: UIButton {
+    
+    
+    // MARK: - LifeCycle
+
     init(title: String, readyStatus: ReadyProgressStatus) {
         super.init(frame: .zero)
         

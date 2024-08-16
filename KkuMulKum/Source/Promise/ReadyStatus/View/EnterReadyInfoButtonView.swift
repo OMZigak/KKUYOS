@@ -21,6 +21,9 @@ class EnterReadyInfoButtonView: BaseView {
         $0.contentMode = .scaleAspectFill
     }
     
+    
+    // MARK: - Setup
+
     override func setupView() {
         backgroundColor = .white
         addSubviews(descriptionLabel, chevronButton)

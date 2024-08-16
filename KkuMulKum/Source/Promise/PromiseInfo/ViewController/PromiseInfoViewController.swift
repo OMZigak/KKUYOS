@@ -15,8 +15,11 @@ class PromiseInfoViewController: BaseViewController {
     // MARK: Property
     
     private let viewModel: PromiseViewModel
-    private let promiseInfoView: PromiseInfoView = PromiseInfoView()
+    private let rootView: PromiseInfoView = PromiseInfoView()
     
+    
+    // MARK: - LifeCycle
+
     init(viewModel: PromiseViewModel) {
         self.viewModel = viewModel
         
@@ -28,7 +31,7 @@ class PromiseInfoViewController: BaseViewController {
     }
     
     override func loadView() {
-        view = promiseInfoView
+        view = rootView
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -38,9 +41,12 @@ class PromiseInfoViewController: BaseViewController {
         viewModel.fetchPromiseParticipantList()
     }
     
+    
+    // MARK: - Setup
+    
     override func setupDelegate() {
-        promiseInfoView.participantCollectionView.delegate = self
-        promiseInfoView.participantCollectionView.dataSource = self
+        rootView.participantCollectionView.delegate = self
+        rootView.participantCollectionView.dataSource = self
     }
 }
 
@@ -50,47 +56,46 @@ class PromiseInfoViewController: BaseViewController {
 extension PromiseInfoViewController {
     func setupBinding() {
         viewModel.promiseInfo.bind(with: self) { owner, info in
-            owner.promiseInfoView.timeContentLabel.setText(
-                info?.time ?? "설정되지 않음",
+            owner.rootView.timeContentLabel.setText(
+                info?.time ?? "시간이 설정되지 않았어요!",
                 style: .body04,
                 color: .gray7
             )
             
-            owner.promiseInfoView.readyLevelContentLabel.setText(
-                info?.dressUpLevel ?? "설정되지 않음",
+            owner.rootView.readyLevelContentLabel.setText(
+                info?.dressUpLevel ?? "꾸밈 난이도가 설정되지 않았어요!",
                 style: .body04,
                 color: .gray7
             )
             
-            owner.promiseInfoView.locationContentLabel.setText(
-                info?.address ?? "설정되지 않음",
+            owner.rootView.locationContentLabel.setText(
+                info?.address ?? "위치 정보가 설정되지 않았어요!",
                 style: .body04,
                 color: .gray7,
                 isSingleLine: true
             )
             
-            owner.promiseInfoView.penaltyLevelContentLabel.setText(
-                info?.penalty ?? "설정되지 않음",
+            owner.rootView.penaltyLevelContentLabel.setText(
+                info?.penalty ?? "벌칙이 설정되지 않았어요!",
                 style: .body04,
                 color: .gray7
             )
         }
         
-        viewModel.participantsInfo.bind(with: self) {
-            owner,
-            participantsInfo in
+        viewModel.participantsInfo.bind(with: self) { owner, participantsInfo in
             DispatchQueue.main.async {
-                owner.promiseInfoView.participantNumberLabel.setText(
+                owner.rootView.participantNumberLabel.setText(
                     "약속 참여 인원 \(participantsInfo?.count ?? 0)명",
                     style: .body01
                 )
-                owner.promiseInfoView.participantNumberLabel.setHighlightText(
+                
+                owner.rootView.participantNumberLabel.setHighlightText(
                     "\(participantsInfo?.count ?? 0)명",
                     style: .body01,
                     color: .maincolor
                 )
                 
-                owner.promiseInfoView.participantCollectionView.reloadData()
+                owner.rootView.participantCollectionView.reloadData()
             }
         }
     }

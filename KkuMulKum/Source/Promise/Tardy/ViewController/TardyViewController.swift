@@ -17,8 +17,8 @@ class TardyViewController: BaseViewController {
     let arriveView: ArriveView = ArriveView()
     
     
-    // MARK: Initialize
-    
+    // MARK: - LifeCycle
+
     init(viewModel: PromiseViewModel) {
         self.viewModel = viewModel
         
@@ -29,17 +29,8 @@ class TardyViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    // MARK: - Setup
-    
     override func loadView() {
         view = viewModel.isPastDue.value ? arriveView : tardyView
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        
     }
     
     override func viewDidLoad() {
@@ -48,6 +39,13 @@ class TardyViewController: BaseViewController {
         setupBinding()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    
+    // MARK: - Setup
+
     override func setupDelegate() {
         tardyView.tardyCollectionView.dataSource = self
     }
@@ -100,7 +98,7 @@ extension TardyViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return viewModel.comers.value?.count ?? 0
+        return viewModel.comers.value.count 
     }
     
     func collectionView(
@@ -112,15 +110,16 @@ extension TardyViewController: UICollectionViewDataSource {
             for: indexPath
         ) as? TardyCollectionViewCell else { return UICollectionViewCell() }
         
-        guard let data = viewModel.comers.value?[indexPath.row] else { return cell }
-        
-        cell.nameLabel.setText(data.name ?? " " , style: .body06, color: .gray6)
-        
-        guard let imageURL = URL(string: data.profileImageURL ?? "") else {
-            cell.profileImageView.image = .imgProfile
-            return cell
-        }
-        cell.profileImageView.kf.setImage(with: imageURL)
+        cell.nameLabel.setText(
+            viewModel.comers.value[indexPath.row].name ?? "",
+            style: .body06,
+            color: .gray6
+        )
+                
+        cell.profileImageView.kf.setImage(
+            with: URL(string: viewModel.comers.value[indexPath.row].profileImageURL ?? ""),
+            placeholder: UIImage.imgProfile
+        )
         
         return cell
     }
