@@ -163,8 +163,8 @@ final class HomeView: BaseView {
         levelCharacterImage.snp.makeConstraints {
             $0.top.equalToSuperview().offset(106)
             $0.trailing.equalToSuperview()
-            $0.width.equalTo(160)
-            $0.height.equalTo(198)
+            $0.width.equalTo(Screen.width(160))
+            $0.height.equalTo(Screen.height(198))
         }
         
         levelView.snp.makeConstraints {
