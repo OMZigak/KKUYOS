@@ -13,12 +13,15 @@ extension NSAttributedString {
         style: UIFont.Pretendard
     ) -> NSAttributedString {
         let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.paragraphSpacing = style.leading
+//        paragraphStyle.paragraphSpacing = style.leading
+        paragraphStyle.maximumLineHeight = style.lineHeight
+        paragraphStyle.minimumLineHeight = style.lineHeight
         
         let attributes: [NSAttributedString.Key: Any] = [
             .paragraphStyle: paragraphStyle,
             .font: UIFont.pretendard(style),
-            .kern: style.tracking
+            .kern: style.tracking,
+            .baselineOffset: style.baselineOffset
         ]
         
         return NSAttributedString(string: text, attributes: attributes)

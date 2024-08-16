@@ -167,7 +167,7 @@ final class HomeView: BaseView {
         
         kkumulLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(112)
+            $0.top.equalToSuperview().offset(106)
         }
         
         levelCharacterImage.snp.makeConstraints {
