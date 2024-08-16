@@ -177,36 +177,43 @@ final class TodayPromiseView: BaseView {
         
         meetingNameLabel.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(8)
-            $0.top.bottom.equalToSuperview().inset(4)
+            $0.top.bottom.equalToSuperview().inset(2)
         }
         
         nameLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
-            $0.top.equalTo(meetingNameView.snp.bottom).offset(8)
+            $0.top.equalTo(meetingNameView.snp.bottom).offset(4)
         }
         
         infoView.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(24)
-            $0.top.equalTo(nameLabel.snp.bottom).offset(12)
+            $0.top.equalTo(nameLabel.snp.bottom).offset(8)
             $0.trailing.lessThanOrEqualToSuperview().offset(-24)
         }
         
         lineView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-84)
+            $0.bottom.equalToSuperview().offset(-80)
             $0.height.equalTo(4)
         }
         
         prepareButton.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.bottom.equalToSuperview().offset(-38)
+            $0.bottom.equalToSuperview().offset(-34)
             $0.width.equalTo(84)
             $0.height.equalTo(32)
         }
         
         moveButton.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-38)
+            $0.bottom.equalToSuperview().offset(-34)
+            $0.width.equalTo(84)
+            $0.height.equalTo(32)
+        }
+        
+        arriveButton.snp.makeConstraints {
+            $0.trailing.equalToSuperview().offset(-20)
+            $0.bottom.equalToSuperview().offset(-34)
             $0.width.equalTo(84)
             $0.height.equalTo(32)
         }
@@ -214,29 +221,16 @@ final class TodayPromiseView: BaseView {
         prepareLineView.snp.makeConstraints {
             $0.leading.equalToSuperview()
             $0.trailing.equalTo(prepareButton.snp.centerX)
-            $0.bottom.equalToSuperview().offset(-84)
+            $0.bottom.equalToSuperview().offset(-80)
             $0.height.equalTo(4)
         }
-        
-        moveLineView.snp.makeConstraints {
-            $0.leading.equalTo(prepareButton.snp.centerX)
-            $0.trailing.equalTo(moveButton.snp.centerX)
-            $0.bottom.equalToSuperview().offset(-84)
-            $0.height.equalTo(4)
-        }
+
         
         arriveLineView.snp.makeConstraints {
             $0.leading.equalTo(moveButton.snp.centerX)
             $0.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview().offset(-84)
+            $0.bottom.equalToSuperview().offset(-80)
             $0.height.equalTo(4)
-        }
-        
-        arriveButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.bottom.equalToSuperview().offset(-38)
-            $0.width.equalTo(84)
-            $0.height.equalTo(32)
         }
         
         timeIcon.snp.makeConstraints {
@@ -284,17 +278,17 @@ final class TodayPromiseView: BaseView {
         }
         
         prepareLabel.snp.makeConstraints {
-            $0.top.equalTo(prepareButton.snp.bottom).offset(8)
+            $0.top.equalTo(prepareButton.snp.bottom).offset(6)
             $0.centerX.equalTo(prepareButton.snp.centerX)
         }
         
         moveLabel.snp.makeConstraints {
-            $0.top.equalTo(moveButton.snp.bottom).offset(8)
+            $0.top.equalTo(moveButton.snp.bottom).offset(6)
             $0.centerX.equalTo(moveButton.snp.centerX)
         }
         
         arriveLabel.snp.makeConstraints {
-            $0.top.equalTo(arriveButton.snp.bottom).offset(8)
+            $0.top.equalTo(arriveButton.snp.bottom).offset(6)
             $0.centerX.equalTo(arriveButton.snp.centerX)
         }
         
