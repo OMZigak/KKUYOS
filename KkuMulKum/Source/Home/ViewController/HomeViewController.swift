@@ -246,7 +246,7 @@ private extension HomeViewController {
                     style: .caption01,
                     color: .maincolor
                 )
-                self?.rootView.levelCaptionLabel.setText(
+                self?.rootView.boardCaptionLabel.setText(
                     self?.viewModel.levelCaption.value ?? "",
                     style: .label01,
                     color: .white

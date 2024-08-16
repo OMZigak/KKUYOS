@@ -36,7 +36,7 @@ final class HomeView: BaseView {
     
     let levelLabel = UILabel()
     
-    let levelCaptionLabel = UILabel()
+    let boardCaptionLabel = UILabel()
     
     private let levelView = UIStackView(axis: .horizontal).then {
         $0.backgroundColor = .white
@@ -45,8 +45,12 @@ final class HomeView: BaseView {
         $0.distribution = .fill
     }
     
-    private let levelCaptionView = UIImageView().then {
-        $0.image = .imgBoard
+    private let boardHorizontalView = UIImageView().then {
+        $0.image = .imgBoardHorizontal
+    }
+    
+    private let boardVerticalView = UIImageView().then {
+        $0.image = .imgBoardVertical
     }
     
     private let promiseView = UIView(backgroundColor: .gray0).then {
@@ -111,8 +115,9 @@ final class HomeView: BaseView {
             kkumulLabel,
             levelCharacterImage,
             levelView,
-            levelCaptionView,
-            levelCaptionLabel,
+            boardVerticalView,
+            boardHorizontalView,
+            boardCaptionLabel,
             promiseView
         )
         levelView.addSubview(levelLabel)
@@ -172,16 +177,23 @@ final class HomeView: BaseView {
             $0.top.bottom.equalToSuperview().inset(6)
         }
         
-        levelCaptionView.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(258)
-            $0.width.equalTo(Screen.width(186))
-            $0.height.equalTo(Screen.height(150))
+        boardVerticalView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(52)
+            $0.bottom.equalTo(promiseView.snp.top)
+            $0.width.equalTo(Screen.width(12))
+            $0.height.equalTo(Screen.height(140))
         }
         
-        levelCaptionLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(30)
-            $0.top.equalToSuperview().offset(278)
+        boardHorizontalView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.bottom.equalTo(promiseView.snp.top).offset(-80)
+            $0.width.equalTo(Screen.width(186))
+            $0.height.equalTo(Screen.height(50))
+        }
+        
+        boardCaptionLabel.snp.makeConstraints {
+            $0.leading.equalTo(boardHorizontalView).offset(8)
+            $0.centerY.equalTo(boardHorizontalView.snp.centerY)
         }
         
         promiseView.snp.makeConstraints {
