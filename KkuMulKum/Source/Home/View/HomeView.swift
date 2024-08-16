@@ -205,7 +205,7 @@ final class HomeView: BaseView {
         
         todayLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(20)
+            $0.top.equalToSuperview().offset(16)
         }
         
         todayButton.snp.makeConstraints {
@@ -228,7 +228,7 @@ final class HomeView: BaseView {
         
         upcomingLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalTo(todayPromiseView.snp.bottom).offset(32)
+            $0.top.equalTo(todayPromiseView.snp.bottom).offset(28)
         }
         
         upcomingPromiseView.snp.makeConstraints {
