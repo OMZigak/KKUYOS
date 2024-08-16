@@ -69,10 +69,10 @@ final class MeetingInfoBannerView: BaseView {
 
 extension MeetingInfoBannerView {
     func configure(createdAt: String, metCount: Int) {
-        createdAtLabel.setText(createdAt, style: .label01, color: .gray4)
+        createdAtLabel.updateText(createdAt)
         
         metCountLabel.do {
-            $0.setText("이 모임의 꾸물이들은 \(metCount)번 만났어요!", style: .body03, color: .gray8)
+            $0.updateText("이 모임의 꾸물이들은 \(metCount)번 만났어요!")
             $0.setHighlightText("\(metCount)번", style: .body03, color: .maincolor)
         }
     }

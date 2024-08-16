@@ -9,15 +9,12 @@ import UIKit
 
 extension UILabel {
     func setText(
-        _ text: String,
+        _ text: String = " ",
         style: UIFont.Pretendard,
         color: UIColor = .black,
         isSingleLine: Bool = false
     ) {
-        attributedText = .pretendardString(
-            text,
-            style: style
-        )
+        attributedText = .pretendardString(text.isEmpty ? " " : text, style: style)
         textColor = color
         if isSingleLine {
             numberOfLines = 1
@@ -27,15 +24,22 @@ extension UILabel {
         }
     }
     
+    func updateText(_ text: String?) {
+        guard let currentAttributes = attributedText?.attributes(at: 0, effectiveRange: nil) else {
+            self.text = text
+            return
+        }
+        attributedText = NSAttributedString(string: text ?? " ", attributes: currentAttributes)
+    }
+    
     func setHighlightText(_ words: String..., style: UIFont.Pretendard, color: UIColor? = nil) {
-        guard let currentText = attributedText?.string else { return }
-        let mutableAttributedString = NSMutableAttributedString(
-            attributedString: attributedText ?? NSAttributedString()
-        )
+        guard let currentAttributedText = attributedText else { return }
+        
+        let mutableAttributedString = NSMutableAttributedString(attributedString: currentAttributedText)
         let textColor = textColor ?? .black
         
         for word in words {
-            let range = (currentText as NSString).range(of: word)
+            let range = (currentAttributedText.string as NSString).range(of: word)
             
             if range.location != NSNotFound {
                 let highlightedAttributes: [NSAttributedString.Key: Any] = [

@@ -12,7 +12,7 @@ import Then
 
 final class MeetingPromiseCell: BaseCollectionViewCell {
     private let dDayLabel = UILabel().then {
-        $0.setText("", style: .body05, color: .mainorange)
+        $0.setText(style: .body05, color: .mainorange)
     }
     
     private let nameLabel = UILabel().then {
@@ -26,7 +26,7 @@ final class MeetingPromiseCell: BaseCollectionViewCell {
     }
     
     private let dateLabel = UILabel().then {
-        $0.setText("", style: .body06, color: .gray7)
+        $0.setText(style: .body06, color: .gray7)
     }
     
     private let dateStackView = UIStackView(axis: .horizontal).then {
@@ -40,7 +40,7 @@ final class MeetingPromiseCell: BaseCollectionViewCell {
     }
     
     private let timeLabel = UILabel().then {
-        $0.setText("", style: .body06, color: .gray7)
+        $0.setText(style: .body06, color: .gray7)
     }
     
     private let timeStackView = UIStackView(axis: .horizontal).then {
@@ -54,7 +54,7 @@ final class MeetingPromiseCell: BaseCollectionViewCell {
     }
     
     private let placeLabel = UILabel().then {
-        $0.setText("", style: .body06, color: .gray7)
+        $0.setText(style: .body06, color: .gray7)
     }
     
     private let placeStackView = UIStackView(axis: .horizontal).then {
@@ -110,9 +110,9 @@ extension MeetingPromiseCell {
     func configure(dDay: Int, name: String, date: String, time: String, place: String) {
         let dDayText = dDay == 0 ? "DAY" : "\(dDay)"
         dDayLabel.setText("D-\(dDayText)", style: .body05, color: dDay == 0 ? .mainorange : .gray5)
-        nameLabel.setText(name, style: .body03, color: .gray8)
-        dateLabel.setText(date, style: .body06, color: .gray7)
-        timeLabel.setText(time, style: .body06, color: .gray7)
-        placeLabel.setText(place, style: .body06, color: .gray7, isSingleLine: true)
+        nameLabel.updateText(name)
+        dateLabel.updateText(date)
+        timeLabel.updateText(time)
+        placeLabel.updateText(place)
     }
 }

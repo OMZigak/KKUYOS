@@ -174,7 +174,7 @@ extension MeetingInfoView {
     
     func configureMemberCount(_ memberCount: Int) {
         memberCountLabel.do {
-            $0.setText("모임 참여 인원 \(memberCount)명", style: .body01, color: .gray8)
+            $0.updateText("모임 참여 인원 \(memberCount)명")
             $0.setHighlightText("\(memberCount)명", style: .body01, color: .maincolor)
         }
     }
