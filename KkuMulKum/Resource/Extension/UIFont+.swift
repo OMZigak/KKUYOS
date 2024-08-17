@@ -50,11 +50,13 @@ extension UIFont {
         
         var tracking: CGFloat { CGFloat(-2) / 100 * size }
         
-        var leading: CGFloat {
+        var lineHeight: CGFloat {
             switch self {
-            case .label00: (1.38 - 1) * size
-            default: (1.6 - 1) * size
+            case .label00: 1.38 * size
+            default: 1.6 * size
             }
         }
+        
+        var baselineOffset: CGFloat { return (lineHeight - size) / 3 }
     }
 }

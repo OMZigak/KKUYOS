@@ -74,7 +74,7 @@ final class MeetingListView: BaseView {
         }
         
         addButton.snp.makeConstraints {
-            $0.top.equalTo(infoLabel.snp.bottom).offset(24)
+            $0.top.equalTo(infoLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(Screen.height(48))
         }
@@ -82,8 +82,8 @@ final class MeetingListView: BaseView {
         emptyCharacter.snp.makeConstraints {
             $0.top.equalTo(addButton.snp.bottom).offset(94)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(Screen.height(126))
-            $0.width.equalTo(Screen.width(73))
+            $0.height.equalTo(Screen.height(174))
+            $0.width.equalTo(Screen.width(100))
         }
         
         emptyLabel.snp.makeConstraints {
@@ -103,7 +103,7 @@ final class MeetingListView: BaseView {
         
         header.snp.makeConstraints {
             $0.top.equalToSuperview()
-            $0.width.equalTo(UIScreen.main.bounds.width-40)
+            $0.width.equalTo(UIScreen.main.bounds.width - 40)
             $0.height.equalTo(Screen.height(174))
         }
     }

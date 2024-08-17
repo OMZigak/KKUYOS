@@ -30,6 +30,18 @@ final class HomeView: BaseView {
         $0.image = .imgLogo
     }
     
+    private let levelView = UIView(backgroundColor: .white).then {
+        $0.layer.cornerRadius = Screen.height(28) / 2
+    }
+    
+    private let boardHorizontalView = UIImageView().then {
+        $0.image = .imgBoardHorizontal
+    }
+    
+    private let boardVerticalView = UIImageView().then {
+        $0.image = .imgBoardVertical
+    }
+    
     let kkumulLabel = UILabel()
     
     let levelCharacterImage = UIImageView()
@@ -37,17 +49,6 @@ final class HomeView: BaseView {
     let levelLabel = UILabel()
     
     let levelCaptionLabel = UILabel()
-    
-    private let levelView = UIStackView(axis: .horizontal).then {
-        $0.backgroundColor = .white
-        $0.layer.cornerRadius = 12
-        $0.alignment = .fill
-        $0.distribution = .fill
-    }
-    
-    private let levelCaptionView = UIImageView().then {
-        $0.image = .imgBoard
-    }
     
     private let promiseView = UIView(backgroundColor: .gray0).then {
         $0.roundCorners(
@@ -108,14 +109,15 @@ final class HomeView: BaseView {
         scrollView.addSubview(contentView)
         contentView.addSubviews(
             logo,
+            levelView,
+            boardVerticalView,
+            boardHorizontalView,
             kkumulLabel,
             levelCharacterImage,
-            levelView,
-            levelCaptionView,
+            levelLabel,
             levelCaptionLabel,
             promiseView
         )
-        levelView.addSubview(levelLabel)
         promiseView.addSubviews(
             todayLabel,
             todayButton,
@@ -150,38 +152,47 @@ final class HomeView: BaseView {
             $0.height.equalTo(24)
         }
         
-        kkumulLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(112)
-        }
-        
-        levelCharacterImage.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(106)
-            $0.trailing.equalToSuperview()
-            $0.width.equalTo(160)
-            $0.height.equalTo(198)
-        }
-        
         levelView.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-36)
-            $0.top.equalToSuperview().offset(350)
+            $0.trailing.equalToSuperview().offset(-38)
+            $0.bottom.equalTo(promiseView.snp.top).offset(-20)
+            $0.width.equalTo(Screen.width(114))
+            $0.height.equalTo(Screen.height(28))
         }
         
         levelLabel.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(18)
-            $0.top.bottom.equalToSuperview().inset(6)
+            $0.centerX.equalTo(levelView.snp.centerX)
+            $0.centerY.equalTo(levelView.snp.centerY)
         }
         
-        levelCaptionView.snp.makeConstraints {
+        kkumulLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(258)
+            $0.top.equalToSuperview().offset(106)
+        }
+        
+        levelCharacterImage.snp.makeConstraints {
+            $0.trailing.equalToSuperview()
+            $0.bottom.equalTo(promiseView.snp.top).offset(-50)
+            $0.width.equalTo(Screen.width(160))
+            $0.height.equalTo(Screen.height(198))
+        }
+        
+        boardVerticalView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(52)
+            $0.bottom.equalTo(promiseView.snp.top)
+            $0.width.equalTo(Screen.width(12))
+            $0.height.equalTo(Screen.height(140))
+        }
+        
+        boardHorizontalView.snp.makeConstraints {
+            $0.leading.equalToSuperview().offset(20)
+            $0.bottom.equalTo(promiseView.snp.top).offset(-80)
             $0.width.equalTo(Screen.width(186))
-            $0.height.equalTo(Screen.height(150))
+            $0.height.equalTo(Screen.height(50))
         }
         
         levelCaptionLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().offset(30)
-            $0.top.equalToSuperview().offset(278)
+            $0.leading.equalTo(boardHorizontalView).offset(8)
+            $0.centerY.equalTo(boardHorizontalView.snp.centerY)
         }
         
         promiseView.snp.makeConstraints {
@@ -193,7 +204,7 @@ final class HomeView: BaseView {
         
         todayLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalToSuperview().offset(20)
+            $0.top.equalToSuperview().offset(16)
         }
         
         todayButton.snp.makeConstraints {
@@ -216,7 +227,7 @@ final class HomeView: BaseView {
         
         upcomingLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalTo(todayPromiseView.snp.bottom).offset(32)
+            $0.top.equalTo(todayPromiseView.snp.bottom).offset(28)
         }
         
         upcomingPromiseView.snp.makeConstraints {
