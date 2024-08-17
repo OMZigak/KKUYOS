@@ -30,8 +30,7 @@ final class HomeView: BaseView {
         $0.image = .imgLogo
     }
     
-    private let levelView = UIView().then {
-        $0.backgroundColor = .white
+    private let levelView = UIView(backgroundColor: .white).then {
         $0.layer.cornerRadius = Screen.height(28) / 2
     }
     
