@@ -221,13 +221,13 @@ private extension CustomActionSheetController {
         }
         
         actionButton.snp.makeConstraints {
-            $0.width.equalTo(138)
+            $0.width.equalTo(Screen.width(138))
         }
         
         buttonStackView.snp.makeConstraints {
             $0.horizontalEdges.equalToSuperview().inset(12)
             $0.bottom.equalToSuperview().offset(-12)
-            $0.height.equalTo(50)
+            $0.height.equalTo(Screen.height(50))
         }
         
         labelStackView.snp.makeConstraints {
@@ -239,7 +239,7 @@ private extension CustomActionSheetController {
             $0.top.equalToSuperview().offset(imageView.isHidden ? 0 : 40)
             $0.bottom.equalTo(labelStackView.snp.top).offset(-32)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(imageView.isHidden ? 0 : 90)
+            $0.height.equalTo(imageView.isHidden ? 0 : Screen.height(90))
         }
     }
 }
