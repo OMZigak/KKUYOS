@@ -191,6 +191,7 @@
 		DE254ACC2C311DC200A4015E /* Pretendard-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */; };
 		DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */; };
 		DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */; };
+		DE3309A72C7099A9003F6E76 /* CustomActionSheetController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3309A62C7099A9003F6E76 /* CustomActionSheetController.swift */; };
 		DE558C592C45954B008DAC4A /* SelectMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE558C582C45954B008DAC4A /* SelectMemberViewController.swift */; };
 		DE558C5B2C4595A7008DAC4A /* SelectMemberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE558C5A2C4595A7008DAC4A /* SelectMemberView.swift */; };
 		DE6D4D0F2C3F14D80005584B /* MeetingInfoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6D4D012C3F14D80005584B /* MeetingInfoService.swift */; };
@@ -383,6 +384,7 @@
 		DE254AC32C311DC200A4015E /* Pretendard-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Pretendard-Thin.otf"; sourceTree = "<group>"; };
 		DE32D1D12C3BF703006848DF /* LoginUserResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginUserResponseModel.swift; sourceTree = "<group>"; };
 		DE32D1D32C3BFB56006848DF /* UpdateProfileNameModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateProfileNameModel.swift; sourceTree = "<group>"; };
+		DE3309A62C7099A9003F6E76 /* CustomActionSheetController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionSheetController.swift; sourceTree = "<group>"; };
 		DE558C582C45954B008DAC4A /* SelectMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberViewController.swift; sourceTree = "<group>"; };
 		DE558C5A2C4595A7008DAC4A /* SelectMemberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberView.swift; sourceTree = "<group>"; };
 		DE6D4D012C3F14D80005584B /* MeetingInfoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingInfoService.swift; sourceTree = "<group>"; };
@@ -1378,6 +1380,7 @@
 				782965C82C6CCDEF000C7537 /* BottomSheet.swift */,
 				DE9E187F2C3BA4AA00DB76B4 /* CustomButton.swift */,
 				DE9E18832C3BA84500DB76B4 /* CustomTextField.swift */,
+				DE3309A62C7099A9003F6E76 /* CustomActionSheetController.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -1887,6 +1890,7 @@
 				DD86266C2C4606A300E4F980 /* SetReadyInfoViewController.swift in Sources */,
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,
 				DECB845C2C4442490022A003 /* FindPlaceViewController.swift in Sources */,
+				DE3309A72C7099A9003F6E76 /* CustomActionSheetController.swift in Sources */,
 				DD8626652C4606A300E4F980 /* OurReadyStatusCollectionViewCell.swift in Sources */,
 				DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */,
 				DDFA50802C4693BD000A62E2 /* ProfileSetupView.swift in Sources */,
