@@ -101,9 +101,8 @@ final class CustomActionSheetController: BaseViewController {
     override func setupAction() {
         actionButton.rx.tap
             .subscribe(with: self) { owner, _ in
-                owner.dismiss(animated: true) {
-                    owner.delegate?.actionButtonDidTap()
-                }
+                owner.delegate?.actionButtonDidTap()
+                owner.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
         
