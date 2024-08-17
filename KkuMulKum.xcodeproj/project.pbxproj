@@ -30,7 +30,6 @@
 		784E4D992C3B95A900BC943C /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D982C3B95A900BC943C /* KeychainAccess */; };
 		785AE1602C2E857A00677CA0 /* LookinServer in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE15F2C2E857A00677CA0 /* LookinServer */; };
 		785AE1662C2E858A00677CA0 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1652C2E858A00677CA0 /* SnapKit */; };
-		785AE16B2C2E85C200677CA0 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE16A2C2E85C200677CA0 /* Moya */; };
 		785AE16E2C2E85E800677CA0 /* Then in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE16D2C2E85E800677CA0 /* Then */; };
 		785AE18A2C2E878600677CA0 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1892C2E878600677CA0 /* FirebaseAnalytics */; };
 		785AE18C2C2E878600677CA0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE18B2C2E878600677CA0 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -213,6 +212,12 @@
 		DEA89B832C45C5CA00AF4924 /* SelectMemberViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA89B822C45C5CA00AF4924 /* SelectMemberViewModel.swift */; };
 		DEA89B852C45C60200AF4924 /* SelectMemeberServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA89B842C45C60200AF4924 /* SelectMemeberServiceType.swift */; };
 		DEA932182C3F180800FDF637 /* MeetingPromisesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEA932172C3F180800FDF637 /* MeetingPromisesModel.swift */; };
+		DEAD45882C6F70A400395A96 /* Moya in Frameworks */ = {isa = PBXBuildFile; productRef = DEAD45872C6F70A400395A96 /* Moya */; };
+		DEAD458A2C6F70A400395A96 /* ReactiveMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DEAD45892C6F70A400395A96 /* ReactiveMoya */; };
+		DEAD458C2C6F70A400395A96 /* RxMoya in Frameworks */ = {isa = PBXBuildFile; productRef = DEAD458B2C6F70A400395A96 /* RxMoya */; };
+		DEAD458F2C6F70D600395A96 /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = DEAD458E2C6F70D600395A96 /* Differentiator */; };
+		DEAD45912C6F70D600395A96 /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = DEAD45902C6F70D600395A96 /* RxDataSources */; };
+		DEAD45942C6F70FC00395A96 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = DEAD45932C6F70FC00395A96 /* ReactorKit */; };
 		DEBA032F2C3C24F2002ED8F2 /* ModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA032E2C3C24F2002ED8F2 /* ModelType.swift */; };
 		DEBA03312C3C2972002ED8F2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEBA03302C3C2972002ED8F2 /* ViewController.swift */; };
 		DECB84562C43FB990022A003 /* AddPromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DECB84552C43FB990022A003 /* AddPromiseViewModel.swift */; };
@@ -434,6 +439,7 @@
 			files = (
 				785AE1C02C2E878600677CA0 /* FirebaseVertexAI-Preview in Frameworks */,
 				780E897A2C5D22B90009D27E /* KakaoSDK in Frameworks */,
+				DEAD45942C6F70FC00395A96 /* ReactorKit in Frameworks */,
 				785AE19E2C2E878600677CA0 /* FirebaseDatabaseSwift in Frameworks */,
 				785AE1AA2C2E878600677CA0 /* FirebaseFunctionsCombine-Community in Frameworks */,
 				785AE1BC2C2E878600677CA0 /* FirebaseStorage in Frameworks */,
@@ -443,17 +449,18 @@
 				780E89902C5D22B90009D27E /* KakaoSDKUser in Frameworks */,
 				785AE1662C2E858A00677CA0 /* SnapKit in Frameworks */,
 				785AE1942C2E878600677CA0 /* FirebaseAppDistribution-Beta in Frameworks */,
+				DEAD458C2C6F70A400395A96 /* RxMoya in Frameworks */,
 				785AE1B02C2E878600677CA0 /* FirebaseInstallations in Frameworks */,
 				784E4D992C3B95A900BC943C /* KeychainAccess in Frameworks */,
 				780E89822C5D22B90009D27E /* KakaoSDKCommon in Frameworks */,
 				785AE1902C2E878600677CA0 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				785AE18E2C2E878600677CA0 /* FirebaseAnalyticsSwift in Frameworks */,
 				785AE1962C2E878600677CA0 /* FirebaseAuth in Frameworks */,
+				DEAD45882C6F70A400395A96 /* Moya in Frameworks */,
 				780E89862C5D22B90009D27E /* KakaoSDKFriendCore in Frameworks */,
 				785AE1A82C2E878600677CA0 /* FirebaseFunctions in Frameworks */,
 				785AE1602C2E857A00677CA0 /* LookinServer in Frameworks */,
 				785AE19A2C2E878600677CA0 /* FirebaseCrashlytics in Frameworks */,
-				785AE16B2C2E85C200677CA0 /* Moya in Frameworks */,
 				785AE1922C2E878600677CA0 /* FirebaseAppCheck in Frameworks */,
 				780E898C2C5D22B90009D27E /* KakaoSDKTalk in Frameworks */,
 				780E89882C5D22B90009D27E /* KakaoSDKNavi in Frameworks */,
@@ -465,9 +472,11 @@
 				DDAF1C7E2C3D5B86008A37D3 /* RxRelay in Frameworks */,
 				785AE1B82C2E878600677CA0 /* FirebaseRemoteConfig in Frameworks */,
 				785AE1B62C2E878600677CA0 /* FirebasePerformance in Frameworks */,
+				DEAD458F2C6F70D600395A96 /* Differentiator in Frameworks */,
 				784E4D942C3B1C7F00BC943C /* KakaoSDK in Frameworks */,
 				785AE18C2C2E878600677CA0 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */,
 				784E4D962C3B1C7F00BC943C /* KakaoSDKAuth in Frameworks */,
+				DEAD45912C6F70D600395A96 /* RxDataSources in Frameworks */,
 				785AE1A62C2E878600677CA0 /* FirebaseFirestoreSwift in Frameworks */,
 				785AE1A22C2E878600677CA0 /* FirebaseFirestore in Frameworks */,
 				780E897E2C5D22B90009D27E /* KakaoSDKCert in Frameworks */,
@@ -481,6 +490,7 @@
 				780E898E2C5D22B90009D27E /* KakaoSDKTemplate in Frameworks */,
 				785AE1A02C2E878600677CA0 /* FirebaseDynamicLinks in Frameworks */,
 				DDAF1C812C3D5BD5008A37D3 /* Kingfisher in Frameworks */,
+				DEAD458A2C6F70A400395A96 /* ReactiveMoya in Frameworks */,
 				780E89802C5D22B90009D27E /* KakaoSDKCertCore in Frameworks */,
 				785AE1AE2C2E878600677CA0 /* FirebaseInAppMessagingSwift-Beta in Frameworks */,
 			);
@@ -1585,7 +1595,6 @@
 			packageProductDependencies = (
 				785AE15F2C2E857A00677CA0 /* LookinServer */,
 				785AE1652C2E858A00677CA0 /* SnapKit */,
-				785AE16A2C2E85C200677CA0 /* Moya */,
 				785AE16D2C2E85E800677CA0 /* Then */,
 				785AE1892C2E878600677CA0 /* FirebaseAnalytics */,
 				785AE18B2C2E878600677CA0 /* FirebaseAnalyticsOnDeviceConversion */,
@@ -1634,6 +1643,12 @@
 				780E898B2C5D22B90009D27E /* KakaoSDKTalk */,
 				780E898D2C5D22B90009D27E /* KakaoSDKTemplate */,
 				780E898F2C5D22B90009D27E /* KakaoSDKUser */,
+				DEAD45872C6F70A400395A96 /* Moya */,
+				DEAD45892C6F70A400395A96 /* ReactiveMoya */,
+				DEAD458B2C6F70A400395A96 /* RxMoya */,
+				DEAD458E2C6F70D600395A96 /* Differentiator */,
+				DEAD45902C6F70D600395A96 /* RxDataSources */,
+				DEAD45932C6F70FC00395A96 /* ReactorKit */,
 			);
 			productName = KkuMulKum;
 			productReference = 78B928682C29402C006D9942 /* KkuMulKum.app */;
@@ -1666,7 +1681,6 @@
 			packageReferences = (
 				785AE15E2C2E857900677CA0 /* XCRemoteSwiftPackageReference "LookinServer" */,
 				785AE1642C2E858A00677CA0 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				785AE1692C2E85C200677CA0 /* XCRemoteSwiftPackageReference "Moya" */,
 				785AE16C2C2E85E800677CA0 /* XCRemoteSwiftPackageReference "Then" */,
 				785AE1882C2E878600677CA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				784E4D922C3B1C7F00BC943C /* XCRemoteSwiftPackageReference "kakao-ios-sdk" */,
@@ -1674,6 +1688,9 @@
 				DDAF1C7A2C3D5B86008A37D3 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				DDAF1C7F2C3D5BD5008A37D3 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				78BD611E2C43F557005752FD /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
+				DEAD45862C6F70A400395A96 /* XCRemoteSwiftPackageReference "Moya" */,
+				DEAD458D2C6F70D600395A96 /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				DEAD45922C6F70FC00395A96 /* XCRemoteSwiftPackageReference "ReactorKit" */,
 			);
 			productRefGroup = 78B928692C29402C006D9942 /* Products */;
 			projectDirPath = "";
@@ -2148,14 +2165,6 @@
 				minimumVersion = 5.7.1;
 			};
 		};
-		785AE1692C2E85C200677CA0 /* XCRemoteSwiftPackageReference "Moya" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Moya/Moya.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 15.0.3;
-			};
-		};
 		785AE16C2C2E85E800677CA0 /* XCRemoteSwiftPackageReference "Then" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/devxoul/Then.git";
@@ -2194,6 +2203,30 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 7.12.0;
+			};
+		};
+		DEAD45862C6F70A400395A96 /* XCRemoteSwiftPackageReference "Moya" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Moya/Moya";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 15.0.3;
+			};
+		};
+		DEAD458D2C6F70D600395A96 /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
+		DEAD45922C6F70FC00395A96 /* XCRemoteSwiftPackageReference "ReactorKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactorKit/ReactorKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -2283,11 +2316,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 785AE1642C2E858A00677CA0 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
-		};
-		785AE16A2C2E85C200677CA0 /* Moya */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 785AE1692C2E85C200677CA0 /* XCRemoteSwiftPackageReference "Moya" */;
-			productName = Moya;
 		};
 		785AE16D2C2E85E800677CA0 /* Then */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2453,6 +2481,36 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DDAF1C7F2C3D5BD5008A37D3 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		DEAD45872C6F70A400395A96 /* Moya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEAD45862C6F70A400395A96 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = Moya;
+		};
+		DEAD45892C6F70A400395A96 /* ReactiveMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEAD45862C6F70A400395A96 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = ReactiveMoya;
+		};
+		DEAD458B2C6F70A400395A96 /* RxMoya */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEAD45862C6F70A400395A96 /* XCRemoteSwiftPackageReference "Moya" */;
+			productName = RxMoya;
+		};
+		DEAD458E2C6F70D600395A96 /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEAD458D2C6F70D600395A96 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		DEAD45902C6F70D600395A96 /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEAD458D2C6F70D600395A96 /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
+		};
+		DEAD45932C6F70FC00395A96 /* ReactorKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DEAD45922C6F70FC00395A96 /* XCRemoteSwiftPackageReference "ReactorKit" */;
+			productName = ReactorKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
