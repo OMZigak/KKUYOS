@@ -8,7 +8,6 @@
 import UIKit
 
 class BaseViewController: UIViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,7 +43,10 @@ extension BaseViewController {
             .foregroundColor: UIColor.gray8,
             .font: UIFont.pretendard(.body03)
         ]
-        
+    }
+    
+    /// 네비게이션 바 아래 회색 구분선 추가
+    final func setupNavigationBarUnderLine() {
         let lineView = UIView(backgroundColor: .gray2)
         navigationController?.navigationBar.addSubviews(lineView)
         
@@ -52,11 +54,6 @@ extension BaseViewController {
             $0.horizontalEdges.bottom.equalToSuperview()
             $0.height.equalTo(Screen.height(1))
         }
-        
-        let barAppearance = UINavigationBarAppearance()
-        barAppearance.backgroundColor = .white
-        navigationItem.standardAppearance = barAppearance
-        navigationItem.scrollEdgeAppearance = barAppearance
     }
     
     /// 네비게이션 바 BackButton 구성
@@ -69,6 +66,7 @@ extension BaseViewController {
         ).then {
             $0.tintColor = .black
         }
+        
         navigationItem.leftBarButtonItem = backButton
     }
 }
