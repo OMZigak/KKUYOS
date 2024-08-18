@@ -62,19 +62,21 @@ final class CustomActionSheetController: BaseViewController {
 
     weak var delegate: CustomActionSheetDelegate?
     
+    private let kind: ActionSheetKind
     private let disposeBag = DisposeBag()
     
     
     // MARK: - Initializer
 
     init(kind: ActionSheetKind) {
+        self.kind = kind
         super.init(nibName: nil, bundle: nil)
         
-        configure(kind: kind)
         setupModalStyle()
     }
     
     required init?(coder: NSCoder) {
+        self.kind = .logout
         super.init(coder: coder)
         
         setupModalStyle()
@@ -90,6 +92,16 @@ final class CustomActionSheetController: BaseViewController {
     }
 
     override func setupView() {
+        titleLabel.updateText(kind.title)
+        
+        descriptionLabel.updateText(kind.description)
+        descriptionLabel.textColor = kind.descriptionColor
+        
+        actionButton.setTitle(kind.actionButtonTitle, style: .body04, color: .gray8)
+        
+        imageView.image = kind.image
+        imageView.isHidden = kind.image == nil
+        
         labelStackView.addArrangedSubviews(titleLabel, descriptionLabel)
         buttonStackView.addArrangedSubviews(actionButton, cancelButton)
         contentView.addSubviews(imageView, labelStackView, buttonStackView)
@@ -135,6 +147,17 @@ extension CustomActionSheetController {
                     .imgDeletePromise
             case .logout, .unsubscribe:
                 nil
+            }
+        }
+        
+        var imageHeight: CGFloat {
+            switch self {
+            case .exitMeeting:
+                Screen.height(90)
+            case .exitPromise, .deletePromise:
+                Screen.height(86)
+            case .logout, .unsubscribe:
+                0
             }
         }
         
@@ -193,23 +216,7 @@ extension CustomActionSheetController {
 }
 
 private extension CustomActionSheetController {
-    func configure(kind: ActionSheetKind) {
-        titleLabel.updateText(kind.title)
-        
-        descriptionLabel.updateText(kind.description)
-        descriptionLabel.textColor = kind.descriptionColor
-        
-        actionButton.setTitle(kind.actionButtonTitle, style: .body04, color: .gray8)
-        
-        guard let image = kind.image else {
-            imageView.isHidden = true
-            return
-        }
-        
-        imageView.image = image
-    }
-    
-    func setupModalStyle() {
+     func setupModalStyle() {
         modalTransitionStyle = .crossDissolve
         modalPresentationStyle = .overCurrentContext
     }
@@ -238,7 +245,7 @@ private extension CustomActionSheetController {
             $0.top.equalToSuperview().offset(imageView.isHidden ? 0 : 40)
             $0.bottom.equalTo(labelStackView.snp.top).offset(-32)
             $0.centerX.equalToSuperview()
-            $0.height.equalTo(imageView.isHidden ? 0 : Screen.height(90))
+            $0.height.equalTo(kind.imageHeight)
         }
     }
 }
