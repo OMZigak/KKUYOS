@@ -62,6 +62,9 @@ class PromiseInfoViewController: BaseViewController {
 extension PromiseInfoViewController {
     func setupBinding() {
         viewModel.promiseInfo.bind(with: self) { owner, info in
+            // TODO: 서버 API 반영되면 아래 주석 해제
+            // owner.rootView.editButton.isHidden = info?.isParticipant!
+            
             owner.rootView.timeContentLabel.setText(
                 info?.time ?? "시간이 설정되지 않았어요!",
                 style: .body04,

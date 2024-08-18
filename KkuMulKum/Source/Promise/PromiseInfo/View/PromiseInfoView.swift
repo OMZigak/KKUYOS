@@ -21,6 +21,11 @@ class PromiseInfoView: BaseView {
     let promiseNameLabel: UILabel = UILabel().then {
         $0.setText("약속 이름이 설정되지 않았어요!", style: .body01, color: .gray7)
     }
+    
+    let editButton: CustomButton = CustomButton().then {
+        $0.setTitle("수정하기", style: .caption01, color: .maincolor)
+        $0.backgroundColor = .white
+    }
 
     let participantNumberLabel: UILabel = UILabel().then {
         $0.setText("약속 참여 인원 n명", style: .body05, color: .maincolor)
@@ -108,6 +113,7 @@ class PromiseInfoView: BaseView {
             promiseImageView,
             dDayLabel,
             promiseNameLabel,
+            editButton,
             backgroundView
         )
         
@@ -140,6 +146,13 @@ class PromiseInfoView: BaseView {
         dDayLabel.snp.makeConstraints {
             $0.top.equalTo(promiseImageView)
             $0.leading.equalTo(promiseImageView.snp.trailing).offset(16)
+        }
+        
+        editButton.snp.makeConstraints {
+            $0.centerY.equalTo(promiseImageView)
+            $0.height.equalTo(Screen.height(30))
+            $0.width.equalTo(Screen.width(69))
+            $0.trailing.equalToSuperview().inset(20)
         }
         
         promiseNameLabel.snp.makeConstraints {
