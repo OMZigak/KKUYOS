@@ -116,7 +116,7 @@ extension PromiseInfoViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return ((viewModel.participantsInfo.value?.count ?? 0) + 1)
+        return (viewModel.participantsInfo.value?.count ?? 0)
     }
 }
 
@@ -133,15 +133,7 @@ extension PromiseInfoViewController: UICollectionViewDelegateFlowLayout {
             for: indexPath) as? ParticipantCollectionViewCell 
         else { return UICollectionViewCell() }
         
-        if indexPath.row == 0 {
-            cell.profileImageView.image = .imgEmptyCell
-            cell.profileImageView.contentMode = .scaleAspectFill
-            cell.userNameLabel.isHidden = true
-            
-            return cell
-        }
-        
-        guard let info = viewModel.participantsInfo.value?[indexPath.row - 1] else {
+        guard let info = viewModel.participantsInfo.value?[indexPath.row] else {
             return cell
         }
         
