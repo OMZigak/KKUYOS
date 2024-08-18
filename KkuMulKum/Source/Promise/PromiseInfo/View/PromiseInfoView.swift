@@ -68,28 +68,36 @@ class PromiseInfoView: BaseView {
         $0.setText("위치", style: .body05, color: .maincolor)
     }
     
-    private let locationDivideView: UIView = UIView().then {
-        $0.backgroundColor = .gray2
+    private let locationBackgroundView: UIView = UIView().then {
+        $0.backgroundColor = .gray0
+        $0.layer.cornerRadius = Screen.height(8)
     }
     
     private let timeInfoLabel: UILabel = UILabel().then {
         $0.setText("약속시간", style: .body05, color: .maincolor)
     }
     
-    private let timeDivideView: UIView = UIView().then {
-        $0.backgroundColor = .gray2
+    private let timeBackgroundView: UIView = UIView().then {
+        $0.backgroundColor = .gray0
+        $0.layer.cornerRadius = Screen.height(8)
     }
     
     private let readyLevelInfoLabel: UILabel = UILabel().then {
         $0.setText("꾸레벨", style: .body05, color: .maincolor)
     }
     
-    private let readyLevelDivideView: UIView = UIView().then {
-        $0.backgroundColor = .gray2
+    private let readyLevelBackgroundView: UIView = UIView().then {
+        $0.backgroundColor = .gray0
+        $0.layer.cornerRadius = Screen.height(8)
     }
     
     private let penaltyLevelInfoLabel: UILabel = UILabel().then {
         $0.setText("벌칙", style: .body05, color: .maincolor)
+    }
+    
+    private let penaltyBackgroundView: UIView = UIView().then {
+        $0.backgroundColor = .gray0
+        $0.layer.cornerRadius = Screen.height(8)
     }
     
     
@@ -107,15 +115,16 @@ class PromiseInfoView: BaseView {
             participantNumberLabel,
             participantCollectionView,
             locationInfoLabel,
+            locationBackgroundView,
             locationContentLabel,
-            locationDivideView,
             timeInfoLabel,
+            timeBackgroundView,
             timeContentLabel,
-            timeDivideView,
             readyLevelInfoLabel,
+            readyLevelBackgroundView,
             readyLevelContentLabel,
-            readyLevelDivideView,
             penaltyLevelInfoLabel,
+            penaltyBackgroundView,
             penaltyLevelContentLabel
         )
     }
@@ -140,7 +149,7 @@ class PromiseInfoView: BaseView {
         
         backgroundView.snp.makeConstraints {
             $0.top.equalTo(promiseImageView.snp.bottom).offset(28)
-            $0.leading.trailing.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
         
@@ -150,69 +159,73 @@ class PromiseInfoView: BaseView {
         }
         
         participantCollectionView.snp.makeConstraints {
-            $0.top.equalTo(participantNumberLabel.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview()
+            $0.top.equalTo(participantNumberLabel.snp.bottom).offset(8.5)
+            $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(Screen.height(88))
         }
         
         locationInfoLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(14)
-            $0.leading.equalToSuperview().offset(12)
+            $0.top.equalTo(participantCollectionView.snp.bottom).offset(12)
+            $0.leading.equalToSuperview().offset(20)
+        }
+        
+        locationBackgroundView.snp.makeConstraints {
+            $0.top.equalTo(locationInfoLabel.snp.bottom).offset(4)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.height.equalTo(Screen.height(53))
         }
         
         locationContentLabel.snp.makeConstraints {
-            $0.top.equalTo(locationInfoLabel.snp.bottom).offset(8)
-            $0.leading.equalTo(locationInfoLabel)
-            $0.trailing.equalToSuperview().offset(-8)
-        }
-        
-        locationDivideView.snp.makeConstraints {
-            $0.top.equalTo(locationContentLabel.snp.bottom).offset(16)
-            $0.leading.trailing.equalToSuperview().inset(12)
-            $0.height.equalTo(Screen.height(1))
+            $0.centerY.equalTo(locationBackgroundView)
+            $0.horizontalEdges.equalTo(locationBackgroundView).inset(8)
         }
         
         timeInfoLabel.snp.makeConstraints {
-            $0.top.equalTo(locationDivideView.snp.top).offset(14)
-            $0.leading.equalTo(locationDivideView)
+            $0.top.equalTo(locationBackgroundView.snp.bottom).offset(12)
+            $0.leading.equalTo(locationBackgroundView)
+        }
+        
+        timeBackgroundView.snp.makeConstraints {
+            $0.top.equalTo(timeInfoLabel.snp.bottom).offset(4)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.height.equalTo(Screen.height(53))
         }
         
         timeContentLabel.snp.makeConstraints {
-            $0.top.equalTo(timeInfoLabel.snp.bottom).offset(8)
-            $0.leading.equalTo(timeInfoLabel)
-        }
-        
-        timeDivideView.snp.makeConstraints {
-            $0.top.equalTo(timeContentLabel.snp.bottom).offset(16)
-            $0.leading.trailing.equalToSuperview().inset(12)
-            $0.height.equalTo(Screen.height(1))
+            $0.centerY.equalTo(timeBackgroundView)
+            $0.horizontalEdges.equalTo(timeBackgroundView).inset(8)
         }
         
         readyLevelInfoLabel.snp.makeConstraints {
-            $0.top.equalTo(timeDivideView.snp.top).offset(14)
-            $0.leading.equalTo(timeDivideView)
+            $0.top.equalTo(timeBackgroundView.snp.bottom).offset(12)
+            $0.leading.equalTo(timeBackgroundView)
+        }
+        
+        readyLevelBackgroundView.snp.makeConstraints {
+            $0.top.equalTo(readyLevelInfoLabel.snp.bottom).offset(4)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.height.equalTo(Screen.height(53))
         }
         
         readyLevelContentLabel.snp.makeConstraints {
-            $0.top.equalTo(readyLevelInfoLabel.snp.bottom).offset(8)
-            $0.leading.equalTo(readyLevelInfoLabel)
-        }
-        
-        readyLevelDivideView.snp.makeConstraints {
-            $0.top.equalTo(readyLevelContentLabel.snp.bottom).offset(16)
-            $0.leading.trailing.equalToSuperview().inset(12)
-            $0.height.equalTo(Screen.height(1))
+            $0.centerY.equalTo(readyLevelBackgroundView)
+            $0.horizontalEdges.equalTo(readyLevelBackgroundView).inset(8)
         }
         
         penaltyLevelInfoLabel.snp.makeConstraints {
-            $0.top.equalTo(readyLevelDivideView.snp.top).offset(14)
-            $0.leading.equalTo(timeDivideView)
+            $0.top.equalTo(readyLevelBackgroundView.snp.bottom).offset(12)
+            $0.leading.equalTo(timeBackgroundView)
+        }
+        
+        penaltyBackgroundView.snp.makeConstraints {
+            $0.top.equalTo(penaltyLevelInfoLabel.snp.bottom).offset(4)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+            $0.height.equalTo(Screen.height(53))
         }
         
         penaltyLevelContentLabel.snp.makeConstraints {
-            $0.top.equalTo(penaltyLevelInfoLabel.snp.bottom).offset(8)
-            $0.leading.equalTo(penaltyLevelInfoLabel)
-            $0.bottom.equalToSuperview().inset(16)
+            $0.centerY.equalTo(penaltyBackgroundView)
+            $0.horizontalEdges.equalTo(readyLevelBackgroundView).inset(8)
         }
     }
 }
