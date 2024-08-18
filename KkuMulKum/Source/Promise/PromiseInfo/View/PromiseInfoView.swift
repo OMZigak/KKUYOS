@@ -11,10 +11,20 @@ class PromiseInfoView: BaseView {
     
     
     // MARK: Property
+    
+    let promiseImageView: UIImageView = UIImageView(image: .imgPromise)
+    
+    let dDayLabel: UILabel = UILabel().then {
+        $0.setText("D-n", style: .body05, color: .gray5)
+    }
+    
+    let promiseNameLabel: UILabel = UILabel().then {
+        $0.setText("약속 이름이 설정되지 않았어요!", style: .body01, color: .gray7)
+    }
 
     let participantNumberLabel: UILabel = UILabel().then {
-        $0.setText("약속 참여 인원 n명", style: .body01)
-        $0.setHighlightText("n명", style: .body01, color: .maincolor)
+        $0.setText("약속 참여 인원 n명", style: .body05, color: .maincolor)
+        $0.setHighlightText("n명", style: .body05, color: .gray3)
     }
     
     let participantCollectionView: UICollectionView = UICollectionView(
@@ -24,6 +34,7 @@ class PromiseInfoView: BaseView {
             $0.minimumInteritemSpacing = 12
             $0.estimatedItemSize = .init(width: Screen.width(68), height: Screen.height(88))
     }).then {
+        $0.backgroundColor = .clear
         $0.showsHorizontalScrollIndicator = false
         $0.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0)
         $0.register(
@@ -48,29 +59,13 @@ class PromiseInfoView: BaseView {
         $0.setText("ssss하기", style: .body04, color: .gray7)
     }
     
-    private let chevronButton: UIButton = UIButton().then {
-        $0.setImage(.iconRight.withTintColor(.gray4), for: .normal)
-        $0.contentMode = .scaleAspectFill
-    }
-    
     private let backgroundView: UIView = UIView().then {
-        $0.backgroundColor = .gray0
+        $0.backgroundColor = .white
         $0.layer.cornerRadius = Screen.height(18)
     }
     
-    private let promiseInfoLabel: UILabel = UILabel().then {
-        $0.setText("약속 상세 정보", style: .body01, color: .gray7)
-    }
-    
-    private let promiseInfoBackgroundView: UIView = UIView().then {
-        $0.backgroundColor = .white
-        $0.layer.borderColor = UIColor.gray2.cgColor
-        $0.layer.borderWidth = 1
-        $0.layer.cornerRadius = Screen.height(8)
-    }
-    
     private let locationInfoLabel: UILabel = UILabel().then {
-        $0.setText("위치", style: .caption01, color: .maincolor)
+        $0.setText("위치", style: .body05, color: .maincolor)
     }
     
     private let locationDivideView: UIView = UIView().then {
@@ -78,7 +73,7 @@ class PromiseInfoView: BaseView {
     }
     
     private let timeInfoLabel: UILabel = UILabel().then {
-        $0.setText("약속시간", style: .caption01, color: .maincolor)
+        $0.setText("약속시간", style: .body05, color: .maincolor)
     }
     
     private let timeDivideView: UIView = UIView().then {
@@ -86,7 +81,7 @@ class PromiseInfoView: BaseView {
     }
     
     private let readyLevelInfoLabel: UILabel = UILabel().then {
-        $0.setText("준비레벨", style: .caption01, color: .maincolor)
+        $0.setText("꾸레벨", style: .body05, color: .maincolor)
     }
     
     private let readyLevelDivideView: UIView = UIView().then {
@@ -94,7 +89,7 @@ class PromiseInfoView: BaseView {
     }
     
     private let penaltyLevelInfoLabel: UILabel = UILabel().then {
-        $0.setText("벌칙", style: .caption01, color: .maincolor)
+        $0.setText("벌칙", style: .body05, color: .maincolor)
     }
     
     
@@ -102,15 +97,15 @@ class PromiseInfoView: BaseView {
 
     override func setupView() {
         addSubviews(
-            participantNumberLabel,
-            chevronButton,
-            participantCollectionView,
-            backgroundView,
-            promiseInfoLabel,
-            promiseInfoBackgroundView
+            promiseImageView,
+            dDayLabel,
+            promiseNameLabel,
+            backgroundView
         )
         
-        promiseInfoBackgroundView.addSubviews(
+        backgroundView.addSubviews(
+            participantNumberLabel,
+            participantCollectionView,
             locationInfoLabel,
             locationContentLabel,
             locationDivideView,
@@ -126,38 +121,38 @@ class PromiseInfoView: BaseView {
     }
     
     override func setupAutoLayout() {
-        participantNumberLabel.snp.makeConstraints {
-            $0.top.equalTo(self.safeAreaLayoutGuide).offset(28)
+        promiseImageView.snp.makeConstraints {
+            $0.top.equalTo(self.safeAreaLayoutGuide).offset(31)
             $0.leading.equalToSuperview().offset(20)
+            $0.height.equalTo(Screen.height(48))
+            $0.width.equalTo(promiseImageView.snp.height)
         }
         
-        chevronButton.snp.makeConstraints {
-            $0.centerY.equalTo(participantNumberLabel)
-            $0.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(Screen.height(24))
-            $0.width.equalTo(chevronButton.snp.height)
+        dDayLabel.snp.makeConstraints {
+            $0.top.equalTo(promiseImageView)
+            $0.leading.equalTo(promiseImageView.snp.trailing).offset(16)
+        }
+        
+        promiseNameLabel.snp.makeConstraints {
+            $0.top.equalTo(dDayLabel.snp.bottom).inset(2)
+            $0.leading.equalTo(dDayLabel)
+        }
+        
+        backgroundView.snp.makeConstraints {
+            $0.top.equalTo(promiseImageView.snp.bottom).offset(28)
+            $0.leading.trailing.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
+        participantNumberLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(18)
+            $0.leading.equalToSuperview().offset(20)
         }
         
         participantCollectionView.snp.makeConstraints {
             $0.top.equalTo(participantNumberLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(Screen.height(88))
-        }
-        
-        backgroundView.snp.makeConstraints {
-            $0.top.equalTo(participantCollectionView.snp.bottom).offset(27)
-            $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalToSuperview()
-        }
-        
-        promiseInfoLabel.snp.makeConstraints {
-            $0.top.equalTo(backgroundView.snp.top).offset(26)
-            $0.leading.equalToSuperview().offset(20)
-        }
-        
-        promiseInfoBackgroundView.snp.makeConstraints {
-            $0.top.equalTo(promiseInfoLabel.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(20)
         }
         
         locationInfoLabel.snp.makeConstraints {

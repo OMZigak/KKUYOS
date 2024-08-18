@@ -43,10 +43,7 @@ extension BaseViewController {
             .foregroundColor: UIColor.gray8,
             .font: UIFont.pretendard(.body03)
         ]
-    }
-    
-    /// 네비게이션 바 아래 회색 구분선 추가
-    final func setupNavigationBarUnderLine() {
+        
         let lineView = UIView(backgroundColor: .gray2)
         navigationController?.navigationBar.addSubviews(lineView)
         

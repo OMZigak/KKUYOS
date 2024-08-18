@@ -34,6 +34,12 @@ class PromiseInfoViewController: BaseViewController {
         view = rootView
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .gray0
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -86,13 +92,14 @@ extension PromiseInfoViewController {
             DispatchQueue.main.async {
                 owner.rootView.participantNumberLabel.setText(
                     "약속 참여 인원 \(participantsInfo?.count ?? 0)명",
-                    style: .body01
+                    style: .body05,
+                    color: .maincolor
                 )
                 
                 owner.rootView.participantNumberLabel.setHighlightText(
                     "\(participantsInfo?.count ?? 0)명",
-                    style: .body01,
-                    color: .maincolor
+                    style: .body05,
+                    color: .gray3
                 )
                 
                 owner.rootView.participantCollectionView.reloadData()
