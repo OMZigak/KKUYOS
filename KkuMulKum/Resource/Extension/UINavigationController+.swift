@@ -26,7 +26,9 @@ extension UINavigationController {
     convenience init(rootViewController: UIViewController, isBorderNeeded: Bool) {
         self.init(rootViewController: rootViewController)
         
-        addBorder()
+        if isBorderNeeded {
+            addBorder()
+        }
     }
     
     private func addBorder() {
