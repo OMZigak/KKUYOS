@@ -30,5 +30,22 @@ class ObservablePattern<T> {
             listener(object, value)
         }
     }
+    
+    func bindOnMain(_ listener: @escaping (T) -> Void) {
+        self.listener = { value in
+            DispatchQueue.main.async {
+                listener(value)
+            }
+        }
+    }
+    
+    func bindOnMain<Object: AnyObject>(with object: Object, _ listener: @escaping (Object, T) -> Void) {
+        self.listener = { [weak object] value in
+            guard let object else { return }
+            DispatchQueue.main.async {
+                listener(object, value)
+            }
+        }
+    }
 }
 
