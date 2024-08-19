@@ -34,6 +34,12 @@ class PromiseInfoViewController: BaseViewController {
         view = rootView
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .gray0
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -56,6 +62,9 @@ class PromiseInfoViewController: BaseViewController {
 extension PromiseInfoViewController {
     func setupBinding() {
         viewModel.promiseInfo.bind(with: self) { owner, info in
+            // TODO: 서버 API 반영되면 아래 주석 해제
+            // owner.rootView.editButton.isHidden = info?.isParticipant!
+            
             owner.rootView.timeContentLabel.setText(
                 info?.time ?? "시간이 설정되지 않았어요!",
                 style: .body04,
@@ -86,13 +95,14 @@ extension PromiseInfoViewController {
             DispatchQueue.main.async {
                 owner.rootView.participantNumberLabel.setText(
                     "약속 참여 인원 \(participantsInfo?.count ?? 0)명",
-                    style: .body01
+                    style: .body05,
+                    color: .maincolor
                 )
                 
                 owner.rootView.participantNumberLabel.setHighlightText(
                     "\(participantsInfo?.count ?? 0)명",
-                    style: .body01,
-                    color: .maincolor
+                    style: .body05,
+                    color: .gray3
                 )
                 
                 owner.rootView.participantCollectionView.reloadData()
@@ -109,7 +119,7 @@ extension PromiseInfoViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return ((viewModel.participantsInfo.value?.count ?? 0) + 1)
+        return (viewModel.participantsInfo.value?.count ?? 0)
     }
 }
 
@@ -126,15 +136,7 @@ extension PromiseInfoViewController: UICollectionViewDelegateFlowLayout {
             for: indexPath) as? ParticipantCollectionViewCell 
         else { return UICollectionViewCell() }
         
-        if indexPath.row == 0 {
-            cell.profileImageView.image = .imgEmptyCell
-            cell.profileImageView.contentMode = .scaleAspectFill
-            cell.userNameLabel.isHidden = true
-            
-            return cell
-        }
-        
-        guard let info = viewModel.participantsInfo.value?[indexPath.row - 1] else {
+        guard let info = viewModel.participantsInfo.value?[indexPath.row] else {
             return cell
         }
         

@@ -253,7 +253,6 @@
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		784824F62C6E1C9900FE07A0 /* AuthServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceProtocol.swift; sourceTree = "<group>"; };
-		785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.plist; sourceTree = "<group>"; };
 		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		789196352C492F8600FF8CDF /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
 		789196372C49697B00FF8CDF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
@@ -764,6 +763,7 @@
 			children = (
 				DD1FD0332C5CCF8E00D0A72C /* ViewController */,
 				DD1FD0362C5CD00300D0A72C /* View */,
+				DD41174A2C720BD9008AA5FC /* Cell */,
 			);
 			path = PromiseInfo;
 			sourceTree = "<group>";
@@ -919,6 +919,14 @@
 				DD3F9DD72C49C25D008E1FF7 /* PromiseServiceProtocol.swift */,
 			);
 			path = ServiceProtocol;
+			sourceTree = "<group>";
+		};
+		DD41174A2C720BD9008AA5FC /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		DD43936B2C412F4500EC1799 /* AddMeeting */ = {
@@ -1150,7 +1158,6 @@
 			isa = PBXGroup;
 			children = (
 				DD41BF002C41DE4F0095A068 /* TardyCollectionViewCell.swift */,
-				DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */,
 				DD8626572C4606A300E4F980 /* OurReadyStatusCollectionViewCell.swift */,
 			);
 			path = Cell;
