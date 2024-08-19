@@ -8,7 +8,6 @@
 import UIKit
 
 class BaseViewController: UIViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,6 +62,7 @@ extension BaseViewController {
         ).then {
             $0.tintColor = .black
         }
+        
         navigationItem.leftBarButtonItem = backButton
     }
 }
