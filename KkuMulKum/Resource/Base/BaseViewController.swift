@@ -37,7 +37,7 @@ class BaseViewController: UIViewController {
 
 extension BaseViewController {
     /// 네비게이션 바 타이틀 설정
-    final func setupNavigationBarTitle(with string: String) {
+    func setupNavigationBarTitle(with string: String) {
         title = string
         
         navigationController?.navigationBar.titleTextAttributes = [
@@ -60,7 +60,7 @@ extension BaseViewController {
     }
     
     /// 네비게이션 바 BackButton 구성
-    final func setupNavigationBarBackButton() {
+    func setupNavigationBarBackButton() {
         let backButton = UIBarButtonItem(
             image: .iconBack,
             style: .plain,
