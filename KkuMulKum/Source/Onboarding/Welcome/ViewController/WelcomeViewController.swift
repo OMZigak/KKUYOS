@@ -52,7 +52,10 @@ class WelcomeViewController: BaseViewController {
     @objc private func confirmButtonTapped() {
         let mainTabBarController = MainTabBarController()
         
-        let navigationController = UINavigationController(rootViewController: mainTabBarController)
+        let navigationController = UINavigationController(
+            rootViewController: mainTabBarController,
+            isBorderNeeded: true
+        )
         
         navigationController.isNavigationBarHidden = true
         navigationController.modalPresentationStyle = .fullScreen

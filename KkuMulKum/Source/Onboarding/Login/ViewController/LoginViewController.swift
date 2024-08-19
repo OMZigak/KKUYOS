@@ -102,7 +102,10 @@ class LoginViewController: BaseViewController {
     private func navigateToMainScreen() async {
         await MainActor.run {
             let mainTabBarController = MainTabBarController()
-            let navigationController = UINavigationController(rootViewController: mainTabBarController)
+            let navigationController = UINavigationController(
+                rootViewController: mainTabBarController,
+                isBorderNeeded: true
+            )
             navigationController.isNavigationBarHidden = true
             navigationController.modalPresentationStyle = .fullScreen
             navigationController.modalTransitionStyle = .crossDissolve
@@ -117,7 +120,10 @@ class LoginViewController: BaseViewController {
             if let navigationController = self.navigationController {
                 navigationController.pushViewController(nicknameViewController, animated: true)
             } else {
-                let navigationController = UINavigationController(rootViewController: nicknameViewController)
+                let navigationController = UINavigationController(
+                    rootViewController: nicknameViewController,
+                    isBorderNeeded: true
+                )
                 navigationController.modalPresentationStyle = .fullScreen
                 navigationController.modalTransitionStyle = .crossDissolve
                 self.present(navigationController, animated: true, completion: nil)
