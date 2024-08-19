@@ -8,7 +8,6 @@
 import UIKit
 
 class BaseViewController: UIViewController {
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,8 +35,8 @@ class BaseViewController: UIViewController {
 }
 
 extension BaseViewController {
-    /// 네비게이션 바 타이틀 설정
-    final func setupNavigationBarTitle(with string: String) {
+    /// 네비게이션 바 타이틀 설정 및 경계선 숨김 또는 표시
+    func setupNavigationBarTitle(with string: String, isBorderHidden: Bool = false) {
         title = string
         
         navigationController?.navigationBar.titleTextAttributes = [
@@ -45,13 +44,7 @@ extension BaseViewController {
             .font: UIFont.pretendard(.body03)
         ]
         
-        let lineView = UIView(backgroundColor: .gray2)
-        navigationController?.navigationBar.addSubviews(lineView)
-        
-        lineView.snp.makeConstraints {
-            $0.horizontalEdges.bottom.equalToSuperview()
-            $0.height.equalTo(Screen.height(1))
-        }
+        isBorderHidden ? navigationController?.hideBorder() : navigationController?.showBorder()
         
         let barAppearance = UINavigationBarAppearance()
         barAppearance.backgroundColor = .white
@@ -60,7 +53,7 @@ extension BaseViewController {
     }
     
     /// 네비게이션 바 BackButton 구성
-    final func setupNavigationBarBackButton() {
+    func setupNavigationBarBackButton() {
         let backButton = UIBarButtonItem(
             image: .iconBack,
             style: .plain,
@@ -69,6 +62,7 @@ extension BaseViewController {
         ).then {
             $0.tintColor = .black
         }
+        
         navigationItem.leftBarButtonItem = backButton
     }
 }

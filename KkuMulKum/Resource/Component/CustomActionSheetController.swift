@@ -14,7 +14,7 @@ import Then
 
 protocol CustomActionSheetDelegate: AnyObject {
     /// CustomActionSheetController의 ActionButton이 눌렸을 때, 어떤 작업을 할 지 정의합니다.
-    func actionButtonDidTap()
+    func actionButtonDidTap(for kind: ActionSheetKind)
 }
 
 final class CustomActionSheetController: BaseViewController {
@@ -113,7 +113,7 @@ final class CustomActionSheetController: BaseViewController {
     override func setupAction() {
         actionButton.rx.tap
             .subscribe(with: self) { owner, _ in
-                owner.delegate?.actionButtonDidTap()
+                owner.delegate?.actionButtonDidTap(for: owner.kind)
                 owner.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
@@ -123,95 +123,6 @@ final class CustomActionSheetController: BaseViewController {
                 owner.dismiss(animated: true)
             }
             .disposed(by: disposeBag)
-    }
-}
-
-
-// MARK: - ActionSheetKind
-
-extension CustomActionSheetController {
-    enum ActionSheetKind {
-        case exitMeeting
-        case exitPromise
-        case deletePromise
-        case logout
-        case unsubscribe
-        
-        var image: UIImage? {
-            switch self {
-            case .exitMeeting:
-                    .imgExitMeeting
-            case .exitPromise:
-                    .imgExitPromise
-            case .deletePromise:
-                    .imgDeletePromise
-            case .logout, .unsubscribe:
-                nil
-            }
-        }
-        
-        var imageHeight: CGFloat {
-            switch self {
-            case .exitMeeting:
-                Screen.height(90)
-            case .exitPromise, .deletePromise:
-                Screen.height(86)
-            case .logout, .unsubscribe:
-                0
-            }
-        }
-        
-        var title: String {
-            switch self {
-            case .exitMeeting:
-                "모임에서 나가시겠어요?"
-            case .exitPromise:
-                "약속에서 나가시겠어요?"
-            case .deletePromise:
-                "정말 약속을 삭제하시겠어요?"
-            case .logout:
-                "로그아웃 하시겠어요?"
-            case .unsubscribe:
-                "정말 탈퇴 하시겠어요?"
-            }
-        }
-        
-        var description: String {
-            switch self {
-            case .exitMeeting:
-                "모임에서 나가도\n초대 코드를 통해 다시 들어올 수 있어요."
-            case .exitPromise:
-                "약속에서 나가도\n참여 인원 추가를 통해 다시 참여 가능해요."
-            case .deletePromise:
-                "약속을 삭제하면 해당 약속이\n모든 참여 인원의 약속 목록에서 사라져요."
-            case .logout:
-                "로그아웃 시, 다시 로그인 하셔야 해요."
-            case .unsubscribe:
-                "탈퇴 버튼 선택시,\n계정은 삭제되며 복구되지 않습니다."
-            }
-        }
-        
-        var descriptionColor: UIColor {
-            switch self {
-            case .exitMeeting, .exitPromise, .logout:
-                    .gray6
-            case .deletePromise, .unsubscribe:
-                    .red
-            }
-        }
-        
-        var actionButtonTitle: String {
-            switch self {
-            case .exitMeeting, .exitPromise:
-                "나가기"
-            case .deletePromise:
-                "삭제하기"
-            case .logout:
-                "로그아웃"
-            case .unsubscribe:
-                "탈퇴하기"
-            }
-        }
     }
 }
 
@@ -246,6 +157,95 @@ private extension CustomActionSheetController {
             $0.bottom.equalTo(labelStackView.snp.top).offset(-32)
             $0.centerX.equalToSuperview()
             $0.height.equalTo(kind.imageHeight)
+        }
+    }
+}
+
+
+// MARK: - ActionSheetKind
+
+enum ActionSheetKind {
+    case exitMeeting
+    case exitPromise
+    case deletePromise
+    case logout
+    case unsubscribe
+}
+
+fileprivate extension ActionSheetKind {
+    var image: UIImage? {
+        switch self {
+        case .exitMeeting:
+                .imgExitMeeting
+        case .exitPromise:
+                .imgExitPromise
+        case .deletePromise:
+                .imgDeletePromise
+        case .logout, .unsubscribe:
+            nil
+        }
+    }
+    
+    var imageHeight: CGFloat {
+        switch self {
+        case .exitMeeting:
+            Screen.height(90)
+        case .exitPromise, .deletePromise:
+            Screen.height(86)
+        case .logout, .unsubscribe:
+            0
+        }
+    }
+    
+    var title: String {
+        switch self {
+        case .exitMeeting:
+            "모임에서 나가시겠어요?"
+        case .exitPromise:
+            "약속에서 나가시겠어요?"
+        case .deletePromise:
+            "정말 약속을 삭제하시겠어요?"
+        case .logout:
+            "로그아웃 하시겠어요?"
+        case .unsubscribe:
+            "정말 탈퇴 하시겠어요?"
+        }
+    }
+    
+    var description: String {
+        switch self {
+        case .exitMeeting:
+            "모임에서 나가도\n초대 코드를 통해 다시 들어올 수 있어요."
+        case .exitPromise:
+            "약속에서 나가도\n참여 인원 추가를 통해 다시 참여 가능해요."
+        case .deletePromise:
+            "약속을 삭제하면 해당 약속이\n모든 참여 인원의 약속 목록에서 사라져요."
+        case .logout:
+            "로그아웃 시, 다시 로그인 하셔야 해요."
+        case .unsubscribe:
+            "탈퇴 버튼 선택시,\n계정은 삭제되며 복구되지 않습니다."
+        }
+    }
+    
+    var descriptionColor: UIColor {
+        switch self {
+        case .exitMeeting, .exitPromise, .logout:
+                .gray6
+        case .deletePromise, .unsubscribe:
+                .red
+        }
+    }
+    
+    var actionButtonTitle: String {
+        switch self {
+        case .exitMeeting, .exitPromise:
+            "나가기"
+        case .deletePromise:
+            "삭제하기"
+        case .logout:
+            "로그아웃"
+        case .unsubscribe:
+            "탈퇴하기"
         }
     }
 }

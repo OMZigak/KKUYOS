@@ -36,7 +36,7 @@ final class MeetingListView: BaseView {
     }
     
     private let addIconImageView = UIImageView().then {
-        $0.image = .icGroupPlus
+        $0.image = .iconGroupPlus
     }
     
     lazy var tableView = UITableView(frame: .zero, style: .plain).then {

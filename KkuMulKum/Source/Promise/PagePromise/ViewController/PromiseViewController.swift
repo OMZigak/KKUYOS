@@ -87,8 +87,6 @@ class PromiseViewController: BaseViewController {
     override func setupView() {
         view.backgroundColor = .white
         
-        setupNavigationBarBackButton()
-        
         addChild(promisePageViewController)
         
         view.addSubviews(
