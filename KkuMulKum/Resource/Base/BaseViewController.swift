@@ -36,7 +36,7 @@ class BaseViewController: UIViewController {
 }
 
 extension BaseViewController {
-    /// 네비게이션 바 타이틀 설정
+    /// 네비게이션 바 타이틀 설정 및 경계선 숨김 또는 표시
     func setupNavigationBarTitle(with string: String, isBorderHidden: Bool = false) {
         title = string
         
