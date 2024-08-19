@@ -150,6 +150,7 @@
 		DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */; };
 		DD931B762C3DC16100526452 /* PromiseInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B752C3DC16100526452 /* PromiseInfoView.swift */; };
 		DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */; };
+		DDA303802C73353300D1045E /* RemovePromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA3037F2C73353300D1045E /* RemovePromiseViewController.swift */; };
 		DDAF1C7C2C3D5B86008A37D3 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C7B2C3D5B86008A37D3 /* RxCocoa */; };
 		DDAF1C7E2C3D5B86008A37D3 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C7D2C3D5B86008A37D3 /* RxRelay */; };
 		DDAF1C812C3D5BD5008A37D3 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C802C3D5BD5008A37D3 /* Kingfisher */; };
@@ -253,7 +254,6 @@
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		784824F62C6E1C9900FE07A0 /* AuthServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceProtocol.swift; sourceTree = "<group>"; };
-		785AE1D02C3B07A600677CA0 /* PrivacyInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.plist; sourceTree = "<group>"; };
 		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		789196352C492F8600FF8CDF /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
 		789196372C49697B00FF8CDF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
@@ -348,6 +348,7 @@
 		DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD931B752C3DC16100526452 /* PromiseInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoView.swift; sourceTree = "<group>"; };
 		DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
+		DDA3037F2C73353300D1045E /* RemovePromiseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePromiseViewController.swift; sourceTree = "<group>"; };
 		DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		DDAF1C8A2C3D6E3D008A37D3 /* PromiseViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PromiseViewModel.swift; sourceTree = "<group>"; };
 		DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TardyViewController.swift; sourceTree = "<group>"; };
@@ -869,6 +870,7 @@
 			isa = PBXGroup;
 			children = (
 				DDAF1C8D2C3D6E3D008A37D3 /* PromiseViewController.swift */,
+				DDA3037F2C73353300D1045E /* RemovePromiseViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1796,6 +1798,7 @@
 				DD4393762C412F4500EC1799 /* InviteCodeView.swift in Sources */,
 				DD3F9DD22C485753008E1FF7 /* UtilService.swift in Sources */,
 				DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */,
+				DDA303802C73353300D1045E /* RemovePromiseViewController.swift in Sources */,
 				DE32D1D42C3BFB56006848DF /* UpdateProfileNameModel.swift in Sources */,
 				DD3F9DD02C48571A008E1FF7 /* MeetingListServiceType.swift in Sources */,
 				A39F2B212C499CE5008DA5F5 /* SetReadyStatusInfoServiceType.swift in Sources */,

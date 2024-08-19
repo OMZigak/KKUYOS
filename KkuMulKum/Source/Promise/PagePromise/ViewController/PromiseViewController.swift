@@ -8,11 +8,16 @@
 import UIKit
 
 class PromiseViewController: BaseViewController {
+    func actionButtonDidTap() {
+        <#code#>
+    }
+    
     
     
     // MARK: Property
 
     private let viewModel: PromiseViewModel
+    private let removePromiseViewContoller: RemovePromiseViewController
     private let promiseInfoViewController: PromiseInfoViewController
     private let promiseReadyStatusViewController: ReadyStatusViewController
     private let promiseTardyViewController: TardyViewController
@@ -45,6 +50,10 @@ class PromiseViewController: BaseViewController {
             promiseTardyViewController
         ]
         
+        removePromiseViewContoller = RemovePromiseViewController(
+            promiseName: self.viewModel.promiseInfo.value?.promiseName ?? ""
+        )
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -56,6 +65,7 @@ class PromiseViewController: BaseViewController {
         super.viewDidLoad()
         
         setupNavigationBarBackButton()
+        setupPromiseEditButton()
         setupBindings()
     }
     
@@ -122,6 +132,18 @@ class PromiseViewController: BaseViewController {
             action: #selector(finishMeetingButtonDidTap),
             for: .touchUpInside
         )
+        
+        removePromiseViewContoller.exitButton.addTarget(
+            self,
+            action: #selector(exitButtonDidTap),
+            for: .touchUpInside
+        )
+        
+        removePromiseViewContoller.deleteButton.addTarget(
+            self,
+            action: #selector(deleteButtonDidTap),
+            for: .touchUpInside
+        )
     }
     
     override func setupDelegate() {
@@ -139,6 +161,18 @@ private extension PromiseViewController {
                 self.setupNavigationBarTitle(with: info?.promiseName ?? "")
             }
         }
+    }
+    
+    func setupPromiseEditButton() {
+        navigationController?.navigationItem.setRightBarButton(
+            UIBarButtonItem(
+                image: .imgMore,
+                style: .plain,
+                target: self,
+                action: #selector(moreButtonDidTap)
+            ),
+            animated: false
+        )
     }
     
     @objc
@@ -170,6 +204,44 @@ private extension PromiseViewController {
         
         navigationController?.popViewController(animated: true)
     }
+    
+    @objc
+    func moreButtonDidTap() {
+        let bottomSheetViewController = BottomSheetViewController(
+            contentViewController: removePromiseViewContoller,
+            defaultHeight: Screen.height(232)
+        )
+        
+        present(bottomSheetViewController, animated: true)
+    }
+}
+
+
+// MARK: - CustomActionSheetDelegate
+
+extension PromiseViewController: CustomActionSheetDelegate {
+    @objc
+    func exitButtonDidTap() {
+        let viewController = CustomActionSheetController(kind: .exitPromise)
+        viewController.delegate = self
+        
+        presentingViewController?.dismiss(animated: false)
+        present(viewController, animated: true)
+    }
+    
+    @objc
+    func deleteButtonDidTap() {
+        let viewController = CustomActionSheetController(kind: .deletePromise)
+        viewController.delegate = self
+        
+        presentingViewController?.dismiss(animated: false)
+        present(viewController, animated: true)
+    }
+    
+    // TODO: 액션 시트 상의 후 작업
+//    func actionButtonDidTap() {
+//        print(">>>>> \(<#디버깅 할 내용#>) : \(#function)")
+//    }
 }
 
 
