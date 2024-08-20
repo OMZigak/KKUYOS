@@ -8,6 +8,10 @@
 import UIKit
 
 class RemovePromiseViewController: BaseViewController {
+    let promiseNameLabel: UILabel = UILabel().then {
+        $0.setText("약속 이름", style: .body03, color: .gray8)
+    }
+    
     lazy var exitButton: UIButton = UIButton().then {
         $0.setTitle("약속 나가기", style: .body05, color: .white)
         $0.backgroundColor = .gray7
@@ -18,10 +22,6 @@ class RemovePromiseViewController: BaseViewController {
         $0.setTitle("약속 삭제하기", style: .body05, color: .mainred)
         $0.backgroundColor = .gray1
         $0.layer.cornerRadius = Screen.height(8)
-    }
-    
-    private let promiseNameLabel: UILabel = UILabel().then {
-        $0.setText("약속 이름", style: .body03, color: .gray8)
     }
     
     

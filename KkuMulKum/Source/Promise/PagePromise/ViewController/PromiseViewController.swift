@@ -48,10 +48,6 @@ class PromiseViewController: BaseViewController {
             promiseTardyViewController
         ]
         
-        removePromiseViewContoller = RemovePromiseViewController(
-            promiseName: viewModel.promiseInfo.value?.promiseName ?? ""
-        )
-        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -158,6 +154,7 @@ private extension PromiseViewController {
         viewModel.promiseInfo.bind { info in
             DispatchQueue.main.async {
                 self.setupNavigationBarTitle(with: info?.promiseName ?? "")
+                self.removePromiseViewContoller.promiseNameLabel.text = info?.promiseName ?? ""
             }
         }
     }
