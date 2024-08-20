@@ -103,11 +103,5 @@ private extension SelectMemberViewController {
                 cell.configure(with: member)
             }
             .disposed(by: disposeBag)
-        
-        output.isEnabledConfirmButton
-            .drive(with: self) { owner, flag in
-                owner.rootView.confirmButton.isEnabled = flag
-            }
-            .disposed(by: disposeBag)
     }
 }

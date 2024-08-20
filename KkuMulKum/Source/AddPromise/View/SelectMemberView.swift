@@ -46,7 +46,7 @@ final class SelectMemberView: BaseView {
         )
     }
     
-    let confirmButton = CustomButton(title: "다음")
+    let confirmButton = CustomButton(title: "다음", isEnabled: true)
     
     override func setupView() {
         descriptionStackView.addArrangedSubviews(pageNumberLabel, titleLabel)

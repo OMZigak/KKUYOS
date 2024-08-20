@@ -47,7 +47,6 @@ extension SelectMemberViewModel: ViewModelType {
     
     struct Output {
         let memberList: Driver<[Member]>
-        let isEnabledConfirmButton: Driver<Bool>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
