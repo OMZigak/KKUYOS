@@ -139,7 +139,6 @@ private extension MeetingInfoViewController {
                 cell.configure(
                     dDay: promise.dDay,
                     name: promise.name,
-                    date: promise.date,
                     time: promise.time,
                     place: promise.placeName
                 )
