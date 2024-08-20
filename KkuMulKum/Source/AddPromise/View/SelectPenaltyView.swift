@@ -70,9 +70,9 @@ final class SelectPenaltyView: BaseView {
         let safeArea = safeAreaLayoutGuide
         
         progressView.snp.makeConstraints {
-            $0.top.equalTo(safeArea).offset(-2)
+            $0.top.equalTo(safeArea).offset(-1)
             $0.horizontalEdges.equalToSuperview()
-            $0.height.equalTo(Screen.height(3))
+            $0.height.equalTo(Screen.height(4))
         }
         
         descriptionStackView.snp.makeConstraints {
