@@ -74,13 +74,8 @@ extension SelectMemberViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
-        let isEnabledConfirmButton = selectedMemberListRelay
-            .map { !$0.isEmpty }
-            .asDriver(onErrorJustReturn: false)
-        
         let output = Output(
-            memberList: memberListRelay.asDriver(onErrorJustReturn: []),
-            isEnabledConfirmButton: isEnabledConfirmButton
+            memberList: memberListRelay.asDriver(onErrorJustReturn: [])
         )
         
         return output
@@ -91,9 +86,7 @@ private extension SelectMemberViewModel {
     func fetchMeetingMembers() {
         Task {
             do {
-                guard let responseBody = try await service.fetchMeetingMemberListExcludeLoginUser(
-                    with: meetingID
-                ),
+                guard let responseBody = try await service.fetchMeetingMemberListExcludeLoginUser(with: meetingID),
                       responseBody.success
                 else {
                     memberListRelay.accept([])
