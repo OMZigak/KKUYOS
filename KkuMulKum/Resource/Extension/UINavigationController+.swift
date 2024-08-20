@@ -7,21 +7,6 @@
 
 import UIKit
 
-import SnapKit
-import Then
-
-extension UINavigationController {
-    fileprivate static let borderLine = UIView(backgroundColor: .gray2)
-    
-    func hideBorder() {
-        Self.borderLine.isHidden = true
-    }
-    
-    func showBorder() {
-        Self.borderLine.isHidden = false
-    }
-}
-
 extension UINavigationController {
     convenience init(rootViewController: UIViewController, isBorderNeeded: Bool) {
         self.init(rootViewController: rootViewController)
@@ -31,16 +16,40 @@ extension UINavigationController {
         }
     }
     
-    private func addBorder() {
-        let border = Self.borderLine
+    func showBorder() {
+        let border = findBottomBorder()
+        border?.isHidden = false
+    }
+    
+    func hideBorder() {
+        let border = findBottomBorder()
+        border?.isHidden = true
+    }
+}
+
+private extension UINavigationController {
+    enum Constants {
+        static let bottomBorderName = "BottomBorder"
+        static let bottomBorderWidth: CGFloat = Screen.height(1)
+    }
+    
+    func addBorder() {
+        guard findBottomBorder() == nil else { return }
         
-        if !navigationBar.subviews.contains(where: { $0 == border }) {
-            navigationBar.addSubviews(border)
-            
-            border.snp.makeConstraints {
-                $0.horizontalEdges.bottom.equalToSuperview()
-                $0.height.equalTo(Screen.height(1))
-            }
-        }
+        let border = CALayer()
+        border.name = Constants.bottomBorderName
+        border.backgroundColor = UIColor.gray2.cgColor
+        border.frame = CGRect(
+            x: 0,
+            y: navigationBar.frame.height - Constants.bottomBorderWidth,
+            width: navigationBar.frame.width,
+            height: Constants.bottomBorderWidth
+        )
+        
+        navigationBar.layer.addSublayer(border)
+    }
+    
+    func findBottomBorder() -> CALayer? {
+        return navigationBar.layer.sublayers?.first(where: { $0.name == Constants.bottomBorderName })
     }
 }
