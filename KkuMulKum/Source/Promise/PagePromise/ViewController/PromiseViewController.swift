@@ -8,24 +8,22 @@
 import UIKit
 
 class PromiseViewController: BaseViewController {
-    func actionButtonDidTap() {
-        <#code#>
-    }
-    
     
     
     // MARK: Property
 
     private let viewModel: PromiseViewModel
-    private let removePromiseViewContoller: RemovePromiseViewController
     private let promiseInfoViewController: PromiseInfoViewController
     private let promiseReadyStatusViewController: ReadyStatusViewController
     private let promiseTardyViewController: TardyViewController
+    private let exitViewController = CustomActionSheetController(kind: .exitPromise)
+    private let deleteViewController = CustomActionSheetController(kind: .deletePromise)
     private let promisePageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .vertical
     )
     
+    private var removePromiseViewContoller: RemovePromiseViewController = RemovePromiseViewController(promiseName: "")
     private var promiseViewControllerList: [BaseViewController] = []
     
     private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(
@@ -51,7 +49,7 @@ class PromiseViewController: BaseViewController {
         ]
         
         removePromiseViewContoller = RemovePromiseViewController(
-            promiseName: self.viewModel.promiseInfo.value?.promiseName ?? ""
+            promiseName: viewModel.promiseInfo.value?.promiseName ?? ""
         )
         
         super.init(nibName: nil, bundle: nil)
@@ -131,6 +129,7 @@ class PromiseViewController: BaseViewController {
             for: .touchUpInside
         )
         
+        // TODO: 버튼 안눌리는 문제 해결하기
         removePromiseViewContoller.exitButton.addTarget(
             self,
             action: #selector(exitButtonDidTap),
@@ -146,6 +145,8 @@ class PromiseViewController: BaseViewController {
     
     override func setupDelegate() {
         promisePageViewController.dataSource = self
+        exitViewController.delegate = self
+        deleteViewController.delegate = self
     }
 }
 
@@ -162,15 +163,14 @@ private extension PromiseViewController {
     }
     
     func setupPromiseEditButton() {
-        navigationController?.navigationItem.setRightBarButton(
-            UIBarButtonItem(
-                image: .imgMore,
-                style: .plain,
-                target: self,
-                action: #selector(moreButtonDidTap)
-            ),
-            animated: false
+        let moreButton = UIBarButtonItem(
+            image: .imgMore.withRenderingMode(.alwaysOriginal),
+            style: .plain,
+            target: self,
+            action: #selector(self.moreButtonDidTap)
         )
+        
+        navigationItem.rightBarButtonItem = moreButton
     }
     
     @objc
@@ -212,34 +212,38 @@ private extension PromiseViewController {
         
         present(bottomSheetViewController, animated: true)
     }
+    
+    @objc
+    func exitButtonDidTap() {
+        dismiss(animated: false)
+        present(exitViewController, animated: true)
+    }
+    
+    @objc
+    func deleteButtonDidTap() {
+        dismiss(animated: false)
+        present(deleteViewController, animated: true)
+    }
 }
 
 
 // MARK: - CustomActionSheetDelegate
 
 extension PromiseViewController: CustomActionSheetDelegate {
-    @objc
-    func exitButtonDidTap() {
-        let viewController = CustomActionSheetController(kind: .exitPromise)
-        viewController.delegate = self
-        
-        presentingViewController?.dismiss(animated: false)
-        present(viewController, animated: true)
+    func actionButtonDidTap(for kind: ActionSheetKind) {
+        if kind == .deletePromise {
+            // TODO: 약속 삭제 API 연결
+            
+            dismiss(animated: false)
+            navigationController?.popViewController(animated: true)
+        }
+        else {
+            // TODO: 약속 나가기 API 연결
+            
+            dismiss(animated: false)
+            navigationController?.popViewController(animated: true)
+        }
     }
-    
-    @objc
-    func deleteButtonDidTap() {
-        let viewController = CustomActionSheetController(kind: .deletePromise)
-        viewController.delegate = self
-        
-        presentingViewController?.dismiss(animated: false)
-        present(viewController, animated: true)
-    }
-    
-    // TODO: 액션 시트 상의 후 작업
-//    func actionButtonDidTap() {
-//        print(">>>>> \(<#디버깅 할 내용#>) : \(#function)")
-//    }
 }
 
 
