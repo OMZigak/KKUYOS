@@ -103,5 +103,13 @@ private extension SelectMemberViewController {
                 cell.configure(with: member)
             }
             .disposed(by: disposeBag)
+        
+        output.memberList
+            .map { $0.isEmpty }
+            .drive(with: self) { owner, flag in
+                owner.rootView.memberListView.isHidden = flag
+                owner.rootView.emptyContentView.isHidden = !flag
+            }
+            .disposed(by: disposeBag)
     }
 }

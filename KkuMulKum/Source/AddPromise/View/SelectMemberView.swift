@@ -46,14 +46,36 @@ final class SelectMemberView: BaseView {
         )
     }
     
+    private let emptyImageView = UIImageView().then {
+        $0.contentMode = .scaleAspectFill
+        $0.image = .imgEmptyTardy.withRenderingMode(.alwaysOriginal)
+    }
+    
+    private let emptyLabel = UILabel().then {
+        $0.setText(
+            "약속에 함께할 꾸물이들이 없어요!\n모임에 친구들을 초대해보세요",
+            style: .body05,
+            color: .gray3
+        )
+        $0.textAlignment = .center
+    }
+    
+    let emptyContentView = UIStackView(axis: .vertical).then {
+        $0.spacing = 32
+        $0.alignment = .center
+        $0.isHidden = true
+    }
+    
     let confirmButton = CustomButton(title: "다음", isEnabled: true)
     
     override func setupView() {
         descriptionStackView.addArrangedSubviews(pageNumberLabel, titleLabel)
+        emptyContentView.addArrangedSubviews(emptyImageView, emptyLabel)
         addSubviews(
             progressView,
             descriptionStackView,
             memberListView,
+            emptyContentView,
             confirmButton
         )
     }
@@ -76,6 +98,16 @@ final class SelectMemberView: BaseView {
             $0.top.equalTo(descriptionStackView.snp.bottom).offset(16)
             $0.horizontalEdges.equalToSuperview().inset(20)
             $0.bottom.equalToSuperview().offset(-167)
+        }
+        
+        emptyImageView.snp.makeConstraints {
+            $0.width.equalTo(Screen.width(112))
+            $0.height.equalTo(Screen.height(122))
+        }
+        
+        emptyContentView.snp.makeConstraints {
+            $0.top.equalTo(descriptionStackView.snp.bottom).offset(130)
+            $0.horizontalEdges.equalToSuperview().inset(84)
         }
         
         confirmButton.snp.makeConstraints {
