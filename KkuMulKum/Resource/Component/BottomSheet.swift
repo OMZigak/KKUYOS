@@ -6,6 +6,7 @@
 //// ref: https://velog.io/@minsang/iOS-Bottom-Sheet
 
 import UIKit
+
 import SnapKit
 import Then
 
@@ -109,7 +110,7 @@ class BottomSheetViewController: BaseViewController {
         bottomSheetView.addSubview(contentViewController.view)
         bottomSheetView.addSubview(dragIndicatorView)
         contentViewController.didMove(toParent: self)
-        dragIndicatorView.backgroundColor = .black
+        dragIndicatorView.backgroundColor = .gray2
     }
     
     private func showBottomSheet(atState: BottomSheetViewState = .normal) {
@@ -142,7 +143,7 @@ extension BottomSheetViewController {
         }
         
         bottomSheetView.snp.makeConstraints {
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+            $0.leading.trailing.equalTo(view.safeAreaLayoutGuide)
             $0.bottom.equalToSuperview()
             $0.height.equalTo(defaultHeight)
         }
