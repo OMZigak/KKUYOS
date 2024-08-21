@@ -10,11 +10,8 @@ import UIKit
 import SnapKit
 import Then
 
+
 class MyPageEtcSettingView: BaseView {
-    
-    let kakaoShareTapped = ObservablePattern<Void?>(nil)
-    var onWithdrawTapped: (() -> Void)?
-    
     let stackView = UIStackView(axis: .vertical).then {
         $0.spacing = 12
         $0.distribution = .fillEqually
@@ -87,7 +84,8 @@ class MyPageEtcSettingView: BaseView {
         case 3:
             print("로그아웃 탭됨")
         case 4:
-            onWithdrawTapped?()
+            print("ㅇ 탭됨")
+
         default:
             break
         }

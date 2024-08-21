@@ -10,7 +10,9 @@ import UIKit
 import SnapKit
 import Then
 
+
 class MyPageContentView: BaseView {
+    
     let profileStackView = UIStackView(axis: .vertical).then {
         $0.spacing = 12
         $0.alignment = .center
@@ -21,6 +23,7 @@ class MyPageContentView: BaseView {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = Screen.width(24) / 2
         $0.clipsToBounds = true
+        
     }
     
     let profileImageView = UIImageView().then {
@@ -48,9 +51,8 @@ class MyPageContentView: BaseView {
         backgroundColor = .green1
         
         profileStackView.addArrangedSubviews(profileImageView, nameLabel)
-        profileImageView.addSubview(editButton)
-        levelView.addSubview(levelLabel)
-        addSubviews(profileStackView, levelView, separatorView)
+        addSubviews(profileStackView, editButton, levelView, separatorView)
+        levelView.addSubviews(levelLabel)
     }
     
     override func setupAutoLayout() {

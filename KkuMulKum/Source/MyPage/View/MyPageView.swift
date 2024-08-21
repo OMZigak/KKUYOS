@@ -12,7 +12,7 @@ import Then
 
 class MyPageView: BaseView {
     private let topBackgroundView = UIView(backgroundColor: .white)
-    private let contentView = MyPageContentView()
+    let contentView = MyPageContentView()
     let etcSettingView = MyPageEtcSettingView()
     
     override func setupView() {
@@ -41,4 +41,6 @@ class MyPageView: BaseView {
             $0.bottom.equalTo(safeArea).offset(-127)
         }
     }
+   
+       
 }
