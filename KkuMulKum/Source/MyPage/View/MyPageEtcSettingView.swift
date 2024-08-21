@@ -16,7 +16,7 @@ class MyPageEtcSettingView: BaseView {
     var onWithdrawTapped: (() -> Void)?
     
     let stackView = UIStackView(axis: .vertical).then {
-        $0.spacing = 24
+        $0.spacing = 12
         $0.distribution = .fillEqually
     }
     
@@ -29,6 +29,7 @@ class MyPageEtcSettingView: BaseView {
         stackView.addArrangedSubviews(
             createRow(title: "버전정보", subtitle: "1.0.0"),
             createRow(title: "이용약관"),
+            createRow(title: "문의하기"),
             createRow(title: "로그아웃"),
             createRow(title: "탈퇴하기")
         )
@@ -78,12 +79,14 @@ class MyPageEtcSettingView: BaseView {
         
         switch index {
         case 0:
-            kakaoShareTapped.value = ()
+            print("버전정보 탭됨")
         case 1:
-            print("이용약관 탭됨")
+            print("이용약관 탭됨") 
         case 2:
-            print("로그아웃 탭됨")
+            print("문의하기 탭됨")
         case 3:
+            print("로그아웃 탭됨")
+        case 4:
             onWithdrawTapped?()
         default:
             break

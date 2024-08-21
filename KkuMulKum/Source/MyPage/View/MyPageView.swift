@@ -13,7 +13,7 @@ import Then
 class MyPageView: BaseView {
     private let topBackgroundView = UIView(backgroundColor: .white)
     private let contentView = MyPageContentView()
-     let etcSettingView = MyPageEtcSettingView()
+    let etcSettingView = MyPageEtcSettingView()
     
     override func setupView() {
         backgroundColor = .green1
@@ -38,7 +38,7 @@ class MyPageView: BaseView {
         etcSettingView.snp.makeConstraints {
             $0.top.equalTo(contentView.snp.bottom).offset(12)
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalTo(safeArea).offset(-60)
+            $0.bottom.equalTo(safeArea).offset(-127)
         }
     }
 }
