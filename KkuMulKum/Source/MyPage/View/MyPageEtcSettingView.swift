@@ -10,12 +10,17 @@ import UIKit
 import SnapKit
 import Then
 
-
 class MyPageEtcSettingView: BaseView {
     let stackView = UIStackView(axis: .vertical).then {
         $0.spacing = 12
         $0.distribution = .fillEqually
     }
+    
+    let versionInfoRow = UIView()
+    let termsOfServiceRow = UIView()
+    let inquiryRow = UIView()
+    let logoutRow = UIView()
+    let unsubscribeRow = UIView()
     
     override func setupView() {
         backgroundColor = .white
@@ -23,14 +28,9 @@ class MyPageEtcSettingView: BaseView {
         layer.borderColor = UIColor.gray2.cgColor
         layer.cornerRadius = 8
         
-        stackView.addArrangedSubviews(
-            createRow(title: "버전정보", subtitle: "1.0.0"),
-            createRow(title: "이용약관"),
-            createRow(title: "문의하기"),
-            createRow(title: "로그아웃"),
-            createRow(title: "탈퇴하기")
-        )
+        setupRows()
         
+        stackView.addArrangedSubviews(versionInfoRow,termsOfServiceRow,inquiryRow,logoutRow,unsubscribeRow)
         addSubviews(stackView)
     }
     
@@ -40,12 +40,19 @@ class MyPageEtcSettingView: BaseView {
         }
     }
     
-    private func createRow(title: String, subtitle: String? = nil) -> UIView {
-        let rowView = UIView()
+    private func setupRows() {
+        setupRow(versionInfoRow, title: "버전정보", subtitle: "1.0.0")
+        setupRow(termsOfServiceRow, title: "이용약관")
+        setupRow(inquiryRow, title: "문의하기")
+        setupRow(logoutRow, title: "로그아웃")
+        setupRow(unsubscribeRow, title: "탈퇴하기")
+    }
+    
+    private func setupRow(_ row: UIView, title: String, subtitle: String? = nil) {
         let titleLabel = UILabel().then {
             $0.setText(title, style: .body03, color: .gray7)
         }
-        rowView.addSubview(titleLabel)
+        row.addSubviews(titleLabel)
         
         titleLabel.snp.makeConstraints {
             $0.verticalEdges.leading.equalToSuperview()
@@ -55,7 +62,7 @@ class MyPageEtcSettingView: BaseView {
             let subtitleLabel = UILabel().then {
                 $0.setText(subtitle, style: .body03, color: .gray8)
             }
-            rowView.addSubview(subtitleLabel)
+            row.addSubviews(subtitleLabel)
             
             subtitleLabel.snp.makeConstraints {
                 $0.trailing.equalToSuperview()
@@ -63,31 +70,8 @@ class MyPageEtcSettingView: BaseView {
             }
         }
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(rowTapped(_:)))
-        rowView.addGestureRecognizer(tapGesture)
-        rowView.isUserInteractionEnabled = true
-        
-        return rowView
-    }
-    
-    @objc private func rowTapped(_ gesture: UITapGestureRecognizer) {
-        guard let tappedView = gesture.view else { return }
-        let index = stackView.arrangedSubviews.firstIndex(of: tappedView)
-        
-        switch index {
-        case 0:
-            print("버전정보 탭됨")
-        case 1:
-            print("이용약관 탭됨") 
-        case 2:
-            print("문의하기 탭됨")
-        case 3:
-            print("로그아웃 탭됨")
-        case 4:
-            print("ㅇ 탭됨")
-
-        default:
-            break
-        }
+        let tapGesture = UITapGestureRecognizer()
+        row.addGestureRecognizer(tapGesture)
+        row.isUserInteractionEnabled = true
     }
 }

@@ -23,7 +23,6 @@ class MyPageContentView: BaseView {
         $0.backgroundColor = .white
         $0.layer.cornerRadius = Screen.width(24) / 2
         $0.clipsToBounds = true
-        
     }
     
     let profileImageView = UIImageView().then {

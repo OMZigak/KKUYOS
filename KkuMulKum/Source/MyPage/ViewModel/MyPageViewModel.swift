@@ -12,15 +12,43 @@ import RxCocoa
 class MyPageViewModel {
     
     let editButtonTapped = PublishRelay<Void>()
+    let logoutButtonTapped = PublishRelay<Void>()
+    let unsubscribeButtonTapped = PublishRelay<Void>()
+    let actionSheetButtonTapped = PublishRelay<ActionSheetKind>()
+    
     let pushEditProfileVC: Signal<Void>
+    let showActionSheet: Signal<ActionSheetKind>
+    let performLogout: Signal<Void>
+    let performUnsubscribe: Signal<Void>
+    private let disposeBag = DisposeBag()
+    
     
     init() {
         pushEditProfileVC = editButtonTapped.asSignal()
-        // 디버그 로그 추가
-              editButtonTapped
-                  .subscribe(onNext: {
-                      print("Edit button tapped in ViewModel")
-                  })
-                  .disposed(by: DisposeBag())
-          }
+        
+        showActionSheet = Observable.merge(
+            logoutButtonTapped.map { ActionSheetKind.logout },
+            unsubscribeButtonTapped.map { ActionSheetKind.unsubscribe }
+        ).asSignal(onErrorJustReturn: .logout)
+        
+        let actionSheetResult = actionSheetButtonTapped.asObservable()
+        
+        performLogout = actionSheetResult
+            .filter { $0 == .logout }
+            .map { _ in }
+            .asSignal(onErrorJustReturn: ())
+        
+        performUnsubscribe = actionSheetResult
+            .filter { $0 == .unsubscribe }
+            .map { _ in }
+            .asSignal(onErrorJustReturn: ())
+    }
+    
+    func logout() {
+        print("로그아웃 눌름 ㅂㅂ")
+    }
+    
+    func unsubscribe() {
+        print("탈퇴 누름 ㅂㅂ")
+    }
 }
