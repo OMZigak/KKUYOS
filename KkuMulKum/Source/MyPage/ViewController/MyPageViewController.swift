@@ -22,6 +22,8 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .green1
+
         bindViewModel()
     }
     
