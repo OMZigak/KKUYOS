@@ -28,7 +28,6 @@ class MyPageViewController: BaseViewController {
        private func bindViewModel() {
         
        }
-       
 
        
        private func showAlert(title: String, message: String) {
