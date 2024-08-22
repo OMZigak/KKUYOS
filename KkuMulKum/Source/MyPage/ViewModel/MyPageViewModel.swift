@@ -23,11 +23,11 @@ class MyPageViewModel {
     let showActionSheet: Signal<ActionSheetKind>
     let performLogout: Signal<Void>
     let performUnsubscribe: Signal<Void>
-    let userInfo: BehaviorRelay<MyPageUserInfo?>
+    let userInfo: BehaviorRelay<LoginUserModel?>
     
     init(userService: MyPageUserServiceType = MyPageUserService()) {
         self.userService = userService
-        self.userInfo = BehaviorRelay<MyPageUserInfo?>(value: nil)
+        self.userInfo = BehaviorRelay<LoginUserModel?>(value: nil)
         
         pushEditProfileVC = editButtonTapped.asSignal()
         

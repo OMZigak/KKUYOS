@@ -16,7 +16,7 @@ final class MyPageUserService: MyPageUserServiceType {
         self.provider = provider
     }
     
-    func getUserInfo() async throws -> MyPageUserInfo {
+    func getUserInfo() async throws -> LoginUserModel {
         return try await performRequest(.getUserInfo)
     }
     

@@ -29,7 +29,6 @@
 		784824FE2C75F25900FE07A0 /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784824FD2C75F25900FE07A0 /* MyPageEditViewController.swift */; };
 		784825092C77623C00FE07A0 /* MypageTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784825082C77623C00FE07A0 /* MypageTargetType.swift */; };
 		7848250B2C77627200FE07A0 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7848250A2C77627200FE07A0 /* UserService.swift */; };
-		7848250E2C7762EF00FE07A0 /* MyPageIngoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7848250D2C7762EF00FE07A0 /* MyPageIngoModel.swift */; };
 		784825112C77666500FE07A0 /* ServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784825102C77666500FE07A0 /* ServiceProtocol.swift */; };
 		784E4D942C3B1C7F00BC943C /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D932C3B1C7F00BC943C /* KakaoSDK */; };
 		784E4D962C3B1C7F00BC943C /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D952C3B1C7F00BC943C /* KakaoSDKAuth */; };
@@ -264,7 +263,6 @@
 		784824FD2C75F25900FE07A0 /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
 		784825082C77623C00FE07A0 /* MypageTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageTargetType.swift; sourceTree = "<group>"; };
 		7848250A2C77627200FE07A0 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
-		7848250D2C7762EF00FE07A0 /* MyPageIngoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageIngoModel.swift; sourceTree = "<group>"; };
 		784825102C77666500FE07A0 /* ServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProtocol.swift; sourceTree = "<group>"; };
 		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		789196352C492F8600FF8CDF /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
@@ -570,14 +568,6 @@
 				784824FB2C75BF7900FE07A0 /* MyPageViewModel.swift */,
 			);
 			path = ViewModel;
-			sourceTree = "<group>";
-		};
-		7848250C2C7762A800FE07A0 /* MyPage */ = {
-			isa = PBXGroup;
-			children = (
-				7848250D2C7762EF00FE07A0 /* MyPageIngoModel.swift */,
-			);
-			path = MyPage;
 			sourceTree = "<group>";
 		};
 		7848250F2C77664400FE07A0 /* ServiceProtocol */ = {
@@ -1463,7 +1453,6 @@
 				DE9E188E2C3BCC6B00DB76B4 /* Meetings */,
 				DE9E188F2C3BCC7600DB76B4 /* Promises */,
 				DE9E18902C3BCC8000DB76B4 /* Utils */,
-				7848250C2C7762A800FE07A0 /* MyPage */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1881,7 +1870,6 @@
 				78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */,
 				DD3F9DD42C4858A3008E1FF7 /* UtilTargetType.swift in Sources */,
 				DECB84562C43FB990022A003 /* AddPromiseViewModel.swift in Sources */,
-				7848250E2C7762EF00FE07A0 /* MyPageIngoModel.swift in Sources */,
 				DECB84602C4446930022A003 /* FindPlaceService.swift in Sources */,
 				DEFBEBD52C46C86600437188 /* SelectPenaltyService.swift in Sources */,
 				DEBA032F2C3C24F2002ED8F2 /* ModelType.swift in Sources */,

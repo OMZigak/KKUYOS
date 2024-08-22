@@ -8,6 +8,6 @@
 import Foundation
 
 protocol MyPageUserServiceType {
-    func getUserInfo() async throws -> MyPageUserInfo
+    func getUserInfo() async throws -> LoginUserModel
     func performRequest<T: ResponseModelType>(_ target: UserTargetType) async throws -> T
 }

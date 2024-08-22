@@ -92,14 +92,14 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
             .disposed(by: disposeBag)
     }
     
-    private func updateUI(with userInfo: MyPageUserInfo?) {
+    private func updateUI(with userInfo: LoginUserModel?) {
         guard let userInfo = userInfo else { return }
         
         rootView.contentView.nameLabel.text = userInfo.name ?? "꾸물리안 님"
         rootView.contentView.levelLabel.setText("Lv. \(userInfo.level) 지각대장 꾸물이", style: .body05, color: .white)
         rootView.contentView.levelLabel.setHighlightText("Lv. \(userInfo.level)", style: .body05, color: .lightGreen)
         
-        if let profileImageURL = userInfo.profileImg {
+        if let profileImageURL = userInfo.profileImageURL {
             loadImage(from: profileImageURL, into: rootView.contentView.profileImageView)
         } else {
             rootView.contentView.profileImageView.image = UIImage.imgProfile
