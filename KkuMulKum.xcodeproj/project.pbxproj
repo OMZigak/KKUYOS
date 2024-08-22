@@ -25,6 +25,8 @@
 		782B407F2C3E44B7008B0CA7 /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */; };
 		782B40822C3E4925008B0CA7 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */; };
 		784824F72C6E1C9900FE07A0 /* AuthServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784824F62C6E1C9900FE07A0 /* AuthServiceProtocol.swift */; };
+		784824FC2C75BF7900FE07A0 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784824FB2C75BF7900FE07A0 /* MyPageViewModel.swift */; };
+		784824FE2C75F25900FE07A0 /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784824FD2C75F25900FE07A0 /* MyPageEditViewController.swift */; };
 		784E4D942C3B1C7F00BC943C /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D932C3B1C7F00BC943C /* KakaoSDK */; };
 		784E4D962C3B1C7F00BC943C /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D952C3B1C7F00BC943C /* KakaoSDKAuth */; };
 		784E4D992C3B95A900BC943C /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D982C3B95A900BC943C /* KeychainAccess */; };
@@ -168,7 +170,6 @@
 		DDFA50802C4693BD000A62E2 /* ProfileSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507C2C4693BD000A62E2 /* ProfileSetupView.swift */; };
 		DDFA50812C4693BD000A62E2 /* ProfileSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDFA507E2C4693BD000A62E2 /* ProfileSetupViewController.swift */; };
 		DE0137D32C43C5E50088C777 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0137D22C43C5E50088C777 /* MyPageView.swift */; };
-		DE159D322C406E1600425101 /* MyPageAlarmSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2A2C406E1600425101 /* MyPageAlarmSettingView.swift */; };
 		DE159D332C406E1600425101 /* MyPageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2B2C406E1600425101 /* MyPageContentView.swift */; };
 		DE159D342C406E1600425101 /* MyPageEtcSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2C2C406E1600425101 /* MyPageEtcSettingView.swift */; };
 		DE159D362C406E1600425101 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2F2C406E1600425101 /* MyPageViewController.swift */; };
@@ -255,6 +256,8 @@
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
 		784824F62C6E1C9900FE07A0 /* AuthServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceProtocol.swift; sourceTree = "<group>"; };
+		784824FB2C75BF7900FE07A0 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
+		784824FD2C75F25900FE07A0 /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
 		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		789196352C492F8600FF8CDF /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
 		789196372C49697B00FF8CDF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
@@ -362,7 +365,6 @@
 		DDFA507C2C4693BD000A62E2 /* ProfileSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupView.swift; sourceTree = "<group>"; };
 		DDFA507E2C4693BD000A62E2 /* ProfileSetupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSetupViewController.swift; sourceTree = "<group>"; };
 		DE0137D22C43C5E50088C777 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
-		DE159D2A2C406E1600425101 /* MyPageAlarmSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageAlarmSettingView.swift; sourceTree = "<group>"; };
 		DE159D2B2C406E1600425101 /* MyPageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageContentView.swift; sourceTree = "<group>"; };
 		DE159D2C2C406E1600425101 /* MyPageEtcSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageEtcSettingView.swift; sourceTree = "<group>"; };
 		DE159D2F2C406E1600425101 /* MyPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
@@ -552,6 +554,14 @@
 				784824F62C6E1C9900FE07A0 /* AuthServiceProtocol.swift */,
 			);
 			path = ServiceProtocol;
+			sourceTree = "<group>";
+		};
+		784824FA2C75BF6800FE07A0 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				784824FB2C75BF7900FE07A0 /* MyPageViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		789196392C49697F00FF8CDF /* Auth */ = {
@@ -1207,7 +1217,6 @@
 			children = (
 				DE0137D22C43C5E50088C777 /* MyPageView.swift */,
 				DE159D2B2C406E1600425101 /* MyPageContentView.swift */,
-				DE159D2A2C406E1600425101 /* MyPageAlarmSettingView.swift */,
 				DE159D2C2C406E1600425101 /* MyPageEtcSettingView.swift */,
 			);
 			path = View;
@@ -1217,6 +1226,7 @@
 			isa = PBXGroup;
 			children = (
 				DE159D2F2C406E1600425101 /* MyPageViewController.swift */,
+				784824FD2C75F25900FE07A0 /* MyPageEditViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -1224,6 +1234,7 @@
 		DE159D312C406E1600425101 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				784824FA2C75BF6800FE07A0 /* ViewModel */,
 				DE159D2E2C406E1600425101 /* View */,
 				DE159D302C406E1600425101 /* ViewController */,
 			);
@@ -1746,6 +1757,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				784824FC2C75BF7900FE07A0 /* MyPageViewModel.swift in Sources */,
 				DDD62FFC2C5FA54100174B57 /* CreateMeetingServiceProtocol.swift in Sources */,
 				DDE7D2CC2C47F073005A921F /* PlaceModel.swift in Sources */,
 				DEFBEBD12C46B33000437188 /* SelectCapsuleButton.swift in Sources */,
@@ -1774,6 +1786,7 @@
 				789AD4B32C3C0093002E2688 /* SocialLoginResponseModel.swift in Sources */,
 				DD43937F2C41357800EC1799 /* InviteCodeViewModel.swift in Sources */,
 				DE9E188B2C3BC92500DB76B4 /* EmptyModel.swift in Sources */,
+				784824FE2C75F25900FE07A0 /* MyPageEditViewController.swift in Sources */,
 				DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */,
 				A3FB184D2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift in Sources */,
 				DD3976842C41C2AD00E2A4C4 /* UpcomingPromiseCollecitonViewCell.swift in Sources */,
@@ -1837,7 +1850,6 @@
 				A3FB18572C3BF704001483E5 /* MeetingListResponseModel.swift in Sources */,
 				DE254AB22C31197B00A4015E /* UIButton+.swift in Sources */,
 				DE6D4D162C3F14D80005584B /* MeetingInfoViewController.swift in Sources */,
-				DE159D322C406E1600425101 /* MyPageAlarmSettingView.swift in Sources */,
 				78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */,
 				DD3F9DD42C4858A3008E1FF7 /* UtilTargetType.swift in Sources */,
 				DECB84562C43FB990022A003 /* AddPromiseViewModel.swift in Sources */,
