@@ -51,21 +51,21 @@ class LoginViewController: BaseViewController {
     }
     
     private func bindViewModel() {
-        loginViewModel.loginState.bind(with: self) { owner, state in
-            
-            Task {
-                switch state {
-                case .notLogin:
-                    print("Login State: Not logged in")
-                case .login:
-                    print("Login State: Logged in")
-                    await owner.navigateToMainScreen()
-                case .needOnboarding:
-                    print("Login State: Need onboarding")
-                    await owner.navigateToOnboardingScreen()
-                }
-            }
-        }
+//        loginViewModel.loginState.bind(with: self) { owner, state in
+//            
+//            Task {
+//                switch state {
+//                case .notLogin:
+//                    print("Login State: Not logged in")
+//                case .login:
+//                    print("Login State: Logged in")
+//                    await owner.navigateToOnboardingScreen()
+//                case .needOnboarding:
+//                    print("Login State: Need onboarding")
+//                    await owner.navigateToOnboardingScreen()
+//                }
+//            }
+//        }
         
         loginViewModel.userName.bind(with: self) { owner, name in
             Task {
