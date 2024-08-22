@@ -10,7 +10,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-
 class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     private let rootView = MyPageView()
     private let viewModel = MyPageViewModel()

@@ -14,11 +14,11 @@ class ProfileSetupViewModel {
     let nickname: String
     let serverResponse = ObservablePattern<String?>(nil)
     
-    private let authService: AuthServiceType
+    private let authService: AuthServiceProtocol
     private var imageData: Data?
     private let maxImageSizeBytes = 4 * 1024 * 1024
 
-    init(nickname: String, authService: AuthServiceType = AuthService()) {
+    init(nickname: String, authService: AuthServiceProtocol = AuthService()) {
         self.nickname = nickname
         self.authService = authService
     }

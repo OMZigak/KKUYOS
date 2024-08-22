@@ -23,7 +23,7 @@ enum NetworkErrorMapper {
     }
 }
 
-class AuthService: AuthServiceType {
+class AuthService: AuthServiceProtocol {
     private var keychainService: KeychainService
     private var provider = MoyaProvider<AuthTargetType>()
     

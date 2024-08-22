@@ -27,6 +27,9 @@
 		784824F72C6E1C9900FE07A0 /* AuthServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784824F62C6E1C9900FE07A0 /* AuthServiceProtocol.swift */; };
 		784824FC2C75BF7900FE07A0 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784824FB2C75BF7900FE07A0 /* MyPageViewModel.swift */; };
 		784824FE2C75F25900FE07A0 /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784824FD2C75F25900FE07A0 /* MyPageEditViewController.swift */; };
+		784825092C77623C00FE07A0 /* MypageTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784825082C77623C00FE07A0 /* MypageTargetType.swift */; };
+		7848250B2C77627200FE07A0 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7848250A2C77627200FE07A0 /* UserService.swift */; };
+		7848250E2C7762EF00FE07A0 /* MyPageIngoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7848250D2C7762EF00FE07A0 /* MyPageIngoModel.swift */; };
 		784E4D942C3B1C7F00BC943C /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D932C3B1C7F00BC943C /* KakaoSDK */; };
 		784E4D962C3B1C7F00BC943C /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D952C3B1C7F00BC943C /* KakaoSDKAuth */; };
 		784E4D992C3B95A900BC943C /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D982C3B95A900BC943C /* KeychainAccess */; };
@@ -258,6 +261,9 @@
 		784824F62C6E1C9900FE07A0 /* AuthServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceProtocol.swift; sourceTree = "<group>"; };
 		784824FB2C75BF7900FE07A0 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		784824FD2C75F25900FE07A0 /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
+		784825082C77623C00FE07A0 /* MypageTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageTargetType.swift; sourceTree = "<group>"; };
+		7848250A2C77627200FE07A0 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
+		7848250D2C7762EF00FE07A0 /* MyPageIngoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageIngoModel.swift; sourceTree = "<group>"; };
 		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		789196352C492F8600FF8CDF /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
 		789196372C49697B00FF8CDF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
@@ -564,6 +570,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		7848250C2C7762A800FE07A0 /* MyPage */ = {
+			isa = PBXGroup;
+			children = (
+				7848250D2C7762EF00FE07A0 /* MyPageIngoModel.swift */,
+			);
+			path = MyPage;
+			sourceTree = "<group>";
+		};
 		789196392C49697F00FF8CDF /* Auth */ = {
 			isa = PBXGroup;
 			children = (
@@ -728,6 +742,7 @@
 				A3DD9C672C45C78300E58A13 /* HomeService.swift */,
 				DD3F9DC52C484DEB008E1FF7 /* PromiseService.swift */,
 				DD3F9DD12C485753008E1FF7 /* UtilService.swift */,
+				7848250A2C77627200FE07A0 /* UserService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -1165,6 +1180,7 @@
 				DDE7D2C92C47EE81005A921F /* PromiseTargetType.swift */,
 				A39F2B1C2C47F3D0008DA5F5 /* HomeTargetType.swift */,
 				DD3F9DD32C4858A3008E1FF7 /* UtilTargetType.swift */,
+				784825082C77623C00FE07A0 /* MypageTargetType.swift */,
 			);
 			path = TargetType;
 			sourceTree = "<group>";
@@ -1436,6 +1452,7 @@
 				DE9E188E2C3BCC6B00DB76B4 /* Meetings */,
 				DE9E188F2C3BCC7600DB76B4 /* Promises */,
 				DE9E18902C3BCC8000DB76B4 /* Utils */,
+				7848250C2C7762A800FE07A0 /* MyPage */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1853,6 +1870,7 @@
 				78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */,
 				DD3F9DD42C4858A3008E1FF7 /* UtilTargetType.swift in Sources */,
 				DECB84562C43FB990022A003 /* AddPromiseViewModel.swift in Sources */,
+				7848250E2C7762EF00FE07A0 /* MyPageIngoModel.swift in Sources */,
 				DECB84602C4446930022A003 /* FindPlaceService.swift in Sources */,
 				DEFBEBD52C46C86600437188 /* SelectPenaltyService.swift in Sources */,
 				DEBA032F2C3C24F2002ED8F2 /* ModelType.swift in Sources */,
@@ -1861,6 +1879,7 @@
 				DE6D4D0F2C3F14D80005584B /* MeetingInfoService.swift in Sources */,
 				DD3F9DD62C4988E2008E1FF7 /* RegisterMeetingsResponseModel.swift in Sources */,
 				DD3F9DCC2C485614008E1FF7 /* HomeServiceType.swift in Sources */,
+				7848250B2C77627200FE07A0 /* UserService.swift in Sources */,
 				DD39768A2C41C2AD00E2A4C4 /* HomeViewController.swift in Sources */,
 				DED5DBF42C34539A006ECE7E /* BaseTableViewCell.swift in Sources */,
 				DDE7D2CA2C47EE81005A921F /* PromiseTargetType.swift in Sources */,
@@ -1882,6 +1901,7 @@
 				DE32D1D22C3BF703006848DF /* LoginUserResponseModel.swift in Sources */,
 				DD8626692C4606A300E4F980 /* ReadyStatusProgressView.swift in Sources */,
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
+				784825092C77623C00FE07A0 /* MypageTargetType.swift in Sources */,
 				DD8626642C4606A300E4F980 /* ReadyPlanInfoView.swift in Sources */,
 				DD3976682C41769400E2A4C4 /* CreateMeetingViewModel.swift in Sources */,
 				DECB84582C43FBEB0022A003 /* AddPromiseViewController.swift in Sources */,

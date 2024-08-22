@@ -15,10 +15,10 @@ enum AuthError: Error {
 }
 
 class AuthInterceptor: RequestInterceptor {
-    let authService: AuthServiceType
+    let authService: AuthServiceProtocol
     let provider: MoyaProvider<AuthTargetType>
     
-    init(authService: AuthServiceType, provider: MoyaProvider<AuthTargetType>) {
+    init(authService: AuthServiceProtocol, provider: MoyaProvider<AuthTargetType>) {
         self.authService = authService
         self.provider = provider
     }
