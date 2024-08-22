@@ -8,9 +8,9 @@
 import UIKit
 import WebKit
 
-class MyPageAskViewController: UIViewController, WKUIDelegate {
+class MyPageAskViewController: BaseViewController {
     
-    private let viewModel : MyPageViewModel
+    private let viewModel: MyPageViewModel
     private var webView: WKWebView!
 
     init(viewModel: MyPageViewModel) {
@@ -32,8 +32,16 @@ class MyPageAskViewController: UIViewController, WKUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let myURL = URL(string:"https://www.apple.com")
+        let myURL = URL(string: "https://docs.google.com/forms/d/e/1FAIpQLSdRR65ARe2M7JxQEAx8vpFz-I8tyEYwlpLwtSnJjniGOapPVQ/viewform")
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)
     }
+    
+    override func setupView() {
+        super.setupView()
+        setupNavigationBarTitle(with: "문의하기")
+        setupNavigationBarBackButton()
+    }
 }
+
+extension MyPageAskViewController: WKUIDelegate {}

@@ -53,6 +53,8 @@ class MyPageEditViewModel: ViewModelType {
             .map { $0 != nil }
             .asDriver(onErrorJustReturn: false)
         
+        
+        // TODO: api 연결시 다시 연결예정
 //        input.confirmButtonTap
 //                   .withLatestFrom(imageDataRelay)
 //                   .flatMapLatest { [weak self] imageData -> Observable<String> in

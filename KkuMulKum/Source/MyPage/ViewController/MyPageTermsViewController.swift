@@ -8,9 +8,9 @@
 import UIKit
 import WebKit
 
-class MyPageTermsViewController: UIViewController, WKUIDelegate {
+class MyPageTermsViewController: BaseViewController {
     
-    private let viewModel : MyPageViewModel
+    private let viewModel: MyPageViewModel
     private var webView: WKWebView!
 
     init(viewModel: MyPageViewModel) {
@@ -32,8 +32,16 @@ class MyPageTermsViewController: UIViewController, WKUIDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let myURL = URL(string:"https://www.apple.com")
+        let myURL = URL(string: "https://arrow-frog-4b9.notion.site/a66033a3ff4a40bfaa6eff0a5bee737d")
         let myRequest = URLRequest(url: myURL!)
         webView.load(myRequest)
     }
+    
+    override func setupView() {
+        super.setupView()
+        setupNavigationBarTitle(with: "이용약관")
+        setupNavigationBarBackButton()
+    }
 }
+
+extension MyPageTermsViewController: WKUIDelegate {}
