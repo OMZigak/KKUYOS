@@ -50,7 +50,8 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
             .disposed(by: disposeBag)
         
         bindRowTapGesture(for: rootView.etcSettingView.termsOfServiceRow)
-            .subscribe(onNext: { print("이용약관 탭됨") })
+            .subscribe(onNext: { [weak self] in
+                self?.pushTermsViewController() })
             .disposed(by: disposeBag)
         
         bindRowTapGesture(for: rootView.etcSettingView.inquiryRow)
@@ -62,8 +63,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         viewModel.pushEditProfileVC
             .emit(onNext: { [weak self] in
                 self?.pushEditProfileViewController()
-            })
-            .disposed(by: disposeBag)
+            })            .disposed(by: disposeBag)
         
         viewModel.showActionSheet
             .emit(onNext: { [weak self] kind in
@@ -105,7 +105,12 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         let askViewController = MyPageAskViewController(viewModel: self.viewModel)
         navigationController?.pushViewController(askViewController, animated: true)
     }
-
+    
+    private func pushTermsViewController() {
+        let askViewController = MyPageTermsViewController(viewModel: self.viewModel)
+        navigationController?.pushViewController(askViewController, animated: true)
+    }
+    
     func actionButtonDidTap(for kind: ActionSheetKind) {
         viewModel.actionSheetButtonTapped.accept(kind)
     }

@@ -1,5 +1,5 @@
 //
-//  MyPageAskViewController.swift
+//  MyPageTermsViewController.swift
 //  KkuMulKum
 //
 //  Created by 이지훈 on 8/22/24.
@@ -8,7 +8,7 @@
 import UIKit
 import WebKit
 
-class MyPageAskViewController: UIViewController, WKUIDelegate {
+class MyPageTermsViewController: UIViewController, WKUIDelegate {
     
     private let viewModel : MyPageViewModel
     private var webView: WKWebView!
