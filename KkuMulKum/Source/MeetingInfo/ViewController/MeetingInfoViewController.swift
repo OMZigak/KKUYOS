@@ -66,6 +66,14 @@ final class MeetingInfoViewController: BaseViewController {
         setupNavigationBarBackButton()
     }
     
+    override func setupAction() {
+        rootView.createPromiseButtonDidTap
+            .subscribe(with: self) { owner, _ in
+                owner.navigateToAddPromise()
+            }
+            .disposed(by: disposeBag)
+    }
+    
     override func setupDelegate() {
         rootView.promiseListView.delegate = self
     }
@@ -142,22 +150,6 @@ private extension MeetingInfoViewController {
                     time: promise.time,
                     place: promise.placeName
                 )
-            }
-            .disposed(by: disposeBag)
-        
-        output.isPossbleToCreatePromise
-            .drive(with: self) { owner, flag in
-                guard flag else {
-                    let toast = Toast()
-                    toast.show(
-                        message: "모임에 구성원이 없어서 약속을 만들 수 없어요.",
-                        view: owner.view,
-                        position: .bottom,
-                        inset: 100
-                    )
-                    return
-                }
-                owner.navigateToAddPromise()
             }
             .disposed(by: disposeBag)
     }

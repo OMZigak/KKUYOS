@@ -104,9 +104,11 @@ private extension SelectMemberViewController {
             }
             .disposed(by: disposeBag)
         
-        output.isEnabledConfirmButton
+        output.memberList
+            .map { $0.isEmpty }
             .drive(with: self) { owner, flag in
-                owner.rootView.confirmButton.isEnabled = flag
+                owner.rootView.memberListView.isHidden = flag
+                owner.rootView.emptyContentView.isHidden = !flag
             }
             .disposed(by: disposeBag)
     }
