@@ -72,6 +72,9 @@ extension MeetingInfoViewModel: ViewModelType {
                 guard let model else { return [] }
                 return model.promises
             }
+            .compactMap { [weak self] promises in
+                self?.reformattedDate(with: promises)
+            }
             .asDriver(onErrorJustReturn: [])
             
         let output = Output(
@@ -116,6 +119,32 @@ private extension MeetingInfoViewModel {
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
+        }
+    }
+    
+    func reformattedDate(with promises: [MeetingPromise]) -> [MeetingPromise] {
+        let inputDateFormat = "yyyy-MM-dd HH:mm:ss"
+        let outputDateFormat = "yyyy.MM.dd a H:mm"
+        
+        let inputDateFormatter = DateFormatter()
+        inputDateFormatter.dateFormat = inputDateFormat
+        
+        let outputDateFormatter = DateFormatter()
+        outputDateFormatter.dateFormat = outputDateFormat
+        outputDateFormatter.amSymbol = "AM"
+        outputDateFormatter.pmSymbol = "PM"
+        
+        return promises.compactMap {
+            guard let date = inputDateFormatter.date(from: $0.time) else { return nil }
+            let reformattedDate = outputDateFormatter.string(from: date)
+            
+            return MeetingPromise(
+                promiseID: $0.promiseID,
+                name: $0.name,
+                dDay: $0.dDay,
+                time: reformattedDate,
+                placeName: $0.placeName
+            )
         }
     }
 }

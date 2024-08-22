@@ -111,7 +111,12 @@ extension MeetingPromiseCell {
         let dDayText = dDay == 0 ? "DAY" : "\(dDay)"
         dDayLabel.setText("D-\(dDayText)", style: .body05, color: dDay == 0 ? .mainorange : .gray5)
         nameLabel.updateText(name)
-        timeLabel.updateText(time)
         placeLabel.updateText(place)
+        
+        let temp = time.split(separator: " ").map { "\($0)" }
+        let dateString = temp[0]
+        let timeString = "\(temp[1]) \(temp[2])"
+        dateLabel.updateText(dateString)
+        timeLabel.updateText(timeString)
     }
 }
