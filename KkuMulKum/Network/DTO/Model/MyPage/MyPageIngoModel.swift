@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 struct MyPageUserInfo: ResponseModelType {
     let userId: Int
     let name: String?

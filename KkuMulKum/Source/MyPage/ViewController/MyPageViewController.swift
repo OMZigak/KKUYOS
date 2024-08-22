@@ -24,6 +24,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         view.backgroundColor = .green1
     
         bindViewModel()
+        viewModel.fetchUserInfo()
     }
     
     override func setupView() {
@@ -32,65 +33,91 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     }
     
     private func bindViewModel() {
-            // Inputs
-            rootView.contentView.editButton.rx.tap
-                .bind(to: viewModel.editButtonTapped)
-                .disposed(by: disposeBag)
-            
-            bindRowTapGesture(for: rootView.etcSettingView.logoutRow)
-                .bind(to: viewModel.logoutButtonTapped)
-                .disposed(by: disposeBag)
-            
-            bindRowTapGesture(for: rootView.etcSettingView.unsubscribeRow)
-                .bind(to: viewModel.unsubscribeButtonTapped)
-                .disposed(by: disposeBag)
-            
-            // Other rows
-            bindRowTapGesture(for: rootView.etcSettingView.versionInfoRow)
-                .subscribe(onNext: { print("버전정보 탭됨") })
-                .disposed(by: disposeBag)
-            
-            bindRowTapGesture(for: rootView.etcSettingView.termsOfServiceRow)
-                .subscribe(onNext: { print("이용약관 탭됨") })
-                .disposed(by: disposeBag)
-            
-            bindRowTapGesture(for: rootView.etcSettingView.inquiryRow)
-                .subscribe(onNext: { print("문의하기 탭됨") })
-                .disposed(by: disposeBag)
-            
-            // Outputs
-            viewModel.pushEditProfileVC
-                .emit(onNext: { [weak self] in
-                    self?.pushEditProfileViewController()
-                })
-                .disposed(by: disposeBag)
-            
-            viewModel.showActionSheet
-                .emit(onNext: { [weak self] kind in
-                    self?.showActionSheet(for: kind)
-                })
-                .disposed(by: disposeBag)
-            
-            viewModel.performLogout
-                .emit(onNext: { [weak self] in
-                    self?.viewModel.logout()
-                })
-                .disposed(by: disposeBag)
-            
-            viewModel.performUnsubscribe
-                .emit(onNext: { [weak self] in
-                    self?.viewModel.unsubscribe()
-                })
-                .disposed(by: disposeBag)
+        // Inputs
+        rootView.contentView.editButton.rx.tap
+            .bind(to: viewModel.editButtonTapped)
+            .disposed(by: disposeBag)
+        
+        bindRowTapGesture(for: rootView.etcSettingView.logoutRow)
+            .bind(to: viewModel.logoutButtonTapped)
+            .disposed(by: disposeBag)
+        
+        bindRowTapGesture(for: rootView.etcSettingView.unsubscribeRow)
+            .bind(to: viewModel.unsubscribeButtonTapped)
+            .disposed(by: disposeBag)
+        
+        // Other rows
+        bindRowTapGesture(for: rootView.etcSettingView.versionInfoRow)
+            .subscribe(onNext: { print("버전정보 탭됨") })
+            .disposed(by: disposeBag)
+        
+        bindRowTapGesture(for: rootView.etcSettingView.termsOfServiceRow)
+            .subscribe(onNext: { print("이용약관 탭됨") })
+            .disposed(by: disposeBag)
+        
+        bindRowTapGesture(for: rootView.etcSettingView.inquiryRow)
+            .subscribe(onNext: { print("문의하기 탭됨") })
+            .disposed(by: disposeBag)
+        
+        // Outputs
+        viewModel.pushEditProfileVC
+            .emit(onNext: { [weak self] in
+                self?.pushEditProfileViewController()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.showActionSheet
+            .emit(onNext: { [weak self] kind in
+                self?.showActionSheet(for: kind)
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.performLogout
+            .emit(onNext: { [weak self] in
+                self?.viewModel.logout()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.performUnsubscribe
+            .emit(onNext: { [weak self] in
+                self?.viewModel.unsubscribe()
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.userInfo
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] userInfo in
+                self?.updateUI(with: userInfo)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func updateUI(with userInfo: MyPageUserInfo?) {
+        guard let userInfo = userInfo else { return }
+        
+        rootView.contentView.nameLabel.text = userInfo.name ?? "꾸물리안 님"
+        rootView.contentView.levelLabel.setText("Lv. \(userInfo.level) 지각대장 꾸물이", style: .body05, color: .white)
+        rootView.contentView.levelLabel.setHighlightText("Lv. \(userInfo.level)", style: .body05, color: .lightGreen)
+        
+        if let profileImageURL = userInfo.profileImg {
+            loadImage(from: profileImageURL, into: rootView.contentView.profileImageView)
+        } else {
+            rootView.contentView.profileImageView.image = UIImage.imgProfile
         }
+    }
+    
+    private func loadImage(from urlString: String, into imageView: UIImageView) {
+
+    }
+    
     private func bindRowTapGesture(for view: UIView) -> Observable<Void> {
-            return view.gestureRecognizers?
-                .compactMap { $0 as? UITapGestureRecognizer }
-                .first?
-                .rx.event
-                .map { _ in }
-                ?? Observable.empty()
-        }
+        return view.gestureRecognizers?
+            .compactMap { $0 as? UITapGestureRecognizer }
+            .first?
+            .rx.event
+            .map { _ in }
+            ?? Observable.empty()
+    }
     
     private func pushEditProfileViewController() {
         let editProfileViewController = MyPageEditViewController()
@@ -98,13 +125,12 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     }
     
     func actionButtonDidTap(for kind: ActionSheetKind) {
-            viewModel.actionSheetButtonTapped.accept(kind)
-        }
+        viewModel.actionSheetButtonTapped.accept(kind)
+    }
     
     private func showActionSheet(for kind: ActionSheetKind) {
-           let actionSheet = CustomActionSheetController(kind: kind)
-           actionSheet.delegate = self
-           present(actionSheet, animated: true, completion: nil)
-       }
-    
+        let actionSheet = CustomActionSheetController(kind: kind)
+        actionSheet.delegate = self
+        present(actionSheet, animated: true, completion: nil)
+    }
 }

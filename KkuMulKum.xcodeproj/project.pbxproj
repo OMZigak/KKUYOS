@@ -30,6 +30,7 @@
 		784825092C77623C00FE07A0 /* MypageTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784825082C77623C00FE07A0 /* MypageTargetType.swift */; };
 		7848250B2C77627200FE07A0 /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7848250A2C77627200FE07A0 /* UserService.swift */; };
 		7848250E2C7762EF00FE07A0 /* MyPageIngoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7848250D2C7762EF00FE07A0 /* MyPageIngoModel.swift */; };
+		784825112C77666500FE07A0 /* ServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784825102C77666500FE07A0 /* ServiceProtocol.swift */; };
 		784E4D942C3B1C7F00BC943C /* KakaoSDK in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D932C3B1C7F00BC943C /* KakaoSDK */; };
 		784E4D962C3B1C7F00BC943C /* KakaoSDKAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D952C3B1C7F00BC943C /* KakaoSDKAuth */; };
 		784E4D992C3B95A900BC943C /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 784E4D982C3B95A900BC943C /* KeychainAccess */; };
@@ -264,6 +265,7 @@
 		784825082C77623C00FE07A0 /* MypageTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageTargetType.swift; sourceTree = "<group>"; };
 		7848250A2C77627200FE07A0 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		7848250D2C7762EF00FE07A0 /* MyPageIngoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageIngoModel.swift; sourceTree = "<group>"; };
+		784825102C77666500FE07A0 /* ServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceProtocol.swift; sourceTree = "<group>"; };
 		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		789196352C492F8600FF8CDF /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
 		789196372C49697B00FF8CDF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
@@ -576,6 +578,14 @@
 				7848250D2C7762EF00FE07A0 /* MyPageIngoModel.swift */,
 			);
 			path = MyPage;
+			sourceTree = "<group>";
+		};
+		7848250F2C77664400FE07A0 /* ServiceProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				784825102C77666500FE07A0 /* ServiceProtocol.swift */,
+			);
+			path = ServiceProtocol;
 			sourceTree = "<group>";
 		};
 		789196392C49697F00FF8CDF /* Auth */ = {
@@ -1250,6 +1260,7 @@
 		DE159D312C406E1600425101 /* MyPage */ = {
 			isa = PBXGroup;
 			children = (
+				7848250F2C77664400FE07A0 /* ServiceProtocol */,
 				784824FA2C75BF6800FE07A0 /* ViewModel */,
 				DE159D2E2C406E1600425101 /* View */,
 				DE159D302C406E1600425101 /* ViewController */,
@@ -1903,6 +1914,7 @@
 				DE9E18892C3BC91000DB76B4 /* ResponseBodyDTO.swift in Sources */,
 				784825092C77623C00FE07A0 /* MypageTargetType.swift in Sources */,
 				DD8626642C4606A300E4F980 /* ReadyPlanInfoView.swift in Sources */,
+				784825112C77666500FE07A0 /* ServiceProtocol.swift in Sources */,
 				DD3976682C41769400E2A4C4 /* CreateMeetingViewModel.swift in Sources */,
 				DECB84582C43FBEB0022A003 /* AddPromiseViewController.swift in Sources */,
 				DDE7D2C62C47D2BB005A921F /* MeetingTargetType.swift in Sources */,
