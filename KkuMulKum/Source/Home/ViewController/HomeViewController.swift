@@ -52,27 +52,23 @@ class HomeViewController: BaseViewController {
         viewModel.requestNearestPromise()
         viewModel.requestUpcomingPromise()
         
-        updateUI()
-        
-        updateUserInfo()
-        updateNearestPromise()
-        updateUpcomingPromise()
+        setupBinding()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-        
-        updateUI()
-        
-        updateUserInfo()
-        updateNearestPromise()
-        updateUpcomingPromise()
+
         viewModel.requestLoginUser()
         viewModel.requestNearestPromise()
         viewModel.requestUpcomingPromise()
+        
+        setupBinding()
     }
     
+    
+    // MARK: - Function
+
     override func setupAction() {
         rootView.todayButton.addTarget(
             self,
@@ -197,7 +193,14 @@ private extension HomeViewController {
         )
     }
     
-    func updateUI() {
+    func setupBinding() {
+        bindCurrentState()
+        bindUserInfo()
+        bindNearestPromise()
+        bindUpcomingPromise()
+    }
+    
+    func bindCurrentState() {
         viewModel.currentState.bind { [weak self] state in
             DispatchQueue.main.async {
                 switch state {
@@ -214,7 +217,7 @@ private extension HomeViewController {
         }
     }
     
-    func updateUserInfo() {
+    func bindUserInfo() {
         viewModel.loginUser.bind { [weak self] _ in
             DispatchQueue.main.async {
                 let data = self?.viewModel.loginUser.value
@@ -261,7 +264,7 @@ private extension HomeViewController {
         }
     }
     
-    func updateNearestPromise() {
+    func bindNearestPromise() {
         viewModel.nearestPromise.bind { [weak self] _ in
             DispatchQueue.main.async {
                 guard let self = self else { return }
@@ -300,7 +303,7 @@ private extension HomeViewController {
         }
     }
     
-    func updateUpcomingPromise() {
+    func bindUpcomingPromise() {
         viewModel.upcomingPromiseList.bind { [weak self] _ in
             guard let self,
                   let responseBody = viewModel.upcomingPromiseList.value,
