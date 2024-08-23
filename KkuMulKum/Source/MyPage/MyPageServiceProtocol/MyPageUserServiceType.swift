@@ -1,5 +1,5 @@
 //
-//  ServiceProtocol.swift
+//  MyPageUserServiceType.swift
 //  KkuMulKum
 //
 //  Created by 이지훈 on 8/22/24.
