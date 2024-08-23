@@ -13,6 +13,7 @@ import RxSwift
 final class MeetingInfoViewModel {
     let meetingID: Int
     
+    var meetingName: String { infoRelay.value?.name ?? "" }
     var meetingInvitationCode: String? { infoRelay.value?.invitationCode }
     var meetingPromises: [MeetingPromise] { meetingPromisesModelRelay.value?.promises ?? [] }
     

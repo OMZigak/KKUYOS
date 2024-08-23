@@ -64,6 +64,7 @@ final class MeetingInfoViewController: BaseViewController {
     
     override func setupView() {
         setupNavigationBarBackButton()
+        setupNavigationBarRightButton()
     }
     
     override func setupAction() {
@@ -153,6 +154,54 @@ private extension MeetingInfoViewController {
         let viewModel = AddPromiseViewModel(meetingID: viewModel.meetingID)
         let viewController = AddPromiseViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func setupNavigationBarRightButton() {
+        let moreButton = UIBarButtonItem(
+            image: .imgMore.withRenderingMode(.alwaysOriginal),
+            style: .plain,
+            target: self,
+            action: #selector(self.moreButtonDidTap)
+        )
+        
+        navigationItem.rightBarButtonItem = moreButton
+    }
+    
+    @objc
+    func moreButtonDidTap() {
+        let viewController = MeetingInfoMoreViewController(meetingName: viewModel.meetingName)
+        viewController.delegate = self
+        
+        let bottomSheetController = BottomSheetViewController(
+            contentViewController: viewController,
+            defaultHeight: Screen.height(232)
+        )
+        
+        present(bottomSheetController, animated: true)
+    }
+}
+
+
+// MARK: - MeetingInfoMoreDelegate
+
+extension MeetingInfoViewController: MeetingInfoMoreDelegate {
+    func exitButtonDidTap() {
+        let actionSheetController = CustomActionSheetController(kind: .exitMeeting)
+        actionSheetController.delegate = self
+        
+        present(actionSheetController, animated: true)
+    }
+}
+
+
+// MARK: - CustomActionSheetDelegate
+
+extension MeetingInfoViewController: CustomActionSheetDelegate {
+    func actionButtonDidTap(for kind: ActionSheetKind) {
+        
+        // TODO: ViewModel 삭제 요청
+        
+
     }
 }
 
