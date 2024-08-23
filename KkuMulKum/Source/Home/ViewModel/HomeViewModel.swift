@@ -17,13 +17,12 @@ enum ReadyState {
 }
 
 final class HomeViewModel {
-    var currentState = ObservablePattern<ReadyState>(.none)
-    
     var loginUser = ObservablePattern<ResponseBodyDTO<LoginUserModel>?>(nil)
     var nearestPromise = ObservablePattern<ResponseBodyDTO<NearestPromiseModel>?>(nil)
     var upcomingPromiseList = ObservablePattern<ResponseBodyDTO<UpcomingPromiseListModel>?>(nil)
     var myReadyStatus = ObservablePattern<ResponseBodyDTO<MyReadyStatusModel>?>(nil)
     
+    var currentState = ObservablePattern<ReadyState>(.none)
     var levelName = ObservablePattern<String>("")
     var levelCaption = ObservablePattern<String>("")
     
@@ -60,16 +59,21 @@ final class HomeViewModel {
         }
     }
     
+    ///서버에서 보내주는 readyStatus의 시간 유무에 따른 현재 상태 분류
     private func judgeReadyStatus() {
-        let data = myReadyStatus.value?.data
-        if data?.preparationStartAt == nil && data?.departureAt == nil && data?.arrivalAt == nil {
+        guard let data = myReadyStatus.value?.data else {
             currentState.value = .none
-        } else if data?.preparationStartAt != nil && data?.departureAt == nil && data?.arrivalAt == nil {
-            currentState.value = .prepare
-        } else if data?.departureAt != nil && data?.arrivalAt == nil {
-            currentState.value = .move
-        } else if data?.arrivalAt != nil {
+            return
+        }
+        
+        if let _ = data.arrivalAt {
             currentState.value = .arrive
+        } else if let _ = data.departureAt {
+            currentState.value = .move
+        } else if let _ = data.preparationStartAt {
+            currentState.value = .prepare
+        } else {
+            currentState.value = .none
         }
     }
     
