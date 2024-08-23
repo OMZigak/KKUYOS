@@ -112,11 +112,32 @@ extension MeetingPromiseCell {
         dDayLabel.setText("D-\(dDayText)", style: .body05, color: dDay == 0 ? .mainorange : .gray5)
         nameLabel.updateText(name)
         placeLabel.updateText(place)
+// MARK: - State
+
+extension MeetingPromiseCell {
+    enum State {
+        case past, today, future
         
-        let temp = time.split(separator: " ").map { "\($0)" }
-        let dateString = temp[0]
-        let timeString = "\(temp[1]) \(temp[2])"
-        dateLabel.updateText(dateString)
-        timeLabel.updateText(timeString)
+        fileprivate var dDayTextColor: UIColor {
+            switch self {
+            case .past: .gray3
+            case .today: .orange
+            case .future: .gray5
+            }
+        }
+        
+        fileprivate var nameTextColor: UIColor {
+            switch self {
+            case .past: .gray3
+            default: .gray8
+            }
+        }
+        
+        fileprivate var otherTextColor: UIColor {
+            switch self {
+            case .past: .gray3
+            default: .gray7
+            }
+        }
     }
 }
