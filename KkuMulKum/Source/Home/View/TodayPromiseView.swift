@@ -224,7 +224,13 @@ final class TodayPromiseView: BaseView {
             $0.bottom.equalToSuperview().offset(-80)
             $0.height.equalTo(4)
         }
-
+        
+        moveLineView.snp.makeConstraints {
+            $0.leading.equalTo(prepareButton.snp.centerX)
+            $0.trailing.equalTo(moveButton.snp.centerX)
+            $0.bottom.equalToSuperview().offset(-80)
+            $0.height.equalTo(4)
+        }
         
         arriveLineView.snp.makeConstraints {
             $0.leading.equalTo(moveButton.snp.centerX)
