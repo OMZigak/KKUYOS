@@ -25,7 +25,7 @@ class LoginViewModel: NSObject {
     var userName: ObservablePattern<String?> = ObservablePattern(nil)
     
     private let provider: MoyaProvider<AuthTargetType>
-    private var authService: AuthServiceType
+    private var authService: AuthServiceProtocol
     private let authInterceptor: AuthInterceptor
     private let keychainAccessible: KeychainAccessible
     
@@ -33,7 +33,7 @@ class LoginViewModel: NSObject {
         provider: MoyaProvider<AuthTargetType> = MoyaProvider<AuthTargetType>(
             plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
         ),
-        authService: AuthServiceType = AuthService(),
+        authService: AuthServiceProtocol = AuthService(),
         keychainAccessible: KeychainAccessible = DefaultKeychainAccessible()
     ) {
         self.provider = provider

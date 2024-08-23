@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol AuthServiceType {
+protocol AuthServiceProtocol {
     func saveAccessToken(_ token: String) -> Bool
     func saveRefreshToken(_ token: String) -> Bool
     func getAccessToken() -> String?

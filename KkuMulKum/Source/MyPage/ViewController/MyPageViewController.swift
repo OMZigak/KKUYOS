@@ -10,7 +10,6 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-
 class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     private let rootView = MyPageView()
     private let viewModel = MyPageViewModel()
@@ -25,6 +24,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         view.backgroundColor = .green1
         
         bindViewModel()
+        viewModel.fetchUserInfo()
     }
     
     override func setupView() {
@@ -33,6 +33,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     }
     
     private func bindViewModel() {
+        // Inputs
         rootView.contentView.editButton.rx.tap
             .bind(to: viewModel.editButtonTapped)
             .disposed(by: disposeBag)
@@ -44,7 +45,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         bindRowTapGesture(for: rootView.etcSettingView.unsubscribeRow)
             .bind(to: viewModel.unsubscribeButtonTapped)
             .disposed(by: disposeBag)
-        
+        // Other rows
         bindRowTapGesture(for: rootView.etcSettingView.versionInfoRow)
             .subscribe(onNext: { print("버전정보 탭됨") })
             .disposed(by: disposeBag)
@@ -63,7 +64,8 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         viewModel.pushEditProfileVC
             .emit(onNext: { [weak self] in
                 self?.pushEditProfileViewController()
-            })            .disposed(by: disposeBag)
+            })
+            .disposed(by: disposeBag)
         
         viewModel.showActionSheet
             .emit(onNext: { [weak self] kind in
@@ -82,6 +84,31 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
                 self?.viewModel.unsubscribe()
             })
             .disposed(by: disposeBag)
+        
+        viewModel.userInfo
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] userInfo in
+                self?.updateUI(with: userInfo)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func updateUI(with userInfo: LoginUserModel?) {
+        guard let userInfo = userInfo else { return }
+        
+        rootView.contentView.nameLabel.text = userInfo.name ?? "꾸물리안 님"
+        rootView.contentView.levelLabel.setText("Lv. \(userInfo.level) 지각대장 꾸물이", style: .body05, color: .white)
+        rootView.contentView.levelLabel.setHighlightText("Lv. \(userInfo.level)", style: .body05, color: .lightGreen)
+        
+        if let profileImageURL = userInfo.profileImageURL {
+            loadImage(from: profileImageURL, into: rootView.contentView.profileImageView)
+        } else {
+            rootView.contentView.profileImageView.image = UIImage.imgProfile
+        }
+    }
+    
+    private func loadImage(from urlString: String, into imageView: UIImageView) {
+
     }
     
     private func bindRowTapGesture(for view: UIView) -> Observable<Void> {
@@ -90,6 +117,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
             .first?
             .rx.event
             .map { _ in }
+
         ?? Observable.empty()
     }
     

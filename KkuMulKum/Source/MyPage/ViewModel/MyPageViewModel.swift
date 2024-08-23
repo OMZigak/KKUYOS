@@ -11,6 +11,8 @@ import RxSwift
 import RxCocoa
 
 class MyPageViewModel {
+    private let userService: MyPageUserServiceType
+    private let disposeBag = DisposeBag()
     
     let editButtonTapped = PublishRelay<Void>()
     let logoutButtonTapped = PublishRelay<Void>()
@@ -21,10 +23,12 @@ class MyPageViewModel {
     let showActionSheet: Signal<ActionSheetKind>
     let performLogout: Signal<Void>
     let performUnsubscribe: Signal<Void>
-    private let disposeBag = DisposeBag()
+    let userInfo: BehaviorRelay<LoginUserModel?>
     
-    
-    init() {
+    init(userService: MyPageUserServiceType = MyPageUserService()) {
+        self.userService = userService
+        self.userInfo = BehaviorRelay<LoginUserModel?>(value: nil)
+        
         pushEditProfileVC = editButtonTapped.asSignal()
         
         showActionSheet = Observable.merge(
@@ -43,6 +47,17 @@ class MyPageViewModel {
             .filter { $0 == .unsubscribe }
             .map { _ in }
             .asSignal(onErrorJustReturn: ())
+    }
+    
+    func fetchUserInfo() {
+        Task {
+            do {
+                let info = try await userService.getUserInfo()
+                userInfo.accept(info)
+            } catch {
+                print("Failed to fetch user info: \(error)")
+            }
+        }
     }
     
     func logout() {

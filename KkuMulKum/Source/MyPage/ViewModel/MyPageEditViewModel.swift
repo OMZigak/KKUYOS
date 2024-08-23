@@ -14,7 +14,7 @@ import RxCocoa
 import Moya
 
 class MyPageEditViewModel: ViewModelType {
-    private let authService: AuthServiceType
+    private let authService: AuthServiceProtocol
     
     struct Input {
         let profileImageTap: Observable<Void>
@@ -28,7 +28,7 @@ class MyPageEditViewModel: ViewModelType {
         let serverResponse: Driver<String?>
     }
     
-    init(authService: AuthServiceType) {
+    init(authService: AuthServiceProtocol) {
            self.authService = authService
        }
     
