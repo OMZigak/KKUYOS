@@ -144,12 +144,7 @@ private extension MeetingInfoViewController {
                 cellIdentifier: MeetingPromiseCell.reuseIdentifier,
                 cellType: MeetingPromiseCell.self
             )) { index, promise, cell in
-                cell.configure(
-                    dDay: promise.dDay,
-                    name: promise.name,
-                    time: promise.time,
-                    place: promise.placeName
-                )
+                cell.configure(model: promise)
             }
             .disposed(by: disposeBag)
     }

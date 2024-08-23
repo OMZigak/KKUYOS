@@ -37,7 +37,7 @@ extension MeetingInfoViewModel: ViewModelType {
         let info: Driver<MeetingInfoModel?>
         let memberCount: Driver<Int>
         let members: Driver<[Member]>
-        let promises: Driver<[MeetingPromise]>
+        let promises: Driver<[MeetingInfoPromiseModel]>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -73,7 +73,7 @@ extension MeetingInfoViewModel: ViewModelType {
                 return model.promises
             }
             .compactMap { [weak self] promises in
-                self?.reformattedDate(with: promises)
+                self?.convertToMeetingInfoPromiseModels(from: promises)
             }
             .asDriver(onErrorJustReturn: [])
             
@@ -121,30 +121,52 @@ private extension MeetingInfoViewModel {
             }
         }
     }
-    
-    func reformattedDate(with promises: [MeetingPromise]) -> [MeetingPromise] {
-        let inputDateFormat = "yyyy-MM-dd HH:mm:ss"
-        let outputDateFormat = "yyyy.MM.dd a H:mm"
-        
+}
+
+private extension MeetingInfoViewModel {
+    func convertToMeetingInfoPromiseModels(from promises: [MeetingPromise]) -> [MeetingInfoPromiseModel] {
         let inputDateFormatter = DateFormatter()
-        inputDateFormatter.dateFormat = inputDateFormat
+        inputDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         let outputDateFormatter = DateFormatter()
-        outputDateFormatter.dateFormat = outputDateFormat
+        outputDateFormatter.dateFormat = "yyyy.MM.dd a H:mm"
         outputDateFormatter.amSymbol = "AM"
         outputDateFormatter.pmSymbol = "PM"
         
-        return promises.compactMap {
-            guard let date = inputDateFormatter.date(from: $0.time) else { return nil }
-            let reformattedDate = outputDateFormatter.string(from: date)
+        return promises.compactMap { promise in
+            guard let date = inputDateFormatter.date(from: promise.time) else { return nil }
+            let formattedDate = outputDateFormatter.string(from: date)
             
-            return MeetingPromise(
-                promiseID: $0.promiseID,
-                name: $0.name,
-                dDay: $0.dDay,
-                time: reformattedDate,
-                placeName: $0.placeName
+            let (dateString, timeString) = splitDateAndTime(from: formattedDate)
+            let (dDayString, state) = configure(dDay: promise.dDay)
+            
+            return MeetingInfoPromiseModel(
+                state: state,
+                promiseID: promise.promiseID,
+                name: promise.name,
+                dDayText: dDayString,
+                dateText: dateString,
+                timeText: timeString,
+                placeName: promise.placeName
             )
+        }
+    }
+    
+    func splitDateAndTime(from formattedDate: String) -> (String, String) {
+        let components = formattedDate.split(separator: " ").map { "\($0)" }
+        guard components.count >= 3 else { return ("", "") }
+        let dateString = components[0]
+        let timeString = "\(components[1]) \(components[2])"
+        return (dateString, timeString)
+    }
+    
+    func configure(dDay: Int) -> (dDayText: String, state: MeetingPromiseCell.State) {
+        if 0 < dDay {
+            return ("+\(dDay)", .past)
+        } else if 0 == dDay {
+            return ("-Day", .today)
+        } else {
+            return ("\(dDay)", .future)
         }
     }
 }
