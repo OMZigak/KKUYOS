@@ -181,9 +181,8 @@ extension HomeViewController: UICollectionViewDataSource {
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let maxOffsetY = rootView.scrollView.contentSize.height - rootView.scrollView.bounds.height
-        if rootView.scrollView.contentOffset.y > maxOffsetY {
-            rootView.scrollView.contentOffset.y = maxOffsetY
-        }
+        
+        rootView.backgroundColor = rootView.scrollView.contentOffset.y >= maxOffsetY ? .gray0 : .maincolor
     }
 }
 
