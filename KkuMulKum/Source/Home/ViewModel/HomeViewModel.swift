@@ -27,9 +27,9 @@ final class HomeViewModel {
     var levelName = ObservablePattern<String>("")
     var levelCaption = ObservablePattern<String>("")
     
-    private let service: HomeServiceType
+    private let service: HomeServiceProtocol
     
-    init(service: HomeServiceType) {
+    init(service: HomeServiceProtocol) {
         self.service = service
     }
     

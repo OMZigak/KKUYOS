@@ -147,7 +147,7 @@ extension UpcomingPromiseCollectionViewCell {
         )
         meetingNameLabel.setText(contentData.meetingName, style: .caption02, color: .green3)
         nameLabel.setText(contentData.name, style: .body03, color: .gray8)
-        dateLabel.setText(contentData.date, style: .body06, color: .gray7)
+        dateLabel.setText(contentData.time, style: .body06, color: .gray7)
         timeLabel.setText(contentData.time, style: .body06, color: .gray7)
         placeNameLabel.setText(
             contentData.placeName,
