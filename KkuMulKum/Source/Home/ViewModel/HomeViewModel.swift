@@ -17,6 +17,10 @@ enum ReadyState {
 }
 
 final class HomeViewModel {
+    
+    
+    // MARK: - Property
+
     var loginUser = ObservablePattern<ResponseBodyDTO<LoginUserModel>?>(nil)
     var nearestPromise = ObservablePattern<ResponseBodyDTO<NearestPromiseModel>?>(nil)
     var upcomingPromiseList = ObservablePattern<ResponseBodyDTO<UpcomingPromiseListModel>?>(nil)
@@ -26,11 +30,17 @@ final class HomeViewModel {
     var levelName = ObservablePattern<String>("")
     var levelCaption = ObservablePattern<String>("")
     
+    
+    // MARK: - Initializer
+
     private let service: HomeServiceProtocol
     
     init(service: HomeServiceProtocol) {
         self.service = service
     }
+    
+    
+    // MARK: - Function
     
     ///서버에서 보내주는 level Int 값에 따른 levelName
     private func getLevelName(level: Int) -> String {
@@ -80,12 +90,10 @@ final class HomeViewModel {
     func requestMyReadyStatus() {
         Task  {
             do {
-                print(currentState.value)
                 myReadyStatus.value = try await service.fetchMyReadyStatus(
                     with: nearestPromise.value?.data?.promiseID ?? 1
                 )
                 judgeReadyStatus()
-                print(currentState.value)
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
