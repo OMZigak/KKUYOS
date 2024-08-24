@@ -144,15 +144,17 @@ private extension MeetingInfoViewModel {
         let inputDateFormatter = DateFormatter()
         inputDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
-        let outputDateFormatter = DateFormatter()
-        outputDateFormatter.dateFormat = "yyyy.MM.dd a H:mm"
-        outputDateFormatter.amSymbol = "AM"
-        outputDateFormatter.pmSymbol = "PM"
+        let outputDateFormatter = DateFormatter().then {
+            $0.locale = Locale(identifier: "ko_KR")
+            $0.timeZone = TimeZone(identifier: "Asia/Seoul")
+            $0.dateFormat = "yyyy.MM.dd a h:mm"
+            $0.amSymbol = "AM"
+            $0.pmSymbol = "PM"
+        }
         
         return promises.compactMap { promise in
             guard let date = inputDateFormatter.date(from: promise.time) else { return nil }
             let formattedDate = outputDateFormatter.string(from: date)
-            
             let (dateString, timeString) = splitDateAndTime(from: formattedDate)
             let (dDayString, state) = configure(dDay: promise.dDay)
             
