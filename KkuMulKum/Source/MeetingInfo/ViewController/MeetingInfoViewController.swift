@@ -19,6 +19,7 @@ final class MeetingInfoViewController: BaseViewController {
     private let viewModel: MeetingInfoViewModel
     
     private let viewWillAppearRelay = PublishRelay<Void>()
+    private let actionButtonDidTapRelay = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     private let rootView = MeetingInfoView()
     
@@ -100,7 +101,8 @@ private extension MeetingInfoViewController {
     func bindViewModel() {
         let input = MeetingInfoViewModel.Input(
             viewWillAppear: viewWillAppearRelay,
-            createPromiseButtonDidTap: rootView.createPromiseButtonDidTap
+            createPromiseButtonDidTap: rootView.createPromiseButtonDidTap,
+            actionButtonDidTapRelay: actionButtonDidTapRelay
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
@@ -148,6 +150,21 @@ private extension MeetingInfoViewController {
                 cell.configure(model: promise)
             }
             .disposed(by: disposeBag)
+        
+        output.isExitMeetingSucceed
+            .drive(with: self) { owner, result in
+                if result {
+                    owner.navigationController?.popViewController(animated: true)
+                } else {
+                    Toast().show(
+                        message: "다시 시도해 주세요.",
+                        view: owner.view,
+                        position: .bottom,
+                        inset: Screen.height(100)
+                    )
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     func navigateToAddPromise() {
@@ -161,7 +178,7 @@ private extension MeetingInfoViewController {
             image: .imgMore.withRenderingMode(.alwaysOriginal),
             style: .plain,
             target: self,
-            action: #selector(self.moreButtonDidTap)
+            action: #selector(moreButtonDidTap)
         )
         
         navigationItem.rightBarButtonItem = moreButton
@@ -198,10 +215,9 @@ extension MeetingInfoViewController: MeetingInfoMoreDelegate {
 
 extension MeetingInfoViewController: CustomActionSheetDelegate {
     func actionButtonDidTap(for kind: ActionSheetKind) {
+        guard kind == .exitMeeting else { return }
         
-        // TODO: ViewModel 삭제 요청
-        
-
+        actionButtonDidTapRelay.accept(())
     }
 }
 

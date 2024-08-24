@@ -17,12 +17,12 @@ final class MeetingInfoViewModel {
     var meetingInvitationCode: String? { infoRelay.value?.invitationCode }
     var meetingPromises: [MeetingPromise] { meetingPromisesModelRelay.value?.promises ?? [] }
     
-    private let service: MeetingInfoServiceType
+    private let service: MeetingInfoServiceProtocol
     private let infoRelay = BehaviorRelay<MeetingInfoModel?>(value: nil)
     private let meetingMemberModelRelay = BehaviorRelay<MeetingMembersModel?>(value: nil)
     private let meetingPromisesModelRelay = BehaviorRelay<MeetingPromisesModel?>(value: nil)
     
-    init(meetingID: Int, service: MeetingInfoServiceType) {
+    init(meetingID: Int, service: MeetingInfoServiceProtocol) {
         self.meetingID = meetingID
         self.service = service
     }
@@ -32,6 +32,7 @@ extension MeetingInfoViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: PublishRelay<Void>
         let createPromiseButtonDidTap: Observable<Void>
+        let actionButtonDidTapRelay: PublishRelay<Void>
     }
     
     struct Output {
@@ -39,6 +40,7 @@ extension MeetingInfoViewModel: ViewModelType {
         let memberCount: Driver<Int>
         let members: Driver<[Member]>
         let promises: Driver<[MeetingInfoPromiseModel]>
+        let isExitMeetingSucceed: Driver<Bool>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -77,12 +79,25 @@ extension MeetingInfoViewModel: ViewModelType {
                 self?.convertToMeetingInfoPromiseModels(from: promises)
             }
             .asDriver(onErrorJustReturn: [])
+        
+        let isExitMeetingSucceed = input.actionButtonDidTapRelay
+            .flatMapLatest { [weak self] _ -> Driver<Bool> in
+                guard let self else {
+                    return Driver.just(false)
+                }
+                
+                return self.service.exitMeeting(with: self.meetingID)
+                    .map { $0.success }
+                    .asDriver(onErrorJustReturn: false)
+            }
+            .asDriver(onErrorJustReturn: false)
             
         let output = Output(
             info: info,
             memberCount: memberCount,
             members: members,
-            promises: promises
+            promises: promises,
+            isExitMeetingSucceed: isExitMeetingSucceed
         )
         
         return output
