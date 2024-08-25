@@ -15,7 +15,7 @@ final class AddPromiseCompleteView: BaseView {
     
     private let progressView = UIProgressView(progressViewStyle: .default).then {
         $0.progressTintColor = .maincolor
-        $0.backgroundColor = .gray2
+        $0.backgroundColor = .gray1
         $0.setProgress(1, animated: false)
     }
     

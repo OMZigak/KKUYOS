@@ -11,9 +11,9 @@ import SnapKit
 import Then
 
 final class AddPromiseView: BaseView {
-    let progressView = UIProgressView(progressViewStyle: .default).then {
+    let progressView = UIProgressView(progressViewStyle: .bar).then {
         $0.progressTintColor = .maincolor
-        $0.backgroundColor = .gray2
+        $0.backgroundColor = .gray1
         $0.setProgress(0.0, animated: false)
     }
     

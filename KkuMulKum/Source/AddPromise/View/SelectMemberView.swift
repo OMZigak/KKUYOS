@@ -11,10 +11,10 @@ import SnapKit
 import Then
 
 final class SelectMemberView: BaseView {
-    private let progressView = UIProgressView(progressViewStyle: .default).then {
+    private let progressView = UIProgressView(progressViewStyle: .bar).then {
         $0.progressTintColor = .maincolor
-        $0.backgroundColor = .gray2
-        $0.setProgress(0.5, animated: false)
+        $0.backgroundColor = .gray1
+        $0.setProgress(0.34, animated: false)
     }
     
     private let pageNumberLabel = UILabel().then {
