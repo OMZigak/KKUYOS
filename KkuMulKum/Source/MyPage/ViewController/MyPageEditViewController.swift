@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class MyPageEditViewController: BaseViewController {
     private let rootView = MyPageEditView()
@@ -33,6 +34,7 @@ class MyPageEditViewController: BaseViewController {
         super.viewDidLoad()
         setupNavigationBarTitle(with: "프로필 설정")
         setupNavigationBarBackButton()
+        viewModel.fetchUserInfo()
     }
     
     override func setupView() {
@@ -77,7 +79,38 @@ class MyPageEditViewController: BaseViewController {
             .map { $0 ? 1.0 : 0.5 }
             .drive(rootView.confirmButton.rx.alpha)
             .disposed(by: disposeBag)
+        
+        output.userInfo
+                   .drive(onNext: { [weak self] userInfo in
+                       self?.updateProfileImage(with: userInfo?.profileImageURL)
+                   })
+                   .disposed(by: disposeBag)
     }
+    
+    private func updateProfileImage(with urlString: String?) {
+            guard let urlString = urlString, let url = URL(string: urlString) else {
+                rootView.profileImageView.image = UIImage.imgProfile
+                return
+            }
+            
+            rootView.profileImageView.kf.setImage(
+                with: url,
+                placeholder: UIImage.imgProfile,
+                options: [
+                    .transition(.fade(0.2)),
+                    .cacheOriginalImage
+                ],
+                completionHandler: { result in
+                    switch result {
+                    case .success(_):
+                        print("Profile image loaded successfully")
+                    case .failure(let error):
+                        print("Failed to load profile image: \(error.localizedDescription)")
+                        self.rootView.profileImageView.image = UIImage.imgProfile
+                    }
+                }
+            )
+        }
     
     private func showImagePicker() {
         let imagePicker = UIImagePickerController()
