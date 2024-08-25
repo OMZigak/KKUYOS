@@ -73,6 +73,7 @@ private extension PromiseInfoViewController {
         let viewController = EditPromiseViewController(
             viewModel: EditPromiseViewModel(
                 promiseID: viewModel.promiseID,
+                promiseName: viewModel.promiseInfo.value?.promiseName,
                 placeName: viewModel.promiseInfo.value?.placeName,
                 time: viewModel.promiseInfo.value?.time,
                 participantList: participantList,

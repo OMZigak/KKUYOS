@@ -11,6 +11,7 @@ class EditPromiseViewController: BaseViewController {
     let viewModel: EditPromiseViewModel
     
     private let rootView: AddPromiseView = AddPromiseView()
+    private let findPlaceViewController = FindPlaceViewController(viewModel: FindPlaceViewModel(service: UtilService()))
     
     
     // MARK: - LifeCycle
@@ -33,12 +34,9 @@ class EditPromiseViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        rootView.promiseNameTextField.text = viewModel.promiseName?.value
-        rootView.promisePlaceTextField.text = viewModel.placeName
-        
+    
         setupNavigationBarBackButton()
-        setupNavigationBarTitle(with: "약속 수정하기")
+        setupNavigationBarTitle(with: "약속 수정하기", isBorderHidden: true)
         
         setupBinding()
     }
@@ -57,15 +55,25 @@ class EditPromiseViewController: BaseViewController {
     // MARK: - Setup
 
     override func setupView() {
+        rootView.promiseNameTextField.text = viewModel.promiseName?.value
+        rootView.promiseNameCountLabel.text = "\(viewModel.promiseName?.value.count ?? 0)/10"
+        rootView.promisePlaceTextField.text = viewModel.placeName?.value
         rootView.titleLabel.text = "약속을\n수정해 주세요"
         rootView.confirmButton.isEnabled = true
+        
+        setupDatePicker()
     }
     
     override func setupAction() {
         rootView.confirmButton.addTarget(self, action: #selector(confirmButtonDidTap), for: .touchUpInside)
+        rootView.promiseNameTextField.addTarget(self, action: #selector(nameTextFieldDidChange), for: .editingChanged)
+        rootView.promisePlaceTextField.addTarget(self, action: #selector(placeTextFieldDidTap), for: .touchDown)
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        )
     }
     
     override func setupDelegate() {
+        findPlaceViewController.delegate = self
         rootView.promiseNameTextField.delegate = self
     }
 }
@@ -77,29 +85,68 @@ private extension EditPromiseViewController {
     func setupBinding() {
         viewModel.promiseNameState.bind(with: self) { owner, state in
             owner.rootView.promiseNameErrorLabel.isHidden = true
-            
+            owner.rootView.confirmButton.isEnabled = true
             
             switch state {
             case .valid:
-                self.rootView.promiseNameTextField.layer.borderColor = UIColor.maincolor.cgColor
+                owner.rootView.promiseNameTextField.layer.borderColor = UIColor.maincolor.cgColor
             case .invalid:
-                self.rootView.promiseNameTextField.layer.borderColor = UIColor.mainred.cgColor
+                owner.rootView.promiseNameTextField.layer.borderColor = UIColor.mainred.cgColor
+                owner.rootView.promiseNameErrorLabel.isHidden = false
+                owner.rootView.confirmButton.isEnabled = false
             case .empty:
-                self.rootView.promiseNameTextField.layer.borderColor = UIColor.gray3.cgColor
+                owner.rootView.promiseNameTextField.layer.borderColor = UIColor.gray3.cgColor
             }
         }
+        
+        viewModel.promiseName?.bind(with: self, { owner, name in
+            owner.rootView.promiseNameCountLabel.text = "\(owner.viewModel.promiseName?.value.count ?? 0)/10"
+        })
+        
+        viewModel.placeName?.bind(with: self, { owner, name in
+            owner.rootView.promisePlaceTextField.text = owner.viewModel.placeName?.value ?? ""
+        })
+    }
+    
+    func setupDatePicker() {
+        let inputDateFormatter = DateFormatter()
+        inputDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        guard let date = inputDateFormatter.date(from: viewModel.time ?? "") else {
+            return
+        }
+        
+        rootView.datePicker.minimumDate = .none
+        rootView.datePicker.date = date
+        rootView.timePicker.date = date
     }
     
     @objc
     func confirmButtonDidTap() {
+        viewModel.updateDateInfo(
+            date: rootView.datePicker.date,
+            time: rootView.timePicker.date
+        )
+        
         let viewController = ChooseMemberViewController(viewModel: viewModel)
         
         navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc
-    func textFieldDidChange() {
-        
+    func nameTextFieldDidChange() {
+        viewModel.validateName(rootView.promiseNameTextField.text ?? "")
+    }
+    
+    @objc
+    func placeTextFieldDidTap() {
+        navigationController?.pushViewController(findPlaceViewController, animated: true)
+    }
+    
+    @objc
+    func dismissKeyboard() {
+        viewModel.validateName(rootView.promiseNameTextField.text ?? "")
+        view.endEditing(true)
     }
 }
 
@@ -107,20 +154,24 @@ private extension EditPromiseViewController {
 // MARK: - UITextFieldDelegate
 
 extension EditPromiseViewController: UITextFieldDelegate {
-    func textFieldDidChangeSelection(_ textField: UITextField) {
-        viewModel.validateName(rootView.promiseNameTextField.text ?? "")
-        rootView.promiseNameCountLabel.text = "\(viewModel.promiseName?.value.count ?? 0)/10"
-    }
-    
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         rootView.promiseNameTextField.layer.borderColor = UIColor.maincolor.cgColor
         
         return true
     }
-//    
-//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-//        viewModel.validateName(textField.text ?? "")
-//        
-//        return true
-//    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        viewModel.validateName(textField.text ?? "")
+        
+        return true
+    }
+}
+
+
+// MARK: - FindPlaceViewControllerDelegate
+
+extension EditPromiseViewController: FindPlaceViewControllerDelegate {
+    func configure(selectedPlace: Place) {
+        viewModel.updatePlaceInfo(place: selectedPlace)
+    }
 }

@@ -34,8 +34,8 @@ class EnterContentViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupNavigationBarTitle(with: "약속 수정하기", isBorderHidden: true)
         setupNavigationBarBackButton()
-        setupNavigationBarTitle(with: "약속 수정하기")
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -35,7 +35,7 @@ class ChooseMemberViewController: BaseViewController {
         super.viewDidLoad()
         
         setupNavigationBarBackButton()
-        setupNavigationBarTitle(with: "약속 수정하기")
+        setupNavigationBarTitle(with: "약속 수정하기", isBorderHidden: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {

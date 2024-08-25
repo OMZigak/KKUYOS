@@ -22,8 +22,9 @@ class PromiseInfoView: BaseView {
         $0.setText("약속 이름을 설정해주세요", style: .body01, color: .gray7)
     }
     
-    let editButton: CustomButton = CustomButton(title: "수정하기", isEnabled: true).then {
+    let editButton: UIButton = UIButton().then {
         $0.setTitle("수정하기", style: .caption01, color: .maincolor)
+        $0.layer.cornerRadius = Screen.height(8)
         $0.backgroundColor = .white
     }
 
