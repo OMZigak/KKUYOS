@@ -19,6 +19,11 @@ class EditPromiseViewController: BaseViewController {
         view = rootView
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        setupNavigationBarBackButton()
+        setupNavigationBarTitle(with: "약속 수정하기")
+    }
+    
     
     // MARK: - Setup
 
@@ -37,6 +42,8 @@ class EditPromiseViewController: BaseViewController {
 private extension EditPromiseViewController {
     @objc
     func confirmButtonDidTap() {
-        // TODO: 꾸물이 선택 뷰 연결
+        let viewController = ChooseMemberViewController()
+        
+        navigationController?.pushViewController(viewController, animated: true)
     }
 }
