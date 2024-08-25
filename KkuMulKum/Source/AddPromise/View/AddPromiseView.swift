@@ -21,7 +21,7 @@ final class AddPromiseView: BaseView {
         $0.setText("1/3", style: .body05, color: .gray6)
     }
     
-    private let titleLabel = UILabel().then {
+    let titleLabel = UILabel().then {
         $0.setText("약속을\n추가해 주세요", style: .head01, color: .gray8)
     }
     
