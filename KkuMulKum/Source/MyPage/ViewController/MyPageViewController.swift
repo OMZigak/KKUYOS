@@ -98,6 +98,21 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
             })
             .disposed(by: disposeBag)
         
+        viewModel.logoutResult
+                 .observe(on: MainScheduler.instance)
+                 .subscribe(onNext: { [weak self] result in
+                     switch result {
+                     case .success:
+                         print("Logout successful")
+                         self?.navigateToLoginScreen()
+                     case .failure(let error):
+                         print("Logout failed: \(error)")
+                         // 에러 처리 (예: 알림 표시)
+                     }
+                 })
+                 .disposed(by: disposeBag)
+         
+        
         viewModel.userInfo
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] userInfo in

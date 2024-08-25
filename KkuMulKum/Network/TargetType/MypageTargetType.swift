@@ -12,6 +12,8 @@ import Moya
 enum UserTargetType {
     case getUserInfo
     case unsubscribe(authCode : String)
+    case logout
+
 }
 
 extension UserTargetType: TargetType {
@@ -30,6 +32,8 @@ extension UserTargetType: TargetType {
             return "/api/v1/users/me"
         case .unsubscribe:
             return "/api/v1/auth/withdrawal"
+        case .logout:
+            return "/api/v1/auth/signout"
         }
     }
     
@@ -39,6 +43,8 @@ extension UserTargetType: TargetType {
             return .get
         case .unsubscribe:
             return .delete
+        case .logout:
+            return .post
         }
     }
     
@@ -47,6 +53,8 @@ extension UserTargetType: TargetType {
         case .getUserInfo:
             return .requestPlain
         case .unsubscribe(let authCode):
+            return .requestPlain
+        case .logout:
             return .requestPlain
         }
     }

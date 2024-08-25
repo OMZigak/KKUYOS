@@ -11,4 +11,5 @@ protocol MyPageUserServiceProtocol {
     func getUserInfo() async throws -> LoginUserModel
     func performRequest<T: ResponseModelType>(_ target: UserTargetType) async throws -> T
     func unsubscribe(authCode: String) async throws -> Void
+    func logout() async throws -> Void
 }

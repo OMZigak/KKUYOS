@@ -26,6 +26,8 @@ class MyPageViewModel: NSObject {
     let performUnsubscribe: Signal<Void>
     let userInfo: BehaviorRelay<LoginUserModel?>
     let unsubscribeResult = PublishRelay<Result<Void, Error>>()
+    let logoutResult = PublishRelay<Result<Void, Error>>()
+
     
     init(userService: MyPageUserServiceProtocol = MyPageUserService()) {
         self.userService = userService
@@ -63,8 +65,17 @@ class MyPageViewModel: NSObject {
     }
     
     func logout() {
-        print("로그아웃 눌름 ㅂㅂ")
-    }
+            Task {
+                do {
+                    try await userService.logout()
+                    print("Logout successful")
+                    logoutResult.accept(.success(()))
+                } catch {
+                    print("Logout failed: \(error)")
+                    logoutResult.accept(.failure(error))
+                }
+            }
+        }
     
     func unsubscribe() {
         let appleIDProvider = ASAuthorizationAppleIDProvider()

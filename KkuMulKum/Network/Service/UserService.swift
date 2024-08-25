@@ -45,14 +45,18 @@ final class MyPageUserService {
         }
     }
 }
-    extension MyPageUserService : MyPageUserServiceProtocol {
-        
-        func getUserInfo() async throws -> LoginUserModel {
-            return try await performRequest(.getUserInfo)
-        }
-        
-        func unsubscribe(authCode: String) async throws {
-            let _: EmptyModel = try await performRequest(.unsubscribe(authCode: authCode))
-        }
+
+extension MyPageUserService : MyPageUserServiceProtocol {
+    func getUserInfo() async throws -> LoginUserModel {
+        return try await performRequest(.getUserInfo)
     }
+    
+    func unsubscribe(authCode: String) async throws {
+        let _: EmptyModel = try await performRequest(.unsubscribe(authCode: authCode))
+    }
+    
+    func logout() async throws {
+        let _: EmptyModel = try await performRequest(.logout)
+    }
+}
 
