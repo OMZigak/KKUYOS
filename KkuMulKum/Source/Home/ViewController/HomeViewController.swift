@@ -212,46 +212,52 @@ private extension HomeViewController {
     
     func bindUserInfo() {
         viewModel.loginUser.bind { [weak self] _ in
+            guard let self,
+                  let responseBody = viewModel.loginUser.value,
+                  let data = responseBody.data
+            else {
+                return
+            }
+            
             DispatchQueue.main.async {
-                let data = self?.viewModel.loginUser.value?.data
-                let characterImage = self?.rootView.levelCharacterImage
+                let characterImage = self.rootView.levelCharacterImage
                 
-                self?.rootView.kkumulLabel.setText(
-                    "\(data?.name ?? "") 님,\n\(data?.promiseCount ?? 0)번의 약속에서\n\(data?.tardyCount ?? 0)번 꾸물거렸어요!",
+                self.rootView.kkumulLabel.setText(
+                    "\(data.name ?? "") 님,\n\(data.promiseCount)번의 약속에서\n\(data.tardyCount)번 꾸물거렸어요!",
                     style: .title02,
                     color: .white
                 )
-                self?.rootView.kkumulLabel.setHighlightText(
-                    "\(data?.name ?? "") 님,",
+                self.rootView.kkumulLabel.setHighlightText(
+                    "\(data.name ?? "") 님,",
                     style: .title00,
                     color: .white
                 )
-                self?.rootView.kkumulLabel.setHighlightText(
-                    "\(data?.promiseCount ?? 0)번",
-                    "\(data?.tardyCount ?? 0)번",
+                self.rootView.kkumulLabel.setHighlightText(
+                    "\(data.promiseCount)번",
+                    "\(data.tardyCount)번",
                     style: .title00,
                     color: .lightGreen
                 )
-                self?.rootView.levelLabel.setText(
-                    "Lv.\(data?.level ?? 0)  \(self?.viewModel.levelName.value ?? "")",
+                self.rootView.levelLabel.setText(
+                    "Lv.\(data.level)  \(self.viewModel.levelName.value)",
                     style: .caption01,
                     color: .gray6
                 )
-                self?.rootView.levelLabel.setHighlightText(
-                    "Lv.\(data?.level ?? 0)",
+                self.rootView.levelLabel.setHighlightText(
+                    "Lv.\(data.level)",
                     style: .caption01,
                     color: .maincolor
                 )
-                self?.rootView.levelCaptionLabel.setText(
-                    self?.viewModel.levelCaption.value ?? "",
+                self.rootView.levelCaptionLabel.setText(
+                    self.viewModel.levelCaption.value,
                     style: .label01,
                     color: .white
                 )
-                switch data?.level {
-                case 1: characterImage?.image = .imgLevel01
-                case 2: characterImage?.image = .imgLevel02
-                case 3: characterImage?.image = .imgLevel03
-                case 4: characterImage?.image = .imgLevel04
+                switch data.level {
+                case 1: characterImage.image = .imgLevel01
+                case 2: characterImage.image = .imgLevel02
+                case 3: characterImage.image = .imgLevel03
+                case 4: characterImage.image = .imgLevel04
                 default: break
                 }
             }
@@ -266,11 +272,11 @@ private extension HomeViewController {
                 
                 if data == nil {
                     self.rootView.todayPromiseView.isHidden = true
-                    self.rootView.todayEmptyView.isHidden = false
                     self.rootView.todayButton.isHidden = true
+                    self.rootView.todayEmptyView.isHidden = false
                 } else {
-                    self.rootView.todayButton.isHidden = false
                     self.rootView.todayPromiseView.isHidden = false
+                    self.rootView.todayButton.isHidden = false
                     self.rootView.todayEmptyView.isHidden = true
                     self.rootView.todayPromiseView.meetingNameLabel.setText(
                         data?.meetingName ?? "",
