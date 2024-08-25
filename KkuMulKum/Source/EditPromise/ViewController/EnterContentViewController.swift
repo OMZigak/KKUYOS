@@ -1,5 +1,5 @@
 //
-//  ChooseMemberViewController.swift
+//  EnterContentViewController.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 8/25/24.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-class ChooseMemberViewController: BaseViewController {
-    private let rootView: SelectMemberView = SelectMemberView()
+class EnterContentViewController: BaseViewController {
+    private let rootView: SelectPenaltyView = SelectPenaltyView()
     
     
     // MARK: - LifeCycle
@@ -35,11 +35,9 @@ class ChooseMemberViewController: BaseViewController {
 
 // MARK: - Extension
 
-private extension ChooseMemberViewController {
+private extension EnterContentViewController {
     @objc
     func confirmButtonDidTap() {
-        let viewController = EnterContentViewController()
-        
-        navigationController?.pushViewController(viewController, animated: true)
+        // TODO: 약속 수정 축하 뷰 연결 및 API 연결
     }
 }
