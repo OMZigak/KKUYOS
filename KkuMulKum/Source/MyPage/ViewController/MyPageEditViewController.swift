@@ -14,6 +14,7 @@ class MyPageEditViewController: BaseViewController {
     private let rootView = MyPageEditView()
     private let viewModel: MyPageEditViewModel
     private let disposeBag = DisposeBag()
+    private let newProfileImageSubject = PublishSubject<UIImage?>()
     
     init(viewModel: MyPageEditViewModel) {
         self.viewModel = viewModel
@@ -30,20 +31,40 @@ class MyPageEditViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupNavigationBarTitle(with: "프로필 설정")
         setupNavigationBarBackButton()
+    }
+    
+    override func setupView() {
+        super.setupView()
         setupBindings()
+    }
+    
+    override func setupAction() {
+        super.setupAction()
+        
+        rootView.cameraButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.showImagePicker()
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.confirmButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupBindings() {
         let input = MyPageEditViewModel.Input(
             profileImageTap: rootView.cameraButton.rx.tap.asObservable(),
             confirmButtonTap: rootView.confirmButton.rx.tap.asObservable(),
-            newProfileImage: Observable.never() // This will be updated in imagePickerController
+            newProfileImage: newProfileImageSubject.asObservable()
         )
         
-        let output = viewModel.transform(input: input, disposeBag: DisposeBag())
+        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+        
         output.profileImage
             .drive(rootView.profileImageView.rx.image)
             .disposed(by: disposeBag)
@@ -56,43 +77,14 @@ class MyPageEditViewController: BaseViewController {
             .map { $0 ? 1.0 : 0.5 }
             .drive(rootView.confirmButton.rx.alpha)
             .disposed(by: disposeBag)
-        
-        output.serverResponse
-            .drive(onNext: { [weak self] response in
-                if let response = response {
-                    self?.showAlert(message: response)
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        rootView.cameraButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.showImagePicker()
-            })
-            .disposed(by: disposeBag)
-        
-        navigationItem.leftBarButtonItem?.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.navigateToMyPageViewController()
-            })
-            .disposed(by: disposeBag)
     }
+    
     private func showImagePicker() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = true
         present(imagePicker, animated: true)
-    }
-    
-    private func showAlert(message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default))
-        present(alert, animated: true)
-    }
-    
-    private func navigateToMyPageViewController() {
-        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -103,12 +95,7 @@ extension MyPageEditViewController: UIImagePickerControllerDelegate, UINavigatio
     ) {
         if let editedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
             let croppedImage = cropToCircle(image: editedImage)
-            let input = MyPageEditViewModel.Input(
-                profileImageTap: Observable.never(),
-                confirmButtonTap: Observable.never(),
-                newProfileImage: Observable.just(croppedImage)
-            )
-            _ = viewModel.transform(input: input, disposeBag: DisposeBag())
+            newProfileImageSubject.onNext(croppedImage)
         }
         dismiss(animated: true)
     }

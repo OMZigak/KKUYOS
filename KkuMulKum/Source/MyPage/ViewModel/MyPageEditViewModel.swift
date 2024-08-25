@@ -5,16 +5,15 @@
 //  Created by 이지훈 on 8/22/24.
 //
 
-import Foundation
-
 import UIKit
-import Kingfisher
+
 import RxSwift
 import RxCocoa
-import Moya
 
 class MyPageEditViewModel: ViewModelType {
     private let authService: AuthServiceProtocol
+    private let userService: MyPageUserServiceType
+    private let userInfo = BehaviorRelay<LoginUserModel?>(value: nil)
     
     struct Input {
         let profileImageTap: Observable<Void>
@@ -26,21 +25,22 @@ class MyPageEditViewModel: ViewModelType {
         let profileImage: Driver<UIImage?>
         let isConfirmButtonEnabled: Driver<Bool>
         let serverResponse: Driver<String?>
+        let userInfo: Driver<LoginUserModel?>
     }
     
-    init(authService: AuthServiceProtocol) {
-           self.authService = authService
-       }
+    init(authService: AuthServiceProtocol, userService: MyPageUserServiceType = MyPageUserService()) {
+        self.authService = authService
+        self.userService = userService
+    }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
-            let imageDataRelay = BehaviorRelay<Data?>(value: nil)
-            let serverResponseRelay = PublishRelay<String?>()
-            
+        let imageDataRelay = BehaviorRelay<Data?>(value: nil)
+        let serverResponseRelay = PublishRelay<String?>()
         
         input.newProfileImage
             .compactMap { $0?.jpegData(compressionQuality: 1.0) }
             .bind(to: imageDataRelay)
-            .disposed(by: DisposeBag())
+            .disposed(by: disposeBag)
         
         let profileImage = imageDataRelay
             .map { data -> UIImage? in
@@ -53,30 +53,55 @@ class MyPageEditViewModel: ViewModelType {
             .map { $0 != nil }
             .asDriver(onErrorJustReturn: false)
         
-        
-        // TODO: api 연결시 다시 연결예정
-//        input.confirmButtonTap
-//                   .withLatestFrom(imageDataRelay)
-//                   .flatMapLatest { [weak self] imageData -> Observable<String> in
-//                       guard let self = self, let imageData = imageData else {
-//                           return .just("이미지 데이터가 없습니다.")
-//                       }
-//                       return self.authService.rx.request(.updateProfileImage(image: imageData, fileName: "profile_image.jpg", mimeType: "image/jpeg"))
-//                           .filterSuccessfulStatusCodes()
-//                           .map { _ in "프로필 이미지가 성공적으로 업로드되었습니다." }
-//                           .catchError { error in
-//                               let networkError = error as? NetworkError ?? .unknownError("알 수 없는 오류가 발생했습니다.")
-//                               return .just(self.handleError(networkError))
-//                           }
-//                   }
-//                   .bind(to: serverResponseRelay)
-//                   .disposed(by: disposeBag)
+        input.confirmButtonTap
+            .withLatestFrom(imageDataRelay)
+            .flatMapLatest { [weak self] imageData -> Observable<String> in
+                guard let self = self, let imageData = imageData else {
+                    return .just("이미지 데이터가 없습니다.")
+                }
+                return Observable.create { observer in
+                    Task {
+                        do {
+                            let _: EmptyModel = try await self.authService.performRequest(
+                                .updateProfileImage(
+                                    image: imageData,
+                                    fileName: "profile_image.jpg",
+                                    mimeType: "image/jpeg"
+                                )
+                            )
+                            observer.onNext("프로필 이미지가 성공적으로 업로드되었습니다.")
+                            observer.onCompleted()
+                        } catch {
+                            let networkError = error as? NetworkError ?? .unknownError("알 수 없는 오류가 발생했습니다.")
+                            observer.onNext(self.handleError(networkError))
+                            observer.onCompleted()
+                        }
+                    }
+                    return Disposables.create()
+                }
+            }
+            .bind(to: serverResponseRelay)
+            .disposed(by: disposeBag)
         
         return Output(
             profileImage: profileImage,
             isConfirmButtonEnabled: isConfirmButtonEnabled,
-            serverResponse: serverResponseRelay.asDriver(onErrorJustReturn: nil)
+            serverResponse: serverResponseRelay.asDriver(onErrorJustReturn: nil),
+            userInfo: userInfo.asDriver()
         )
+    }
+    
+    func fetchUserInfo() {
+        Task {
+            do {
+                let info = try await userService.getUserInfo()
+                DispatchQueue.main.async { [weak self] in
+                    self?.userInfo.accept(info)
+                }
+            } catch {
+                print("Failed to fetch user info: \(error)")
+            }
+        }
     }
     
     private func handleError(_ error: NetworkError) -> String {
@@ -92,5 +117,3 @@ class MyPageEditViewModel: ViewModelType {
         }
     }
 }
-
-

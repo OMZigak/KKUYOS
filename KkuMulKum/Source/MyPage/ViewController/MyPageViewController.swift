@@ -9,6 +9,7 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     private let rootView = MyPageView()
@@ -17,6 +18,11 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     
     override func loadView() {
         view = rootView
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.fetchUserInfo()
     }
     
     override func viewDidLoad() {
@@ -108,7 +114,28 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     }
     
     private func loadImage(from urlString: String, into imageView: UIImageView) {
-
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL: \(urlString)")
+            return
+        }
+        
+        imageView.kf.setImage(
+            with: url,
+            placeholder: UIImage.imgProfile,
+            options: [
+                .transition(.fade(0.2)),
+                .cacheOriginalImage
+            ],
+            completionHandler: { result in
+                switch result {
+                case .success(_):
+                    print("Image loaded successfully")
+                case .failure(let error):
+                    print("Failed to load image: \(error.localizedDescription)")
+                    imageView.image = UIImage.imgProfile
+                }
+            }
+        )
     }
     
     private func bindRowTapGesture(for view: UIView) -> Observable<Void> {

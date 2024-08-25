@@ -41,6 +41,4 @@ class MyPageView: BaseView {
             $0.bottom.equalTo(safeArea).offset(-127)
         }
     }
-   
-       
 }
