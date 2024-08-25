@@ -47,11 +47,6 @@ class HomeViewController: BaseViewController {
         
         view.backgroundColor = .maincolor
         register()
-        
-        viewModel.requestLoginUser()
-        viewModel.requestNearestPromise()
-        viewModel.requestUpcomingPromise()
-        
         setupBinding()
     }
     
@@ -62,8 +57,6 @@ class HomeViewController: BaseViewController {
         viewModel.requestLoginUser()
         viewModel.requestNearestPromise()
         viewModel.requestUpcomingPromise()
-        
-        setupBinding()
     }
     
     
@@ -220,31 +213,32 @@ private extension HomeViewController {
     func bindUserInfo() {
         viewModel.loginUser.bind { [weak self] _ in
             DispatchQueue.main.async {
-                let data = self?.viewModel.loginUser.value
+                let data = self?.viewModel.loginUser.value?.data
+                let characterImage = self?.rootView.levelCharacterImage
                 
                 self?.rootView.kkumulLabel.setText(
-                    "\(data?.data?.name ?? "") 님,\n\(data?.data?.promiseCount ?? 0)번의 약속에서\n\(data?.data?.tardyCount ?? 0)번 꾸물거렸어요!",
+                    "\(data?.name ?? "") 님,\n\(data?.promiseCount ?? 0)번의 약속에서\n\(data?.tardyCount ?? 0)번 꾸물거렸어요!",
                     style: .title02,
                     color: .white
                 )
                 self?.rootView.kkumulLabel.setHighlightText(
-                    "\(data?.data?.name ?? "") 님,",
+                    "\(data?.name ?? "") 님,",
                     style: .title00,
                     color: .white
                 )
                 self?.rootView.kkumulLabel.setHighlightText(
-                    "\(data?.data?.promiseCount ?? 0)번",
-                    "\(data?.data?.tardyCount ?? 0)번",
+                    "\(data?.promiseCount ?? 0)번",
+                    "\(data?.tardyCount ?? 0)번",
                     style: .title00,
                     color: .lightGreen
                 )
                 self?.rootView.levelLabel.setText(
-                    "Lv.\(data?.data?.level ?? 0)  \(self?.viewModel.levelName.value ?? "")",
+                    "Lv.\(data?.level ?? 0)  \(self?.viewModel.levelName.value ?? "")",
                     style: .caption01,
                     color: .gray6
                 )
                 self?.rootView.levelLabel.setHighlightText(
-                    "Lv.\(data?.data?.level ?? 0)",
+                    "Lv.\(data?.level ?? 0)",
                     style: .caption01,
                     color: .maincolor
                 )
@@ -253,11 +247,11 @@ private extension HomeViewController {
                     style: .label01,
                     color: .white
                 )
-                switch data?.data?.level {
-                case 1: self?.rootView.levelCharacterImage.image = .imgLevel01
-                case 2: self?.rootView.levelCharacterImage.image = .imgLevel02
-                case 3: self?.rootView.levelCharacterImage.image = .imgLevel03
-                case 4: self?.rootView.levelCharacterImage.image = .imgLevel04
+                switch data?.level {
+                case 1: characterImage?.image = .imgLevel01
+                case 2: characterImage?.image = .imgLevel02
+                case 3: characterImage?.image = .imgLevel03
+                case 4: characterImage?.image = .imgLevel04
                 default: break
                 }
             }
@@ -268,9 +262,9 @@ private extension HomeViewController {
         viewModel.nearestPromise.bind { [weak self] _ in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                let data = self.viewModel.nearestPromise.value
+                let data = self.viewModel.nearestPromise.value?.data
                 
-                if data?.data == nil {
+                if data == nil {
                     self.rootView.todayPromiseView.isHidden = true
                     self.rootView.todayEmptyView.isHidden = false
                     self.rootView.todayButton.isHidden = true
@@ -279,22 +273,22 @@ private extension HomeViewController {
                     self.rootView.todayPromiseView.isHidden = false
                     self.rootView.todayEmptyView.isHidden = true
                     self.rootView.todayPromiseView.meetingNameLabel.setText(
-                        data?.data?.meetingName ?? "",
+                        data?.meetingName ?? "",
                         style: .caption02,
                         color: .green3
                     )
                     self.rootView.todayPromiseView.nameLabel.setText(
-                        data?.data?.name ?? "",
+                        data?.name ?? "",
                         style: .body03,
                         color: .gray8
                     )
                     self.rootView.todayPromiseView.placeNameLabel.setText(
-                        data?.data?.placeName ?? "",
+                        data?.placeName ?? "",
                         style: .body06,
                         color: .gray7
                     )
                     self.rootView.todayPromiseView.timeLabel.setText(
-                        data?.data?.time ?? "",
+                        data?.time ?? "",
                         style: .body06,
                         color: .gray7
                     )
@@ -457,15 +451,18 @@ private extension HomeViewController {
     @objc
     func prepareButtonDidTap(_ sender: UIButton) {
         viewModel.updatePrepareStatus()
+        viewModel.currentState.value = .prepare
     }
     
     @objc
     func moveButtonDidTap(_ sender: UIButton) {
         viewModel.updateMoveStatus()
+        viewModel.currentState.value = .move
     }
     
     @objc
     func arriveButtonDidTap(_ sender: UIButton) {
         viewModel.updateArriveStatus()
+        viewModel.currentState.value = .arrive
     }
 }

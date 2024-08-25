@@ -109,7 +109,7 @@ final class HomeViewModel {
                 else {
                     return
                 }
-                currentState.value = .prepare
+//                currentState.value = .prepare
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
@@ -125,7 +125,7 @@ final class HomeViewModel {
                 else {
                     return
                 }
-                currentState.value = .move
+//                currentState.value = .move
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
@@ -141,7 +141,7 @@ final class HomeViewModel {
                 else {
                     return
                 }
-                currentState.value = .arrive
+//                currentState.value = .arrive
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
