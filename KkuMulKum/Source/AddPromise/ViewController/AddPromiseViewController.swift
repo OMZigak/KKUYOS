@@ -13,9 +13,9 @@ import SnapKit
 import Then
 
 final class AddPromiseViewController: BaseViewController {
+    let rootView = AddPromiseView()
     private let viewModel: AddPromiseViewModel
     private let disposeBag = DisposeBag()
-    private let rootView = AddPromiseView()
     private let promiseNameTextFieldEndEditingRelay = PublishRelay<Void>()
     private let searchPlaceCompleted = PublishRelay<Place>()
     
