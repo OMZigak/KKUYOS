@@ -154,7 +154,6 @@
 		DD8626612C4606A300E4F980 /* SetReadyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626522C4606A300E4F980 /* SetReadyInfoViewModel.swift */; };
 		DD8626632C4606A300E4F980 /* EnterReadyInfoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626552C4606A300E4F980 /* EnterReadyInfoButtonView.swift */; };
 		DD8626642C4606A300E4F980 /* ReadyPlanInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626562C4606A300E4F980 /* ReadyPlanInfoView.swift */; };
-		DD8626652C4606A300E4F980 /* OurReadyStatusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626572C4606A300E4F980 /* OurReadyStatusCollectionViewCell.swift */; };
 		DD8626662C4606A300E4F980 /* ReadyStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626582C4606A300E4F980 /* ReadyStatusView.swift */; };
 		DD8626672C4606A300E4F980 /* SetReadyInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626592C4606A300E4F980 /* SetReadyInfoView.swift */; };
 		DD8626682C4606A300E4F980 /* ReadyStatusButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD86265A2C4606A300E4F980 /* ReadyStatusButton.swift */; };
@@ -165,6 +164,7 @@
 		DD90E24B2C7BD69800CEE180 /* EditPromiseServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD90E24A2C7BD69800CEE180 /* EditPromiseServiceProtocol.swift */; };
 		DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */; };
 		DD931B762C3DC16100526452 /* PromiseInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B752C3DC16100526452 /* PromiseInfoView.swift */; };
+		DD9F59672C7C7E5C00E928DF /* OurReadyStatusCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD9F59662C7C7E5C00E928DF /* OurReadyStatusCollectionViewCell.swift */; };
 		DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */; };
 		DDA303802C73353300D1045E /* RemovePromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA3037F2C73353300D1045E /* RemovePromiseViewController.swift */; };
 		DDAF1C7C2C3D5B86008A37D3 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = DDAF1C7B2C3D5B86008A37D3 /* RxCocoa */; };
@@ -381,6 +381,7 @@
 		DD90E24A2C7BD69800CEE180 /* EditPromiseServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPromiseServiceProtocol.swift; sourceTree = "<group>"; };
 		DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD931B752C3DC16100526452 /* PromiseInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoView.swift; sourceTree = "<group>"; };
+		DD9F59662C7C7E5C00E928DF /* OurReadyStatusCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OurReadyStatusCollectionViewCell.swift; sourceTree = "<group>"; };
 		DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
 		DDA3037F2C73353300D1045E /* RemovePromiseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePromiseViewController.swift; sourceTree = "<group>"; };
 		DDAF1C832C3D5D19008A37D3 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
@@ -685,6 +686,7 @@
 			children = (
 				78B9286A2C29402C006D9942 /* KkuMulKum */,
 				78B928692C29402C006D9942 /* Products */,
+				DD9F59642C7C7E3B00E928DF /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -790,7 +792,7 @@
 			children = (
 				DD1FD02E2C5CCB2E00D0A72C /* ViewController */,
 				DD1FD0312C5CCEC300D0A72C /* View */,
-				DD3466492C7AF61A00E62284 /* Cell */,
+				DD9F59652C7C7E5C00E928DF /* Cell */,
 			);
 			path = ReadyStatus;
 			sourceTree = "<group>";
@@ -1204,6 +1206,22 @@
 				DD1FD02C2C5CC6DE00D0A72C /* View */,
 			);
 			path = Tardy;
+			sourceTree = "<group>";
+		};
+		DD9F59642C7C7E3B00E928DF /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				DD8626572C4606A300E4F980 /* OurReadyStatusCollectionViewCell.swift */,
+			);
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		DD9F59652C7C7E5C00E928DF /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				DD9F59662C7C7E5C00E928DF /* OurReadyStatusCollectionViewCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		DDA2EE7E2C3860B2007C6059 /* Core */ = {
@@ -2015,6 +2033,7 @@
 				DED5DBEE2C34529A006ECE7E /* BaseView.swift in Sources */,
 				A3DD9C402C41BAD000E58A13 /* MeetingListViewController.swift in Sources */,
 				A3DD9C3F2C41BAD000E58A13 /* MeetingListView.swift in Sources */,
+				DD9F59672C7C7E5C00E928DF /* OurReadyStatusCollectionViewCell.swift in Sources */,
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE0137D32C43C5E50088C777 /* MyPageView.swift in Sources */,
 				DE558C592C45954B008DAC4A /* SelectMemberViewController.swift in Sources */,
@@ -2027,7 +2046,6 @@
 				DE8247FD2C36E7C7000601BC /* MoyaLoggingPlugin.swift in Sources */,
 				DECB845C2C4442490022A003 /* FindPlaceViewController.swift in Sources */,
 				DE3309A72C7099A9003F6E76 /* CustomActionSheetController.swift in Sources */,
-				DD8626652C4606A300E4F980 /* OurReadyStatusCollectionViewCell.swift in Sources */,
 				DD34664E2C7B023F00E62284 /* EditPromiseViewController.swift in Sources */,
 				DD3466552C7B060500E62284 /* ChooseContentViewController.swift in Sources */,
 				DEBB8DEF2C77201200C5A528 /* MeetingInfoPromiseModel.swift in Sources */,
