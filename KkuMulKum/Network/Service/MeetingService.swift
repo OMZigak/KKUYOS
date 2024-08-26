@@ -51,8 +51,11 @@ extension MeetingService: MeetingInfoServiceProtocol {
         return try await request(with: .fetchMeetingMember(meetingID: meetingID))
     }
     
-    func fetchMeetingPromiseList(with meetingID: Int) async throws -> ResponseBodyDTO<MeetingPromisesModel>? {
-        return try await request(with: .fetchMeetingPromiseList(meetingID: meetingID))
+    func fetchMeetingPromiseList(
+        with meetingID: Int,
+        isParticipant: Bool
+    ) async throws -> ResponseBodyDTO<MeetingPromisesModel>? {
+        return try await request(with: .fetchMeetingPromiseList(meetingID: meetingID, isParticipant: isParticipant))
     }
     
     func exitMeeting(with meetingID: Int) -> Single<ResponseBodyDTO<EmptyModel>> {
@@ -175,114 +178,27 @@ final class MockMeetingInfoService: MeetingInfoServiceProtocol {
         return ResponseBodyDTO(success: true, data: mockData, error: nil)
     }
     
-    func fetchMeetingPromiseList(with meetingID: Int) -> ResponseBodyDTO<MeetingPromisesModel>? {
+    func fetchMeetingPromiseList(
+        with meetingID: Int,
+        isParticipant: Bool
+    ) async throws -> ResponseBodyDTO<MeetingPromisesModel>? {
         let mockData = MeetingPromisesModel(
             promises: [
-                MeetingPromise(
-                    promiseID: 1,
-                    name: "꾸물 리프레시 데이",
-                    dDay: 0,
-                    time: "PM 2:00",
-                    placeName: "DMC역"
-                ),
-                MeetingPromise(
-                    promiseID: 2,
-                    name: "꾸물 잼얘 나이트",
-                    dDay: 10,
-                    time: "PM 6:00",
-                    placeName: "홍대입구"
-                ),
-                MeetingPromise(
-                    promiseID: 3,
-                    name: "친구 생일 파티",
-                    dDay: 5,
-                    time: "PM 7:00",
-                    placeName: "강남역"
-                ),
-                MeetingPromise(
-                    promiseID: 4,
-                    name: "주말 산책",
-                    dDay: 3,
-                    time: "AM 10:00",
-                    placeName: "서울숲"
-                ),
-                MeetingPromise(
-                    promiseID: 5,
-                    name: "프로젝트 미팅",
-                    dDay: 1,
-                    time: "AM 9:00",
-                    placeName: "삼성역"
-                ),
-                MeetingPromise(
-                    promiseID: 6,
-                    name: "독서 모임",
-                    dDay: 7,
-                    time: "PM 3:00",
-                    placeName: "합정역"
-                ),
-                MeetingPromise(
-                    promiseID: 7,
-                    name: "헬스클럽 모임",
-                    dDay: 2,
-                    time: "AM 8:00",
-                    placeName: "신촌역"
-                ),
-                MeetingPromise(
-                    promiseID: 8,
-                    name: "영화 관람",
-                    dDay: 4,
-                    time: "PM 8:00",
-                    placeName: "잠실역"
-                ),
-                MeetingPromise(
-                    promiseID: 9,
-                    name: "저녁 식사",
-                    dDay: 6,
-                    time: "PM 7:30",
-                    placeName: "이태원역"
-                ),
-                MeetingPromise(
-                    promiseID: 10,
-                    name: "아침 조깅",
-                    dDay: 14,
-                    time: "AM 6:00",
-                    placeName: "한강공원"
-                ),
-                MeetingPromise(
-                    promiseID: 11,
-                    name: "커피 브레이크",
-                    dDay: 8,
-                    time: "PM 4:00",
-                    placeName: "을지로입구"
-                ),
-                MeetingPromise(
-                    promiseID: 12,
-                    name: "스터디 그룹",
-                    dDay: 12,
-                    time: "PM 5:00",
-                    placeName: "강남역"
-                ),
-                MeetingPromise(
-                    promiseID: 13,
-                    name: "뮤직 페스티벌",
-                    dDay: 9,
-                    time: "PM 2:00",
-                    placeName: "난지공원"
-                ),
-                MeetingPromise(
-                    promiseID: 14,
-                    name: "낚시 여행",
-                    dDay: 11,
-                    time: "AM 5:00",
-                    placeName: "속초항"
-                ),
-                MeetingPromise(
-                    promiseID: 15,
-                    name: "가족 모임",
-                    dDay: 13,
-                    time: "PM 1:00",
-                    placeName: "광화문역"
-                )
+                MeetingPromise(promiseID: 1,name: "꾸물 리프레시 데이",dDay: 0,time: "PM 2:00",placeName: "DMC역"),
+                MeetingPromise(promiseID: 2,name: "꾸물 잼얘 나이트",dDay: 10,time: "PM 6:00",placeName: "홍대입구"),
+                MeetingPromise(promiseID: 3,name: "친구 생일 파티",dDay: 5,time: "PM 7:00",placeName: "강남역"),
+                MeetingPromise(promiseID: 4,name: "주말 산책",dDay: 3,time: "AM 10:00",placeName: "서울숲"),
+                MeetingPromise(promiseID: 5,name: "프로젝트 미팅",dDay: 1,time: "AM 9:00",placeName: "삼성역"),
+                MeetingPromise(promiseID: 6,name: "독서 모임",dDay: 7,time: "PM 3:00",placeName: "합정역"),
+                MeetingPromise(promiseID: 7,name: "헬스클럽 모임",dDay: 2,time: "AM 8:00",placeName: "신촌역"),
+                MeetingPromise(promiseID: 8,name: "영화 관람",dDay: 4,time: "PM 8:00",placeName: "잠실역"),
+                MeetingPromise(promiseID: 9,name: "저녁 식사",dDay: 6,time: "PM 7:30",placeName: "이태원역"),
+                MeetingPromise(promiseID: 10,name: "아침 조깅",dDay: 14,time: "AM 6:00",placeName: "한강공원"),
+                MeetingPromise(promiseID: 11,name: "커피 브레이크",dDay: 8,time: "PM 4:00",placeName: "을지로입구"),
+                MeetingPromise(promiseID: 12,name: "스터디 그룹",dDay: 12,time: "PM 5:00",placeName: "강남역"),
+                MeetingPromise(promiseID: 13,name: "뮤직 페스티벌",dDay: 9,time: "PM 2:00",placeName: "난지공원"),
+                MeetingPromise(promiseID: 14, name: "낚시 여행", dDay: 11, time: "AM 5:00", placeName: "속초항"),
+                MeetingPromise(promiseID: 15, name: "가족 모임", dDay: 13, time: "PM 1:00", placeName: "광화문역")
             ]
         )
         
