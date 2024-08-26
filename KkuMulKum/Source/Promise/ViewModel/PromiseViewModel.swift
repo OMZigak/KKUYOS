@@ -173,7 +173,7 @@ extension PromiseViewModel {
     }
     
     /// 약속 상세 정보 조회 API 구현 함수
-    func fetchPromiseInfo(promiseID: Int, completion: @escaping () -> Void) {
+    func fetchPromiseInfo(promiseID: Int) {
         Task {
             do {
                 let result = try await service.fetchPromiseInfo(with: promiseID)
@@ -184,9 +184,8 @@ extension PromiseViewModel {
                     return
                 }
                 
+                print(">>>>> \(result?.data) : \(#function)")
                 promiseInfo.value = result?.data
-                print(">>>>> \(promiseInfo.value) : \(#function)")
-                completion()
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }

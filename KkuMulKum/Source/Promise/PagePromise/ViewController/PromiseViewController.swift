@@ -47,14 +47,6 @@ class PromiseViewController: BaseViewController {
         ]
         
         super.init(nibName: nil, bundle: nil)
-        
-        viewModel.fetchPromiseInfo(promiseID: viewModel.promiseID) {
-            DispatchQueue.main.async {
-                self.promiseInfoViewController = PromiseInfoViewController(viewModel: self.viewModel)
-                self.promiseInfoViewController.setupContent()
-                self.promiseInfoViewController.setUpTimeContent()
-            }
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -156,11 +148,14 @@ class PromiseViewController: BaseViewController {
 
 private extension PromiseViewController {
     func setupBindings() {
-        viewModel.promiseInfo.bind { info in
-            DispatchQueue.main.async {
-                self.setupNavigationBarTitle(with: info?.promiseName ?? "")
-                self.removePromiseViewContoller.promiseNameLabel.text = info?.promiseName ?? ""
-            }
+        viewModel.promiseInfo.bindOnMain(with: self) { owner, info in
+            print(">>>>> \(info) : \(#function)")
+            
+            owner.setupNavigationBarTitle(with: info?.promiseName ?? "")
+            owner.promiseInfoViewController.rootView.editButton.isHidden = !(info?.isParticipant ?? false)
+            owner.promiseInfoViewController.setupContent()
+            owner.promiseInfoViewController.setUpTimeContent()
+            owner.removePromiseViewContoller.promiseNameLabel.text = info?.promiseName ?? ""
         }
     }
     

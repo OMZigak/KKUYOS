@@ -37,22 +37,21 @@ class PromiseInfoViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .gray0
+        setupBinding()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setupBinding()
         viewModel.fetchPromiseParticipantList()
+        viewModel.fetchPromiseInfo(promiseID: viewModel.promiseID)
     }
     
     
     // MARK: - Setup
     
     override func setupView() {
-        setupContent()
-        setUpTimeContent()
+        view.backgroundColor = .gray0
     }
     
     override func setupDelegate() {
@@ -78,7 +77,7 @@ extension PromiseInfoViewController {
                 placeName: viewModel.promiseInfo.value?.placeName,
                 time: viewModel.promiseInfo.value?.time,
                 dressUpLevel: viewModel.promiseInfo.value?.dressUpLevel,
-                penalty: viewModel.promiseInfo.value?.penalty, 
+                penalty: viewModel.promiseInfo.value?.penalty,
                 service: PromiseService()
             )
         )
@@ -87,29 +86,15 @@ extension PromiseInfoViewController {
     }
     
     func setupBinding() {
+        /// promiseInfo 할당 자체가 비동기
         viewModel.promiseInfo.bind(with: self) { owner, info in
-            owner.rootView.editButton.isHidden = !(info?.isParticipant ?? false)
-            
-            self.setUpTimeContent()
-            
-            owner.rootView.readyLevelContentLabel.setText(
-                info?.dressUpLevel ?? "꾸밈 난이도가 설정되지 않았어요!",
-                style: .body04,
-                color: .gray7
-            )
-            
-            owner.rootView.locationContentLabel.setText(
-                info?.address ?? "위치 정보가 설정되지 않았어요!",
-                style: .body04,
-                color: .gray7,
-                isSingleLine: true
-            )
-            
-            owner.rootView.penaltyLevelContentLabel.setText(
-                info?.penalty ?? "벌칙이 설정되지 않았어요!",
-                style: .body04,
-                color: .gray7
-            )
+            DispatchQueue.main.async {
+                owner.rootView.editButton.isHidden = !(info?.isParticipant ?? false)
+                
+                
+                
+                print(">>>>> \(info) : \(#function)")
+            }
         }
         
         viewModel.participantsInfo.bind(with: self) { owner, participantsInfo in
@@ -132,26 +117,30 @@ extension PromiseInfoViewController {
     }
     
     func setupContent() {
-        DispatchQueue.main.async {
-            if let name = self.viewModel.promiseInfo.value?.promiseName {
-                self.rootView.promiseNameLabel.setText(name, style: .body04)
-            } else {
-                print("넌조졋다")
-            }
-            
-            self.rootView.locationContentLabel.setText(
-                self.viewModel.promiseInfo.value?.placeName ?? "약속 장소 미설정",
-                style: .body04
-            )
-            self.rootView.readyLevelContentLabel.setText(
-                self.viewModel.promiseInfo.value?.dressUpLevel ?? "꾸레벨 미설정",
-                style: .body04
-            )
-            self.rootView.penaltyLevelContentLabel.setText(
-                self.viewModel.promiseInfo.value?.penalty ?? "벌칙 미설정",
-                style: .body04
-            )
+        print(">>>>> \(self.viewModel.promiseInfo.value) : \(#function)")
+        
+        /// 데이터가 있는데 if let이 첫번째 디버깅(promiseVC)에서는 당연히 안받아와지고
+        /// 두번째 디버깅(fetchPromiseIInfo)에서는 받아와짐
+        /// 근데 두번째 디버깅 밑 setUpContent는 UI가 안바뀜
+        /// PromiseVC 외부에서 정보를 받아올 수 없어(사유: 통신 함수 선언은 뷰모델 내부에 잇음) 조졋다.
+        if let name = self.viewModel.promiseInfo.value?.promiseName {
+            self.rootView.promiseNameLabel.setText(name, style: .body04)
+        } else {
+            print("넌조졋다")
         }
+        
+        self.rootView.locationContentLabel.setText(
+            self.viewModel.promiseInfo.value?.placeName ?? "약속 장소 미설정",
+            style: .body04
+        )
+        self.rootView.readyLevelContentLabel.setText(
+            self.viewModel.promiseInfo.value?.dressUpLevel ?? "꾸레벨 미설정",
+            style: .body04
+        )
+        self.rootView.penaltyLevelContentLabel.setText(
+            self.viewModel.promiseInfo.value?.penalty ?? "벌칙 미설정",
+            style: .body04
+        )
     }
     
     func setUpTimeContent() {
@@ -170,8 +159,6 @@ extension PromiseInfoViewController {
         
         let time = dateFormatter.string(from: date)
         
-        rootView.timeContentLabel.setText(time, style: .body04)
-        
         let currentDate = Calendar.current
         
         let components = currentDate.dateComponents([.day], from: Date(), to: date)
@@ -179,7 +166,7 @@ extension PromiseInfoViewController {
             return
         }
         
-        print(">>>>> \(remainDay) : \(#function)")
+        rootView.timeContentLabel.setText(time, style: .body04)
         
         if remainDay == 0 {
             rootView.dDayLabel.setText("D-DAY" ,style: .body05, color: .mainorange)
