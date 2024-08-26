@@ -83,11 +83,6 @@ class MyPageEditViewController: BaseViewController {
             .drive(rootView.confirmButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        output.isConfirmButtonEnabled
-            .map { $0 ? 1.0 : 0.5 }
-            .drive(rootView.confirmButton.rx.alpha)
-            .disposed(by: disposeBag)
-        
         output.userInfo
             .drive(onNext: { [weak self] userInfo in
                 self?.updateProfileImage(with: userInfo?.profileImageURL)
