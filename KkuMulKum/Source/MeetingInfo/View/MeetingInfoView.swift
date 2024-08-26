@@ -144,7 +144,7 @@ final class MeetingInfoView: BaseView {
         
         segmentedControl.snp.makeConstraints {
             $0.top.equalTo(promiseDescriptionLabel.snp.bottom).offset(16)
-            $0.leading.equalToSuperview().offset(20)
+            $0.leading.equalToSuperview().offset(15)
             $0.height.equalTo(Screen.height(26))
         }
         
