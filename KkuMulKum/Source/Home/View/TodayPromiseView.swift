@@ -58,17 +58,11 @@ final class TodayPromiseView: BaseView {
     
     private let lineView = UIView(backgroundColor: .gray2)
     
-    let prepareLineView = UIView(backgroundColor: .maincolor).then {
-        $0.isHidden = true
-    }
+    let prepareLineView = UIView(backgroundColor: .maincolor)
     
-    let moveLineView = UIView(backgroundColor: .maincolor).then {
-        $0.isHidden = true
-    }
+    let moveLineView = UIView(backgroundColor: .maincolor)
     
-    let arriveLineView = UIView(backgroundColor: .maincolor).then {
-        $0.isHidden = true
-    }
+    let arriveLineView = UIView(backgroundColor: .maincolor)
     
     let prepareCircleView = UIView(backgroundColor: .maincolor).then {
         $0.layer.cornerRadius = 8
@@ -84,49 +78,38 @@ final class TodayPromiseView: BaseView {
     
     let prepareCheckView = UIImageView().then {
         $0.image = .iconCheck
-        $0.isHidden = true
     }
     
     let moveCheckView = UIImageView().then {
         $0.image = .iconCheck
-        $0.isHidden = true
     }
     
     let arriveCheckView = UIImageView().then {
         $0.image = .iconCheck
-        $0.isHidden = true
     }
     
     let prepareButton = UIButton().then {
-        $0.setTitle("준비 시작", style: .body05, color: .maincolor)
         $0.setLayer(borderWidth: 1, borderColor: .maincolor, cornerRadius: 16)
     }
     
     let moveButton = UIButton().then {
-        $0.setTitle("이동 시작", style: .body05, color: .gray4)
-        $0.setLayer(borderWidth: 1, borderColor: .gray4, cornerRadius: 16)
-        $0.isEnabled = false
+        $0.setLayer(borderWidth: 1, borderColor: .maincolor, cornerRadius: 16)
     }
     
     let arriveButton = UIButton().then {
-        $0.setTitle("도착 완료", style: .body05, color: .gray4)
-        $0.setLayer(borderWidth: 1, borderColor: .gray4, cornerRadius: 16)
-        $0.isEnabled = false
+        $0.setLayer(borderWidth: 1, borderColor: .maincolor, cornerRadius: 16)
     }
     
     let prepareLabel = UILabel().then {
         $0.setText("준비를 시작 시 눌러주세요", style: .label02, color: .gray5)
-        $0.isHidden = false
     }
     
     let moveLabel = UILabel().then {
         $0.setText("이동를 시작 시 눌러주세요", style: .label02, color: .gray5)
-        $0.isHidden = true
     }
     
     let arriveLabel = UILabel().then {
         $0.setText("도착 완료 시 눌러주세요", style: .label02, color: .gray5)
-        $0.isHidden = true
     }
     
     let prepareTimeLabel = UILabel()
