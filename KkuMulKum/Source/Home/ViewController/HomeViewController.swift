@@ -47,32 +47,21 @@ class HomeViewController: BaseViewController {
         
         view.backgroundColor = .maincolor
         register()
-        
-        viewModel.requestLoginUser()
-        viewModel.requestNearestPromise()
-        viewModel.requestUpcomingPromise()
-        
-        updateUI()
-        
-        updateUserInfo()
-        updateNearestPromise()
-        updateUpcomingPromise()
+        setupBinding()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
-        
-        updateUI()
-        
-        updateUserInfo()
-        updateNearestPromise()
-        updateUpcomingPromise()
+
         viewModel.requestLoginUser()
         viewModel.requestNearestPromise()
         viewModel.requestUpcomingPromise()
     }
     
+    
+    // MARK: - Function
+
     override func setupAction() {
         rootView.todayButton.addTarget(
             self,
@@ -168,8 +157,11 @@ extension HomeViewController: UICollectionViewDataSource {
             withReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier, 
             for: indexPath
         ) as? UpcomingPromiseCollectionViewCell else { return UICollectionViewCell() }
+
         if let data = viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item] {
-            cell.dataBind(data)
+            let formattedTime = viewModel.formattedTimes.value[indexPath.item]
+            let formattedDay = viewModel.formattedDays.value[indexPath.item]
+            cell.dataBind(data, formattedTime: formattedTime, formattedDay: formattedDay)
         }
         return cell
     }    
@@ -181,9 +173,8 @@ extension HomeViewController: UICollectionViewDataSource {
 extension HomeViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let maxOffsetY = rootView.scrollView.contentSize.height - rootView.scrollView.bounds.height
-        if rootView.scrollView.contentOffset.y > maxOffsetY {
-            rootView.scrollView.contentOffset.y = maxOffsetY
-        }
+        
+        rootView.backgroundColor = rootView.scrollView.contentOffset.y >= maxOffsetY ? .gray0 : .maincolor
     }
 }
 
@@ -198,7 +189,14 @@ private extension HomeViewController {
         )
     }
     
-    func updateUI() {
+    func setupBinding() {
+        bindCurrentState()
+        bindUserInfo()
+        bindNearestPromise()
+        bindUpcomingPromise()
+    }
+    
+    func bindCurrentState() {
         viewModel.currentState.bind { [weak self] state in
             DispatchQueue.main.async {
                 switch state {
@@ -209,90 +207,97 @@ private extension HomeViewController {
                 case .arrive:
                     self?.setArriveUI()
                 case .none:
-                    break
+                    self?.setNoneUI()
                 }
             }
         }
     }
     
-    func updateUserInfo() {
+    func bindUserInfo() {
         viewModel.loginUser.bind { [weak self] _ in
+            guard let self,
+                  let responseBody = viewModel.loginUser.value,
+                  let data = responseBody.data
+            else {
+                return
+            }
+            
             DispatchQueue.main.async {
-                let data = self?.viewModel.loginUser.value
+                let characterImage = self.rootView.levelCharacterImage
                 
-                self?.rootView.kkumulLabel.setText(
-                    "\(data?.data?.name ?? "") 님,\n\(data?.data?.promiseCount ?? 0)번의 약속에서\n\(data?.data?.tardyCount ?? 0)번 꾸물거렸어요!",
+                self.rootView.kkumulLabel.setText(
+                    "\(data.name ?? "") 님,\n\(data.promiseCount)번의 약속에서\n\(data.tardyCount)번 꾸물거렸어요!",
                     style: .title02,
                     color: .white
                 )
-                self?.rootView.kkumulLabel.setHighlightText(
-                    "\(data?.data?.name ?? "") 님,",
+                self.rootView.kkumulLabel.setHighlightText(
+                    "\(data.name ?? "") 님,",
                     style: .title00,
                     color: .white
                 )
-                self?.rootView.kkumulLabel.setHighlightText(
-                    "\(data?.data?.promiseCount ?? 0)번",
-                    "\(data?.data?.tardyCount ?? 0)번",
+                self.rootView.kkumulLabel.setHighlightText(
+                    "\(data.promiseCount)번",
+                    "\(data.tardyCount)번",
                     style: .title00,
                     color: .lightGreen
                 )
-                self?.rootView.levelLabel.setText(
-                    "Lv.\(data?.data?.level ?? 0)  \(self?.viewModel.levelName.value ?? "")",
+                self.rootView.levelLabel.setText(
+                    "Lv.\(data.level)  \(self.viewModel.levelName.value)",
                     style: .caption01,
                     color: .gray6
                 )
-                self?.rootView.levelLabel.setHighlightText(
-                    "Lv.\(data?.data?.level ?? 0)",
+                self.rootView.levelLabel.setHighlightText(
+                    "Lv.\(data.level)",
                     style: .caption01,
                     color: .maincolor
                 )
-                self?.rootView.levelCaptionLabel.setText(
-                    self?.viewModel.levelCaption.value ?? "",
+                self.rootView.levelCaptionLabel.setText(
+                    self.viewModel.levelCaption.value,
                     style: .label01,
                     color: .white
                 )
-                switch data?.data?.level {
-                case 1: self?.rootView.levelCharacterImage.image = .imgLevel01
-                case 2: self?.rootView.levelCharacterImage.image = .imgLevel02
-                case 3: self?.rootView.levelCharacterImage.image = .imgLevel03
-                case 4: self?.rootView.levelCharacterImage.image = .imgLevel04
+                switch data.level {
+                case 1: characterImage.image = .imgLevel01
+                case 2: characterImage.image = .imgLevel02
+                case 3: characterImage.image = .imgLevel03
+                case 4: characterImage.image = .imgLevel04
                 default: break
                 }
             }
         }
     }
     
-    func updateNearestPromise() {
+    func bindNearestPromise() {
         viewModel.nearestPromise.bind { [weak self] _ in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                let data = self.viewModel.nearestPromise.value
+                let data = self.viewModel.nearestPromise.value?.data
                 
-                if data?.data == nil {
+                if data == nil {
                     self.rootView.todayPromiseView.isHidden = true
-                    self.rootView.todayEmptyView.isHidden = false
                     self.rootView.todayButton.isHidden = true
+                    self.rootView.todayEmptyView.isHidden = false
                 } else {
-                    self.rootView.todayButton.isHidden = false
                     self.rootView.todayPromiseView.isHidden = false
+                    self.rootView.todayButton.isHidden = false
                     self.rootView.todayEmptyView.isHidden = true
                     self.rootView.todayPromiseView.meetingNameLabel.setText(
-                        data?.data?.meetingName ?? "",
+                        data?.meetingName ?? "",
                         style: .caption02,
                         color: .green3
                     )
                     self.rootView.todayPromiseView.nameLabel.setText(
-                        data?.data?.name ?? "",
+                        data?.name ?? "",
                         style: .body03,
                         color: .gray8
                     )
                     self.rootView.todayPromiseView.placeNameLabel.setText(
-                        data?.data?.placeName ?? "",
+                        data?.placeName ?? "",
                         style: .body06,
                         color: .gray7
                     )
                     self.rootView.todayPromiseView.timeLabel.setText(
-                        data?.data?.time ?? "",
+                        self.viewModel.todayFormattedTime.value,
                         style: .body06,
                         color: .gray7
                     )
@@ -301,7 +306,7 @@ private extension HomeViewController {
         }
     }
     
-    func updateUpcomingPromise() {
+    func bindUpcomingPromise() {
         viewModel.upcomingPromiseList.bind { [weak self] _ in
             guard let self,
                   let responseBody = viewModel.upcomingPromiseList.value,
@@ -323,56 +328,116 @@ private extension HomeViewController {
         }
     }
     
+   func getCurrentTimeString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "a h:mm"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        return dateFormatter.string(from: Date())
+    }
+    
     func setDisableButton(_ sender: UIButton) {
-        sender.setTitleColor(.gray3, for: .normal)
         sender.layer.borderColor = UIColor.gray3.cgColor
         sender.backgroundColor = .white
     }
     
     func setEnableButton(_ sender: UIButton) {
-        sender.setTitleColor(.maincolor, for: .normal)
         sender.layer.borderColor = UIColor.maincolor.cgColor
         sender.backgroundColor = .white
     }
     
     func setProgressButton(_ sender: UIButton) {
-        sender.setTitleColor(.maincolor, for: .normal)
         sender.layer.borderColor = UIColor.maincolor.cgColor
         sender.backgroundColor = .green2
     }
     
     func setCompleteButton(_ sender: UIButton) {
-        sender.setTitleColor(.white, for: .normal)
         sender.layer.borderColor = UIColor.maincolor.cgColor
         sender.backgroundColor = .maincolor
     }
     
+    func setNoneUI() {
+        setEnableButton(rootView.todayPromiseView.prepareButton)
+        setDisableButton(rootView.todayPromiseView.moveButton)
+        setDisableButton(rootView.todayPromiseView.arriveButton)
+        
+        rootView.todayPromiseView.prepareButton.setTitle("준비 시작", style: .body05, color: .maincolor)
+        rootView.todayPromiseView.moveButton.setTitle("이동 시작", style: .body05, color: .gray3)
+        rootView.todayPromiseView.arriveButton.setTitle("도착 완료", style: .body05, color: .gray3)
+        
+        rootView.todayPromiseView.prepareButton.isEnabled = true
+        rootView.todayPromiseView.moveButton.isEnabled = false
+        rootView.todayPromiseView.arriveButton.isEnabled = false
+        
+        rootView.todayPromiseView.prepareCircleView.backgroundColor = .gray2
+        rootView.todayPromiseView.moveCircleView.backgroundColor = .gray2
+        rootView.todayPromiseView.arriveCircleView.backgroundColor = .gray2
+        
+        rootView.todayPromiseView.prepareCheckView.isHidden = true
+        rootView.todayPromiseView.moveCheckView.isHidden = true
+        rootView.todayPromiseView.arriveCheckView.isHidden = true
+        
+        rootView.todayPromiseView.prepareLabel.isHidden = false
+        rootView.todayPromiseView.moveLabel.isHidden = true
+        rootView.todayPromiseView.arriveLabel.isHidden = true
+        
+        rootView.todayPromiseView.prepareLineView.isHidden = true
+        rootView.todayPromiseView.moveLineView.isHidden = true
+        rootView.todayPromiseView.arriveLineView.isHidden = true
+        
+        rootView.todayPromiseView.prepareTimeLabel.isHidden = true
+        rootView.todayPromiseView.moveTimeLabel.isHidden = true
+        rootView.todayPromiseView.arriveTimeLabel.isHidden = true
+    }
+    
     func setPrepareUI() {
         setProgressButton(rootView.todayPromiseView.prepareButton)
-        rootView.todayPromiseView.moveButton.setTitle("준비 중", for: .normal)
         setEnableButton(rootView.todayPromiseView.moveButton)
         setDisableButton(rootView.todayPromiseView.arriveButton)
         
+        rootView.todayPromiseView.prepareButton.setTitle("준비 중", style: .body05, color: .maincolor)
+        rootView.todayPromiseView.moveButton.setTitle("이동 시작", style: .body05, color: .maincolor)
+        rootView.todayPromiseView.arriveButton.setTitle("도착 완료", style: .body05, color: .gray3)
+        
         rootView.todayPromiseView.prepareButton.isEnabled = false
         rootView.todayPromiseView.moveButton.isEnabled = true
+        rootView.todayPromiseView.arriveButton.isEnabled = false
         
         rootView.todayPromiseView.prepareCircleView.backgroundColor = .green2
+        rootView.todayPromiseView.moveCircleView.backgroundColor = .gray2
+        rootView.todayPromiseView.arriveCircleView.backgroundColor = .gray2
+        
+        rootView.todayPromiseView.prepareCheckView.isHidden = true
+        rootView.todayPromiseView.moveCheckView.isHidden = true
+        rootView.todayPromiseView.arriveCheckView.isHidden = true
         
         rootView.todayPromiseView.prepareLabel.isHidden = true
         rootView.todayPromiseView.moveLabel.isHidden = false
+        rootView.todayPromiseView.arriveLabel.isHidden = true
         
         rootView.todayPromiseView.prepareLineView.isHidden = false
+        rootView.todayPromiseView.moveLineView.isHidden = true
+        rootView.todayPromiseView.arriveLineView.isHidden = true
         
+        let currentTime = getCurrentTimeString()
         rootView.todayPromiseView.prepareTimeLabel.setText(
-            self.viewModel.myReadyStatus.value?.data?.preparationStartAt ?? "", style: .caption02, color: .gray8
+            self.viewModel.myReadyStatus.value?.data?.preparationStartAt ?? currentTime,
+            style: .caption02,
+            color: .gray8
         )
+        
+        rootView.todayPromiseView.prepareTimeLabel.isHidden = false
+        rootView.todayPromiseView.moveTimeLabel.isHidden = true
+        rootView.todayPromiseView.arriveTimeLabel.isHidden = true
     }
     
     func setMoveUI() {
         setCompleteButton(rootView.todayPromiseView.prepareButton)
-        rootView.todayPromiseView.moveButton.setTitle("이동 중", for: .normal)
         setProgressButton(rootView.todayPromiseView.moveButton)
         setEnableButton(rootView.todayPromiseView.arriveButton)
+        
+        rootView.todayPromiseView.prepareButton.setTitle("준비 중", style: .body05, color: .white)
+        rootView.todayPromiseView.moveButton.setTitle("이동 중", style: .body05, color: .maincolor)
+        rootView.todayPromiseView.arriveButton.setTitle("도착 완료", style: .body05, color: .maincolor)
         
         rootView.todayPromiseView.prepareButton.isEnabled = false
         rootView.todayPromiseView.moveButton.isEnabled = false
@@ -380,28 +445,45 @@ private extension HomeViewController {
         
         rootView.todayPromiseView.prepareCircleView.backgroundColor = .maincolor
         rootView.todayPromiseView.moveCircleView.backgroundColor = .green2
+        rootView.todayPromiseView.arriveCircleView.backgroundColor = .gray2
         
         rootView.todayPromiseView.prepareLabel.isHidden = true
         rootView.todayPromiseView.moveLabel.isHidden = true
         rootView.todayPromiseView.arriveLabel.isHidden = false
         
         rootView.todayPromiseView.prepareCheckView.isHidden = false
+        rootView.todayPromiseView.moveCheckView.isHidden = true
+        rootView.todayPromiseView.arriveCheckView.isHidden = true
         
         rootView.todayPromiseView.prepareLineView.isHidden = false
         rootView.todayPromiseView.moveLineView.isHidden = false
+        rootView.todayPromiseView.arriveLineView.isHidden = true
         
+        let currentTime = getCurrentTimeString()
         rootView.todayPromiseView.prepareTimeLabel.setText(
-            self.viewModel.myReadyStatus.value?.data?.preparationStartAt ?? "", style: .caption02, color: .gray8
+            self.viewModel.myReadyStatus.value?.data?.preparationStartAt ?? currentTime,
+            style: .caption02,
+            color: .gray8
         )
         rootView.todayPromiseView.moveTimeLabel.setText(
-            self.viewModel.myReadyStatus.value?.data?.departureAt ?? "", style: .caption02, color: .gray8
+            self.viewModel.myReadyStatus.value?.data?.departureAt ?? currentTime,
+            style: .caption02,
+            color: .gray8
         )
+        
+        rootView.todayPromiseView.prepareTimeLabel.isHidden = false
+        rootView.todayPromiseView.moveTimeLabel.isHidden = false
+        rootView.todayPromiseView.arriveTimeLabel.isHidden = true
     }
     
     func setArriveUI() {
         setCompleteButton(rootView.todayPromiseView.prepareButton)
         setCompleteButton(rootView.todayPromiseView.moveButton)
         setCompleteButton(rootView.todayPromiseView.arriveButton)
+        
+        rootView.todayPromiseView.prepareButton.setTitle("준비 중", style: .body05, color: .white)
+        rootView.todayPromiseView.moveButton.setTitle("이동 중", style: .body05, color: .white)
+        rootView.todayPromiseView.arriveButton.setTitle("도착 완료", style: .body05, color: .white)
         
         rootView.todayPromiseView.prepareButton.isEnabled = false
         rootView.todayPromiseView.moveButton.isEnabled = false
@@ -423,15 +505,26 @@ private extension HomeViewController {
         rootView.todayPromiseView.moveLineView.isHidden = false
         rootView.todayPromiseView.arriveLineView.isHidden = false
         
+        let currentTime = getCurrentTimeString()
         rootView.todayPromiseView.prepareTimeLabel.setText(
-            self.viewModel.myReadyStatus.value?.data?.preparationStartAt ?? "", style: .caption02, color: .gray8
+            self.viewModel.myReadyStatus.value?.data?.preparationStartAt ?? currentTime,
+            style: .caption02,
+            color: .gray8
         )
         rootView.todayPromiseView.moveTimeLabel.setText(
-            self.viewModel.myReadyStatus.value?.data?.departureAt ?? "", style: .caption02, color: .gray8
+            self.viewModel.myReadyStatus.value?.data?.departureAt ?? currentTime,
+            style: .caption02,
+            color: .gray8
         )
         rootView.todayPromiseView.arriveTimeLabel.setText(
-            self.viewModel.myReadyStatus.value?.data?.arrivalAt ?? "", style: .caption02, color: .gray8
+            self.viewModel.myReadyStatus.value?.data?.arrivalAt ?? currentTime,
+            style: .caption02,
+            color: .gray8
         )
+        
+        rootView.todayPromiseView.prepareTimeLabel.isHidden = false
+        rootView.todayPromiseView.moveTimeLabel.isHidden = false
+        rootView.todayPromiseView.arriveTimeLabel.isHidden = false
     }
     
     
@@ -455,15 +548,18 @@ private extension HomeViewController {
     @objc
     func prepareButtonDidTap(_ sender: UIButton) {
         viewModel.updatePrepareStatus()
+        viewModel.currentState.value = .prepare
     }
     
     @objc
     func moveButtonDidTap(_ sender: UIButton) {
         viewModel.updateMoveStatus()
+        viewModel.currentState.value = .move
     }
     
     @objc
     func arriveButtonDidTap(_ sender: UIButton) {
         viewModel.updateArriveStatus()
+        viewModel.currentState.value = .arrive
     }
 }

@@ -12,7 +12,7 @@ import Foundation
 
 struct NearestPromiseModel: ResponseModelType {
     let promiseID, dDay: Int
-    let name, meetingName, dressUpLevel, date, time, placeName: String
+    let name, meetingName, dressUpLevel, time, placeName: String
     
     enum CodingKeys: String, CodingKey {
         case promiseID = "promiseId"
@@ -20,7 +20,6 @@ struct NearestPromiseModel: ResponseModelType {
         case name
         case meetingName
         case dressUpLevel
-        case date
         case time
         case placeName
     }
