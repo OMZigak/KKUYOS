@@ -75,7 +75,7 @@ extension PromiseTargetType: TargetType {
             return "/api/v1/promises/\(promiseID)/completion"
         case .fetchPromiseAvailableMember(let promiseID):
             return "/api/v1/promises/\(promiseID)/members"
-        case .putPromiseInfo(promiseID: let promiseID):
+        case .putPromiseInfo(let promiseID, _):
             return "/api/v1/promises/\(promiseID)"
         case .deletePromise(promiseID: let promiseID):
             return "/api/v1/promises/\(promiseID)"

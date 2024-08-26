@@ -118,7 +118,7 @@
 		DD3072262C3C0F0B00416D9F /* TardyInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3072252C3C0F0B00416D9F /* TardyInfoModel.swift */; };
 		DD34664E2C7B023F00E62284 /* EditPromiseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD34664D2C7B023F00E62284 /* EditPromiseViewController.swift */; };
 		DD3466532C7B044F00E62284 /* ChooseMemberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3466522C7B044F00E62284 /* ChooseMemberViewController.swift */; };
-		DD3466552C7B060500E62284 /* EnterContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3466542C7B060500E62284 /* EnterContentViewController.swift */; };
+		DD3466552C7B060500E62284 /* ChooseContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3466542C7B060500E62284 /* ChooseContentViewController.swift */; };
 		DD3466572C7B0B3200E62284 /* EditPromiseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3466562C7B0B3200E62284 /* EditPromiseViewModel.swift */; };
 		DD3976682C41769400E2A4C4 /* CreateMeetingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3976672C41769400E2A4C4 /* CreateMeetingViewModel.swift */; };
 		DD39766F2C41B54400E2A4C4 /* InviteCodeServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD39766E2C41B54400E2A4C4 /* InviteCodeServiceProtocol.swift */; };
@@ -333,7 +333,7 @@
 		DD3072252C3C0F0B00416D9F /* TardyInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TardyInfoModel.swift; sourceTree = "<group>"; };
 		DD34664D2C7B023F00E62284 /* EditPromiseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPromiseViewController.swift; sourceTree = "<group>"; };
 		DD3466522C7B044F00E62284 /* ChooseMemberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseMemberViewController.swift; sourceTree = "<group>"; };
-		DD3466542C7B060500E62284 /* EnterContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterContentViewController.swift; sourceTree = "<group>"; };
+		DD3466542C7B060500E62284 /* ChooseContentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseContentViewController.swift; sourceTree = "<group>"; };
 		DD3466562C7B0B3200E62284 /* EditPromiseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPromiseViewModel.swift; sourceTree = "<group>"; };
 		DD3976672C41769400E2A4C4 /* CreateMeetingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateMeetingViewModel.swift; sourceTree = "<group>"; };
 		DD39766E2C41B54400E2A4C4 /* InviteCodeServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodeServiceProtocol.swift; sourceTree = "<group>"; };
@@ -855,7 +855,7 @@
 			children = (
 				DD34664D2C7B023F00E62284 /* EditPromiseViewController.swift */,
 				DD3466522C7B044F00E62284 /* ChooseMemberViewController.swift */,
-				DD3466542C7B060500E62284 /* EnterContentViewController.swift */,
+				DD3466542C7B060500E62284 /* ChooseContentViewController.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -2029,7 +2029,7 @@
 				DE3309A72C7099A9003F6E76 /* CustomActionSheetController.swift in Sources */,
 				DD8626652C4606A300E4F980 /* OurReadyStatusCollectionViewCell.swift in Sources */,
 				DD34664E2C7B023F00E62284 /* EditPromiseViewController.swift in Sources */,
-				DD3466552C7B060500E62284 /* EnterContentViewController.swift in Sources */,
+				DD3466552C7B060500E62284 /* ChooseContentViewController.swift in Sources */,
 				DEBB8DEF2C77201200C5A528 /* MeetingInfoPromiseModel.swift in Sources */,
 				DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */,
 				DDFA50802C4693BD000A62E2 /* ProfileSetupView.swift in Sources */,

@@ -66,10 +66,6 @@ class PromiseInfoViewController: BaseViewController {
 private extension PromiseInfoViewController {
     @objc
     func editButtonDidTap() {
-        let participantList = viewModel.participantsInfo.value?.map({ participant in
-            participant.memberId
-        })
-        
         let viewController = EditPromiseViewController(
             viewModel: EditPromiseViewModel(
                 promiseID: viewModel.promiseID,

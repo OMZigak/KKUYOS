@@ -13,8 +13,8 @@ class EditPromiseViewModel {
     let promiseName: ObservablePattern<String>?
     let placeName: ObservablePattern<String>?
     let participantList: ObservablePattern<[AvailableMember]>?
-    let dressUpLevel: String?
-    let penalty: String?
+    let dressUpLevel: ObservablePattern<String>?
+    let penalty: ObservablePattern<String>?
     
     var xCoordinate: Double?
     var yCoordinate: Double?
@@ -50,8 +50,8 @@ class EditPromiseViewModel {
         self.roadAddress = roadAddress
         self.time = time
         self.participantList = ObservablePattern<[AvailableMember]>(participantList ?? [])
-        self.dressUpLevel = dressUpLevel
-        self.penalty = penalty
+        self.dressUpLevel = ObservablePattern<String>(dressUpLevel ?? "")
+        self.penalty = ObservablePattern<String>(penalty ?? "")
         self.service = service
     }
 }
@@ -109,10 +109,18 @@ extension EditPromiseViewModel {
         
         self.time = dateFormatter.string(from: calendar.date(from: combinedComponents)!)
     }
+    
+    func updateDressLevel(text: String) {
+        dressUpLevel?.value = text
+    }
+    
+    func updatePenaltyLevel(text: String) {
+        penalty?.value = text
+    }
 }
 
 extension EditPromiseViewModel {
-    func putPromiseInfo(request: EditPromiseRequestModel) {
+    func putPromiseInfo(request: EditPromiseRequestModel, completion: @escaping () -> Void) {
         Task {
             do {
                 let result = try await service.putPromiseInfo(with: promiseID, request: request)
@@ -121,6 +129,8 @@ extension EditPromiseViewModel {
                         success == true else {
                     return
                 }
+                
+                completion()
             }
         }
     }

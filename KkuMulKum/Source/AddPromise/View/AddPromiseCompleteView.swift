@@ -25,7 +25,7 @@ final class AddPromiseCompleteView: BaseView {
         $0.contentMode = .scaleAspectFill
     }
     
-    private let titleLabel = UILabel().then {
+    let titleLabel = UILabel().then {
         $0.setText("약속이 생성되었어요!", style: .head01, color: .gray8)
     }
     

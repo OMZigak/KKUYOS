@@ -101,9 +101,22 @@ private extension ChooseMemberViewController {
     
     @objc
     func confirmButtonDidTap() {
-        let viewController = EnterContentViewController(viewModel: viewModel)
+        let viewController = ChooseContentViewController(viewModel: viewModel)
         
         navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+
+
+// MARK: - UICollectionViewDelegate
+
+extension ChooseMemberViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        viewModel.participantList?.value[indexPath.row].isParticipant = true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        viewModel.participantList?.value[indexPath.row].isParticipant = false
     }
 }
 
