@@ -44,12 +44,14 @@ class MeetingListViewController: BaseViewController {
         setupNavigationBarTitle(with: "내 모임")
         register()
         
+        updateInfoLabel()
         updateMeetingList()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        viewModel.requestLoginUser()
         viewModel.requestMeetingList()
     }
     
@@ -71,6 +73,21 @@ class MeetingListViewController: BaseViewController {
         rootView.tableView.dataSource = self
     }
     
+    private func updateInfoLabel() {
+        viewModel.loginUser.bind { [weak self] _ in
+            DispatchQueue.main.async {
+                guard let self = self else { return }
+                let data = self.viewModel.meetingList.value
+                
+                self.rootView.infoLabel.setText(
+                    "\(self.viewModel.loginUser.value?.data?.name ?? "꾸물리안") 님이 가입한 모임은\n총 \(self.viewModel.meetingList.value?.data?.count ?? 0)개예요!",
+                    style: .head01,
+                    color: .gray8
+                )
+            }
+        }
+    }
+    
     private func updateMeetingList() {
         viewModel.meetingList.bind { [weak self] _ in
             DispatchQueue.main.async {
@@ -78,7 +95,7 @@ class MeetingListViewController: BaseViewController {
                 let data = self.viewModel.meetingList.value
                 
                 self.rootView.infoLabel.setText(
-                    "꾸물리안이 가입한 모임은\n총 \(self.viewModel.meetingList.value?.data?.count ?? 0)개예요!",
+                    "\(self.viewModel.loginUser.value?.data?.name ?? "꾸물리안") 님이 가입한 모임은\n총 \(self.viewModel.meetingList.value?.data?.count ?? 0)개예요!",
                     style: .head01,
                     color: .gray8
                 )

@@ -66,7 +66,7 @@ final class HomeView: BaseView {
     }
     
     let todayButton = UIButton().then {
-        let icon = UIImage(resource: .iconRight)
+        let icon = UIImage(resource: .iconRight).withTintColor(.gray4)
         $0.setImage(icon, for: .normal)
     }
     
@@ -210,7 +210,8 @@ final class HomeView: BaseView {
         todayButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().offset(-20)
             $0.centerY.equalTo(todayLabel.snp.centerY)
-            $0.size.equalTo(20)
+            $0.height.equalTo(Screen.height(24))
+            $0.width.equalTo(Screen.width(24))
         }
         
         todayPromiseView.snp.makeConstraints {

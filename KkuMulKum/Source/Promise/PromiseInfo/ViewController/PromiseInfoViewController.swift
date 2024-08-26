@@ -54,12 +54,33 @@ class PromiseInfoViewController: BaseViewController {
         rootView.participantCollectionView.delegate = self
         rootView.participantCollectionView.dataSource = self
     }
+    
+    override func setupAction() {
+        rootView.editButton.addTarget(self, action: #selector(editButtonDidTap), for: .touchUpInside)
+    }
 }
 
 
 // MARK: - Extension
 
-extension PromiseInfoViewController {
+private extension PromiseInfoViewController {
+    @objc
+    func editButtonDidTap() {
+        let viewController = EditPromiseViewController(
+            viewModel: EditPromiseViewModel(
+                promiseID: viewModel.promiseID,
+                promiseName: viewModel.promiseInfo.value?.promiseName,
+                placeName: viewModel.promiseInfo.value?.placeName,
+                time: viewModel.promiseInfo.value?.time,
+                dressUpLevel: viewModel.promiseInfo.value?.dressUpLevel,
+                penalty: viewModel.promiseInfo.value?.penalty, 
+                service: PromiseService()
+            )
+        )
+        
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
     func setupBinding() {
         viewModel.promiseInfo.bind(with: self) { owner, info in
             // TODO: 서버 API 반영되면 아래 주석 해제

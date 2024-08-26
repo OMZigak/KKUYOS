@@ -16,7 +16,7 @@ struct UpcomingPromiseListModel: ResponseModelType {
 
 struct UpcomingPromise: Codable {
     let promiseID, dDay: Int
-    let name, meetingName, dressUpLevel, date, time, placeName: String
+    let name, meetingName, dressUpLevel, time, placeName: String
     
     enum CodingKeys: String, CodingKey {
         case promiseID = "promiseId"
@@ -24,7 +24,6 @@ struct UpcomingPromise: Codable {
         case name
         case meetingName
         case dressUpLevel
-        case date
         case time
         case placeName
     }
