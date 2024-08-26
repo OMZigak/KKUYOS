@@ -76,9 +76,9 @@ private extension PromiseInfoViewController {
                 promiseName: viewModel.promiseInfo.value?.promiseName,
                 placeName: viewModel.promiseInfo.value?.placeName,
                 time: viewModel.promiseInfo.value?.time,
-                participantList: participantList,
                 dressUpLevel: viewModel.promiseInfo.value?.dressUpLevel,
-                penalty: viewModel.promiseInfo.value?.penalty
+                penalty: viewModel.promiseInfo.value?.penalty, 
+                service: PromiseService()
             )
         )
         

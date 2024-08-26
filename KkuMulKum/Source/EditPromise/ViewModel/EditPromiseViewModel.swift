@@ -12,7 +12,7 @@ class EditPromiseViewModel {
     let promiseID: Int
     let promiseName: ObservablePattern<String>?
     let placeName: ObservablePattern<String>?
-    let participantList: [Int]?
+    let participantList: ObservablePattern<[AvailableMember]>?
     let dressUpLevel: String?
     let penalty: String?
     
@@ -21,6 +21,8 @@ class EditPromiseViewModel {
     var address: String?
     var roadAddress: String?
     var time: String?
+    
+    private let service: EditPromiseServiceProtocol
     
     
     // MARK: Initialize
@@ -34,9 +36,10 @@ class EditPromiseViewModel {
         address: String? = nil,
         roadAddress: String? = nil,
         time: String? = nil,
-        participantList: [Int]? = nil,
+        participantList: [AvailableMember]? = nil,
         dressUpLevel: String? = nil,
-        penalty: String? = nil
+        penalty: String? = nil,
+        service: EditPromiseServiceProtocol
     ) {
         self.promiseID = promiseID
         self.promiseName = ObservablePattern<String>(promiseName ?? "")
@@ -46,9 +49,10 @@ class EditPromiseViewModel {
         self.address = address
         self.roadAddress = roadAddress
         self.time = time
-        self.participantList = participantList
+        self.participantList = ObservablePattern<[AvailableMember]>(participantList ?? [])
         self.dressUpLevel = dressUpLevel
         self.penalty = penalty
+        self.service = service
     }
 }
 
@@ -104,5 +108,61 @@ extension EditPromiseViewModel {
         dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         
         self.time = dateFormatter.string(from: calendar.date(from: combinedComponents)!)
+    }
+}
+
+extension EditPromiseViewModel {
+    func putPromiseInfo(request: EditPromiseRequestModel) {
+        Task {
+            do {
+                let result = try await service.putPromiseInfo(with: promiseID, request: request)
+                
+                guard let success = result?.success,
+                        success == true else {
+                    return
+                }
+            }
+        }
+    }
+    
+    func fetchPromiseAvailableMember(completion: @escaping () -> Void) {
+        Task {
+            do {
+                let result = try await service.fetchPromiseAvailableMember(with: promiseID)
+                
+                guard let success = result?.success, success == true else {
+                    return
+                }
+                
+                participantList?.value = result?.data?.members ?? []
+                
+                completion()
+            }
+        }
+    }
+
+    
+    func deletePromise() {
+        Task {
+            do {
+                let result = try await service.deletePromise(promiseID: promiseID)
+                
+                guard let success = result?.success, success == true else {
+                    return
+                }
+            }
+        }
+    }
+    
+    func exitPromise() {
+        Task {
+            do {
+                let result = try await service.exitPromise(promiseID: promiseID)
+                
+                guard let success = result?.success, success == true else {
+                    return
+                }
+            }
+        }
     }
 }

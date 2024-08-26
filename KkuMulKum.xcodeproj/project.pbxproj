@@ -161,6 +161,8 @@
 		DD8626692C4606A300E4F980 /* ReadyStatusProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD86265B2C4606A300E4F980 /* ReadyStatusProgressView.swift */; };
 		DD86266C2C4606A300E4F980 /* SetReadyInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626602C4606A300E4F980 /* SetReadyInfoViewController.swift */; };
 		DD90E2432C7B942D00CEE180 /* EditPromiseRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD90E2422C7B942D00CEE180 /* EditPromiseRequestModel.swift */; };
+		DD90E2452C7BCD9700CEE180 /* ParticipateAvailabilityResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD90E2442C7BCD9600CEE180 /* ParticipateAvailabilityResponseModel.swift */; };
+		DD90E24B2C7BD69800CEE180 /* EditPromiseServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD90E24A2C7BD69800CEE180 /* EditPromiseServiceProtocol.swift */; };
 		DD931B6E2C3DA27F00526452 /* ParticipantCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */; };
 		DD931B762C3DC16100526452 /* PromiseInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD931B752C3DC16100526452 /* PromiseInfoView.swift */; };
 		DDA2EE732C385EB9007C6059 /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */; };
@@ -375,6 +377,8 @@
 		DD86265B2C4606A300E4F980 /* ReadyStatusProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusProgressView.swift; sourceTree = "<group>"; };
 		DD8626602C4606A300E4F980 /* SetReadyInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetReadyInfoViewController.swift; sourceTree = "<group>"; };
 		DD90E2422C7B942D00CEE180 /* EditPromiseRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPromiseRequestModel.swift; sourceTree = "<group>"; };
+		DD90E2442C7BCD9600CEE180 /* ParticipateAvailabilityResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipateAvailabilityResponseModel.swift; sourceTree = "<group>"; };
+		DD90E24A2C7BD69800CEE180 /* EditPromiseServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPromiseServiceProtocol.swift; sourceTree = "<group>"; };
 		DD931B6D2C3DA27F00526452 /* ParticipantCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD931B752C3DC16100526452 /* PromiseInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseInfoView.swift; sourceTree = "<group>"; };
 		DDA2EE722C385EB9007C6059 /* MainTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarController.swift; sourceTree = "<group>"; };
@@ -839,6 +843,7 @@
 		DD34664B2C7B020400E62284 /* EditPromise */ = {
 			isa = PBXGroup;
 			children = (
+				DD90E2492C7BD67800CEE180 /* ServiceProtocol */,
 				DD34664C2C7B021C00E62284 /* ViewController */,
 				DD34664F2C7B024D00E62284 /* ViewModel */,
 			);
@@ -1181,6 +1186,14 @@
 				789873352C3D1B3000435E96 /* View */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		DD90E2492C7BD67800CEE180 /* ServiceProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				DD90E24A2C7BD69800CEE180 /* EditPromiseServiceProtocol.swift */,
+			);
+			path = ServiceProtocol;
 			sourceTree = "<group>";
 		};
 		DD931B682C3D9DAD00526452 /* Tardy */ = {
@@ -1561,6 +1574,7 @@
 				DD3072212C3C0DA300416D9F /* PromiseParticipantListResponseModel.swift */,
 				DD3072232C3C0EB200416D9F /* MyPromiseReadyInfoRequestModel.swift */,
 				DD3072252C3C0F0B00416D9F /* TardyInfoModel.swift */,
+				DD90E2442C7BCD9600CEE180 /* ParticipateAvailabilityResponseModel.swift */,
 			);
 			path = Promises;
 			sourceTree = "<group>";
@@ -1926,6 +1940,7 @@
 				DD4393792C412F4500EC1799 /* JoinButtonView.swift in Sources */,
 				DE54732E2C72F13B005FB40E /* UINavigationController+.swift in Sources */,
 				DD3976832C41C2AD00E2A4C4 /* HomeViewModel.swift in Sources */,
+				DD90E2452C7BCD9700CEE180 /* ParticipateAvailabilityResponseModel.swift in Sources */,
 				DD41BF012C41DE4F0095A068 /* TardyCollectionViewCell.swift in Sources */,
 				A3DD9C682C45C78300E58A13 /* HomeService.swift in Sources */,
 				782B407B2C3E395A008B0CA7 /* WelcomeView.swift in Sources */,
@@ -1946,6 +1961,7 @@
 				DEBA032F2C3C24F2002ED8F2 /* ModelType.swift in Sources */,
 				789AD4B52C3C0147002E2688 /* ReissueModel.swift in Sources */,
 				DECB845E2C4442AF0022A003 /* FindPlaceView.swift in Sources */,
+				DD90E24B2C7BD69800CEE180 /* EditPromiseServiceProtocol.swift in Sources */,
 				DE6D4D0F2C3F14D80005584B /* MeetingInfoService.swift in Sources */,
 				DD3F9DD62C4988E2008E1FF7 /* RegisterMeetingsResponseModel.swift in Sources */,
 				DD3F9DCC2C485614008E1FF7 /* HomeServiceType.swift in Sources */,

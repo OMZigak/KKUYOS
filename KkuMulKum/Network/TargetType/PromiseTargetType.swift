@@ -27,6 +27,10 @@ enum PromiseTargetType {
     )
     case fetchTardyInfo(promiseID: Int)
     case updatePromiseCompletion(promiseID: Int)
+    case fetchPromiseAvailableMember(promiseID: Int)
+    case putPromiseInfo(promiseID: Int, request: EditPromiseRequestModel)
+    case deletePromise(promiseID: Int)
+    case exitPromise(promiseID: Int)
 }
 
 extension PromiseTargetType: TargetType {
@@ -69,6 +73,14 @@ extension PromiseTargetType: TargetType {
             return "/api/v1/promises/\(promiseID)/tardy"
         case .updatePromiseCompletion(let promiseID):
             return "/api/v1/promises/\(promiseID)/completion"
+        case .fetchPromiseAvailableMember(let promiseID):
+            return "/api/v1/promises/\(promiseID)/members"
+        case .putPromiseInfo(promiseID: let promiseID):
+            return "/api/v1/promises/\(promiseID)"
+        case .deletePromise(promiseID: let promiseID):
+            return "/api/v1/promises/\(promiseID)"
+        case .exitPromise(promiseID: let promiseID):
+            return "/api/v1/promises/\(promiseID)/leave"
         }
     }
     
@@ -76,13 +88,17 @@ extension PromiseTargetType: TargetType {
         switch self {
         case .fetchTodayNextPromise, .fetchUpcomingPromiseList, .fetchMeetingMemberExcludeMe,
                 .fetchMeetingPromiseList, .fetchPromiseInfo, .fetchMyReadyStatus,
-                .fetchPromiseParticipantList, .fetchTardyInfo:
+                .fetchPromiseParticipantList, .fetchTardyInfo, .fetchPromiseAvailableMember:
             return .get
         case .addPromise:
             return .post
         case .updateDepartureStatus, .updatePreparationStatus, .updateArrivalStatus,
                 .updateMyPromiseReadyStatus, .updatePromiseCompletion:
             return .patch
+        case .putPromiseInfo:
+            return .put
+        case .deletePromise, .exitPromise:
+            return .delete
         }
     }
     
@@ -91,11 +107,13 @@ extension PromiseTargetType: TargetType {
         case .fetchTodayNextPromise, .fetchUpcomingPromiseList, .updatePreparationStatus,
                 .updateDepartureStatus, .updateArrivalStatus, .fetchPromiseInfo,
                 .fetchMyReadyStatus, .fetchPromiseParticipantList,
-                .fetchTardyInfo, .updatePromiseCompletion, .fetchMeetingPromiseList:
+                .fetchTardyInfo, .updatePromiseCompletion, .fetchMeetingPromiseList, .fetchPromiseAvailableMember, .deletePromise, .exitPromise:
             return .requestPlain
         case .updateMyPromiseReadyStatus(_, let request):
             return .requestJSONEncodable(request)
         case .addPromise(_, let request):
+            return .requestJSONEncodable(request)
+        case .putPromiseInfo(_, let request):
             return .requestJSONEncodable(request)
         case .fetchMeetingMemberExcludeMe:
             return .requestParameters(
