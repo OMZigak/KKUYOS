@@ -12,9 +12,9 @@ import Then
 final class MeetingListViewModel {
     var meetingList = ObservablePattern<ResponseBodyDTO<MeetingListModel>?>(nil)
     
-    private let service: MeetingListServiceType
+    private let service: MeetingListServiceProtocol
     
-    init(service: MeetingListServiceType) {
+    init(service: MeetingListServiceProtocol) {
         self.service = service
     }
     
