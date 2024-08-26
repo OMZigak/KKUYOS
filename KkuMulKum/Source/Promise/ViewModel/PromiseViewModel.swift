@@ -179,12 +179,11 @@ extension PromiseViewModel {
                 let result = try await service.fetchPromiseInfo(with: promiseID)
                 
                 guard let success = result?.success,
-                        success == true
+                      success == true
                 else {
                     return
                 }
                 
-                print(">>>>> \(result?.data) : \(#function)")
                 promiseInfo.value = result?.data
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")

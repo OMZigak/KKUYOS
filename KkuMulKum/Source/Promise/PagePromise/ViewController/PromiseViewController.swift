@@ -149,8 +149,6 @@ class PromiseViewController: BaseViewController {
 private extension PromiseViewController {
     func setupBindings() {
         viewModel.promiseInfo.bindOnMain(with: self) { owner, info in
-            print(">>>>> \(info) : \(#function)")
-            
             owner.setupNavigationBarTitle(with: info?.promiseName ?? "")
             owner.promiseInfoViewController.rootView.editButton.isHidden = !(info?.isParticipant ?? false)
             owner.promiseInfoViewController.setupContent()

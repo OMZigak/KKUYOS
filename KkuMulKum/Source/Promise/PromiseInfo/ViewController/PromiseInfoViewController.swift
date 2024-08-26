@@ -86,17 +86,6 @@ extension PromiseInfoViewController {
     }
     
     func setupBinding() {
-        /// promiseInfo 할당 자체가 비동기
-        viewModel.promiseInfo.bind(with: self) { owner, info in
-            DispatchQueue.main.async {
-                owner.rootView.editButton.isHidden = !(info?.isParticipant ?? false)
-                
-                
-                
-                print(">>>>> \(info) : \(#function)")
-            }
-        }
-        
         viewModel.participantsInfo.bind(with: self) { owner, participantsInfo in
             DispatchQueue.main.async {
                 owner.rootView.participantNumberLabel.setText(
@@ -117,17 +106,10 @@ extension PromiseInfoViewController {
     }
     
     func setupContent() {
-        print(">>>>> \(self.viewModel.promiseInfo.value) : \(#function)")
-        
-        /// 데이터가 있는데 if let이 첫번째 디버깅(promiseVC)에서는 당연히 안받아와지고
-        /// 두번째 디버깅(fetchPromiseIInfo)에서는 받아와짐
-        /// 근데 두번째 디버깅 밑 setUpContent는 UI가 안바뀜
-        /// PromiseVC 외부에서 정보를 받아올 수 없어(사유: 통신 함수 선언은 뷰모델 내부에 잇음) 조졋다.
-        if let name = self.viewModel.promiseInfo.value?.promiseName {
-            self.rootView.promiseNameLabel.setText(name, style: .body04)
-        } else {
-            print("넌조졋다")
-        }
+        self.rootView.promiseNameLabel.setText(
+            self.viewModel.promiseInfo.value?.promiseName ?? "",
+            style: .body04
+        )
         
         self.rootView.locationContentLabel.setText(
             self.viewModel.promiseInfo.value?.placeName ?? "약속 장소 미설정",
