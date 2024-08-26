@@ -21,8 +21,12 @@ final class MeetingListView: BaseView {
     
     let infoLabel = UILabel()
     
+    private let addButtonView = UIView(backgroundColor: .green2).then {
+        $0.layer.cornerRadius = 8
+    }
+    
     let addButton = UIButton().then {
-        $0.backgroundColor = .green2
+        $0.backgroundColor = .clear
         $0.layer.cornerRadius = 8
     }
     
@@ -65,7 +69,7 @@ final class MeetingListView: BaseView {
     override func setupView() {
         self.backgroundColor = .gray0
         addSubviews(tableView, emptyCharacter, emptyLabel)
-        header.addSubviews(infoLabel, addButton, addInfoView)
+        header.addSubviews(infoLabel, addButtonView, addInfoView, addButton)
         addInfoView.addArrangedSubviews(addIconImageView, addInfoLabel)
     }
     
@@ -78,6 +82,12 @@ final class MeetingListView: BaseView {
         infoLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24)
             $0.leading.equalToSuperview()
+        }
+        
+        addButtonView.snp.makeConstraints {
+            $0.top.equalTo(infoLabel.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(Screen.height(48))
         }
         
         addButton.snp.makeConstraints {
