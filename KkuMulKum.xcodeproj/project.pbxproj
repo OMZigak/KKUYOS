@@ -790,6 +790,7 @@
 			children = (
 				DD1FD02E2C5CCB2E00D0A72C /* ViewController */,
 				DD1FD0312C5CCEC300D0A72C /* View */,
+				DD3466492C7AF61A00E62284 /* Cell */,
 			);
 			path = ReadyStatus;
 			sourceTree = "<group>";
@@ -1252,7 +1253,6 @@
 			isa = PBXGroup;
 			children = (
 				DD41BF002C41DE4F0095A068 /* TardyCollectionViewCell.swift */,
-				DD8626572C4606A300E4F980 /* OurReadyStatusCollectionViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
