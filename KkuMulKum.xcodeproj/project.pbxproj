@@ -374,7 +374,6 @@
 		DD8626522C4606A300E4F980 /* SetReadyInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetReadyInfoViewModel.swift; sourceTree = "<group>"; };
 		DD8626552C4606A300E4F980 /* EnterReadyInfoButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterReadyInfoButtonView.swift; sourceTree = "<group>"; };
 		DD8626562C4606A300E4F980 /* ReadyPlanInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyPlanInfoView.swift; sourceTree = "<group>"; };
-		DD8626572C4606A300E4F980 /* OurReadyStatusCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OurReadyStatusCollectionViewCell.swift; sourceTree = "<group>"; };
 		DD8626582C4606A300E4F980 /* ReadyStatusView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusView.swift; sourceTree = "<group>"; };
 		DD8626592C4606A300E4F980 /* SetReadyInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetReadyInfoView.swift; sourceTree = "<group>"; };
 		DD86265A2C4606A300E4F980 /* ReadyStatusButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyStatusButton.swift; sourceTree = "<group>"; };
@@ -690,7 +689,6 @@
 			children = (
 				78B9286A2C29402C006D9942 /* KkuMulKum */,
 				78B928692C29402C006D9942 /* Products */,
-				DD9F59642C7C7E3B00E928DF /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1211,14 +1209,6 @@
 				DD1FD02C2C5CC6DE00D0A72C /* View */,
 			);
 			path = Tardy;
-			sourceTree = "<group>";
-		};
-		DD9F59642C7C7E3B00E928DF /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				DD8626572C4606A300E4F980 /* OurReadyStatusCollectionViewCell.swift */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		DD9F59652C7C7E5C00E928DF /* Cell */ = {

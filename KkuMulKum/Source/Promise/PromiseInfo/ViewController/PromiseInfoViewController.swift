@@ -68,7 +68,7 @@ class PromiseInfoViewController: BaseViewController {
 
 // MARK: - Extension
 
-private extension PromiseInfoViewController {
+extension PromiseInfoViewController {
     @objc
     func editButtonDidTap() {
         let viewController = EditPromiseViewController(

@@ -337,6 +337,34 @@ extension PromiseViewModel {
             }
         }
     }
+    
+    func deletePromise(completion: @escaping () -> Void) {
+        Task {
+            do {
+                let result = try await service.deletePromise(promiseID: promiseID)
+                
+                guard let success = result?.success, success == true else {
+                    return
+                }
+                
+                completion()
+            }
+        }
+    }
+    
+    func exitPromise(completion: @escaping () -> Void) {
+        Task {
+            do {
+                let result = try await service.exitPromise(promiseID: promiseID)
+                
+                guard let success = result?.success, success == true else {
+                    return
+                }
+                
+                completion()
+            }
+        }
+    }
 }
 
 private extension PromiseViewModel {

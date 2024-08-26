@@ -72,12 +72,6 @@ extension PromiseService: PromiseServiceProtocol {
     func fetchPromiseParticipantList(with promiseID: Int) async throws -> ResponseBodyDTO<PromiseParticipantListModel>? {
         return try await request(with: .fetchPromiseParticipantList(promiseID: promiseID))
     }
-}
-
-extension PromiseService: EditPromiseServiceProtocol {
-    func fetchPromiseAvailableMember(with promiseID: Int) async throws -> ResponseBodyDTO<ParticipateAvailabilityResponseModel>? {
-        return try await self.request(with: .fetchPromiseAvailableMember(promiseID: promiseID))
-    }
     
     func deletePromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
         return try await self.request(with: .deletePromise(promiseID: promiseID))
@@ -86,6 +80,12 @@ extension PromiseService: EditPromiseServiceProtocol {
     func exitPromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
         return try await self.request(with: .exitPromise(promiseID: promiseID))
     }
+}
+
+extension PromiseService: EditPromiseServiceProtocol {
+    func fetchPromiseAvailableMember(with promiseID: Int) async throws -> ResponseBodyDTO<ParticipateAvailabilityResponseModel>? {
+        return try await self.request(with: .fetchPromiseAvailableMember(promiseID: promiseID))
+    }
     
     func putPromiseInfo(with promiseID: Int, request: EditPromiseRequestModel) async throws -> ResponseBodyDTO<AddPromiseResponseModel>? {
         return try await self.request(with: .putPromiseInfo(promiseID: promiseID, request: request))
@@ -93,6 +93,26 @@ extension PromiseService: EditPromiseServiceProtocol {
 }
 
 final class MockPromiseService: PromiseServiceProtocol {
+    func deletePromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        let mockData = EmptyModel()
+        
+        return ResponseBodyDTO<EmptyModel>.init(
+            success: true,
+            data: mockData,
+            error: nil
+        )
+    }
+    
+    func exitPromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        let mockData = EmptyModel()
+        
+        return ResponseBodyDTO<EmptyModel>.init(
+            success: true,
+            data: mockData,
+            error: nil
+        )
+    }
+    
     func fetchPromiseInfo(with promiseId: Int) async throws -> ResponseBodyDTO<PromiseInfoModel>? {
         let mockData = PromiseInfoModel(
             isParticipant: true,

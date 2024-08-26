@@ -234,15 +234,22 @@ private extension PromiseViewController {
 extension PromiseViewController: CustomActionSheetDelegate {
     func actionButtonDidTap(for kind: ActionSheetKind) {
         if kind == .deletePromise {
-            
             dismiss(animated: false)
-            navigationController?.popViewController(animated: true)
+            
+            viewModel.deletePromise() {
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
         }
         else {
-            // TODO: 약속 나가기 API 연결
-            
             dismiss(animated: false)
-            navigationController?.popViewController(animated: true)
+            
+            viewModel.exitPromise() {
+                DispatchQueue.main.async {
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
         }
     }
 }
