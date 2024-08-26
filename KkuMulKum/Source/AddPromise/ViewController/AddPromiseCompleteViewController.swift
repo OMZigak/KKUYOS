@@ -12,9 +12,10 @@ import RxSwift
 
 final class AddPromiseCompleteViewController: BaseViewController {
     let promiseID: Int
+    let rootView = AddPromiseCompleteView()
     
     private let disposeBag = DisposeBag()
-    private let rootView = AddPromiseCompleteView()
+    
     
     
     // MARK: - Initializer
