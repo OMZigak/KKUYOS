@@ -157,8 +157,11 @@ extension HomeViewController: UICollectionViewDataSource {
             withReuseIdentifier: UpcomingPromiseCollectionViewCell.reuseIdentifier, 
             for: indexPath
         ) as? UpcomingPromiseCollectionViewCell else { return UICollectionViewCell() }
+
         if let data = viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item] {
-            cell.dataBind(data)
+            let formattedTime = viewModel.formattedTimes.value[indexPath.item]
+            let formattedDay = viewModel.formattedDays.value[indexPath.item]
+            cell.dataBind(data, formattedTime: formattedTime, formattedDay: formattedDay)
         }
         return cell
     }    
@@ -294,7 +297,7 @@ private extension HomeViewController {
                         color: .gray7
                     )
                     self.rootView.todayPromiseView.timeLabel.setText(
-                        data?.time ?? "",
+                        self.viewModel.todayFormattedTime.value,
                         style: .body06,
                         color: .gray7
                     )

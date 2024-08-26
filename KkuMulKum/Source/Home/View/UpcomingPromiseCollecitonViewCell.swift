@@ -138,7 +138,7 @@ final class UpcomingPromiseCollectionViewCell: BaseCollectionViewCell {
 // MARK: - Data Bind
 
 extension UpcomingPromiseCollectionViewCell {
-    func dataBind(_ contentData: UpcomingPromise) {
+    func dataBind(_ contentData: UpcomingPromise, formattedTime: String, formattedDay: String) {
         let dDayText = contentData.dDay == 0 ? "DAY" : "\(contentData.dDay)"
         dDayLabel.setText(
             "D-\(dDayText)",
@@ -147,8 +147,8 @@ extension UpcomingPromiseCollectionViewCell {
         )
         meetingNameLabel.setText(contentData.meetingName, style: .caption02, color: .green3)
         nameLabel.setText(contentData.name, style: .body03, color: .gray8)
-        dateLabel.setText(contentData.time, style: .body06, color: .gray7)
-        timeLabel.setText(contentData.time, style: .body06, color: .gray7)
+        dateLabel.setText(formattedDay, style: .body06, color: .gray7)
+        timeLabel.setText(formattedTime, style: .body06, color: .gray7)
         placeNameLabel.setText(
             contentData.placeName,
             style: .body06,

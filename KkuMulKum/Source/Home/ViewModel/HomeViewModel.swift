@@ -30,6 +30,13 @@ final class HomeViewModel {
     var levelName = ObservablePattern<String>("")
     var levelCaption = ObservablePattern<String>("")
     
+    /// 오늘의 약속
+    var todayFormattedTime = ObservablePattern<String>("")
+    
+    /// 다가올 나의 약속
+    var formattedTimes = ObservablePattern<[String]>([])
+    var formattedDays = ObservablePattern<[String]>([])
+    
     
     // MARK: - Initializer
 
@@ -42,7 +49,7 @@ final class HomeViewModel {
     
     // MARK: - Function
     
-    ///서버에서 보내주는 level Int 값에 따른 levelName
+    /// 서버에서 보내주는 level Int 값에 따른 levelName
     private func getLevelName(level: Int) -> String {
         switch level {
             case 1: return "빼꼼 꾸물이"
@@ -53,7 +60,7 @@ final class HomeViewModel {
         }
     }
     
-    ///서버에서 보내주는 level Int 값에 따른 levelCaption
+    /// 서버에서 보내주는 level Int 값에 따른 levelCaption
     private func getLevelCaption(level: Int) -> String {
         switch level {
         case 1:
@@ -69,7 +76,35 @@ final class HomeViewModel {
         }
     }
     
-    ///서버에서 보내주는 readyStatus의 시간 유무에 따른 현재 상태 분류
+    /// 서버에서 보내주는 time 데이터를 시간으로 변환하는 함수
+    private func formatTimeToString(_ timeString: String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        if let time = dateFormatter.date(from: timeString) {
+            dateFormatter.dateFormat = "a h:mm"
+            return dateFormatter.string(from: time)
+        }
+        
+        return nil
+    }
+    
+    /// 서버에서 보내주는 time 데이터를 날짜로 변환하는 함수
+    func formatDateToString(_ timeString: String) -> String? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        if let date = dateFormatter.date(from: timeString) {
+            dateFormatter.dateFormat = "yyyy.MM.dd"
+            return dateFormatter.string(from: date)
+        }
+        
+        return nil
+    }
+    
+    /// 서버에서 보내주는 readyStatus의 시간 유무에 따른 현재 상태 분류
     private func judgeReadyStatus() {
         print("judgeReadyStatus = \(currentState.value)")
         guard let data = myReadyStatus.value?.data else {
@@ -163,6 +198,7 @@ final class HomeViewModel {
         Task  {
             do {
                 nearestPromise.value = try await service.fetchNearestPromise()
+                todayFormattedTime.value = formatTimeToString(nearestPromise.value?.data?.time ?? "") ?? ""
                 requestMyReadyStatus()
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
@@ -174,6 +210,11 @@ final class HomeViewModel {
         Task {
             do {
                 upcomingPromiseList.value = try await service.fetchUpcomingPromise()
+                
+                let promises = upcomingPromiseList.value?.data?.promises ?? []
+                formattedTimes.value = promises.map { formatTimeToString($0.time) ?? "" }
+                formattedDays.value = promises.map { formatDateToString($0.time) ?? "" }
+                
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
