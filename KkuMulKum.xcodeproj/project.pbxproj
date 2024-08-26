@@ -99,6 +99,7 @@
 		A3DD9C402C41BAD000E58A13 /* MeetingListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */; };
 		A3DD9C412C41BAD000E58A13 /* MeetingListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C3A2C41BAD000E58A13 /* MeetingListViewModel.swift */; };
 		A3DD9C682C45C78300E58A13 /* HomeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3DD9C672C45C78300E58A13 /* HomeService.swift */; };
+		A3FB02442C788A790026DE0E /* HomeServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB02432C788A790026DE0E /* HomeServiceProtocol.swift */; };
 		A3FB184D2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */; };
 		A3FB184F2C3BF4BC001483E5 /* MakeMeetingsResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */; };
 		A3FB18512C3BF531001483E5 /* RegisterMeetingsResquestModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FB18502C3BF531001483E5 /* RegisterMeetingsResquestModel.swift */; };
@@ -127,7 +128,6 @@
 		DD39768A2C41C2AD00E2A4C4 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3976822C41C2AD00E2A4C4 /* HomeViewController.swift */; };
 		DD39768C2C41C36B00E2A4C4 /* Color.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DD39768B2C41C36B00E2A4C4 /* Color.xcassets */; };
 		DD3F9DC62C484DEB008E1FF7 /* PromiseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3F9DC52C484DEB008E1FF7 /* PromiseService.swift */; };
-		DD3F9DCC2C485614008E1FF7 /* HomeServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3F9DCB2C485614008E1FF7 /* HomeServiceType.swift */; };
 		DD3F9DD02C48571A008E1FF7 /* MeetingListServiceType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3F9DCF2C48571A008E1FF7 /* MeetingListServiceType.swift */; };
 		DD3F9DD22C485753008E1FF7 /* UtilService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3F9DD12C485753008E1FF7 /* UtilService.swift */; };
 		DD3F9DD42C4858A3008E1FF7 /* UtilTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD3F9DD32C4858A3008E1FF7 /* UtilTargetType.swift */; };
@@ -307,6 +307,7 @@
 		A3DD9C382C41BAD000E58A13 /* MeetingListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListViewController.swift; sourceTree = "<group>"; };
 		A3DD9C3A2C41BAD000E58A13 /* MeetingListViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeetingListViewModel.swift; sourceTree = "<group>"; };
 		A3DD9C672C45C78300E58A13 /* HomeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeService.swift; sourceTree = "<group>"; };
+		A3FB02432C788A790026DE0E /* HomeServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeServiceProtocol.swift; sourceTree = "<group>"; };
 		A3FB184C2C3BF45F001483E5 /* MakeMeetingsRequestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsRequestModel.swift; sourceTree = "<group>"; };
 		A3FB184E2C3BF4BB001483E5 /* MakeMeetingsResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeMeetingsResponseModel.swift; sourceTree = "<group>"; };
 		A3FB18502C3BF531001483E5 /* RegisterMeetingsResquestModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterMeetingsResquestModel.swift; sourceTree = "<group>"; };
@@ -336,7 +337,6 @@
 		DD3976822C41C2AD00E2A4C4 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		DD39768B2C41C36B00E2A4C4 /* Color.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Color.xcassets; sourceTree = "<group>"; };
 		DD3F9DC52C484DEB008E1FF7 /* PromiseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromiseService.swift; sourceTree = "<group>"; };
-		DD3F9DCB2C485614008E1FF7 /* HomeServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeServiceType.swift; sourceTree = "<group>"; };
 		DD3F9DCF2C48571A008E1FF7 /* MeetingListServiceType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeetingListServiceType.swift; sourceTree = "<group>"; };
 		DD3F9DD12C485753008E1FF7 /* UtilService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilService.swift; sourceTree = "<group>"; };
 		DD3F9DD32C4858A3008E1FF7 /* UtilTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilTargetType.swift; sourceTree = "<group>"; };
@@ -760,6 +760,14 @@
 			path = Service;
 			sourceTree = "<group>";
 		};
+		A3FB02422C788A520026DE0E /* ServiceProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				A3FB02432C788A790026DE0E /* HomeServiceProtocol.swift */,
+			);
+			path = ServiceProtocol;
+			sourceTree = "<group>";
+		};
 		DD1FD02C2C5CC6DE00D0A72C /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -870,7 +878,7 @@
 		DD3976752C41C2AD00E2A4C4 /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				DD3F9DCA2C485606008E1FF7 /* ServiceType */,
+				A3FB02422C788A520026DE0E /* ServiceProtocol */,
 				DD3976762C41C2AD00E2A4C4 /* ViewModel */,
 				DD3976812C41C2AD00E2A4C4 /* ViewController */,
 				DD39767C2C41C2AD00E2A4C4 /* View */,
@@ -947,14 +955,6 @@
 				DDAF1C8B2C3D6E3D008A37D3 /* TardyViewController.swift */,
 			);
 			path = ViewController;
-			sourceTree = "<group>";
-		};
-		DD3F9DCA2C485606008E1FF7 /* ServiceType */ = {
-			isa = PBXGroup;
-			children = (
-				DD3F9DCB2C485614008E1FF7 /* HomeServiceType.swift */,
-			);
-			path = ServiceType;
 			sourceTree = "<group>";
 		};
 		DD3F9DCE2C485700008E1FF7 /* ServiceType */ = {
@@ -1834,6 +1834,7 @@
 				DD30721E2C3C0CC800416D9F /* PromiseInfoResponseModel.swift in Sources */,
 				DD41BEFF2C41DAA40095A068 /* TardyEmptyView.swift in Sources */,
 				A3FB18512C3BF531001483E5 /* RegisterMeetingsResquestModel.swift in Sources */,
+				A3FB02442C788A790026DE0E /* HomeServiceProtocol.swift in Sources */,
 				DD8626632C4606A300E4F980 /* EnterReadyInfoButtonView.swift in Sources */,
 				789AD4B32C3C0093002E2688 /* SocialLoginResponseModel.swift in Sources */,
 				DD43937F2C41357800EC1799 /* InviteCodeViewModel.swift in Sources */,
