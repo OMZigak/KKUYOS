@@ -16,11 +16,14 @@ class PromiseViewController: BaseViewController {
     private let promiseInfoViewController: PromiseInfoViewController
     private let promiseReadyStatusViewController: ReadyStatusViewController
     private let promiseTardyViewController: TardyViewController
+    private let exitViewController = CustomActionSheetController(kind: .exitPromise)
+    private let deleteViewController = CustomActionSheetController(kind: .deletePromise)
     private let promisePageViewController = UIPageViewController(
         transitionStyle: .scroll,
         navigationOrientation: .vertical
     )
     
+    private var removePromiseViewContoller: RemovePromiseViewController = RemovePromiseViewController(promiseName: "")
     private var promiseViewControllerList: [BaseViewController] = []
     
     private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(
@@ -56,6 +59,7 @@ class PromiseViewController: BaseViewController {
         super.viewDidLoad()
         
         setupNavigationBarBackButton()
+        setupPromiseEditButton()
         setupBindings()
     }
     
@@ -76,8 +80,6 @@ class PromiseViewController: BaseViewController {
 
     override func setupView() {
         view.backgroundColor = .white
-        
-        setupNavigationBarBackButton()
         
         addChild(promisePageViewController)
         
@@ -122,10 +124,25 @@ class PromiseViewController: BaseViewController {
             action: #selector(finishMeetingButtonDidTap),
             for: .touchUpInside
         )
+        
+        // TODO: 버튼 안눌리는 문제 해결하기
+        removePromiseViewContoller.exitButton.addTarget(
+            self,
+            action: #selector(exitButtonDidTap),
+            for: .touchUpInside
+        )
+        
+        removePromiseViewContoller.deleteButton.addTarget(
+            self,
+            action: #selector(deleteButtonDidTap),
+            for: .touchUpInside
+        )
     }
     
     override func setupDelegate() {
         promisePageViewController.dataSource = self
+        exitViewController.delegate = self
+        deleteViewController.delegate = self
     }
 }
 
@@ -137,8 +154,20 @@ private extension PromiseViewController {
         viewModel.promiseInfo.bind { info in
             DispatchQueue.main.async {
                 self.setupNavigationBarTitle(with: info?.promiseName ?? "")
+                self.removePromiseViewContoller.promiseNameLabel.text = info?.promiseName ?? ""
             }
         }
+    }
+    
+    func setupPromiseEditButton() {
+        let moreButton = UIBarButtonItem(
+            image: .imgMore.withRenderingMode(.alwaysOriginal),
+            style: .plain,
+            target: self,
+            action: #selector(self.moreButtonDidTap)
+        )
+        
+        navigationItem.rightBarButtonItem = moreButton
     }
     
     @objc
@@ -169,6 +198,48 @@ private extension PromiseViewController {
         promiseTardyViewController.viewModel.updatePromiseCompletion()
         
         navigationController?.popViewController(animated: true)
+    }
+    
+    @objc
+    func moreButtonDidTap() {
+        let bottomSheetViewController = BottomSheetViewController(
+            contentViewController: removePromiseViewContoller,
+            defaultHeight: Screen.height(232)
+        )
+        
+        present(bottomSheetViewController, animated: true)
+    }
+    
+    @objc
+    func exitButtonDidTap() {
+        dismiss(animated: false)
+        present(exitViewController, animated: true)
+    }
+    
+    @objc
+    func deleteButtonDidTap() {
+        dismiss(animated: false)
+        present(deleteViewController, animated: true)
+    }
+}
+
+
+// MARK: - CustomActionSheetDelegate
+
+extension PromiseViewController: CustomActionSheetDelegate {
+    func actionButtonDidTap(for kind: ActionSheetKind) {
+        if kind == .deletePromise {
+            // TODO: 약속 삭제 API 연결
+            
+            dismiss(animated: false)
+            navigationController?.popViewController(animated: true)
+        }
+        else {
+            // TODO: 약속 나가기 API 연결
+            
+            dismiss(animated: false)
+            navigationController?.popViewController(animated: true)
+        }
     }
 }
 

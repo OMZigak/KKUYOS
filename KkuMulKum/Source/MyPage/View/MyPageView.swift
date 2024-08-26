@@ -12,14 +12,13 @@ import Then
 
 class MyPageView: BaseView {
     private let topBackgroundView = UIView(backgroundColor: .white)
-    private let contentView = MyPageContentView()
-    private let alarmView = MyPageAlarmSettingView()
-     let etcSettingView = MyPageEtcSettingView()
+    let contentView = MyPageContentView()
+    let etcSettingView = MyPageEtcSettingView()
     
     override func setupView() {
         backgroundColor = .green1
         
-        addSubviews(topBackgroundView, contentView, alarmView, etcSettingView)
+        addSubviews(topBackgroundView, contentView, etcSettingView)
     }
     
     override func setupAutoLayout() {
@@ -36,15 +35,12 @@ class MyPageView: BaseView {
             $0.horizontalEdges.equalToSuperview()
         }
         
-        alarmView.snp.makeConstraints {
-            $0.top.equalTo(contentView.snp.bottom)
-            $0.horizontalEdges.equalToSuperview().inset(20)
-        }
-        
         etcSettingView.snp.makeConstraints {
-            $0.top.equalTo(alarmView.snp.bottom).offset(12)
+            $0.top.equalTo(contentView.snp.bottom).offset(12)
             $0.horizontalEdges.equalToSuperview().inset(20)
-            $0.bottom.equalTo(safeArea).offset(-60)
+            $0.bottom.equalTo(safeArea).offset(-127)
         }
     }
+   
+       
 }

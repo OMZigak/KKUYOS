@@ -16,6 +16,7 @@ enum MeetingTargetType {
     case fetchMeetingInfo(meetingID: Int)
     case fetchMeetingMember(meetingID: Int)
     case fetchMeetingPromiseList(meetingID: Int)
+    case exitMeeting(meetingID: Int)
 }
 
 extension MeetingTargetType: TargetType {
@@ -42,6 +43,8 @@ extension MeetingTargetType: TargetType {
             return "/api/v1/meetings/\(meetingID)/members"
         case .fetchMeetingPromiseList(let meetingID):
             return "/api/v1/meetings/\(meetingID)/promises"
+        case .exitMeeting(let meetingID):
+            return "/api/v1/meetings/\(meetingID)"
         }
     }
     
@@ -51,6 +54,8 @@ extension MeetingTargetType: TargetType {
             return .post
         case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember, .fetchMeetingPromiseList:
             return .get
+        case .exitMeeting:
+            return .delete
         }
     }
     
@@ -60,7 +65,7 @@ extension MeetingTargetType: TargetType {
             return .requestJSONEncodable(request)
         case .joinMeeting(let request):
             return .requestJSONEncodable(request)
-        case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember:
+        case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember, .exitMeeting:
             return .requestPlain
         case .fetchMeetingPromiseList:
             return .requestParameters(

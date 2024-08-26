@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         loginViewModel.autoLogin { [weak self] success in
             DispatchQueue.main.async {
                 if success {
-                    self?.showMainScreen()
+                    self?.showLoginScreen()
                 } else {
                     self?.showLoginScreen()
                 }
@@ -59,7 +59,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     
     private func showMainScreen() {
         let mainTabBarController = MainTabBarController()
-        let navigationController = UINavigationController(rootViewController: mainTabBarController)
+        let navigationController = UINavigationController(
+            rootViewController: mainTabBarController,
+            isBorderNeeded: true
+        )
         navigationController.isNavigationBarHidden = true
         
         animateRootViewControllerChange(to: navigationController)

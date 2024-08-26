@@ -51,14 +51,14 @@ class JoinButtonView: BaseView {
     
     override func setupAutoLayout() {
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(18)
+            $0.top.equalToSuperview().offset(14)
             $0.leading.equalToSuperview().offset(20)
         }
         
         mainTitleLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(18)
+            $0.bottom.equalToSuperview().inset(14)
             $0.leading.equalToSuperview().offset(20)
-            $0.top.equalTo(subTitleLabel.snp.bottom).offset(8)
+            $0.top.equalTo(subTitleLabel.snp.bottom).offset(2)
         }
         
         chevronImageView.snp.makeConstraints {

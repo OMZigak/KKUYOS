@@ -13,15 +13,16 @@ import RxSwift
 final class MeetingInfoViewModel {
     let meetingID: Int
     
+    var meetingName: String { infoRelay.value?.name ?? "" }
     var meetingInvitationCode: String? { infoRelay.value?.invitationCode }
     var meetingPromises: [MeetingPromise] { meetingPromisesModelRelay.value?.promises ?? [] }
     
-    private let service: MeetingInfoServiceType
+    private let service: MeetingInfoServiceProtocol
     private let infoRelay = BehaviorRelay<MeetingInfoModel?>(value: nil)
     private let meetingMemberModelRelay = BehaviorRelay<MeetingMembersModel?>(value: nil)
     private let meetingPromisesModelRelay = BehaviorRelay<MeetingPromisesModel?>(value: nil)
     
-    init(meetingID: Int, service: MeetingInfoServiceType) {
+    init(meetingID: Int, service: MeetingInfoServiceProtocol) {
         self.meetingID = meetingID
         self.service = service
     }
@@ -31,14 +32,15 @@ extension MeetingInfoViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: PublishRelay<Void>
         let createPromiseButtonDidTap: Observable<Void>
+        let actionButtonDidTapRelay: PublishRelay<Void>
     }
     
     struct Output {
         let info: Driver<MeetingInfoModel?>
         let memberCount: Driver<Int>
         let members: Driver<[Member]>
-        let promises: Driver<[MeetingPromise]>
-        let isPossbleToCreatePromise: Driver<Bool>
+        let promises: Driver<[MeetingInfoPromiseModel]>
+        let isExitMeetingSucceed: Driver<Bool>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -73,26 +75,29 @@ extension MeetingInfoViewModel: ViewModelType {
                 guard let model else { return [] }
                 return model.promises
             }
+            .compactMap { [weak self] promises in
+                self?.convertToMeetingInfoPromiseModels(from: promises)
+            }
             .asDriver(onErrorJustReturn: [])
         
-        let isPossibleToCreatePromise = input.createPromiseButtonDidTap
-            .map { [weak self] _ in
-                guard let count = self?.meetingMemberModelRelay.value?.memberCount,
-                      count > 1
-                else {
-                    return false
+        let isExitMeetingSucceed = input.actionButtonDidTapRelay
+            .flatMapLatest { [weak self] _ -> Driver<Bool> in
+                guard let self else {
+                    return Driver.just(false)
                 }
-                return true
+                
+                return self.service.exitMeeting(with: self.meetingID)
+                    .map { $0.success }
+                    .asDriver(onErrorJustReturn: false)
             }
             .asDriver(onErrorJustReturn: false)
             
-        
         let output = Output(
             info: info,
             memberCount: memberCount,
             members: members,
             promises: promises,
-            isPossbleToCreatePromise: isPossibleToCreatePromise
+            isExitMeetingSucceed: isExitMeetingSucceed
         )
         
         return output
@@ -130,6 +135,56 @@ private extension MeetingInfoViewModel {
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
+        }
+    }
+}
+
+private extension MeetingInfoViewModel {
+    func convertToMeetingInfoPromiseModels(from promises: [MeetingPromise]) -> [MeetingInfoPromiseModel] {
+        let inputDateFormatter = DateFormatter()
+        inputDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        let outputDateFormatter = DateFormatter().then {
+            $0.locale = Locale(identifier: "ko_KR")
+            $0.timeZone = TimeZone(identifier: "Asia/Seoul")
+            $0.dateFormat = "yyyy.MM.dd a h:mm"
+            $0.amSymbol = "AM"
+            $0.pmSymbol = "PM"
+        }
+        
+        return promises.compactMap { promise in
+            guard let date = inputDateFormatter.date(from: promise.time) else { return nil }
+            let formattedDate = outputDateFormatter.string(from: date)
+            let (dateString, timeString) = splitDateAndTime(from: formattedDate)
+            let (dDayString, state) = configure(dDay: promise.dDay)
+            
+            return MeetingInfoPromiseModel(
+                state: state,
+                promiseID: promise.promiseID,
+                name: promise.name,
+                dDayText: dDayString,
+                dateText: dateString,
+                timeText: timeString,
+                placeName: promise.placeName
+            )
+        }
+    }
+    
+    func splitDateAndTime(from formattedDate: String) -> (String, String) {
+        let components = formattedDate.split(separator: " ").map { "\($0)" }
+        guard components.count >= 3 else { return ("", "") }
+        let dateString = components[0]
+        let timeString = "\(components[1]) \(components[2])"
+        return (dateString, timeString)
+    }
+    
+    func configure(dDay: Int) -> (dDayText: String, state: MeetingPromiseCell.State) {
+        if 0 < dDay {
+            return ("+\(dDay)", .past)
+        } else if 0 == dDay {
+            return ("-Day", .today)
+        } else {
+            return ("\(dDay)", .future)
         }
     }
 }

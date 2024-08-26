@@ -103,7 +103,6 @@ extension AddPromiseViewModel: ViewModelType {
         let adjustedDate = Observable.combineLatest(input.date, input.time)
             .map { date, time -> Date in
                 let calendar = Calendar.current
-                var combinedComponents = DateComponents()
                 
                 guard let tempDate = calendar.date(byAdding: .minute, value: -1, to: Date()) else {
                     return Date()

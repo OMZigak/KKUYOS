@@ -25,7 +25,7 @@ class LoginViewModel: NSObject {
     var userName: ObservablePattern<String?> = ObservablePattern(nil)
     
     private let provider: MoyaProvider<AuthTargetType>
-    private var authService: AuthServiceType
+    private var authService: AuthServiceProtocol
     private let authInterceptor: AuthInterceptor
     private let keychainAccessible: KeychainAccessible
     
@@ -33,7 +33,7 @@ class LoginViewModel: NSObject {
         provider: MoyaProvider<AuthTargetType> = MoyaProvider<AuthTargetType>(
             plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
         ),
-        authService: AuthServiceType = AuthService(),
+        authService: AuthServiceProtocol = AuthService(),
         keychainAccessible: KeychainAccessible = DefaultKeychainAccessible()
     ) {
         self.provider = provider
@@ -289,19 +289,27 @@ class LoginViewModel: NSObject {
 
 extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-        print("Apple authorization completed")
-        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
-              let identityToken = appleIDCredential.identityToken,
-              let tokenString = String(data: identityToken, encoding: .utf8) else {
-            print("Failed to get Apple ID Credential or identity token")
-            return
-        }
-        
-        print("Apple Login Successful, identity token: \(tokenString)")
-        getFCMToken { [weak self] fcmToken in
-            self?.loginToServer(with: .appleLogin(identityToken: tokenString, fcmToken: fcmToken))
-        }
-    }
+           print("Apple authorization completed")
+           guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+                 let identityToken = appleIDCredential.identityToken,
+                 let tokenString = String(data: identityToken, encoding: .utf8) else {
+               print("Failed to get Apple ID Credential or identity token")
+               return
+           }
+           
+           // authorization_code 출력 추가
+           if let authorizationCode = appleIDCredential.authorizationCode,
+              let codeString = String(data: authorizationCode, encoding: .utf8) {
+               print("Authorization Code: \(codeString)")
+           } else {
+               print("Authorization Code not available")
+           }
+           
+           print("Apple Login Successful, identity token: \(tokenString)")
+           getFCMToken { [weak self] fcmToken in
+               self?.loginToServer(with: .appleLogin(identityToken: tokenString, fcmToken: fcmToken))
+           }
+       }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("Apple authorization error: \(error.localizedDescription)")

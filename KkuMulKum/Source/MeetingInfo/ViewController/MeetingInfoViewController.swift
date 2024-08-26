@@ -19,6 +19,7 @@ final class MeetingInfoViewController: BaseViewController {
     private let viewModel: MeetingInfoViewModel
     
     private let viewWillAppearRelay = PublishRelay<Void>()
+    private let actionButtonDidTapRelay = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     private let rootView = MeetingInfoView()
     
@@ -64,6 +65,15 @@ final class MeetingInfoViewController: BaseViewController {
     
     override func setupView() {
         setupNavigationBarBackButton()
+        setupNavigationBarRightButton()
+    }
+    
+    override func setupAction() {
+        rootView.createPromiseButtonDidTap
+            .subscribe(with: self) { owner, _ in
+                owner.navigateToAddPromise()
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setupDelegate() {
@@ -91,7 +101,8 @@ private extension MeetingInfoViewController {
     func bindViewModel() {
         let input = MeetingInfoViewModel.Input(
             viewWillAppear: viewWillAppearRelay,
-            createPromiseButtonDidTap: rootView.createPromiseButtonDidTap
+            createPromiseButtonDidTap: rootView.createPromiseButtonDidTap,
+            actionButtonDidTapRelay: actionButtonDidTapRelay
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
@@ -136,29 +147,22 @@ private extension MeetingInfoViewController {
                 cellIdentifier: MeetingPromiseCell.reuseIdentifier,
                 cellType: MeetingPromiseCell.self
             )) { index, promise, cell in
-                cell.configure(
-                    dDay: promise.dDay,
-                    name: promise.name,
-                    date: promise.date,
-                    time: promise.time,
-                    place: promise.placeName
-                )
+                cell.configure(model: promise)
             }
             .disposed(by: disposeBag)
         
-        output.isPossbleToCreatePromise
-            .drive(with: self) { owner, flag in
-                guard flag else {
-                    let toast = Toast()
-                    toast.show(
-                        message: "모임에 구성원이 없어서 약속을 만들 수 없어요.",
+        output.isExitMeetingSucceed
+            .drive(with: self) { owner, result in
+                if result {
+                    owner.navigationController?.popViewController(animated: true)
+                } else {
+                    Toast().show(
+                        message: "다시 시도해 주세요.",
                         view: owner.view,
                         position: .bottom,
-                        inset: 100
+                        inset: Screen.height(100)
                     )
-                    return
                 }
-                owner.navigateToAddPromise()
             }
             .disposed(by: disposeBag)
     }
@@ -167,6 +171,53 @@ private extension MeetingInfoViewController {
         let viewModel = AddPromiseViewModel(meetingID: viewModel.meetingID)
         let viewController = AddPromiseViewController(viewModel: viewModel)
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func setupNavigationBarRightButton() {
+        let moreButton = UIBarButtonItem(
+            image: .imgMore.withRenderingMode(.alwaysOriginal),
+            style: .plain,
+            target: self,
+            action: #selector(moreButtonDidTap)
+        )
+        
+        navigationItem.rightBarButtonItem = moreButton
+    }
+    
+    @objc
+    func moreButtonDidTap() {
+        let viewController = MeetingInfoMoreViewController(meetingName: viewModel.meetingName)
+        viewController.delegate = self
+        
+        let bottomSheetController = BottomSheetViewController(
+            contentViewController: viewController,
+            defaultHeight: Screen.height(232)
+        )
+        
+        present(bottomSheetController, animated: true)
+    }
+}
+
+
+// MARK: - MeetingInfoMoreDelegate
+
+extension MeetingInfoViewController: MeetingInfoMoreDelegate {
+    func exitButtonDidTap() {
+        let actionSheetController = CustomActionSheetController(kind: .exitMeeting)
+        actionSheetController.delegate = self
+        
+        present(actionSheetController, animated: true)
+    }
+}
+
+
+// MARK: - CustomActionSheetDelegate
+
+extension MeetingInfoViewController: CustomActionSheetDelegate {
+    func actionButtonDidTap(for kind: ActionSheetKind) {
+        guard kind == .exitMeeting else { return }
+        
+        actionButtonDidTapRelay.accept(())
     }
 }
 

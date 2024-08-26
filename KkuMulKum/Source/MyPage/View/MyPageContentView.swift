@@ -10,14 +10,23 @@ import UIKit
 import SnapKit
 import Then
 
+
 class MyPageContentView: BaseView {
+    
     let profileStackView = UIStackView(axis: .vertical).then {
         $0.spacing = 12
         $0.alignment = .center
     }
     
+    let editButton = UIButton().then {
+        $0.setImage(UIImage.imgEdit, for: .normal)
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = Screen.width(24) / 2
+        $0.clipsToBounds = true
+    }
+    
     let profileImageView = UIImageView().then {
-        $0.image = UIImage(named: "img_profile")
+        $0.image = UIImage.imgProfile
         $0.contentMode = .scaleAspectFill
         $0.clipsToBounds = true
     }
@@ -41,19 +50,25 @@ class MyPageContentView: BaseView {
         backgroundColor = .green1
         
         profileStackView.addArrangedSubviews(profileImageView, nameLabel)
-        levelView.addSubview(levelLabel)
-        addSubviews(profileStackView, levelView, separatorView)
+        addSubviews(profileStackView, editButton, levelView, separatorView)
+        levelView.addSubviews(levelLabel)
     }
-   
+    
     override func setupAutoLayout() {
         profileStackView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24)
             $0.centerX.equalToSuperview()
+            $0.height.equalTo(Screen.height(120))
         }
         
         profileImageView.snp.makeConstraints {
             $0.height.equalTo(Screen.height(82))
             $0.width.equalTo(profileImageView.snp.height)
+        }
+        
+        editButton.snp.makeConstraints {
+            $0.size.equalTo(Screen.width(24))
+            $0.bottom.trailing.equalTo(profileImageView)
         }
         
         levelView.snp.makeConstraints {
