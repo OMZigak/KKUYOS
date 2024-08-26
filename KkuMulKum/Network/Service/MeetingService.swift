@@ -82,7 +82,6 @@ extension MeetingService: InviteCodeServiceProtocol {
     }
 }
 
-
 final class MockMeetingInfoService: MeetingInfoServiceProtocol {
     func fetchMeetingInfo(with meetingID: Int) -> ResponseBodyDTO<MeetingInfoModel>? {
         let mockData = MeetingInfoModel(
