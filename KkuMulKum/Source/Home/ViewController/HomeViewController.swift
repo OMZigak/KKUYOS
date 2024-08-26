@@ -356,7 +356,6 @@ private extension HomeViewController {
     }
     
     func setNoneUI() {
-        print("setNoneUI")
         setEnableButton(rootView.todayPromiseView.prepareButton)
         setDisableButton(rootView.todayPromiseView.moveButton)
         setDisableButton(rootView.todayPromiseView.arriveButton)
@@ -391,7 +390,6 @@ private extension HomeViewController {
     }
     
     func setPrepareUI() {
-        print("setPrepareUI")
         setProgressButton(rootView.todayPromiseView.prepareButton)
         setEnableButton(rootView.todayPromiseView.moveButton)
         setDisableButton(rootView.todayPromiseView.arriveButton)
@@ -433,7 +431,6 @@ private extension HomeViewController {
     }
     
     func setMoveUI() {
-        print("setMoveUI")
         setCompleteButton(rootView.todayPromiseView.prepareButton)
         setProgressButton(rootView.todayPromiseView.moveButton)
         setEnableButton(rootView.todayPromiseView.arriveButton)
@@ -480,7 +477,6 @@ private extension HomeViewController {
     }
     
     func setArriveUI() {
-        print("setArriveUI")
         setCompleteButton(rootView.todayPromiseView.prepareButton)
         setCompleteButton(rootView.todayPromiseView.moveButton)
         setCompleteButton(rootView.todayPromiseView.arriveButton)

@@ -106,7 +106,6 @@ final class HomeViewModel {
     
     /// 서버에서 보내주는 readyStatus의 시간 유무에 따른 현재 상태 분류
     private func judgeReadyStatus() {
-        print("judgeReadyStatus = \(currentState.value)")
         guard let data = myReadyStatus.value?.data else {
             currentState.value = .none
             return
@@ -121,7 +120,6 @@ final class HomeViewModel {
         } else {
             currentState.value = .none
         }
-        print("judgeReadyStatus = \(currentState.value)")
     }
     
     func requestMyReadyStatus() {
@@ -214,7 +212,6 @@ final class HomeViewModel {
                 let promises = upcomingPromiseList.value?.data?.promises ?? []
                 formattedTimes.value = promises.map { formatTimeToString($0.time) ?? "" }
                 formattedDays.value = promises.map { formatDateToString($0.time) ?? "" }
-                
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
