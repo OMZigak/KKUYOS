@@ -1245,6 +1245,7 @@
 				DD1FD0322C5CCF7700D0A72C /* PromiseInfo */,
 				DD1FD02D2C5CCB1E00D0A72C /* ReadyStatus */,
 				DD931B682C3D9DAD00526452 /* Tardy */,
+				DD34664B2C7B020400E62284 /* EditPromise */,
 			);
 			path = Promise;
 			sourceTree = "<group>";
@@ -1359,7 +1360,6 @@
 				DECB844E2C43FB200022A003 /* AddPromise */,
 				DD7AB15F2C513B66008308DE /* SetReadyInfo */,
 				DDAF1C872C3D6E3D008A37D3 /* Promise */,
-				DD34664B2C7B020400E62284 /* EditPromise */,
 				DE159D312C406E1600425101 /* MyPage */,
 			);
 			path = Source;

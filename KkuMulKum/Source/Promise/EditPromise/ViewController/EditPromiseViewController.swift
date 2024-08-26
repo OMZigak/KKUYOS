@@ -11,7 +11,11 @@ class EditPromiseViewController: BaseViewController {
     let viewModel: EditPromiseViewModel
     
     private let rootView: AddPromiseView = AddPromiseView()
-    private let findPlaceViewController = FindPlaceViewController(viewModel: FindPlaceViewModel(service: UtilService()))
+    private let findPlaceViewController = FindPlaceViewController(
+        viewModel: FindPlaceViewModel(
+            service: UtilService()
+        )
+    )
     
     
     // MARK: - LifeCycle
@@ -45,12 +49,6 @@ class EditPromiseViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         navigationController?.isNavigationBarHidden = false
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        navigationController?.isNavigationBarHidden = true
     }
     
     
@@ -142,7 +140,8 @@ private extension EditPromiseViewController {
     
     @objc
     func placeTextFieldDidTap() {
-        navigationController?.pushViewController(findPlaceViewController, animated: true)
+        findPlaceViewController.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.pushViewController(findPlaceViewController, animated: true)
     }
     
     @objc
