@@ -121,9 +121,6 @@ extension PromiseViewModel {
                                       : myReadyStatus.value?.departureAt == nil ? .ready
                                       : myReadyStatus.value?.arrivalAt == nil ? .move
                                       : .done
-        
-        // TODO: 리팩토링 끝나면 삭제
-        print(">>>>> \(myReadyProgressStatus.value) : \(#function)")
     }
     
     /// 준비 or 이동 소요 시간 계산하는 함수
@@ -176,7 +173,7 @@ extension PromiseViewModel {
     }
     
     /// 약속 상세 정보 조회 API 구현 함수
-    func fetchPromiseInfo(promiseID: Int) {
+    func fetchPromiseInfo(promiseID: Int, completion: @escaping () -> Void) {
         Task {
             do {
                 let result = try await service.fetchPromiseInfo(with: promiseID)
@@ -188,6 +185,10 @@ extension PromiseViewModel {
                 }
                 
                 promiseInfo.value = result?.data
+                print(">>>>> \(promiseInfo.value) : \(#function)")
+                completion()
+            } catch {
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }

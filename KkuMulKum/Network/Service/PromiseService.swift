@@ -77,14 +77,17 @@ extension PromiseService: PromiseServiceProtocol {
 final class MockPromiseService: PromiseServiceProtocol {
     func fetchPromiseInfo(with promiseId: Int) async throws -> ResponseBodyDTO<PromiseInfoModel>? {
         let mockData = PromiseInfoModel(
+            isParticipant: true,
             promiseID: 1,
             promiseName: "냐미",
             placeName: "우리집 앞",
+            time: "2024-07-07 15:00:00",
+            dressUpLevel: "LV 2. 냐미",
+            penalty: "냐미",
             address: "경기도 용인시 수지구 대지로 72",
             roadAddress: "경기도 용인시 수지구 대지로 72",
-            time: "2024년 7월 24일 오후 10시 30분",
-            dressUpLevel: "LV 2. 냐미",
-            penalty: "냐미"
+            x: 127.00090541880259,
+            y: 37.55808646250296
         )
         
         return ResponseBodyDTO<PromiseInfoModel>.init(

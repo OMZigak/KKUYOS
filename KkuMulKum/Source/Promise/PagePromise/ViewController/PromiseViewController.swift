@@ -13,9 +13,9 @@ class PromiseViewController: BaseViewController {
     // MARK: Property
 
     private let viewModel: PromiseViewModel
-    private let promiseInfoViewController: PromiseInfoViewController
-    private let promiseReadyStatusViewController: ReadyStatusViewController
-    private let promiseTardyViewController: TardyViewController
+    private var promiseInfoViewController: PromiseInfoViewController
+    private var promiseReadyStatusViewController: ReadyStatusViewController
+    private var promiseTardyViewController: TardyViewController
     private let exitViewController = CustomActionSheetController(kind: .exitPromise)
     private let deleteViewController = CustomActionSheetController(kind: .deletePromise)
     private let promisePageViewController = UIPageViewController(
@@ -36,8 +36,6 @@ class PromiseViewController: BaseViewController {
     init(viewModel: PromiseViewModel) {
         self.viewModel = viewModel
         
-        viewModel.fetchPromiseInfo(promiseID: viewModel.promiseID)
-        
         promiseInfoViewController = PromiseInfoViewController(viewModel: viewModel)
         promiseReadyStatusViewController = ReadyStatusViewController(viewModel: viewModel)
         promiseTardyViewController = TardyViewController(viewModel: viewModel)
@@ -49,6 +47,14 @@ class PromiseViewController: BaseViewController {
         ]
         
         super.init(nibName: nil, bundle: nil)
+        
+        viewModel.fetchPromiseInfo(promiseID: viewModel.promiseID) {
+            DispatchQueue.main.async {
+                self.promiseInfoViewController = PromiseInfoViewController(viewModel: self.viewModel)
+                self.promiseInfoViewController.setupContent()
+                self.promiseInfoViewController.setUpTimeContent()
+            }
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -125,7 +131,6 @@ class PromiseViewController: BaseViewController {
             for: .touchUpInside
         )
         
-        // TODO: 버튼 안눌리는 문제 해결하기
         removePromiseViewContoller.exitButton.addTarget(
             self,
             action: #selector(exitButtonDidTap),
@@ -229,7 +234,6 @@ private extension PromiseViewController {
 extension PromiseViewController: CustomActionSheetDelegate {
     func actionButtonDidTap(for kind: ActionSheetKind) {
         if kind == .deletePromise {
-            // TODO: 약속 삭제 API 연결
             
             dismiss(animated: false)
             navigationController?.popViewController(animated: true)

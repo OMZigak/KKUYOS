@@ -14,8 +14,8 @@ class PromiseInfoViewController: BaseViewController {
     
     // MARK: Property
     
-    private let viewModel: PromiseViewModel
-    private let rootView: PromiseInfoView = PromiseInfoView()
+    let rootView: PromiseInfoView = PromiseInfoView()
+    let viewModel: PromiseViewModel
     
     
     // MARK: - LifeCycle
@@ -50,6 +50,11 @@ class PromiseInfoViewController: BaseViewController {
     
     // MARK: - Setup
     
+    override func setupView() {
+        setupContent()
+        setUpTimeContent()
+    }
+    
     override func setupDelegate() {
         rootView.participantCollectionView.delegate = self
         rootView.participantCollectionView.dataSource = self
@@ -60,16 +65,11 @@ class PromiseInfoViewController: BaseViewController {
 // MARK: - Extension
 
 extension PromiseInfoViewController {
-    func setupBinding() {
+    private func setupBinding() {
         viewModel.promiseInfo.bind(with: self) { owner, info in
-            // TODO: 서버 API 반영되면 아래 주석 해제
-            // owner.rootView.editButton.isHidden = info?.isParticipant!
+            owner.rootView.editButton.isHidden = !(info?.isParticipant ?? false)
             
-            owner.rootView.timeContentLabel.setText(
-                info?.time ?? "시간이 설정되지 않았어요!",
-                style: .body04,
-                color: .gray7
-            )
+            self.setUpTimeContent()
             
             owner.rootView.readyLevelContentLabel.setText(
                 info?.dressUpLevel ?? "꾸밈 난이도가 설정되지 않았어요!",
@@ -107,6 +107,73 @@ extension PromiseInfoViewController {
                 
                 owner.rootView.participantCollectionView.reloadData()
             }
+        }
+    }
+    
+    func setupContent() {
+        DispatchQueue.main.async {
+            if let name = self.viewModel.promiseInfo.value?.promiseName {
+                self.rootView.promiseNameLabel.setText(name, style: .body04)
+            } else {
+                print("넌조졋다")
+            }
+            
+            self.rootView.locationContentLabel.setText(
+                self.viewModel.promiseInfo.value?.placeName ?? "약속 장소 미설정",
+                style: .body04
+            )
+            self.rootView.readyLevelContentLabel.setText(
+                self.viewModel.promiseInfo.value?.dressUpLevel ?? "꾸레벨 미설정",
+                style: .body04
+            )
+            self.rootView.penaltyLevelContentLabel.setText(
+                self.viewModel.promiseInfo.value?.penalty ?? "벌칙 미설정",
+                style: .body04
+            )
+        }
+    }
+    
+    func setUpTimeContent() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        
+        guard let date = dateFormatter.date(from: viewModel.promiseInfo.value?.time ?? "") else {
+            return
+        }
+        
+        dateFormatter.dateFormat = "M월 d일 a h:mm"
+        dateFormatter.amSymbol = "AM"
+        dateFormatter.pmSymbol = "PM"
+        
+        let time = dateFormatter.string(from: date)
+        
+        rootView.timeContentLabel.setText(time, style: .body04)
+        
+        let currentDate = Calendar.current
+        
+        let components = currentDate.dateComponents([.day], from: Date(), to: date)
+        guard let remainDay = components.day else {
+            return
+        }
+        
+        print(">>>>> \(remainDay) : \(#function)")
+        
+        if remainDay == 0 {
+            rootView.dDayLabel.setText("D-DAY" ,style: .body05, color: .mainorange)
+            rootView.promiseImageView.image = .imgPromise
+            rootView.promiseNameLabel.textColor = .gray7
+        }
+        else if remainDay < 0 {
+            rootView.dDayLabel.setText("D+\(remainDay)" ,style: .body05, color: .gray4)
+            rootView.promiseImageView.image = .imgPromiseGray
+            rootView.promiseNameLabel.textColor = .gray4
+        }
+        else {
+            rootView.dDayLabel.setText("D-\(remainDay)" ,style: .body05, color: .gray5)
+            rootView.promiseImageView.image = .imgPromise
+            rootView.promiseNameLabel.textColor = .gray7
         }
     }
 }
