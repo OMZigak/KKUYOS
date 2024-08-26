@@ -107,7 +107,6 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
                          self?.navigateToLoginScreen()
                      case .failure(let error):
                          print("Logout failed: \(error)")
-                         // 에러 처리 (예: 알림 표시)
                      }
                  })
                  .disposed(by: disposeBag)
@@ -168,14 +167,12 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     }
     
     private func navigateToLoginScreen() {
-        DispatchQueue.main.async {
             let loginViewModel = LoginViewModel()
             let loginViewController = LoginViewController(viewModel: loginViewModel)
             let navigationController = UINavigationController(rootViewController: loginViewController)
             navigationController.modalPresentationStyle = .fullScreen
             self.view.window?.rootViewController = navigationController
             self.view.window?.makeKeyAndVisible()
-        }
     }
     
     func actionButtonDidTap(for kind: ActionSheetKind) {
