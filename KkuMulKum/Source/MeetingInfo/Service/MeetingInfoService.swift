@@ -12,6 +12,6 @@ import RxSwift
 protocol MeetingInfoServiceProtocol {
     func fetchMeetingInfo(with meetingID: Int) async throws -> ResponseBodyDTO<MeetingInfoModel>?
     func fetchMeetingMemberList(with meetingID: Int) async throws -> ResponseBodyDTO<MeetingMembersModel>?
-    func fetchMeetingPromiseList(with meetingID: Int, isParticipant: Bool) async throws -> ResponseBodyDTO<MeetingPromisesModel>?
+    func fetchMeetingPromiseList(with meetingID: Int, isParticipant: Bool?) async throws -> ResponseBodyDTO<MeetingPromisesModel>?
     func exitMeeting(with meetingID: Int) -> Single<ResponseBodyDTO<EmptyModel>>
 }
