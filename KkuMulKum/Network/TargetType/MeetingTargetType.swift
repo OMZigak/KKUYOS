@@ -72,7 +72,7 @@ extension MeetingTargetType: TargetType {
                 "done": "false",
                 "isParticipant": isParticipant
             ]
-            return .requestParameters(parameters: parameters, encoding: JSONEncoding.default)
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
     
