@@ -42,6 +42,9 @@ final class MeetingService {
     }
 }
 
+
+// MARK: - MeetingInfoServiceProtocol
+
 extension MeetingService: MeetingInfoServiceProtocol {
     func fetchMeetingInfo(with meetingID: Int) async throws -> ResponseBodyDTO<MeetingInfoModel>? {
         return try await request(with: .fetchMeetingInfo(meetingID: meetingID))
@@ -53,9 +56,12 @@ extension MeetingService: MeetingInfoServiceProtocol {
     
     func fetchMeetingPromiseList(
         with meetingID: Int,
-        isParticipant: Bool
+        isParticipant: Bool?
     ) async throws -> ResponseBodyDTO<MeetingPromisesModel>? {
-        return try await request(with: .fetchMeetingPromiseList(meetingID: meetingID, isParticipant: isParticipant))
+        guard let isParticipant else {
+            return try await request(with: .fetchMeetingPromiseList(meetingID: meetingID))
+        }
+        return try await request(with: .fetchParticipatedPromiseList(meetingID: meetingID, isParticipant: isParticipant))
     }
     
     func exitMeeting(with meetingID: Int) -> Single<ResponseBodyDTO<EmptyModel>> {
@@ -180,7 +186,7 @@ final class MockMeetingInfoService: MeetingInfoServiceProtocol {
     
     func fetchMeetingPromiseList(
         with meetingID: Int,
-        isParticipant: Bool
+        isParticipant: Bool?
     ) async throws -> ResponseBodyDTO<MeetingPromisesModel>? {
         let mockData = MeetingPromisesModel(
             promises: [
