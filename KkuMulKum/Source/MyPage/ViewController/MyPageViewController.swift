@@ -51,7 +51,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         bindRowTapGesture(for: rootView.etcSettingView.unsubscribeRow)
             .bind(to: viewModel.unsubscribeButtonTapped)
             .disposed(by: disposeBag)
-        // Other rows
+        
         bindRowTapGesture(for: rootView.etcSettingView.versionInfoRow)
             .subscribe(onNext: { print("버전정보 탭됨") })
             .disposed(by: disposeBag)
@@ -106,8 +106,29 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         rootView.contentView.levelLabel.setText("Lv. \(userInfo.level) 지각대장 꾸물이", style: .body05, color: .white)
         rootView.contentView.levelLabel.setHighlightText("Lv. \(userInfo.level)", style: .body05, color: .lightGreen)
         
-        if let profileImageURL = userInfo.profileImageURL {
-            loadImage(from: profileImageURL, into: rootView.contentView.profileImageView)
+        updateProfileImage(with: userInfo.profileImageURL)
+    }
+    
+    private func updateProfileImage(with urlString: String?) {
+        if let urlString = urlString, let url = URL(string: urlString) {
+            rootView.contentView.profileImageView.kf.setImage(
+                with: url,
+                placeholder: UIImage.imgProfile,
+                options: [
+                    .transition(.fade(0.2)),
+                    .forceRefresh,
+                    .cacheOriginalImage
+                ],
+                completionHandler: { result in
+                    switch result {
+                    case .success(_):
+                        print("Profile image loaded successfully")
+                    case .failure(let error):
+                        print("Failed to load profile image: \(error.localizedDescription)")
+                        self.rootView.contentView.profileImageView.image = UIImage.imgProfile
+                    }
+                }
+            )
         } else {
             rootView.contentView.profileImageView.image = UIImage.imgProfile
         }
@@ -124,6 +145,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
             placeholder: UIImage.imgProfile,
             options: [
                 .transition(.fade(0.2)),
+                .forceRefresh,
                 .cacheOriginalImage
             ],
             completionHandler: { result in
@@ -144,17 +166,31 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
             .first?
             .rx.event
             .map { _ in }
-
         ?? Observable.empty()
     }
     
     private func pushEditProfileViewController() {
-        let authService = AuthService()
-        let editProfileViewModel = MyPageEditViewModel(authService: authService)
-        let editProfileViewController = MyPageEditViewController(viewModel: editProfileViewModel)
-        
-        navigationController?.pushViewController(editProfileViewController, animated: true)
-    }
+           let authService = AuthService()
+           let editProfileViewModel = MyPageEditViewModel(authService: authService)
+           let editProfileViewController = MyPageEditViewController(viewModel: editProfileViewModel)
+           
+           editProfileViewModel.profileImageUpdated
+               .observe(on: MainScheduler.instance)
+               .subscribe(onNext: { [weak self] imageDataString in
+                   if let imageDataString = imageDataString,
+                      let imageData = Data(base64Encoded: imageDataString),
+                      let image = UIImage(data: imageData) {
+                       self?.rootView.contentView.profileImageView.image = image
+                   } else {
+                       self?.rootView.contentView.profileImageView.image = UIImage.imgProfile
+                   }
+                   KingfisherManager.shared.cache.clearMemoryCache()
+                   KingfisherManager.shared.cache.clearDiskCache()
+               })
+               .disposed(by: disposeBag)
+           
+           navigationController?.pushViewController(editProfileViewController, animated: true)
+       }
     
     private func pushAskViewController() {
         let askViewController = MyPageAskViewController(viewModel: self.viewModel)
@@ -175,5 +211,4 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         actionSheet.delegate = self
         present(actionSheet, animated: true, completion: nil)
     }
-    
 }

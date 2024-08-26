@@ -14,10 +14,12 @@ class MyPageEditViewModel: ViewModelType {
     private let authService: AuthServiceProtocol
     private let userService: MyPageUserServiceType
     private let userInfo = BehaviorRelay<LoginUserModel?>(value: nil)
+    let profileImageUpdated = PublishSubject<String?>()
     
     struct Input {
         let profileImageTap: Observable<Void>
         let confirmButtonTap: Observable<Void>
+        let skipButtonTap: Observable<Void>
         let newProfileImage: Observable<UIImage?>
     }
     
@@ -39,6 +41,11 @@ class MyPageEditViewModel: ViewModelType {
         
         input.newProfileImage
             .compactMap { $0?.jpegData(compressionQuality: 1.0) }
+            .bind(to: imageDataRelay)
+            .disposed(by: disposeBag)
+        
+        input.skipButtonTap
+            .map { _ in UIImage.imgProfile.jpegData(compressionQuality: 1.0) }
             .bind(to: imageDataRelay)
             .disposed(by: disposeBag)
         
@@ -69,7 +76,31 @@ class MyPageEditViewModel: ViewModelType {
                                     mimeType: "image/jpeg"
                                 )
                             )
+                            self.profileImageUpdated.onNext(imageData.base64EncodedString())
                             observer.onNext("프로필 이미지가 성공적으로 업로드되었습니다.")
+                            observer.onCompleted()
+                        } catch {
+                            let networkError = error as? NetworkError ?? .unknownError("알 수 없는 오류가 발생했습니다.")
+                            observer.onNext(self.handleError(networkError))
+                            observer.onCompleted()
+                        }
+                    }
+                    return Disposables.create()
+                }
+            }
+            .bind(to: serverResponseRelay)
+            .disposed(by: disposeBag)
+        
+        input.skipButtonTap
+            .flatMapLatest { [weak self] _ -> Observable<String> in
+                guard let self = self else { return .just("오류가 발생했습니다.") }
+                return Observable.create { observer in
+                    Task {
+                        do {
+                            let _: EmptyModel = try await self.authService.performRequest(.updateProfileImage(image: UIImage.imgProfile.jpegData(compressionQuality: 1.0)!, fileName: "default_profile.jpg", mimeType: "image/jpeg"))
+                            // 성공 시 profileImageUpdated에 nil 전달 (기본 이미지로 설정됨을 의미)
+                            self.profileImageUpdated.onNext(nil)
+                            observer.onNext("프로필 이미지가 기본 이미지로 변경되었습니다.")
                             observer.onCompleted()
                         } catch {
                             let networkError = error as? NetworkError ?? .unknownError("알 수 없는 오류가 발생했습니다.")

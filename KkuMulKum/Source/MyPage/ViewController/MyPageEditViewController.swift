@@ -56,12 +56,20 @@ class MyPageEditViewController: BaseViewController {
                 self?.navigationController?.popViewController(animated: true)
             })
             .disposed(by: disposeBag)
+        
+        rootView.skipButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.newProfileImageSubject.onNext(UIImage.imgProfile)
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupBindings() {
         let input = MyPageEditViewModel.Input(
             profileImageTap: rootView.cameraButton.rx.tap.asObservable(),
             confirmButtonTap: rootView.confirmButton.rx.tap.asObservable(),
+            skipButtonTap: rootView.skipButton.rx.tap.asObservable(),
             newProfileImage: newProfileImageSubject.asObservable()
         )
         
@@ -81,36 +89,36 @@ class MyPageEditViewController: BaseViewController {
             .disposed(by: disposeBag)
         
         output.userInfo
-                   .drive(onNext: { [weak self] userInfo in
-                       self?.updateProfileImage(with: userInfo?.profileImageURL)
-                   })
-                   .disposed(by: disposeBag)
+            .drive(onNext: { [weak self] userInfo in
+                self?.updateProfileImage(with: userInfo?.profileImageURL)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func updateProfileImage(with urlString: String?) {
-            guard let urlString = urlString, let url = URL(string: urlString) else {
-                rootView.profileImageView.image = UIImage.imgProfile
-                return
-            }
-            
-            rootView.profileImageView.kf.setImage(
-                with: url,
-                placeholder: UIImage.imgProfile,
-                options: [
-                    .transition(.fade(0.2)),
-                    .cacheOriginalImage
-                ],
-                completionHandler: { result in
-                    switch result {
-                    case .success(_):
-                        print("Profile image loaded successfully")
-                    case .failure(let error):
-                        print("Failed to load profile image: \(error.localizedDescription)")
-                        self.rootView.profileImageView.image = UIImage.imgProfile
-                    }
-                }
-            )
+        guard let urlString = urlString, let url = URL(string: urlString) else {
+            rootView.profileImageView.image = UIImage.imgProfile
+            return
         }
+        
+        rootView.profileImageView.kf.setImage(
+            with: url,
+            placeholder: UIImage.imgProfile,
+            options: [
+                .transition(.fade(0.2)),
+                .cacheOriginalImage
+            ],
+            completionHandler: { result in
+                switch result {
+                case .success(_):
+                    print("Profile image loaded successfully")
+                case .failure(let error):
+                    print("Failed to load profile image: \(error.localizedDescription)")
+                    self.rootView.profileImageView.image = UIImage.imgProfile
+                }
+            }
+        )
+    }
     
     private func showImagePicker() {
         let imagePicker = UIImagePickerController()
