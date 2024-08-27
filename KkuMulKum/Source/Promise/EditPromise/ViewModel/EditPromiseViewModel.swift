@@ -150,29 +150,4 @@ extension EditPromiseViewModel {
             }
         }
     }
-
-    
-    func deletePromise() {
-        Task {
-            do {
-                let result = try await service.deletePromise(promiseID: promiseID)
-                
-                guard let success = result?.success, success == true else {
-                    return
-                }
-            }
-        }
-    }
-    
-    func exitPromise() {
-        Task {
-            do {
-                let result = try await service.exitPromise(promiseID: promiseID)
-                
-                guard let success = result?.success, success == true else {
-                    return
-                }
-            }
-        }
-    }
 }

@@ -14,8 +14,8 @@ class PromiseInfoViewController: BaseViewController {
     
     // MARK: Property
     
-    private let viewModel: PromiseViewModel
-    private let rootView: PromiseInfoView = PromiseInfoView()
+    let rootView: PromiseInfoView = PromiseInfoView()
+    let viewModel: PromiseViewModel
     
     
     // MARK: - LifeCycle
@@ -37,18 +37,22 @@ class PromiseInfoViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .gray0
+        setupBinding()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setupBinding()
         viewModel.fetchPromiseParticipantList()
+        viewModel.fetchPromiseInfo()
     }
     
     
     // MARK: - Setup
+    
+    override func setupView() {
+        view.backgroundColor = .gray0
+    }
     
     override func setupDelegate() {
         rootView.participantCollectionView.delegate = self
@@ -63,7 +67,7 @@ class PromiseInfoViewController: BaseViewController {
 
 // MARK: - Extension
 
-private extension PromiseInfoViewController {
+extension PromiseInfoViewController {
     @objc
     func editButtonDidTap() {
         let viewController = EditPromiseViewController(
@@ -73,7 +77,7 @@ private extension PromiseInfoViewController {
                 placeName: viewModel.promiseInfo.value?.placeName,
                 time: viewModel.promiseInfo.value?.time,
                 dressUpLevel: viewModel.promiseInfo.value?.dressUpLevel,
-                penalty: viewModel.promiseInfo.value?.penalty, 
+                penalty: viewModel.promiseInfo.value?.penalty,
                 service: PromiseService()
             )
         )
@@ -82,36 +86,6 @@ private extension PromiseInfoViewController {
     }
     
     func setupBinding() {
-        viewModel.promiseInfo.bind(with: self) { owner, info in
-            // TODO: 서버 API 반영되면 아래 주석 해제
-            // owner.rootView.editButton.isHidden = info?.isParticipant!
-            
-            owner.rootView.timeContentLabel.setText(
-                info?.time ?? "시간이 설정되지 않았어요!",
-                style: .body04,
-                color: .gray7
-            )
-            
-            owner.rootView.readyLevelContentLabel.setText(
-                info?.dressUpLevel ?? "꾸밈 난이도가 설정되지 않았어요!",
-                style: .body04,
-                color: .gray7
-            )
-            
-            owner.rootView.locationContentLabel.setText(
-                info?.address ?? "위치 정보가 설정되지 않았어요!",
-                style: .body04,
-                color: .gray7,
-                isSingleLine: true
-            )
-            
-            owner.rootView.penaltyLevelContentLabel.setText(
-                info?.penalty ?? "벌칙이 설정되지 않았어요!",
-                style: .body04,
-                color: .gray7
-            )
-        }
-        
         viewModel.participantsInfo.bind(with: self) { owner, participantsInfo in
             DispatchQueue.main.async {
                 owner.rootView.participantNumberLabel.setText(
@@ -128,6 +102,68 @@ private extension PromiseInfoViewController {
                 
                 owner.rootView.participantCollectionView.reloadData()
             }
+        }
+    }
+    
+    func setupContent() {
+        self.rootView.promiseNameLabel.setText(
+            self.viewModel.promiseInfo.value?.promiseName ?? "",
+            style: .body04
+        )
+        
+        self.rootView.locationContentLabel.setText(
+            self.viewModel.promiseInfo.value?.placeName ?? "약속 장소 미설정",
+            style: .body04
+        )
+        self.rootView.readyLevelContentLabel.setText(
+            self.viewModel.promiseInfo.value?.dressUpLevel ?? "꾸레벨 미설정",
+            style: .body04
+        )
+        self.rootView.penaltyLevelContentLabel.setText(
+            self.viewModel.promiseInfo.value?.penalty ?? "벌칙 미설정",
+            style: .body04
+        )
+    }
+    
+    func setUpTimeContent() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        
+        guard let date = dateFormatter.date(from: viewModel.promiseInfo.value?.time ?? "") else {
+            return
+        }
+        
+        dateFormatter.dateFormat = "M월 d일 a h:mm"
+        dateFormatter.amSymbol = "AM"
+        dateFormatter.pmSymbol = "PM"
+        
+        let time = dateFormatter.string(from: date)
+        
+        let currentDate = Calendar.current
+        
+        let components = currentDate.dateComponents([.day], from: Date(), to: date)
+        guard let remainDay = components.day else {
+            return
+        }
+        
+        rootView.timeContentLabel.setText(time, style: .body04)
+        
+        if remainDay == 0 {
+            rootView.dDayLabel.setText("D-DAY" ,style: .body05, color: .mainorange)
+            rootView.promiseImageView.image = .imgPromise
+            rootView.promiseNameLabel.textColor = .gray7
+        }
+        else if remainDay < 0 {
+            rootView.dDayLabel.setText("D+\(remainDay)" ,style: .body05, color: .gray4)
+            rootView.promiseImageView.image = .imgPromiseGray
+            rootView.promiseNameLabel.textColor = .gray4
+        }
+        else {
+            rootView.dDayLabel.setText("D-\(remainDay)" ,style: .body05, color: .gray5)
+            rootView.promiseImageView.image = .imgPromise
+            rootView.promiseNameLabel.textColor = .gray7
         }
     }
 }

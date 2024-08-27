@@ -121,9 +121,6 @@ extension PromiseViewModel {
                                       : myReadyStatus.value?.departureAt == nil ? .ready
                                       : myReadyStatus.value?.arrivalAt == nil ? .move
                                       : .done
-        
-        // TODO: 리팩토링 끝나면 삭제
-        print(">>>>> \(myReadyProgressStatus.value) : \(#function)")
     }
     
     /// 준비 or 이동 소요 시간 계산하는 함수
@@ -176,18 +173,20 @@ extension PromiseViewModel {
     }
     
     /// 약속 상세 정보 조회 API 구현 함수
-    func fetchPromiseInfo(promiseID: Int) {
+    func fetchPromiseInfo() {
         Task {
             do {
                 let result = try await service.fetchPromiseInfo(with: promiseID)
                 
                 guard let success = result?.success,
-                        success == true
+                      success == true
                 else {
                     return
                 }
                 
                 promiseInfo.value = result?.data
+            } catch {
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
@@ -333,6 +332,38 @@ extension PromiseViewModel {
                 }
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+    }
+    
+    func deletePromise(completion: @escaping () -> Void) {
+        Task {
+            do {
+                let result = try await service.deletePromise(promiseID: promiseID)
+                
+                guard let success = result?.success,
+                        success == true
+                else {
+                    return
+                }
+                
+                completion()
+            }
+        }
+    }
+    
+    func exitPromise(completion: @escaping () -> Void) {
+        Task {
+            do {
+                let result = try await service.exitPromise(promiseID: promiseID)
+                
+                guard let success = result?.success, 
+                        success == true
+                else {
+                    return
+                }
+                
+                completion()
             }
         }
     }

@@ -30,6 +30,7 @@ final class SelectMemberCell: BaseCollectionViewCell {
         didSet {
             let color: UIColor = isSelected ? .maincolor : .gray2
             layer.borderColor = color.cgColor
+            backgroundColor = isSelected ? .green1 : .white
         }
     }
     
@@ -59,8 +60,9 @@ final class SelectMemberCell: BaseCollectionViewCell {
 }
 
 extension SelectMemberCell {
-    func configure(with member: Member) {
+    func configure(with member: Member, isSelect: Bool = false) {
         self.member = member
+        self.isSelected = isSelect
         
         nameLabel.updateText(member.name)
         

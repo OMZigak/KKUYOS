@@ -11,6 +11,4 @@ protocol EditPromiseServiceProtocol {
     /// 약속 수정
     func fetchPromiseAvailableMember(with promiseID: Int) async throws -> ResponseBodyDTO<ParticipateAvailabilityResponseModel>?
     func putPromiseInfo(with promiseID: Int, request: EditPromiseRequestModel) async throws -> ResponseBodyDTO<AddPromiseResponseModel>?
-    func deletePromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
-    func exitPromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
 }
