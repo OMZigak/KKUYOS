@@ -65,6 +65,7 @@ class MyPageContentView: BaseView {
             $0.height.equalTo(Screen.height(82))
             $0.width.equalTo(profileImageView.snp.height)
         }
+        profileImageView.layer.cornerRadius = Screen.height(82) / 2
         
         editButton.snp.makeConstraints {
             $0.size.equalTo(Screen.width(24))

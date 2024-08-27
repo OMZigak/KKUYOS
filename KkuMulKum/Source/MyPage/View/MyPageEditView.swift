@@ -29,7 +29,7 @@ class MyPageEditView: BaseView {
     }
     
     let skipButton = UIButton().then {
-        $0.setTitle("기본 프로필로 설정", style: .body05, color: .gray5)
+        $0.setTitle("기본 프로필로 설정", style: .body03, color: .gray5)
         $0.addUnderline()
     }
     
