@@ -44,7 +44,7 @@ class PromiseInfoViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         viewModel.fetchPromiseParticipantList()
-        viewModel.fetchPromiseInfo(promiseID: viewModel.promiseID)
+        viewModel.fetchPromiseInfo()
     }
     
     

@@ -173,7 +173,7 @@ extension PromiseViewModel {
     }
     
     /// 약속 상세 정보 조회 API 구현 함수
-    func fetchPromiseInfo(promiseID: Int) {
+    func fetchPromiseInfo() {
         Task {
             do {
                 let result = try await service.fetchPromiseInfo(with: promiseID)
@@ -341,7 +341,9 @@ extension PromiseViewModel {
             do {
                 let result = try await service.deletePromise(promiseID: promiseID)
                 
-                guard let success = result?.success, success == true else {
+                guard let success = result?.success,
+                        success == true
+                else {
                     return
                 }
                 
@@ -355,7 +357,9 @@ extension PromiseViewModel {
             do {
                 let result = try await service.exitPromise(promiseID: promiseID)
                 
-                guard let success = result?.success, success == true else {
+                guard let success = result?.success, 
+                        success == true
+                else {
                     return
                 }
                 

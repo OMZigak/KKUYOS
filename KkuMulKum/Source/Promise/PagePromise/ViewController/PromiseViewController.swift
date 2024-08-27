@@ -13,9 +13,9 @@ class PromiseViewController: BaseViewController {
     // MARK: Property
 
     private let viewModel: PromiseViewModel
-    private var promiseInfoViewController: PromiseInfoViewController
-    private var promiseReadyStatusViewController: ReadyStatusViewController
-    private var promiseTardyViewController: TardyViewController
+    private let promiseInfoViewController: PromiseInfoViewController
+    private let promiseReadyStatusViewController: ReadyStatusViewController
+    private let promiseTardyViewController: TardyViewController
     private let exitViewController = CustomActionSheetController(kind: .exitPromise)
     private let deleteViewController = CustomActionSheetController(kind: .deletePromise)
     private let promisePageViewController = UIPageViewController(
