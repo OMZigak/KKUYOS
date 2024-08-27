@@ -11,10 +11,10 @@ import SnapKit
 import Then
 
 final class SelectPenaltyView: BaseView {
-    private let progressView = UIProgressView(progressViewStyle: .default).then {
+    private let progressView = UIProgressView(progressViewStyle: .bar).then {
         $0.progressTintColor = .maincolor
-        $0.backgroundColor = .gray2
-        $0.setProgress(0.75, animated: false)
+        $0.backgroundColor = .gray1
+        $0.setProgress(0.67, animated: false)
     }
     
     private let pageNumberLabel = UILabel().then {

@@ -19,11 +19,12 @@ class PromiseInfoView: BaseView {
     }
     
     let promiseNameLabel: UILabel = UILabel().then {
-        $0.setText("약속 이름이 설정되지 않았어요!", style: .body01, color: .gray7)
+        $0.setText("약속 이름을 설정해주세요", style: .body01, color: .gray7)
     }
     
-    let editButton: CustomButton = CustomButton().then {
+    let editButton: UIButton = UIButton().then {
         $0.setTitle("수정하기", style: .caption01, color: .maincolor)
+        $0.layer.cornerRadius = Screen.height(8)
         $0.backgroundColor = .white
     }
 
