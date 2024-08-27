@@ -80,6 +80,8 @@ final class MeetingInfoView: BaseView {
         $0.setText("남은 약속을 확인해보세요", style: .body01, color: .gray7)
     }
     
+    private let segmentedControl = UnderlineSegmentedControl(items: ["내가 속한 약속", "모든 약속"])
+    
     private let emptyDescriptionView = UIView(backgroundColor: .white).then {
         $0.layer.cornerRadius = 8
         $0.layer.borderColor = UIColor.gray2.cgColor
@@ -96,7 +98,7 @@ final class MeetingInfoView: BaseView {
         backgroundColor = .white
         
         grayBackgroundView.addSubviews(
-            promiseDescriptionLabel, emptyDescriptionView, promiseListView
+            promiseDescriptionLabel, segmentedControl, emptyDescriptionView, promiseListView
         )
         emptyDescriptionView.addSubviews(emptyDescriptionLabel)
         addSubviews(
@@ -140,21 +142,27 @@ final class MeetingInfoView: BaseView {
             $0.horizontalEdges.equalToSuperview().inset(20)
         }
         
-        promiseListView.snp.makeConstraints {
+        segmentedControl.snp.makeConstraints {
             $0.top.equalTo(promiseDescriptionLabel.snp.bottom).offset(16)
+            $0.leading.equalToSuperview().offset(15)
+            $0.height.equalTo(Screen.height(26))
+        }
+        
+        promiseListView.snp.makeConstraints {
+            $0.top.equalTo(segmentedControl.snp.bottom).offset(16)
             $0.horizontalEdges.equalToSuperview()
             $0.height.equalTo(Screen.height(188))
         }
         
         createPromiseButton.snp.makeConstraints {
-            $0.top.equalTo(promiseListView.snp.bottom).offset(45)
+            $0.top.equalTo(promiseListView.snp.bottom).offset(33)
             $0.trailing.equalTo(safeArea).offset(-16)
             $0.width.equalTo(Screen.width(136))
             $0.height.equalTo(Screen.height(52))
         }
         
         emptyDescriptionView.snp.makeConstraints {
-            $0.top.equalTo(promiseDescriptionLabel.snp.bottom).offset(16)
+            $0.top.equalTo(segmentedControl.snp.bottom).offset(16)
             $0.horizontalEdges.equalToSuperview().inset(20)
         }
         
@@ -167,6 +175,7 @@ final class MeetingInfoView: BaseView {
 
 extension MeetingInfoView {
     var createPromiseButtonDidTap: Observable<Void> { createPromiseButton.rx.tap.asObservable() }
+    var selectedSegmentIndex: Observable<Int> { segmentedControl.rx.selectedSegmentIndex.asObservable() }
     
     func configureInfo(createdAt: String, metCount: Int) {
         infoBanner.configure(createdAt: createdAt, metCount: metCount)

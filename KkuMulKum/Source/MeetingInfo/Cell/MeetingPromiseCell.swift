@@ -126,7 +126,7 @@ extension MeetingPromiseCell {
         fileprivate var dDayTextColor: UIColor {
             switch self {
             case .past: .gray3
-            case .today: .orange
+            case .today: .mainorange
             case .future: .gray5
             }
         }

@@ -25,7 +25,7 @@ final class MeetingInfoViewController: BaseViewController {
     
     
     // MARK: - Initializer
-
+    
     init(viewModel: MeetingInfoViewModel) {
         self.viewModel = viewModel
         
@@ -38,7 +38,7 @@ final class MeetingInfoViewController: BaseViewController {
     
     
     // MARK: - Life Cycle
-
+    
     override func loadView() {
         view = rootView
     }
@@ -75,34 +75,20 @@ final class MeetingInfoViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
     }
-    
-    override func setupDelegate() {
-        rootView.promiseListView.delegate = self
-    }
-}
-
-
-// MARK: - UICollectionViewDelegate
-
-extension MeetingInfoViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let pagePromiseViewController = PromiseViewController(
-            viewModel: PromiseViewModel(
-                promiseID: viewModel.meetingPromises[indexPath.item].promiseID, 
-                service: PromiseService()
-            )
-        )
-        
-        navigationController?.pushViewController(pagePromiseViewController, animated: true)
-    }
 }
 
 private extension MeetingInfoViewController {
     func bindViewModel() {
+        let promiseCellDidSelect = rootView.promiseListView.rx.itemSelected
+            .map { $0.item }
+            .asObservable()
+        
         let input = MeetingInfoViewModel.Input(
             viewWillAppear: viewWillAppearRelay,
             createPromiseButtonDidTap: rootView.createPromiseButtonDidTap,
-            actionButtonDidTapRelay: actionButtonDidTapRelay
+            actionButtonDidTapRelay: actionButtonDidTapRelay,
+            selectedSegmentedIndex: rootView.selectedSegmentIndex,
+            promiseCellDidSelect: promiseCellDidSelect
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
@@ -117,7 +103,7 @@ private extension MeetingInfoViewController {
                 )
             }
             .disposed(by: disposeBag)
-       
+        
         output.memberCount
             .drive(with: self) { owner, count in
                 owner.rootView.configureMemberCount(count)
@@ -163,6 +149,18 @@ private extension MeetingInfoViewController {
                         inset: Screen.height(100)
                     )
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        output.navigateToPromiseInfo
+            .drive(with: self) { owner, promiseID in
+                guard let promiseID else { return }
+                
+                let pagePromiseViewController = PromiseViewController(
+                    viewModel: PromiseViewModel(promiseID: promiseID, service: PromiseService())
+                )
+                
+                owner.navigationController?.pushViewController(pagePromiseViewController, animated: true)
             }
             .disposed(by: disposeBag)
     }

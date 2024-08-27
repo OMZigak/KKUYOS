@@ -255,6 +255,7 @@
 		DED5DBF02C345317006ECE7E /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBEF2C345317006ECE7E /* BaseCollectionViewCell.swift */; };
 		DED5DBF22C34534A006ECE7E /* BaseCollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBF12C34534A006ECE7E /* BaseCollectionReusableView.swift */; };
 		DED5DBF42C34539A006ECE7E /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED5DBF32C34539A006ECE7E /* BaseTableViewCell.swift */; };
+		DEE4B1412C7C73630063B92A /* UnderlineSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE4B1402C7C73630063B92A /* UnderlineSegmentedControl.swift */; };
 		DEF725DB2C3F3BBF008C87C7 /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF725DA2C3F3BBF008C87C7 /* Toast.swift */; };
 		DEFBEBCB2C466E9500437188 /* SelectMemberCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFBEBCA2C466E9500437188 /* SelectMemberCell.swift */; };
 		DEFBEBCD2C46AE0700437188 /* SelectPenaltyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFBEBCC2C46AE0700437188 /* SelectPenaltyViewController.swift */; };
@@ -463,6 +464,7 @@
 		DED5DBEF2C345317006ECE7E /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		DED5DBF12C34534A006ECE7E /* BaseCollectionReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionReusableView.swift; sourceTree = "<group>"; };
 		DED5DBF32C34539A006ECE7E /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		DEE4B1402C7C73630063B92A /* UnderlineSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnderlineSegmentedControl.swift; sourceTree = "<group>"; };
 		DEF725DA2C3F3BBF008C87C7 /* Toast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		DEFBEBCA2C466E9500437188 /* SelectMemberCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectMemberCell.swift; sourceTree = "<group>"; };
 		DEFBEBCC2C46AE0700437188 /* SelectPenaltyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectPenaltyViewController.swift; sourceTree = "<group>"; };
@@ -1444,6 +1446,7 @@
 				DE6D4D032C3F14D80005584B /* InvitationCodePopUpView.swift */,
 				DE6D4D042C3F14D80005584B /* MeetingInfoBannerView.swift */,
 				DE6D4D052C3F14D80005584B /* MeetingInfoView.swift */,
+				DEE4B1402C7C73630063B92A /* UnderlineSegmentedControl.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1469,12 +1472,12 @@
 		DE6D4D0E2C3F14D80005584B /* MeetingInfo */ = {
 			isa = PBXGroup;
 			children = (
-				DEFBEBC92C466C6500437188 /* Cell */,
 				DE6D4D022C3F14D80005584B /* Service */,
-				DE6D4D082C3F14D80005584B /* View */,
-				DE6D4D0B2C3F14D80005584B /* ViewController */,
-				DE6D4D0D2C3F14D80005584B /* ViewModel */,
 				DEBB8DED2C771FFD00C5A528 /* Model */,
+				DE6D4D0D2C3F14D80005584B /* ViewModel */,
+				DE6D4D0B2C3F14D80005584B /* ViewController */,
+				DE6D4D082C3F14D80005584B /* View */,
+				DEFBEBC92C466C6500437188 /* Cell */,
 			);
 			path = MeetingInfo;
 			sourceTree = "<group>";
@@ -1868,6 +1871,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				784824FC2C75BF7900FE07A0 /* MyPageViewModel.swift in Sources */,
+				DEE4B1412C7C73630063B92A /* UnderlineSegmentedControl.swift in Sources */,
 				DDD62FFC2C5FA54100174B57 /* CreateMeetingServiceProtocol.swift in Sources */,
 				DDE7D2CC2C47F073005A921F /* PlaceModel.swift in Sources */,
 				DEFBEBD12C46B33000437188 /* SelectCapsuleButton.swift in Sources */,
