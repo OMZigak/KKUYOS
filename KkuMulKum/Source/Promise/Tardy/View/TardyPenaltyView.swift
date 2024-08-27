@@ -47,12 +47,12 @@ class TardyPenaltyView: BaseView {
         }
         
         penaltyLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(18)
+            $0.top.equalToSuperview().offset(14)
             $0.leading.equalTo(penaltyImageView.snp.trailing).offset(20)
         }
         
         contentLabel.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(18)
+            $0.bottom.equalToSuperview().inset(14)
             $0.leading.equalTo(penaltyLabel)
         }
     }

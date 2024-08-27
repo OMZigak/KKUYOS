@@ -30,7 +30,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         loginViewModel.autoLogin { [weak self] success in
             DispatchQueue.main.async {
                 if success {
-                    self?.showLoginScreen()
+                    self?.showMainScreen()
                 } else {
                     self?.showLoginScreen()
                 }

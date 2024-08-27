@@ -27,8 +27,8 @@ class OurReadyStatusCollectionViewCell: BaseCollectionViewCell {
     }
     
     override func setupView() {
-        backgroundColor = .white
-        layer.cornerRadius = 8
+        backgroundColor = .gray0
+        layer.cornerRadius = Screen.height(8)
         clipsToBounds = true
         
         addSubviews(
@@ -48,7 +48,7 @@ class OurReadyStatusCollectionViewCell: BaseCollectionViewCell {
         
         nameLabel.snp.makeConstraints {
             $0.centerY.equalTo(profileImageView)
-            $0.leading.equalTo(profileImageView.snp.trailing).offset(13)
+            $0.leading.equalTo(profileImageView.snp.trailing).offset(12)
         }
         
         readyStatusButton.snp.makeConstraints {

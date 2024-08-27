@@ -72,19 +72,60 @@ extension PromiseService: PromiseServiceProtocol {
     func fetchPromiseParticipantList(with promiseID: Int) async throws -> ResponseBodyDTO<PromiseParticipantListModel>? {
         return try await request(with: .fetchPromiseParticipantList(promiseID: promiseID))
     }
+    
+    func deletePromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return try await self.request(with: .deletePromise(promiseID: promiseID))
+    }
+    
+    func exitPromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return try await self.request(with: .exitPromise(promiseID: promiseID))
+    }
+}
+
+extension PromiseService: EditPromiseServiceProtocol {
+    func fetchPromiseAvailableMember(with promiseID: Int) async throws -> ResponseBodyDTO<ParticipateAvailabilityResponseModel>? {
+        return try await self.request(with: .fetchPromiseAvailableMember(promiseID: promiseID))
+    }
+    
+    func putPromiseInfo(with promiseID: Int, request: EditPromiseRequestModel) async throws -> ResponseBodyDTO<AddPromiseResponseModel>? {
+        return try await self.request(with: .putPromiseInfo(promiseID: promiseID, request: request))
+    }
 }
 
 final class MockPromiseService: PromiseServiceProtocol {
+    func deletePromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        let mockData = EmptyModel()
+        
+        return ResponseBodyDTO<EmptyModel>.init(
+            success: true,
+            data: mockData,
+            error: nil
+        )
+    }
+    
+    func exitPromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        let mockData = EmptyModel()
+        
+        return ResponseBodyDTO<EmptyModel>.init(
+            success: true,
+            data: mockData,
+            error: nil
+        )
+    }
+    
     func fetchPromiseInfo(with promiseId: Int) async throws -> ResponseBodyDTO<PromiseInfoModel>? {
         let mockData = PromiseInfoModel(
+            isParticipant: true,
             promiseID: 1,
             promiseName: "냐미",
             placeName: "우리집 앞",
+            time: "2024-07-07 15:00:00",
+            dressUpLevel: "LV 2. 냐미",
+            penalty: "냐미",
             address: "경기도 용인시 수지구 대지로 72",
             roadAddress: "경기도 용인시 수지구 대지로 72",
-            time: "2024년 7월 24일 오후 10시 30분",
-            dressUpLevel: "LV 2. 냐미",
-            penalty: "냐미"
+            x: 127.00090541880259,
+            y: 37.55808646250296
         )
         
         return ResponseBodyDTO<PromiseInfoModel>.init(

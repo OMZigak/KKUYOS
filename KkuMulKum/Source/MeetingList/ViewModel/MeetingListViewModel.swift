@@ -10,12 +10,23 @@ import UIKit
 import Then
 
 final class MeetingListViewModel {
+    var loginUser = ObservablePattern<ResponseBodyDTO<LoginUserModel>?>(nil)
     var meetingList = ObservablePattern<ResponseBodyDTO<MeetingListModel>?>(nil)
     
-    private let service: MeetingListServiceType
+    private let service: MeetingListServiceProtocol
     
-    init(service: MeetingListServiceType) {
+    init(service: MeetingListServiceProtocol) {
         self.service = service
+    }
+    
+    func requestLoginUser() {
+        Task {
+            do {
+                loginUser.value = try await service.fetchLoginUser()
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
     }
     
     func requestMeetingList() {
