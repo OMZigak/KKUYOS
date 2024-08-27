@@ -6,12 +6,13 @@
 //
 
 import Foundation
+import AuthenticationServices
 
 import RxSwift
 import RxCocoa
 
-class MyPageViewModel {
-    private let userService: MyPageUserServiceType
+class MyPageViewModel: NSObject {
+    private let userService: MyPageUserServiceProtocol
     private let disposeBag = DisposeBag()
     
     let editButtonTapped = PublishRelay<Void>()
@@ -24,8 +25,11 @@ class MyPageViewModel {
     let performLogout: Signal<Void>
     let performUnsubscribe: Signal<Void>
     let userInfo: BehaviorRelay<LoginUserModel?>
+    let unsubscribeResult = PublishRelay<Result<Void, Error>>()
+    let logoutResult = PublishRelay<Result<Void, Error>>()
+
     
-    init(userService: MyPageUserServiceType = MyPageUserService()) {
+    init(userService: MyPageUserServiceProtocol = MyPageUserService()) {
         self.userService = userService
         self.userInfo = BehaviorRelay<LoginUserModel?>(value: nil)
         
@@ -61,10 +65,52 @@ class MyPageViewModel {
     }
     
     func logout() {
-        print("로그아웃 눌름 ㅂㅂ")
-    }
+            Task {
+                do {
+                    try await userService.logout()
+                    print("Logout successful")
+                    logoutResult.accept(.success(()))
+                } catch {
+                    print("Logout failed: \(error)")
+                    logoutResult.accept(.failure(error))
+                }
+            }
+        }
     
     func unsubscribe() {
-        print("탈퇴 누름 ㅂㅂ")
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
+        
+        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
+        authorizationController.delegate = self
+        authorizationController.performRequests()
+    }
+    
+    private func performUnsubscribe(with authorizationCode: String) {
+        Task {
+            do {
+                try await userService.unsubscribe(authCode: authorizationCode)
+                print("Unsubscribe successful")
+                unsubscribeResult.accept(.success(()))
+            } catch {
+                print("Unsubscribe failed: \(error)")
+                unsubscribeResult.accept(.failure(error))
+            }
+        }
+    }
+}
+
+extension MyPageViewModel: ASAuthorizationControllerDelegate {
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        if let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+           let authorizationCode = appleIDCredential.authorizationCode,
+           let authCodeString = String(data: authorizationCode, encoding: .utf8) {
+            performUnsubscribe(with: authCodeString)
+        }
+    }
+    
+    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        unsubscribeResult.accept(.failure(error))
     }
 }

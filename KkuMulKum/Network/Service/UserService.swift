@@ -9,15 +9,11 @@ import Foundation
 
 import Moya
 
-final class MyPageUserService: MyPageUserServiceType {
+final class MyPageUserService {
     private var provider = MoyaProvider<UserTargetType>()
     
     init(provider: MoyaProvider<UserTargetType> = MoyaProvider(plugins: [MoyaLoggingPlugin()])) {
         self.provider = provider
-    }
-    
-    func getUserInfo() async throws -> LoginUserModel {
-        return try await performRequest(.getUserInfo)
     }
     
     func performRequest<T: ResponseModelType>(_ target: UserTargetType) async throws -> T {
@@ -27,11 +23,18 @@ final class MyPageUserService: MyPageUserServiceType {
                 case .success(let response):
                     do {
                         let decodedResponse = try JSONDecoder().decode(ResponseBodyDTO<T>.self, from: response.data)
-                        guard decodedResponse.success, let data = decodedResponse.data else {
+                        if decodedResponse.success {
+                            if let data = decodedResponse.data {
+                                continuation.resume(returning: data)
+                            } else if T.self == EmptyModel.self {
+                                continuation.resume(returning: EmptyModel() as! T)
+                            } else {
+                                throw NetworkError.unknownError("Unexpected nil data")
+                            }
+                        } else {
                             throw decodedResponse.error.map(NetworkErrorMapper.mapErrorResponse) ??
                             NetworkError.unknownError("Unknown error occurred")
                         }
-                        continuation.resume(returning: data)
                     } catch {
                         continuation.resume(throwing: error is NetworkError ? error : NetworkError.decodingError)
                     }
@@ -42,3 +45,18 @@ final class MyPageUserService: MyPageUserServiceType {
         }
     }
 }
+
+extension MyPageUserService : MyPageUserServiceProtocol {
+    func getUserInfo() async throws -> LoginUserModel {
+        return try await performRequest(.getUserInfo)
+    }
+    
+    func unsubscribe(authCode: String) async throws {
+        let _: EmptyModel = try await performRequest(.unsubscribe(authCode: authCode))
+    }
+    
+    func logout() async throws {
+        let _: EmptyModel = try await performRequest(.logout)
+    }
+}
+

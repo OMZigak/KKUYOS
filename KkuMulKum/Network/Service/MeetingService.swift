@@ -295,7 +295,6 @@ final class MockMeetingInfoService: MeetingInfoServiceProtocol {
     }
 }
 
-
 final class MockInviteCodeService: InviteCodeServiceProtocol {
     func joinMeeting(with request: RegisterMeetingsModel) -> ResponseBodyDTO<RegisterMeetingsResponseModel>? {
         let mockData = RegisterMeetingsResponseModel(

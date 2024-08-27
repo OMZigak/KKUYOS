@@ -74,6 +74,24 @@ extension PromiseService: PromiseServiceProtocol {
     }
 }
 
+extension PromiseService: EditPromiseServiceProtocol {
+    func fetchPromiseAvailableMember(with promiseID: Int) async throws -> ResponseBodyDTO<ParticipateAvailabilityResponseModel>? {
+        return try await self.request(with: .fetchPromiseAvailableMember(promiseID: promiseID))
+    }
+    
+    func deletePromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return try await self.request(with: .deletePromise(promiseID: promiseID))
+    }
+    
+    func exitPromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>? {
+        return try await self.request(with: .exitPromise(promiseID: promiseID))
+    }
+    
+    func putPromiseInfo(with promiseID: Int, request: EditPromiseRequestModel) async throws -> ResponseBodyDTO<AddPromiseResponseModel>? {
+        return try await self.request(with: .putPromiseInfo(promiseID: promiseID, request: request))
+    }
+}
+
 final class MockPromiseService: PromiseServiceProtocol {
     func fetchPromiseInfo(with promiseId: Int) async throws -> ResponseBodyDTO<PromiseInfoModel>? {
         let mockData = PromiseInfoModel(

@@ -15,12 +15,18 @@ final class MeetingListView: BaseView {
     
     // MARK: - Property
     
-    private let header = UIView()
+    private let header = UIView().then {
+        $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Screen.height(174))
+    }
     
     let infoLabel = UILabel()
     
+    private let addButtonView = UIView(backgroundColor: .green2).then {
+        $0.layer.cornerRadius = 8
+    }
+    
     let addButton = UIButton().then {
-        $0.backgroundColor = .green2
+        $0.backgroundColor = .clear
         $0.layer.cornerRadius = 8
     }
     
@@ -63,14 +69,25 @@ final class MeetingListView: BaseView {
     override func setupView() {
         self.backgroundColor = .gray0
         addSubviews(tableView, emptyCharacter, emptyLabel)
-        header.addSubviews(infoLabel, addButton, addInfoView)
+        header.addSubviews(infoLabel, addButtonView, addInfoView, addButton)
         addInfoView.addArrangedSubviews(addIconImageView, addInfoLabel)
     }
     
     override func setupAutoLayout() {
+        tableView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.bottom.equalToSuperview()
+        }
+        
         infoLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(24)
             $0.leading.equalToSuperview()
+        }
+        
+        addButtonView.snp.makeConstraints {
+            $0.top.equalTo(infoLabel.snp.bottom).offset(20)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(Screen.height(48))
         }
         
         addButton.snp.makeConstraints {
@@ -94,17 +111,6 @@ final class MeetingListView: BaseView {
         addInfoView.snp.makeConstraints {
             $0.centerY.equalTo(addButton.snp.centerY)
             $0.centerX.equalTo(addButton.snp.centerX)
-        }
-        
-        tableView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.bottom.equalToSuperview()
-        }
-        
-        header.snp.makeConstraints {
-            $0.top.equalToSuperview()
-            $0.width.equalTo(UIScreen.main.bounds.width - 40)
-            $0.height.equalTo(Screen.height(174))
         }
     }
 }

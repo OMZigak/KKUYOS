@@ -69,11 +69,16 @@ class ReadyStatusView: BaseView {
     }
     
     private let ourReadyStatusLabel: UILabel = UILabel().then {
-        $0.setText(
-            "우리들의 준비 현황",
-            style: .body01,
-            color: .gray8
-        )
+        $0.setText("우리들의 준비 현황", style: .body01, color: .gray8)
+    }
+    
+    private let ourReadyStatusBackView: UIView = UIView().then {
+        $0.backgroundColor = .white
+        $0.layer.cornerRadius = Screen.height(18)
+    }
+    
+    private let bottomBackgroundView: UIView = UIView().then {
+        $0.backgroundColor = .white
     }
     
     private var collectionViewHeightConstraint: Constraint?
@@ -91,18 +96,19 @@ class ReadyStatusView: BaseView {
             enterReadyButtonView,
             readyPlanInfoView,
             myReadyStatusTitleLabel,
-            readyBaseView,
-            ourReadyStatusLabel
+            readyBaseView
         )
         
         contentView.addSubviews(
             baseStackView,
+            ourReadyStatusBackView,
+            ourReadyStatusLabel,
             ourReadyStatusCollectionView
         )
         
         scrollView.addSubview(contentView)
         
-        addSubviews(scrollView)
+        addSubviews(scrollView, bottomBackgroundView)
         
     }
     
@@ -121,14 +127,36 @@ class ReadyStatusView: BaseView {
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
+        ourReadyStatusBackView.snp.makeConstraints {
+            $0.top.equalTo(baseStackView.snp.bottom).offset(24)
+            $0.horizontalEdges.bottom.equalToSuperview()
+        }
+        
+        ourReadyStatusLabel.snp.makeConstraints {
+            $0.top.equalTo(readyBaseView.snp.bottom).offset(50)
+            $0.leading.equalToSuperview().offset(20)
+        }
+        
         ourReadyStatusCollectionView.snp.makeConstraints {
-            $0.top.equalTo(baseStackView.snp.bottom).offset(22)
+            $0.top.equalTo(ourReadyStatusLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview().inset(20)
             self.collectionViewHeightConstraint = $0.height.equalTo(0).constraint
         }
         
         contentView.snp.makeConstraints {
             $0.bottom.equalTo(ourReadyStatusCollectionView.snp.bottom).offset(20)
+        }
+        
+        ourReadyStatusBackView.snp.makeConstraints {
+            $0.top.equalTo(readyBaseView.snp.bottom).offset(24)
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalToSuperview()
+        }
+        
+        bottomBackgroundView.snp.makeConstraints {
+            $0.top.equalTo(contentView.snp.bottom)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(Screen.height(600))
         }
     }
 }

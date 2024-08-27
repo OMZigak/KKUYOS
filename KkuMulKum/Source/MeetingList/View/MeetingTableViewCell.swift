@@ -24,7 +24,7 @@ final class MeetingTableViewCell: BaseTableViewCell {
     private let countLabel = UILabel()
     
     private let rightIcon = UIImageView().then {
-        $0.image = .iconRight
+        $0.image = .iconRight.withTintColor(.gray3)
     }
     
     
