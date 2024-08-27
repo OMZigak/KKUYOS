@@ -85,6 +85,33 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
             })
             .disposed(by: disposeBag)
         
+        viewModel.unsubscribeResult
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] result in
+                switch result {
+                case .success:
+                    print("success")
+                    self?.navigateToLoginScreen()
+                case .failure(let error):
+                    print("fauile")
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        viewModel.logoutResult
+                 .observe(on: MainScheduler.instance)
+                 .subscribe(onNext: { [weak self] result in
+                     switch result {
+                     case .success:
+                         print("Logout successful")
+                         self?.navigateToLoginScreen()
+                     case .failure(let error):
+                         print("Logout failed: \(error)")
+                     }
+                 })
+                 .disposed(by: disposeBag)
+         
+        
         viewModel.userInfo
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] userInfo in
@@ -108,7 +135,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     }
     
     private func loadImage(from urlString: String, into imageView: UIImageView) {
-
+        
     }
     
     private func bindRowTapGesture(for view: UIView) -> Observable<Void> {
@@ -117,7 +144,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
             .first?
             .rx.event
             .map { _ in }
-
+        
         ?? Observable.empty()
     }
     
@@ -137,6 +164,15 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     private func pushTermsViewController() {
         let askViewController = MyPageTermsViewController(viewModel: self.viewModel)
         navigationController?.pushViewController(askViewController, animated: true)
+    }
+    
+    private func navigateToLoginScreen() {
+            let loginViewModel = LoginViewModel()
+            let loginViewController = LoginViewController(viewModel: loginViewModel)
+            let navigationController = UINavigationController(rootViewController: loginViewController)
+            navigationController.modalPresentationStyle = .fullScreen
+            self.view.window?.rootViewController = navigationController
+            self.view.window?.makeKeyAndVisible()
     }
     
     func actionButtonDidTap(for kind: ActionSheetKind) {
