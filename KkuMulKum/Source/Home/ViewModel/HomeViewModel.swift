@@ -138,12 +138,9 @@ final class HomeViewModel {
     func updatePrepareStatus() {
         Task {
             do {
-                guard let responseBody = try await service.updatePreparationStatus(
+                _ = try await service.updatePreparationStatus(
                     with: nearestPromise.value?.data?.promiseID ?? 1
-                ) 
-                else {
-                    return
-                }
+                )
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
@@ -153,12 +150,9 @@ final class HomeViewModel {
     func updateMoveStatus() {
         Task {
             do {
-                guard let responseBody = try await service.updateDepartureStatus(
+                _ = try await service.updateDepartureStatus(
                     with: nearestPromise.value?.data?.promiseID ?? 1
-                ) 
-                else {
-                    return
-                }
+                )
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
@@ -168,12 +162,9 @@ final class HomeViewModel {
     func updateArriveStatus() {
         Task {
             do {
-                guard let responseBody = try await service.updateArrivalStatus(
+                _ = try await service.updateArrivalStatus(
                     with: nearestPromise.value?.data?.promiseID ?? 1
                 )
-                else {
-                    return
-                }
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
