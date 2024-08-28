@@ -157,7 +157,7 @@ extension UpcomingPromiseCollectionViewCell {
         placeNameLabel.setText(
             placeName,
             style: .body06,
-            color: .gray7
+            color: .gray7,
             isSingleLine: true
         )
     }

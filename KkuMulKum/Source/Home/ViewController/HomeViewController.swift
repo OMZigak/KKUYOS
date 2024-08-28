@@ -243,8 +243,7 @@ private extension HomeViewController {
                     color: .white
                 )
                 self.rootView.kkumulLabel.setHighlightText(
-                    "\(data.promiseCount)번",
-                    "\(data.tardyCount)번",
+                    for: ["\(data.promiseCount)번", "\(data.tardyCount)번"],
                     style: .title00,
                     color: .lightGreen
                 )
