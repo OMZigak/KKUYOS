@@ -70,21 +70,19 @@ extension UILabel {
                     range: searchRange
                 )
                 
-                if range.location != NSNotFound {
-                    let highlightedAttributes: [NSAttributedString.Key: Any] = [
-                        .font: UIFont.pretendard(style),
-                        .foregroundColor: textColor
-                    ]
-                    mutableAttributedString.addAttributes(highlightedAttributes, range: range)
-                    
-                    /// 다음 검색 범위를 설정
-                    searchRange = NSRange(
-                        location: range.location + range.length,
-                        length: currentAttributedText.length - (range.location + range.length)
-                    )
-                } else {
-                    break
-                }
+                guard range.location != NSNotFound else { break }
+                
+                let highlightedAttributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.pretendard(style),
+                    .foregroundColor: textColor
+                ]
+                mutableAttributedString.addAttributes(highlightedAttributes, range: range)
+                
+                /// 다음 검색 범위를 설정
+                searchRange = NSRange(
+                    location: range.location + range.length,
+                    length: currentAttributedText.length - (range.location + range.length)
+                )
             }
         }
         
