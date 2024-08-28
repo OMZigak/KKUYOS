@@ -82,6 +82,8 @@ extension UILabel {
                         location: range.location + range.length,
                         length: currentAttributedText.length - (range.location + range.length)
                     )
+                } else {
+                    break
                 }
             }
         }
