@@ -12,7 +12,7 @@ import RxCocoa
 
 class MyPageEditViewModel: ViewModelType {
     private let authService: AuthServiceProtocol
-    private let userService: MyPageUserServiceType
+    private let userService: MyPageUserServiceProtocol
     private let userInfo = BehaviorRelay<LoginUserModel?>(value: nil)
     let profileImageUpdated = PublishSubject<String?>()
     
@@ -30,7 +30,7 @@ class MyPageEditViewModel: ViewModelType {
         let userInfo: Driver<LoginUserModel?>
     }
     
-    init(authService: AuthServiceProtocol, userService: MyPageUserServiceType = MyPageUserService()) {
+    init(authService: AuthServiceProtocol, userService: MyPageUserServiceProtocol = MyPageUserService()) {
         self.authService = authService
         self.userService = userService
     }
