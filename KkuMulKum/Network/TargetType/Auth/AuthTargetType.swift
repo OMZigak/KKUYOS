@@ -18,9 +18,7 @@ enum AuthTargetType {
 
 extension AuthTargetType: TargetType {
     var baseURL: URL {
-        guard let privacyInfo = Bundle.main.privacyInfo,
-              let urlString = privacyInfo["BASE_URL"] as? String,
-              let url = URL(string: urlString) else {
+        guard let url = Bundle.main.baseURL else {
             fatalError("Invalid BASE_URL in PrivacyInfo.plist")
         }
         return url
