@@ -21,6 +21,7 @@ final class MeetingInfoViewModel {
     private let infoRelay = BehaviorRelay<MeetingInfoModel?>(value: nil)
     private let meetingMemberModelRelay = BehaviorRelay<MeetingMembersModel?>(value: nil)
     private let meetingPromisesModelRelay = BehaviorRelay<MeetingPromisesModel?>(value: nil)
+    private let partipatedPromisesModelRelay = BehaviorRelay<MeetingPromisesModel?>(value: nil)
     
     init(meetingID: Int, service: MeetingInfoServiceProtocol) {
         self.meetingID = meetingID
@@ -33,6 +34,8 @@ extension MeetingInfoViewModel: ViewModelType {
         let viewWillAppear: PublishRelay<Void>
         let createPromiseButtonDidTap: Observable<Void>
         let actionButtonDidTapRelay: PublishRelay<Void>
+        let selectedSegmentedIndex: Observable<Int>
+        let promiseCellDidSelect: Observable<Int>
     }
     
     struct Output {
@@ -41,6 +44,7 @@ extension MeetingInfoViewModel: ViewModelType {
         let members: Driver<[Member]>
         let promises: Driver<[MeetingInfoPromiseModel]>
         let isExitMeetingSucceed: Driver<Bool>
+        let navigateToPromiseInfo: Driver<Int?>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -49,6 +53,7 @@ extension MeetingInfoViewModel: ViewModelType {
                 owner.fetchMeetingInfo()
                 owner.fetchMeetingMembers()
                 owner.fetchMeetingPromises()
+                owner.fetchParticipatedPromises()
             }
             .disposed(by: disposeBag)
         
@@ -62,7 +67,9 @@ extension MeetingInfoViewModel: ViewModelType {
             .map { model -> [Member] in
                 let mockData = Member(memberID: 0, name: "", profileImageURL: "")
                 
-                guard let model else { return [mockData] }
+                guard let model else {
+                    return [mockData]
+                }
                 
                 var newMembers = model.members
                 newMembers.insert(mockData, at: 0)
@@ -70,13 +77,17 @@ extension MeetingInfoViewModel: ViewModelType {
             }
             .asDriver(onErrorJustReturn: [])
         
-        let promises = meetingPromisesModelRelay
-            .map { model -> [MeetingPromise] in
-                guard let model else { return [] }
-                return model.promises
-            }
-            .compactMap { [weak self] promises in
-                self?.convertToMeetingInfoPromiseModels(from: promises)
+        let promises = input.selectedSegmentedIndex
+            .flatMapLatest { [weak self] index -> Observable<[MeetingInfoPromiseModel]> in
+                guard let self else {
+                    return Observable.just([])
+                }
+                
+                let source = index == 0 ? self.partipatedPromisesModelRelay : self.meetingPromisesModelRelay
+                return source
+                    .compactMap { $0?.promises }
+                    .map { self.convertToMeetingInfoPromiseModels(from: $0) }
+                    .asObservable()
             }
             .asDriver(onErrorJustReturn: [])
         
@@ -91,13 +102,27 @@ extension MeetingInfoViewModel: ViewModelType {
                     .asDriver(onErrorJustReturn: false)
             }
             .asDriver(onErrorJustReturn: false)
-            
+        
+        let navigateToPromiseInfo = input.promiseCellDidSelect
+            .withLatestFrom(input.selectedSegmentedIndex) {
+                (selectedIndex: $1, selectedItem: $0)
+            }
+            .map { [weak self] selectedIndex, selectedItem in
+                let promises = selectedIndex == 0
+                ? self?.partipatedPromisesModelRelay.value?.promises
+                : self?.meetingPromisesModelRelay.value?.promises
+                
+                return promises?[selectedItem].promiseID
+            }
+            .asDriver(onErrorJustReturn: nil)
+        
         let output = Output(
             info: info,
             memberCount: memberCount,
             members: members,
             promises: promises,
-            isExitMeetingSucceed: isExitMeetingSucceed
+            isExitMeetingSucceed: isExitMeetingSucceed,
+            navigateToPromiseInfo: navigateToPromiseInfo
         )
         
         return output
@@ -130,8 +155,19 @@ private extension MeetingInfoViewModel {
     func fetchMeetingPromises() {
         Task {
             do {
-                let responseBody = try await service.fetchMeetingPromiseList(with: meetingID)
+                let responseBody = try await service.fetchMeetingPromiseList(with: meetingID, isParticipant: nil)
                 meetingPromisesModelRelay.accept(responseBody?.data)
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
+    }
+    
+    func fetchParticipatedPromises() {
+        Task {
+            do {
+                let responseBody = try await service.fetchMeetingPromiseList(with: meetingID, isParticipant: true)
+                partipatedPromisesModelRelay.accept(responseBody?.data)
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }

@@ -21,5 +21,9 @@ protocol PromiseServiceProtocol {
     /// 지각 꾸물이
     func fetchTardyInfo(with promiseID: Int) async throws -> ResponseBodyDTO<TardyInfoModel>?
     func updatePromiseCompletion(with promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
+    
+    /// 약속 삭제 및 나가기
+    func deletePromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
+    func exitPromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
 }
 

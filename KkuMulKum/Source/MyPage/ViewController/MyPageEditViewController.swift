@@ -9,11 +9,13 @@ import UIKit
 
 import RxSwift
 import RxCocoa
+import Kingfisher
 
 class MyPageEditViewController: BaseViewController {
     private let rootView = MyPageEditView()
     private let viewModel: MyPageEditViewModel
     private let disposeBag = DisposeBag()
+    private let newProfileImageSubject = PublishSubject<UIImage?>()
     
     init(viewModel: MyPageEditViewModel) {
         self.viewModel = viewModel
@@ -30,20 +32,49 @@ class MyPageEditViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupNavigationBarTitle(with: "프로필 설정")
         setupNavigationBarBackButton()
+        viewModel.fetchUserInfo()
+    }
+    
+    override func setupView() {
+        super.setupView()
         setupBindings()
+    }
+    
+    override func setupAction() {
+        super.setupAction()
+        
+        rootView.cameraButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.showImagePicker()
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.confirmButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
+        
+        rootView.skipButton.rx.tap
+            .subscribe(onNext: { [weak self] in
+                self?.newProfileImageSubject.onNext(UIImage.imgProfile)
+                self?.navigationController?.popViewController(animated: true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupBindings() {
         let input = MyPageEditViewModel.Input(
             profileImageTap: rootView.cameraButton.rx.tap.asObservable(),
             confirmButtonTap: rootView.confirmButton.rx.tap.asObservable(),
-            newProfileImage: Observable.never() // This will be updated in imagePickerController
+            skipButtonTap: rootView.skipButton.rx.tap.asObservable(),
+            newProfileImage: newProfileImageSubject.asObservable()
         )
         
-        let output = viewModel.transform(input: input, disposeBag: DisposeBag())
+        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+        
         output.profileImage
             .drive(rootView.profileImageView.rx.image)
             .disposed(by: disposeBag)
@@ -52,47 +83,44 @@ class MyPageEditViewController: BaseViewController {
             .drive(rootView.confirmButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        output.isConfirmButtonEnabled
-            .map { $0 ? 1.0 : 0.5 }
-            .drive(rootView.confirmButton.rx.alpha)
-            .disposed(by: disposeBag)
-        
-        output.serverResponse
-            .drive(onNext: { [weak self] response in
-                if let response = response {
-                    self?.showAlert(message: response)
-                }
-            })
-            .disposed(by: disposeBag)
-        
-        rootView.cameraButton.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.showImagePicker()
-            })
-            .disposed(by: disposeBag)
-        
-        navigationItem.leftBarButtonItem?.rx.tap
-            .subscribe(onNext: { [weak self] in
-                self?.navigateToMyPageViewController()
+        output.userInfo
+            .drive(onNext: { [weak self] userInfo in
+                self?.updateProfileImage(with: userInfo?.profileImageURL)
             })
             .disposed(by: disposeBag)
     }
+    
+    private func updateProfileImage(with urlString: String?) {
+        guard let urlString = urlString, let url = URL(string: urlString) else {
+            rootView.profileImageView.image = UIImage.imgProfile
+            return
+        }
+        
+        rootView.profileImageView.kf.setImage(
+            with: url,
+            placeholder: UIImage.imgProfile,
+            options: [
+                .transition(.fade(0.2)),
+                .cacheOriginalImage
+            ],
+            completionHandler: { result in
+                switch result {
+                case .success(_):
+                    print("Profile image loaded successfully")
+                case .failure(let error):
+                    print("Failed to load profile image: \(error.localizedDescription)")
+                    self.rootView.profileImageView.image = UIImage.imgProfile
+                }
+            }
+        )
+    }
+    
     private func showImagePicker() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = true
         present(imagePicker, animated: true)
-    }
-    
-    private func showAlert(message: String) {
-        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .default))
-        present(alert, animated: true)
-    }
-    
-    private func navigateToMyPageViewController() {
-        navigationController?.popViewController(animated: true)
     }
 }
 
@@ -103,12 +131,7 @@ extension MyPageEditViewController: UIImagePickerControllerDelegate, UINavigatio
     ) {
         if let editedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
             let croppedImage = cropToCircle(image: editedImage)
-            let input = MyPageEditViewModel.Input(
-                profileImageTap: Observable.never(),
-                confirmButtonTap: Observable.never(),
-                newProfileImage: Observable.just(croppedImage)
-            )
-            _ = viewModel.transform(input: input, disposeBag: DisposeBag())
+            newProfileImageSubject.onNext(croppedImage)
         }
         dismiss(animated: true)
     }

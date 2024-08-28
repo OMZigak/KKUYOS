@@ -16,6 +16,7 @@ enum MeetingTargetType {
     case fetchMeetingInfo(meetingID: Int)
     case fetchMeetingMember(meetingID: Int)
     case fetchMeetingPromiseList(meetingID: Int)
+    case fetchParticipatedPromiseList(meetingID: Int, isParticipant: Bool)
     case exitMeeting(meetingID: Int)
 }
 
@@ -39,7 +40,7 @@ extension MeetingTargetType: TargetType {
             return "/api/v1/meetings/\(meetingID)"
         case .fetchMeetingMember(let meetingID):
             return "/api/v1/meetings/\(meetingID)/members"
-        case .fetchMeetingPromiseList(let meetingID):
+        case .fetchMeetingPromiseList(let meetingID), .fetchParticipatedPromiseList(let meetingID, _):
             return "/api/v1/meetings/\(meetingID)/promises"
         case .exitMeeting(let meetingID):
             return "/api/v1/meetings/\(meetingID)"
@@ -50,7 +51,7 @@ extension MeetingTargetType: TargetType {
         switch self {
         case .createMeeting, .joinMeeting:
             return .post
-        case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember, .fetchMeetingPromiseList:
+        case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember, .fetchMeetingPromiseList, .fetchParticipatedPromiseList:
             return .get
         case .exitMeeting:
             return .delete
@@ -66,10 +67,16 @@ extension MeetingTargetType: TargetType {
         case .fetchMeetingList, .fetchMeetingInfo, .fetchMeetingMember, .exitMeeting:
             return .requestPlain
         case .fetchMeetingPromiseList:
-            return .requestParameters(
-                parameters: ["done": "false"],
-                encoding: URLEncoding.queryString
-            )
+            let parameters: [String: Any] = [
+                "done": "false"
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
+        case .fetchParticipatedPromiseList(_, let isParticipant):
+            let parameters: [String: Any] = [
+                "done": "false",
+                "isParticipant": isParticipant
+            ]
+            return .requestParameters(parameters: parameters, encoding: URLEncoding.queryString)
         }
     }
     

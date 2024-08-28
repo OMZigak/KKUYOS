@@ -11,7 +11,7 @@ enum AuthTargetType {
     case appleLogin(identityToken: String, fcmToken: String)
     case kakaoLogin(accessToken: String, fcmToken: String)
     case refreshToken(refreshToken: String)
-    case updateProfileImage(image: Data, fileName: String, mimeType: String)
+    case updateProfileImage(image: Data?, fileName: String?, mimeType: String?)
     case updateName(name: String)
     case getUserInfo
 }
@@ -59,8 +59,12 @@ extension AuthTargetType: TargetType {
         case .refreshToken:
             return .requestPlain
         case let .updateProfileImage(imageData, fileName, mimeType):
-            let formData = MultipartFormData(provider: .data(imageData), name: "image", fileName: fileName, mimeType: mimeType)
-            return .uploadMultipart([formData])
+            if let imageData = imageData, let fileName = fileName, let mimeType = mimeType {
+                let formData = MultipartFormData(provider: .data(imageData), name: "image", fileName: fileName, mimeType: mimeType)
+                return .uploadMultipart([formData])
+            } else {
+                return .requestPlain
+            }
         case let .updateName(name):
             return .requestParameters(
                 parameters: ["name": name],
