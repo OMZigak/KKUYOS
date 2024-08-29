@@ -45,6 +45,7 @@ class PromiseInfoViewController: BaseViewController {
         
         viewModel.fetchPromiseParticipantList()
         viewModel.fetchPromiseInfo()
+        viewModel.fetchTardyInfo()
     }
     
     
@@ -86,22 +87,25 @@ extension PromiseInfoViewController {
     }
     
     func setupBinding() {
-        viewModel.participantsInfo.bind(with: self) { owner, participantsInfo in
-            DispatchQueue.main.async {
-                owner.rootView.participantNumberLabel.setText(
-                    "약속 참여 인원 \(participantsInfo?.count ?? 0)명",
-                    style: .body05,
-                    color: .maincolor
-                )
-                
-                owner.rootView.participantNumberLabel.setHighlightText(
-                    "\(participantsInfo?.count ?? 0)명",
-                    style: .body05,
-                    color: .gray3
-                )
-                
-                owner.rootView.participantCollectionView.reloadData()
-            }
+        viewModel.isPastDue.bindOnMain(with: self) { owner, isPastDue in
+            
+            owner.rootView.editButton.isHidden = isPastDue
+        }
+        
+        viewModel.participantsInfo.bindOnMain(with: self) { owner, participantsInfo in
+            owner.rootView.participantNumberLabel.setText(
+                "약속 참여 인원 \(participantsInfo?.count ?? 0)명",
+                style: .body05,
+                color: .maincolor
+            )
+            
+            owner.rootView.participantNumberLabel.setHighlightText(
+                "\(participantsInfo?.count ?? 0)명",
+                style: .body05,
+                color: .gray3
+            )
+            
+            owner.rootView.participantCollectionView.reloadData()
         }
     }
     
@@ -130,41 +134,41 @@ extension PromiseInfoViewController {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.locale = Locale(identifier: "ko_KR")
         dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-        
-        guard let date = dateFormatter.date(from: viewModel.promiseInfo.value?.time ?? "") else {
+
+        guard let dateWithTime = dateFormatter.date(from: viewModel.promiseInfo.value?.time ?? "") else {
             return
         }
-        
-        dateFormatter.dateFormat = "M월 d일 a h:mm"
-        dateFormatter.amSymbol = "AM"
-        dateFormatter.pmSymbol = "PM"
-        
-        let time = dateFormatter.string(from: date)
-        
-        let currentDate = Calendar.current
-        
-        let components = currentDate.dateComponents([.day], from: Date(), to: date)
+
+        let calendar = Calendar.current
+
+        let dateOnly = calendar.startOfDay(for: dateWithTime)
+        let today = calendar.startOfDay(for: Date())
+
+        let components = calendar.dateComponents([.day], from: today, to: dateOnly)
         guard let remainDay = components.day else {
             return
         }
-        
-        rootView.timeContentLabel.setText(time, style: .body04)
-        
+
         if remainDay == 0 {
-            rootView.dDayLabel.setText("D-DAY" ,style: .body05, color: .mainorange)
+            rootView.dDayLabel.setText("D-DAY", style: .body05, color: .mainorange)
             rootView.promiseImageView.image = .imgPromise
             rootView.promiseNameLabel.textColor = .gray7
-        }
-        else if remainDay < 0 {
-            rootView.dDayLabel.setText("D+\(-remainDay)" ,style: .body05, color: .gray4)
+        } else if remainDay < 0 {
+            rootView.dDayLabel.setText("D+\(-remainDay)", style: .body05, color: .gray4)
             rootView.promiseImageView.image = .imgPromiseGray
             rootView.promiseNameLabel.textColor = .gray4
-        }
-        else {
-            rootView.dDayLabel.setText("D-\(remainDay)" ,style: .body05, color: .gray5)
+        } else {
+            rootView.dDayLabel.setText("D-\(remainDay)", style: .body05, color: .gray5)
             rootView.promiseImageView.image = .imgPromise
             rootView.promiseNameLabel.textColor = .gray7
         }
+
+        dateFormatter.dateFormat = "M월 d일 a h:mm"
+        dateFormatter.amSymbol = "AM"
+        dateFormatter.pmSymbol = "PM"
+        let time = dateFormatter.string(from: dateWithTime)
+
+        rootView.timeContentLabel.setText(time, style: .body04)
     }
 }
 
