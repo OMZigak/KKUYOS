@@ -194,9 +194,9 @@ private extension PromiseViewController {
     
     @objc
     func finishMeetingButtonDidTap() {
-        promiseTardyViewController.viewModel.updatePromiseCompletion()
-        
-        navigationController?.popViewController(animated: true)
+        promiseTardyViewController.viewModel.updatePromiseCompletion {
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @objc

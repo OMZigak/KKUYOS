@@ -318,7 +318,7 @@ extension PromiseViewModel {
     }
     
     /// 약속 완료 API 구현 함수
-    func updatePromiseCompletion() {
+    func updatePromiseCompletion(completion: @escaping () -> Void) {
         Task {
             do {
                 let responseBody = try await service.updatePromiseCompletion(with: promiseID)
@@ -330,6 +330,8 @@ extension PromiseViewModel {
                     
                     return
                 }
+                
+                completion()
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
