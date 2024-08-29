@@ -156,7 +156,7 @@ extension PromiseInfoViewController {
             rootView.promiseNameLabel.textColor = .gray7
         }
         else if remainDay < 0 {
-            rootView.dDayLabel.setText("D+\(remainDay)" ,style: .body05, color: .gray4)
+            rootView.dDayLabel.setText("D+\(-remainDay)" ,style: .body05, color: .gray4)
             rootView.promiseImageView.image = .imgPromiseGray
             rootView.promiseNameLabel.textColor = .gray4
         }
