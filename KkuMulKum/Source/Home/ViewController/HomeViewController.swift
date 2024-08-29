@@ -161,7 +161,14 @@ extension HomeViewController: UICollectionViewDataSource {
         if let data = viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item] {
             let formattedTime = viewModel.formattedTimes.value[indexPath.item]
             let formattedDay = viewModel.formattedDays.value[indexPath.item]
-            cell.dataBind(data, formattedTime: formattedTime, formattedDay: formattedDay)
+            let placeName = viewModel.placeNames.value[indexPath.item]
+            
+            cell.dataBind(
+                data,
+                formattedTime: formattedTime,
+                formattedDay: formattedDay,
+                placeName: placeName
+            )
         }
         return cell
     }    
@@ -236,8 +243,7 @@ private extension HomeViewController {
                     color: .white
                 )
                 self.rootView.kkumulLabel.setHighlightText(
-                    "\(data.promiseCount)번",
-                    "\(data.tardyCount)번",
+                    for: ["\(data.promiseCount)번", "\(data.tardyCount)번"],
                     style: .title00,
                     color: .lightGreen
                 )
@@ -292,7 +298,7 @@ private extension HomeViewController {
                         color: .gray8
                     )
                     self.rootView.todayPromiseView.placeNameLabel.setText(
-                        data?.placeName ?? "",
+                        self.viewModel.todayPlaceName.value,
                         style: .body06,
                         color: .gray7
                     )

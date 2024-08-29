@@ -32,6 +32,7 @@ extension UILabel {
         attributedText = NSAttributedString(string: text ?? " ", attributes: currentAttributes)
     }
     
+    /// 단일 단어를 하이라이트할 때
     func setHighlightText(_ words: String..., style: UIFont.Pretendard, color: UIColor? = nil) {
         guard let currentAttributedText = attributedText else { return }
         
@@ -50,5 +51,41 @@ extension UILabel {
                 attributedText = mutableAttributedString
             }
         }
+    }
+    
+    /// 여러 단어를 하이라이트할 때, 순차적으로 하이라이트하여 동일한 단어를 처리
+    func setHighlightText(for words: [String], style: UIFont.Pretendard, color: UIColor? = nil) {
+        guard let currentAttributedText = attributedText else { return }
+        
+        let mutableAttributedString = NSMutableAttributedString(attributedString: currentAttributedText)
+        let textColor = color ?? self.textColor ?? .black
+        
+        for word in words {
+            var searchRange = NSRange(location: 0, length: currentAttributedText.length)
+            
+            while searchRange.location < currentAttributedText.length {
+                let range = (currentAttributedText.string as NSString).range(
+                    of: word,
+                    options: [],
+                    range: searchRange
+                )
+                
+                guard range.location != NSNotFound else { break }
+                
+                let highlightedAttributes: [NSAttributedString.Key: Any] = [
+                    .font: UIFont.pretendard(style),
+                    .foregroundColor: textColor
+                ]
+                mutableAttributedString.addAttributes(highlightedAttributes, range: range)
+                
+                /// 다음 검색 범위를 설정
+                searchRange = NSRange(
+                    location: range.location + range.length,
+                    length: currentAttributedText.length - (range.location + range.length)
+                )
+            }
+        }
+        
+        attributedText = mutableAttributedString
     }
 }

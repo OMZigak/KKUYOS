@@ -32,10 +32,12 @@ final class HomeViewModel {
     
     /// 오늘의 약속
     var todayFormattedTime = ObservablePattern<String>("")
+    var todayPlaceName = ObservablePattern<String>("")
     
     /// 다가올 나의 약속
     var formattedTimes = ObservablePattern<[String]>([])
     var formattedDays = ObservablePattern<[String]>([])
+    var placeNames = ObservablePattern<[String]>([])
     
     
     // MARK: - Initializer
@@ -138,12 +140,9 @@ final class HomeViewModel {
     func updatePrepareStatus() {
         Task {
             do {
-                guard let responseBody = try await service.updatePreparationStatus(
+                _ = try await service.updatePreparationStatus(
                     with: nearestPromise.value?.data?.promiseID ?? 1
-                ) 
-                else {
-                    return
-                }
+                )
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
@@ -153,12 +152,9 @@ final class HomeViewModel {
     func updateMoveStatus() {
         Task {
             do {
-                guard let responseBody = try await service.updateDepartureStatus(
+                _ = try await service.updateDepartureStatus(
                     with: nearestPromise.value?.data?.promiseID ?? 1
-                ) 
-                else {
-                    return
-                }
+                )
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
@@ -168,12 +164,9 @@ final class HomeViewModel {
     func updateArriveStatus() {
         Task {
             do {
-                guard let responseBody = try await service.updateArrivalStatus(
+                _ = try await service.updateArrivalStatus(
                     with: nearestPromise.value?.data?.promiseID ?? 1
                 )
-                else {
-                    return
-                }
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
@@ -197,6 +190,9 @@ final class HomeViewModel {
             do {
                 nearestPromise.value = try await service.fetchNearestPromise()
                 todayFormattedTime.value = formatTimeToString(nearestPromise.value?.data?.time ?? "") ?? ""
+                let placeName = self.nearestPromise.value?.data?.placeName ?? ""
+                todayPlaceName.value = placeName.count > 14 ? String(placeName.prefix(14)) + "..." : placeName
+                
                 requestMyReadyStatus()
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
@@ -212,6 +208,10 @@ final class HomeViewModel {
                 let promises = upcomingPromiseList.value?.data?.promises ?? []
                 formattedTimes.value = promises.map { formatTimeToString($0.time) ?? "" }
                 formattedDays.value = promises.map { formatDateToString($0.time) ?? "" }
+                placeNames.value = promises.map { promise in
+                    let name = promise.placeName
+                    return name.count > 12 ? String(name.prefix(12)) + "..." : name
+                }
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }

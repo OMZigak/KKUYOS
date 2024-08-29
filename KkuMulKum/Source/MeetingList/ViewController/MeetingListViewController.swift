@@ -77,10 +77,11 @@ class MeetingListViewController: BaseViewController {
         viewModel.loginUser.bind { [weak self] _ in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                let data = self.viewModel.meetingList.value
+                let userData = self.viewModel.loginUser.value?.data
+                let listData = self.viewModel.meetingList.value?.data
                 
                 self.rootView.infoLabel.setText(
-                    "\(self.viewModel.loginUser.value?.data?.name ?? "꾸물리안") 님이 가입한 모임은\n총 \(self.viewModel.meetingList.value?.data?.count ?? 0)개예요!",
+                    "\(userData?.name ?? "꾸물리안") 님이 가입한 모임은\n총 \(listData?.count ?? 0)개예요!",
                     style: .head01,
                     color: .gray8
                 )
@@ -92,15 +93,16 @@ class MeetingListViewController: BaseViewController {
         viewModel.meetingList.bind { [weak self] _ in
             DispatchQueue.main.async {
                 guard let self = self else { return }
-                let data = self.viewModel.meetingList.value
+                let userData = self.viewModel.loginUser.value?.data
+                let listData = self.viewModel.meetingList.value?.data
                 
                 self.rootView.infoLabel.setText(
-                    "\(self.viewModel.loginUser.value?.data?.name ?? "꾸물리안") 님이 가입한 모임은\n총 \(self.viewModel.meetingList.value?.data?.count ?? 0)개예요!",
+                    "\(userData?.name ?? "꾸물리안") 님이 가입한 모임은\n총 \(listData?.count ?? 0)개예요!",
                     style: .head01,
                     color: .gray8
                 )
                 
-                if data?.data?.count == 0 {
+                if listData?.count == 0 {
                     self.rootView.emptyLabel.isHidden = false
                     self.rootView.emptyCharacter.isHidden = false
                 } else {
