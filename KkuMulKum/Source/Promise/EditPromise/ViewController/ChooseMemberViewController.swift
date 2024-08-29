@@ -39,9 +39,7 @@ class ChooseMemberViewController: BaseViewController {
         
         setupBinding()
         
-        viewModel.fetchPromiseAvailableMember() {
-            self.setupSelectInitialCells()
-        }
+        viewModel.fetchPromiseAvailableMember()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,23 +78,6 @@ private extension ChooseMemberViewController {
         viewModel.participantList?.bindOnMain(with: self, { owner, members in
             self.rootView.memberListView.reloadData()
         })
-    }
-    
-    // TODO: 셀 초기 선택 안되는 문제 해결
-    func setupSelectInitialCells() {
-        DispatchQueue.main.async {
-            guard let members = self.viewModel.participantList?.value else { return }
-            
-            for index in 0 ..< members.count {
-                let indexPath = IndexPath(item: index, section: 0)
-                
-                if members[index].isParticipant {
-                    (self.rootView.memberListView.cellForItem(at: indexPath) as? SelectMemberCell)?.isSelected = true
-                }
-            }
-            
-            self.rootView.memberListView.reloadData()
-        }
     }
     
     @objc
@@ -138,6 +119,14 @@ extension ChooseMemberViewController: UICollectionViewDataSource {
                 profileImageURL: viewModel.participantList?.value[indexPath.row].profileImageURL
             )
         )
+        
+        guard let isParticipant = viewModel.participantList?.value[indexPath.row].isParticipant else {
+            return cell
+        }
+        
+        if isParticipant {
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+        }
         
         return cell
     }
