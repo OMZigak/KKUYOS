@@ -57,7 +57,7 @@ class PromiseViewController: BaseViewController {
         super.viewDidLoad()
         
         setupNavigationBarBackButton()
-        setupPromiseEditButton()
+        setupPromiseEditButton(isHidden: false)
         setupBindings()
     }
     
@@ -154,18 +154,19 @@ private extension PromiseViewController {
             owner.promiseInfoViewController.setupContent()
             owner.promiseInfoViewController.setUpTimeContent()
             owner.removePromiseViewContoller.promiseNameLabel.text = info?.promiseName ?? ""
+            owner.setupPromiseEditButton(isHidden: !(info?.isParticipant ?? false))
         }
     }
     
-    func setupPromiseEditButton() {
+    func setupPromiseEditButton(isHidden: Bool) {
         let moreButton = UIBarButtonItem(
             image: .imgMore.withRenderingMode(.alwaysOriginal),
             style: .plain,
             target: self,
             action: #selector(self.moreButtonDidTap)
         )
-        
-        navigationItem.rightBarButtonItem = moreButton
+
+        navigationItem.rightBarButtonItem = isHidden ? nil : moreButton
     }
     
     @objc
