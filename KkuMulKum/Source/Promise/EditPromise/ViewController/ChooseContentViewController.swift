@@ -85,6 +85,15 @@ private extension ChooseContentViewController {
                 button.isSelected = (button.identifier == penalty)
             }
         })
+        
+        viewModel.isSuccess.bindOnMain(with: self) { owner, success in
+            let viewController = AddPromiseCompleteViewController(promiseID: self.viewModel.promiseID)
+            
+            viewController.setupNavigationBarTitle(with: "약속 수정하기")
+            viewController.rootView.titleLabel.text = "약속이 수정되었어요!"
+            
+            self.navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     @objc
@@ -99,31 +108,6 @@ private extension ChooseContentViewController {
     
     @objc
     func confirmButtonDidTap() {
-        guard let participantList = viewModel.participantList?.value else { return }
-        let participants = participantList.filter { $0.isParticipant }.map { $0.memberID }
-        
-        viewModel.putPromiseInfo(
-            request: EditPromiseRequestModel(
-                name: viewModel.promiseName?.value ?? "",
-                placeName: viewModel.placeName?.value ?? "",
-                address: viewModel.address ?? "",
-                roadAddress: viewModel.roadAddress ?? "",
-                time: viewModel.time ?? "",
-                dressUpLevel: viewModel.dressUpLevel?.value ?? "",
-                penalty: viewModel.penalty?.value ?? "",
-                x: viewModel.xCoordinate ?? 0,
-                y: viewModel.yCoordinate ?? 0,
-                participants: participants
-            )
-        ) {
-            DispatchQueue.main.async {
-                let viewController = AddPromiseCompleteViewController(promiseID: self.viewModel.promiseID)
-                
-                viewController.setupNavigationBarTitle(with: "약속 수정하기")
-                viewController.rootView.titleLabel.text = "약속이 수정되었어요!"
-                
-                self.navigationController?.pushViewController(viewController, animated: true)
-            }
-        }
+        viewModel.putPromiseInfo()
     }
 }

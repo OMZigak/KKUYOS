@@ -15,6 +15,7 @@ class EditPromiseViewModel {
     let participantList: ObservablePattern<[AvailableMember]>?
     let dressUpLevel: ObservablePattern<String>?
     let penalty: ObservablePattern<String>?
+    let isSuccess = ObservablePattern<Bool>(false)
     
     var xCoordinate: Double?
     var yCoordinate: Double?
@@ -120,33 +121,49 @@ extension EditPromiseViewModel {
 }
 
 extension EditPromiseViewModel {
-    func putPromiseInfo(request: EditPromiseRequestModel, completion: @escaping () -> Void) {
+    func putPromiseInfo() {
+        let participants = participantList?.value.filter { $0.isParticipant }.map { $0.memberID } ?? []
+        
+        let request = EditPromiseRequestModel(
+            name: promiseName?.value ?? "",
+            placeName: placeName?.value ?? "",
+            address: address ?? "",
+            roadAddress: roadAddress ?? "",
+            time: time ?? "",
+            dressUpLevel: dressUpLevel?.value ?? "",
+            penalty: penalty?.value ?? "",
+            x: xCoordinate ?? 0,
+            y: yCoordinate ?? 0,
+            participants: participants
+        )
+        
         Task {
             do {
                 let result = try await service.putPromiseInfo(with: promiseID, request: request)
                 
                 guard let success = result?.success,
-                        success == true else {
+                      success == true
+                else {
                     return
                 }
                 
-                completion()
+                isSuccess.value = success
             }
         }
     }
     
-    func fetchPromiseAvailableMember(completion: @escaping () -> Void) {
+    func fetchPromiseAvailableMember() {
         Task {
             do {
                 let result = try await service.fetchPromiseAvailableMember(with: promiseID)
                 
-                guard let success = result?.success, success == true else {
+                guard let success = result?.success,
+                      success == true
+                else {
                     return
                 }
                 
                 participantList?.value = result?.data?.members ?? []
-                
-                completion()
             }
         }
     }
