@@ -120,13 +120,12 @@ extension ChooseMemberViewController: UICollectionViewDataSource {
             )
         )
         
-        guard let isParticipant = viewModel.participantList?.value[indexPath.row].isParticipant else {
+        if let isParticipant = viewModel.participantList?.value[indexPath.row].isParticipant, isParticipant {
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
+        } else {
             return cell
         }
-        
-        if isParticipant {
-            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: [])
-        }
+
         
         return cell
     }
