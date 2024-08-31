@@ -1213,13 +1213,6 @@
 			path = Tardy;
 			sourceTree = "<group>";
 		};
-		DD9F59642C7C7E3B00E928DF /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		DD9F59652C7C7E5C00E928DF /* Cell */ = {
 			isa = PBXGroup;
 			children = (
