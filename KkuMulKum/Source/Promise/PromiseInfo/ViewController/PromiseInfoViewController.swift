@@ -112,7 +112,7 @@ extension PromiseInfoViewController {
     func setupContent() {
         self.rootView.promiseNameLabel.setText(
             self.viewModel.promiseInfo.value?.promiseName ?? "",
-            style: .body04
+            style: .body01
         )
         
         self.rootView.locationContentLabel.setText(
