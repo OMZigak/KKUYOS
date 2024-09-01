@@ -218,7 +218,7 @@ private extension MeetingInfoViewModel {
         if 0 < dDay {
             return ("+\(dDay)", .past)
         } else if 0 == dDay {
-            return ("-Day", .today)
+            return ("-DAY", .today)
         } else {
             return ("\(dDay)", .future)
         }
