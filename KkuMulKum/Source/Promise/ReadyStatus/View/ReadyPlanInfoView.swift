@@ -26,11 +26,9 @@ class ReadyPlanInfoView: BaseView {
     }
     
     private let editButton: UIButton = UIButton().then {
-        $0.setTitle("수정", for: .normal)
-        $0.setTitleColor(.gray6, for: .normal)
-        $0.titleLabel?.font = .pretendard(.caption01)
+        $0.setTitle("수정", style: .caption01, color: .gray6)
         $0.backgroundColor = .gray0
-        $0.layer.cornerRadius = 50
+        $0.layer.cornerRadius = Screen.height(28) / 2
         $0.clipsToBounds = true
     }
     
@@ -68,6 +66,7 @@ class ReadyPlanInfoView: BaseView {
         editButton.snp.makeConstraints {
             $0.trailing.equalToSuperview().inset(22)
             $0.bottom.equalToSuperview().inset(18)
+            $0.width.equalTo(Screen.width(60))
             $0.height.equalTo(Screen.height(28))
         }
     }
