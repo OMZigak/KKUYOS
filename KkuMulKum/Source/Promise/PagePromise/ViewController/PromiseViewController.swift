@@ -197,6 +197,13 @@ private extension PromiseViewController {
         promiseTardyViewController.viewModel.updatePromiseCompletion {
             DispatchQueue.main.async {
                 self.navigationController?.popViewController(animated: true)
+                
+                if let viewController = self.navigationController?.viewControllers.last {
+                    print(">>>>> \(viewController) : \(#function)")
+                    
+                    let toast = Toast()
+                    toast.show(message: "약속 마치기 성공!", view: viewController.view, position: .bottom, inset: 100)
+                }
             }
         }
     }
