@@ -123,6 +123,7 @@ extension ReadyStatusViewController {
                     owner.updateReadyInfoView(flag: false)
                     return
                 }
+                
                 owner.updateReadyInfoView(flag: true)
             }
         }
@@ -181,21 +182,17 @@ extension ReadyStatusViewController {
             }
         }
         
-        viewModel.myReadyProgressStatus.bind(with: self) { owner, status in
-            DispatchQueue.main.async {
-                owner.updateReadyStartButton(status: status)
-            }
+        viewModel.myReadyProgressStatus.bindOnMain(with: self) { owner, status in
+            owner.updateReadyStartButton()
         }
         
-        viewModel.participantsInfo.bind(with: self) { owner, participants in
-            DispatchQueue.main.async {
-                owner.rootView.ourReadyStatusCollectionView.reloadData()
-                
-                owner.rootView.ourReadyStatusCollectionView.snp.updateConstraints {
-                    $0.height.equalTo(
-                        CGFloat(participants?.count ?? 0) * Screen.height(80)
-                    )
-                }
+        viewModel.participantsInfo.bindOnMain(with: self) { owner, participants in
+            owner.rootView.ourReadyStatusCollectionView.reloadData()
+            
+            owner.rootView.ourReadyStatusCollectionView.snp.updateConstraints {
+                $0.height.equalTo(
+                    CGFloat(participants?.count ?? 0) * Screen.height(80)
+                )
             }
         }
         
@@ -218,8 +215,8 @@ extension ReadyStatusViewController {
     }
     
     /// 준비 상태에 따라 버튼 상태 변경
-    func updateReadyStartButton(status: ReadyProgressStatus) {
-        switch status {
+    func updateReadyStartButton() {
+        switch viewModel.myReadyProgressStatus.value {
         case .none:
             DispatchQueue.main.async {
                 self.rootView.myReadyStatusProgressView.readyStartButton.setupButton(
@@ -234,10 +231,7 @@ extension ReadyStatusViewController {
                     "도착 완료",
                     .none
                 )
-                self.rootView.myReadyStatusProgressView.statusProgressView.setProgress(
-                    0,
-                    animated: false
-                )
+                self.rootView.myReadyStatusProgressView.statusProgressView.setProgress(0, animated: false)
             }
         case .ready:
             DispatchQueue.main.async {
@@ -253,10 +247,10 @@ extension ReadyStatusViewController {
                     "도착 완료",
                     .none
                 )
-                self.rootView.myReadyStatusProgressView.statusProgressView.setProgress(
-                    0.2,
-                    animated: false
-                )
+                self.rootView.myReadyStatusProgressView.statusProgressView.setProgress(0.2, animated: false)
+                
+                self.rootView.myReadyStatusProgressView.readyStartButton.isEnabled = false
+                self.rootView.myReadyStatusProgressView.moveStartButton.isEnabled = true
                 
                 [
                     self.rootView.myReadyStatusProgressView.moveStartTimeLabel,
@@ -286,13 +280,10 @@ extension ReadyStatusViewController {
                     )
                 }
             }
-            
-            /// 준비 시작 네트워크 통신
-            viewModel.updatePreparationStatus()
         case .move:
             DispatchQueue.main.async {
                 self.rootView.myReadyStatusProgressView.readyStartButton.setupButton(
-                    "준비 중",
+                    "준비 완료",
                     .done
                 )
                 self.rootView.myReadyStatusProgressView.moveStartButton.setupButton(
@@ -307,6 +298,10 @@ extension ReadyStatusViewController {
                     0.5,
                     animated: false
                 )
+                
+                self.rootView.myReadyStatusProgressView.moveStartButton.isEnabled = false
+                self.rootView.myReadyStatusProgressView.arrivalButton.isEnabled = true
+                
                 self.rootView.myReadyStatusProgressView.arrivalTitleLabel.isHidden = false
                 self.rootView.myReadyStatusProgressView.moveStartTitleLabel.isHidden = true
                 self.rootView.myReadyStatusProgressView.readyStartTitleLabel.isHidden = true
@@ -341,17 +336,14 @@ extension ReadyStatusViewController {
                     )
                 }
             }
-            
-            /// 이동 시작 네트워크 통신
-            viewModel.updateDepartureStatus()
         case .done:
             DispatchQueue.main.async {
                 self.rootView.myReadyStatusProgressView.readyStartButton.setupButton(
-                    "준비 중",
+                    "준비 완료",
                     .done
                 )
                 self.rootView.myReadyStatusProgressView.moveStartButton.setupButton(
-                    "이동 중",
+                    "이동 완료",
                     .done
                 )
                 self.rootView.myReadyStatusProgressView.arrivalButton.setupButton(
@@ -362,6 +354,8 @@ extension ReadyStatusViewController {
                     1,
                     animated: false
                 )
+                
+                self.rootView.myReadyStatusProgressView.arrivalButton.isEnabled = false
                 
                 [
                     self.rootView.myReadyStatusProgressView.arrivalTitleLabel,
@@ -411,30 +405,25 @@ extension ReadyStatusViewController {
                     )
                 }
             }
-            
-            /// 도착 완료 네트워크 통신
-            viewModel.updateArrivalStatus()
         }
     }
     
     @objc
     func readyStartButtonDidTap() {
-        viewModel.myReadyProgressStatus.value = .ready
-        rootView.myReadyStatusProgressView.readyStartButton.isEnabled = false
-        rootView.myReadyStatusProgressView.moveStartButton.isEnabled = true
+        viewModel.fetchPromiseParticipantList()
+        viewModel.updatePreparationStatus()
     }
     
     @objc
     func moveStartButtonDidTap() {
-        viewModel.myReadyProgressStatus.value = .move
-        rootView.myReadyStatusProgressView.moveStartButton.isEnabled = false
-        rootView.myReadyStatusProgressView.arrivalButton.isEnabled = true
+        viewModel.fetchPromiseParticipantList()
+        viewModel.updateDepartureStatus()
     }
     
     @objc
     func arrivalButtonDidTap() {
-        viewModel.myReadyProgressStatus.value = .done
-        rootView.myReadyStatusProgressView.arrivalButton.isEnabled = false
+        viewModel.fetchPromiseParticipantList()
+        viewModel.updateArrivalStatus()
     }
     
     @objc
