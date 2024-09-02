@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 class NicknameViewController: BaseViewController {
-    
+
     private let nicknameView = NicknameView()
     private let viewModel: NicknameViewModel
     private let disposeBag = DisposeBag()

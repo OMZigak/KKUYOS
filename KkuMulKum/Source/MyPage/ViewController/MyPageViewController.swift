@@ -215,8 +215,10 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
                    KingfisherManager.shared.cache.clearDiskCache()
                })
                .disposed(by: disposeBag)
-           
-           navigationController?.pushViewController(editProfileViewController, animated: true)
+        
+        editProfileViewController.hidesBottomBarWhenPushed = true
+        
+        navigationController?.pushViewController(editProfileViewController, animated: true)
        }
     
     private func pushAskViewController() {
