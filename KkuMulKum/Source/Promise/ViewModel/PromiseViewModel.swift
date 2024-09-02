@@ -96,7 +96,7 @@ extension PromiseViewModel {
     
     /// 준비 현황 버튼 클릭했을 때 현재 시간 반환하는 함수
     func updateReadyStatusTime() -> String {
-        dateFormatter.dateFormat = "a hh:mm"
+        dateFormatter.dateFormat = "a h:mm"
         
         return dateFormatter.string(from: Date())
     }
@@ -381,7 +381,12 @@ private extension PromiseViewModel {
         switch error.code {
         case 40051:
             errorMessage.value = "도착하지 않은 참여자가 있습니다."
-            
+        case 40050:
+            errorMessage.value = "약속 시간이 지나지 않았습니다."
+        case 40340:
+            errorMessage.value = "참여하지 않은 약속입니다."
+        case 40450:
+            errorMessage.value = "약속을 찾을 수 없습니다."
         default:
             errorMessage.value = "알 수 없는 에러"
         }
