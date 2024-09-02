@@ -91,6 +91,9 @@ class ReadyStatusViewController: BaseViewController {
 
 extension ReadyStatusViewController {
     func setupBinding() {
+        viewModel.promiseInfo.bindOnMain(with: self) { owner, model in
+            owner.rootView.myReadyStatusProgressView.isUserInteractionEnabled = (model?.isParticipant ?? false)
+        }
         viewModel.myReadyStatus.bind(with: self) {
             owner,
             model in
