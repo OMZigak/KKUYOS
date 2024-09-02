@@ -33,6 +33,9 @@ final class MeetingMemberCell: BaseCollectionViewCell {
         super.prepareForReuse()
         
         profileImageButton.do {
+            var config = UIButton.Configuration.plain()
+            config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+            
             $0.imageView?.image = nil
             $0.backgroundColor = .clear
             $0.isEnabled = false
@@ -89,6 +92,10 @@ private extension MeetingMemberCell {
         self.delegate = delegate
         
         profileImageButton.do {
+            var config = UIButton.Configuration.plain()
+            config.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0)
+            
+            $0.configuration = config
             $0.backgroundColor = .gray1
             $0.setImage(.iconPlus.withTintColor(.gray4), for: .normal)
             $0.isEnabled = true
