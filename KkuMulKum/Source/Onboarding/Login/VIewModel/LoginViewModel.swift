@@ -260,31 +260,6 @@ class LoginViewModel: NSObject {
             print("Failed to save tokens")
         }
     }
-    
-    // TODO: 자동로그인 구현 후 삭제예정
-    func fetchValueFromPrivacyInfo(forKey key: String) -> String? {
-        guard let path = Bundle.main.path(forResource: "PrivacyInfo", ofType: "plist"),
-              let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject],
-              let value = dict[key] as? String else {
-            return nil
-        }
-        return value
-    }
-    
-    // TODO: 자동로그인 구현 후 삭제예정
-    func performTestLogin() {
-          guard let testAccessToken = fetchValueFromPrivacyInfo(forKey: "TEST_ACCESS_TOKEN") else {
-              print("Failed to retrieve test access token")
-              error.value = "Test access token not found"
-              return
-          }
-          
-          saveTokens(accessToken: testAccessToken, refreshToken: "")
-          userName.value = ""
-          loginState.value = .login
-      }
-    
-
 }
 
 extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {

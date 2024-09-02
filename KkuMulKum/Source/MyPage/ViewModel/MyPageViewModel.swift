@@ -53,6 +53,21 @@ class MyPageViewModel: NSObject {
             .asSignal(onErrorJustReturn: ())
     }
     
+    func getLevelText(for level: Int) -> String {
+        switch level {
+        case 1:
+            return "빼꼼 꾸물이"
+        case 2:
+            return "망기적 꾸물이"
+        case 3:
+            return "기적 꾸물이"
+        case 4:
+            return "꾸물꿈"
+        default:
+            return "꾸물리안 님"
+        }
+    }
+    
     func fetchUserInfo() {
         Task {
             do {
