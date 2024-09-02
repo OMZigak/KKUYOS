@@ -95,12 +95,12 @@ class ReadyStatusView: BaseView {
         baseStackView.addArrangedSubviews(
             enterReadyButtonView,
             readyPlanInfoView,
-            myReadyStatusTitleLabel,
-            readyBaseView
+            myReadyStatusTitleLabel
         )
         
         contentView.addSubviews(
             baseStackView,
+            readyBaseView,
             ourReadyStatusBackView,
             ourReadyStatusLabel,
             ourReadyStatusCollectionView
@@ -127,8 +127,13 @@ class ReadyStatusView: BaseView {
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
+        readyBaseView.snp.makeConstraints {
+            $0.top.equalTo(baseStackView.snp.bottom).offset(13)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
         ourReadyStatusBackView.snp.makeConstraints {
-            $0.top.equalTo(baseStackView.snp.bottom).offset(24)
+            $0.top.equalTo(readyBaseView.snp.bottom).offset(24)
             $0.horizontalEdges.bottom.equalToSuperview()
         }
         

@@ -55,14 +55,14 @@ class ReadyPlanInfoView: BaseView {
         }
         
         requestReadyTimeLabel.snp.makeConstraints {
-            $0.top.equalTo(readyTimeLabel.snp.bottom).offset(12)
+            $0.top.equalTo(readyTimeLabel.snp.bottom).offset(9)
             $0.leading.equalToSuperview().offset(20)
         }
         
         requestMoveTimeLabel.snp.makeConstraints {
-            $0.top.equalTo(requestReadyTimeLabel.snp.bottom).offset(8)
+            $0.top.equalTo(requestReadyTimeLabel.snp.bottom).offset(4)
             $0.leading.equalToSuperview().offset(20)
-            $0.bottom.equalToSuperview().inset(18)
+            $0.bottom.equalToSuperview().inset(16)
         }
         
         editButton.snp.makeConstraints {
