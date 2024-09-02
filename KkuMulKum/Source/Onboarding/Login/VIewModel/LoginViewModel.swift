@@ -10,6 +10,7 @@ import AuthenticationServices
 
 import KakaoSDKUser
 import KakaoSDKAuth
+import KakaoSDKCommon
 import Moya
 import FirebaseMessaging
 
@@ -29,6 +30,8 @@ class LoginViewModel: NSObject {
     private let authInterceptor: AuthInterceptor
     private let keychainAccessible: KeychainAccessible
     
+    private let kakaoAppKey: String
+
     init(
         provider: MoyaProvider<AuthTargetType> = MoyaProvider<AuthTargetType>(
             plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
@@ -36,6 +39,12 @@ class LoginViewModel: NSObject {
         authService: AuthServiceProtocol = AuthService(),
         keychainAccessible: KeychainAccessible = DefaultKeychainAccessible()
     ) {
+        if let appKey = Bundle.main.privacyInfo?["NATIVE_APP_KEY"] as? String {
+            self.kakaoAppKey = appKey
+        } else {
+            fatalError("Failed to load NATIVE_APP_KEY from PrivacyInfo.plist")
+        }
+        
         self.provider = provider
         self.authService = authService
         self.authInterceptor = AuthInterceptor(authService: authService, provider: provider)
