@@ -447,14 +447,19 @@ extension ReadyStatusViewController {
         guard let _ = viewModel.promiseInfo.value?.promiseName else { return }
         guard let readyStatusInfo = viewModel.myReadyStatus.value else { return }
         
-        let setReadyInfoViewController = SetReadyInfoViewController(
-            viewModel: SetReadyInfoViewModel(
-                promiseID: viewModel.promiseID,
-                promiseTime: readyStatusInfo.promiseTime,
-                promiseName: viewModel.promiseInfo.value?.promiseName ?? "",
-                service: PromiseService()
-            )
+        let setReadyInfoViewModel = SetReadyInfoViewModel(
+            promiseID: viewModel.promiseID,
+            promiseTime: readyStatusInfo.promiseTime,
+            promiseName: viewModel.promiseInfo.value?.promiseName ?? "",
+            service: PromiseService()
         )
+        
+        setReadyInfoViewModel.storedReadyHour = (readyStatusInfo.preparationTime ?? 0) / 60
+        setReadyInfoViewModel.storedReadyMinute = (readyStatusInfo.preparationTime ?? 0) % 60
+        setReadyInfoViewModel.storedMoveHour = (readyStatusInfo.travelTime ?? 0) / 60
+        setReadyInfoViewModel.storedMoveMinute = (readyStatusInfo.travelTime ?? 0) % 60
+        
+        let setReadyInfoViewController = SetReadyInfoViewController(viewModel: setReadyInfoViewModel)
         
         navigationController?.pushViewController(
             setReadyInfoViewController,
