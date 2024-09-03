@@ -46,16 +46,20 @@ class ChooseContentViewController: BaseViewController {
         navigationController?.isNavigationBarHidden = false
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     
     // MARK: - Setup
     
     override func setupView() {
         rootView.confirmButton.isEnabled = true
         rootView.confirmButton.setTitle("수정하기", style: .body03, color: .white)
+        
+        for button in self.rootView.levelButtons {
+            button.isSelected = (button.titleLabel?.text == viewModel.dressUpLevel?.value)
+        }
+            
+        for button in self.rootView.penaltyButtons {
+            button.isSelected = (button.identifier == viewModel.penalty?.value)
+        }
     }
     
     override func setupAction() {
