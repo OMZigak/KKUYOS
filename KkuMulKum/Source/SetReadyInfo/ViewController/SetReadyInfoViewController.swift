@@ -86,6 +86,8 @@ final class SetReadyInfoViewController: BaseViewController {
     
     @objc
     private func textFieldDidChange(_ textField: UITextField) {
+        let text = textField.text ?? ""
+        viewModel.updateTime(textField: textField.accessibilityIdentifier ?? "", time: text)
         viewModel.checkValid(
             readyHourText: rootView.readyHourTextField.text ?? "",
             readyMinuteText: rootView.readyMinuteTextField.text ?? "",
