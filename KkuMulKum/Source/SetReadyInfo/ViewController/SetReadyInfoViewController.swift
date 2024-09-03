@@ -160,6 +160,13 @@ private extension SetReadyInfoViewController {
             rootView.moveHourTextField.text = String(viewModel.storedMoveHour)
             rootView.moveMinuteTextField.text = String(viewModel.storedMoveMinute)
         }
+        
+        viewModel.checkValid(
+            readyHourText: rootView.readyHourTextField.text ?? "",
+            readyMinuteText: rootView.readyMinuteTextField.text ?? "",
+            moveHourText: rootView.moveHourTextField.text ?? "",
+            moveMinuteText: rootView.moveMinuteTextField.text ?? ""
+        )
     }
     
     func setTextFieldDelegate() {
