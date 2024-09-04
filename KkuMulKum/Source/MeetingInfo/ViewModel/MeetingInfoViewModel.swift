@@ -57,7 +57,33 @@ extension MeetingInfoViewModel: ViewModelType {
             }
             .disposed(by: disposeBag)
         
-        let info = infoRelay.asDriver(onErrorJustReturn: nil)
+        let info = infoRelay
+            .map { info -> MeetingInfoModel? in
+                guard let info else {
+                    print("MeetingInfoModel이 존재하지 않습니다.")
+                    return nil
+                }
+                
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                
+                guard let date = dateFormatter.date(from: info.createdAt) else {
+                    print("서버의 date가 형식에 맞지 않습니다.")
+                    return nil
+                }
+                
+                dateFormatter.dateFormat = "yyyy.MM.dd"
+                let dateString = dateFormatter.string(from: date)
+                
+                return MeetingInfoModel(
+                    meetingID: info.meetingID,
+                    name: info.name,
+                    createdAt: dateString,
+                    metCount: info.metCount,
+                    invitationCode: info.invitationCode
+                )
+            }
+            .asDriver(onErrorJustReturn: nil)
         
         let memberCount = meetingMemberModelRelay
             .compactMap { $0?.memberCount }
@@ -218,7 +244,7 @@ private extension MeetingInfoViewModel {
         if 0 < dDay {
             return ("+\(dDay)", .past)
         } else if 0 == dDay {
-            return ("-Day", .today)
+            return ("-DAY", .today)
         } else {
             return ("\(dDay)", .future)
         }

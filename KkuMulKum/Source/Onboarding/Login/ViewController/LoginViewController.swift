@@ -44,29 +44,9 @@ class LoginViewController: BaseViewController {
             action: #selector(kakaoLoginTapped)
         )
         loginView.kakaoLoginImageView.addGestureRecognizer(kakaoTapGesture)
-        
-        // TODO: 자동로그인 구현 후 삭제예정
-        loginView.testLoginButton.addTarget(self, action: #selector(testLoginTapped), for: .touchUpInside)
-
     }
     
     private func bindViewModel() {
-//        loginViewModel.loginState.bind(with: self) { owner, state in
-//            
-//            Task {
-//                switch state {
-//                case .notLogin:
-//                    print("Login State: Not logged in")
-//                case .login:
-//                    print("Login State: Logged in")
-//                    await owner.navigateToOnboardingScreen()
-//                case .needOnboarding:
-//                    print("Login State: Need onboarding")
-//                    await owner.navigateToOnboardingScreen()
-//                }
-//            }
-//        }
-        
         loginViewModel.userName.bind(with: self) { owner, name in
             Task {
                 if name != nil {
@@ -139,8 +119,4 @@ class LoginViewController: BaseViewController {
             present(alert, animated: true)
         }
     }
-    
-    @objc private func testLoginTapped() {
-            loginViewModel.performTestLogin()
-        }
 }

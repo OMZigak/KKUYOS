@@ -15,12 +15,23 @@ final class SetReadyInfoViewModel {
     
     let isValid = ObservablePattern<Bool>(false)
     let errMessage = ObservablePattern<String>("")
-    
-    let readyHour = ObservablePattern<String>("")
-    let readyMinute = ObservablePattern<String>("")
-    let moveHour = ObservablePattern<String>("")
-    let moveMinute = ObservablePattern<String>("")
     let isSucceedToSave = ObservablePattern<Bool>(false)
+    
+
+    var readyHour = ObservablePattern<String>("")
+    var readyMinute = ObservablePattern<String>("")
+    var moveHour = ObservablePattern<String>("")
+    var moveMinute = ObservablePattern<String>("")
+    
+    var preparationTime = ObservablePattern<Int>(0)
+    var travelTime = ObservablePattern<Int>(0)
+    
+    var storedReadyHour: Int = 0
+    var storedReadyMinute: Int = 0
+    var storedMoveHour: Int = 0
+    var storedMoveMinute: Int = 0
+
+    let bufferTime: TimeInterval = 10 * 60
     
     var readyTime: Int = 0
     var moveTime: Int = 0
@@ -52,10 +63,10 @@ final class SetReadyInfoViewModel {
     }
     
     private func calculateTimes() {
-        let readyHours = Int(readyHour.value) ?? 0
-        let readyMinutes = Int(readyMinute.value) ?? 0
-        let moveHours = Int(moveHour.value) ?? 0
-        let moveMinutes = Int(moveMinute.value) ?? 0
+        let readyHours = Int(readyHour.value) ?? storedReadyHour
+        let readyMinutes = Int(readyMinute.value) ?? storedReadyMinute
+        let moveHours = Int(moveHour.value) ?? storedMoveHour
+        let moveMinutes = Int(moveMinute.value) ?? storedMoveMinute
         
         readyTime = readyHours * 60 + readyMinutes
         moveTime = moveHours * 60 + moveMinutes
@@ -142,8 +153,8 @@ final class SetReadyInfoViewModel {
         print("이동 시간: \(self.moveTime) 분")
         print("총 준비 시간: \(totalPrepTime / 60) 분")
         
-        let readyStartTime = promiseDate.addingTimeInterval(-TimeInterval(self.readyTime + self.moveTime) * 60)
-        let moveStartTime = promiseDate.addingTimeInterval(-TimeInterval(self.moveTime) * 60)
+        let readyStartTime = promiseDate.addingTimeInterval(-(totalPrepTime + bufferTime))
+        let moveStartTime = promiseDate.addingTimeInterval(-(TimeInterval(self.moveTime * 60) + bufferTime))
         
         print("준비 시작 시간: \(timeFormatter.string(from: readyStartTime))")
         print("이동 시작 시간: \(timeFormatter.string(from: moveStartTime))")

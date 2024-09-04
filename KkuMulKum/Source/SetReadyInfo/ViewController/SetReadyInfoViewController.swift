@@ -30,12 +30,6 @@ final class SetReadyInfoViewController: BaseViewController {
     
     // MARK: - LifeCycle
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navigationController?.isNavigationBarHidden = false
-    }
-    
     override func loadView() {
         self.view = rootView
     }
@@ -47,8 +41,15 @@ final class SetReadyInfoViewController: BaseViewController {
         setupNavigationBarBackButton()
         setupNavigationBarTitle(with: "준비 정보 입력하기")
         
-        bindViewModel()
+        setupBinding()
         setupTapGesture()
+        setupTextField()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.isNavigationBarHidden = false
     }
     
     override func setupDelegate() {
@@ -85,6 +86,8 @@ final class SetReadyInfoViewController: BaseViewController {
     
     @objc
     private func textFieldDidChange(_ textField: UITextField) {
+        let text = textField.text ?? ""
+        viewModel.updateTime(textField: textField.accessibilityIdentifier ?? "", time: text)
         viewModel.checkValid(
             readyHourText: rootView.readyHourTextField.text ?? "",
             readyMinuteText: rootView.readyMinuteTextField.text ?? "",
@@ -121,10 +124,13 @@ extension SetReadyInfoViewController: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         textField.layer.borderColor = UIColor.gray3.cgColor
-        viewModel.updateTime(
-            textField: textField.accessibilityIdentifier ?? "",
-            time: textField.text ?? ""
-        )
+        
+        if let text = textField.text, !text.isEmpty {
+            viewModel.updateTime(
+                textField: textField.accessibilityIdentifier ?? "",
+                time: textField.text ?? ""
+            )
+        }
     }
     
     func textField(
@@ -142,6 +148,27 @@ extension SetReadyInfoViewController: UITextFieldDelegate {
 // MARK: - Function
 
 private extension SetReadyInfoViewController {
+    func setupTextField() {
+        /// 저장된 준비 시간이 0이 아니면 텍스트 필드에 설정
+        if viewModel.storedReadyHour != 0 || viewModel.storedReadyMinute != 0 {
+            rootView.readyHourTextField.text = String(viewModel.storedReadyHour)
+            rootView.readyMinuteTextField.text = String(viewModel.storedReadyMinute)
+        }
+        
+        /// 저장된 이동 시간이 0이 아니면 텍스트 필드에 설정
+        if viewModel.storedMoveHour != 0 || viewModel.storedMoveMinute != 0 {
+            rootView.moveHourTextField.text = String(viewModel.storedMoveHour)
+            rootView.moveMinuteTextField.text = String(viewModel.storedMoveMinute)
+        }
+        
+        viewModel.checkValid(
+            readyHourText: rootView.readyHourTextField.text ?? "",
+            readyMinuteText: rootView.readyMinuteTextField.text ?? "",
+            moveHourText: rootView.moveHourTextField.text ?? "",
+            moveMinuteText: rootView.moveMinuteTextField.text ?? ""
+        )
+    }
+    
     func setTextFieldDelegate() {
         let textFields: [(UITextField, String)] = [
             (rootView.readyHourTextField, "readyHour"),
@@ -164,7 +191,7 @@ private extension SetReadyInfoViewController {
     
     // MARK: - Data Bind
     
-    func bindViewModel() {
+    func setupBinding() {
         viewModel.readyHour.bind { [weak self] readyHour in
             self?.rootView.readyHourTextField.text = readyHour
         }

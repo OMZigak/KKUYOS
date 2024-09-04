@@ -15,7 +15,9 @@ final class MeetingInfoBannerView: BaseView {
         $0.setText("모임 생성일", style: .label01, color: .gray4)
     }
     
-    private let divider = UIView(backgroundColor: .gray4)
+    private let divider = UILabel().then {
+        $0.setText("l", style: .label01, color: .gray4)
+    }
     
     private let createdAtLabel = UILabel().then {
         $0.setText("2024.06.01", style: .label01, color: .gray4)
@@ -40,24 +42,29 @@ final class MeetingInfoBannerView: BaseView {
         backgroundColor = .lightGreen
         layer.cornerRadius = 8
         
-        horizontalStackView.addArrangedSubviews(explanationLabel, divider, createdAtLabel)
-        backgroundImageView.addSubviews(horizontalStackView, metCountLabel)
+        backgroundImageView.addSubviews(explanationLabel, divider, createdAtLabel, metCountLabel)
         addSubviews(backgroundImageView)
     }
     
     override func setupAutoLayout() {
-        divider.snp.makeConstraints {
-            $0.width.equalTo(1)
-        }
-        
-        horizontalStackView.snp.makeConstraints {
+        explanationLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(20)
             $0.leading.equalToSuperview().offset(16)
         }
         
+        divider.snp.makeConstraints {
+            $0.leading.equalTo(explanationLabel.snp.trailing).offset(12)
+            $0.centerY.equalTo(explanationLabel)
+        }
+        
+        createdAtLabel.snp.makeConstraints {
+            $0.leading.equalTo(divider.snp.trailing).offset(12)
+            $0.centerY.equalTo(explanationLabel)
+        }
+        
         metCountLabel.snp.makeConstraints {
-            $0.top.equalTo(horizontalStackView.snp.bottom).offset(2)
-            $0.leading.equalTo(horizontalStackView)
+            $0.top.equalTo(explanationLabel.snp.bottom).offset(2)
+            $0.leading.equalTo(explanationLabel)
             $0.bottom.equalToSuperview().offset(-20)
         }
         

@@ -77,6 +77,11 @@ class ReadyStatusViewController: BaseViewController {
             action: #selector(arrivalButtonDidTap),
             for: .touchUpInside
         )
+        rootView.readyPlanInfoView.editButton.addTarget(
+            self,
+            action: #selector(editReadyButtonDidTap),
+            for: .touchUpInside
+        )
         rootView.enterReadyButtonView.addGestureRecognizer(
             UITapGestureRecognizer(
                 target: self,
@@ -427,6 +432,31 @@ extension ReadyStatusViewController {
     func arrivalButtonDidTap() {
         viewModel.fetchPromiseParticipantList()
         viewModel.updateArrivalStatus()
+    }
+    
+    @objc
+    func editReadyButtonDidTap() {
+        guard let _ = viewModel.promiseInfo.value?.promiseName else { return }
+        guard let readyStatusInfo = viewModel.myReadyStatus.value else { return }
+        
+        let setReadyInfoViewModel = SetReadyInfoViewModel(
+            promiseID: viewModel.promiseID,
+            promiseTime: readyStatusInfo.promiseTime,
+            promiseName: viewModel.promiseInfo.value?.promiseName ?? "",
+            service: PromiseService()
+        )
+        
+        setReadyInfoViewModel.storedReadyHour = (readyStatusInfo.preparationTime ?? 0) / 60
+        setReadyInfoViewModel.storedReadyMinute = (readyStatusInfo.preparationTime ?? 0) % 60
+        setReadyInfoViewModel.storedMoveHour = (readyStatusInfo.travelTime ?? 0) / 60
+        setReadyInfoViewModel.storedMoveMinute = (readyStatusInfo.travelTime ?? 0) % 60
+        
+        let setReadyInfoViewController = SetReadyInfoViewController(viewModel: setReadyInfoViewModel)
+        
+        navigationController?.pushViewController(
+            setReadyInfoViewController,
+            animated: true
+        )
     }
     
     @objc
