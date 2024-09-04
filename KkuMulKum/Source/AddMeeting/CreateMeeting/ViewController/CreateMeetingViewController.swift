@@ -85,22 +85,42 @@ class CreateMeetingViewController: BaseViewController {
 private extension CreateMeetingViewController {
     func setupBinding() {
         viewModel.inviteCodeState.bind(with: self) { owner, state in
+            owner.rootView.presentButton.isEnabled = false
+            owner.rootView.errorLabel.isHidden = true
+            
             switch state {
             case .valid:
                 owner.rootView.presentButton.isEnabled = true
-            case .empty, .invalid:
-                owner.rootView.presentButton.isEnabled = false
+            case .invalid:
+                owner.rootView.errorLabel.isHidden = false
+            case .empty:
+                break
             }
         }
         
         viewModel.characterCount.bind(with: self) { owner, count in
             owner.rootView.characterLabel.text = "\(count)/10"
         }
+        
+        viewModel.meetingName.bind(with: self) { owner, name in
+            owner.viewModel.validateName()
+        }
+        
+        viewModel.inviteCode.bindOnMain(with: self) { owner, code in
+            let inviteCodePopUpViewController = InvitationCodePopUpViewController(invitationCode: code)
+            
+            owner.setupPopUpViewController(viewController: inviteCodePopUpViewController)
+            owner.setupPopUpAction(view: inviteCodePopUpViewController.rootView)
+            owner.removeDismissGesture(view: inviteCodePopUpViewController.rootView)
+            
+            owner.present(inviteCodePopUpViewController, animated: true)
+        }
     }
     
     @objc 
     func textFieldDidChange(_ textField: UITextField) {
-        viewModel.validateName(textField.text ?? "")
+        viewModel.meetingName.value = textField.text ?? ""
+        viewModel.characterCount.value = "\(textField.text?.count ?? 0)"
     }
     
     @objc 
@@ -111,20 +131,7 @@ private extension CreateMeetingViewController {
     
     @objc 
     func presentButtonDidTap() {
-        let inviteCodePopUpViewController = InvitationCodePopUpViewController(
-            invitationCode: viewModel.inviteCode.value
-        )
-        
-        setupPopUpViewController(viewController: inviteCodePopUpViewController)
-        setupPopUpAction(view: inviteCodePopUpViewController.rootView)
-        removeDismissGesture(view: inviteCodePopUpViewController.rootView)
         viewModel.createMeeting(name: viewModel.meetingName.value)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            inviteCodePopUpViewController.rootView.setInvitationCodeText(self.viewModel.inviteCode.value)
-            
-            self.present(inviteCodePopUpViewController, animated: true)
-        }
     }
     
     @objc

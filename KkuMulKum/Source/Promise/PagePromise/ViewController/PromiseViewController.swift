@@ -149,12 +149,15 @@ class PromiseViewController: BaseViewController {
 private extension PromiseViewController {
     func setupBindings() {
         viewModel.promiseInfo.bindOnMain(with: self) { owner, info in
-            owner.setupNavigationBarTitle(with: info?.promiseName ?? "")
+            owner.setupNavigationBarTitle(with: info?.promiseName ?? "", isBorderHidden: false)
+            
             owner.promiseInfoViewController.rootView.editButton.isHidden = !(info?.isParticipant ?? false)
+            owner.setupPromiseEditButton(isHidden: !(info?.isParticipant ?? false))
+            
             owner.promiseInfoViewController.setupContent()
             owner.promiseInfoViewController.setUpTimeContent()
             owner.removePromiseViewContoller.promiseNameLabel.text = info?.promiseName ?? ""
-            owner.setupPromiseEditButton(isHidden: !(info?.isParticipant ?? false))
+            
         }
     }
     
@@ -195,7 +198,14 @@ private extension PromiseViewController {
     @objc
     func finishMeetingButtonDidTap() {
         promiseTardyViewController.viewModel.updatePromiseCompletion {
-            self.navigationController?.popViewController(animated: true)
+            DispatchQueue.main.async {
+                self.navigationController?.popViewController(animated: true)
+                
+                if let viewController = self.navigationController?.viewControllers.last {
+                    let toast = Toast()
+                    toast.show(message: "약속 마치기 성공!", view: viewController.view, position: .bottom, inset: 100)
+                }
+            }
         }
     }
     

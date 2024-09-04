@@ -25,6 +25,11 @@ class CreateMeetingView: BaseView {
         isEnabled: false
     )
     
+    let errorLabel: UILabel = UILabel().then {
+        $0.setText("한글, 영문, 숫자만을 사용해 총 10자 이내로 입력해주세요. (공백 포함)", style: .caption02, color: .mainred)
+        $0.isHidden = true
+    }
+    
     private let mainTitleLabel: UILabel = UILabel().then {
         $0.setText("모임 이름을\n입력해 주세요", style: .head01)
     }
@@ -37,18 +42,19 @@ class CreateMeetingView: BaseView {
             mainTitleLabel,
             nameTextField,
             characterLabel,
+            errorLabel,
             presentButton
         )
     }
     
     override func setupAutoLayout() {
         mainTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide).offset(32)
+            $0.top.equalTo(safeAreaLayoutGuide).offset(24)
             $0.leading.equalToSuperview().offset(20)
         }
         
         nameTextField.snp.makeConstraints {
-            $0.top.equalTo(mainTitleLabel.snp.bottom).offset(24)
+            $0.top.equalTo(mainTitleLabel.snp.bottom).offset(16)
             $0.width.equalTo(CustomTextField.defaultWidth)
             $0.height.equalTo(CustomTextField.defaultHeight)
             $0.leading.equalTo(mainTitleLabel)
@@ -57,6 +63,11 @@ class CreateMeetingView: BaseView {
         characterLabel.snp.makeConstraints {
             $0.centerY.equalTo(nameTextField)
             $0.trailing.equalTo(nameTextField.snp.trailing).inset(12)
+        }
+        
+        errorLabel.snp.makeConstraints {
+            $0.top.equalTo(nameTextField.snp.bottom).offset(4)
+            $0.leading.equalTo(nameTextField)
         }
         
         presentButton.snp.makeConstraints {

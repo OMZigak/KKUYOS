@@ -40,15 +40,15 @@ class CreateMeetingViewModel {
 // MARK: - Extension
 
 extension CreateMeetingViewModel {
-    func validateName(_ name: String) {
-        meetingName.value = name
-        characterCount.value = String(name.count)
+    func validateName() {
+        let regex = "^[가-힣a-zA-Z0-9 ]{1,10}$"
+        let predicate = NSPredicate(format:"SELF MATCHES %@", regex)
         
-        switch name.count {
+        switch meetingName.value.count {
         case 0:
             inviteCodeState.value = .empty
         case 1...10:
-            inviteCodeState.value = .valid
+            inviteCodeState.value = predicate.evaluate(with: meetingName.value) ? .valid : .invalid
         default:
             inviteCodeState.value = .invalid
         }

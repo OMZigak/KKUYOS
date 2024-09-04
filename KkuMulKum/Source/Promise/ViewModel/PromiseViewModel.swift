@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum TappedButton {
+    case ready
+    case move
+}
+
 class PromiseViewModel {
     
     
@@ -96,25 +101,55 @@ extension PromiseViewModel {
     
     /// 준비 현황 버튼 클릭했을 때 현재 시간 반환하는 함수
     func updateReadyStatusTime() -> String {
-        dateFormatter.dateFormat = "a hh:mm"
+        dateFormatter.dateFormat = "a h:mm"
         
         return dateFormatter.string(from: Date())
     }
     
     /// 꾸물거릴 시간이 없어요 팝업 표시를 위해 지각 여부를 판단하는 함수
-    func checkLate(settingTime: String, arriveTime: String) {
-        dateFormatter.dateFormat = "HH시 mm분"
-        
-        let readyStartDate = dateFormatter.date(from: settingTime)
-        
-        dateFormatter.dateFormat = "a h:mm"
-        
-        let preparationStartDate = dateFormatter.date(from: arriveTime)
-        
-        if let readyStartDate = readyStartDate, let preparationStartDate = preparationStartDate {
-            self.isLate.value = preparationStartDate.compare(readyStartDate) == .orderedDescending
+    func checkLate(tappedButton: TappedButton) {
+        fetchMyReadyStatus()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH시 mm분"
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+
+        switch tappedButton {
+        case .move:
+            if let moveTime = formatter.date(from: moveStartTime.value) {
+                let calendar = Calendar.current
+                
+                let moveTimeComponents = calendar.dateComponents([.hour, .minute], from: moveTime)
+                let currentTimeComponents = calendar.dateComponents([.hour, .minute], from: Date())
+                
+                if let moveHour = moveTimeComponents.hour, let moveMinute = moveTimeComponents.minute,
+                   let currentHour = currentTimeComponents.hour, let currentMinute = currentTimeComponents.minute {
+                    if currentHour > moveHour || (currentHour == moveHour && currentMinute > moveMinute) {
+                        self.isLate.value = true
+                    } else {
+                        self.isLate.value = false
+                    }
+                }
+            }
+        case .ready:
+            if let readyTime = formatter.date(from: readyStartTime.value) {
+                let calendar = Calendar.current
+                
+                let readyTimeComponents = calendar.dateComponents([.hour, .minute], from: readyTime)
+                let currentTimeComponents = calendar.dateComponents([.hour, .minute], from: Date())
+                
+                if let readyHour = readyTimeComponents.hour, let readyMinute = readyTimeComponents.minute,
+                   let currentHour = currentTimeComponents.hour, let currentMinute = currentTimeComponents.minute {
+                    if currentHour > readyHour || (currentHour == readyHour && currentMinute > readyMinute) {
+                        self.isLate.value = true
+                    } else {
+                        self.isLate.value = false
+                    }
+                }
+            }
         }
     }
+
     
     func updateMyReadyProgressStatus() {
         myReadyProgressStatus.value = myReadyStatus.value?.preparationStartAt == nil ? .none
@@ -221,6 +256,7 @@ extension PromiseViewModel {
                 else {
                     return
                 }
+                
                 myReadyStatus.value = responseBody?.data
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
@@ -242,10 +278,9 @@ extension PromiseViewModel {
                     return
                 }
                 
-                self.checkLate(
-                    settingTime: self.moveStartTime.value,
-                    arriveTime: self.myReadyStatus.value?.departureAt ?? ""
-                )
+                myReadyProgressStatus.value = .ready
+                
+                self.checkLate(tappedButton: .ready)
             }
         }
     }
@@ -264,10 +299,9 @@ extension PromiseViewModel {
                     return
                 }
                 
-                self.checkLate(
-                    settingTime: self.moveDuration.value,
-                    arriveTime: self.myReadyStatus.value?.preparationStartAt ?? ""
-                )
+                myReadyProgressStatus.value = .move
+                
+                self.checkLate(tappedButton: .move)
             }
         }
     }
@@ -285,6 +319,8 @@ extension PromiseViewModel {
                 else {
                     return
                 }
+                
+                myReadyProgressStatus.value = .done
             }
         }
     }
@@ -381,7 +417,12 @@ private extension PromiseViewModel {
         switch error.code {
         case 40051:
             errorMessage.value = "도착하지 않은 참여자가 있습니다."
-            
+        case 40050:
+            errorMessage.value = "약속 시간이 지나지 않았습니다."
+        case 40340:
+            errorMessage.value = "참여하지 않은 약속입니다."
+        case 40450:
+            errorMessage.value = "약속을 찾을 수 없습니다."
         default:
             errorMessage.value = "알 수 없는 에러"
         }

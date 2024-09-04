@@ -52,12 +52,12 @@ class InviteCodeView: BaseView {
         let safeArea = safeAreaLayoutGuide
         
         mainTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(safeArea).offset(32)
+            $0.top.equalTo(safeArea).offset(24)
             $0.leading.equalToSuperview().offset(20)
         }
         
         inviteCodeTextField.snp.makeConstraints {
-            $0.top.equalTo(mainTitleLabel.snp.bottom).offset(24)
+            $0.top.equalTo(mainTitleLabel.snp.bottom).offset(16)
             $0.width.equalTo(CustomTextField.defaultWidth)
             $0.height.equalTo(CustomTextField.defaultHeight)
             $0.leading.equalTo(mainTitleLabel)
@@ -71,7 +71,7 @@ class InviteCodeView: BaseView {
         }
         
         errorLabel.snp.makeConstraints {
-            $0.top.equalTo(inviteCodeTextField.snp.bottom).offset(8)
+            $0.top.equalTo(inviteCodeTextField.snp.bottom).offset(4)
             $0.leading.equalTo(inviteCodeTextField)
         }
         

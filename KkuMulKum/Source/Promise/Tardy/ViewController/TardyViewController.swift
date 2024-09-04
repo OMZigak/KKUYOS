@@ -41,15 +41,11 @@ class TardyViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        viewModel.fetchPromiseParticipantList()
-        viewModel.fetchPromiseInfo()
-        viewModel.fetchTardyInfo()
     }
     
     
     // MARK: - Setup
-
+    
     override func setupDelegate() {
         tardyView.tardyCollectionView.dataSource = self
     }
@@ -64,7 +60,7 @@ private extension TardyViewController {
         viewModel.isPastDue.bindOnMain(with: self) { owner, isPastDue in
             owner.tardyView.tardyCollectionView.isHidden = !isPastDue
             owner.tardyView.tardyEmptyView.isHidden = isPastDue
-            owner.tardyView.finishMeetingButton.isEnabled = isPastDue
+            owner.tardyView.finishMeetingButton.isEnabled = (isPastDue && (owner.viewModel.promiseInfo.value?.isParticipant ?? false))
         }
         
         viewModel.penalty.bindOnMain(with: self) { owner, penalty in
@@ -85,10 +81,6 @@ private extension TardyViewController {
             DispatchQueue.main.async {
                 owner.tardyView.tardyCollectionView.reloadData()
             }
-        }
-        
-        viewModel.promiseInfo.bindOnMain(with: self) { owner, info in
-            owner.tardyView.finishMeetingButton.isEnabled = (info?.isParticipant ?? false)
         }
         
         viewModel.errorMessage.bindOnMain(with: self) { owner, error in

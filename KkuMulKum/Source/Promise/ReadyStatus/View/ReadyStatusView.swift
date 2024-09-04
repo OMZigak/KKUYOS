@@ -31,7 +31,6 @@ class ReadyStatusView: BaseView {
     
     let popUpImageView: UIImageView = UIImageView(image: .imgTextPopup).then {
         $0.contentMode = .scaleAspectFit
-        $0.isHidden = true
     }
     
     let ourReadyStatusCollectionView: UICollectionView = UICollectionView(
@@ -64,7 +63,7 @@ class ReadyStatusView: BaseView {
         $0.setText("나의 준비 현황", style: .body01, color: .gray8)
     }
     
-    private let readyBaseView: UIStackView = UIStackView(axis: .vertical).then {
+    let readyBaseView: UIStackView = UIStackView(axis: .vertical).then {
         $0.spacing = 4
     }
     
@@ -95,12 +94,12 @@ class ReadyStatusView: BaseView {
         baseStackView.addArrangedSubviews(
             enterReadyButtonView,
             readyPlanInfoView,
-            myReadyStatusTitleLabel,
-            readyBaseView
+            myReadyStatusTitleLabel
         )
         
         contentView.addSubviews(
             baseStackView,
+            readyBaseView,
             ourReadyStatusBackView,
             ourReadyStatusLabel,
             ourReadyStatusCollectionView
@@ -127,8 +126,13 @@ class ReadyStatusView: BaseView {
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
+        readyBaseView.snp.makeConstraints {
+            $0.top.equalTo(baseStackView.snp.bottom).offset(13)
+            $0.horizontalEdges.equalToSuperview().inset(20)
+        }
+        
         ourReadyStatusBackView.snp.makeConstraints {
-            $0.top.equalTo(baseStackView.snp.bottom).offset(24)
+            $0.top.equalTo(readyBaseView.snp.bottom).offset(24)
             $0.horizontalEdges.bottom.equalToSuperview()
         }
         
