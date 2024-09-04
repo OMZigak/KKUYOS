@@ -17,7 +17,7 @@ class ParticipantCollectionViewCell: BaseCollectionViewCell {
     let profileImageView: UIImageView = UIImageView().then {
         $0.backgroundColor = .gray1
         $0.image = .imgProfile
-        $0.contentMode = .scaleAspectFit
+        $0.contentMode = .scaleAspectFill
         $0.layer.cornerRadius = Screen.height(64) / 2
         $0.clipsToBounds = true
     }

@@ -37,8 +37,6 @@ class PromiseInfoView: BaseView {
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout().then {
             $0.scrollDirection = .horizontal
-            $0.minimumInteritemSpacing = 12
-            $0.estimatedItemSize = .init(width: Screen.width(68), height: Screen.height(88))
     }).then {
         $0.backgroundColor = .clear
         $0.showsHorizontalScrollIndicator = false

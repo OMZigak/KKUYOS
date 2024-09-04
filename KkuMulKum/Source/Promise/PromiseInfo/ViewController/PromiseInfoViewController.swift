@@ -105,6 +105,7 @@ extension PromiseInfoViewController {
                 color: .gray3
             )
             
+            self.rootView.participantCollectionView.layoutIfNeeded()
             owner.rootView.participantCollectionView.reloadData()
         }
     }
@@ -180,21 +181,20 @@ extension PromiseInfoViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return (viewModel.participantsInfo.value?.count ?? 0)
+        guard let info = viewModel.participantsInfo.value else {
+            return 0
+        }
+        
+        return info.count
     }
-}
-
-
-// MARK: - UICollectionViewDelegateFlowLayout
-
-extension PromiseInfoViewController: UICollectionViewDelegateFlowLayout {
+    
     func collectionView(
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: ParticipantCollectionViewCell.reuseIdentifier,
-            for: indexPath) as? ParticipantCollectionViewCell 
+            for: indexPath) as? ParticipantCollectionViewCell
         else { return UICollectionViewCell() }
         
         guard let info = viewModel.participantsInfo.value?[indexPath.row] else {
@@ -214,3 +214,13 @@ extension PromiseInfoViewController: UICollectionViewDelegateFlowLayout {
         return cell
     }
 }
+
+
+// MARK: - UICollectionViewDelegateFlowLayout
+
+extension PromiseInfoViewController: UICollectionViewDelegateFlowLayout  {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: Screen.width(68), height: Screen.height(88))
+    }
+}
+
