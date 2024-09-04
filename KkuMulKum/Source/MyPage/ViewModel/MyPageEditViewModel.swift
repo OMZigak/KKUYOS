@@ -40,12 +40,10 @@ class MyPageEditViewModel: ViewModelType {
         let serverResponseRelay = PublishRelay<String?>()
         
         input.newProfileImage
-            .compactMap { $0?.jpegData(compressionQuality: 1.0) }
-            .bind(to: imageDataRelay)
-            .disposed(by: disposeBag)
-        
-        input.skipButtonTap
-            .map { _ in UIImage.imgProfile.jpegData(compressionQuality: 1.0) }
+            .compactMap { $0?.jpegData(compressionQuality: 0.8) }
+            .do(onNext: { data in
+                print("New profile image data size: \(data.count) bytes")
+            })
             .bind(to: imageDataRelay)
             .disposed(by: disposeBag)
         
@@ -64,11 +62,13 @@ class MyPageEditViewModel: ViewModelType {
             .withLatestFrom(imageDataRelay)
             .flatMapLatest { [weak self] imageData -> Observable<String> in
                 guard let self = self, let imageData = imageData else {
+                    print("No image data available for upload")
                     return .just("이미지 데이터가 없습니다.")
                 }
                 return Observable.create { observer in
                     Task {
                         do {
+                            print("Attempting to upload image data of size: \(imageData.count) bytes")
                             let _: EmptyModel = try await self.authService.performRequest(
                                 .updateProfileImage(
                                     image: imageData,
@@ -76,11 +76,13 @@ class MyPageEditViewModel: ViewModelType {
                                     mimeType: "image/jpeg"
                                 )
                             )
+                            print("Profile image upload successful")
                             self.profileImageUpdated.onNext(imageData.base64EncodedString())
                             observer.onNext("프로필 이미지가 성공적으로 업로드되었습니다.")
                             observer.onCompleted()
                         } catch {
                             let networkError = error as? NetworkError ?? .unknownError("알 수 없는 오류가 발생했습니다.")
+                            print("Profile image upload failed: \(networkError)")
                             observer.onNext(self.handleError(networkError))
                             observer.onCompleted()
                         }
@@ -97,8 +99,14 @@ class MyPageEditViewModel: ViewModelType {
                 return Observable.create { observer in
                     Task {
                         do {
-                            let _: EmptyModel = try await self.authService.performRequest(.updateProfileImage(image: UIImage.imgProfile.jpegData(compressionQuality: 1.0)!, fileName: "default_profile.jpg", mimeType: "image/jpeg"))
-                            // 성공 시 profileImageUpdated에 nil 전달 (기본 이미지로 설정됨을 의미)
+                            let defaultImageData = UIImage.imgProfile.jpegData(compressionQuality: 1.0) ?? Data()
+                            let _: EmptyModel = try await self.authService.performRequest(
+                                .updateProfileImage(
+                                    image: defaultImageData,
+                                    fileName: "default_profile.jpg",
+                                    mimeType: "image/jpeg"
+                                )
+                            )
                             self.profileImageUpdated.onNext(nil)
                             observer.onNext("프로필 이미지가 기본 이미지로 변경되었습니다.")
                             observer.onCompleted()
@@ -143,8 +151,14 @@ class MyPageEditViewModel: ViewModelType {
             return "네트워크 오류: \(error.localizedDescription)"
         case .decodingError:
             return "데이터 처리 중 오류가 발생했습니다."
-        default:
-            return "알 수 없는 오류가 발생했습니다."
+        case .unknownError(let message):
+            return "알 수 없는 오류가 발생했습니다: \(message)"
+        case .invalidImageFormat:
+            return "잘못된 이미지 형식입니다. 지원되는 형식의 이미지를 선택해주세요."
+        case .imageSizeExceeded:
+            return "이미지 크기가 허용 한도를 초과했습니다. 더 작은 이미지를 선택해주세요."
+        case .userNotFound:
+            return "사용자를 찾을 수 없습니다. 로그인 상태를 확인해주세요."
         }
     }
 }
