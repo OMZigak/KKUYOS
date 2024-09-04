@@ -164,9 +164,9 @@ extension ReadyStatusViewController {
                     "\(readyStartTime)에 준비하고,\n\(owner.viewModel.moveStartTime.value)에 이동을 시작해야 해요",
                     style: .body03
                 )
+                
                 owner.rootView.readyPlanInfoView.readyTimeLabel.setHighlightText(
-                    readyStartTime,
-                    owner.viewModel.moveStartTime.value,
+                    for: [readyStartTime, owner.viewModel.moveStartTime.value],
                     style: .body03,
                     color: .maincolor
                 )
@@ -181,9 +181,9 @@ extension ReadyStatusViewController {
                     "\(owner.viewModel.readyStartTime.value)에 준비하고,\n\(moveStartTime)에 이동을 시작해야 해요",
                     style: .body03
                 )
+                
                 owner.rootView.readyPlanInfoView.readyTimeLabel.setHighlightText(
-                    owner.viewModel.readyStartTime.value,
-                    moveStartTime,
+                    for: [owner.viewModel.readyStartTime.value, moveStartTime],
                     style: .body03,
                     color: .maincolor
                 )
