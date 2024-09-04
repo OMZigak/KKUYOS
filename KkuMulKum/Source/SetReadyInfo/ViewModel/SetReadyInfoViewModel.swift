@@ -22,6 +22,8 @@ final class SetReadyInfoViewModel {
     let moveMinute = ObservablePattern<String>("")
     let isSucceedToSave = ObservablePattern<Bool>(false)
     
+    let bufferTime: TimeInterval = 10 * 60
+    
     var readyTime: Int = 0
     var moveTime: Int = 0
     
@@ -142,8 +144,8 @@ final class SetReadyInfoViewModel {
         print("이동 시간: \(self.moveTime) 분")
         print("총 준비 시간: \(totalPrepTime / 60) 분")
         
-        let readyStartTime = promiseDate.addingTimeInterval(-TimeInterval(self.readyTime + self.moveTime) * 60)
-        let moveStartTime = promiseDate.addingTimeInterval(-TimeInterval(self.moveTime) * 60)
+        let readyStartTime = promiseDate.addingTimeInterval(-(totalPrepTime + bufferTime))
+        let moveStartTime = promiseDate.addingTimeInterval(-(TimeInterval(self.moveTime * 60) + bufferTime))
         
         print("준비 시작 시간: \(timeFormatter.string(from: readyStartTime))")
         print("이동 시작 시간: \(timeFormatter.string(from: moveStartTime))")

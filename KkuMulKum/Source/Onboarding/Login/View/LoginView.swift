@@ -29,16 +29,8 @@ class LoginView: BaseView {
         $0.isUserInteractionEnabled = true
     }
     
-    // TODO: 자동로그인 구현 후 삭제예정
-    let testLoginButton = UIButton().then {
-            $0.setTitle("Test Login", for: .normal)
-            $0.setTitleColor(.white, for: .normal)
-            $0.backgroundColor = .systemBlue
-            $0.layer.cornerRadius = 10
-        }
-    
     override func setupView() {
-        addSubviews(backgroundImageView, appleLoginImageView, kakaoLoginImageView, testLoginButton)
+        addSubviews(backgroundImageView, appleLoginImageView, kakaoLoginImageView)
     }
     
     override func setupAutoLayout() {
@@ -59,13 +51,5 @@ class LoginView: BaseView {
             $0.horizontalEdges.equalToSuperview().inset(14)
             $0.height.equalTo(Screen.height(54))
         }
-        
-        // TODO: 자동로그인 구현 후 삭제예정
-        testLoginButton.snp.makeConstraints {
-                  $0.centerX.equalToSuperview()
-                  $0.top.equalTo(appleLoginImageView.snp.bottom).offset(20)
-                  $0.width.equalTo(200)
-                  $0.height.equalTo(50)
-              }
     }
 }
