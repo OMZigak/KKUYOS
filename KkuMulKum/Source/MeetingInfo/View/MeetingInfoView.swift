@@ -57,12 +57,6 @@ final class MeetingInfoView: BaseView {
         $0.setText("모임 참여 인원 0명", style: .body01, color: .gray8)
     }
     
-    private let arrowButton = UIButton().then {
-        let image = UIImage(resource: .iconRight).withTintColor(.gray4)
-        $0.setImage(image, for: .normal)
-        $0.contentMode = .scaleAspectFill
-    }
-    
     private let createPromiseButton = UIButton(backgroundColor: .maincolor).then {
         $0.setTitle("+   약속추가", style: .body01, color: .white)
         $0.layer.cornerRadius = Screen.height(52) / 2
@@ -102,7 +96,7 @@ final class MeetingInfoView: BaseView {
         )
         emptyDescriptionView.addSubviews(emptyDescriptionLabel)
         addSubviews(
-            infoBanner, memberCountLabel, arrowButton, memberListView, createPromiseButton,
+            infoBanner, memberCountLabel, memberListView, createPromiseButton,
             grayBackgroundView
         )
         bringSubviewToFront(createPromiseButton)
@@ -119,11 +113,6 @@ final class MeetingInfoView: BaseView {
         memberCountLabel.snp.makeConstraints {
             $0.top.equalTo(infoBanner.snp.bottom).offset(20)
             $0.leading.equalTo(infoBanner)
-        }
-        
-        arrowButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview().offset(-20)
-            $0.centerY.equalTo(memberCountLabel)
         }
         
         memberListView.snp.makeConstraints {

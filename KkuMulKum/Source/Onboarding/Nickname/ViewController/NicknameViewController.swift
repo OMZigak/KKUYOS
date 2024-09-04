@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 
 class NicknameViewController: BaseViewController {
-    
+
     private let nicknameView = NicknameView()
     private let viewModel: NicknameViewModel
     private let disposeBag = DisposeBag()
@@ -35,6 +35,8 @@ class NicknameViewController: BaseViewController {
         setupTextField()
         setupTapGesture()
         setupNavigationBarTitle(with: "닉네임 설정")
+        navigationItem.leftBarButtonItem = nil
+
     }
     
     private func setupBindings() {
@@ -136,6 +138,7 @@ class NicknameViewController: BaseViewController {
             .disposed(by: disposeBag)
         view.addGestureRecognizer(tapGesture)
     }
+    
 }
 
 extension NicknameViewController: UITextFieldDelegate {

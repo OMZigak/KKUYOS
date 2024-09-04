@@ -6,6 +6,7 @@
 //
 
 import UIKit
+
 import KakaoSDKCommon
 import KakaoSDKAuth
 import Firebase
@@ -19,30 +20,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
         
-        UNUserNotificationCenter.current().delegate = LocalNotificationManager.shared
-
-        // KakaoSDK 초기화 과정에서 앱 키를 동적으로 불러오기
-        if let kakaoAppKey = fetchKakaoAppKeyFromPrivacyInfo() {
-            KakaoSDK.initSDK(appKey: kakaoAppKey)
+        // KakaoSDK 초기화
+        if let kakaoAppKey = Bundle.main.privacyInfo?["NATIVE_APP_KEY"] as? String {
+            KakaoSDK.initSDK(appKey: kakaoAppKey, loggingEnable: true)
             print("Kakao SDK initialized with app key: \(kakaoAppKey)")
         } else {
             print("Failed to load KAKAO_APP_KEY from PrivacyInfo.plist")
         }
+        
         setupFirebase(application: application)
         
         return true
     }
-    
-    func fetchKakaoAppKeyFromPrivacyInfo() -> String? {
-        guard let path = Bundle.main.path(forResource: "PrivacyInfo", ofType: "plist"),
-              let dict = NSDictionary(contentsOfFile: path) as? [String: AnyObject],
-              let appKey = dict["NATIVE_APP_KEY"] as? String else {
-            return nil
-        }
-        return appKey
-    }
-    
-    // 카카오 로그인
+
+    // 카카오 로그인 URL 처리 (중복 제거)
     func application(
         _ app: UIApplication,
         open url: URL,
@@ -117,7 +108,7 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         Messaging.messaging().apnsToken = deviceToken
         
-        Messaging.messaging().token { [weak self] token, error in
+        Messaging.messaging().token { token, error in
             if let error = error {
                 print("Error fetching FCM registration token: \(error)")
             } else if let token = token {

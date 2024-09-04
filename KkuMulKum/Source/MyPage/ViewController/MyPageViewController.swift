@@ -128,9 +128,10 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     
     private func updateUI(with userInfo: LoginUserModel?) {
         guard let userInfo = userInfo else { return }
+        let levelText = viewModel.getLevelText(for: userInfo.level)
         
-        rootView.contentView.nameLabel.text = userInfo.name ?? "꾸물리안 님"
-        rootView.contentView.levelLabel.setText("Lv. \(userInfo.level) 지각대장 꾸물이", style: .body05, color: .white)
+        rootView.contentView.nameLabel.text = (userInfo.name.map { $0 + " 님" }) ?? "꾸물리안 님"
+        rootView.contentView.levelLabel.setText("Lv. \(userInfo.level) \(levelText)", style: .body05, color: .white)
         rootView.contentView.levelLabel.setHighlightText("Lv. \(userInfo.level)", style: .body05, color: .lightGreen)
         
         updateProfileImage(with: userInfo.profileImageURL)
@@ -215,8 +216,10 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
                    KingfisherManager.shared.cache.clearDiskCache()
                })
                .disposed(by: disposeBag)
-           
-           navigationController?.pushViewController(editProfileViewController, animated: true)
+        
+        editProfileViewController.hidesBottomBarWhenPushed = true
+        
+        navigationController?.pushViewController(editProfileViewController, animated: true)
        }
     
     private func pushAskViewController() {

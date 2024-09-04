@@ -441,7 +441,7 @@ private extension HomeViewController {
         setProgressButton(rootView.todayPromiseView.moveButton)
         setEnableButton(rootView.todayPromiseView.arriveButton)
         
-        rootView.todayPromiseView.prepareButton.setTitle("준비 중", style: .body05, color: .white)
+        rootView.todayPromiseView.prepareButton.setTitle("준비 완료", style: .body05, color: .white)
         rootView.todayPromiseView.moveButton.setTitle("이동 중", style: .body05, color: .maincolor)
         rootView.todayPromiseView.arriveButton.setTitle("도착 완료", style: .body05, color: .maincolor)
         
@@ -487,8 +487,8 @@ private extension HomeViewController {
         setCompleteButton(rootView.todayPromiseView.moveButton)
         setCompleteButton(rootView.todayPromiseView.arriveButton)
         
-        rootView.todayPromiseView.prepareButton.setTitle("준비 중", style: .body05, color: .white)
-        rootView.todayPromiseView.moveButton.setTitle("이동 중", style: .body05, color: .white)
+        rootView.todayPromiseView.prepareButton.setTitle("준비 완료", style: .body05, color: .white)
+        rootView.todayPromiseView.moveButton.setTitle("이동 완료", style: .body05, color: .white)
         rootView.todayPromiseView.arriveButton.setTitle("도착 완료", style: .body05, color: .white)
         
         rootView.todayPromiseView.prepareButton.isEnabled = false
