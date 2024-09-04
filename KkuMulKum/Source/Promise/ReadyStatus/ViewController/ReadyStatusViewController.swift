@@ -204,10 +204,8 @@ extension ReadyStatusViewController {
             }
         }
         
-        viewModel.isLate.bind(with: self) { owner, status in
-            DispatchQueue.main.async {
-                self.updatePopUpImageView(isLate: !status)
-            }
+        viewModel.isLate.bindOnMain(with: self) { owner, status in
+            self.updatePopUpImageView()
         }
     }
     
@@ -218,8 +216,10 @@ extension ReadyStatusViewController {
     }
     
     /// 준비 시작이나 이동 시작 시간이 늦었을 때 팝업 표시 여부 변경
-    func updatePopUpImageView(isLate: Bool) {
-        rootView.popUpImageView.isHidden = !isLate
+    func updatePopUpImageView() {
+        rootView.popUpImageView.isHidden = !viewModel.isLate.value
+        
+        rootView.readyBaseView.layoutIfNeeded()
     }
     
     /// 준비 상태에 따라 버튼 상태 변경

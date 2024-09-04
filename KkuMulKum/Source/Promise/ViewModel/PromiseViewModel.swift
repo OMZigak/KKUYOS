@@ -7,6 +7,11 @@
 
 import Foundation
 
+enum TappedButton {
+    case ready
+    case move
+}
+
 class PromiseViewModel {
     
     
@@ -102,19 +107,49 @@ extension PromiseViewModel {
     }
     
     /// 꾸물거릴 시간이 없어요 팝업 표시를 위해 지각 여부를 판단하는 함수
-    func checkLate(settingTime: String, arriveTime: String) {
-        dateFormatter.dateFormat = "HH시 mm분"
-        
-        let readyStartDate = dateFormatter.date(from: settingTime)
-        
-        dateFormatter.dateFormat = "a h:mm"
-        
-        let preparationStartDate = dateFormatter.date(from: arriveTime)
-        
-        if let readyStartDate = readyStartDate, let preparationStartDate = preparationStartDate {
-            self.isLate.value = preparationStartDate.compare(readyStartDate) == .orderedDescending
+    func checkLate(tappedButton: TappedButton) {
+        fetchMyReadyStatus()
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH시 mm분"
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+
+        switch tappedButton {
+        case .move:
+            if let moveTime = formatter.date(from: moveStartTime.value) {
+                let calendar = Calendar.current
+                
+                let moveTimeComponents = calendar.dateComponents([.hour, .minute], from: moveTime)
+                let currentTimeComponents = calendar.dateComponents([.hour, .minute], from: Date())
+                
+                if let moveHour = moveTimeComponents.hour, let moveMinute = moveTimeComponents.minute,
+                   let currentHour = currentTimeComponents.hour, let currentMinute = currentTimeComponents.minute {
+                    if currentHour > moveHour || (currentHour == moveHour && currentMinute > moveMinute) {
+                        self.isLate.value = true
+                    } else {
+                        self.isLate.value = false
+                    }
+                }
+            }
+        case .ready:
+            if let readyTime = formatter.date(from: readyStartTime.value) {
+                let calendar = Calendar.current
+                
+                let readyTimeComponents = calendar.dateComponents([.hour, .minute], from: readyTime)
+                let currentTimeComponents = calendar.dateComponents([.hour, .minute], from: Date())
+                
+                if let readyHour = readyTimeComponents.hour, let readyMinute = readyTimeComponents.minute,
+                   let currentHour = currentTimeComponents.hour, let currentMinute = currentTimeComponents.minute {
+                    if currentHour > readyHour || (currentHour == readyHour && currentMinute > readyMinute) {
+                        self.isLate.value = true
+                    } else {
+                        self.isLate.value = false
+                    }
+                }
+            }
         }
     }
+
     
     func updateMyReadyProgressStatus() {
         myReadyProgressStatus.value = myReadyStatus.value?.preparationStartAt == nil ? .none
@@ -245,10 +280,7 @@ extension PromiseViewModel {
                 
                 myReadyProgressStatus.value = .ready
                 
-                self.checkLate(
-                    settingTime: self.moveStartTime.value,
-                    arriveTime: self.myReadyStatus.value?.departureAt ?? ""
-                )
+                self.checkLate(tappedButton: .ready)
             }
         }
     }
@@ -269,10 +301,7 @@ extension PromiseViewModel {
                 
                 myReadyProgressStatus.value = .move
                 
-                self.checkLate(
-                    settingTime: self.moveDuration.value,
-                    arriveTime: self.myReadyStatus.value?.preparationStartAt ?? ""
-                )
+                self.checkLate(tappedButton: .move)
             }
         }
     }

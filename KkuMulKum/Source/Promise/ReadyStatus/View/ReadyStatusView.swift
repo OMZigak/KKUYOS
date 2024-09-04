@@ -31,7 +31,6 @@ class ReadyStatusView: BaseView {
     
     let popUpImageView: UIImageView = UIImageView(image: .imgTextPopup).then {
         $0.contentMode = .scaleAspectFit
-        $0.isHidden = true
     }
     
     let ourReadyStatusCollectionView: UICollectionView = UICollectionView(
@@ -64,7 +63,7 @@ class ReadyStatusView: BaseView {
         $0.setText("나의 준비 현황", style: .body01, color: .gray8)
     }
     
-    private let readyBaseView: UIStackView = UIStackView(axis: .vertical).then {
+    let readyBaseView: UIStackView = UIStackView(axis: .vertical).then {
         $0.spacing = 4
     }
     
