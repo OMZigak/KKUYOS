@@ -49,12 +49,12 @@ class CreateMeetingView: BaseView {
     
     override func setupAutoLayout() {
         mainTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(safeAreaLayoutGuide).offset(32)
+            $0.top.equalTo(safeAreaLayoutGuide).offset(24)
             $0.leading.equalToSuperview().offset(20)
         }
         
         nameTextField.snp.makeConstraints {
-            $0.top.equalTo(mainTitleLabel.snp.bottom).offset(24)
+            $0.top.equalTo(mainTitleLabel.snp.bottom).offset(16)
             $0.width.equalTo(CustomTextField.defaultWidth)
             $0.height.equalTo(CustomTextField.defaultHeight)
             $0.leading.equalTo(mainTitleLabel)

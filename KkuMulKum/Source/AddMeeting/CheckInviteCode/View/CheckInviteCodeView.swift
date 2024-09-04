@@ -45,12 +45,12 @@ class CheckInviteCodeView: BaseView {
         let safeArea = safeAreaLayoutGuide
         
         checkInviteLabel.snp.makeConstraints {
-            $0.top.equalTo(safeArea).offset(32)
+            $0.top.equalTo(safeArea).offset(24)
             $0.leading.equalToSuperview().offset(20)
         }
         
         enterInviteCodeView.snp.makeConstraints {
-            $0.top.equalTo(checkInviteLabel.snp.bottom).offset(24)
+            $0.top.equalTo(checkInviteLabel.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
