@@ -221,6 +221,7 @@ extension PromiseViewModel {
                 else {
                     return
                 }
+                
                 myReadyStatus.value = responseBody?.data
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
@@ -241,6 +242,8 @@ extension PromiseViewModel {
                 else {
                     return
                 }
+                
+                myReadyProgressStatus.value = .ready
                 
                 self.checkLate(
                     settingTime: self.moveStartTime.value,
@@ -264,6 +267,8 @@ extension PromiseViewModel {
                     return
                 }
                 
+                myReadyProgressStatus.value = .move
+                
                 self.checkLate(
                     settingTime: self.moveDuration.value,
                     arriveTime: self.myReadyStatus.value?.preparationStartAt ?? ""
@@ -285,6 +290,8 @@ extension PromiseViewModel {
                 else {
                     return
                 }
+                
+                myReadyProgressStatus.value = .done
             }
         }
     }
