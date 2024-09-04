@@ -41,10 +41,6 @@ class TardyViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        viewModel.fetchPromiseParticipantList()
-        viewModel.fetchPromiseInfo()
-        viewModel.fetchTardyInfo()
     }
     
     
