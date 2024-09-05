@@ -15,6 +15,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     private let rootView = MyPageView()
     private let viewModel = MyPageViewModel()
     private let disposeBag = DisposeBag()
+    private var needsUserInfoRefresh = true
     
     override func loadView() {
         view = rootView
@@ -22,7 +23,10 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.fetchUserInfo()
+        if needsUserInfoRefresh {
+            viewModel.fetchUserInfo()
+            needsUserInfoRefresh = false
+        }
     }
     
     override func viewDidLoad() {
@@ -30,7 +34,6 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         view.backgroundColor = .green1
         
         bindViewModel()
-        viewModel.fetchUserInfo()
     }
     
     override func setupView() {
@@ -105,18 +108,18 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
             .disposed(by: disposeBag)
         
         viewModel.logoutResult
-                 .observe(on: MainScheduler.instance)
-                 .subscribe(onNext: { [weak self] result in
-                     switch result {
-                     case .success:
-                         print("Logout successful")
-                         self?.navigateToLoginScreen()
-                     case .failure(let error):
-                         print("Logout failed: \(error)")
-                     }
-                 })
-                 .disposed(by: disposeBag)
-         
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] result in
+                switch result {
+                case .success:
+                    print("Logout successful")
+                    self?.navigateToLoginScreen()
+                case .failure(let error):
+                    print("Logout failed: \(error)")
+                }
+            })
+            .disposed(by: disposeBag)
+        
         
         viewModel.userInfo
             .observe(on: MainScheduler.instance)
@@ -138,31 +141,31 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     }
     
     private func updateProfileImage(with urlString: String?) {
-            print("Attempting to update profile image with URL: \(urlString ?? "nil")")
-            if let urlString = urlString, let url = URL(string: urlString) {
-                rootView.contentView.profileImageView.kf.setImage(
-                    with: url,
-                    placeholder: UIImage.imgProfile,
-                    options: [
-                        .transition(.fade(0.2)),
-                        .forceRefresh,
-                        .cacheOriginalImage
-                    ],
-                    completionHandler: { result in
-                        switch result {
-                        case .success(let value):
-                            print("Profile image loaded successfully. Size: \(value.image.size)")
-                        case .failure(let error):
-                            print("Failed to load profile image: \(error.localizedDescription)")
-                            self.rootView.contentView.profileImageView.image = UIImage.imgProfile
-                        }
+        print("Attempting to update profile image with URL: \(urlString ?? "nil")")
+        if let urlString = urlString, let url = URL(string: urlString) {
+            rootView.contentView.profileImageView.kf.setImage(
+                with: url,
+                placeholder: UIImage.imgProfile,
+                options: [
+                    .transition(.fade(0.2)),
+                    .forceRefresh,
+                    .cacheOriginalImage
+                ],
+                completionHandler: { result in
+                    switch result {
+                    case .success(let value):
+                        print("Profile image loaded successfully. Size: \(value.image.size)")
+                    case .failure(let error):
+                        print("Failed to load profile image: \(error.localizedDescription)")
+                        self.rootView.contentView.profileImageView.image = UIImage.imgProfile
                     }
-                )
-            } else {
-                print("Invalid URL or nil. Setting default profile image.")
-                rootView.contentView.profileImageView.image = UIImage.imgProfile
-            }
+                }
+            )
+        } else {
+            print("Invalid URL or nil. Setting default profile image.")
+            rootView.contentView.profileImageView.image = UIImage.imgProfile
         }
+    }
     
     private func loadImage(from urlString: String, into imageView: UIImageView) {
         guard let url = URL(string: urlString) else {
@@ -200,34 +203,23 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     }
     
     private func pushEditProfileViewController() {
-            let authService = AuthService()
-            let editProfileViewModel = MyPageEditViewModel(authService: authService)
-            let editProfileViewController = MyPageEditViewController(viewModel: editProfileViewModel)
-            
-            editProfileViewModel.profileImageUpdated
-                .observe(on: MainScheduler.instance)
-                .subscribe(onNext: { [weak self] imageDataString in
-                    print("Profile image update received. Data string length: \(imageDataString?.count ?? 0)")
-                    if let imageDataString = imageDataString,
-                       let imageData = Data(base64Encoded: imageDataString),
-                       let image = UIImage(data: imageData) {
-                        print("Successfully created UIImage from updated profile data")
-                        self?.rootView.contentView.profileImageView.image = image
-                        // Force refresh Kingfisher cache
-                        KingfisherManager.shared.cache.removeImage(forKey: self?.viewModel.userInfo.value?.profileImageURL ?? "")
-                    } else {
-                        print("Failed to create UIImage from updated profile data. Setting default image.")
-                        self?.rootView.contentView.profileImageView.image = UIImage.imgProfile
-                    }
-                    // Refresh user info to get the updated profile image URL
-                    self?.viewModel.fetchUserInfo()
-                })
-                .disposed(by: disposeBag)
-            
-            editProfileViewController.hidesBottomBarWhenPushed = true
-            
-            navigationController?.pushViewController(editProfileViewController, animated: true)
-        }
+        let editViewModel = MyPageEditViewModel(authService: AuthService())
+        let editVC = MyPageEditViewController(viewModel: editViewModel)
+        
+        editViewModel.profileImageUpdated
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] imageDataString in
+                if let imageDataString = imageDataString,
+                   let imageData = Data(base64Encoded: imageDataString),
+                   let image = UIImage(data: imageData) {
+                    self?.rootView.contentView.profileImageView.image = image
+                }
+                self?.needsUserInfoRefresh = true
+            })
+            .disposed(by: disposeBag)
+        
+        navigationController?.pushViewController(editVC, animated: true)
+    }
     
     private func pushAskViewController() {
         let askViewController = MyPageAskViewController(viewModel: self.viewModel)
@@ -240,12 +232,12 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     }
     
     private func navigateToLoginScreen() {
-            let loginViewModel = LoginViewModel()
-            let loginViewController = LoginViewController(viewModel: loginViewModel)
-            let navigationController = UINavigationController(rootViewController: loginViewController)
-            navigationController.modalPresentationStyle = .fullScreen
-            self.view.window?.rootViewController = navigationController
-            self.view.window?.makeKeyAndVisible()
+        let loginViewModel = LoginViewModel()
+        let loginViewController = LoginViewController(viewModel: loginViewModel)
+        let navigationController = UINavigationController(rootViewController: loginViewController)
+        navigationController.modalPresentationStyle = .fullScreen
+        self.view.window?.rootViewController = navigationController
+        self.view.window?.makeKeyAndVisible()
     }
     
     func actionButtonDidTap(for kind: ActionSheetKind) {

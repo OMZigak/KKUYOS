@@ -16,6 +16,7 @@ class MyPageEditViewModel: ViewModelType {
     private let userInfo = BehaviorRelay<LoginUserModel?>(value: nil)
     let profileImageUpdated = PublishSubject<String?>()
     
+    
     struct Input {
         let profileImageTap: Observable<Void>
         let confirmButtonTap: Observable<Void>
@@ -128,6 +129,32 @@ class MyPageEditViewModel: ViewModelType {
             serverResponse: serverResponseRelay.asDriver(onErrorJustReturn: nil),
             userInfo: userInfo.asDriver()
         )
+    }
+    
+    func updateProfileImage(_ image: UIImage) {
+        guard let imageData = image.jpegData(compressionQuality: 0.8) else {
+            print("Failed to convert image to data")
+            return
+        }
+
+        Task {
+            do {
+                let _: EmptyModel = try await self.authService.performRequest(
+                    .updateProfileImage(
+                        image: imageData,
+                        fileName: "profile_image.jpg",
+                        mimeType: "image/jpeg"
+                    )
+                )
+                DispatchQueue.main.async { [weak self] in
+                    self?.profileImageUpdated.onNext(imageData.base64EncodedString())
+                }
+            } catch {
+                let networkError = error as? NetworkError ?? .unknownError("오류 발생.")
+                print("Profile image upload failed: \(networkError)")
+                    self.profileImageUpdated.onNext(nil)
+            }
+        }
     }
     
     func fetchUserInfo() {
