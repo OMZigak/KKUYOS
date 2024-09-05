@@ -101,6 +101,7 @@ class MeetingListViewController: BaseViewController {
                     style: .head01,
                     color: .gray8
                 )
+                self.rootView.tableView.reloadData()
                 
                 if listData?.count == 0 {
                     self.rootView.emptyLabel.isHidden = false
@@ -108,7 +109,6 @@ class MeetingListViewController: BaseViewController {
                 } else {
                     self.rootView.emptyLabel.isHidden = true
                     self.rootView.emptyCharacter.isHidden = true
-                    self.rootView.tableView.reloadData()
                 }
             }
         }
