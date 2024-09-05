@@ -250,7 +250,7 @@ private extension HomeViewController {
                 self.rootView.levelLabel.setText(
                     "Lv.\(data.level)  \(self.viewModel.levelName.value)",
                     style: .caption01,
-                    color: .gray6
+                    color: .gray8
                 )
                 self.rootView.levelLabel.setHighlightText(
                     "Lv.\(data.level)",
