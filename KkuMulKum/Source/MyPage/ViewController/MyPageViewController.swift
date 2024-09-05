@@ -140,12 +140,16 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         updateProfileImage(with: userInfo.profileImageURL)
     }
     
-    private func updateProfileImage(with urlString: String?) {
+    private func updateProfileImage(with urlString: String?, localImage: UIImage? = nil) {
         print("Attempting to update profile image with URL: \(urlString ?? "nil")")
+        if let localImage = localImage {
+            rootView.contentView.profileImageView.image = localImage
+        }
+        
         if let urlString = urlString, let url = URL(string: urlString) {
             rootView.contentView.profileImageView.kf.setImage(
                 with: url,
-                placeholder: UIImage.imgProfile,
+                placeholder: localImage ?? UIImage.imgProfile,
                 options: [
                     .transition(.fade(0.2)),
                     .forceRefresh,
@@ -154,16 +158,18 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
                 completionHandler: { result in
                     switch result {
                     case .success(let value):
-                        print("Profile image loaded successfully. Size: \(value.image.size)")
+                        print("Profile image loaded successfully from server. Size: \(value.image.size)")
                     case .failure(let error):
-                        print("Failed to load profile image: \(error.localizedDescription)")
-                        self.rootView.contentView.profileImageView.image = UIImage.imgProfile
+                        print("Failed to load profile image from server: \(error.localizedDescription)")
+                        if self.rootView.contentView.profileImageView.image == nil {
+                            self.rootView.contentView.profileImageView.image = UIImage.imgProfile
+                        }
                     }
                 }
             )
         } else {
-            print("Invalid URL or nil. Setting default profile image.")
-            rootView.contentView.profileImageView.image = UIImage.imgProfile
+            print("Invalid URL or nil. Using local image or default profile image.")
+            rootView.contentView.profileImageView.image = localImage ?? UIImage.imgProfile
         }
     }
     
@@ -212,7 +218,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
                 if let imageDataString = imageDataString,
                    let imageData = Data(base64Encoded: imageDataString),
                    let image = UIImage(data: imageData) {
-                    self?.rootView.contentView.profileImageView.image = image
+                    self?.updateProfileImage(with: nil, localImage: image)
                 }
                 self?.needsUserInfoRefresh = true
             })
