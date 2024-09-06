@@ -40,7 +40,7 @@ final class SelectPenaltyViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavigationBarTitle(with: "약속 추가하기")
+        setupNavigationBarTitle(with: "약속 추가하기", isBorderHidden: true)
         setupNavigationBarBackButton()
         
         bindViewModel()
