@@ -96,7 +96,7 @@ private extension MeetingInfoViewController {
         output.info
             .drive(with: self) { owner, meetingInfo in
                 guard let info = meetingInfo else { return }
-                owner.title = info.name
+                owner.setupNavigationBarTitle(with: info.name)
                 owner.rootView.configureInfo(
                     createdAt: info.createdAt,
                     metCount: info.metCount

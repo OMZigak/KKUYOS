@@ -84,7 +84,7 @@ class LoginViewController: BaseViewController {
             let mainTabBarController = MainTabBarController()
             let navigationController = UINavigationController(
                 rootViewController: mainTabBarController,
-                isBorderNeeded: true
+                isBorderNeeded: false
             )
             navigationController.isNavigationBarHidden = true
             navigationController.modalPresentationStyle = .fullScreen
@@ -102,7 +102,7 @@ class LoginViewController: BaseViewController {
             } else {
                 let navigationController = UINavigationController(
                     rootViewController: nicknameViewController,
-                    isBorderNeeded: true
+                    isBorderNeeded: false
                 )
                 navigationController.modalPresentationStyle = .fullScreen
                 navigationController.modalTransitionStyle = .crossDissolve
