@@ -15,6 +15,8 @@ final class MeetingListView: BaseView {
     
     // MARK: - Property
     
+    private let topBackgroundView = UIView(backgroundColor: .white)
+    
     private let header = UIView().then {
         $0.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: Screen.height(174))
     }
@@ -68,15 +70,22 @@ final class MeetingListView: BaseView {
     
     override func setupView() {
         self.backgroundColor = .gray0
-        addSubviews(tableView, emptyCharacter, emptyLabel)
+        addSubviews(topBackgroundView, tableView, emptyCharacter, emptyLabel)
         header.addSubviews(infoLabel, addButtonView, addInfoView, addButton)
         addInfoView.addArrangedSubviews(addIconImageView, addInfoLabel)
     }
     
     override func setupAutoLayout() {
+        topBackgroundView.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.horizontalEdges.equalToSuperview()
+            $0.bottom.equalTo(safeAreaLayoutGuide.snp.top)
+        }
+        
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.bottom.equalToSuperview()
+            $0.top.equalTo(safeAreaLayoutGuide.snp.top)
+            $0.bottom.equalToSuperview()
         }
         
         infoLabel.snp.makeConstraints {
