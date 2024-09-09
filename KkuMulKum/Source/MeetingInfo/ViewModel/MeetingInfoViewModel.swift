@@ -15,13 +15,12 @@ final class MeetingInfoViewModel {
     
     var meetingName: String { infoRelay.value?.name ?? "" }
     var meetingInvitationCode: String? { infoRelay.value?.invitationCode }
-    var meetingPromises: [MeetingPromise] { meetingPromisesModelRelay.value?.promises ?? [] }
     
     private let service: MeetingInfoServiceProtocol
     private let infoRelay = BehaviorRelay<MeetingInfoModel?>(value: nil)
     private let meetingMemberModelRelay = BehaviorRelay<MeetingMembersModel?>(value: nil)
     private let meetingPromisesModelRelay = BehaviorRelay<MeetingPromisesModel?>(value: nil)
-    private let partipatedPromisesModelRelay = BehaviorRelay<MeetingPromisesModel?>(value: nil)
+    private let participatedPromisesModelRelay = BehaviorRelay<MeetingPromisesModel?>(value: nil)
     
     init(meetingID: Int, service: MeetingInfoServiceProtocol) {
         self.meetingID = meetingID
@@ -109,7 +108,7 @@ extension MeetingInfoViewModel: ViewModelType {
                     return Observable.just([])
                 }
                 
-                let source = index == 0 ? self.partipatedPromisesModelRelay : self.meetingPromisesModelRelay
+                let source = index == 0 ? self.participatedPromisesModelRelay : self.meetingPromisesModelRelay
                 return source
                     .compactMap { $0?.promises }
                     .map { self.convertToMeetingInfoPromiseModels(from: $0) }
@@ -135,7 +134,7 @@ extension MeetingInfoViewModel: ViewModelType {
             }
             .map { [weak self] selectedIndex, selectedItem in
                 let promises = selectedIndex == 0
-                ? self?.partipatedPromisesModelRelay.value?.promises
+                ? self?.participatedPromisesModelRelay.value?.promises
                 : self?.meetingPromisesModelRelay.value?.promises
                 
                 return promises?[selectedItem].promiseID
