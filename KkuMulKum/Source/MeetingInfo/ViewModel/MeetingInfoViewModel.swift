@@ -123,7 +123,7 @@ extension MeetingInfoViewModel: ViewModelType {
                     return Driver.just(false)
                 }
                 
-                return self.service.exitMeeting(with: self.meetingID)
+                return service.exitMeeting(with: meetingID)
                     .map { $0.success }
                     .asDriver(onErrorJustReturn: false)
             }
