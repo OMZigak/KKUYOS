@@ -57,11 +57,22 @@ extension MeetingService: MeetingInfoServiceProtocol {
     func fetchMeetingPromiseList(
         with meetingID: Int,
         isParticipant: Bool?
-    ) async throws -> ResponseBodyDTO<MeetingPromisesModel>? {
-        guard let isParticipant else {
-            return try await request(with: .fetchMeetingPromiseList(meetingID: meetingID))
+    ) -> Single<ResponseBodyDTO<MeetingPromisesModel>> {
+        if let isParticipant {
+            return provider.rx.request(.fetchParticipatedPromiseList(meetingID: meetingID, isParticipant: isParticipant))
+                .map(ResponseBodyDTO<MeetingPromisesModel>.self)
+                .catch { error in
+                    print(">>> 에러 발생: \(error.localizedDescription) : \(#function) : \(Self.self)")
+                    return .error(error)
+                }
         }
-        return try await request(with: .fetchParticipatedPromiseList(meetingID: meetingID, isParticipant: isParticipant))
+        
+        return provider.rx.request(.fetchMeetingPromiseList(meetingID: meetingID))
+            .map(ResponseBodyDTO<MeetingPromisesModel>.self)
+            .catch { error in
+                print(">>> 에러 발생: \(error.localizedDescription) : \(#function) : \(Self.self)")
+                return .error(error)
+            }
     }
     
     func exitMeeting(with meetingID: Int) -> Single<ResponseBodyDTO<EmptyModel>> {
@@ -187,7 +198,7 @@ final class MockMeetingInfoService: MeetingInfoServiceProtocol {
     func fetchMeetingPromiseList(
         with meetingID: Int,
         isParticipant: Bool?
-    ) async throws -> ResponseBodyDTO<MeetingPromisesModel>? {
+    ) -> Single<ResponseBodyDTO<MeetingPromisesModel>> {
         let mockData = MeetingPromisesModel(
             promises: [
                 MeetingPromise(promiseID: 1,name: "꾸물 리프레시 데이",dDay: 0,time: "PM 2:00",placeName: "DMC역"),
@@ -208,7 +219,7 @@ final class MockMeetingInfoService: MeetingInfoServiceProtocol {
             ]
         )
         
-        return ResponseBodyDTO(success: true, data: mockData, error: nil)
+        return .just(ResponseBodyDTO(success: true, data: mockData, error: nil))
     }
     
     func exitMeeting(with meetingID: Int) -> Single<ResponseBodyDTO<EmptyModel>> {
