@@ -44,6 +44,13 @@ extension BaseViewController {
             .font: UIFont.pretendard(.body03)
         ]
         
+        let barAppearance = UINavigationBarAppearance()
+        barAppearance.backgroundColor = .white
+        barAppearance.shadowColor = nil
+        
+        navigationController?.navigationBar.standardAppearance = barAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = barAppearance
+        
         if !isBorderHidden {
             addBorder()
         }
