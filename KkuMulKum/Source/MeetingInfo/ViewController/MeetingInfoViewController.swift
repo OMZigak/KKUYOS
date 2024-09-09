@@ -223,7 +223,7 @@ extension MeetingInfoViewController: CustomActionSheetDelegate {
 // MARK: - MeetingMemberCellDelegate
 
 extension MeetingInfoViewController: MeetingMemberCellDelegate {
-    func profileImageButtonDidTap() {
+    func profileImageViewDidTap() {
         guard let code = viewModel.meetingInvitationCode else { return }
         
         let viewController = InvitationCodePopUpViewController(
