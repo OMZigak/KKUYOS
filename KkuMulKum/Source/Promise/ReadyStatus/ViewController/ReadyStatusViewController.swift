@@ -99,6 +99,7 @@ extension ReadyStatusViewController {
         viewModel.promiseInfo.bindOnMain(with: self) { owner, model in
             owner.rootView.myReadyStatusProgressView.isUserInteractionEnabled = (model?.isParticipant ?? false)
         }
+        
         viewModel.myReadyStatus.bind(with: self) {
             owner,
             model in
@@ -192,6 +193,8 @@ extension ReadyStatusViewController {
         
         viewModel.myReadyProgressStatus.bindOnMain(with: self) { owner, status in
             owner.updateReadyStartButton()
+            
+            self.rootView.ourReadyStatusCollectionView.reloadData()
         }
         
         viewModel.participantsInfo.bindOnMain(with: self) { owner, participants in
@@ -511,15 +514,15 @@ extension ReadyStatusViewController: UICollectionViewDataSource {
             cell.profileImageView.kf.setImage(with: imageURL, placeholder: UIImage.imgProfile)
         }
         
-        switch viewModel.participantsInfo.value?[indexPath.row].state {
-        case "도착":
-            cell.readyStatusButton.setupButton("도착", .done)
-        case "이동중":
-            cell.readyStatusButton.setupButton("이동중", .move)
-        case "준비중":
-            cell.readyStatusButton.setupButton("준비중", .ready)
-        default:
+        switch viewModel.myReadyProgressStatus.value {
+        case .none:
             cell.readyStatusButton.setupButton("꾸물중", .none)
+        case .ready:
+            cell.readyStatusButton.setupButton("준비중", .ready)
+        case .move:
+            cell.readyStatusButton.setupButton("이동중", .move)
+        case .done:
+            cell.readyStatusButton.setupButton("도착", .done)
         }
         
         return cell
