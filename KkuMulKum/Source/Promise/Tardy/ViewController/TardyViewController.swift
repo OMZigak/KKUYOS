@@ -29,10 +29,6 @@ class TardyViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func loadView() {
-        view = viewModel.isPastDue.value ? arriveView : tardyView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,10 +37,22 @@ class TardyViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        viewModel.fetchTardyInfo()
     }
     
     
     // MARK: - Setup
+    
+    override func setupView() {
+        view.addSubviews(tardyView, arriveView)
+        
+        [tardyView, arriveView].forEach {
+            $0.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
+        }
+    }
     
     override func setupDelegate() {
         tardyView.tardyCollectionView.dataSource = self
@@ -71,10 +79,11 @@ private extension TardyViewController {
             )
         }
         
-        viewModel.hasTardy.bind(with: self) { owner, hasTardy in
-            DispatchQueue.main.async {
-                owner.view = hasTardy && owner.viewModel.isPastDue.value ? owner.arriveView : owner.tardyView
-            }
+        viewModel.hasTardy.bindOnMain(with: self) { owner, hasTardy in
+            let flag = hasTardy && owner.viewModel.isPastDue.value
+
+            owner.arriveView.isHidden = !flag
+            owner.tardyView.isHidden = flag
         }
         
         viewModel.comers.bind(with: self) { owner, comers in
