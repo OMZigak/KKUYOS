@@ -154,7 +154,7 @@ private extension MeetingInfoViewController {
         
         output.navigateToPromiseInfo
             .drive(with: self) { owner, promiseID in
-                guard let promiseID else { return }
+                guard promiseID > 0 else { return }
                 
                 let pagePromiseViewController = PromiseViewController(
                     viewModel: PromiseViewModel(promiseID: promiseID, service: PromiseService())
