@@ -55,12 +55,12 @@ class ArriveView: BaseView {
         }
         
         mainTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(giftImageView.snp.bottom).offset(36)
+            $0.top.equalTo(giftImageView.snp.bottom).offset(30)
             $0.centerX.equalToSuperview()
         }
         
         subTitleLabel.snp.makeConstraints {
-            $0.top.equalTo(mainTitleLabel.snp.bottom).offset(17)
+            $0.top.equalTo(mainTitleLabel.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
         }
         

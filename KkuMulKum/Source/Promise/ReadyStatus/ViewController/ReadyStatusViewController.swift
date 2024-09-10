@@ -45,6 +45,7 @@ class ReadyStatusViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        viewModel.fetchPromiseInfo()
         viewModel.fetchMyReadyStatus()
         viewModel.fetchPromiseParticipantList()
     }
@@ -97,48 +98,47 @@ class ReadyStatusViewController: BaseViewController {
 extension ReadyStatusViewController {
     func setupBinding() {
         viewModel.promiseInfo.bindOnMain(with: self) { owner, model in
-            owner.rootView.myReadyStatusProgressView.isUserInteractionEnabled = (model?.isParticipant ?? false)
-        }
-        viewModel.myReadyStatus.bind(with: self) {
-            owner,
-            model in
-            DispatchQueue.main.async {
-                guard let model else {
-                    owner.updateReadyInfoView(flag: false)
-                    return
-                }
-                
-                /// 준비 시간을 계산해 UI에 표시
-                owner.viewModel.calculateDuration()
-                owner.viewModel.calculateStartTime()
-                
-                /// myReadyStatus의 바인딩 부분에 조건을 통해 myReadyProgressStatus 값을 업데이트
-                if model.preparationStartAt == nil {
-                    owner.viewModel.myReadyProgressStatus.value = .none
-                }
-                else if model.departureAt == nil {
-                    owner.viewModel.myReadyProgressStatus.value = .ready
-                }
-                else if model.arrivalAt == nil {
-                    owner.viewModel.myReadyProgressStatus.value = .move
-                }
-                else {
-                    owner.viewModel.myReadyProgressStatus.value = .done
-                }
-                
-                /// 준비하기 버튼과 준비 정보 화면 중 어떤 걸 표시할지 결정
-                if model.preparationTime == nil {
-                    owner.updateReadyInfoView(flag: false)
-                    return
-                }
-                
-                owner.updateReadyInfoView(flag: true)
+            guard let isParticipant = model?.isParticipant else { return }
+
+            owner.rootView.enterReadyButtonView.isUserInteractionEnabled = isParticipant
+
+            if !isParticipant {
+                owner.updateReadyInfoView(flag: false)
+                owner.rootView.myReadyStatusProgressView.readyStartButton.setupButton("준비 시작", .none)
             }
         }
         
-        viewModel.moveDuration.bind(with: self) {
-            owner,
-            moveTime in
+        viewModel.myReadyStatus.bindOnMain(with: self) { owner, model in
+            guard let status = model else { return }
+            
+            /// 준비 시간을 계산해 UI에 표시
+            owner.viewModel.calculateDuration()
+            owner.viewModel.calculateStartTime()
+            
+            /// myReadyStatus의 바인딩 부분에 조건을 통해 myReadyProgressStatus 값을 업데이트
+            if status.preparationStartAt == nil {
+                owner.viewModel.myReadyProgressStatus.value = .none
+            }
+            else if status.departureAt == nil {
+                owner.viewModel.myReadyProgressStatus.value = .ready
+            }
+            else if status.arrivalAt == nil {
+                owner.viewModel.myReadyProgressStatus.value = .move
+            }
+            else {
+                owner.viewModel.myReadyProgressStatus.value = .done
+            }
+            
+            /// 준비하기 버튼과 준비 정보 화면 중 어떤 걸 표시할지 결정
+            if status.preparationTime == nil {
+                owner.updateReadyInfoView(flag: false)
+                return
+            }
+            
+            owner.updateReadyInfoView(flag: true)
+        }
+        
+        viewModel.moveDuration.bind(with: self) { owner, moveTime in
             owner.rootView.readyPlanInfoView.requestMoveTimeLabel.setText(
                 "이동 소요 시간: \(moveTime)",
                 style: .label02,
@@ -173,9 +173,7 @@ extension ReadyStatusViewController {
             }
         }
         
-        viewModel.moveStartTime.bind(with: self) {
-            owner,
-            moveStartTime in
+        viewModel.moveStartTime.bind(with: self) { owner, moveStartTime in
             DispatchQueue.main.async {
                 owner.rootView.readyPlanInfoView.readyTimeLabel.setText(
                     "\(owner.viewModel.readyStartTime.value)에 준비하고,\n\(moveStartTime)에 이동을 시작해야 해요",
@@ -192,6 +190,7 @@ extension ReadyStatusViewController {
         
         viewModel.myReadyProgressStatus.bindOnMain(with: self) { owner, status in
             owner.updateReadyStartButton()
+            owner.rootView.ourReadyStatusCollectionView.reloadData()
         }
         
         viewModel.participantsInfo.bindOnMain(with: self) { owner, participants in
@@ -205,7 +204,7 @@ extension ReadyStatusViewController {
         }
         
         viewModel.isLate.bindOnMain(with: self) { owner, status in
-            self.updatePopUpImageView()
+            owner.updatePopUpImageView()
         }
     }
     
@@ -418,20 +417,23 @@ extension ReadyStatusViewController {
     
     @objc
     func readyStartButtonDidTap() {
-        viewModel.fetchPromiseParticipantList()
-        viewModel.updatePreparationStatus()
+        viewModel.updatePreparationStatus { [weak self] in
+            self?.viewModel.fetchPromiseParticipantList()
+        }
     }
     
     @objc
     func moveStartButtonDidTap() {
-        viewModel.fetchPromiseParticipantList()
-        viewModel.updateDepartureStatus()
+        viewModel.updateDepartureStatus { [weak self] in
+            self?.viewModel.fetchPromiseParticipantList()
+        }
     }
     
     @objc
     func arrivalButtonDidTap() {
-        viewModel.fetchPromiseParticipantList()
-        viewModel.updateArrivalStatus()
+        viewModel.updateArrivalStatus { [weak self] in
+            self?.viewModel.fetchPromiseParticipantList()
+        }
     }
     
     @objc
@@ -512,14 +514,18 @@ extension ReadyStatusViewController: UICollectionViewDataSource {
         }
         
         switch viewModel.participantsInfo.value?[indexPath.row].state {
-        case "도착":
-            cell.readyStatusButton.setupButton("도착", .done)
-        case "이동중":
-            cell.readyStatusButton.setupButton("이동중", .move)
+        case "꾸물중":
+            cell.readyStatusButton.setupButton("꾸물중", .none)
         case "준비중":
             cell.readyStatusButton.setupButton("준비중", .ready)
-        default:
-            cell.readyStatusButton.setupButton("꾸물중", .none)
+        case "이동중":
+            cell.readyStatusButton.setupButton("이동중", .move)
+        case "도착":
+            cell.readyStatusButton.setupButton("도착", .done)
+        case .none:
+            return cell
+        case .some(_):
+            return cell
         }
         
         return cell

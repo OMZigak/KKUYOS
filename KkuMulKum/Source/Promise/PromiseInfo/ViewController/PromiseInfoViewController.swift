@@ -53,6 +53,10 @@ class PromiseInfoViewController: BaseViewController {
     
     override func setupView() {
         view.backgroundColor = .gray0
+        
+        if let isParticipant = viewModel.promiseInfo.value?.isParticipant {
+            rootView.editButton.isHidden = isParticipant
+        }
     }
     
     override func setupDelegate() {
@@ -71,24 +75,42 @@ class PromiseInfoViewController: BaseViewController {
 extension PromiseInfoViewController {
     @objc
     func editButtonDidTap() {
-        let viewController = EditPromiseViewController(
-            viewModel: EditPromiseViewModel(
-                promiseID: viewModel.promiseID,
-                promiseName: viewModel.promiseInfo.value?.promiseName,
-                placeName: viewModel.promiseInfo.value?.placeName,
-                time: viewModel.promiseInfo.value?.time,
-                dressUpLevel: viewModel.promiseInfo.value?.dressUpLevel,
-                penalty: viewModel.promiseInfo.value?.penalty,
-                service: PromiseService()
+        if var dressUpLevel = viewModel.promiseInfo.value?.dressUpLevel {
+            let levels = ["LV1", "LV2", "LV3", "LV4", "FREE"]
+            
+            if dressUpLevel.contains("마음대로 입고 오기") {
+                dressUpLevel = "FREE"
+            }
+            else {
+                if let matched = levels.first(where: {
+                    level in dressUpLevel.replacingOccurrences(of: " ", with: "").contains(level)
+                }) {
+                    dressUpLevel = matched
+                }
+            }
+            
+            let viewController = EditPromiseViewController(
+                viewModel: EditPromiseViewModel(
+                    promiseID: viewModel.promiseID,
+                    promiseName: viewModel.promiseInfo.value?.promiseName,
+                    placeName: viewModel.promiseInfo.value?.placeName,
+                    xCoordinate: viewModel.promiseInfo.value?.x,
+                    yCoordinate: viewModel.promiseInfo.value?.y,
+                    address: viewModel.promiseInfo.value?.address,
+                    roadAddress: viewModel.promiseInfo.value?.roadAddress,
+                    time: viewModel.promiseInfo.value?.time,
+                    dressUpLevel: dressUpLevel,
+                    penalty: viewModel.promiseInfo.value?.penalty,
+                    service: PromiseService()
+                )
             )
-        )
-        
-        navigationController?.pushViewController(viewController, animated: true)
+            
+            navigationController?.pushViewController(viewController, animated: true)
+        }
     }
     
     func setupBinding() {
         viewModel.isPastDue.bindOnMain(with: self) { owner, isPastDue in
-            
             owner.rootView.editButton.isHidden = isPastDue
         }
         

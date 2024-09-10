@@ -265,7 +265,7 @@ extension PromiseViewModel {
     }
     
     /// 준비 시작 업데이트 API 구현 함수
-    func updatePreparationStatus() {
+    func updatePreparationStatus(completion: @escaping () -> Void) {
         Task {
             do {
                 let responseBody = try await service.updatePreparationStatus(
@@ -281,12 +281,14 @@ extension PromiseViewModel {
                 myReadyProgressStatus.value = .ready
                 
                 self.checkLate(tappedButton: .ready)
+                
+                completion()
             }
         }
     }
     
     /// 이동 시작 업데이트 API 구현 함수
-    func updateDepartureStatus() {
+    func updateDepartureStatus(completion: @escaping () -> Void) {
         Task {
             do {
                 let responseBody = try await service.updateDepartureStatus(
@@ -302,12 +304,14 @@ extension PromiseViewModel {
                 myReadyProgressStatus.value = .move
                 
                 self.checkLate(tappedButton: .move)
+                
+                completion()
             }
         }
     }
     
     /// 도착 완료 업데이트 API 구현 함수
-    func updateArrivalStatus() {
+    func updateArrivalStatus(completion: @escaping () -> Void) {
         Task {
             do {
                 let responseBody = try await service.updateArrivalStatus(
@@ -321,6 +325,8 @@ extension PromiseViewModel {
                 }
                 
                 myReadyProgressStatus.value = .done
+                
+                completion()
             }
         }
     }
@@ -342,7 +348,7 @@ extension PromiseViewModel {
                     return
                 }
                 
-                hasTardy.value = data.lateComers.isEmpty
+                hasTardy.value = !(data.lateComers.isEmpty)
                 isPastDue.value = data.isPastDue
                 penalty.value = data.penalty
                 comers.value = data.lateComers

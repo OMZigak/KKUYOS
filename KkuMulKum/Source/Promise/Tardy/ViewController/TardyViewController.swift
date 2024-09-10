@@ -29,10 +29,6 @@ class TardyViewController: BaseViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func loadView() {
-        view = viewModel.isPastDue.value ? arriveView : tardyView
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -41,10 +37,22 @@ class TardyViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        viewModel.fetchTardyInfo()
     }
     
     
     // MARK: - Setup
+    
+    override func setupView() {
+        view.addSubviews(arriveView, tardyView)
+        
+        [arriveView, tardyView].forEach {
+            $0.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
+        }
+    }
     
     override func setupDelegate() {
         tardyView.tardyCollectionView.dataSource = self
@@ -58,8 +66,6 @@ private extension TardyViewController {
     func setupBinding() {
         /// 시간이 지나고 지각자가 없을 때 arriveView로 띄워짐
         viewModel.isPastDue.bindOnMain(with: self) { owner, isPastDue in
-            owner.tardyView.tardyCollectionView.isHidden = !isPastDue
-            owner.tardyView.tardyEmptyView.isHidden = isPastDue
             owner.tardyView.finishMeetingButton.isEnabled = (isPastDue && (owner.viewModel.promiseInfo.value?.isParticipant ?? false))
         }
         
@@ -71,10 +77,14 @@ private extension TardyViewController {
             )
         }
         
-        viewModel.hasTardy.bind(with: self) { owner, hasTardy in
-            DispatchQueue.main.async {
-                owner.view = hasTardy && owner.viewModel.isPastDue.value ? owner.arriveView : owner.tardyView
-            }
+        viewModel.hasTardy.bindOnMain(with: self) { owner, hasTardy in
+            let isPastDue = owner.viewModel.isPastDue.value
+            let arriveHideFlag = !(isPastDue && !hasTardy)
+            
+            owner.arriveView.isHidden = arriveHideFlag
+            owner.tardyView.isHidden = !arriveHideFlag
+            owner.tardyView.tardyCollectionView.isHidden = !isPastDue
+            owner.tardyView.tardyEmptyView.isHidden = isPastDue
         }
         
         viewModel.comers.bind(with: self) { owner, comers in

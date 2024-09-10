@@ -151,7 +151,6 @@ private extension PromiseViewController {
         viewModel.promiseInfo.bindOnMain(with: self) { owner, info in
             owner.setupNavigationBarTitle(with: info?.promiseName ?? "", isBorderHidden: true)
             
-            owner.promiseInfoViewController.rootView.editButton.isHidden = !(info?.isParticipant ?? false)
             owner.setupPromiseEditButton(isHidden: !(info?.isParticipant ?? false))
             
             owner.promiseInfoViewController.setupContent()
