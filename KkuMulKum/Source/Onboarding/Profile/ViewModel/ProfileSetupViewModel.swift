@@ -48,43 +48,28 @@ class ProfileSetupViewModel {
         return imageData
     }
     
-    func uploadProfileImage() async -> Bool {
-        print("uploadProfileImage 함수 호출됨")
-        guard let imageData = imageData else {
-            print("이미지 데이터가 없습니다.")
-            serverResponse.value = "이미지 데이터가 없습니다."
-            return false
-        }
-        
-        if imageData.count > maxImageSizeBytes {
-            print("이미지 크기가 최대 허용 크기를 초과합니다.")
-            serverResponse.value = "이미지 크기가 너무 큽니다. 더 작은 이미지를 선택해주세요."
-            return false
-        }
-        
-        print("업로드할 이미지 데이터 크기: \(imageData.count) bytes")
-        
-        let fileName = "profile_image.jpg"
-        let mimeType = "image/jpeg"
-        
-        do {
-            let _: EmptyModel = try await authService.performRequest(
-                .updateProfileImage(
-                    image: imageData,
-                    fileName: fileName,
-                    mimeType: mimeType
-                )
-            )
-            serverResponse.value = "프로필 이미지가 성공적으로 업로드되었습니다."
-            print("프로필 이미지 업로드 성공")
+    func uploadProfileImage() {
+            guard let imageData = imageData else {
+                serverResponse.value = "이미지 데이터가 없습니다."
+                return
+            }
             
-            clearImageCache()
-            return true
-        } catch {
-            handleError(error as? NetworkError ?? .unknownError("알 수 없는 오류가 발생했습니다."))
-            return false
+            Task {
+                do {
+                    let _: EmptyModel = try await authService.performRequest(
+                        .updateProfileImage(
+                            image: imageData,
+                            fileName: "profile_image.jpg",
+                            mimeType: "image/jpeg"
+                        )
+                    )
+                    print("프로필 이미지가 성공적으로 업로드되었습니다.")
+                    clearImageCache()
+                } catch {
+                    print("프로필 이미지 업로드 실패: \(error.localizedDescription)")
+                }
+            }
         }
-    }
     
     private func handleError(_ error: NetworkError) {
         switch error {
