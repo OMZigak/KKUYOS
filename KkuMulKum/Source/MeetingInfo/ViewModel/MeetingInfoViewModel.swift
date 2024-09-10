@@ -9,19 +9,24 @@ import Foundation
 
 import RxCocoa
 import RxSwift
+import Then
 
 final class MeetingInfoViewModel {
     let meetingID: Int
     
     var meetingName: String { infoRelay.value?.name ?? "" }
     var meetingInvitationCode: String? { infoRelay.value?.invitationCode }
-    var meetingPromises: [MeetingPromise] { meetingPromisesModelRelay.value?.promises ?? [] }
     
+    private let dateFormatter = DateFormatter().then {
+        $0.locale = Locale(identifier: "ko_KR")
+        $0.timeZone = TimeZone(identifier: "Asia/Seoul")
+        $0.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        $0.amSymbol = "AM"
+        $0.pmSymbol = "PM"
+    }
     private let service: MeetingInfoServiceProtocol
     private let infoRelay = BehaviorRelay<MeetingInfoModel?>(value: nil)
     private let meetingMemberModelRelay = BehaviorRelay<MeetingMembersModel?>(value: nil)
-    private let meetingPromisesModelRelay = BehaviorRelay<MeetingPromisesModel?>(value: nil)
-    private let partipatedPromisesModelRelay = BehaviorRelay<MeetingPromisesModel?>(value: nil)
     
     init(meetingID: Int, service: MeetingInfoServiceProtocol) {
         self.meetingID = meetingID
@@ -44,7 +49,7 @@ extension MeetingInfoViewModel: ViewModelType {
         let members: Driver<[Member]>
         let promises: Driver<[MeetingInfoPromiseModel]>
         let isExitMeetingSucceed: Driver<Bool>
-        let navigateToPromiseInfo: Driver<Int?>
+        let navigateToPromiseInfo: Driver<Int>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
@@ -52,19 +57,18 @@ extension MeetingInfoViewModel: ViewModelType {
             .subscribe(with: self) { owner, _ in
                 owner.fetchMeetingInfo()
                 owner.fetchMeetingMembers()
-                owner.fetchMeetingPromises()
-                owner.fetchParticipatedPromises()
             }
             .disposed(by: disposeBag)
         
         let info = infoRelay
-            .map { info -> MeetingInfoModel? in
-                guard let info else {
-                    print("MeetingInfoModel이 존재하지 않습니다.")
+            .map { [weak self] info -> MeetingInfoModel? in
+                guard let self,
+                      let info 
+                else {
+                    print(">>> 모델이 존재하지 않습니다. : \(#function) : \(Self.self)")
                     return nil
                 }
                 
-                let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 
                 guard let date = dateFormatter.date(from: info.createdAt) else {
@@ -103,19 +107,39 @@ extension MeetingInfoViewModel: ViewModelType {
             }
             .asDriver(onErrorJustReturn: [])
         
-        let promises = input.selectedSegmentedIndex
+        let promises = Observable.merge(
+            input.viewWillAppear.withLatestFrom(input.selectedSegmentedIndex),
+            input.selectedSegmentedIndex
+        )
+            .startWith(0)
             .flatMapLatest { [weak self] index -> Observable<[MeetingInfoPromiseModel]> in
                 guard let self else {
-                    return Observable.just([])
+                    return .just([])
                 }
                 
-                let source = index == 0 ? self.partipatedPromisesModelRelay : self.meetingPromisesModelRelay
-                return source
-                    .compactMap { $0?.promises }
-                    .map { self.convertToMeetingInfoPromiseModels(from: $0) }
-                    .asObservable()
+                if index == 0 {
+                    return service.fetchParticipatedPromiseList(with: self.meetingID, isParticipant: true)
+                        .map { response in
+                            self.convertToMeetingInfoPromiseModels(from: response.data?.promises ?? [])
+                        }
+                        .asObservable()
+                        .catchAndReturn([])
+                } else {
+                    return service.fetchMeetingPromiseList(with: self.meetingID)
+                        .map { response in
+                            self.convertToMeetingInfoPromiseModels(from: response.data?.promises ?? [])
+                        }
+                        .asObservable()
+                        .catchAndReturn([])
+                }
             }
             .asDriver(onErrorJustReturn: [])
+        
+        let navigateToPromiseInfo = input.promiseCellDidSelect
+            .withLatestFrom(promises) { index, promises in
+                return promises[index].promiseID
+            }
+            .asDriver(onErrorJustReturn: -1)
         
         let isExitMeetingSucceed = input.actionButtonDidTapRelay
             .flatMapLatest { [weak self] _ -> Driver<Bool> in
@@ -123,24 +147,11 @@ extension MeetingInfoViewModel: ViewModelType {
                     return Driver.just(false)
                 }
                 
-                return self.service.exitMeeting(with: self.meetingID)
+                return service.exitMeeting(with: meetingID)
                     .map { $0.success }
                     .asDriver(onErrorJustReturn: false)
             }
             .asDriver(onErrorJustReturn: false)
-        
-        let navigateToPromiseInfo = input.promiseCellDidSelect
-            .withLatestFrom(input.selectedSegmentedIndex) {
-                (selectedIndex: $1, selectedItem: $0)
-            }
-            .map { [weak self] selectedIndex, selectedItem in
-                let promises = selectedIndex == 0
-                ? self?.partipatedPromisesModelRelay.value?.promises
-                : self?.meetingPromisesModelRelay.value?.promises
-                
-                return promises?[selectedItem].promiseID
-            }
-            .asDriver(onErrorJustReturn: nil)
         
         let output = Output(
             info: info,
@@ -178,33 +189,8 @@ private extension MeetingInfoViewModel {
         }
     }
     
-    func fetchMeetingPromises() {
-        Task {
-            do {
-                let responseBody = try await service.fetchMeetingPromiseList(with: meetingID, isParticipant: nil)
-                meetingPromisesModelRelay.accept(responseBody?.data)
-            } catch {
-                print(">>> \(error.localizedDescription) : \(#function)")
-            }
-        }
-    }
-    
-    func fetchParticipatedPromises() {
-        Task {
-            do {
-                let responseBody = try await service.fetchMeetingPromiseList(with: meetingID, isParticipant: true)
-                partipatedPromisesModelRelay.accept(responseBody?.data)
-            } catch {
-                print(">>> \(error.localizedDescription) : \(#function)")
-            }
-        }
-    }
-}
-
-private extension MeetingInfoViewModel {
     func convertToMeetingInfoPromiseModels(from promises: [MeetingPromise]) -> [MeetingInfoPromiseModel] {
-        let inputDateFormatter = DateFormatter()
-        inputDateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
         let outputDateFormatter = DateFormatter().then {
             $0.locale = Locale(identifier: "ko_KR")
@@ -215,7 +201,7 @@ private extension MeetingInfoViewModel {
         }
         
         return promises.compactMap { promise in
-            guard let date = inputDateFormatter.date(from: promise.time) else { return nil }
+            guard let date = dateFormatter.date(from: promise.time) else { return nil }
             let formattedDate = outputDateFormatter.string(from: date)
             let (dateString, timeString) = splitDateAndTime(from: formattedDate)
             let (dDayString, state) = configure(dDay: promise.dDay)

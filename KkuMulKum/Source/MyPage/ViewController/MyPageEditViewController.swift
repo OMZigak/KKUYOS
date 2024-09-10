@@ -16,6 +16,7 @@ class MyPageEditViewController: BaseViewController {
     private let viewModel: MyPageEditViewModel
     private let disposeBag = DisposeBag()
     private let newProfileImageSubject = PublishSubject<UIImage?>()
+    let profileImageUpdated = PublishSubject<String?>()
     
     init(viewModel: MyPageEditViewModel) {
         self.viewModel = viewModel
@@ -72,6 +73,13 @@ class MyPageEditViewController: BaseViewController {
             skipButtonTap: rootView.skipButton.rx.tap.asObservable(),
             newProfileImage: newProfileImageSubject.asObservable()
         )
+        
+        input.newProfileImage
+            .compactMap { $0 }
+            .subscribe(onNext: { [weak self] image in
+                self?.viewModel.updateProfileImage(image)
+            })
+            .disposed(by: disposeBag)
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
         
