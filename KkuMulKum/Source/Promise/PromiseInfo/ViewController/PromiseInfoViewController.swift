@@ -53,6 +53,10 @@ class PromiseInfoViewController: BaseViewController {
     
     override func setupView() {
         view.backgroundColor = .gray0
+        
+        if let isParticipant = viewModel.promiseInfo.value?.isParticipant {
+            rootView.editButton.isHidden = isParticipant
+        }
     }
     
     override func setupDelegate() {
@@ -107,7 +111,6 @@ extension PromiseInfoViewController {
     
     func setupBinding() {
         viewModel.isPastDue.bindOnMain(with: self) { owner, isPastDue in
-            
             owner.rootView.editButton.isHidden = isPastDue
         }
         
