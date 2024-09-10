@@ -98,51 +98,47 @@ class ReadyStatusViewController: BaseViewController {
 extension ReadyStatusViewController {
     func setupBinding() {
         viewModel.promiseInfo.bindOnMain(with: self) { owner, model in
-            if let isParticipant = model?.isParticipant {
-                owner.rootView.enterReadyButtonView.isUserInteractionEnabled = isParticipant
-                
-                if !isParticipant {
-                    owner.updateReadyInfoView(flag: false)
-                    owner.rootView.myReadyStatusProgressView.readyStartButton.setupButton("준비 시작", .none)
-                }
+            guard let isParticipant = model?.isParticipant else { return }
+
+            owner.rootView.enterReadyButtonView.isUserInteractionEnabled = isParticipant
+
+            if !isParticipant {
+                owner.updateReadyInfoView(flag: false)
+                owner.rootView.myReadyStatusProgressView.readyStartButton.setupButton("준비 시작", .none)
             }
         }
         
-        viewModel.myReadyStatus.bindOnMain(with: self) {
-            owner,
-            model in
-            if let status = model {
-                /// 준비 시간을 계산해 UI에 표시
-                owner.viewModel.calculateDuration()
-                owner.viewModel.calculateStartTime()
-                
-                /// myReadyStatus의 바인딩 부분에 조건을 통해 myReadyProgressStatus 값을 업데이트
-                if status.preparationStartAt == nil {
-                    owner.viewModel.myReadyProgressStatus.value = .none
-                }
-                else if status.departureAt == nil {
-                    owner.viewModel.myReadyProgressStatus.value = .ready
-                }
-                else if status.arrivalAt == nil {
-                    owner.viewModel.myReadyProgressStatus.value = .move
-                }
-                else {
-                    owner.viewModel.myReadyProgressStatus.value = .done
-                }
-                
-                /// 준비하기 버튼과 준비 정보 화면 중 어떤 걸 표시할지 결정
-                if status.preparationTime == nil {
-                    owner.updateReadyInfoView(flag: false)
-                    return
-                }
-                
-                owner.updateReadyInfoView(flag: true)
+        viewModel.myReadyStatus.bindOnMain(with: self) { owner, model in
+            guard let status = model else { return }
+            
+            /// 준비 시간을 계산해 UI에 표시
+            owner.viewModel.calculateDuration()
+            owner.viewModel.calculateStartTime()
+            
+            /// myReadyStatus의 바인딩 부분에 조건을 통해 myReadyProgressStatus 값을 업데이트
+            if status.preparationStartAt == nil {
+                owner.viewModel.myReadyProgressStatus.value = .none
             }
+            else if status.departureAt == nil {
+                owner.viewModel.myReadyProgressStatus.value = .ready
+            }
+            else if status.arrivalAt == nil {
+                owner.viewModel.myReadyProgressStatus.value = .move
+            }
+            else {
+                owner.viewModel.myReadyProgressStatus.value = .done
+            }
+            
+            /// 준비하기 버튼과 준비 정보 화면 중 어떤 걸 표시할지 결정
+            if status.preparationTime == nil {
+                owner.updateReadyInfoView(flag: false)
+                return
+            }
+            
+            owner.updateReadyInfoView(flag: true)
         }
         
-        viewModel.moveDuration.bind(with: self) {
-            owner,
-            moveTime in
+        viewModel.moveDuration.bind(with: self) { owner, moveTime in
             owner.rootView.readyPlanInfoView.requestMoveTimeLabel.setText(
                 "이동 소요 시간: \(moveTime)",
                 style: .label02,
@@ -177,9 +173,7 @@ extension ReadyStatusViewController {
             }
         }
         
-        viewModel.moveStartTime.bind(with: self) {
-            owner,
-            moveStartTime in
+        viewModel.moveStartTime.bind(with: self) { owner, moveStartTime in
             DispatchQueue.main.async {
                 owner.rootView.readyPlanInfoView.readyTimeLabel.setText(
                     "\(owner.viewModel.readyStartTime.value)에 준비하고,\n\(moveStartTime)에 이동을 시작해야 해요",
@@ -196,8 +190,7 @@ extension ReadyStatusViewController {
         
         viewModel.myReadyProgressStatus.bindOnMain(with: self) { owner, status in
             owner.updateReadyStartButton()
-            
-            self.rootView.ourReadyStatusCollectionView.reloadData()
+            owner.rootView.ourReadyStatusCollectionView.reloadData()
         }
         
         viewModel.participantsInfo.bindOnMain(with: self) { owner, participants in
@@ -211,7 +204,7 @@ extension ReadyStatusViewController {
         }
         
         viewModel.isLate.bindOnMain(with: self) { owner, status in
-            self.updatePopUpImageView()
+            owner.updatePopUpImageView()
         }
     }
     
@@ -424,22 +417,22 @@ extension ReadyStatusViewController {
     
     @objc
     func readyStartButtonDidTap() {
-        viewModel.updatePreparationStatus {
-            self.viewModel.fetchPromiseParticipantList()
+        viewModel.updatePreparationStatus { [weak self] in
+            self?.viewModel.fetchPromiseParticipantList()
         }
     }
     
     @objc
     func moveStartButtonDidTap() {
-        viewModel.updateDepartureStatus {
-            self.viewModel.fetchPromiseParticipantList()
+        viewModel.updateDepartureStatus { [weak self] in
+            self?.viewModel.fetchPromiseParticipantList()
         }
     }
     
     @objc
     func arrivalButtonDidTap() {
-        viewModel.updateArrivalStatus {
-            self.viewModel.fetchPromiseParticipantList()
+        viewModel.updateArrivalStatus { [weak self] in
+            self?.viewModel.fetchPromiseParticipantList()
         }
     }
     
