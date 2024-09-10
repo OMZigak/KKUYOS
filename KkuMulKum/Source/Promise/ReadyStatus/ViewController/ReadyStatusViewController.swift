@@ -102,6 +102,10 @@ extension ReadyStatusViewController {
                 owner.rootView.myReadyStatusProgressView.isUserInteractionEnabled = isParticipant
                 owner.rootView.enterReadyButtonView.isUserInteractionEnabled = isParticipant
                 owner.updateReadyInfoView(flag: isParticipant)
+                
+                if !isParticipant {
+                    owner.rootView.myReadyStatusProgressView.readyStartButton.setupButton("준비 시작", .none)
+                }
             }
         }
         
