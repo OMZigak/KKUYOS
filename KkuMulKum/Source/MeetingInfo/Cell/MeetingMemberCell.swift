@@ -12,13 +12,13 @@ import SnapKit
 import Then
 
 protocol MeetingMemberCellDelegate: AnyObject {
-    func profileImageButtonDidTap()
+    func profileImageViewDidTap()
 }
 
 final class MeetingMemberCell: BaseCollectionViewCell {
-    private let profileImageButton = UIButton().then {
+    private let profileImageView: UIImageView = UIImageView().then {
+        $0.isUserInteractionEnabled = true
         $0.layer.cornerRadius = Screen.height(64) / 2
-        $0.isEnabled = false
         $0.clipsToBounds = true
     }
     
@@ -28,46 +28,33 @@ final class MeetingMemberCell: BaseCollectionViewCell {
     }
     
     private weak var delegate: MeetingMemberCellDelegate?
+    private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(profileImageViewDidTap(_:)))
     
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        profileImageButton.do {
-            var config = UIButton.Configuration.plain()
-            config.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-            
-            $0.imageView?.image = nil
-            $0.backgroundColor = .clear
-            $0.isEnabled = false
-        }
+        profileImageView.image = nil
+        profileImageView.removeGestureRecognizer(tapGesture)
         
         nameLabel.setText(style: .caption02, color: .gray6)
     }
     
     override func setupView() {
-        contentView.addSubviews(profileImageButton, nameLabel)
+        contentView.addSubviews(profileImageView, nameLabel)
     }
     
     override func setupAutoLayout() {
-        profileImageButton.snp.makeConstraints {
+        profileImageView.snp.makeConstraints {
             $0.top.centerX.equalToSuperview()
             $0.height.equalTo(Screen.height(64))
-            $0.width.equalTo(profileImageButton.snp.height)
+            $0.width.equalTo(profileImageView.snp.height)
         }
         
         nameLabel.snp.makeConstraints {
-            $0.top.equalTo(profileImageButton.snp.bottom).offset(4)
-            $0.centerX.equalTo(profileImageButton)
+            $0.top.equalTo(profileImageView.snp.bottom).offset(4)
+            $0.centerX.equalTo(profileImageView)
             $0.bottom.equalToSuperview()
         }
-    }
-    
-    override func setupAction() {
-        profileImageButton.addTarget(
-            self,
-            action: #selector(profileImageButtonDidTap(_:)),
-            for: .touchUpInside
-        )
     }
 }
 
@@ -91,15 +78,12 @@ private extension MeetingMemberCell {
     func configureForAdd(with delegate: MeetingMemberCellDelegate) {
         self.delegate = delegate
         
-        profileImageButton.do {
-            var config = UIButton.Configuration.plain()
-            config.contentInsets = NSDirectionalEdgeInsets(top: 5, leading: 0, bottom: 0, trailing: 0)
-            
-            $0.configuration = config
+        profileImageView.do {
+            $0.image = .iconPlusDark.withRenderingMode(.alwaysOriginal)
+            $0.contentMode = .center
             $0.backgroundColor = .gray1
-            $0.setImage(.iconPlus.withTintColor(.gray4), for: .normal)
-            $0.isEnabled = true
         }
+        profileImageView.addGestureRecognizer(tapGesture)
         
         nameLabel.setText(style: .caption02, color: .gray6)
     }
@@ -110,15 +94,15 @@ private extension MeetingMemberCell {
         
         nameLabel.setText(name ?? " ", style: .caption02, color: .gray6)
         
-        profileImageButton.kf.setImage(
+        profileImageView.kf.setImage(
             with: imageURL,
-            for: .disabled,
-            placeholder: .imgProfile.withRenderingMode(.alwaysOriginal)
+            placeholder: UIImage(resource: .imgProfile).withRenderingMode(.alwaysOriginal)
         )
+        profileImageView.contentMode = .scaleAspectFill
     }
     
     @objc
-    func profileImageButtonDidTap(_ sender: UIButton) {
-        delegate?.profileImageButtonDidTap()
+    func profileImageViewDidTap(_ sender: UIImageView) {
+        delegate?.profileImageViewDidTap()
     }
 }

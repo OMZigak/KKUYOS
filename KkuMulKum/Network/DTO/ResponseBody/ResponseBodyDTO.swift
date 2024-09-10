@@ -19,4 +19,3 @@ struct ErrorResponse: Codable {
     let code: Int
     let message: String
 }
-
