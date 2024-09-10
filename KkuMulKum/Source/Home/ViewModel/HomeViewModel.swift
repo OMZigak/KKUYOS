@@ -193,7 +193,9 @@ final class HomeViewModel {
                 let placeName = self.nearestPromise.value?.data?.placeName ?? ""
                 todayPlaceName.value = placeName.count > 14 ? String(placeName.prefix(14)) + "..." : placeName
                 
-                requestMyReadyStatus()
+                if let _ = nearestPromise.value?.data {
+                    requestMyReadyStatus()
+                }
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
