@@ -342,7 +342,7 @@ extension PromiseViewModel {
                     return
                 }
                 
-                hasTardy.value = data.lateComers.isEmpty
+                hasTardy.value = !(data.lateComers.isEmpty)
                 isPastDue.value = data.isPastDue
                 penalty.value = data.penalty
                 comers.value = data.lateComers
