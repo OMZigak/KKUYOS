@@ -31,6 +31,7 @@ class ReadyStatusView: BaseView {
     
     let popUpImageView: UIImageView = UIImageView(image: .imgTextPopup).then {
         $0.contentMode = .scaleAspectFit
+        $0.isHidden = true
     }
     
     let ourReadyStatusCollectionView: UICollectionView = UICollectionView(
