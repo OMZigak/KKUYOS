@@ -428,20 +428,23 @@ extension ReadyStatusViewController {
     
     @objc
     func readyStartButtonDidTap() {
-        viewModel.fetchPromiseParticipantList()
-        viewModel.updatePreparationStatus()
+        viewModel.updatePreparationStatus {
+            self.viewModel.fetchPromiseParticipantList()
+        }
     }
     
     @objc
     func moveStartButtonDidTap() {
-        viewModel.fetchPromiseParticipantList()
-        viewModel.updateDepartureStatus()
+        viewModel.updateDepartureStatus {
+            self.viewModel.fetchPromiseParticipantList()
+        }
     }
     
     @objc
     func arrivalButtonDidTap() {
-        viewModel.fetchPromiseParticipantList()
-        viewModel.updateArrivalStatus()
+        viewModel.updateArrivalStatus {
+            self.viewModel.fetchPromiseParticipantList()
+        }
     }
     
     @objc
@@ -521,15 +524,19 @@ extension ReadyStatusViewController: UICollectionViewDataSource {
             cell.profileImageView.kf.setImage(with: imageURL, placeholder: UIImage.imgProfile)
         }
         
-        switch viewModel.myReadyProgressStatus.value {
-        case .none:
+        switch viewModel.participantsInfo.value?[indexPath.row].state {
+        case "꾸물중":
             cell.readyStatusButton.setupButton("꾸물중", .none)
-        case .ready:
+        case "준비중":
             cell.readyStatusButton.setupButton("준비중", .ready)
-        case .move:
+        case "이동중":
             cell.readyStatusButton.setupButton("이동중", .move)
-        case .done:
+        case "도착":
             cell.readyStatusButton.setupButton("도착", .done)
+        case .none:
+            return cell
+        case .some(_):
+            return cell
         }
         
         return cell
