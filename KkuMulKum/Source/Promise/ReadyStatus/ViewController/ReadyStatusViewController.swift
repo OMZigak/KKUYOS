@@ -142,6 +142,11 @@ extension ReadyStatusViewController {
             }
             
             owner.updateReadyInfoView(flag: true)
+            owner.updateLatePopupStatus()
+        }
+        
+        viewModel.myReadyProgressStatus.bindOnMain(with: self) { owner, status in
+            owner.updateLatePopupStatus()
         }
         
         viewModel.moveDuration.bind(with: self) { owner, moveTime in
@@ -196,6 +201,7 @@ extension ReadyStatusViewController {
         
         viewModel.myReadyProgressStatus.bindOnMain(with: self) { owner, status in
             owner.updateReadyStartButton()
+            owner.updateLatePopupStatus()
             owner.rootView.ourReadyStatusCollectionView.reloadData()
         }
         
@@ -208,9 +214,51 @@ extension ReadyStatusViewController {
                 )
             }
         }
+    }
+    
+    func updateLatePopupStatus() {
+        let date = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH시 mm분"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         
-        viewModel.isLate.bindOnMain(with: self) { owner, status in
-            owner.updatePopUpImageView()
+        guard let readyStartTime = dateFormatter.date(from: viewModel.readyStartTime.value) else { return }
+        guard let moveStartTime = dateFormatter.date(from: viewModel.moveStartTime.value) else { return }
+        
+        let readyStartComponent = date.dateComponents([.hour, .minute], from: readyStartTime)
+        let moveStartComponents = date.dateComponents([.hour, .minute], from: moveStartTime)
+        let currentTimeComponents = date.dateComponents([.hour, .minute], from: Date())
+        
+        guard let readyStartHour = readyStartComponent.hour,
+              let readyStartMinute = readyStartComponent.minute,
+              let moveStartHour = moveStartComponents.hour,
+              let moveStartMinute = moveStartComponents.minute,
+              let currentTimeHour = currentTimeComponents.hour,
+              let currentTimeMinute = currentTimeComponents.minute else { return }
+        
+        DispatchQueue.main.async {
+            if (currentTimeHour >= readyStartHour) && (currentTimeMinute > readyStartMinute) && ((currentTimeHour <= moveStartHour) && (currentTimeMinute < moveStartMinute)) {
+                let readyLateFlag = !(self.viewModel.myReadyProgressStatus.value == .none)
+                
+                print(">> \(readyLateFlag) : \(#function)")
+                
+                self.rootView.popUpImageView.isHidden = readyLateFlag
+            }
+            else if ((currentTimeHour >= moveStartHour) && (currentTimeMinute > moveStartMinute)) && self.viewModel.isPastDue.value == false {
+                let moveLateFlag = !(self.viewModel.myReadyProgressStatus.value == .none || self.viewModel.myReadyProgressStatus.value == .ready)
+                
+                print(">>> \(moveLateFlag) : \(#function)")
+                
+                self.rootView.popUpImageView.isHidden = moveLateFlag
+            }
+            else {
+                let arriveLateFlag = self.viewModel.isPastDue.value && !(self.viewModel.myReadyProgressStatus.value == .done)
+                
+                print(">>>> \(arriveLateFlag) : \(#function)")
+                
+                self.rootView.popUpImageView.isHidden = arriveLateFlag
+            }
         }
     }
     
