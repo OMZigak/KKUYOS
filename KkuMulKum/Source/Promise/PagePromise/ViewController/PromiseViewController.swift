@@ -150,13 +150,14 @@ private extension PromiseViewController {
     func setupBindings() {
         viewModel.promiseInfo.bindOnMain(with: self) { owner, info in
             owner.setupNavigationBarTitle(with: info?.promiseName ?? "", isBorderHidden: true)
-            
-            owner.setupPromiseEditButton(isHidden: !(info?.isParticipant ?? false))
-            
             owner.promiseInfoViewController.setupContent()
             owner.promiseInfoViewController.setUpTimeContent()
             owner.removePromiseViewContoller.promiseNameLabel.text = info?.promiseName ?? ""
             
+            guard let isParticipant = info?.isParticipant else { return }
+            
+            owner.setupPromiseEditButton(isHidden: !isParticipant)
+            owner.promiseInfoViewController.rootView.editButton.isHidden = !isParticipant
         }
     }
     
