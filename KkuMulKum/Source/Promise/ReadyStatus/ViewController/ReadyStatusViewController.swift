@@ -45,6 +45,7 @@ class ReadyStatusViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        viewModel.fetchTardyInfo()
         viewModel.fetchPromiseInfo()
         viewModel.fetchMyReadyStatus()
         viewModel.fetchPromiseParticipantList()
@@ -97,10 +98,15 @@ class ReadyStatusViewController: BaseViewController {
 
 extension ReadyStatusViewController {
     func setupBinding() {
+        viewModel.isPastDue.bindOnMain(with: self) { owner, flag in
+            guard let isParticipant = owner.viewModel.promiseInfo.value?.isParticipant else { return }
+            
+            owner.rootView.readyPlanInfoView.editButton.isHidden = flag
+            owner.rootView.enterReadyButtonView.isUserInteractionEnabled = !flag && isParticipant
+        }
+        
         viewModel.promiseInfo.bindOnMain(with: self) { owner, model in
             guard let isParticipant = model?.isParticipant else { return }
-
-            owner.rootView.enterReadyButtonView.isUserInteractionEnabled = isParticipant
 
             if !isParticipant {
                 owner.updateReadyInfoView(flag: false)
