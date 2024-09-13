@@ -66,6 +66,7 @@ class ChooseMemberViewController: BaseViewController {
     }
     
     override func setupDelegate() {
+        rootView.memberListView.delegate = self
         rootView.memberListView.dataSource = self
     }
 }
