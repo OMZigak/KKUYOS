@@ -240,10 +240,8 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     private func navigateToLoginScreen() {
         let loginViewModel = LoginViewModel()
         let loginViewController = LoginViewController(viewModel: loginViewModel)
-        let navigationController = UINavigationController(rootViewController: loginViewController)
-        navigationController.modalPresentationStyle = .fullScreen
-        self.view.window?.rootViewController = navigationController
-        self.view.window?.makeKeyAndVisible()
+        loginViewController.modalPresentationStyle = .fullScreen
+        self.present(loginViewController, animated: true, completion: nil)
     }
     
     func actionButtonDidTap(for kind: ActionSheetKind) {
