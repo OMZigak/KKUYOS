@@ -103,6 +103,9 @@ extension ReadyStatusViewController {
             
             owner.rootView.readyPlanInfoView.editButton.isHidden = flag
             owner.rootView.enterReadyButtonView.isUserInteractionEnabled = !flag && isParticipant
+            owner.rootView.myReadyStatusProgressView.readyStartButton.isUserInteractionEnabled = isParticipant
+            owner.rootView.myReadyStatusProgressView.moveStartButton.isUserInteractionEnabled = isParticipant
+            owner.rootView.myReadyStatusProgressView.arrivalButton.isUserInteractionEnabled = isParticipant
         }
         
         viewModel.promiseInfo.bindOnMain(with: self) { owner, model in
