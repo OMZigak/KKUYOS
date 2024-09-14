@@ -112,7 +112,7 @@ extension MeetingPromiseCell {
         nameLabel.setText(model.name, style: .body03, color: model.state.nameTextColor)
         dateLabel.setText(model.dateText, style: .body06, color: model.state.otherTextColor)
         timeLabel.setText(model.timeText, style: .body06, color: model.state.otherTextColor)
-        placeLabel.setText(model.placeName, style: .body06, color: model.state.otherTextColor)
+        placeLabel.setText(model.placeName, style: .body06, color: model.state.otherTextColor, isSingleLine: true)
     }
 }
 
