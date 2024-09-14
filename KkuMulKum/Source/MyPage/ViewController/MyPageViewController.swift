@@ -134,7 +134,9 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         let levelText = viewModel.getLevelText(for: userInfo.level)
         
         rootView.contentView.nameLabel.text = (userInfo.name.map { $0 + " 님" }) ?? "꾸물리안 님"
-        rootView.contentView.levelLabel.setText("Lv. \(userInfo.level) \(levelText)", style: .body05, color: .white)
+        
+        let fullLevelText = "Lv. \(userInfo.level) \(levelText)"
+        rootView.contentView.levelLabel.setText(fullLevelText, style: .body05, color: .white)
         rootView.contentView.levelLabel.setHighlightText("Lv. \(userInfo.level)", style: .body05, color: .lightGreen)
         
         updateProfileImage(with: userInfo.profileImageURL)
