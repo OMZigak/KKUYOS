@@ -251,6 +251,9 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     private func showActionSheet(for kind: ActionSheetKind) {
         let actionSheet = CustomActionSheetController(kind: kind)
         actionSheet.delegate = self
-        present(actionSheet, animated: true, completion: nil)
+        
+        if let tabBarController = self.tabBarController {
+            tabBarController.present(actionSheet, animated: true, completion: nil)
+        }
     }
 }
