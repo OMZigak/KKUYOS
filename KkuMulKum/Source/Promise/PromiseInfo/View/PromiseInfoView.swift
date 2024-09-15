@@ -68,7 +68,7 @@ class PromiseInfoView: BaseView {
         $0.layer.cornerRadius = Screen.height(18)
     }
     
-    private let locationInfoLabel: UILabel = UILabel().then {
+    let locationInfoLabel: UILabel = UILabel().then {
         $0.setText("위치", style: .body05, color: .maincolor)
     }
     
@@ -77,7 +77,7 @@ class PromiseInfoView: BaseView {
         $0.layer.cornerRadius = Screen.height(8)
     }
     
-    private let timeInfoLabel: UILabel = UILabel().then {
+    let timeInfoLabel: UILabel = UILabel().then {
         $0.setText("약속시간", style: .body05, color: .maincolor)
     }
     
@@ -86,7 +86,7 @@ class PromiseInfoView: BaseView {
         $0.layer.cornerRadius = Screen.height(8)
     }
     
-    private let readyLevelInfoLabel: UILabel = UILabel().then {
+    let readyLevelInfoLabel: UILabel = UILabel().then {
         $0.setText("꾸레벨", style: .body05, color: .maincolor)
     }
     
@@ -95,7 +95,7 @@ class PromiseInfoView: BaseView {
         $0.layer.cornerRadius = Screen.height(8)
     }
     
-    private let penaltyLevelInfoLabel: UILabel = UILabel().then {
+    let penaltyLevelInfoLabel: UILabel = UILabel().then {
         $0.setText("벌칙", style: .body05, color: .maincolor)
     }
     

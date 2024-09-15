@@ -14,6 +14,8 @@ class PromiseViewModel {
 
     let promiseID: Int
     let promiseInfo = ObservablePattern<PromiseInfoModel?>(nil)
+    let participants = ObservablePattern<[Participant]>([])
+    let dDay = ObservablePattern<Int?>(nil)
     
     private let service: PromiseServiceProtocol
     
@@ -29,6 +31,24 @@ class PromiseViewModel {
 
 // MARK: - Extension
 
+private extension PromiseViewModel {
+    func calculateDday() {
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        
+        guard let dateWithTime = dateFormatter.date(from: promiseInfo.value?.time ?? "") else { return }
+        
+        let dateOnly = calendar.startOfDay(for: dateWithTime)
+        let today = calendar.startOfDay(for: Date())
+        let components = calendar.dateComponents([.day], from: today, to: dateOnly)
+        
+        dDay.value = components.day
+    }
+}
+
 extension PromiseViewModel {
     /// 약속 상세 정보 조회 API 구현 함수
     func fetchPromiseInfo() {
@@ -40,16 +60,15 @@ extension PromiseViewModel {
                       success == true
                 else {
                     print(">>>>> \(String(describing: result)) : \(#function)")
-                    
                     return
                 }
                 
                 promiseInfo.value = result?.data
+                
+                calculateDday()
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
-            
-            
         }
     }
     
@@ -57,13 +76,21 @@ extension PromiseViewModel {
     func fetchPromiseParticipantList() {
         Task {
             do {
-                let responseBody = try await service.fetchPromiseParticipantList(with: promiseID)
+                let result = try await service.fetchPromiseParticipantList(with: promiseID)
                 
-                guard let success = responseBody?.success, 
-                        success == true
+                guard let success = result?.success,
+                      success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
+                
+                guard let data = result?.data else {
+                    print(">>>>> \("데이터 없음") : \(#function)")
+                    return
+                }
+                
+                participants.value = data.participants
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
@@ -74,11 +101,12 @@ extension PromiseViewModel {
     func fetchMyReadyStatus() {
         Task {
             do {
-                let responseBody = try await service.fetchMyReadyStatus(with: promiseID)
+                let result = try await service.fetchMyReadyStatus(with: promiseID)
                 
-                guard let success = responseBody?.success,
+                guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
             } catch {
@@ -91,11 +119,12 @@ extension PromiseViewModel {
     func updatePreparationStatus() {
         Task {
             do {
-                let responseBody = try await service.updatePreparationStatus(with: promiseID)
+                let result = try await service.updatePreparationStatus(with: promiseID)
                 
-                guard let success = responseBody?.success,
+                guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
             }
@@ -109,11 +138,12 @@ extension PromiseViewModel {
     func updateDepartureStatus() {
         Task {
             do {
-                let responseBody = try await service.updateDepartureStatus(with: promiseID)
+                let result = try await service.updateDepartureStatus(with: promiseID)
                 
-                guard let success = responseBody?.success,
+                guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
             }
@@ -127,11 +157,12 @@ extension PromiseViewModel {
     func updateArrivalStatus() {
         Task {
             do {
-                let responseBody = try await service.updateArrivalStatus(with: promiseID)
+                let result = try await service.updateArrivalStatus(with: promiseID)
                 
-                guard let success = responseBody?.success,
+                guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
             }
@@ -145,11 +176,12 @@ extension PromiseViewModel {
     func fetchTardyInfo() {
         Task {
             do {
-                let responseBody = try await service.fetchTardyInfo(with: promiseID)
+                let result = try await service.fetchTardyInfo(with: promiseID)
                 
-                guard let success = responseBody?.success,
+                guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
             } catch {
@@ -162,11 +194,12 @@ extension PromiseViewModel {
     func updatePromiseCompletion() {
         Task {
             do {
-                let responseBody = try await service.updatePromiseCompletion(with: promiseID)
+                let result = try await service.updatePromiseCompletion(with: promiseID)
                 
-                guard let success = responseBody?.success,
+                guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
             } catch {
@@ -184,6 +217,7 @@ extension PromiseViewModel {
                 guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
             } catch {
@@ -201,6 +235,7 @@ extension PromiseViewModel {
                 guard let success = result?.success, 
                         success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
             } catch {
