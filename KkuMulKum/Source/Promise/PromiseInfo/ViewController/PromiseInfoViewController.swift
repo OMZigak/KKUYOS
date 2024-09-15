@@ -12,7 +12,7 @@ import Kingfisher
 class PromiseInfoViewController: BaseViewController {
     
     
-    // MARK: Property
+    // MARK: - Property
     
     private let viewModel: PromiseViewModel
     private let rootView: PromiseInfoView = PromiseInfoView()
