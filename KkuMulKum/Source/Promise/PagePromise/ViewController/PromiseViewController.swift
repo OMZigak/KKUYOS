@@ -105,13 +105,7 @@ class PromiseViewController: BaseViewController {
             for: .valueChanged
         )
         
-        promiseTardyViewController.tardyView.finishMeetingButton.addTarget(
-            self,
-            action: #selector(finishMeetingButtonDidTap),
-            for: .touchUpInside
-        )
-        
-        promiseTardyViewController.arriveView.finishMeetingButton.addTarget(
+        promiseTardyViewController.rootView.finishMeetingButton.addTarget(
             self,
             action: #selector(finishMeetingButtonDidTap),
             for: .touchUpInside
@@ -143,7 +137,7 @@ class PromiseViewController: BaseViewController {
 private extension PromiseViewController {
     func setupBinding() {
         viewModel.promiseInfo.bindOnMain(with: self) { owner, info in
-            guard let isParticipant = info?.isParticipant else { return }
+            guard let info else { return }
             
             let moreButton = UIBarButtonItem(
                 image: .imgMore.withRenderingMode(.alwaysOriginal),
@@ -152,7 +146,8 @@ private extension PromiseViewController {
                 action: #selector(owner.moreButtonDidTap)
             )
             
-            owner.navigationController?.navigationItem.rightBarButtonItem = isParticipant ? moreButton : nil
+            owner.navigationController?.navigationItem.rightBarButtonItem = info.isParticipant ? moreButton : nil
+            owner.setupNavigationBarTitle(with: info.promiseName, isBorderHidden: true)
         }
     }
     

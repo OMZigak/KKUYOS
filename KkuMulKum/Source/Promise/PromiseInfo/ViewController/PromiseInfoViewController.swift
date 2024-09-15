@@ -43,6 +43,7 @@ class PromiseInfoViewController: BaseViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        viewModel.fetchTardyInfo()
         viewModel.fetchPromiseInfo()
         viewModel.fetchPromiseParticipantList()
     }
@@ -76,8 +77,7 @@ extension PromiseInfoViewController {
         viewModel.promiseInfo.bindOnMain(with: self) { owner, info in
             guard let info else { return }
             
-            owner.rootView.editButton.isHidden = !(info.isParticipant)
-            
+            owner.rootView.editButton.isHidden = owner.viewModel.isEditButtonHidden()
             owner.rootView.promiseNameLabel.setText(info.promiseName, style: .body01)
             owner.rootView.locationContentLabel.setText(info.placeName, style: .body04)
             owner.rootView.readyLevelContentLabel.setText(info.dressUpLevel, style: .body04)
@@ -90,6 +90,10 @@ extension PromiseInfoViewController {
             
             switch dDay {
             case 1...:
+                owner.rootView.dDayLabel.setText("D-\(dDay)", style: .body05, color: .gray5)
+            case 0:
+                owner.rootView.dDayLabel.setText("D-DAY", style: .body05, color: .mainorange)
+            case ..<0:
                 owner.rootView.dDayLabel.setText("D+\(-dDay)", style: .body05, color: .gray4)
                 owner.rootView.promiseImageView.image = .imgPromiseGray
                 owner.rootView.promiseNameLabel.textColor = .gray4
@@ -97,17 +101,17 @@ extension PromiseInfoViewController {
                 owner.rootView.timeInfoLabel.textColor = .gray4
                 owner.rootView.readyLevelInfoLabel.textColor = .gray4
                 owner.rootView.penaltyLevelInfoLabel.textColor = .gray4
-            case 0:
-                owner.rootView.dDayLabel.setText("D-DAY", style: .body05, color: .mainorange)
-            case ..<0:
-                owner.rootView.dDayLabel.setText("D-\(dDay)", style: .body05, color: .gray5)
             default:
                 break
             }
         }
         
-        viewModel.participants.bindOnMain(with: self) { owner, _ in
+        viewModel.participantList.bindOnMain(with: self) { owner, _ in
             owner.rootView.participantCollectionView.reloadData()
+        }
+        
+        viewModel.isPastDue.bindOnMain(with: self) { owner, _ in
+            owner.rootView.editButton.isHidden = owner.viewModel.isEditButtonHidden()
         }
     }
     
@@ -155,7 +159,7 @@ extension PromiseInfoViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return viewModel.participants.value.count
+        return viewModel.participantList.value.count
     }
     
     func collectionView(
@@ -169,7 +173,7 @@ extension PromiseInfoViewController: UICollectionViewDataSource {
             return UICollectionViewCell()
         }
         
-        let info = viewModel.participants.value[indexPath.row]
+        let info = viewModel.participantList.value[indexPath.row]
         
         cell.userNameLabel.setText(info.name, style: .caption02, color: .gray6)
         cell.profileImageView.kf.setImage(

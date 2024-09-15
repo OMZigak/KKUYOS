@@ -14,8 +14,11 @@ class PromiseViewModel {
 
     let promiseID: Int
     let promiseInfo = ObservablePattern<PromiseInfoModel?>(nil)
-    let participants = ObservablePattern<[Participant]>([])
+    let isPastDue = ObservablePattern<Bool?>(nil)
+    let penalty = ObservablePattern<String?>(nil)
     let dDay = ObservablePattern<Int?>(nil)
+    let participantList = ObservablePattern<[Participant]>([])
+    let tardyList = ObservablePattern<[Comer]>([])
     
     private let service: PromiseServiceProtocol
     
@@ -50,6 +53,16 @@ private extension PromiseViewModel {
 }
 
 extension PromiseViewModel {
+    func isEditButtonHidden() -> Bool {
+        guard let isParticipant = promiseInfo.value?.isParticipant,
+              let isPastDue = isPastDue.value 
+        else {
+            return false
+        }
+        
+        return !(isParticipant && !isPastDue)
+    }
+    
     /// 약속 상세 정보 조회 API 구현 함수
     func fetchPromiseInfo() {
         Task {
@@ -90,7 +103,7 @@ extension PromiseViewModel {
                     return
                 }
                 
-                participants.value = data.participants
+                participantList.value = data.participants
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
@@ -184,6 +197,15 @@ extension PromiseViewModel {
                     print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
+                
+                guard let data = result?.data else {
+                    print(">>>>> \("데이터 없음") : \(#function)")
+                    return
+                }
+                
+                penalty.value = data.penalty
+                isPastDue.value = data.isPastDue
+                tardyList.value = data.lateComers
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
