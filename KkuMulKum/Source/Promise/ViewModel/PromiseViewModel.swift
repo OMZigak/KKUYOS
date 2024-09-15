@@ -12,7 +12,6 @@ class PromiseViewModel {
     
     // MARK: Property
 
-    /// 서버 통신을 위해 생성자로 주입받을 약속 ID
     let promiseID: Int
     
     private let service: PromiseServiceProtocol
@@ -20,10 +19,7 @@ class PromiseViewModel {
     
     // MARK: Initialize
 
-    init(
-        promiseID: Int,
-        service: PromiseServiceProtocol
-    ) {
+    init(promiseID: Int, service: PromiseServiceProtocol) {
         self.service = service
         self.promiseID = promiseID
     }
@@ -37,9 +33,7 @@ extension PromiseViewModel {
     func fetchPromiseInfo() {
         Task {
             do {
-                let result = try await service.fetchPromiseInfo(
-                    with: promiseID
-                )
+                let result = try await service.fetchPromiseInfo(with: promiseID)
                 
                 guard let success = result?.success,
                       success == true
@@ -47,9 +41,7 @@ extension PromiseViewModel {
                     return
                 }
             } catch {
-                print(
-                    ">>>>> \(error.localizedDescription) : \(#function)"
-                )
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
@@ -58,9 +50,7 @@ extension PromiseViewModel {
     func fetchPromiseParticipantList() {
         Task {
             do {
-                let responseBody = try await service.fetchPromiseParticipantList(
-                    with: promiseID
-                )
+                let responseBody = try await service.fetchPromiseParticipantList(with: promiseID)
                 
                 guard let success = responseBody?.success, 
                         success == true
@@ -68,9 +58,7 @@ extension PromiseViewModel {
                     return
                 }
             } catch {
-                print(
-                    ">>>>> \(error.localizedDescription) : \(#function)"
-                )
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
@@ -79,9 +67,7 @@ extension PromiseViewModel {
     func fetchMyReadyStatus() {
         Task {
             do {
-                let responseBody = try await service.fetchMyReadyStatus(
-                    with: promiseID
-                )
+                let responseBody = try await service.fetchMyReadyStatus(with: promiseID)
                 
                 guard let success = responseBody?.success,
                       success == true
@@ -89,9 +75,7 @@ extension PromiseViewModel {
                     return
                 }
             } catch {
-                print(
-                    ">>>>> \(error.localizedDescription) : \(#function)"
-                )
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
@@ -100,9 +84,7 @@ extension PromiseViewModel {
     func updatePreparationStatus() {
         Task {
             do {
-                let responseBody = try await service.updatePreparationStatus(
-                    with: promiseID
-                )
+                let responseBody = try await service.updatePreparationStatus(with: promiseID)
                 
                 guard let success = responseBody?.success,
                       success == true
@@ -111,9 +93,7 @@ extension PromiseViewModel {
                 }
             }
             catch {
-                print(
-                    ">>>>> \(error.localizedDescription) : \(#function)"
-                )
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
@@ -122,9 +102,7 @@ extension PromiseViewModel {
     func updateDepartureStatus() {
         Task {
             do {
-                let responseBody = try await service.updateDepartureStatus(
-                    with: promiseID
-                )
+                let responseBody = try await service.updateDepartureStatus(with: promiseID)
                 
                 guard let success = responseBody?.success,
                       success == true
@@ -133,22 +111,16 @@ extension PromiseViewModel {
                 }
             }
             catch {
-                print(
-                    ">>>>> \(error.localizedDescription) : \(#function)"
-                )
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
     
     /// 도착 완료 업데이트 API 구현 함수
-    func updateArrivalStatus(
-        completion: @escaping () -> Void
-    ) {
+    func updateArrivalStatus() {
         Task {
             do {
-                let responseBody = try await service.updateArrivalStatus(
-                    with: promiseID
-                )
+                let responseBody = try await service.updateArrivalStatus(with: promiseID)
                 
                 guard let success = responseBody?.success,
                       success == true
@@ -157,9 +129,7 @@ extension PromiseViewModel {
                 }
             }
             catch {
-                print(
-                    ">>>>> \(error.localizedDescription) : \(#function)"
-                )
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
@@ -168,9 +138,7 @@ extension PromiseViewModel {
     func fetchTardyInfo() {
         Task {
             do {
-                let responseBody = try await service.fetchTardyInfo(
-                    with: promiseID
-                )
+                let responseBody = try await service.fetchTardyInfo(with: promiseID)
                 
                 guard let success = responseBody?.success,
                       success == true
@@ -178,9 +146,7 @@ extension PromiseViewModel {
                     return
                 }
             } catch {
-                print(
-                    ">>>>> \(error.localizedDescription) : \(#function)"
-                )
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
@@ -189,9 +155,7 @@ extension PromiseViewModel {
     func updatePromiseCompletion() {
         Task {
             do {
-                let responseBody = try await service.updatePromiseCompletion(
-                    with: promiseID
-                )
+                let responseBody = try await service.updatePromiseCompletion(with: promiseID)
                 
                 guard let success = responseBody?.success,
                       success == true
@@ -199,9 +163,7 @@ extension PromiseViewModel {
                     return
                 }
             } catch {
-                print(
-                    ">>>>> \(error.localizedDescription) : \(#function)"
-                )
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
@@ -209,9 +171,7 @@ extension PromiseViewModel {
     func deletePromise() {
         Task {
             do {
-                let result = try await service.deletePromise(
-                    promiseID: promiseID
-                )
+                let result = try await service.deletePromise(promiseID: promiseID)
                 
                 guard let success = result?.success,
                       success == true
@@ -219,9 +179,7 @@ extension PromiseViewModel {
                     return
                 }
             } catch {
-                print(
-                    ">>>>> \(error.localizedDescription) : \(#function)"
-                )
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
@@ -229,9 +187,7 @@ extension PromiseViewModel {
     func exitPromise() {
         Task {
             do {
-                let result = try await service.exitPromise(
-                    promiseID: promiseID
-                )
+                let result = try await service.exitPromise(promiseID: promiseID)
                 
                 guard let success = result?.success, 
                         success == true
@@ -239,9 +195,7 @@ extension PromiseViewModel {
                     return
                 }
             } catch {
-                print(
-                    ">>>>> \(error.localizedDescription) : \(#function)"
-                )
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
