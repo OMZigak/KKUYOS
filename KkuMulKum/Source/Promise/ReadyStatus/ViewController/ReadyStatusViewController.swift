@@ -20,23 +20,14 @@ class ReadyStatusViewController: BaseViewController {
     
     // MARK: - LifeCycle
     
-    init(
-        viewModel: PromiseViewModel
-    ) {
+    init(viewModel: PromiseViewModel) {
         self.viewModel = viewModel
         
-        super.init(
-            nibName: nil,
-            bundle: nil
-        )
+        super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(
-        coder: NSCoder
-    ) {
-        fatalError(
-            "init(coder:) has not been implemented"
-        )
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func loadView() {
@@ -51,12 +42,8 @@ class ReadyStatusViewController: BaseViewController {
         setupBinding()
     }
     
-    override func viewWillAppear(
-        _ animated: Bool
-    ) {
-        super.viewWillAppear(
-            animated
-        )
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     override func viewDidLayoutSubviews() {
@@ -74,38 +61,28 @@ class ReadyStatusViewController: BaseViewController {
     override func setupAction() {
         rootView.myReadyStatusProgressView.readyStartButton.addTarget(
             self,
-            action: #selector(
-                readyStartButtonDidTap
-            ),
+            action: #selector(readyStartButtonDidTap),
             for: .touchUpInside
         )
         rootView.myReadyStatusProgressView.moveStartButton.addTarget(
             self,
-            action: #selector(
-                moveStartButtonDidTap
-            ),
+            action: #selector(moveStartButtonDidTap),
             for: .touchUpInside
         )
         rootView.myReadyStatusProgressView.arrivalButton.addTarget(
             self,
-            action: #selector(
-                arrivalButtonDidTap
-            ),
+            action: #selector(arrivalButtonDidTap),
             for: .touchUpInside
         )
         rootView.readyPlanInfoView.editButton.addTarget(
             self,
-            action: #selector(
-                editReadyButtonDidTap
-            ),
+            action: #selector(editReadyButtonDidTap),
             for: .touchUpInside
         )
         rootView.enterReadyButtonView.addGestureRecognizer(
             UITapGestureRecognizer(
                 target: self,
-                action: #selector(
-                    enterReadyButtonDidTap
-                )
+                action: #selector(enterReadyButtonDidTap)
             )
         )
     }

@@ -19,23 +19,14 @@ class TardyViewController: BaseViewController {
     
     // MARK: - LifeCycle
 
-    init(
-        viewModel: PromiseViewModel
-    ) {
+    init(viewModel: PromiseViewModel) {
         self.viewModel = viewModel
         
-        super.init(
-            nibName: nil,
-            bundle: nil
-        )
+        super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(
-        coder: NSCoder
-    ) {
-        fatalError(
-            "init(coder:) has not been implemented"
-        )
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -44,12 +35,8 @@ class TardyViewController: BaseViewController {
         setupBinding()
     }
     
-    override func viewWillAppear(
-        _ animated: Bool
-    ) {
-        super.viewWillAppear(
-            animated
-        )
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
         viewModel.fetchTardyInfo()
     }
@@ -58,15 +45,9 @@ class TardyViewController: BaseViewController {
     // MARK: - Setup
     
     override func setupView() {
-        view.addSubviews(
-            arriveView,
-            tardyView
-        )
+        view.addSubviews(arriveView, tardyView)
         
-        [
-            arriveView,
-            tardyView
-        ].forEach {
+        [arriveView, tardyView].forEach {
             $0.snp.makeConstraints {
                 $0.edges.equalToSuperview()
             }
