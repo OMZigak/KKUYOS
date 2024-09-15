@@ -14,29 +14,20 @@ class PromiseInfoViewController: BaseViewController {
     
     // MARK: Property
     
-    let rootView: PromiseInfoView = PromiseInfoView()
-    let viewModel: PromiseViewModel
+    private let viewModel: PromiseViewModel
+    private let rootView: PromiseInfoView = PromiseInfoView()
     
     
     // MARK: - LifeCycle
 
-    init(
-        viewModel: PromiseViewModel
-    ) {
+    init(viewModel: PromiseViewModel) {
         self.viewModel = viewModel
         
-        super.init(
-            nibName: nil,
-            bundle: nil
-        )
+        super.init(nibName: nil, bundle: nil)
     }
     
-    required init?(
-        coder: NSCoder
-    ) {
-        fatalError(
-            "init(coder:) has not been implemented"
-        )
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func loadView() {
@@ -49,12 +40,8 @@ class PromiseInfoViewController: BaseViewController {
         setupBinding()
     }
     
-    override func viewWillAppear(
-        _ animated: Bool
-    ) {
-        super.viewWillAppear(
-            animated
-        )
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     
@@ -72,9 +59,7 @@ class PromiseInfoViewController: BaseViewController {
     override func setupAction() {
         rootView.editButton.addTarget(
             self,
-            action: #selector(
-                editButtonDidTap
-            ),
+            action: #selector(editButtonDidTap),
             for: .touchUpInside
         )
     }
@@ -84,12 +69,12 @@ class PromiseInfoViewController: BaseViewController {
 // MARK: - Extension
 
 extension PromiseInfoViewController {
-    @objc
-    func editButtonDidTap() {
+    func setupBinding() {
         
     }
     
-    func setupBinding() {
+    @objc
+    func editButtonDidTap() {
         
     }
 }
@@ -112,8 +97,7 @@ extension PromiseInfoViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: ParticipantCollectionViewCell.reuseIdentifier,
             for: indexPath
-        ) as? ParticipantCollectionViewCell
-        else {
+        ) as? ParticipantCollectionViewCell else {
             return UICollectionViewCell()
         }
         
@@ -130,14 +114,7 @@ extension PromiseInfoViewController: UICollectionViewDelegateFlowLayout  {
         layout collectionViewLayout: UICollectionViewLayout,
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
-        return CGSize(
-            width: Screen.width(
-                68
-            ),
-            height: Screen.height(
-                88
-            )
-        )
+        return CGSize(width: Screen.width(68), height: Screen.height(88))
     }
 }
 
