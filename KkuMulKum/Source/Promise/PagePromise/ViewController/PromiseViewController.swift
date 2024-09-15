@@ -54,7 +54,7 @@ class PromiseViewController: BaseViewController {
         super.viewDidLoad()
         
         setupNavigationBarBackButton()
-        setupBindings()
+        setupBinding()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -141,8 +141,19 @@ class PromiseViewController: BaseViewController {
 // MARK: - Extension
 
 private extension PromiseViewController {
-    func setupBindings() {
-        
+    func setupBinding() {
+        viewModel.promiseInfo.bindOnMain(with: self) { owner, info in
+            guard let isParticipant = info?.isParticipant else { return }
+            
+            let moreButton = UIBarButtonItem(
+                image: .imgMore.withRenderingMode(.alwaysOriginal),
+                style: .plain,
+                target: owner,
+                action: #selector(owner.moreButtonDidTap)
+            )
+            
+            owner.navigationController?.navigationItem.rightBarButtonItem = isParticipant ? moreButton : nil
+        }
     }
     
     @objc

@@ -13,6 +13,7 @@ class PromiseViewModel {
     // MARK: Property
 
     let promiseID: Int
+    let promiseInfo = ObservablePattern<PromiseInfoModel?>(nil)
     
     private let service: PromiseServiceProtocol
     
@@ -38,11 +39,17 @@ extension PromiseViewModel {
                 guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
+                    
                     return
                 }
+                
+                promiseInfo.value = result?.data
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
+            
+            
         }
     }
     
@@ -168,6 +175,7 @@ extension PromiseViewModel {
         }
     }
     
+    /// 약속 삭제 API 구현 함수
     func deletePromise() {
         Task {
             do {
@@ -184,6 +192,7 @@ extension PromiseViewModel {
         }
     }
     
+    /// 약속 나가기 API 구현 함수
     func exitPromise() {
         Task {
             do {
