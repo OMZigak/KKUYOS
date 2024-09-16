@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import PhotosUI
 
 class ProfileSetupViewController: BaseViewController {
     private let rootView = ProfileSetupView()
     private let viewModel: ProfileSetupViewModel
+    private let imagePicker = UIImagePickerController()
 
     init(viewModel: ProfileSetupViewModel) {
         self.viewModel = viewModel
@@ -30,6 +32,13 @@ class ProfileSetupViewController: BaseViewController {
         setupNavigationBarTitle(with: "프로필 설정")
         setupNavigationBarBackButton()
         setupBindings()
+        setupImagePicker()
+    }
+    
+    private func setupImagePicker() {
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.allowsEditing = true
     }
     
     override func setupAction() {
@@ -69,36 +78,69 @@ class ProfileSetupViewController: BaseViewController {
     }
     
     @objc private func cameraButtonTapped() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        imagePicker.allowsEditing = true
+        checkPhotoLibraryPermission()
+    }
+    
+    private func checkPhotoLibraryPermission() {
+        PHPhotoLibrary.requestAuthorization { [weak self] status in
+            DispatchQueue.main.async {
+                switch status {
+                case .authorized, .limited:
+                    self?.presentImagePicker()
+                case .denied, .restricted:
+                    self?.showPermissionDeniedAlert()
+                case .notDetermined:
+                    break
+                @unknown default:
+                    break
+                }
+            }
+        }
+    }
+    
+    private func presentImagePicker() {
         present(imagePicker, animated: true)
     }
     
+    private func showPermissionDeniedAlert() {
+        let alert = UIAlertController(
+            title: "권한 거부됨",
+            message: "사진 라이브러리 접근 권한이 거부되었습니다. 설정에서 권한을 변경해주세요.",
+            preferredStyle: .alert
+        )
+        alert.addAction(UIAlertAction(title: "설정", style: .default) { _ in
+            if let settingsURL = URL(string: UIApplication.openSettingsURLString) {
+                UIApplication.shared.open(settingsURL)
+            }
+        })
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        present(alert, animated: true)
+    }
+    
     private func cropToCircle(image: UIImage) -> UIImage {
-            let shorterSide = min(image.size.width, image.size.height)
-            let imageBounds = CGRect(x: 0, y: 0, width: shorterSide, height: shorterSide)
-            UIGraphicsBeginImageContextWithOptions(imageBounds.size, false, UIScreen.main.scale)
-            let context = UIGraphicsGetCurrentContext()!
-            context.addEllipse(in: imageBounds)
-            context.clip()
-            image.draw(in: imageBounds)
-            let circleImage = UIGraphicsGetImageFromCurrentImageContext()!
-            UIGraphicsEndImageContext()
-            return circleImage
-        }
+        let shorterSide = min(image.size.width, image.size.height)
+        let imageBounds = CGRect(x: 0, y: 0, width: shorterSide, height: shorterSide)
+        UIGraphicsBeginImageContextWithOptions(imageBounds.size, false, UIScreen.main.scale)
+        let context = UIGraphicsGetCurrentContext()!
+        context.addEllipse(in: imageBounds)
+        context.clip()
+        image.draw(in: imageBounds)
+        let circleImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return circleImage
+    }
 }
 
 extension ProfileSetupViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(
-           _ picker: UIImagePickerController,
-           didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
-       ) {
-           if let editedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
-               let croppedImage = cropToCircle(image: editedImage)
-               viewModel.updateProfileImage(croppedImage)
-           }
-           dismiss(animated: true)
-       }
+        _ picker: UIImagePickerController,
+        didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]
+    ) {
+        if let editedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
+            let croppedImage = cropToCircle(image: editedImage)
+            viewModel.updateProfileImage(croppedImage)
+        }
+        dismiss(animated: true)
+    }
 }
+
