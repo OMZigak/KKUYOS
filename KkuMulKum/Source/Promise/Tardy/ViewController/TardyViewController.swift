@@ -13,8 +13,7 @@ class TardyViewController: BaseViewController {
     // MARK: Property
     
     let viewModel: PromiseViewModel
-    let tardyView: TardyView = TardyView()
-    let arriveView: ArriveView = ArriveView()
+    let rootView: TardyView = TardyView()
     
     
     // MARK: - LifeCycle
@@ -27,6 +26,10 @@ class TardyViewController: BaseViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func loadView() {
+        view = rootView
     }
     
     override func viewDidLoad() {
@@ -44,18 +47,8 @@ class TardyViewController: BaseViewController {
     
     // MARK: - Setup
     
-    override func setupView() {
-        view.addSubviews(arriveView, tardyView)
-        
-        [arriveView, tardyView].forEach {
-            $0.snp.makeConstraints {
-                $0.edges.equalToSuperview()
-            }
-        }
-    }
-    
     override func setupDelegate() {
-        tardyView.tardyCollectionView.dataSource = self
+        rootView.tardyCollectionView.dataSource = self
     }
 }
 

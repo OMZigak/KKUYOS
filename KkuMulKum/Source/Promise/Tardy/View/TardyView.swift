@@ -18,6 +18,8 @@ class TardyView: BaseView {
     
     let tardyEmptyView: TardyEmptyView = TardyEmptyView()
     
+    let noTardyView: NoTardyView = NoTardyView()
+    
     let tardyCollectionView: UICollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout().then {
@@ -54,6 +56,7 @@ class TardyView: BaseView {
             tardyPenaltyView,
             titleLabel,
             tardyEmptyView,
+            noTardyView,
             tardyCollectionView,
             finishMeetingButton
         )
@@ -76,6 +79,10 @@ class TardyView: BaseView {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(Screen.height(210))
             $0.width.equalTo(Screen.width(112))
+        }
+        
+        noTardyView.snp.makeConstraints {
+            $0.edges.equalTo(safeAreaLayoutGuide)
         }
         
         finishMeetingButton.snp.makeConstraints {

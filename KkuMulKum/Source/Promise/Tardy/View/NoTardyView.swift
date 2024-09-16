@@ -1,5 +1,5 @@
 //
-//  ArriveView.swift
+//  NoTardyView.swift
 //  KkuMulKum
 //
 //  Created by YOUJIM on 7/14/24.
@@ -7,18 +7,11 @@
 
 import UIKit
 
-class ArriveView: BaseView {
+class NoTardyView: BaseView {
     
     
     // MARK: Property
     
-    let finishMeetingButton: CustomButton = CustomButton(
-        title: "약속 마치기",
-        isEnabled: true
-    ).then {
-        $0.backgroundColor = .maincolor
-    }
-
     private let giftImageView: UIImageView = UIImageView().then {
         $0.image = .imgGift
         $0.contentMode = .scaleAspectFit
@@ -41,8 +34,7 @@ class ArriveView: BaseView {
         addSubviews(
             giftImageView,
             mainTitleLabel,
-            subTitleLabel,
-            finishMeetingButton
+            subTitleLabel
         )
     }
     
@@ -62,13 +54,6 @@ class ArriveView: BaseView {
         subTitleLabel.snp.makeConstraints {
             $0.top.equalTo(mainTitleLabel.snp.bottom).offset(4)
             $0.centerX.equalToSuperview()
-        }
-        
-        finishMeetingButton.snp.makeConstraints {
-            $0.bottom.equalToSuperview().inset(64)
-            $0.centerX.equalToSuperview()
-            $0.height.equalTo(CustomButton.defaultHeight)
-            $0.width.equalTo(CustomButton.defaultWidth)
         }
     }
 }

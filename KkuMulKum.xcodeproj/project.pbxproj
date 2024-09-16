@@ -152,7 +152,7 @@
 		DD43937C2C412F4500EC1799 /* InviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4393742C412F4500EC1799 /* InviteCodeViewController.swift */; };
 		DD43937D2C412F4500EC1799 /* CheckInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4393752C412F4500EC1799 /* CheckInviteCodeViewController.swift */; };
 		DD43937F2C41357800EC1799 /* InviteCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43937E2C41357800EC1799 /* InviteCodeViewModel.swift */; };
-		DD4909962C440CDC003ED304 /* ArriveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4909952C440CDC003ED304 /* ArriveView.swift */; };
+		DD4909962C440CDC003ED304 /* NoTardyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4909952C440CDC003ED304 /* NoTardyView.swift */; };
 		DD8626612C4606A300E4F980 /* SetReadyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626522C4606A300E4F980 /* SetReadyInfoViewModel.swift */; };
 		DD8626632C4606A300E4F980 /* EnterReadyInfoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626552C4606A300E4F980 /* EnterReadyInfoButtonView.swift */; };
 		DD8626642C4606A300E4F980 /* ReadyPlanInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626562C4606A300E4F980 /* ReadyPlanInfoView.swift */; };
@@ -371,7 +371,7 @@
 		DD4393742C412F4500EC1799 /* InviteCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteCodeViewController.swift; sourceTree = "<group>"; };
 		DD4393752C412F4500EC1799 /* CheckInviteCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInviteCodeViewController.swift; sourceTree = "<group>"; };
 		DD43937E2C41357800EC1799 /* InviteCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodeViewModel.swift; sourceTree = "<group>"; };
-		DD4909952C440CDC003ED304 /* ArriveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArriveView.swift; sourceTree = "<group>"; };
+		DD4909952C440CDC003ED304 /* NoTardyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTardyView.swift; sourceTree = "<group>"; };
 		DD8626522C4606A300E4F980 /* SetReadyInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetReadyInfoViewModel.swift; sourceTree = "<group>"; };
 		DD8626552C4606A300E4F980 /* EnterReadyInfoButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterReadyInfoButtonView.swift; sourceTree = "<group>"; };
 		DD8626562C4606A300E4F980 /* ReadyPlanInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyPlanInfoView.swift; sourceTree = "<group>"; };
@@ -803,7 +803,7 @@
 				DD41BEF92C41D4160095A068 /* TardyView.swift */,
 				DD41BEFB2C41D54D0095A068 /* TardyPenaltyView.swift */,
 				DD41BEFE2C41DAA40095A068 /* TardyEmptyView.swift */,
-				DD4909952C440CDC003ED304 /* ArriveView.swift */,
+				DD4909952C440CDC003ED304 /* NoTardyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -2039,7 +2039,7 @@
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE0137D32C43C5E50088C777 /* MyPageView.swift in Sources */,
 				DE558C592C45954B008DAC4A /* SelectMemberViewController.swift in Sources */,
-				DD4909962C440CDC003ED304 /* ArriveView.swift in Sources */,
+				DD4909962C440CDC003ED304 /* NoTardyView.swift in Sources */,
 				789196342C486F6B00FF8CDF /* KeychainAccessible.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
 				DD43937B2C412F4500EC1799 /* CreateMeetingViewController.swift in Sources */,
