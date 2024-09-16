@@ -42,7 +42,7 @@ class TardyView: BaseView {
         $0.backgroundColor = .maincolor
     }
     
-    private let titleLabel: UILabel = UILabel().then {
+    let titleLabel: UILabel = UILabel().then {
         $0.setText("이번 약속의 지각 꾸물이는?", style: .head01, color: .gray8)
     }
     
@@ -82,7 +82,7 @@ class TardyView: BaseView {
         }
         
         noTardyView.snp.makeConstraints {
-            $0.edges.equalTo(safeAreaLayoutGuide)
+            $0.edges.equalToSuperview()
         }
         
         finishMeetingButton.snp.makeConstraints {
