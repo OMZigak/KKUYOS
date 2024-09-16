@@ -53,12 +53,12 @@ class TardyView: BaseView {
         backgroundColor = .white
         
         addSubviews(
-            tardyPenaltyView,
             titleLabel,
             tardyEmptyView,
             noTardyView,
             tardyCollectionView,
-            finishMeetingButton
+            finishMeetingButton,
+            tardyPenaltyView
         )
     }
     

@@ -87,8 +87,7 @@ class PromiseViewController: BaseViewController {
         promiseSegmentedControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview().inset(-6)
-            $0.height.equalTo(Screen.height(60)
-            )
+            $0.height.equalTo(Screen.height(60))
         }
         
         promisePageViewController.view.snp.makeConstraints {
@@ -164,6 +163,26 @@ private extension PromiseViewController {
                 owner.promiseViewControllerList[index]
             ], direction: direction, animated: false)
         }
+        
+        viewModel.isFinishSuccess.bindOnMain(with: self) { owner, isSuccess in
+            guard let isSuccess = isSuccess else { return }
+            
+            if isSuccess {
+                self.navigationController?.popViewController(animated: true)
+                
+                if let viewController = self.navigationController?.viewControllers.last {
+                    let toast = Toast()
+                    toast.show(message: "약속 마치기 성공!", view: viewController.view, position: .bottom, inset: 100)
+                }
+            }
+        }
+        
+        viewModel.errorMessage.bindOnMain(with: self) { owner, message in
+            let toast = Toast()
+            guard let message = message else { return }
+            
+            toast.show(message: message, view: owner.view, position: .bottom, inset: 100)
+        }
     }
     
     @objc
@@ -174,7 +193,7 @@ private extension PromiseViewController {
     
     @objc
     func finishMeetingButtonDidTap() {
-        
+        viewModel.updatePromiseCompletion()
     }
     
     @objc

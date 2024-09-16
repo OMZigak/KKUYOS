@@ -57,7 +57,77 @@ class TardyViewController: BaseViewController {
 
 private extension TardyViewController {
     func setupBinding() {
+        viewModel.penalty.bindOnMain(with: self) { owner, penalty in
+            owner.rootView.tardyPenaltyView.contentLabel.text = penalty
+        }
         
+        viewModel.isPastDue.bindOnMain(with: self) { owner, isPastDue in
+            switch owner.viewModel.showTardyScreen() {
+            case .tardyEmptyView:
+                owner.rootView.do {
+                    $0.finishMeetingButton.isEnabled = false
+                    $0.tardyEmptyView.isHidden = false
+                    $0.titleLabel.isHidden = false
+                    $0.tardyPenaltyView.isHidden = false
+                    $0.noTardyView.isHidden = true
+                    $0.tardyCollectionView.isHidden = true
+                }
+            case .tardyListView:
+                owner.rootView.do {
+                    $0.finishMeetingButton.isEnabled = true
+                    $0.titleLabel.isHidden = false
+                    $0.tardyPenaltyView.isHidden = false
+                    $0.tardyCollectionView.isHidden = false
+                    $0.tardyEmptyView.isHidden = true
+                    $0.noTardyView.isHidden = true
+                    
+                    owner.rootView.tardyCollectionView.reloadData()
+                }
+            case .noTardyView:
+                owner.rootView.do {
+                    $0.finishMeetingButton.isEnabled = true
+                    $0.noTardyView.isHidden = false
+                    $0.tardyEmptyView.isHidden = true
+                    $0.titleLabel.isHidden = true
+                    $0.tardyPenaltyView.isHidden = true
+                    $0.tardyCollectionView.isHidden = true
+                }
+            }
+        }
+        
+        viewModel.tardyList.bindOnMain(with: self) { owner, tardyList in
+            switch owner.viewModel.showTardyScreen() {
+            case .tardyEmptyView:
+                owner.rootView.do {
+                    $0.finishMeetingButton.isEnabled = false
+                    $0.tardyEmptyView.isHidden = false
+                    $0.titleLabel.isHidden = false
+                    $0.tardyPenaltyView.isHidden = false
+                    $0.noTardyView.isHidden = true
+                    $0.tardyCollectionView.isHidden = true
+                }
+            case .tardyListView:
+                owner.rootView.do {
+                    $0.finishMeetingButton.isEnabled = true
+                    $0.titleLabel.isHidden = false
+                    $0.tardyPenaltyView.isHidden = false
+                    $0.tardyCollectionView.isHidden = false
+                    $0.tardyEmptyView.isHidden = true
+                    $0.noTardyView.isHidden = true
+                    
+                    owner.rootView.tardyCollectionView.reloadData()
+                }
+            case .noTardyView:
+                owner.rootView.do {
+                    $0.finishMeetingButton.isEnabled = true
+                    $0.noTardyView.isHidden = false
+                    $0.tardyEmptyView.isHidden = true
+                    $0.titleLabel.isHidden = true
+                    $0.tardyPenaltyView.isHidden = true
+                    $0.tardyCollectionView.isHidden = true
+                }
+            }
+        }
     }
 }
 
@@ -68,7 +138,7 @@ extension TardyViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return 0
+        return viewModel.tardyList.value.count
     }
     
     func collectionView(
@@ -81,6 +151,13 @@ extension TardyViewController: UICollectionViewDataSource {
         ) as? TardyCollectionViewCell else {
             return UICollectionViewCell()
         }
+        
+        guard let tardyName = viewModel.tardyList.value[indexPath.row].name else {
+            return cell
+        }
+        
+        cell.nameLabel.setText(tardyName, style: .body06, color: .gray6)
+        cell.profileImageView.kf.setImage(with: URL(string: viewModel.tardyList.value[indexPath.row].profileImageURL ?? ""), placeholder: UIImage.imgProfile)
         
         return cell
     }

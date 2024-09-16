@@ -7,6 +7,12 @@
 
 import Foundation
 
+enum TardyScreen {
+    case tardyEmptyView
+    case tardyListView
+    case noTardyView
+}
+
 class PromiseViewModel {
     
     
@@ -20,6 +26,9 @@ class PromiseViewModel {
     let dDay = ObservablePattern<Int?>(nil)
     let participantList = ObservablePattern<[Participant]>([])
     let tardyList = ObservablePattern<[Comer]>([])
+    
+    let isFinishSuccess = ObservablePattern<Bool?>(nil)
+    let errorMessage = ObservablePattern<String?>(nil)
     
     var pageControlDirection = false
     
@@ -64,6 +73,23 @@ extension PromiseViewModel {
         }
         
         return !(isParticipant && !isPastDue)
+    }
+    
+    func showTardyScreen() -> TardyScreen {
+        guard let isPastDue = isPastDue.value else { return .tardyEmptyView }
+        let hasTardy = !tardyList.value.isEmpty
+        
+        if !isPastDue {
+            return .tardyEmptyView
+        }
+        else if isPastDue && hasTardy {
+            return .tardyListView
+        }
+        else if isPastDue && !hasTardy {
+            return .noTardyView
+        }
+        
+        return .tardyEmptyView
     }
     
     /// 약속 상세 정보 조회 API 구현 함수
@@ -224,9 +250,15 @@ extension PromiseViewModel {
                 guard let success = result?.success,
                       success == true
                 else {
+                    guard let message = result?.error?.message else { return }
+                    
+                    errorMessage.value = message
+                    
                     print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
+
+                isFinishSuccess.value = success
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
