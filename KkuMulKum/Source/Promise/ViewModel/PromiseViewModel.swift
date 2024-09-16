@@ -13,12 +13,15 @@ class PromiseViewModel {
     // MARK: Property
 
     let promiseID: Int
+    let currentPageIndex = ObservablePattern<Int>(0)
     let promiseInfo = ObservablePattern<PromiseInfoModel?>(nil)
     let isPastDue = ObservablePattern<Bool?>(nil)
     let penalty = ObservablePattern<String?>(nil)
     let dDay = ObservablePattern<Int?>(nil)
     let participantList = ObservablePattern<[Participant]>([])
     let tardyList = ObservablePattern<[Comer]>([])
+    
+    var pageControlDirection = false
     
     private let service: PromiseServiceProtocol
     

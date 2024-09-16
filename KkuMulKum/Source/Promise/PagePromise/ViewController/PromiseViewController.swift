@@ -22,7 +22,6 @@ class PromiseViewController: BaseViewController {
         transitionStyle: .scroll,
         navigationOrientation: .vertical
     )
-    
     private var removePromiseViewContoller: RemovePromiseViewController = RemovePromiseViewController(promiseName: "")
     private var promiseViewControllerList: [BaseViewController] = []
     private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(items: ["약속 정보", "준비 현황", "지각 꾸물이"])
@@ -149,29 +148,28 @@ private extension PromiseViewController {
             owner.navigationController?.navigationItem.rightBarButtonItem = info.isParticipant ? moreButton : nil
             owner.setupNavigationBarTitle(with: info.promiseName, isBorderHidden: true)
         }
+        
+        viewModel.currentPageIndex.bindOnMain(with: self) { owner, index in
+            let direction: UIPageViewController.NavigationDirection = owner.viewModel.pageControlDirection ? .forward : .reverse
+            let (width, count) = (
+                owner.promiseSegmentedControl.bounds.width,
+                owner.promiseSegmentedControl.numberOfSegments
+            )
+            
+            owner.promiseSegmentedControl.selectedUnderLineView.snp.updateConstraints {
+                $0.leading.equalToSuperview().offset((width / CGFloat(count)) * CGFloat(index))
+            }
+            
+            owner.promisePageViewController.setViewControllers([
+                owner.promiseViewControllerList[index]
+            ], direction: direction, animated: false)
+        }
     }
     
     @objc
     func didSegmentedControlIndexUpdated() {
-        //        let condition = viewModel.currentPageIndex.value <= promiseSegmentedControl.selectedSegmentIndex
-        //        let direction: UIPageViewController.NavigationDirection = condition ? .forward : .reverse
-        //        let (width, count, selectedIndex) = (
-        //            promiseSegmentedControl.bounds.width,
-        //            promiseSegmentedControl.numberOfSegments,
-        //            promiseSegmentedControl.selectedSegmentIndex
-        //        )
-        //        
-        //        promiseSegmentedControl.selectedUnderLineView.snp.updateConstraints {
-        //            $0.leading.equalToSuperview().offset((width / CGFloat(count)) * CGFloat(selectedIndex))
-        //        }
-        //        
-        //        viewModel.segmentIndexDidChange(
-        //            index: promiseSegmentedControl.selectedSegmentIndex
-        //        )
-        //        
-        //        promisePageViewController.setViewControllers([
-        //            promiseViewControllerList[viewModel.currentPageIndex.value]
-        //        ], direction: direction, animated: false)
+        viewModel.pageControlDirection = viewModel.currentPageIndex.value <= promiseSegmentedControl.selectedSegmentIndex
+        viewModel.currentPageIndex.value = promiseSegmentedControl.selectedSegmentIndex
     }
     
     @objc
