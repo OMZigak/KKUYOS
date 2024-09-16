@@ -85,6 +85,11 @@ extension PromiseInfoViewController {
             owner.rootView.timeContentLabel.setText(info.time, style: .body04)
         }
         
+        viewModel.participantList.bindOnMain(with: self) { owner, list in
+            owner.rootView.participantNumberLabel.setText("\(list.count)명", style: .body05, color: .gray3)
+            owner.rootView.participantCollectionView.reloadData()
+        }
+        
         viewModel.dDay.bindOnMain(with: self) { owner, dDay in
             guard let dDay else { return }
             
@@ -94,20 +99,19 @@ extension PromiseInfoViewController {
             case 0:
                 owner.rootView.dDayLabel.setText("D-DAY", style: .body05, color: .mainorange)
             case ..<0:
-                owner.rootView.dDayLabel.setText("D+\(-dDay)", style: .body05, color: .gray4)
-                owner.rootView.promiseImageView.image = .imgPromiseGray
-                owner.rootView.promiseNameLabel.textColor = .gray4
-                owner.rootView.locationInfoLabel.textColor = .gray4
-                owner.rootView.timeInfoLabel.textColor = .gray4
-                owner.rootView.readyLevelInfoLabel.textColor = .gray4
-                owner.rootView.penaltyLevelInfoLabel.textColor = .gray4
+                owner.rootView.do {
+                    $0.dDayLabel.setText("D+\(-dDay)", style: .body05, color: .gray4)
+                    $0.promiseImageView.image = .imgPromiseGray
+                    $0.participantLabel.textColor = .gray4
+                    $0.promiseNameLabel.textColor = .gray4
+                    $0.locationInfoLabel.textColor = .gray4
+                    $0.timeInfoLabel.textColor = .gray4
+                    $0.readyLevelInfoLabel.textColor = .gray4
+                    $0.penaltyLevelInfoLabel.textColor = .gray4
+                }
             default:
                 break
             }
-        }
-        
-        viewModel.participantList.bindOnMain(with: self) { owner, _ in
-            owner.rootView.participantCollectionView.reloadData()
         }
         
         viewModel.isPastDue.bindOnMain(with: self) { owner, _ in
