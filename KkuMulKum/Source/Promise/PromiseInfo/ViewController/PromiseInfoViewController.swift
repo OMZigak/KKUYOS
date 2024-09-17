@@ -76,13 +76,14 @@ extension PromiseInfoViewController {
     func setupBinding() {
         viewModel.promiseInfo.bindOnMain(with: self) { owner, info in
             guard let info else { return }
+            let time = owner.viewModel.convertTime()
             
             owner.rootView.editButton.isHidden = owner.viewModel.isEditButtonHidden()
             owner.rootView.promiseNameLabel.setText(info.promiseName, style: .body01)
             owner.rootView.locationContentLabel.setText(info.placeName, style: .body04)
             owner.rootView.readyLevelContentLabel.setText(info.dressUpLevel, style: .body04)
             owner.rootView.penaltyLevelContentLabel.setText(info.penalty, style: .body04)
-            owner.rootView.timeContentLabel.setText(info.time, style: .body04)
+            owner.rootView.timeContentLabel.setText(time, style: .body04)
         }
         
         viewModel.participantList.bindOnMain(with: self) { owner, list in

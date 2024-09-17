@@ -92,6 +92,19 @@ extension PromiseViewModel {
         return .tardyEmptyView
     }
     
+    func convertTime() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        guard let promiseTime = promiseInfo.value?.time else { return "" }
+        guard let promiseDate = dateFormatter.date(from: promiseTime) else { return promiseTime }
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "M월 d일 a H:mm"
+        
+        return timeFormatter.string(from: promiseDate)
+    }
+    
     /// 약속 상세 정보 조회 API 구현 함수
     func fetchPromiseInfo() {
         Task {
