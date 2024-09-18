@@ -21,12 +21,13 @@ class PromiseViewModel {
     let promiseID: Int
     let currentPageIndex = ObservablePattern<Int>(0)
     let promiseInfo = ObservablePattern<PromiseInfoModel?>(nil)
+    let myReadyInfo = ObservablePattern<MyReadyStatusModel?>(nil)
     let isPastDue = ObservablePattern<Bool?>(nil)
     let penalty = ObservablePattern<String?>(nil)
     let dDay = ObservablePattern<Int?>(nil)
+    let requestReadyTime = ObservablePattern<[String]>(["", "", "", ""])
     let participantList = ObservablePattern<[Participant]>([])
     let tardyList = ObservablePattern<[Comer]>([])
-    
     let isFinishSuccess = ObservablePattern<Bool?>(nil)
     let errorMessage = ObservablePattern<String?>(nil)
     
@@ -62,6 +63,33 @@ private extension PromiseViewModel {
         
         dDay.value = components.day
     }
+    
+    func calculateReadyInfo() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH시 mm분"
+        
+        guard let promiseTime = myReadyInfo.value?.promiseTime,
+              let promiseDate = dateFormatter.date(from: promiseTime),
+              let preparationTime = myReadyInfo.value?.preparationTime,
+              let travelTime = myReadyInfo.value?.travelTime else {
+            return
+        }
+        
+        let readyStartTime = promiseDate.addingTimeInterval(-TimeInterval(preparationTime + travelTime + 10) * 60)
+        let moveStartTime = promiseDate.addingTimeInterval(-TimeInterval(travelTime + 10) * 60)
+        let preparationHours = preparationTime / 60
+        let preparationMinutes = preparationTime % 60
+        let travelHours = travelTime / 60
+        let travelMinutes = travelTime % 60
+        
+        requestReadyTime.value[0] = timeFormatter.string(from: readyStartTime)
+        requestReadyTime.value[1] = timeFormatter.string(from: moveStartTime)
+        requestReadyTime.value[2] = preparationHours == 0 ? "\(preparationMinutes)분" : "\(preparationHours)시간 \(preparationMinutes)분"
+        requestReadyTime.value[3] = travelHours == 0 ? "\(travelMinutes)분" : "\(travelHours)시간 \(travelMinutes)분"
+    }
 }
 
 extension PromiseViewModel {
@@ -73,6 +101,16 @@ extension PromiseViewModel {
         }
         
         return !(isParticipant && !isPastDue)
+    }
+    
+    func isReadyInfoEntered() -> Bool {
+        guard let isParticipant = promiseInfo.value?.isParticipant,
+              let _ = myReadyInfo.value?.preparationTime,
+              let _ = myReadyInfo.value?.travelTime else {
+            return false
+        }
+        
+        return isParticipant
     }
     
     func showTardyScreen() -> TardyScreen {
@@ -164,6 +202,10 @@ extension PromiseViewModel {
                     print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
+                
+                myReadyInfo.value = result?.data
+                
+                calculateReadyInfo()
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
