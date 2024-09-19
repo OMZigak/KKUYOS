@@ -30,8 +30,6 @@ class ObservablePattern<T> {
     
     func bind(_ listener: @escaping (T) -> Void) {
         listeners.append(listener)
-        
-        listener(value)
     }
     
     func bind<Object: AnyObject>(with object: Object, _ listener: @escaping (Object, T) -> Void) {
@@ -39,8 +37,6 @@ class ObservablePattern<T> {
             guard let object else { return }
             listener(object, value)
         }
-        
-        listener(object, value)
     }
     
     func bindOnMain(_ listener: @escaping (T) -> Void) {
@@ -48,10 +44,6 @@ class ObservablePattern<T> {
             DispatchQueue.main.async {
                 listener(value)
             }
-        }
-        
-        DispatchQueue.main.async {
-            listener(self.value)
         }
     }
     
@@ -61,10 +53,6 @@ class ObservablePattern<T> {
             DispatchQueue.main.async {
                 listener(object, value)
             }
-        }
-        
-        DispatchQueue.main.async {
-            listener(object, self.value)
         }
     }
 }
