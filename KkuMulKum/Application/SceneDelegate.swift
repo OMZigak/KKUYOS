@@ -6,11 +6,14 @@
 //
 
 import UIKit
+
 import KakaoSDKAuth
+import UserNotifications
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     var window: UIWindow?
     let loginViewModel = LoginViewModel()
+    var pendingNotificationData: [String: Any]?
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = (scene as? UIWindowScene) else { return }
@@ -22,9 +25,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         self.window?.rootViewController = launchScreenViewController
         self.window?.makeKeyAndVisible()
         
+        if let notificationResponse = connectionOptions.notificationResponse {
+            let userInfo = notificationResponse.notification.request.content.userInfo
+            handleNotification(userInfo: userInfo)
+        }
+        
         performAutoLogin()
     }
-     
+    
     private func performAutoLogin() {
         print("Performing auto login")
         loginViewModel.autoLogin { [weak self] success in
@@ -39,18 +47,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-            if let url = URLContexts.first?.url {
-                if (AuthApi.isKakaoTalkLoginUrl(url)) {
-                    _ = AuthController.handleOpenUrl(url: url)
-                }
+        if let url = URLContexts.first?.url {
+            if (AuthApi.isKakaoTalkLoginUrl(url)) {
+                _ = AuthController.handleOpenUrl(url: url)
             }
         }
+    }
     
-    func application(
-        _ app: UIApplication,
-        open url: URL,
-        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
-    ) -> Bool {
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
         if (AuthApi.isKakaoTalkLoginUrl(url)) {
             return AuthController.handleOpenUrl(url: url)
         }
@@ -66,6 +70,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navigationController.isNavigationBarHidden = true
         
         animateRootViewControllerChange(to: navigationController)
+        
+        if let notificationData = pendingNotificationData {
+            handleNotificationNavigation(data: notificationData)
+            pendingNotificationData = nil
+        }
     }
     
     private func showLoginScreen() {
@@ -80,16 +89,50 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                           duration: 0.3,
                           options: .transitionCrossDissolve,
                           animations: {
-                            let oldState = UIView.areAnimationsEnabled
-                            UIView.setAnimationsEnabled(false)
-                            window.rootViewController = newRootViewController
-                            UIView.setAnimationsEnabled(oldState)
+            let oldState = UIView.areAnimationsEnabled
+            UIView.setAnimationsEnabled(false)
+            window.rootViewController = newRootViewController
+            UIView.setAnimationsEnabled(oldState)
         })
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {}
-    func sceneDidBecomeActive(_ scene: UIScene) {}
+    
+    func sceneDidBecomeActive(_ scene: UIScene) {
+        if let notificationData = pendingNotificationData {
+            handleNotificationNavigation(data: notificationData)
+            pendingNotificationData = nil
+        }
+    }
+    
     func sceneWillResignActive(_ scene: UIScene) {}
     func sceneWillEnterForeground(_ scene: UIScene) {}
     func sceneDidEnterBackground(_ scene: UIScene) {}
+    
+    func handleNotification(userInfo: [AnyHashable: Any]) {
+        if let data = userInfo["data"] as? [String: Any] {
+            handleNotificationNavigation(data: data)
+        }
+    }
+    
+    private func handleNotificationNavigation(data: [String: Any]) {
+        guard let screen = data["screen"] as? String,
+              let promiseId = data["promiseId"] as? Int else {
+            return
+        }
+        
+        guard let navigationController = window?.rootViewController as? UINavigationController else {
+            pendingNotificationData = data
+            return
+        }
+        
+        switch screen {
+        case "readyStatus":
+            let promiseViewModel = PromiseViewModel(promiseID: promiseId, service: PromiseService())
+            let readyStatusVC = ReadyStatusViewController(viewModel: promiseViewModel)
+            navigationController.pushViewController(readyStatusVC, animated: true)
+        default:
+            break
+        }
+    }
 }
