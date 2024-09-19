@@ -22,6 +22,7 @@ class PromiseViewModel {
     let currentPageIndex = ObservablePattern<Int>(0)
     let promiseInfo = ObservablePattern<PromiseInfoModel?>(nil)
     let myReadyInfo = ObservablePattern<MyReadyStatusModel?>(nil)
+    let myReadyStatus = ObservablePattern<ReadyStatus>(.none)
     let isPastDue = ObservablePattern<Bool?>(nil)
     let penalty = ObservablePattern<String?>(nil)
     let dDay = ObservablePattern<Int?>(nil)
@@ -89,6 +90,22 @@ private extension PromiseViewModel {
         requestReadyTime.value[1] = timeFormatter.string(from: moveStartTime)
         requestReadyTime.value[2] = preparationHours == 0 ? "\(preparationMinutes)분" : "\(preparationHours)시간 \(preparationMinutes)분"
         requestReadyTime.value[3] = travelHours == 0 ? "\(travelMinutes)분" : "\(travelHours)시간 \(travelMinutes)분"
+    }
+    
+    func getMyReadyStatus() {
+        guard let info = myReadyInfo.value else { return }
+        switch (info.preparationStartAt, info.departureAt, info.arrivalAt) {
+        case (nil, nil, nil):
+            myReadyStatus.value = .none
+        case (.some, nil, nil):
+            myReadyStatus.value = .ready
+        case (.some, .some, nil):
+            myReadyStatus.value = .move
+        case (.some, .some, .some):
+            myReadyStatus.value = .done
+        default:
+            break
+        }
     }
 }
 
@@ -206,6 +223,7 @@ extension PromiseViewModel {
                 myReadyInfo.value = result?.data
                 
                 calculateReadyInfo()
+                getMyReadyStatus()
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
@@ -224,6 +242,9 @@ extension PromiseViewModel {
                     print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
+                
+                fetchMyReadyStatus()
+                fetchPromiseParticipantList()
             }
             catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
@@ -243,6 +264,9 @@ extension PromiseViewModel {
                     print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
+                
+                fetchMyReadyStatus()
+                fetchPromiseParticipantList()
             }
             catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
@@ -262,6 +286,9 @@ extension PromiseViewModel {
                     print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
+                
+                fetchMyReadyStatus()
+                fetchPromiseParticipantList()
             }
             catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")

@@ -110,11 +110,12 @@ extension ReadyStatusViewController {
         
         viewModel.promiseInfo.bindOnMain(with: self) { owner, info in
             guard let promiseInfo = info else { return }
+            let isParticipant = promiseInfo.isParticipant
             
             owner.rootView.do {
                 $0.enterReadyButtonView.isHidden = owner.viewModel.isReadyInfoEntered()
                 $0.readyPlanInfoView.isHidden = !$0.enterReadyButtonView.isHidden
-                $0.enterReadyButtonView.isUserInteractionEnabled = promiseInfo.isParticipant
+                $0.enterReadyButtonView.isUserInteractionEnabled = isParticipant
             }
         }
         
@@ -122,6 +123,75 @@ extension ReadyStatusViewController {
             owner.rootView.do {
                 $0.enterReadyButtonView.isHidden = owner.viewModel.isReadyInfoEntered()
                 $0.readyPlanInfoView.isHidden = !$0.enterReadyButtonView.isHidden
+            }
+        }
+        
+        viewModel.myReadyStatus.bindOnMain(with: self) { owner, state in
+            owner.rootView.myReadyStatusProgressView.do {
+                switch state {
+                case .none:
+                    $0.readyStartButton.setupButton("준비 시작", .ready)
+                    $0.moveStartButton.setupButton("이동 시작", .none)
+                    $0.arrivalButton.setupButton("도착 완료", .none)
+                    $0.readyStartButton.isEnabled = true
+                    $0.moveStartButton.isEnabled = false
+                    $0.arrivalButton.isEnabled = false
+                    $0.readyStartTitleLabel.isHidden = false
+                    $0.moveStartTitleLabel.isHidden = true
+                    $0.arrivalTitleLabel.isHidden = true
+                    $0.readyStartTimeLabel.isHidden = true
+                    $0.moveStartTimeLabel.isHidden = true
+                    $0.arrivalTimeLabel.isHidden = true
+                    $0.statusProgressView.setProgress(0.0, animated: false)
+                case .ready:
+                    $0.readyStartButton.setupButton("준비 중", .move)
+                    $0.moveStartButton.setupButton("이동 시작", .ready)
+                    $0.arrivalButton.setupButton("도착 완료", .none)
+                    $0.readyStartButton.isEnabled = false
+                    $0.moveStartButton.isEnabled = true
+                    $0.arrivalButton.isEnabled = false
+                    $0.readyStartTitleLabel.isHidden = true
+                    $0.moveStartTitleLabel.isHidden = false
+                    $0.arrivalTitleLabel.isHidden = true
+                    $0.readyStartTimeLabel.isHidden = false
+                    $0.moveStartTimeLabel.isHidden = true
+                    $0.arrivalTimeLabel.isHidden = true
+                    $0.readyStartCheckImageView.image = .iconCheck
+                    $0.statusProgressView.setProgress(0.2, animated: false)
+                case .move:
+                    $0.readyStartButton.setupButton("준비 완료", .done)
+                    $0.moveStartButton.setupButton("이동 중", .move)
+                    $0.arrivalButton.setupButton("도착 완료", .ready)
+                    $0.readyStartButton.isEnabled = false
+                    $0.moveStartButton.isEnabled = false
+                    $0.arrivalButton.isEnabled = true
+                    $0.readyStartTitleLabel.isHidden = true
+                    $0.moveStartTitleLabel.isHidden = true
+                    $0.arrivalTitleLabel.isHidden = false
+                    $0.readyStartTimeLabel.isHidden = false
+                    $0.moveStartTimeLabel.isHidden = false
+                    $0.arrivalTimeLabel.isHidden = true
+                    $0.readyStartCheckImageView.image = .iconCheck
+                    $0.moveStartCheckImageView.image = .iconCheck
+                    $0.statusProgressView.setProgress(0.5, animated: false)
+                case .done:
+                    $0.readyStartButton.setupButton("준비 완료", .done)
+                    $0.moveStartButton.setupButton("이동 완료", .done)
+                    $0.arrivalButton.setupButton("도착 완료", .done)
+                    $0.readyStartButton.isEnabled = false
+                    $0.moveStartButton.isEnabled = false
+                    $0.arrivalButton.isEnabled = false
+                    $0.readyStartTitleLabel.isHidden = false
+                    $0.moveStartTitleLabel.isHidden = false
+                    $0.arrivalTitleLabel.isHidden = false
+                    $0.readyStartTimeLabel.isHidden = false
+                    $0.moveStartTimeLabel.isHidden = false
+                    $0.arrivalTimeLabel.isHidden = false
+                    $0.readyStartCheckImageView.image = .iconCheck
+                    $0.moveStartCheckImageView.image = .iconCheck
+                    $0.arrivalCheckImageView.image = .iconCheck
+                    $0.statusProgressView.setProgress(1, animated: false)
+                }
             }
         }
         
@@ -137,17 +207,17 @@ extension ReadyStatusViewController {
     
     @objc
     func readyStartButtonDidTap() {
-        
+        viewModel.updatePreparationStatus()
     }
     
     @objc
     func moveStartButtonDidTap() {
-        
+        viewModel.updateDepartureStatus()
     }
     
     @objc
     func arrivalButtonDidTap() {
-        
+        viewModel.updateArrivalStatus()
     }
     
     @objc
