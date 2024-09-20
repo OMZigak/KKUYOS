@@ -30,6 +30,8 @@ class PromiseViewModel {
     let participantList = ObservablePattern<[Participant]>([])
     let tardyList = ObservablePattern<[Comer]>([])
     let isFinishSuccess = ObservablePattern<Bool?>(nil)
+    let isDeleteSuccess = ObservablePattern<Bool?>(nil)
+    let isExitSuccess = ObservablePattern<Bool?>(nil)
     let errorMessage = ObservablePattern<String?>(nil)
     
     var pageControlDirection = false
@@ -359,6 +361,8 @@ extension PromiseViewModel {
                     print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
+                
+                isDeleteSuccess.value = success
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
@@ -377,6 +381,8 @@ extension PromiseViewModel {
                     print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
+                
+                isExitSuccess.value = success
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }

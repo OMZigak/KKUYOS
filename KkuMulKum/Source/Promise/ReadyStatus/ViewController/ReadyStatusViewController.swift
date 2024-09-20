@@ -116,6 +116,7 @@ extension ReadyStatusViewController {
                 $0.enterReadyButtonView.isHidden = owner.viewModel.isReadyInfoEntered()
                 $0.readyPlanInfoView.isHidden = !$0.enterReadyButtonView.isHidden
                 $0.enterReadyButtonView.isUserInteractionEnabled = isParticipant
+                $0.myReadyStatusProgressView.isUserInteractionEnabled = isParticipant
             }
         }
         

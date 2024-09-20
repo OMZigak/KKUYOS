@@ -184,6 +184,14 @@ private extension PromiseViewController {
             
             toast.show(message: message, view: owner.view, position: .bottom, inset: 100)
         }
+        
+        viewModel.isExitSuccess.bindOnMain(with: self) { owner, isSuccess in
+            owner.navigationController?.popViewController(animated: true)
+        }
+        
+        viewModel.isDeleteSuccess.bindOnMain(with: self) { owner, isSuccess in
+            owner.navigationController?.popViewController(animated: true)
+        }
     }
     
     @objc
@@ -226,9 +234,13 @@ private extension PromiseViewController {
 extension PromiseViewController: CustomActionSheetDelegate {
     func actionButtonDidTap(for kind: ActionSheetKind) {
         if kind == .deletePromise {
+            viewModel.deletePromise()
+            
             dismiss(animated: false)
         }
         else {
+            viewModel.exitPromise()
+            
             dismiss(animated: false)
         }
     }
