@@ -124,10 +124,13 @@ extension ReadyStatusViewController {
             let departureAt = status?.departureAt ?? " "
             let arrivalAt = status?.arrivalAt ?? " "
             
+            owner.rootView.myReadyStatusProgressView.do {
+                $0.readyStartTimeLabel.text = preparationStartAt
+                $0.moveStartTimeLabel.text = departureAt
+                $0.arrivalTimeLabel.text = arrivalAt
+            }
+            
             owner.rootView.do {
-                $0.myReadyStatusProgressView.readyStartTimeLabel.text = preparationStartAt
-                $0.myReadyStatusProgressView.moveStartTimeLabel.text = departureAt
-                $0.myReadyStatusProgressView.arrivalTimeLabel.text = arrivalAt
                 $0.enterReadyButtonView.isHidden = owner.viewModel.isReadyInfoEntered()
                 $0.readyPlanInfoView.isHidden = !$0.enterReadyButtonView.isHidden
             }
