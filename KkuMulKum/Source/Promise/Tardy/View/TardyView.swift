@@ -18,6 +18,8 @@ class TardyView: BaseView {
     
     let tardyEmptyView: TardyEmptyView = TardyEmptyView()
     
+    let noTardyView: NoTardyView = NoTardyView()
+    
     let tardyCollectionView: UICollectionView = UICollectionView(
         frame: .zero,
         collectionViewLayout: UICollectionViewFlowLayout().then {
@@ -40,7 +42,7 @@ class TardyView: BaseView {
         $0.backgroundColor = .maincolor
     }
     
-    private let titleLabel: UILabel = UILabel().then {
+    let titleLabel: UILabel = UILabel().then {
         $0.setText("이번 약속의 지각 꾸물이는?", style: .head01, color: .gray8)
     }
     
@@ -51,11 +53,12 @@ class TardyView: BaseView {
         backgroundColor = .white
         
         addSubviews(
-            tardyPenaltyView,
             titleLabel,
             tardyEmptyView,
+            noTardyView,
             tardyCollectionView,
-            finishMeetingButton
+            finishMeetingButton,
+            tardyPenaltyView
         )
     }
     
@@ -76,6 +79,10 @@ class TardyView: BaseView {
             $0.centerX.equalToSuperview()
             $0.height.equalTo(Screen.height(210))
             $0.width.equalTo(Screen.width(112))
+        }
+        
+        noTardyView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
         finishMeetingButton.snp.makeConstraints {

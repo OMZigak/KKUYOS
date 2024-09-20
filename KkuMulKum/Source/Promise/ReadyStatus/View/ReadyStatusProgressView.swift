@@ -171,7 +171,7 @@ class ReadyStatusProgressView: BaseView {
         }
         
         arrivalCheckImageView.snp.makeConstraints {
-            $0.centerX.equalTo(arrivalTimeLabel)
+            $0.trailing.equalToSuperview().inset(53.5)
             $0.centerY.equalTo(readyStartCheckImageView)
             $0.height.equalTo(Screen.height(16))
             $0.width.equalTo(arrivalCheckImageView.snp.height)

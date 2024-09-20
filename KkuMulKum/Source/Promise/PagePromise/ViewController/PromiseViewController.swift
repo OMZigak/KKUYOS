@@ -22,13 +22,9 @@ class PromiseViewController: BaseViewController {
         transitionStyle: .scroll,
         navigationOrientation: .vertical
     )
-    
     private var removePromiseViewContoller: RemovePromiseViewController = RemovePromiseViewController(promiseName: "")
     private var promiseViewControllerList: [BaseViewController] = []
-    
-    private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(
-        items: ["약속 정보", "준비 현황", "지각 꾸물이"]
-    )
+    private lazy var promiseSegmentedControl = PagePromiseSegmentedControl(items: ["약속 정보", "준비 현황", "지각 꾸물이"])
     
     
     // MARK: - LifeCycle
@@ -57,8 +53,7 @@ class PromiseViewController: BaseViewController {
         super.viewDidLoad()
         
         setupNavigationBarBackButton()
-        setupPromiseEditButton(isHidden: false)
-        setupBindings()
+        setupBinding()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,16 +70,13 @@ class PromiseViewController: BaseViewController {
     
     
     // MARK: - Setup
-
+    
     override func setupView() {
         view.backgroundColor = .white
         
         addChild(promisePageViewController)
         
-        view.addSubviews(
-            promiseSegmentedControl,
-            promisePageViewController.view
-        )
+        view.addSubviews(promiseSegmentedControl, promisePageViewController.view)
         
         promisePageViewController.setViewControllers(
             [promiseViewControllerList[0]],
@@ -95,7 +87,7 @@ class PromiseViewController: BaseViewController {
         promiseSegmentedControl.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide)
             $0.leading.trailing.equalToSuperview().inset(-6)
-            $0.height.equalTo(60)
+            $0.height.equalTo(Screen.height(60))
         }
         
         promisePageViewController.view.snp.makeConstraints {
@@ -111,13 +103,7 @@ class PromiseViewController: BaseViewController {
             for: .valueChanged
         )
         
-        promiseTardyViewController.tardyView.finishMeetingButton.addTarget(
-            self,
-            action: #selector(finishMeetingButtonDidTap),
-            for: .touchUpInside
-        )
-        
-        promiseTardyViewController.arriveView.finishMeetingButton.addTarget(
+        promiseTardyViewController.rootView.finishMeetingButton.addTarget(
             self,
             action: #selector(finishMeetingButtonDidTap),
             for: .touchUpInside
@@ -147,58 +133,42 @@ class PromiseViewController: BaseViewController {
 // MARK: - Extension
 
 private extension PromiseViewController {
-    func setupBindings() {
+    func setupBinding() {
         viewModel.promiseInfo.bindOnMain(with: self) { owner, info in
-            owner.setupNavigationBarTitle(with: info?.promiseName ?? "", isBorderHidden: true)
-            owner.promiseInfoViewController.setupContent()
-            owner.promiseInfoViewController.setUpTimeContent()
-            owner.removePromiseViewContoller.promiseNameLabel.text = info?.promiseName ?? ""
+            guard let info else { return }
             
-            guard let isParticipant = info?.isParticipant else { return }
+            let moreButton = UIBarButtonItem(
+                image: .imgMore.withRenderingMode(.alwaysOriginal),
+                style: .plain,
+                target: owner,
+                action: #selector(owner.moreButtonDidTap)
+            )
             
-            owner.setupPromiseEditButton(isHidden: !isParticipant)
-            owner.promiseInfoViewController.rootView.editButton.isHidden = !isParticipant
-        }
-    }
-    
-    func setupPromiseEditButton(isHidden: Bool) {
-        let moreButton = UIBarButtonItem(
-            image: .imgMore.withRenderingMode(.alwaysOriginal),
-            style: .plain,
-            target: self,
-            action: #selector(self.moreButtonDidTap)
-        )
-
-        navigationItem.rightBarButtonItem = isHidden ? nil : moreButton
-    }
-    
-    @objc
-    func didSegmentedControlIndexUpdated() {
-        let condition = viewModel.currentPageIndex.value <= promiseSegmentedControl.selectedSegmentIndex
-        let direction: UIPageViewController.NavigationDirection = condition ? .forward : .reverse
-        let (width, count, selectedIndex) = (
-            promiseSegmentedControl.bounds.width,
-            promiseSegmentedControl.numberOfSegments,
-            promiseSegmentedControl.selectedSegmentIndex
-        )
-        
-        promiseSegmentedControl.selectedUnderLineView.snp.updateConstraints {
-            $0.leading.equalToSuperview().offset((width / CGFloat(count)) * CGFloat(selectedIndex))
+            owner.navigationItem.rightBarButtonItem = info.isParticipant ? moreButton : nil
+            owner.removePromiseViewContoller.promiseNameLabel.text = info.promiseName
+            owner.setupNavigationBarTitle(with: info.promiseName, isBorderHidden: true)
         }
         
-        viewModel.segmentIndexDidChange(
-            index: promiseSegmentedControl.selectedSegmentIndex
-        )
+        viewModel.currentPageIndex.bindOnMain(with: self) { owner, index in
+            let direction: UIPageViewController.NavigationDirection = owner.viewModel.pageControlDirection ? .forward : .reverse
+            let (width, count) = (
+                owner.promiseSegmentedControl.bounds.width,
+                owner.promiseSegmentedControl.numberOfSegments
+            )
+            
+            owner.promiseSegmentedControl.selectedUnderLineView.snp.updateConstraints {
+                $0.leading.equalToSuperview().offset((width / CGFloat(count)) * CGFloat(index))
+            }
+            
+            owner.promisePageViewController.setViewControllers([
+                owner.promiseViewControllerList[index]
+            ], direction: direction, animated: false)
+        }
         
-        promisePageViewController.setViewControllers([
-            promiseViewControllerList[viewModel.currentPageIndex.value]
-        ], direction: direction, animated: false)
-    }
-    
-    @objc
-    func finishMeetingButtonDidTap() {
-        promiseTardyViewController.viewModel.updatePromiseCompletion {
-            DispatchQueue.main.async {
+        viewModel.isFinishSuccess.bindOnMain(with: self) { owner, isSuccess in
+            guard let isSuccess else { return }
+            
+            if isSuccess {
                 self.navigationController?.popViewController(animated: true)
                 
                 if let viewController = self.navigationController?.viewControllers.last {
@@ -207,6 +177,32 @@ private extension PromiseViewController {
                 }
             }
         }
+        
+        viewModel.errorMessage.bindOnMain(with: self) { owner, message in
+            guard let message else { return }
+            let toast = Toast()
+            
+            toast.show(message: message, view: owner.view, position: .bottom, inset: 100)
+        }
+        
+        viewModel.isExitSuccess.bindOnMain(with: self) { owner, isSuccess in
+            owner.navigationController?.popViewController(animated: true)
+        }
+        
+        viewModel.isDeleteSuccess.bindOnMain(with: self) { owner, isSuccess in
+            owner.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    @objc
+    func didSegmentedControlIndexUpdated() {
+        viewModel.pageControlDirection = viewModel.currentPageIndex.value <= promiseSegmentedControl.selectedSegmentIndex
+        viewModel.currentPageIndex.value = promiseSegmentedControl.selectedSegmentIndex
+    }
+    
+    @objc
+    func finishMeetingButtonDidTap() {
+        viewModel.updatePromiseCompletion()
     }
     
     @objc
@@ -238,22 +234,13 @@ private extension PromiseViewController {
 extension PromiseViewController: CustomActionSheetDelegate {
     func actionButtonDidTap(for kind: ActionSheetKind) {
         if kind == .deletePromise {
-            dismiss(animated: false)
+            viewModel.deletePromise()
             
-            viewModel.deletePromise() {
-                DispatchQueue.main.async {
-                    self.navigationController?.popViewController(animated: true)
-                }
-            }
-        }
-        else {
             dismiss(animated: false)
+        } else {
+            viewModel.exitPromise()
             
-            viewModel.exitPromise() {
-                DispatchQueue.main.async {
-                    self.navigationController?.popViewController(animated: true)
-                }
-            }
+            dismiss(animated: false)
         }
     }
 }
