@@ -120,10 +120,19 @@ extension ReadyStatusViewController {
         }
         
         viewModel.myReadyInfo.bindOnMain(with: self) { owner, status in
+            let preparationStartAt = status?.preparationStartAt ?? " "
+            let departureAt = status?.departureAt ?? " "
+            let arrivalAt = status?.arrivalAt ?? " "
+            
             owner.rootView.do {
+                $0.myReadyStatusProgressView.readyStartTimeLabel.text = preparationStartAt
+                $0.myReadyStatusProgressView.moveStartTimeLabel.text = departureAt
+                $0.myReadyStatusProgressView.arrivalTimeLabel.text = arrivalAt
                 $0.enterReadyButtonView.isHidden = owner.viewModel.isReadyInfoEntered()
                 $0.readyPlanInfoView.isHidden = !$0.enterReadyButtonView.isHidden
             }
+            
+            
         }
         
         viewModel.myReadyStatus.bindOnMain(with: self) { owner, state in
@@ -181,9 +190,9 @@ extension ReadyStatusViewController {
                     $0.readyStartButton.isEnabled = false
                     $0.moveStartButton.isEnabled = false
                     $0.arrivalButton.isEnabled = false
-                    $0.readyStartTitleLabel.isHidden = false
-                    $0.moveStartTitleLabel.isHidden = false
-                    $0.arrivalTitleLabel.isHidden = false
+                    $0.readyStartTitleLabel.isHidden = true
+                    $0.moveStartTitleLabel.isHidden = true
+                    $0.arrivalTitleLabel.isHidden = true
                     $0.readyStartTimeLabel.isHidden = false
                     $0.moveStartTimeLabel.isHidden = false
                     $0.arrivalTimeLabel.isHidden = false
