@@ -77,6 +77,10 @@ class CreateMeetingViewController: BaseViewController {
             )
         )
     }
+    
+    override func setupDelegate() {
+        rootView.nameTextField.delegate = self
+    }
 }
 
 
@@ -91,8 +95,12 @@ private extension CreateMeetingViewController {
             switch state {
             case .valid:
                 owner.rootView.presentButton.isEnabled = true
+                owner.rootView.nameTextField.layer.borderColor = UIColor.maincolor.cgColor
+                owner.rootView.characterLabel.textColor = .maincolor
             case .invalid:
                 owner.rootView.errorLabel.isHidden = false
+                owner.rootView.nameTextField.layer.borderColor = UIColor.mainred.cgColor
+                owner.rootView.characterLabel.textColor = .mainred
             case .empty:
                 break
             }
@@ -176,5 +184,16 @@ private extension CreateMeetingViewController {
         if let gesture = view.gestureRecognizers?.first {
             view.removeGestureRecognizer(gesture)
         }
+    }
+}
+
+extension CreateMeetingViewController: UITextFieldDelegate {
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        textField.layer.borderColor = UIColor.maincolor.cgColor
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        rootView.characterLabel.textColor = .gray3
+        rootView.nameTextField.layer.borderColor = UIColor.gray3.cgColor
     }
 }
