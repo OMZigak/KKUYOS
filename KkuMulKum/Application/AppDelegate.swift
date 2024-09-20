@@ -11,6 +11,7 @@ import KakaoSDKCommon
 import KakaoSDKAuth
 import Firebase
 import FirebaseMessaging
+import UserNotifications
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,10 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupFirebase(application: application)
         
+        UNUserNotificationCenter.current().delegate = self
+        
         return true
     }
 
-    // 카카오 로그인 URL 처리 (중복 제거)
     func application(
         _ app: UIApplication,
         open url: URL,
@@ -62,6 +64,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didDiscardSceneSessions sceneSessions: Set<UISceneSession>
     ) {}
+
+    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            sceneDelegate.handleNotification(userInfo: userInfo)
+        }
+        completionHandler(.newData)
+    }
 }
 
 // MARK: - Firebase Setup
@@ -124,5 +133,29 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
         supportedInterfaceOrientationsFor window: UIWindow?
     ) -> UIInterfaceOrientationMask {
         return .portrait
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                willPresent notification: UNNotification,
+                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        let userInfo = notification.request.content.userInfo
+        
+        completionHandler([.banner, .sound])
+        
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            sceneDelegate.handleNotification(userInfo: userInfo)
+        }
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter,
+                                didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
+        let userInfo = response.notification.request.content.userInfo
+        
+        if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            sceneDelegate.handleNotification(userInfo: userInfo)
+        }
+        
+        completionHandler()
     }
 }
