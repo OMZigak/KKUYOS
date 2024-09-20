@@ -131,8 +131,6 @@ extension ReadyStatusViewController {
                 $0.enterReadyButtonView.isHidden = owner.viewModel.isReadyInfoEntered()
                 $0.readyPlanInfoView.isHidden = !$0.enterReadyButtonView.isHidden
             }
-            
-            
         }
         
         viewModel.myReadyStatus.bindOnMain(with: self) { owner, state in
