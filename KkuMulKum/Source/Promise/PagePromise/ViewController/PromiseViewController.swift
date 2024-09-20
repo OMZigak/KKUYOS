@@ -144,7 +144,8 @@ private extension PromiseViewController {
                 action: #selector(owner.moreButtonDidTap)
             )
             
-            owner.navigationController?.navigationItem.rightBarButtonItem = info.isParticipant ? moreButton : nil
+            owner.navigationItem.rightBarButtonItem = info.isParticipant ? moreButton : nil
+            owner.removePromiseViewContoller.promiseNameLabel.text = info.promiseName
             owner.setupNavigationBarTitle(with: info.promiseName, isBorderHidden: true)
         }
         
