@@ -107,7 +107,7 @@ private extension ChooseContentViewController {
         
         viewModel.isSuccess.bindOnMain(with: self) { owner, success in
             if success {
-                let viewController = AddPromiseCompleteViewController(promiseID: self.viewModel.promiseID)
+                let viewController = AddPromiseCompleteViewController(promiseID: owner.viewModel.promiseID)
                 
                 viewController.setupNavigationBarTitle(with: "약속 수정하기")
                 viewController.rootView.titleLabel.text = "약속이 수정되었어요!"

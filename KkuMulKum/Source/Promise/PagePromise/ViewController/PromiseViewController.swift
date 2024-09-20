@@ -166,7 +166,7 @@ private extension PromiseViewController {
         }
         
         viewModel.isFinishSuccess.bindOnMain(with: self) { owner, isSuccess in
-            guard let isSuccess = isSuccess else { return }
+            guard let isSuccess else { return }
             
             if isSuccess {
                 self.navigationController?.popViewController(animated: true)
@@ -179,8 +179,8 @@ private extension PromiseViewController {
         }
         
         viewModel.errorMessage.bindOnMain(with: self) { owner, message in
+            guard let message else { return }
             let toast = Toast()
-            guard let message = message else { return }
             
             toast.show(message: message, view: owner.view, position: .bottom, inset: 100)
         }
@@ -237,8 +237,7 @@ extension PromiseViewController: CustomActionSheetDelegate {
             viewModel.deletePromise()
             
             dismiss(animated: false)
-        }
-        else {
+        } else {
             viewModel.exitPromise()
             
             dismiss(animated: false)

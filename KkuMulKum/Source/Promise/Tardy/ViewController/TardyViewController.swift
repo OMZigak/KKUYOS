@@ -81,7 +81,7 @@ private extension TardyViewController {
                     $0.tardyEmptyView.isHidden = true
                     $0.noTardyView.isHidden = true
                     
-                    owner.rootView.tardyCollectionView.reloadData()
+                    $0.tardyCollectionView.reloadData()
                 }
             case .noTardyView:
                 owner.rootView.do {
@@ -115,7 +115,7 @@ private extension TardyViewController {
                     $0.tardyEmptyView.isHidden = true
                     $0.noTardyView.isHidden = true
                     
-                    owner.rootView.tardyCollectionView.reloadData()
+                    $0.tardyCollectionView.reloadData()
                 }
             case .noTardyView:
                 owner.rootView.do {
@@ -157,7 +157,10 @@ extension TardyViewController: UICollectionViewDataSource {
         }
         
         cell.nameLabel.setText(tardyName, style: .body06, color: .gray6)
-        cell.profileImageView.kf.setImage(with: URL(string: viewModel.tardyList.value[indexPath.row].profileImageURL ?? ""), placeholder: UIImage.imgProfile)
+        cell.profileImageView.kf.setImage(
+            with: URL(string: viewModel.tardyList.value[indexPath.row].profileImageURL ?? ""),
+            placeholder: UIImage.imgProfile
+        )
         
         return cell
     }
