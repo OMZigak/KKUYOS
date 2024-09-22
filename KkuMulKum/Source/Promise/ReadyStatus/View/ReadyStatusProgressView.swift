@@ -36,7 +36,7 @@ class ReadyStatusProgressView: BaseView {
     }
     
     let readyStartTitleLabel: UILabel = UILabel().then {
-        $0.setText("준비를 시작 시 눌러주세요", style: .label02, color: .gray5)
+        $0.setText("준비 시작 시 눌러주세요", style: .label02, color: .gray5)
     }
     
     let moveStartTimeLabel: UILabel = UILabel().then {
@@ -59,7 +59,7 @@ class ReadyStatusProgressView: BaseView {
     }
     
     let moveStartTitleLabel: UILabel = UILabel().then {
-        $0.setText("이동을 시작 시 눌러주세요", style: .label02, color: .gray5)
+        $0.setText("이동 시작 시 눌러주세요", style: .label02, color: .gray5)
         $0.isHidden = true
     }
     
@@ -83,7 +83,7 @@ class ReadyStatusProgressView: BaseView {
     }
     
     let arrivalTitleLabel: UILabel = UILabel().then {
-        $0.setText("도착 시작 시 눌러주세요", style: .label02, color: .gray5)
+        $0.setText("도착 완료 시 눌러주세요", style: .label02, color: .gray5)
         $0.isHidden = true
     }
     

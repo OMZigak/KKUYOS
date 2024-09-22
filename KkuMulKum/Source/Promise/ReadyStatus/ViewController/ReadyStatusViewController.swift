@@ -204,6 +204,15 @@ extension ReadyStatusViewController {
                     $0.statusProgressView.setProgress(1, animated: false)
                 }
             }
+            
+            owner.rootView.popUpImageView.do {
+                switch state {
+                case .none, .ready, .move:
+                    $0.isHidden = false
+                case .done:
+                    $0.isHidden = true
+                }
+            }
         }
         
         viewModel.requestReadyTime.bindOnMain(with: self) { owner, time in

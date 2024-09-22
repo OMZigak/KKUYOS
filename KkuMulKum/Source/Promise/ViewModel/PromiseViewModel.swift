@@ -157,7 +157,10 @@ extension PromiseViewModel {
         guard let promiseDate = dateFormatter.date(from: promiseTime) else { return promiseTime }
         
         let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "M월 d일 a H:mm"
+        timeFormatter.dateFormat = "M월 d일 a h:mm"
+        timeFormatter.locale = Locale(identifier: "ko_KR")
+        timeFormatter.amSymbol = "AM"
+        timeFormatter.pmSymbol = "PM"
         
         return timeFormatter.string(from: promiseDate)
     }
