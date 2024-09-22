@@ -120,7 +120,6 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
             })
             .disposed(by: disposeBag)
         
-        
         viewModel.userInfo
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] userInfo in
