@@ -41,7 +41,7 @@ class MyPageEtcSettingView: BaseView {
     }
     
     private func setupRows() {
-        setupRow(versionInfoRow, title: "버전정보", subtitle: "1.0.0")
+        setupRow(versionInfoRow, title: "버전정보", subtitle: "1.0.1")
         setupRow(termsOfServiceRow, title: "이용약관")
         setupRow(inquiryRow, title: "문의하기")
         setupRow(logoutRow, title: "로그아웃")
