@@ -15,7 +15,7 @@ class MyPageEditViewController: BaseViewController {
     private let rootView = MyPageEditView()
     private let viewModel: MyPageEditViewModel
     private let disposeBag = DisposeBag()
-    private let newProfileImageSubject = PublishSubject<UIImage?>()
+    private var selectedImage: UIImage?
     let profileImageUpdated = PublishSubject<String?>()
     
     init(viewModel: MyPageEditViewModel) {
@@ -54,38 +54,24 @@ class MyPageEditViewController: BaseViewController {
         
         rootView.confirmButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.navigationController?.popViewController(animated: true)
+                self?.handleConfirmButtonTap()
             })
             .disposed(by: disposeBag)
         
         rootView.skipButton.rx.tap
             .subscribe(onNext: { [weak self] in
-                self?.newProfileImageSubject.onNext(UIImage.imgProfile)
-                self?.navigationController?.popViewController(animated: true)
+                self?.handleSkipButtonTap()
             })
             .disposed(by: disposeBag)
     }
     
     private func setupBindings() {
         let input = MyPageEditViewModel.Input(
-            profileImageTap: rootView.cameraButton.rx.tap.asObservable(),
             confirmButtonTap: rootView.confirmButton.rx.tap.asObservable(),
-            skipButtonTap: rootView.skipButton.rx.tap.asObservable(),
-            newProfileImage: newProfileImageSubject.asObservable()
+            skipButtonTap: rootView.skipButton.rx.tap.asObservable()
         )
         
-        input.newProfileImage
-            .compactMap { $0 }
-            .subscribe(onNext: { [weak self] image in
-                self?.viewModel.updateProfileImage(image)
-            })
-            .disposed(by: disposeBag)
-        
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
-        
-        output.profileImage
-            .drive(rootView.profileImageView.rx.image)
-            .disposed(by: disposeBag)
         
         output.isConfirmButtonEnabled
             .drive(rootView.confirmButton.rx.isEnabled)
@@ -130,6 +116,18 @@ class MyPageEditViewController: BaseViewController {
         imagePicker.allowsEditing = true
         present(imagePicker, animated: true)
     }
+    
+    private func handleConfirmButtonTap() {
+        if let selectedImage = selectedImage {
+            viewModel.updateProfileImage(selectedImage)
+        }
+        navigationController?.popViewController(animated: true)
+    }
+    
+    private func handleSkipButtonTap() {
+        viewModel.setDefaultProfileImage()
+        navigationController?.popViewController(animated: true)
+    }
 }
 
 extension MyPageEditViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -139,7 +137,9 @@ extension MyPageEditViewController: UIImagePickerControllerDelegate, UINavigatio
     ) {
         if let editedImage = info[.editedImage] as? UIImage ?? info[.originalImage] as? UIImage {
             let croppedImage = cropToCircle(image: editedImage)
-            newProfileImageSubject.onNext(croppedImage)
+            selectedImage = croppedImage
+            rootView.profileImageView.image = croppedImage
+            rootView.confirmButton.isEnabled = true
         }
         dismiss(animated: true)
     }
