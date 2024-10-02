@@ -24,6 +24,7 @@
 		782B407D2C3E3984008B0CA7 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */; };
 		782B407F2C3E44B7008B0CA7 /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */; };
 		782B40822C3E4925008B0CA7 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */; };
+		783C04402CAD2AE300965F90 /* ci_post_clone.sh in Resources */ = {isa = PBXBuildFile; fileRef = 783C043F2CAD2AE300965F90 /* ci_post_clone.sh */; };
 		784824F72C6E1C9900FE07A0 /* AuthServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784824F62C6E1C9900FE07A0 /* AuthServiceProtocol.swift */; };
 		784824FC2C75BF7900FE07A0 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784824FB2C75BF7900FE07A0 /* MyPageViewModel.swift */; };
 		784824FE2C75F25900FE07A0 /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784824FD2C75F25900FE07A0 /* MyPageEditViewController.swift */; };
@@ -274,6 +275,7 @@
 		782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
+		783C043F2CAD2AE300965F90 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		784824F62C6E1C9900FE07A0 /* AuthServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceProtocol.swift; sourceTree = "<group>"; };
 		784824FB2C75BF7900FE07A0 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		784824FD2C75F25900FE07A0 /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
@@ -586,6 +588,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		783C043E2CAD2AD200965F90 /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				783C043F2CAD2AE300965F90 /* ci_post_clone.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		784824F52C6E1C6800FE07A0 /* ServiceProtocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -705,6 +715,7 @@
 		78B9286A2C29402C006D9942 /* KkuMulKum */ = {
 			isa = PBXGroup;
 			children = (
+				783C043E2CAD2AD200965F90 /* ci_scripts */,
 				789D73B02C46DACD00C7077D /* KkuMulKum.entitlements */,
 				DE254AA12C31106700A4015E /* Application */,
 				DE254AA22C31107700A4015E /* Source */,
@@ -1859,6 +1870,7 @@
 				DE254AC52C311DC200A4015E /* Pretendard-Regular.otf in Resources */,
 				DE254AC92C311DC200A4015E /* Pretendard-SemiBold.otf in Resources */,
 				DE254AC42C311DC200A4015E /* Pretendard-ExtraBold.otf in Resources */,
+				783C04402CAD2AE300965F90 /* ci_post_clone.sh in Resources */,
 				789D73AF2C46D99B00C7077D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2225,7 +2237,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = KkuMulKum.yizihn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2267,7 +2279,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.1;
+				MARKETING_VERSION = 1.0.2;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = KkuMulKum.yizihn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
