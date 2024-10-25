@@ -15,15 +15,7 @@ enum TextFieldVailidationResult {
 }
 
 final class AddPromiseViewModel {
-    let meetingID: Int
-    
-    var name: String { nameRelay.value }
-    var place: Place? { placeRelay.value }
-    var combinedDateTime: String { combinedDateTimeRelay.value }
-    
-    private let nameRelay = BehaviorRelay(value: "")
-    private let combinedDateTimeRelay = BehaviorRelay(value: "")
-    private let placeRelay = BehaviorRelay<Place?>(value: nil)
+    private let meetingID: Int
     
     init(meetingID: Int) {
         self.meetingID = meetingID
@@ -36,19 +28,19 @@ extension AddPromiseViewModel: ViewModelType {
         let promiseTextFieldEndEditing: Observable<Void>
         let date: Observable<Date>
         let time: Observable<Date>
-        let place: PublishRelay<Place>
+        let place: Observable<Place>
+        let confirmButtonDidTap: Observable<Void>
     }
     
     struct Output {
         let validationPromiseNameResult: Observable<TextFieldVailidationResult>
         let isEnabledConfirmButton: Observable<Bool>
         let adjustedDate: Observable<Date>
+        let navigateToSelectMember: Observable<AddPromiseRequestModel.Builder>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
-        input.promiseNameText
-            .bind(to: nameRelay)
-            .disposed(by: disposeBag)
+        let placeRelay = BehaviorRelay<Place?>(value: nil)
         
         let isValid = input.promiseNameText
             .map { [weak self] text in
@@ -61,7 +53,9 @@ extension AddPromiseViewModel: ViewModelType {
         
         let validationResultWhileEditing = input.promiseNameText
             .map { [weak self] text -> TextFieldVailidationResult in
-                guard let self else { return .basic }
+                guard let self else {
+                    return .basic
+                }
                 
                 if text.isEmpty {
                     return .basic
@@ -84,12 +78,10 @@ extension AddPromiseViewModel: ViewModelType {
             validationResultWhileEditing, validationResultAfterEditing
         )
         
-        Observable.combineLatest(input.date, input.time)
+        let combinedDateTime = Observable.combineLatest(input.date, input.time)
             .map { [weak self] date, time -> String in
                 return self?.combine(date: date, time: time) ?? ""
             }
-            .bind(to: combinedDateTimeRelay)
-            .disposed(by: disposeBag)
         
         input.place
             .bind(to: placeRelay)
@@ -115,10 +107,34 @@ extension AddPromiseViewModel: ViewModelType {
                 return date
             }
         
+        let navigateToSelectMember = input.confirmButtonDidTap
+            .withLatestFrom(
+                Observable.combineLatest(
+                    input.promiseNameText,
+                    combinedDateTime,
+                    input.place
+                )
+            )
+            .compactMap { [weak self] name, time, place -> AddPromiseRequestModel.Builder? in
+                guard let self else {
+                    return nil
+                }
+                
+                return AddPromiseRequestModel.Builder()
+                    .setId(meetingID)
+                    .setName(name)
+                    .setTime(time)
+                    .setPlaceName(place.location)
+                    .setAddress(place.address ?? "")
+                    .setRoadAddress(place.roadAddress ?? "")
+                    .setCoordinates(x: place.x, y: place.y)
+            }
+            
         return Output(
             validationPromiseNameResult: validationPromiseNameResult,
             isEnabledConfirmButton: isEnabledConfirmButton, 
-            adjustedDate: adjustedDate
+            adjustedDate: adjustedDate,
+            navigateToSelectMember: navigateToSelectMember
         )
     }
 }
