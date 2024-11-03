@@ -9,15 +9,13 @@ import UIKit
 
 import RxCocoa
 import RxSwift
-import SnapKit
-import Then
 
 final class AddPromiseViewController: BaseViewController {
-    let rootView = AddPromiseView()
     private let viewModel: AddPromiseViewModel
-    private let disposeBag = DisposeBag()
     private let promiseNameTextFieldEndEditingRelay = PublishRelay<Void>()
     private let searchPlaceCompleted = PublishRelay<Place>()
+    private let disposeBag = DisposeBag()
+    private let rootView = AddPromiseView()
     
     
     // MARK: - Intializer
@@ -93,24 +91,6 @@ final class AddPromiseViewController: BaseViewController {
                 owner.navigationController?.pushViewController(viewController, animated: true)
             }
             .disposed(by: disposeBag)
-        
-        rootView.confirmButton.rx.tap
-            .map { _ in }
-            .subscribe(with: self) { owner, _ in
-                guard let place = owner.viewModel.place else { return }
-                
-                let viewController = SelectMemberViewController(
-                    viewModel: SelectMemberViewModel(
-                        meetingID: owner.viewModel.meetingID,
-                        name: owner.viewModel.name,
-                        place: place,
-                        promiseDateString: owner.viewModel.combinedDateTime,
-                        service: PromiseService()
-                    )
-                )
-                owner.navigationController?.pushViewController(viewController, animated: true)
-            }
-            .disposed(by: disposeBag)
     }
     
     override func setupDelegate() {
@@ -132,7 +112,6 @@ extension AddPromiseViewController: FindPlaceViewControllerDelegate {
 // MARK: - UITextFieldDelegate
 
 extension AddPromiseViewController: UITextFieldDelegate {
-    /// done을 눌렀을 때
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == rootView.promiseNameTextField {
             textField.resignFirstResponder()
@@ -154,7 +133,8 @@ private extension AddPromiseViewController {
             promiseTextFieldEndEditing: promiseTextFieldEndEditing,
             date: rootView.datePicker.rx.date.asObservable(),
             time: rootView.timePicker.rx.date.asObservable(),
-            place: searchPlaceCompleted
+            place: searchPlaceCompleted.asObservable(),
+            confirmButtonDidTap: rootView.confirmButton.rx.tap.asObservable()
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
@@ -174,6 +154,18 @@ private extension AddPromiseViewController {
         output.adjustedDate
             .subscribe(with: self) { owner, date in
                 owner.rootView.datePicker.date = date
+            }
+            .disposed(by: disposeBag)
+        
+        output.navigateToSelectMember
+            .subscribe(with: self) { owner, builder in
+                let viewController = SelectMemberViewController(
+                    viewModel: SelectMemberViewModel(
+                        builder: builder,
+                        service: PromiseService()
+                    )
+                )
+                owner.navigationController?.pushViewController(viewController, animated: true)
             }
             .disposed(by: disposeBag)
     }

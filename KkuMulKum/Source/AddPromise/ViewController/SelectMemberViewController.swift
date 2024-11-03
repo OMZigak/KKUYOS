@@ -12,11 +12,9 @@ import RxSwift
 
 final class SelectMemberViewController: BaseViewController {
     private let viewModel: SelectMemberViewModel
+    private let viewWillAppearRelay = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     private let rootView = SelectMemberView()
-    private let viewWillAppearRelay = PublishRelay<Void>()
-    private let memberSelected = PublishSubject<Member>()
-    private let memberDeselected = PublishSubject<Member>()
     
     
     // MARK: - Initializer
@@ -46,51 +44,20 @@ final class SelectMemberViewController: BaseViewController {
         
         bindViewModel()
     }
-    
-    override func setupAction() {
-        rootView.confirmButton.rx.tap
-            .subscribe(with: self) { owner, _ in
-                let viewController = SelectPenaltyViewController(
-                    viewModel: SelectPenaltyViewModel(
-                        meetingID: owner.viewModel.meetingID,
-                        name: owner.viewModel.name,
-                        place: owner.viewModel.place,
-                        dateString: owner.viewModel.promiseDateString,
-                        members: owner.viewModel.selectedMembers,
-                        service: PromiseService()
-                    )
-                )
-                owner.navigationController?.pushViewController(viewController, animated: true)
-            }
-            .disposed(by: disposeBag)
-    }
-    
-    override func setupDelegate() {
-        rootView.memberListView.delegate = self
-    }
-}
-
-
-// MARK: - UICollectionViewDelegate
-
-extension SelectMemberViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedMember = viewModel.members[indexPath.item]
-        memberSelected.onNext(selectedMember)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let deselectedMember = viewModel.members[indexPath.item]
-        memberDeselected.onNext(deselectedMember)
-    }
 }
 
 private extension SelectMemberViewController {
     func bindViewModel() {
+        let memberSelected = rootView.memberListView.rx.itemSelected
+            .map { $0.item }
+        let memberDeselected = rootView.memberListView.rx.itemDeselected
+            .map { $0.item }
+        
         let input = SelectMemberViewModel.Input(
             viewDidLoad: .just(()),
             memberSelected: memberSelected.asObservable(),
-            memberDeselected: memberDeselected.asObservable()
+            memberDeselected: memberDeselected.asObservable(),
+            confirmButtonDidTap: rootView.confirmButton.rx.tap.asObservable()
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
@@ -109,6 +76,18 @@ private extension SelectMemberViewController {
             .drive(with: self) { owner, flag in
                 owner.rootView.memberListView.isHidden = flag
                 owner.rootView.emptyContentView.isHidden = !flag
+            }
+            .disposed(by: disposeBag)
+        
+        output.navigateToSelectPenalty
+            .subscribe(with: self) { owner, builder in
+                let viewController = SelectPenaltyViewController(
+                    viewModel: SelectPenaltyViewModel(
+                        builder: builder,
+                        service: PromiseService()
+                    )
+                )
+                owner.navigationController?.pushViewController(viewController, animated: true)
             }
             .disposed(by: disposeBag)
     }

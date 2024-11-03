@@ -190,6 +190,7 @@
 		DE159D332C406E1600425101 /* MyPageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2B2C406E1600425101 /* MyPageContentView.swift */; };
 		DE159D342C406E1600425101 /* MyPageEtcSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2C2C406E1600425101 /* MyPageEtcSettingView.swift */; };
 		DE159D362C406E1600425101 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2F2C406E1600425101 /* MyPageViewController.swift */; };
+		DE1917772CCB6B7300279D91 /* AddPromiseRequestModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1917762CCB6B7300279D91 /* AddPromiseRequestModelBuilder.swift */; };
 		DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA72C3118EA00A4015E /* UIView+.swift */; };
 		DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA92C31190E00A4015E /* UIStackView+.swift */; };
 		DE254AAC2C31192400A4015E /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AAB2C31192400A4015E /* UILabel+.swift */; };
@@ -405,6 +406,7 @@
 		DE159D2B2C406E1600425101 /* MyPageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageContentView.swift; sourceTree = "<group>"; };
 		DE159D2C2C406E1600425101 /* MyPageEtcSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageEtcSettingView.swift; sourceTree = "<group>"; };
 		DE159D2F2C406E1600425101 /* MyPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		DE1917762CCB6B7300279D91 /* AddPromiseRequestModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseRequestModelBuilder.swift; sourceTree = "<group>"; };
 		DE254AA72C3118EA00A4015E /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		DE254AA92C31190E00A4015E /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		DE254AAB2C31192400A4015E /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -1352,6 +1354,14 @@
 			path = MyPage;
 			sourceTree = "<group>";
 		};
+		DE1917752CCB6B6000279D91 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DE1917762CCB6B7300279D91 /* AddPromiseRequestModelBuilder.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		DE254AA12C31106700A4015E /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -1651,6 +1661,7 @@
 		DECB844E2C43FB200022A003 /* AddPromise */ = {
 			isa = PBXGroup;
 			children = (
+				DE1917752CCB6B6000279D91 /* Model */,
 				DECB84522C43FB510022A003 /* ServiceType */,
 				DECB84512C43FB400022A003 /* ViewModel */,
 				DECB844F2C43FB300022A003 /* ViewController */,
@@ -1929,6 +1940,7 @@
 				782B40822C3E4925008B0CA7 /* NicknameViewModel.swift in Sources */,
 				A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */,
 				DD3466532C7B044F00E62284 /* ChooseMemberViewController.swift in Sources */,
+				DE1917772CCB6B7300279D91 /* AddPromiseRequestModelBuilder.swift in Sources */,
 				DEA932182C3F180800FDF637 /* MeetingPromisesModel.swift in Sources */,
 				DE159D342C406E1600425101 /* MyPageEtcSettingView.swift in Sources */,
 				DE9E18842C3BA84500DB76B4 /* CustomTextField.swift in Sources */,
