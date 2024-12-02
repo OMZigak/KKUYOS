@@ -24,12 +24,14 @@ final class MeetingListViewModel {
 extension MeetingListViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: PublishRelay<Void>
+        let meetingCellDidSelect: Observable<Int>
     }
     
     struct Output {
         let info: Driver<(String, Int)>
         let meetingCount: Driver<Int>
-        let meetingList: Driver<[Meeting]>
+        let meetings: Driver<[Meeting]>
+        let navigateToMeetingInfo: Driver<Int>
     }
     
     func transform(input: Input, disposeBag: RxSwift.DisposeBag) -> Output {
@@ -41,23 +43,30 @@ extension MeetingListViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         let userName = loginUserRelay
-            .compactMap{ $0?.name }
+            .compactMap { $0?.name }
             .asDriver(onErrorJustReturn: "꾸물리안")
         
         let meetingCount = meetingListRelay
-            .compactMap{ $0?.count }
+            .compactMap { $0?.count }
             .asDriver(onErrorJustReturn: 0)
         
-        let meetingList = meetingListRelay
-            .compactMap{ $0?.meetings }
+        let meetings = meetingListRelay
+            .compactMap { $0?.meetings }
             .asDriver(onErrorJustReturn: [])
         
         let info = Driver.combineLatest(userName, meetingCount) { ($0, $1) }
         
+        let navigateToMeetingInfo = input.meetingCellDidSelect
+            .withLatestFrom(meetings) { index, meetings in
+                return meetings[index].meetingID
+            }
+            .asDriver(onErrorJustReturn: 0)
+        
         let output = Output(
             info: info,
             meetingCount: meetingCount,
-            meetingList: meetingList
+            meetings: meetings,
+            navigateToMeetingInfo: navigateToMeetingInfo
         )
         
         return output

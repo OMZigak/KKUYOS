@@ -48,7 +48,6 @@ class MeetingListViewController: BaseViewController {
         
         bindViewModel()
         register()
-        setupDelegate()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -79,7 +78,14 @@ class MeetingListViewController: BaseViewController {
     }
     
     private func bindViewModel() {
-        let input = MeetingListViewModel.Input(viewWillAppear: viewWillAppearRelay)
+        let meetingCellDidSelect = rootView.tableView.rx.itemSelected
+            .map { $0.item }
+            .asObservable()
+        
+        let input = MeetingListViewModel.Input(
+            viewWillAppear: viewWillAppearRelay,
+            meetingCellDidSelect: meetingCellDidSelect
+        )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
         
@@ -98,13 +104,19 @@ class MeetingListViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        output.meetingList
+        output.meetings
             .drive(rootView.tableView.rx.items(
                 cellIdentifier: MeetingTableViewCell.reuseIdentifier,
                 cellType: MeetingTableViewCell.self
             )) { index, meetingList, cell in
                 cell.dataBind(meetingList)
                 cell.selectionStyle = .none
+            }
+            .disposed(by: disposeBag)
+        
+        output.navigateToMeetingInfo
+            .drive(with: self) { owner, meetingID in
+                owner.navigateToMeetingInfo(meetingID: meetingID)
             }
             .disposed(by: disposeBag)
     }
@@ -114,6 +126,20 @@ class MeetingListViewController: BaseViewController {
         
         tabBarController?.navigationController?.pushViewController(
             checkInviteCodeViewController,
+            animated: true
+        )
+    }
+    
+    private func navigateToMeetingInfo(meetingID: Int) {
+        let meetingInfoViewController = MeetingInfoViewController(
+            viewModel: MeetingInfoViewModel(
+                meetingID: meetingID,
+                service: MeetingService()
+            )
+        )
+        
+        tabBarController?.navigationController?.pushViewController(
+            meetingInfoViewController,
             animated: true
         )
     }
