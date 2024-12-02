@@ -5,24 +5,71 @@
 //  Created by 예삐 on 7/13/24.
 //
 
-import UIKit
+import Foundation
 
-import Then
+import RxCocoa
+import RxSwift
 
 final class MeetingListViewModel {
-    var loginUser = ObservablePattern<ResponseBodyDTO<LoginUserModel>?>(nil)
-    var meetingList = ObservablePattern<ResponseBodyDTO<MeetingListModel>?>(nil)
+    private let loginUserRelay = BehaviorRelay<LoginUserModel?>(value: nil)
+    private let meetingListRelay = BehaviorRelay<MeetingListModel?>(value: nil)
     
     private let service: MeetingListServiceProtocol
     
     init(service: MeetingListServiceProtocol) {
         self.service = service
     }
+}
+
+extension MeetingListViewModel: ViewModelType {
+    struct Input {
+        let viewWillAppear: PublishRelay<Void>
+    }
     
+    struct Output {
+        let info: Driver<(String, Int)>
+        let meetingCount: Driver<Int>
+        let meetingList: Driver<[Meeting]>
+    }
+    
+    func transform(input: Input, disposeBag: RxSwift.DisposeBag) -> Output {
+        input.viewWillAppear
+            .subscribe(with: self) { _, _ in
+                self.requestLoginUser()
+                self.requestMeetingList()
+            }
+            .disposed(by: disposeBag)
+        
+        let userName = loginUserRelay
+            .compactMap{ $0?.name }
+            .asDriver(onErrorJustReturn: "꾸물리안")
+        
+        let meetingCount = meetingListRelay
+            .compactMap{ $0?.count }
+            .asDriver(onErrorJustReturn: 0)
+        
+        let meetingList = meetingListRelay
+            .compactMap{ $0?.meetings }
+            .asDriver(onErrorJustReturn: [])
+        
+        let info = Driver.combineLatest(userName, meetingCount) { ($0, $1) }
+        
+        let output = Output(
+            info: info,
+            meetingCount: meetingCount,
+            meetingList: meetingList
+        )
+        
+        return output
+    }
+}
+
+private extension MeetingListViewModel {
     func requestLoginUser() {
         Task {
             do {
-                loginUser.value = try await service.fetchLoginUser()
+                let responseBody = try await service.fetchLoginUser()
+                loginUserRelay.accept(responseBody?.data)
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
@@ -32,7 +79,8 @@ final class MeetingListViewModel {
     func requestMeetingList() {
         Task {
             do {
-                meetingList.value = try await service.fetchMeetingList()
+                let responseBody = try await service.fetchMeetingList()
+                meetingListRelay.accept(responseBody?.data)
             } catch {
                 print(">>> \(error.localizedDescription) : \(#function)")
             }
