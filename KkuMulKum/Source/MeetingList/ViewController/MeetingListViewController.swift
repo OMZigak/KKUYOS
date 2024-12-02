@@ -58,7 +58,11 @@ class MeetingListViewController: BaseViewController {
     }
     
     override func setupAction() {
-        rootView.addButton.addTarget(self, action: #selector(addButtonDidTap), for: .touchUpInside)
+        rootView.addButton.rx.tap
+            .subscribe(with: self) { owner, _ in
+                owner.navigateToAddMeeting()
+            }
+            .disposed(by: disposeBag)
     }
     
     override func setupDelegate() {
@@ -104,14 +108,8 @@ class MeetingListViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
     }
-}
-
-
-// MARK: - Extension
-
-extension MeetingListViewController {
-    @objc
-    func addButtonDidTap() {
+    
+    private func navigateToAddMeeting() {
         let checkInviteCodeViewController = CheckInviteCodeViewController()
         
         tabBarController?.navigationController?.pushViewController(
@@ -120,6 +118,7 @@ extension MeetingListViewController {
         )
     }
 }
+
 
 // MARK: - UITableViewDelegate
 

@@ -34,9 +34,9 @@ extension MeetingListViewModel: ViewModelType {
     
     func transform(input: Input, disposeBag: RxSwift.DisposeBag) -> Output {
         input.viewWillAppear
-            .subscribe(with: self) { _, _ in
-                self.requestLoginUser()
-                self.requestMeetingList()
+            .subscribe(with: self) { owner, _ in
+                owner.requestLoginUser()
+                owner.requestMeetingList()
             }
             .disposed(by: disposeBag)
         
