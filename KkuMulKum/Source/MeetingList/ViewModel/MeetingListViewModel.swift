@@ -24,7 +24,7 @@ final class MeetingListViewModel {
 extension MeetingListViewModel: ViewModelType {
     struct Input {
         let viewWillAppear: PublishRelay<Void>
-        let meetingCellDidSelect: Observable<Int>
+        let meetingCellDidSelect: PublishRelay<Int>
     }
     
     struct Output {

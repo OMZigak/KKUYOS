@@ -19,6 +19,7 @@ class MeetingListViewController: BaseViewController {
     
     private let viewModel: MeetingListViewModel
     private let viewWillAppearRelay = PublishRelay<Void>()
+    private let meetingCellDidSelectRelay = PublishRelay<Int>()
     private let disposeBag = DisposeBag()
     
     
@@ -62,6 +63,11 @@ class MeetingListViewController: BaseViewController {
                 owner.navigateToAddMeeting()
             }
             .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.itemSelected
+            .map { $0.item }
+            .bind(to: meetingCellDidSelectRelay)
+            .disposed(by: disposeBag)
     }
     
     override func setupDelegate() {
@@ -78,13 +84,9 @@ class MeetingListViewController: BaseViewController {
     }
     
     private func bindViewModel() {
-        let meetingCellDidSelect = rootView.tableView.rx.itemSelected
-            .map { $0.item }
-            .asObservable()
-        
         let input = MeetingListViewModel.Input(
             viewWillAppear: viewWillAppearRelay,
-            meetingCellDidSelect: meetingCellDidSelect
+            meetingCellDidSelect: meetingCellDidSelectRelay
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
