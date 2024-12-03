@@ -98,8 +98,8 @@ class MeetingListViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        output.meetingCount
-            .map { $0 != 0 }
+        output.info
+            .map { _, meetingCount in meetingCount != 0}
             .drive(with: self) { owner, isHidden in
                 owner.rootView.emptyLabel.isHidden = isHidden
                 owner.rootView.emptyCharacter.isHidden = isHidden

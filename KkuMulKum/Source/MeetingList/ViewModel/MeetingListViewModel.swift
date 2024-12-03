@@ -29,7 +29,6 @@ extension MeetingListViewModel: ViewModelType {
     
     struct Output {
         let info: Driver<(String, Int)>
-        let meetingCount: Driver<Int>
         let meetings: Driver<[Meeting]>
         let navigateToMeetingInfo: Driver<Int>
     }
@@ -64,7 +63,6 @@ extension MeetingListViewModel: ViewModelType {
         
         let output = Output(
             info: info,
-            meetingCount: meetingCount,
             meetings: meetings,
             navigateToMeetingInfo: navigateToMeetingInfo
         )
