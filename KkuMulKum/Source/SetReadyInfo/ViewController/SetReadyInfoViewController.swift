@@ -31,15 +31,12 @@ final class SetReadyInfoViewController: BaseViewController {
     // MARK: - LifeCycle
     
     override func loadView() {
-        self.view = rootView
+        view = rootView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-        
-        setupNavigationBarBackButton()
-        setupNavigationBarTitle(with: "준비 정보 입력하기")
         
         setupBinding()
         setupTapGesture()
@@ -50,6 +47,11 @@ final class SetReadyInfoViewController: BaseViewController {
         super.viewWillAppear(animated)
         
         navigationController?.isNavigationBarHidden = false
+    }
+    
+    override func setupView() {
+        setupNavigationBarBackButton()
+        setupNavigationBarTitle(with: "준비 정보 입력하기")
     }
     
     override func setupDelegate() {
@@ -109,7 +111,8 @@ final class SetReadyInfoViewController: BaseViewController {
         view.addGestureRecognizer(tapGesture)
     }
     
-    @objc private func dismissKeyboard() {
+    @objc
+    private func dismissKeyboard() {
         view.endEditing(true)
     }
 }
