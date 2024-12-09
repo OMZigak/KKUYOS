@@ -7,13 +7,18 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
+
 final class SetReadyInfoViewController: BaseViewController {
     
     
     // MARK: - Property
     
     private let rootView = SetReadyInfoView()
+
     private let viewModel: SetReadyInfoViewModel
+    private let disposeBag = DisposeBag()
     
     
     // MARK: - Initializer
@@ -59,6 +64,11 @@ final class SetReadyInfoViewController: BaseViewController {
     }
     
     override func setupAction() {
+        setupTextField(textField: rootView.readyHourTextField)
+        setupTextField(textField: rootView.readyMinuteTextField)
+        setupTextField(textField: rootView.moveHourTextField)
+        setupTextField(textField: rootView.moveMinuteTextField)
+        
         rootView.readyHourTextField.addTarget(
             self,
             action: #selector(textFieldDidChange),
@@ -84,6 +94,20 @@ final class SetReadyInfoViewController: BaseViewController {
             action: #selector(doneButtonDidTap),
             for: .touchUpInside
         )
+    }
+    
+    private func setupTextField(textField: UITextField) {
+        let textFieldEvent = Observable.merge(
+            textField.rx.controlEvent(.editingDidBegin).map { UIColor.maincolor.cgColor },
+            textField.rx.controlEvent(.editingDidEnd).map { UIColor.gray3.cgColor },
+            textField.rx.controlEvent(.editingDidEndOnExit).map { UIColor.gray3.cgColor }
+        )
+        
+        textFieldEvent
+            .bind { borderColor in
+                textField.layer.borderColor = borderColor
+            }
+            .disposed(by: disposeBag)
     }
     
     @objc
@@ -121,21 +145,6 @@ final class SetReadyInfoViewController: BaseViewController {
 // MARK: - UITextFieldDelegate
 
 extension SetReadyInfoViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.layer.borderColor = UIColor.maincolor.cgColor
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderColor = UIColor.gray3.cgColor
-        
-        if let text = textField.text, !text.isEmpty {
-            viewModel.updateTime(
-                textField: textField.accessibilityIdentifier ?? "",
-                time: textField.text ?? ""
-            )
-        }
-    }
-    
     func textField(
         _ textField: UITextField,
         shouldChangeCharactersIn range: NSRange,
