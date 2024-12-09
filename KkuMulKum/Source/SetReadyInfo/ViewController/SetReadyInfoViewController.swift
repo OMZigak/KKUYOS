@@ -46,6 +46,7 @@ final class SetReadyInfoViewController: BaseViewController {
         setupBinding()
         setupTapGesture()
         setupTextField()
+        bindViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -69,31 +70,46 @@ final class SetReadyInfoViewController: BaseViewController {
         setupTextField(textField: rootView.moveHourTextField)
         setupTextField(textField: rootView.moveMinuteTextField)
         
-        rootView.readyHourTextField.addTarget(
-            self,
-            action: #selector(textFieldDidChange),
-            for: .editingChanged
-        )
-        rootView.readyMinuteTextField.addTarget(
-            self,
-            action: #selector(textFieldDidChange),
-            for: .editingChanged
-        )
-        rootView.moveHourTextField.addTarget(
-            self,
-            action: #selector(textFieldDidChange),
-            for: .editingChanged
-        )
-        rootView.moveMinuteTextField.addTarget(
-            self,
-            action: #selector(textFieldDidChange),
-            for: .editingChanged
-        )
         rootView.doneButton.addTarget(
             self,
             action: #selector(doneButtonDidTap),
             for: .touchUpInside
         )
+    }
+    
+    private func bindViewModel() {
+        let input = SetReadyInfoViewModel.Input(
+            readyHourText: rootView.readyHourTextField.rx.text.orEmpty.asObservable(),
+            readyMinuteText: rootView.readyMinuteTextField.rx.text.orEmpty.asObservable(),
+            moveHourText: rootView.moveHourTextField.rx.text.orEmpty.asObservable(),
+            moveMinuteText: rootView.moveMinuteTextField.rx.text.orEmpty.asObservable()
+        )
+        
+        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+        
+        output.readyHourText
+            .drive(with: self) { owner, text in
+                owner.rootView.readyHourTextField.text = text
+            }
+            .disposed(by: disposeBag)
+        
+        output.readyMinuteText
+            .drive(with: self) { owner, text in
+                owner.rootView.readyMinuteTextField.text = text
+            }
+            .disposed(by: disposeBag)
+        
+        output.moveHourText
+            .drive(with: self) { owner, text in
+                owner.rootView.moveHourTextField.text = text
+            }
+            .disposed(by: disposeBag)
+        
+        output.moveMinuteText
+            .drive(with: self) { owner, text in
+                owner.rootView.moveMinuteTextField.text = text
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setupTextField(textField: UITextField) {
@@ -108,18 +124,6 @@ final class SetReadyInfoViewController: BaseViewController {
                 textField.layer.borderColor = borderColor
             }
             .disposed(by: disposeBag)
-    }
-    
-    @objc
-    private func textFieldDidChange(_ textField: UITextField) {
-        let text = textField.text ?? ""
-        viewModel.updateTime(textField: textField.accessibilityIdentifier ?? "", time: text)
-        viewModel.checkValid(
-            readyHourText: rootView.readyHourTextField.text ?? "",
-            readyMinuteText: rootView.readyMinuteTextField.text ?? "",
-            moveHourText: rootView.moveHourTextField.text ?? "",
-            moveMinuteText: rootView.moveMinuteTextField.text ?? ""
-        )
     }
     
     @objc
@@ -204,31 +208,15 @@ private extension SetReadyInfoViewController {
     // MARK: - Data Bind
     
     func setupBinding() {
-        viewModel.readyHour.bind { [weak self] readyHour in
-            self?.rootView.readyHourTextField.text = readyHour
-        }
-        
-        viewModel.readyMinute.bind { [weak self] readyMinute in
-            self?.rootView.readyMinuteTextField.text = readyMinute
-        }
-        
-        viewModel.moveHour.bind { [weak self] moveHour in
-            self?.rootView.moveHourTextField.text = moveHour
-        }
-        
-        viewModel.moveMinute.bind { [weak self] moveMinute in
-            self?.rootView.moveMinuteTextField.text = moveMinute
-        }
-        
         viewModel.isValid.bind { [weak self] isValid in
             self?.rootView.doneButton.isEnabled = isValid
         }
         
-        viewModel.errMessage.bind { [weak self] err in
-            if !err.isEmpty {
-                self?.showToast(err)
-            }
-        }
+//        viewModel.errMessage.bind { [weak self] err in
+//            if !err.isEmpty {
+//                self?.showToast(err)
+//            }
+//        }
         
         viewModel.isSucceedToSave.bind { [weak self] _ in
             if self?.viewModel.isSucceedToSave.value == true {
