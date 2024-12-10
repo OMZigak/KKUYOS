@@ -44,7 +44,6 @@ final class SetReadyInfoViewController: BaseViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        setupTapGesture()
         bindViewModel()
     }
     
@@ -69,6 +68,14 @@ final class SetReadyInfoViewController: BaseViewController {
         setupTextField(textField: rootView.readyMinuteTextField)
         setupTextField(textField: rootView.moveHourTextField)
         setupTextField(textField: rootView.moveMinuteTextField)
+        
+        let tapGesture = UITapGestureRecognizer()
+        view.addGestureRecognizer(tapGesture)
+        tapGesture.rx.event
+            .subscribe(with: self) { owner, _ in
+                owner.view.endEditing(true)
+            }
+            .disposed(by: disposeBag)
     }
     
     private func bindViewModel() {
@@ -169,19 +176,6 @@ final class SetReadyInfoViewController: BaseViewController {
             textField.keyboardType = .numberPad
             textField.accessibilityIdentifier = identifier
         }
-    }
-    
-    
-    // MARK: - Keyboard Dismissal
-    
-    private func setupTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
-    }
-    
-    @objc
-    private func dismissKeyboard() {
-        view.endEditing(true)
     }
 }
 
