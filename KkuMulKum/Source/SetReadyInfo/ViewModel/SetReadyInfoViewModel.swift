@@ -23,7 +23,7 @@ final class SetReadyInfoViewModel {
     
     let isSucceedToSave = ObservablePattern<Bool>(false)
     
-    var errMessage: String = ""
+    var errMessageRelay = PublishRelay<String>()
     
     let readyHourRelay = BehaviorRelay<String>(value: "")
     let readyMinuteRelay = BehaviorRelay<String>(value: "")
@@ -116,6 +116,7 @@ extension SetReadyInfoViewModel: ViewModelType {
         let readyMinuteText: Driver<String>
         let moveHourText: Driver<String>
         let moveMinuteText: Driver<String>
+        let errMessage: Driver<String>
         let doneButtonIsEnabled: Driver<Bool>
     }
     
@@ -145,6 +146,8 @@ extension SetReadyInfoViewModel: ViewModelType {
         let moveHourText = checkValidTime(time: .hour, relay: moveHourRelay)
         let moveMinuteText = checkValidTime(time: .minute, relay: moveMinuteRelay)
         
+        let errMessage = errMessageRelay.asDriver(onErrorJustReturn: "")
+        
         let doneButtonIsEnabled = Observable.combineLatest(
             readyHourRelay.map { !$0.isEmpty },
             readyMinuteRelay.map { !$0.isEmpty },
@@ -159,6 +162,7 @@ extension SetReadyInfoViewModel: ViewModelType {
             readyMinuteText: readyMinuteText,
             moveHourText: moveHourText,
             moveMinuteText: moveMinuteText,
+            errMessage: errMessage,
             doneButtonIsEnabled: doneButtonIsEnabled
         )
         
@@ -176,8 +180,7 @@ private extension SetReadyInfoViewModel {
                 } else if let intValue = Int(value), range.contains(intValue) {
                     return value.description
                 } else {
-                    self.errMessage = "시간은 23시간 59분까지만 입력할 수 있어요!"
-                    print(self.errMessage)
+                    self.errMessageRelay.accept("시간은 23시간 59분까지만 입력할 수 있어요!")
                     return String(range.upperBound)
                 }
             }

@@ -111,6 +111,12 @@ final class SetReadyInfoViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
+        output.errMessage
+            .drive(with: self) { owner, err in
+                owner.showToast(err)
+            }
+            .disposed(by: disposeBag)
+        
         output.doneButtonIsEnabled
             .drive(with: self) { owner, isEnabled in
                 owner.rootView.doneButton.backgroundColor = isEnabled ? .maincolor : .gray2
@@ -131,6 +137,11 @@ final class SetReadyInfoViewController: BaseViewController {
                 textField.layer.borderColor = borderColor
             }
             .disposed(by: disposeBag)
+    }
+    
+    func showToast(_ message: String, bottomInset: CGFloat = 128) {
+        guard let view else { return }
+        Toast().show(message: message, view: view, position: .bottom, inset: bottomInset)
     }
     
     @objc
@@ -200,20 +211,9 @@ private extension SetReadyInfoViewController {
         }
     }
     
-    func showToast(_ message: String, bottomInset: CGFloat = 128) {
-        guard let view else { return }
-        Toast().show(message: message, view: view, position: .bottom, inset: bottomInset)
-    }
-    
     // MARK: - Data Bind
     
     func setupBinding() {
-//        viewModel.errMessage.bind { [weak self] err in
-//            if !err.isEmpty {
-//                self?.showToast(err)
-//            }
-//        }
-        
         viewModel.isSucceedToSave.bind { [weak self] _ in
             if self?.viewModel.isSucceedToSave.value == true {
                 DispatchQueue.main.async {
