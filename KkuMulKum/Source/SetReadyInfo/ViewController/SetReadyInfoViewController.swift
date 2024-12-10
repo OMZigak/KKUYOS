@@ -44,8 +44,9 @@ final class SetReadyInfoViewController: BaseViewController {
         view.backgroundColor = .white
         
         setupTapGesture()
-        setupTextField()
         bindViewModel()
+        
+        viewModel.setupStroredTime()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -154,6 +155,21 @@ final class SetReadyInfoViewController: BaseViewController {
         Toast().show(message: message, view: view, position: .bottom, inset: bottomInset)
     }
     
+    private func setTextFieldDelegate() {
+        let textFields: [(UITextField, String)] = [
+            (rootView.readyHourTextField, "readyHour"),
+            (rootView.readyMinuteTextField, "readyMinute"),
+            (rootView.moveHourTextField, "moveHour"),
+            (rootView.moveMinuteTextField, "moveMinute")
+        ]
+        
+        textFields.forEach { (textField, identifier) in
+            textField.delegate = self
+            textField.keyboardType = .numberPad
+            textField.accessibilityIdentifier = identifier
+        }
+    }
+    
     
     // MARK: - Keyboard Dismissal
     
@@ -180,39 +196,5 @@ extension SetReadyInfoViewController: UITextFieldDelegate {
         let allowedCharacters = CharacterSet.decimalDigits
         let characterSet = CharacterSet(charactersIn: string)
         return allowedCharacters.isSuperset(of: characterSet)
-    }
-}
-
-
-// MARK: - Function
-
-private extension SetReadyInfoViewController {
-    func setupTextField() {
-        /// 저장된 준비 시간이 0이 아니면 텍스트 필드에 설정
-        if viewModel.storedReadyHour != 0 || viewModel.storedReadyMinute != 0 {
-            rootView.readyHourTextField.text = String(viewModel.storedReadyHour)
-            rootView.readyMinuteTextField.text = String(viewModel.storedReadyMinute)
-        }
-        
-        /// 저장된 이동 시간이 0이 아니면 텍스트 필드에 설정
-        if viewModel.storedMoveHour != 0 || viewModel.storedMoveMinute != 0 {
-            rootView.moveHourTextField.text = String(viewModel.storedMoveHour)
-            rootView.moveMinuteTextField.text = String(viewModel.storedMoveMinute)
-        }
-    }
-    
-    func setTextFieldDelegate() {
-        let textFields: [(UITextField, String)] = [
-            (rootView.readyHourTextField, "readyHour"),
-            (rootView.readyMinuteTextField, "readyMinute"),
-            (rootView.moveHourTextField, "moveHour"),
-            (rootView.moveMinuteTextField, "moveMinute")
-        ]
-        
-        textFields.forEach { (textField, identifier) in
-            textField.delegate = self
-            textField.keyboardType = .numberPad
-            textField.accessibilityIdentifier = identifier
-        }
     }
 }

@@ -256,13 +256,12 @@ extension ReadyStatusViewController {
             service: PromiseService()
         )
         
-        viewModel.storedReadyHour = preparationTime / 60
-        viewModel.storedReadyMinute = preparationTime % 60
-        viewModel.storedMoveHour = travelTime / 60
-        viewModel.storedMoveMinute = travelTime % 60
+        viewModel.storedReadyHour = (preparationTime / 60).description
+        viewModel.storedReadyMinute = (preparationTime % 60).description
+        viewModel.storedMoveHour = (travelTime / 60).description
+        viewModel.storedMoveMinute = (travelTime % 60).description
         
         let viewController = SetReadyInfoViewController(viewModel: viewModel)
-        
         navigationController?.pushViewController(viewController, animated: true)
     }
     

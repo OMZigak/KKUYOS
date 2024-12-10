@@ -29,10 +29,10 @@ final class SetReadyInfoViewModel {
     let moveHourRelay = BehaviorRelay<String>(value: "")
     let moveMinuteRelay = BehaviorRelay<String>(value: "")
     
-    var storedReadyHour: Int = 0
-    var storedReadyMinute: Int = 0
-    var storedMoveHour: Int = 0
-    var storedMoveMinute: Int = 0
+    var storedReadyHour: String = ""
+    var storedReadyMinute: String = ""
+    var storedMoveHour: String = ""
+    var storedMoveMinute: String = ""
     
     var readyTime: Int = 0
     var moveTime: Int = 0
@@ -54,6 +54,13 @@ final class SetReadyInfoViewModel {
         self.promiseTime = promiseTime
         self.service = service
         self.notificationManager = notificationManager
+    }
+    
+    func setupStroredTime() {
+        readyHourRelay.accept(storedReadyHour)
+        readyMinuteRelay.accept(storedReadyMinute)
+        moveHourRelay.accept(storedMoveHour)
+        moveMinuteRelay.accept(storedMoveMinute)
     }
 }
 
