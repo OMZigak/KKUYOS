@@ -46,12 +46,20 @@ final class SetReadyInfoViewModel {
         promiseID: Int,
         promiseTime: String,
         promiseName: String,
+        storedReadyHour: String = "",
+        storedReadyMinute: String = "",
+        storedMoveHour: String = "",
+        storedMoveMinute: String = "",
         service: SetReadyStatusInfoServiceType,
         notificationManager: LocalNotificationManager = LocalNotificationManager.shared
     ) {
         self.promiseID = promiseID
         self.promiseName = promiseName
         self.promiseTime = promiseTime
+        self.storedReadyHour = storedReadyHour
+        self.storedReadyMinute = storedReadyMinute
+        self.storedMoveHour = storedMoveHour
+        self.storedMoveMinute = storedMoveMinute
         self.service = service
         self.notificationManager = notificationManager
     }
