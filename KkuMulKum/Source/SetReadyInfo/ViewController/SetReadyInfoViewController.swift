@@ -43,7 +43,6 @@ final class SetReadyInfoViewController: BaseViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        setupBinding()
         setupTapGesture()
         setupTextField()
         bindViewModel()
@@ -69,12 +68,6 @@ final class SetReadyInfoViewController: BaseViewController {
         setupTextField(textField: rootView.readyMinuteTextField)
         setupTextField(textField: rootView.moveHourTextField)
         setupTextField(textField: rootView.moveMinuteTextField)
-        
-        rootView.doneButton.addTarget(
-            self,
-            action: #selector(doneButtonDidTap),
-            for: .touchUpInside
-        )
     }
     
     private func bindViewModel() {
@@ -82,7 +75,8 @@ final class SetReadyInfoViewController: BaseViewController {
             readyHourText: rootView.readyHourTextField.rx.text.orEmpty.asObservable(),
             readyMinuteText: rootView.readyMinuteTextField.rx.text.orEmpty.asObservable(),
             moveHourText: rootView.moveHourTextField.rx.text.orEmpty.asObservable(),
-            moveMinuteText: rootView.moveMinuteTextField.rx.text.orEmpty.asObservable()
+            moveMinuteText: rootView.moveMinuteTextField.rx.text.orEmpty.asObservable(),
+            doneButtonDidTap: rootView.doneButton.rx.tap.asObservable()
         )
         
         let output = viewModel.transform(input: input, disposeBag: disposeBag)
@@ -123,6 +117,14 @@ final class SetReadyInfoViewController: BaseViewController {
                 owner.rootView.doneButton.isEnabled = isEnabled
             }
             .disposed(by: disposeBag)
+        
+        output.isSucceed
+            .drive(with: self) { owner, isSucceed in
+                if isSucceed {
+                    owner.navigateToSetReadyCompleted()
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setupTextField(textField: UITextField) {
@@ -139,14 +141,17 @@ final class SetReadyInfoViewController: BaseViewController {
             .disposed(by: disposeBag)
     }
     
-    func showToast(_ message: String, bottomInset: CGFloat = 128) {
-        guard let view else { return }
-        Toast().show(message: message, view: view, position: .bottom, inset: bottomInset)
+    private func navigateToSetReadyCompleted() {
+        let setReadyCompletedViewController = SetReadyCompletedViewController()
+        self.navigationController?.pushViewController(
+            setReadyCompletedViewController,
+            animated: true
+        )
     }
     
-    @objc
-    private func doneButtonDidTap(_ sender: UIButton) {
-        viewModel.updateReadyInfo()
+    private func showToast(_ message: String, bottomInset: CGFloat = 128) {
+        guard let view else { return }
+        Toast().show(message: message, view: view, position: .bottom, inset: bottomInset)
     }
     
     
@@ -208,22 +213,6 @@ private extension SetReadyInfoViewController {
             textField.delegate = self
             textField.keyboardType = .numberPad
             textField.accessibilityIdentifier = identifier
-        }
-    }
-    
-    // MARK: - Data Bind
-    
-    func setupBinding() {
-        viewModel.isSucceedToSave.bind { [weak self] _ in
-            if self?.viewModel.isSucceedToSave.value == true {
-                DispatchQueue.main.async {
-                    let viewController = SetReadyCompletedViewController()
-                    self?.navigationController?.pushViewController(
-                        viewController,
-                        animated: true
-                    )
-                }
-            }
         }
     }
 }

@@ -21,32 +21,23 @@ final class SetReadyInfoViewModel {
     let promiseName: String
     let promiseTime: String
     
-    let isSucceedToSave = ObservablePattern<Bool>(false)
-    
-    var errMessageRelay = PublishRelay<String>()
+    let errMessageRelay = PublishRelay<String>()
+    let isSucceedRelay = BehaviorRelay<Bool>(value: false)
     
     let readyHourRelay = BehaviorRelay<String>(value: "")
     let readyMinuteRelay = BehaviorRelay<String>(value: "")
     let moveHourRelay = BehaviorRelay<String>(value: "")
     let moveMinuteRelay = BehaviorRelay<String>(value: "")
-
-    var readyHour = ObservablePattern<String>("")
-    var readyMinute = ObservablePattern<String>("")
-    var moveHour = ObservablePattern<String>("")
-    var moveMinute = ObservablePattern<String>("")
-    
-    var preparationTime = ObservablePattern<Int>(0)
-    var travelTime = ObservablePattern<Int>(0)
     
     var storedReadyHour: Int = 0
     var storedReadyMinute: Int = 0
     var storedMoveHour: Int = 0
     var storedMoveMinute: Int = 0
-
-    let bufferTime: TimeInterval = 10 * 60
     
     var readyTime: Int = 0
     var moveTime: Int = 0
+    
+    let bufferTime: TimeInterval = 10 * 60
     
     private let service: SetReadyStatusInfoServiceType
     private let notificationManager: LocalNotificationManager
@@ -64,43 +55,6 @@ final class SetReadyInfoViewModel {
         self.service = service
         self.notificationManager = notificationManager
     }
-    
-    private func calculateTimes() {
-        let readyHours = Int(readyHour.value) ?? storedReadyHour
-        let readyMinutes = Int(readyMinute.value) ?? storedReadyMinute
-        let moveHours = Int(moveHour.value) ?? storedMoveHour
-        let moveMinutes = Int(moveMinute.value) ?? storedMoveMinute
-        
-        readyTime = readyHours * 60 + readyMinutes
-        moveTime = moveHours * 60 + moveMinutes
-    }
-    
-    func updateReadyInfo() {
-        calculateTimes()
-        
-        // 로컬 알림 설정
-        scheduleLocalNotification()
-        
-        Task {
-            let model = MyPromiseReadyInfoModel(
-                preparationTime: readyTime,
-                travelTime: moveTime
-            )
-            
-            do {
-                guard let responseBody = try await service.updateMyPromiseReadyStatus(
-                    with: promiseID,
-                    requestModel: model
-                ) else {
-                    isSucceedToSave.value = false
-                    return
-                }
-                isSucceedToSave.value = responseBody.success
-            } catch {
-                print(">>> \(error.localizedDescription) : \(#function)")
-            }
-        }
-    }
 }
 
 extension SetReadyInfoViewModel: ViewModelType {
@@ -109,6 +63,7 @@ extension SetReadyInfoViewModel: ViewModelType {
         let readyMinuteText: Observable<String>
         let moveHourText: Observable<String>
         let moveMinuteText: Observable<String>
+        let doneButtonDidTap: Observable<Void>
     }
     
     struct Output {
@@ -118,6 +73,7 @@ extension SetReadyInfoViewModel: ViewModelType {
         let moveMinuteText: Driver<String>
         let errMessage: Driver<String>
         let doneButtonIsEnabled: Driver<Bool>
+        let isSucceed: Driver<Bool>
     }
     
     func transform(input: Input, disposeBag: RxSwift.DisposeBag) -> Output {
@@ -141,6 +97,12 @@ extension SetReadyInfoViewModel: ViewModelType {
             .bind(to: moveMinuteRelay)
             .disposed(by: disposeBag)
         
+        input.doneButtonDidTap
+            .subscribe(with: self) { owner, _ in
+                owner.updateReadyInfo()
+            }
+            .disposed(by: disposeBag)
+        
         let readyHourText = checkValidTime(time: .hour, relay: readyHourRelay)
         let readyMinuteText = checkValidTime(time: .minute, relay: readyMinuteRelay)
         let moveHourText = checkValidTime(time: .hour, relay: moveHourRelay)
@@ -157,13 +119,16 @@ extension SetReadyInfoViewModel: ViewModelType {
             .map { $0 && $1 && $2 && $3 }
             .asDriver(onErrorJustReturn: false)
         
+        let isSucceed = isSucceedRelay.asDriver(onErrorJustReturn: false)
+        
         let output = Output(
             readyHourText: readyHourText,
             readyMinuteText: readyMinuteText,
             moveHourText: moveHourText,
             moveMinuteText: moveMinuteText,
             errMessage: errMessage,
-            doneButtonIsEnabled: doneButtonIsEnabled
+            doneButtonIsEnabled: doneButtonIsEnabled,
+            isSucceed: isSucceed
         )
         
         return output
@@ -185,6 +150,41 @@ private extension SetReadyInfoViewModel {
                 }
             }
             .asDriver(onErrorJustReturn: "")
+    }
+    
+    func calculateTotalTime() {
+        guard let readyHour = Int(readyHourRelay.value) else { return }
+        guard let readyMinute = Int(readyMinuteRelay.value) else { return }
+        guard let moveHour = Int(moveHourRelay.value) else { return }
+        guard let moveMinute = Int(moveMinuteRelay.value) else { return }
+        
+        readyTime = readyHour * 60 + readyMinute
+        moveTime = moveHour * 60 + moveMinute
+    }
+    
+    func updateReadyInfo() {
+        calculateTotalTime()
+        scheduleLocalNotification()
+        
+        Task {
+            let model = MyPromiseReadyInfoModel(
+                preparationTime: readyTime,
+                travelTime: moveTime
+            )
+            
+            do {
+                guard let responseBody = try await service.updateMyPromiseReadyStatus(
+                    with: promiseID,
+                    requestModel: model
+                ) else {
+                    isSucceedRelay.accept(false)
+                    return
+                }
+                isSucceedRelay.accept(responseBody.success)
+            } catch {
+                print(">>> \(error.localizedDescription) : \(#function)")
+            }
+        }
     }
 }
 
