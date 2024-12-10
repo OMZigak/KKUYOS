@@ -18,6 +18,7 @@ final class SetReadyInfoViewController: BaseViewController {
     private let rootView = SetReadyInfoView()
 
     private let viewModel: SetReadyInfoViewModel
+    private let viewWillAppearRelay = PublishRelay<Void>()
     private let disposeBag = DisposeBag()
     
     
@@ -45,14 +46,13 @@ final class SetReadyInfoViewController: BaseViewController {
         
         setupTapGesture()
         bindViewModel()
-        
-        viewModel.setupStroredTime()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         navigationController?.isNavigationBarHidden = false
+        viewWillAppearRelay.accept(())
     }
     
     override func setupView() {
@@ -73,6 +73,7 @@ final class SetReadyInfoViewController: BaseViewController {
     
     private func bindViewModel() {
         let input = SetReadyInfoViewModel.Input(
+            viewWillAppear: viewWillAppearRelay,
             readyHourText: rootView.readyHourTextField.rx.text.orEmpty.asObservable(),
             readyMinuteText: rootView.readyMinuteTextField.rx.text.orEmpty.asObservable(),
             moveHourText: rootView.moveHourTextField.rx.text.orEmpty.asObservable(),

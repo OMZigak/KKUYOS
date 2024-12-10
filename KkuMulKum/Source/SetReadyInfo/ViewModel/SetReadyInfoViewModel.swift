@@ -63,17 +63,11 @@ final class SetReadyInfoViewModel {
         self.service = service
         self.notificationManager = notificationManager
     }
-    
-    func setupStroredTime() {
-        readyHourRelay.accept(storedReadyHour)
-        readyMinuteRelay.accept(storedReadyMinute)
-        moveHourRelay.accept(storedMoveHour)
-        moveMinuteRelay.accept(storedMoveMinute)
-    }
 }
 
 extension SetReadyInfoViewModel: ViewModelType {
     struct Input {
+        let viewWillAppear: PublishRelay<Void>
         let readyHourText: Observable<String>
         let readyMinuteText: Observable<String>
         let moveHourText: Observable<String>
@@ -92,6 +86,15 @@ extension SetReadyInfoViewModel: ViewModelType {
     }
     
     func transform(input: Input, disposeBag: RxSwift.DisposeBag) -> Output {
+        input.viewWillAppear
+            .subscribe(with: self) { owner, _ in
+                owner.readyHourRelay.accept(owner.storedReadyHour)
+                owner.readyMinuteRelay.accept(owner.storedReadyMinute)
+                owner.moveHourRelay.accept(owner.storedMoveHour)
+                owner.moveMinuteRelay.accept(owner.storedMoveMinute)
+            }
+            .disposed(by: disposeBag)
+        
         input.readyHourText
             .distinctUntilChanged()
             .bind(to: readyHourRelay)
