@@ -110,6 +110,13 @@ final class SetReadyInfoViewController: BaseViewController {
                 owner.rootView.moveMinuteTextField.text = text
             }
             .disposed(by: disposeBag)
+        
+        output.doneButtonIsEnabled
+            .drive(with: self) { owner, isEnabled in
+                owner.rootView.doneButton.backgroundColor = isEnabled ? .maincolor : .gray2
+                owner.rootView.doneButton.isEnabled = isEnabled
+            }
+            .disposed(by: disposeBag)
     }
     
     private func setupTextField(textField: UITextField) {
@@ -176,13 +183,6 @@ private extension SetReadyInfoViewController {
             rootView.moveHourTextField.text = String(viewModel.storedMoveHour)
             rootView.moveMinuteTextField.text = String(viewModel.storedMoveMinute)
         }
-        
-        viewModel.checkValid(
-            readyHourText: rootView.readyHourTextField.text ?? "",
-            readyMinuteText: rootView.readyMinuteTextField.text ?? "",
-            moveHourText: rootView.moveHourTextField.text ?? "",
-            moveMinuteText: rootView.moveMinuteTextField.text ?? ""
-        )
     }
     
     func setTextFieldDelegate() {
@@ -208,10 +208,6 @@ private extension SetReadyInfoViewController {
     // MARK: - Data Bind
     
     func setupBinding() {
-        viewModel.isValid.bind { [weak self] isValid in
-            self?.rootView.doneButton.isEnabled = isValid
-        }
-        
 //        viewModel.errMessage.bind { [weak self] err in
 //            if !err.isEmpty {
 //                self?.showToast(err)

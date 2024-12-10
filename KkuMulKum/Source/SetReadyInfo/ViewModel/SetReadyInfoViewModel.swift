@@ -21,15 +21,14 @@ final class SetReadyInfoViewModel {
     let promiseName: String
     let promiseTime: String
     
-    let isValid = ObservablePattern<Bool>(false)
     let isSucceedToSave = ObservablePattern<Bool>(false)
     
     var errMessage: String = ""
     
-    let readyHourRelay = BehaviorRelay<Int>(value: 0)
-    let readyMinuteRelay = BehaviorRelay<Int>(value: 0)
-    let moveHourRelay = BehaviorRelay<Int>(value: 0)
-    let moveMinuteRelay = BehaviorRelay<Int>(value: 0)
+    let readyHourRelay = BehaviorRelay<String>(value: "")
+    let readyMinuteRelay = BehaviorRelay<String>(value: "")
+    let moveHourRelay = BehaviorRelay<String>(value: "")
+    let moveMinuteRelay = BehaviorRelay<String>(value: "")
 
     var readyHour = ObservablePattern<String>("")
     var readyMinute = ObservablePattern<String>("")
@@ -76,19 +75,6 @@ final class SetReadyInfoViewModel {
         moveTime = moveHours * 60 + moveMinutes
     }
     
-    func checkValid(readyHourText: String,
-        readyMinuteText: String,
-        moveHourText: String,
-        moveMinuteText: String
-    ) {
-        if !readyHourText.isEmpty && !readyMinuteText.isEmpty
-            && !moveHourText.isEmpty && !moveMinuteText.isEmpty {
-            isValid.value = true
-        } else {
-            isValid.value = false
-        }
-    }
-    
     func updateReadyInfo() {
         calculateTimes()
         
@@ -115,8 +101,92 @@ final class SetReadyInfoViewModel {
             }
         }
     }
+}
+
+extension SetReadyInfoViewModel: ViewModelType {
+    struct Input {
+        let readyHourText: Observable<String>
+        let readyMinuteText: Observable<String>
+        let moveHourText: Observable<String>
+        let moveMinuteText: Observable<String>
+    }
     
-    private func scheduleLocalNotification() {
+    struct Output {
+        let readyHourText: Driver<String>
+        let readyMinuteText: Driver<String>
+        let moveHourText: Driver<String>
+        let moveMinuteText: Driver<String>
+        let doneButtonIsEnabled: Driver<Bool>
+    }
+    
+    func transform(input: Input, disposeBag: RxSwift.DisposeBag) -> Output {
+        input.readyHourText
+            .distinctUntilChanged()
+            .bind(to: readyHourRelay)
+            .disposed(by: disposeBag)
+        
+        input.readyMinuteText
+            .distinctUntilChanged()
+            .bind(to: readyMinuteRelay)
+            .disposed(by: disposeBag)
+        
+        input.moveHourText
+            .distinctUntilChanged()
+            .bind(to: moveHourRelay)
+            .disposed(by: disposeBag)
+        
+        input.moveMinuteText
+            .distinctUntilChanged()
+            .bind(to: moveMinuteRelay)
+            .disposed(by: disposeBag)
+        
+        let readyHourText = checkValidTime(time: .hour, relay: readyHourRelay)
+        let readyMinuteText = checkValidTime(time: .minute, relay: readyMinuteRelay)
+        let moveHourText = checkValidTime(time: .hour, relay: moveHourRelay)
+        let moveMinuteText = checkValidTime(time: .minute, relay: moveMinuteRelay)
+        
+        let doneButtonIsEnabled = Observable.combineLatest(
+            readyHourRelay.map { !$0.isEmpty },
+            readyMinuteRelay.map { !$0.isEmpty },
+            moveHourRelay.map { !$0.isEmpty },
+            moveMinuteRelay.map { !$0.isEmpty }
+        )
+            .map { $0 && $1 && $2 && $3 }
+            .asDriver(onErrorJustReturn: false)
+        
+        let output = Output(
+            readyHourText: readyHourText,
+            readyMinuteText: readyMinuteText,
+            moveHourText: moveHourText,
+            moveMinuteText: moveMinuteText,
+            doneButtonIsEnabled: doneButtonIsEnabled
+        )
+        
+        return output
+    }
+}
+
+private extension SetReadyInfoViewModel {
+    func checkValidTime(time: Time, relay: BehaviorRelay<String>) -> Driver<String> {
+        let range: ClosedRange<Int> = time == .hour ? 0...23 : 0...59
+        return relay
+            .map { value in
+                if value.isEmpty {
+                    return ""
+                } else if let intValue = Int(value), range.contains(intValue) {
+                    return value.description
+                } else {
+                    self.errMessage = "시간은 23시간 59분까지만 입력할 수 있어요!"
+                    print(self.errMessage)
+                    return String(range.upperBound)
+                }
+            }
+            .asDriver(onErrorJustReturn: "")
+    }
+}
+
+private extension SetReadyInfoViewModel {
+    func scheduleLocalNotification() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatter.locale = Locale(identifier: "ko_KR")
@@ -192,78 +262,5 @@ final class SetReadyInfoViewModel {
                 print("알림 권한이 허용되지 않았습니다.")
             }
         }
-    }
-}
-
-extension SetReadyInfoViewModel: ViewModelType {
-    struct Input {
-        let readyHourText: Observable<String>
-        let readyMinuteText: Observable<String>
-        let moveHourText: Observable<String>
-        let moveMinuteText: Observable<String>
-    }
-    
-    struct Output {
-        let readyHourText: Driver<String>
-        let readyMinuteText: Driver<String>
-        let moveHourText: Driver<String>
-        let moveMinuteText: Driver<String>
-    }
-    
-    func transform(input: Input, disposeBag: RxSwift.DisposeBag) -> Output {
-        input.readyHourText
-            .distinctUntilChanged()
-            .compactMap { Int($0) }
-            .bind(to: readyHourRelay)
-            .disposed(by: disposeBag)
-        
-        input.readyMinuteText
-            .distinctUntilChanged()
-            .compactMap { Int($0) }
-            .bind(to: readyMinuteRelay)
-            .disposed(by: disposeBag)
-        
-        input.moveHourText
-            .distinctUntilChanged()
-            .compactMap { Int($0) }
-            .bind(to: moveHourRelay)
-            .disposed(by: disposeBag)
-        
-        input.moveMinuteText
-            .distinctUntilChanged()
-            .compactMap { Int($0) }
-            .bind(to: moveMinuteRelay)
-            .disposed(by: disposeBag)
-        
-        let readyHourText = checkValidTime(time: .hour, relay: readyHourRelay)
-        let readyMinuteText = checkValidTime(time: .minute, relay: readyMinuteRelay)
-        let moveHourText = checkValidTime(time: .hour, relay: moveHourRelay)
-        let moveMinuteText = checkValidTime(time: .minute, relay: moveMinuteRelay)
-        
-        let output = Output(
-            readyHourText: readyHourText,
-            readyMinuteText: readyMinuteText,
-            moveHourText: moveHourText,
-            moveMinuteText: moveMinuteText
-        )
-        
-        return output
-    }
-}
-
-private extension SetReadyInfoViewModel {
-    func checkValidTime(time: Time, relay: BehaviorRelay<Int>) -> Driver<String> {
-        let range: ClosedRange<Int> = time == .hour ? 0...23 : 0...59
-        return relay
-            .map { value in
-                if range.contains(value) {
-                    return value.description
-                } else {
-                    self.errMessage = "시간은 23시간 59분까지만 입력할 수 있어요!"
-                    print(self.errMessage)
-                    return String(range.upperBound)
-                }
-            }
-            .asDriver(onErrorJustReturn: "0")
     }
 }
