@@ -17,27 +17,27 @@ enum Time {
 }
 
 final class SetReadyInfoViewModel {
-    let promiseID: Int
-    let promiseName: String
-    let promiseTime: String
+    private let promiseID: Int
+    private let promiseName: String
+    private let promiseTime: String
     
-    let errMessageRelay = PublishRelay<String>()
-    let isSucceedRelay = BehaviorRelay<Bool>(value: false)
+    private let errMessageRelay = PublishRelay<String>()
+    private let isSucceedRelay = BehaviorRelay<Bool>(value: false)
     
-    let readyHourRelay = BehaviorRelay<String>(value: "")
-    let readyMinuteRelay = BehaviorRelay<String>(value: "")
-    let moveHourRelay = BehaviorRelay<String>(value: "")
-    let moveMinuteRelay = BehaviorRelay<String>(value: "")
+    private let readyHourRelay = BehaviorRelay<String>(value: "")
+    private let readyMinuteRelay = BehaviorRelay<String>(value: "")
+    private let moveHourRelay = BehaviorRelay<String>(value: "")
+    private let moveMinuteRelay = BehaviorRelay<String>(value: "")
     
-    var storedReadyHour: String = ""
-    var storedReadyMinute: String = ""
-    var storedMoveHour: String = ""
-    var storedMoveMinute: String = ""
+    private var storedReadyHour: String = ""
+    private var storedReadyMinute: String = ""
+    private var storedMoveHour: String = ""
+    private var storedMoveMinute: String = ""
     
-    var readyTime: Int = 0
-    var moveTime: Int = 0
+    private var readyTime: Int = 0
+    private var moveTime: Int = 0
     
-    let bufferTime: TimeInterval = 10 * 60
+    private let bufferTime: TimeInterval = 10 * 60
     
     private let service: SetReadyStatusInfoServiceType
     private let notificationManager: LocalNotificationManager
@@ -80,7 +80,7 @@ extension SetReadyInfoViewModel: ViewModelType {
         let readyMinuteText: Driver<String>
         let moveHourText: Driver<String>
         let moveMinuteText: Driver<String>
-        let errMessage: Driver<String>
+        let errorMessage: Driver<String>
         let doneButtonIsEnabled: Driver<Bool>
         let isSucceed: Driver<Bool>
     }
@@ -126,7 +126,7 @@ extension SetReadyInfoViewModel: ViewModelType {
         let moveHourText = checkValidTime(time: .hour, relay: moveHourRelay)
         let moveMinuteText = checkValidTime(time: .minute, relay: moveMinuteRelay)
         
-        let errMessage = errMessageRelay.asDriver(onErrorJustReturn: "")
+        let errorMessage = errMessageRelay.asDriver(onErrorJustReturn: "")
         
         let doneButtonIsEnabled = Observable.combineLatest(
             readyHourRelay.map { !$0.isEmpty },
@@ -144,7 +144,7 @@ extension SetReadyInfoViewModel: ViewModelType {
             readyMinuteText: readyMinuteText,
             moveHourText: moveHourText,
             moveMinuteText: moveMinuteText,
-            errMessage: errMessage,
+            errorMessage: errorMessage,
             doneButtonIsEnabled: doneButtonIsEnabled,
             isSucceed: isSucceed
         )

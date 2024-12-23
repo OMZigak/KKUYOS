@@ -114,9 +114,9 @@ final class SetReadyInfoViewController: BaseViewController {
             }
             .disposed(by: disposeBag)
         
-        output.errMessage
-            .drive(with: self) { owner, err in
-                owner.showToast(err)
+        output.errorMessage
+            .drive(with: self) { owner, error in
+                owner.showToast(error)
             }
             .disposed(by: disposeBag)
         
