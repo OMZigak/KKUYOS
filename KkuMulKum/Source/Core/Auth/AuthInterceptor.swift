@@ -142,4 +142,17 @@ class AuthInterceptor: RequestInterceptor {
             }
         }
     }
+    
+    private func getTokenExpiration(from token: String) -> TimeInterval? {
+        let parts = token.components(separatedBy: ".")
+        guard parts.count == 3,
+              let payload = Data(base64Encoded: parts[1].padding(toLength: ((parts[1].count + 3) / 4) * 4,
+                                                                 withPad: "=",
+                                                                 startingAt: 0)),
+              let json = try? JSONSerialization.jsonObject(with: payload, options: []) as? [String: Any],
+              let exp = json["exp"] as? TimeInterval else {
+            return nil
+        }
+        return exp
+    }
 }
