@@ -28,22 +28,11 @@ class AuthInterceptor: RequestInterceptor {
             completion(.success(urlRequest))
             return
         }
-        
-        if let expiration = getTokenExpiration(from: accessToken) {
-            let currentTime = Date().timeIntervalSince1970
-            if expiration - currentTime < 30 {
-                tokenManager.refreshToken { result in
-                    switch result {
-                    case .success(let newToken):
-                        var request = urlRequest
-                        request.headers.update(.authorization(bearerToken: newToken))
-                        completion(.success(request))
-                    case .failure:
-                        completion(.success(urlRequest))
-                    }
-                }
-                return
-            }
+
+        guard authService.getRefreshToken() != nil else {
+            _ = authService.clearTokens()
+            completion(.success(urlRequest))
+            return
         }
         
         var request = urlRequest
@@ -72,18 +61,5 @@ class AuthInterceptor: RequestInterceptor {
                 completion(.doNotRetry)
             }
         }
-    }
-    
-    private func getTokenExpiration(from token: String) -> TimeInterval? {
-        let parts = token.components(separatedBy: ".")
-        guard parts.count == 3,
-              let payload = Data(base64Encoded: parts[1].padding(toLength: ((parts[1].count + 3) / 4) * 4,
-                                                                 withPad: "=",
-                                                                 startingAt: 0)),
-              let json = try? JSONSerialization.jsonObject(with: payload, options: []) as? [String: Any],
-              let exp = json["exp"] as? TimeInterval else {
-            return nil
-        }
-        return exp
     }
 }
