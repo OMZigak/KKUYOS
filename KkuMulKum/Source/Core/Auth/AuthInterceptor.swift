@@ -14,14 +14,82 @@ enum AuthError: Error {
     case tokenRefreshFailed
 }
 
-class AuthInterceptor: RequestInterceptor {
-    let authService: AuthServiceProtocol
-    let provider: MoyaProvider<AuthTargetType>
-    private let lock = NSLock()
+class TokenRefreshManager {
+    private let authService: AuthServiceProtocol
+    private let provider: MoyaProvider<AuthTargetType>
+    private var isRefreshing = false
+    private let queue = DispatchQueue(label: "com.TokenRefreshManager.queue")
     
     init(authService: AuthServiceProtocol, provider: MoyaProvider<AuthTargetType>) {
         self.authService = authService
         self.provider = provider
+    }
+    
+    func refreshToken(completion: @escaping (Result<String, Error>) -> Void) {
+        queue.async { [weak self] in
+            guard let self = self else {
+                completion(.failure(AuthError.tokenRefreshFailed))
+                return
+            }
+            
+            if self.isRefreshing {
+                DispatchQueue.global().asyncAfter(deadline: .now() + 0.1) {
+                    self.refreshToken(completion: completion)
+                }
+                return
+            }
+            
+            self.isRefreshing = true
+            
+            guard let currentRefreshToken = self.authService.getRefreshToken() else {
+                self.isRefreshing = false
+                completion(.failure(AuthError.tokenRefreshFailed))
+                return
+            }
+            
+            self.provider.request(.refreshToken(refreshToken: currentRefreshToken)) { [weak self] result in
+                guard let self = self else {
+                    completion(.failure(AuthError.tokenRefreshFailed))
+                    return
+                }
+                
+                self.queue.async {
+                    self.isRefreshing = false
+                    
+                    switch result {
+                    case .success(let response):
+                        do {
+                            let reissueResponse = try response.map(ResponseBodyDTO<ReissueModel>.self)
+                            if reissueResponse.success, let data = reissueResponse.data {
+                                if self.authService.saveAccessToken(data.accessToken) &&
+                                   self.authService.saveRefreshToken(data.refreshToken) {
+                                    print("Token refreshed and saved successfully")
+                                    completion(.success(data.accessToken))
+                                } else {
+                                    completion(.failure(AuthError.tokenRefreshFailed))
+                                }
+                            } else {
+                                completion(.failure(AuthError.tokenRefreshFailed))
+                            }
+                        } catch {
+                            completion(.failure(error))
+                        }
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                }
+            }
+        }
+    }
+}
+
+class AuthInterceptor: RequestInterceptor {
+    private let tokenManager: TokenRefreshManager
+    private let authService: AuthServiceProtocol
+    
+    init(authService: AuthServiceProtocol, provider: MoyaProvider<AuthTargetType>) {
+        self.authService = authService
+        self.tokenManager = TokenRefreshManager(authService: authService, provider: provider)
     }
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
@@ -33,13 +101,13 @@ class AuthInterceptor: RequestInterceptor {
         if let expiration = getTokenExpiration(from: accessToken) {
             let currentTime = Date().timeIntervalSince1970
             if expiration - currentTime < 30 {
-                refreshToken { [weak self] result in
+                tokenManager.refreshToken { result in
                     switch result {
                     case .success(let newToken):
                         var request = urlRequest
                         request.headers.update(.authorization(bearerToken: newToken))
                         completion(.success(request))
-                    case .failure(_):
+                    case .failure:
                         completion(.success(urlRequest))
                     }
                 }
@@ -59,68 +127,19 @@ class AuthInterceptor: RequestInterceptor {
             return
         }
         
-        refreshToken { [weak self] result in
+        tokenManager.refreshToken { [weak self] result in
+            guard let self = self else {
+                completion(.doNotRetry)
+                return
+            }
+            
             switch result {
-            case .success(let newToken):
-                var updatedRequest = request.request
-                updatedRequest?.headers.update(.authorization(bearerToken: newToken))
+            case .success:
                 completion(.retry)
-            case .failure(_):
-                _ = self?.authService.clearTokens()
+            case .failure:
+                _ = self.authService.clearTokens()
                 completion(.doNotRetry)
             }
         }
-    }
-    
-    private func refreshToken(completion: @escaping (Result<String, Error>) -> Void) {
-        lock.lock() 
-        defer { lock.unlock() }
-        
-        guard let refreshToken = authService.getRefreshToken() else {
-            completion(.failure(AuthError.tokenRefreshFailed))
-            return
-        }
-        
-        provider.request(.refreshToken(refreshToken: refreshToken)) { [weak self] result in
-            switch result {
-            case .success(let response):
-                do {
-                    let reissueResponse = try response.map(ResponseBodyDTO<ReissueModel>.self)
-                    if reissueResponse.success, let data = reissueResponse.data {
-                        _ = self?.authService.saveAccessToken(data.accessToken)
-                        _ = self?.authService.saveRefreshToken(data.refreshToken)
-                        print("Token refreshed successfully")
-                        completion(.success(data.accessToken))
-                    } else {
-                        completion(.failure(AuthError.tokenRefreshFailed))
-                    }
-                } catch {
-                    completion(.failure(error))
-                }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    private func getTokenExpiration(from token: String) -> TimeInterval? {
-        let parts = token.components(separatedBy: ".")
-        guard parts.count == 3,
-              let payload = parts[1].base64Decoded(),
-              let json = try? JSONSerialization.jsonObject(with: payload, options: []) as? [String: Any],
-              let exp = json["exp"] as? TimeInterval else {
-            return nil
-        }
-        return exp
-    }
-}
-
-extension String {
-    func base64Decoded() -> Data? {
-        var base64 = self
-        base64 = base64.padding(toLength: ((base64.count + 3) / 4) * 4,
-                               withPad: "=",
-                               startingAt: 0)
-        return Data(base64Encoded: base64)
     }
 }
