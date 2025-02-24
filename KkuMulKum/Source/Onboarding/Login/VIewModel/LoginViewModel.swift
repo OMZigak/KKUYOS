@@ -20,11 +20,30 @@ enum LoginState {
     case needOnboarding
 }
 
+enum LoginNavigation {
+    case toMain
+    case toOnboarding
+    case showError(message: String)
+}
+
 class LoginViewModel: NSObject {
-    var loginState: ObservablePattern<LoginState> = ObservablePattern(.notLogin)
-    var error: ObservablePattern<String> = ObservablePattern("")
-    var userName: ObservablePattern<String?> = ObservablePattern(nil)
+    // MARK: - Outputs
+    // 현재 상태
+    private(set) var loginState: LoginState = .notLogin {
+        didSet {
+            loginStateChanged?(loginState)
+        }
+    }
     
+    // 상태 변경 콜백
+    var loginStateChanged: ((LoginState) -> Void)?
+    
+    // Pulse 이벤트들
+    private(set) var loginResultPulse = Pulse<Result<SocialLoginResponseModel, Error>>()
+    private(set) var navigationPulse = Pulse<LoginNavigation>()
+    private(set) var errorPulse = Pulse<String>()
+    
+    // MARK: - Private properties
     private let provider: MoyaProvider<AuthTargetType>
     private var authService: AuthServiceProtocol
     private let authInterceptor: AuthInterceptor
@@ -32,6 +51,7 @@ class LoginViewModel: NSObject {
     
     private let kakaoAppKey: String
 
+    // MARK: - Initialization
     init(
         provider: MoyaProvider<AuthTargetType> = MoyaProvider<AuthTargetType>(
             plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
@@ -51,15 +71,21 @@ class LoginViewModel: NSObject {
         self.keychainAccessible = keychainAccessible
         super.init()
         
+        setupBindings()
         print("Initial FCM Token: \(getFCMToken())")
     }
     
-    private func getFCMToken() -> String {
-        let token = keychainAccessible.getToken("FCMToken") ?? "fcm_token_not_available"
-        print("Retrieved FCM Token: \(token)")
-        return token
+    // MARK: - Setup
+    private func setupBindings() {
+        // errorPulse 발생 시 navigationPulse(showError)도 함께 발생시키기
+        errorPulse.subscribe { [weak self] errorMessage in
+            if !errorMessage.isEmpty {
+                self?.navigationPulse.emit(.showError(message: errorMessage))
+            }
+        }
     }
     
+    // MARK: - Public Methods
     func performAppleLogin(presentationAnchor: ASPresentationAnchor) {
         print("Performing Apple Login")
         let request = ASAuthorizationAppleIDProvider().createRequest()
@@ -85,7 +111,14 @@ class LoginViewModel: NSObject {
         }
     }
     
-    private func getFCMToken(completion: @escaping (String) -> Void) {
+    // MARK: - Private Methods
+    private func getFCMToken() -> String {
+        let token = keychainAccessible.getToken("FCMToken") ?? "fcm_token_not_available"
+        print("Retrieved FCM Token: \(token)")
+        return token
+    }
+    
+    private func getFCMTokenAsync(completion: @escaping (String) -> Void) {
         Messaging.messaging().token { token, error in
             if let error = error {
                 print("Error fetching FCM registration token: \(error)")
@@ -104,18 +137,18 @@ class LoginViewModel: NSObject {
     private func handleKakaoLoginResult(oauthToken: OAuthToken?, error: Error?) {
         if let error = error {
             print("Kakao Login Error: \(error.localizedDescription)")
-            self.error.value = error.localizedDescription
+            errorPulse.emit(error.localizedDescription)
             return
         }
         
         if let token = oauthToken?.accessToken {
             print("Kakao Login Successful, access token: \(token)")
-            getFCMToken { [weak self] fcmToken in
+            getFCMTokenAsync { [weak self] fcmToken in
                 self?.loginToServer(with: .kakaoLogin(accessToken: token, fcmToken: fcmToken))
             }
         } else {
             print("Kakao Login Error: No access token")
-            self.error.value = "No access token received"
+            errorPulse.emit("No access token received")
         }
     }
     
@@ -140,12 +173,12 @@ class LoginViewModel: NSObject {
                     self?.handleLoginResponse(loginResponse)
                 } catch {
                     print("Failed to decode response: \(error)")
-                    self?.error.value = "Failed to decode response: \(error.localizedDescription)"
+                    self?.errorPulse.emit("Failed to decode response: \(error.localizedDescription)")
                 }
                 
             case .failure(let error):
                 print("Network error: \(error)")
-                self?.error.value = "Network error: \(error.localizedDescription)"
+                self?.errorPulse.emit("Network error: \(error.localizedDescription)")
             }
         }
     }
@@ -157,30 +190,34 @@ class LoginViewModel: NSObject {
                 accessToken: data.jwtTokenDTO.accessToken,
                 refreshToken: data.jwtTokenDTO.refreshToken
             )
-            userName.value = data.name
+            
+            loginResultPulse.emit(.success(data))
+            
             if data.name != nil {
                 print("Login successful, user has a name")
-                loginState.value = .login
+                loginState = .login
+                navigationPulse.emit(.toMain)
             } else {
                 print("Login successful, but user needs onboarding")
-                loginState.value = .needOnboarding
+                loginState = .needOnboarding
+                navigationPulse.emit(.toOnboarding)
             }
         } else {
             if let error = response.error {
                 print("Login failed: \(error.message)")
-                self.error.value = error.message
+                errorPulse.emit(error.message)
             } else {
                 print("Login failed: Unknown error")
-                self.error.value = "Unknown error occurred"
+                errorPulse.emit("Unknown error occurred")
             }
-            loginState.value = .notLogin
+            loginState = .notLogin
         }
     }
     
     func autoLogin(completion: @escaping (Bool) -> Void) {
         guard let refreshToken = authService.getRefreshToken() else {
             print("No refresh token found")
-            loginState.value = .notLogin
+            loginState = .notLogin
             completion(false)
             return
         }
@@ -229,8 +266,13 @@ class LoginViewModel: NSObject {
                 do {
                     let userInfoResponse = try response.map(ResponseBodyDTO<UserInfoModel>.self)
                     if userInfoResponse.success, let data = userInfoResponse.data {
-                        self?.userName.value = data.name
-                        self?.loginState.value = .login  // 이름이 있으므로 항상 .login 상태로 설정
+                        if data.name != nil {
+                            self?.loginState = .login
+                            self?.navigationPulse.emit(.toMain)
+                        } else {
+                            self?.loginState = .needOnboarding
+                            self?.navigationPulse.emit(.toOnboarding)
+                        }
                         completion(true)
                     } else {
                         self?.clearTokensAndHandleError()
@@ -251,13 +293,12 @@ class LoginViewModel: NSObject {
     
     private func clearTokensAndHandleError() {
         _ = authService.clearTokens()
-        loginState.value = .notLogin
-        error.value = "자동 로그인 실패. 다시 로그인해주세요."
+        loginState = .notLogin
+        errorPulse.emit("자동 로그인 실패. 다시 로그인해주세요.")
         print("Tokens cleared, login state set to notLogin")
     }
     
     private func saveTokens(accessToken: String, refreshToken: String) {
-
         let accessTokenSaved = authService.saveAccessToken(accessToken)
         let refreshTokenSaved = authService.saveRefreshToken(refreshToken)
         
@@ -271,33 +312,34 @@ class LoginViewModel: NSObject {
     }
 }
 
+// MARK: - ASAuthorizationControllerDelegate
 extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-           print("Apple authorization completed")
-           guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
-                 let identityToken = appleIDCredential.identityToken,
-                 let tokenString = String(data: identityToken, encoding: .utf8) else {
-               print("Failed to get Apple ID Credential or identity token")
-               return
-           }
-           
-           // authorization_code 출력 추가
-           if let authorizationCode = appleIDCredential.authorizationCode,
-              let codeString = String(data: authorizationCode, encoding: .utf8) {
-               print("Authorization Code: \(codeString)")
-           } else {
-               print("Authorization Code not available")
-           }
-           
-           print("Apple Login Successful, identity token: \(tokenString)")
-           getFCMToken { [weak self] fcmToken in
-               self?.loginToServer(with: .appleLogin(identityToken: tokenString, fcmToken: fcmToken))
-           }
-       }
+        print("Apple authorization completed")
+        guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
+              let identityToken = appleIDCredential.identityToken,
+              let tokenString = String(data: identityToken, encoding: .utf8) else {
+            print("Failed to get Apple ID Credential or identity token")
+            return
+        }
+        
+        // authorization_code 출력 추가
+        if let authorizationCode = appleIDCredential.authorizationCode,
+           let codeString = String(data: authorizationCode, encoding: .utf8) {
+            print("Authorization Code: \(codeString)")
+        } else {
+            print("Authorization Code not available")
+        }
+        
+        print("Apple Login Successful, identity token: \(tokenString)")
+        getFCMTokenAsync { [weak self] fcmToken in
+            self?.loginToServer(with: .appleLogin(identityToken: tokenString, fcmToken: fcmToken))
+        }
+    }
     
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("Apple authorization error: \(error.localizedDescription)")
-        self.error.value = error.localizedDescription
+        errorPulse.emit(error.localizedDescription)
     }
     
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
