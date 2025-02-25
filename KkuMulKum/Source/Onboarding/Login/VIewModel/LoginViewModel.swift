@@ -172,20 +172,49 @@ class LoginViewModel: NSObject {
             
             loginResultPulse.emit(.success(data))
             
-            navigationPulse.reset()
+            // Pulse 객체를 초기화하고 새로 생성
+            navigationPulse = Pulse<LoginNavigation>()
             
             if data.name != nil {
                 loginState = .login
+                print("📣📣📣 Emitting toMain navigation event")
                 navigationPulse.emit(.toMain)
                 
+                // 직접 화면 전환 (메인 화면으로)
                 DispatchQueue.main.async {
+                    print("🔄🔄🔄 Attempting direct navigation to main")
                     let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                     let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                    sceneDelegate?.showMainScreen()
+                    if let sceneDelegate = sceneDelegate {
+                        sceneDelegate.showMainScreen()
+                        print("✅✅✅ Direct navigation to main successful")
+                    } else {
+                        print("❌❌❌ Failed to get sceneDelegate for direct navigation")
+                    }
                 }
             } else {
                 loginState = .needOnboarding
+                print("📣📣📣 Emitting toOnboarding navigation event")
                 navigationPulse.emit(.toOnboarding)
+                
+                // 직접 화면 전환 (온보딩 화면으로)
+                DispatchQueue.main.async {
+                    print("🔄🔄🔄 Attempting direct navigation to onboarding")
+                    let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                    let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                    if let sceneDelegate = sceneDelegate {
+                        let nicknameViewModel = NicknameViewModel()
+                        let nicknameViewController = NicknameViewController(viewModel: nicknameViewModel)
+                        let navigationController = UINavigationController(
+                            rootViewController: nicknameViewController,
+                            isBorderNeeded: false
+                        )
+                        sceneDelegate.animateRootViewControllerChange(to: navigationController)
+                        print("✅✅✅ Direct navigation to onboarding successful")
+                    } else {
+                        print("❌❌❌ Failed to get sceneDelegate for direct navigation")
+                    }
+                }
             }
         } else {
             if let error = response.error {
@@ -221,12 +250,7 @@ class LoginViewModel: NSObject {
                         self?.saveTokens(accessToken: newAccessToken, refreshToken: newRefreshToken)
                         
                         self?.fetchUserInfo { success in
-                            if success {
-                                completion(true)
-                            } else {
-                                self?.clearTokensAndHandleError()
-                                completion(false)
-                            }
+                            completion(success)
                         }
                     } else {
                         self?.clearTokensAndHandleError()

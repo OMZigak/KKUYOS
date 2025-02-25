@@ -58,21 +58,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         performAutoLogin()
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-            print("🧪 Testing navigation pulse manually")
-            self.loginViewModel.navigationPulse.emit(.toMain)
-        }
     }
-    
     
     private func performAutoLogin() {
         print("Performing auto login")
         loginViewModel.autoLogin { [weak self] success in
             DispatchQueue.main.async {
-                if success {
-                    self?.showMainScreen()
-                } else {
+                if !success {
                     self?.showLoginScreen()
                 }
             }
@@ -115,7 +107,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         animateRootViewControllerChange(to: loginViewController)
     }
     
-    private func animateRootViewControllerChange(to newRootViewController: UIViewController) {
+    func animateRootViewControllerChange(to newRootViewController: UIViewController) {
         guard let window = self.window else { return }
         
         UIView.transition(with: window,
