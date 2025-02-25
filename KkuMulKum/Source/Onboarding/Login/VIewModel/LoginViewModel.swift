@@ -164,45 +164,33 @@ class LoginViewModel: NSObject {
     }
     
     private func handleLoginResponse(_ response: ResponseBodyDTO<SocialLoginResponseModel>) {
-        if response.success, let data = response.data {
+        switch (response.success, response.data) {
+        case (true, let data?):
             saveTokens(
                 accessToken: data.jwtTokenDTO.accessToken,
                 refreshToken: data.jwtTokenDTO.refreshToken
             )
-            
             loginResultPulse.emit(.success(data))
             
-            // Pulse 객체를 초기화하고 새로 생성
+            // Pulse 객체 재설정
             navigationPulse = Pulse<LoginNavigation>()
             
-            if data.name != nil {
+            switch data.name {
+            case .some:
                 loginState = .login
-                print("📣📣📣 Emitting toMain navigation event")
                 navigationPulse.emit(.toMain)
-                
-                // 직접 화면 전환 (메인 화면으로)
                 DispatchQueue.main.async {
-                    print("🔄🔄🔄 Attempting direct navigation to main")
-                    let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                    let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                    if let sceneDelegate = sceneDelegate {
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let sceneDelegate = windowScene.delegate as? SceneDelegate {
                         sceneDelegate.showMainScreen()
-                        print("✅✅✅ Direct navigation to main successful")
-                    } else {
-                        print("❌❌❌ Failed to get sceneDelegate for direct navigation")
                     }
                 }
-            } else {
+            case .none:
                 loginState = .needOnboarding
-                print("📣📣📣 Emitting toOnboarding navigation event")
                 navigationPulse.emit(.toOnboarding)
-                
-                // 직접 화면 전환 (온보딩 화면으로)
                 DispatchQueue.main.async {
-                    print("🔄🔄🔄 Attempting direct navigation to onboarding")
-                    let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-                    let sceneDelegate = windowScene?.delegate as? SceneDelegate
-                    if let sceneDelegate = sceneDelegate {
+                    if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                       let sceneDelegate = windowScene.delegate as? SceneDelegate {
                         let nicknameViewModel = NicknameViewModel()
                         let nicknameViewController = NicknameViewController(viewModel: nicknameViewModel)
                         let navigationController = UINavigationController(
@@ -210,63 +198,61 @@ class LoginViewModel: NSObject {
                             isBorderNeeded: false
                         )
                         sceneDelegate.animateRootViewControllerChange(to: navigationController)
-                        print("✅✅✅ Direct navigation to onboarding successful")
-                    } else {
-                        print("❌❌❌ Failed to get sceneDelegate for direct navigation")
                     }
                 }
             }
-        } else {
-            if let error = response.error {
-                errorPulse.emit(error.message)
-            } else {
-                errorPulse.emit("Unknown error occurred")
-            }
+            
+        default:
+            let errorMessage = response.error?.message ?? "Unknown error occurred"
+            errorPulse.emit(errorMessage)
             loginState = .notLogin
         }
     }
+
     
-    func autoLogin(completion: @escaping (Bool) -> Void) {
+    func autoLogin() async -> Bool {
         if isLoggedOut {
             loginState = .notLogin
-            completion(false)
-            return
+            return false
         }
         
         guard let refreshToken = authService.getRefreshToken() else {
             loginState = .notLogin
-            completion(false)
-            return
+            return false
         }
         
-        provider.request(.refreshToken(refreshToken: refreshToken)) { [weak self] result in
-            switch result {
-            case .success(let response):
-                do {
-                    let reissueResponse = try response.map(ResponseBodyDTO<RefreshTokenResponseModel>.self)
-                    if reissueResponse.success, let data = reissueResponse.data {
-                        let newAccessToken = data.accessToken
-                        let newRefreshToken = data.refreshToken
-                        self?.saveTokens(accessToken: newAccessToken, refreshToken: newRefreshToken)
-                        
-                        self?.fetchUserInfo { success in
-                            completion(success)
-                        }
-                    } else {
-                        self?.clearTokensAndHandleError()
-                        completion(false)
+        do {
+            let response: Response = try await withCheckedThrowingContinuation { continuation in
+                provider.request(.refreshToken(refreshToken: refreshToken)) { result in
+                    switch result {
+                    case .success(let response):
+                        continuation.resume(returning: response)
+                    case .failure(let error):
+                        continuation.resume(throwing: error)
                     }
-                } catch {
-                    self?.clearTokensAndHandleError()
-                    completion(false)
                 }
-            case .failure(let error):
-                self?.clearTokensAndHandleError()
-                completion(false)
             }
+            
+            let reissueResponse = try response.map(ResponseBodyDTO<RefreshTokenResponseModel>.self)
+            if reissueResponse.success, let data = reissueResponse.data {
+                saveTokens(accessToken: data.accessToken, refreshToken: data.refreshToken)
+                
+                let userInfoSuccess: Bool = await withCheckedContinuation { continuation in
+                    self.fetchUserInfo { success in
+                        continuation.resume(returning: success)
+                    }
+                }
+                return userInfoSuccess
+            } else {
+                clearTokensAndHandleError()
+                return false
+            }
+        } catch {
+            clearTokensAndHandleError()
+            return false
         }
     }
-    
+
     private func fetchUserInfo(completion: @escaping (Bool) -> Void) {
         provider.request(.getUserInfo) { [weak self] result in
             switch result {
