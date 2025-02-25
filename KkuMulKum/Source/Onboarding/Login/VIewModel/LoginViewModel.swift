@@ -27,24 +27,24 @@ enum LoginNavigation {
 }
 
 class LoginViewModel: NSObject {
-    // MARK: - Outputs
-    // 현재 상태
+    // 현재 로그인 상태를 추적, 상태 변경 시 콜백 트리거
     private(set) var loginState: LoginState = .notLogin {
         didSet {
             loginStateChanged?(loginState)
         }
     }
     
-    // 상태 변경 콜백
     var loginStateChanged: ((LoginState) -> Void)?
     private var isLoggedOut = false
     
-    // Pulse 이벤트들
+    /// Pulse: 단일 이벤트를 한 번만 전달하는 이벤트 핸들러
+    /// - loginResultPulse: 로그인 결과
+    /// - navigationPulse: 화면 전환 이벤트
+    /// - errorPulse: 에러 메시지 전달
     private(set) var loginResultPulse = Pulse<Result<SocialLoginResponseModel, Error>>()
     private(set) var navigationPulse = Pulse<LoginNavigation>()
     private(set) var errorPulse = Pulse<String>()
     
-    // MARK: - Private properties
     private let provider: MoyaProvider<AuthTargetType>
     private var authService: AuthServiceProtocol
     private let authInterceptor: AuthInterceptor
@@ -52,7 +52,6 @@ class LoginViewModel: NSObject {
     
     private let kakaoAppKey: String
 
-    // MARK: - Initialization
     init(
         provider: MoyaProvider<AuthTargetType> = MoyaProvider<AuthTargetType>(
             plugins: [NetworkLoggerPlugin(configuration: .init(logOptions: .verbose))]
@@ -75,9 +74,8 @@ class LoginViewModel: NSObject {
         setupBindings()
     }
     
-    // MARK: - Setup
+    // 에러 발생 시 자동으로 내비게이션 pulse에 에러 메시지 전달
     private func setupBindings() {
-        // errorPulse 발생 시 navigationPulse(showError)도 함께 발생시키기
         errorPulse.subscribe { [weak self] errorMessage in
             if !errorMessage.isEmpty {
                 self?.navigationPulse.emit(.showError(message: errorMessage))
@@ -85,7 +83,6 @@ class LoginViewModel: NSObject {
         }
     }
     
-    // MARK: - Public Methods
     func performAppleLogin(presentationAnchor: ASPresentationAnchor) {
         let request = ASAuthorizationAppleIDProvider().createRequest()
         request.requestedScopes = [.fullName, .email]
@@ -114,7 +111,6 @@ class LoginViewModel: NSObject {
         loginState = .notLogin
     }
     
-    // MARK: - Private Methods
     private func getFCMToken() -> String {
         return keychainAccessible.getToken("FCMToken") ?? "fcm_token_not_available"
     }
@@ -168,7 +164,6 @@ class LoginViewModel: NSObject {
     }
     
     private func handleLoginResponse(_ response: ResponseBodyDTO<SocialLoginResponseModel>) {
-        print("Handling login response")
         if response.success, let data = response.data {
             saveTokens(
                 accessToken: data.jwtTokenDTO.accessToken,
@@ -177,25 +172,19 @@ class LoginViewModel: NSObject {
             
             loginResultPulse.emit(.success(data))
             
-            // Pulse 리셋 (이전 이벤트 상태 초기화)
             navigationPulse.reset()
             
             if data.name != nil {
-                print("Login successful, user has a name")
                 loginState = .login
-                print("🚀 Emitting navigation pulse to main")
                 navigationPulse.emit(.toMain)
                 
-                // 디버깅용: 직접 화면 전환
                 DispatchQueue.main.async {
                     let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
                     let sceneDelegate = windowScene?.delegate as? SceneDelegate
                     sceneDelegate?.showMainScreen()
                 }
             } else {
-                print("Login successful, but user needs onboarding")
                 loginState = .needOnboarding
-                print("🚀 Emitting navigation pulse to onboarding")
                 navigationPulse.emit(.toOnboarding)
             }
         } else {
@@ -209,7 +198,6 @@ class LoginViewModel: NSObject {
     }
     
     func autoLogin(completion: @escaping (Bool) -> Void) {
-        // 로그아웃 상태라면 자동 로그인 시도하지 않음
         if isLoggedOut {
             loginState = .notLogin
             completion(false)
@@ -301,7 +289,6 @@ class LoginViewModel: NSObject {
     }
 }
 
-// MARK: - ASAuthorizationControllerDelegate
 extension LoginViewModel: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard let appleIDCredential = authorization.credential as? ASAuthorizationAppleIDCredential,
