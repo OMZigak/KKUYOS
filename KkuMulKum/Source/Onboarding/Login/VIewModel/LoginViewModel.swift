@@ -210,49 +210,47 @@ class LoginViewModel: NSObject {
     }
 
     
-    func autoLogin() async -> Bool {
+    func autoLogin(completion: @escaping (Bool) -> Void) {
         if isLoggedOut {
             loginState = .notLogin
-            return false
+            completion(false)
+            return
         }
         
         guard let refreshToken = authService.getRefreshToken() else {
             loginState = .notLogin
-            return false
+            completion(false)
+            return
         }
         
-        do {
-            let response: Response = try await withCheckedThrowingContinuation { continuation in
-                provider.request(.refreshToken(refreshToken: refreshToken)) { result in
-                    switch result {
-                    case .success(let response):
-                        continuation.resume(returning: response)
-                    case .failure(let error):
-                        continuation.resume(throwing: error)
+        provider.request(.refreshToken(refreshToken: refreshToken)) { [weak self] result in
+            switch result {
+            case .success(let response):
+                do {
+                    let reissueResponse = try response.map(ResponseBodyDTO<RefreshTokenResponseModel>.self)
+                    if reissueResponse.success, let data = reissueResponse.data {
+                        let newAccessToken = data.accessToken
+                        let newRefreshToken = data.refreshToken
+                        self?.saveTokens(accessToken: newAccessToken, refreshToken: newRefreshToken)
+                        
+                        self?.fetchUserInfo { success in
+                            completion(success)
+                        }
+                    } else {
+                        self?.clearTokensAndHandleError()
+                        completion(false)
                     }
+                } catch {
+                    self?.clearTokensAndHandleError()
+                    completion(false)
                 }
+            case .failure(let error):
+                self?.clearTokensAndHandleError()
+                completion(false)
             }
-            
-            let reissueResponse = try response.map(ResponseBodyDTO<RefreshTokenResponseModel>.self)
-            if reissueResponse.success, let data = reissueResponse.data {
-                saveTokens(accessToken: data.accessToken, refreshToken: data.refreshToken)
-                
-                let userInfoSuccess: Bool = await withCheckedContinuation { continuation in
-                    self.fetchUserInfo { success in
-                        continuation.resume(returning: success)
-                    }
-                }
-                return userInfoSuccess
-            } else {
-                clearTokensAndHandleError()
-                return false
-            }
-        } catch {
-            clearTokensAndHandleError()
-            return false
         }
     }
-
+    
     private func fetchUserInfo(completion: @escaping (Bool) -> Void) {
         provider.request(.getUserInfo) { [weak self] result in
             switch result {
