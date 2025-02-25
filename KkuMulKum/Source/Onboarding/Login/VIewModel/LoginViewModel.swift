@@ -168,6 +168,7 @@ class LoginViewModel: NSObject {
     }
     
     private func handleLoginResponse(_ response: ResponseBodyDTO<SocialLoginResponseModel>) {
+        print("Handling login response")
         if response.success, let data = response.data {
             saveTokens(
                 accessToken: data.jwtTokenDTO.accessToken,
@@ -180,11 +181,21 @@ class LoginViewModel: NSObject {
             navigationPulse.reset()
             
             if data.name != nil {
+                print("Login successful, user has a name")
                 loginState = .login
+                print("🚀 Emitting navigation pulse to main")
                 navigationPulse.emit(.toMain)
                 
+                // 디버깅용: 직접 화면 전환
+                DispatchQueue.main.async {
+                    let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                    let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                    sceneDelegate?.showMainScreen()
+                }
             } else {
+                print("Login successful, but user needs onboarding")
                 loginState = .needOnboarding
+                print("🚀 Emitting navigation pulse to onboarding")
                 navigationPulse.emit(.toOnboarding)
             }
         } else {

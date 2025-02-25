@@ -58,6 +58,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         }
         
         performAutoLogin()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            print("🧪 Testing navigation pulse manually")
+            self.loginViewModel.navigationPulse.emit(.toMain)
+        }
     }
     
     
