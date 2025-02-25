@@ -185,23 +185,35 @@ class LoginViewModel: NSObject {
     
     private func handleLoginResponse(_ response: ResponseBodyDTO<SocialLoginResponseModel>) {
         print("Handling login response")
-        if response.success, let data = response.data {
-            saveTokens(
-                accessToken: data.jwtTokenDTO.accessToken,
-                refreshToken: data.jwtTokenDTO.refreshToken
-            )
-            
-            loginResultPulse.emit(.success(data))
-            
-            if data.name != nil {
-                print("Login successful, user has a name")
-                loginState = .login
-                navigationPulse.emit(.toMain)
-            } else {
-                print("Login successful, but user needs onboarding")
-                loginState = .needOnboarding
-                navigationPulse.emit(.toOnboarding)
-            }
+          if response.success, let data = response.data {
+              saveTokens(
+                  accessToken: data.jwtTokenDTO.accessToken,
+                  refreshToken: data.jwtTokenDTO.refreshToken
+              )
+              
+              loginResultPulse.emit(.success(data))
+              
+              // Pulse 리셋 (이전 이벤트 상태 초기화)
+              navigationPulse.reset()
+              
+              if data.name != nil {
+                  print("Login successful, user has a name")
+                  loginState = .login
+                  print("🚀 Emitting navigation pulse to main")
+                  navigationPulse.emit(.toMain)
+                  
+                  // 디버깅용: 직접 화면 전환
+                  DispatchQueue.main.async {
+                      let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+                      let sceneDelegate = windowScene?.delegate as? SceneDelegate
+                      sceneDelegate?.showMainScreen()
+                  }
+              } else {
+                  print("Login successful, but user needs onboarding")
+                  loginState = .needOnboarding
+                  print("🚀 Emitting navigation pulse to onboarding")
+                  navigationPulse.emit(.toOnboarding)
+              }
         } else {
             if let error = response.error {
                 print("Login failed: \(error.message)")
