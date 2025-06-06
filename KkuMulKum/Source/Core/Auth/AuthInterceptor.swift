@@ -15,12 +15,12 @@ enum AuthError: Error {
 }
 
 class AuthInterceptor: RequestInterceptor {
-    let authService: AuthServiceProtocol
-    let provider: MoyaProvider<AuthTargetType>
+    private let tokenManager: TokenRefreshManager
+    private let authService: AuthServiceProtocol
     
     init(authService: AuthServiceProtocol, provider: MoyaProvider<AuthTargetType>) {
         self.authService = authService
-        self.provider = provider
+        self.tokenManager = TokenRefreshManager(authService: authService, provider: provider)
     }
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
@@ -28,49 +28,36 @@ class AuthInterceptor: RequestInterceptor {
             completion(.success(urlRequest))
             return
         }
+
+        guard authService.getRefreshToken() != nil else {
+            _ = authService.clearTokens()
+            completion(.success(urlRequest))
+            return
+        }
         
-        var urlRequest = urlRequest
-        urlRequest.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        completion(.success(urlRequest))
+        var request = urlRequest
+        request.headers.update(.authorization(bearerToken: accessToken))
+        completion(.success(request))
     }
     
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        guard let response = request.task?.response as? HTTPURLResponse, response.statusCode == 401 else {
+        guard let response = request.task?.response as? HTTPURLResponse,
+              response.statusCode == 401 else {
             completion(.doNotRetry)
             return
         }
         
-        guard let refreshToken = authService.getRefreshToken() else {
-            _ = authService.clearTokens()
-            completion(.doNotRetry)
-            return
-        }
-        
-        provider.request(.refreshToken(refreshToken: refreshToken)) { [weak self] result in
+        tokenManager.refreshToken { [weak self] result in
+            guard let self = self else {
+                completion(.doNotRetry)
+                return
+            }
+            
             switch result {
-            case .success(let response):
-                do {
-                    let reissueResponse = try response.map(ResponseBodyDTO<ReissueModel>.self)
-                    if reissueResponse.success, let data = reissueResponse.data {
-                        let newAccessToken = data.accessToken
-                        let newRefreshToken = data.refreshToken
-                        _ = self?.authService.saveAccessToken(newAccessToken)
-                        _ = self?.authService.saveRefreshToken(newRefreshToken)
-                        print("Token refreshed successfully in interceptor")
-                        completion(.retry)
-                    } else {
-                        print("Token refresh failed in interceptor: \(reissueResponse.error?.message ?? "Unknown error")")
-                        _ = self?.authService.clearTokens()
-                        completion(.doNotRetry)
-                    }
-                } catch {
-                    print("Token refresh failed in interceptor: \(error)")
-                    _ = self?.authService.clearTokens()
-                    completion(.doNotRetry)
-                }
-            case .failure(let error):
-                print("Network error during token refresh in interceptor: \(error)")
-                _ = self?.authService.clearTokens()
+            case .success:
+                completion(.retry)
+            case .failure:
+                _ = self.authService.clearTokens()
                 completion(.doNotRetry)
             }
         }

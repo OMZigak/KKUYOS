@@ -82,6 +82,7 @@
 		789D73B32C47CC6D00C7077D /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73B22C47CC6D00C7077D /* LocalNotificationManager.swift */; };
 		789D73BE2C47FE0F00C7077D /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73BD2C47FE0F00C7077D /* AuthInterceptor.swift */; };
 		78AA9F1C2D6CC667001F1BCE /* Pulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AA9F1B2D6CC667001F1BCE /* Pulse.swift */; };
+		78AA99CB2D670B67001F1BCE /* TokenRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AA99CA2D670B67001F1BCE /* TokenRefreshManager.swift */; };
 		78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1332C3D951F000AD80A /* NicknameViewController.swift */; };
 		78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1362C3D98D1000AD80A /* NicknameView.swift */; };
 		78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286B2C29402C006D9942 /* AppDelegate.swift */; };
@@ -302,6 +303,7 @@
 		789D73B22C47CC6D00C7077D /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		789D73BD2C47FE0F00C7077D /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		78AA9F1B2D6CC667001F1BCE /* Pulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pulse.swift; sourceTree = "<group>"; };
+		78AA99CA2D670B67001F1BCE /* TokenRefreshManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshManager.swift; sourceTree = "<group>"; };
 		78AED1332C3D951F000AD80A /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		78AED1362C3D98D1000AD80A /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
 		78B928682C29402C006D9942 /* KkuMulKum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KkuMulKum.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -670,6 +672,7 @@
 			isa = PBXGroup;
 			children = (
 				789D73BD2C47FE0F00C7077D /* AuthInterceptor.swift */,
+				78AA99CA2D670B67001F1BCE /* TokenRefreshManager.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -2079,6 +2082,7 @@
 				DD34664E2C7B023F00E62284 /* EditPromiseViewController.swift in Sources */,
 				DD3466552C7B060500E62284 /* ChooseContentViewController.swift in Sources */,
 				DEBB8DEF2C77201200C5A528 /* MeetingInfoPromiseModel.swift in Sources */,
+				78AA99CB2D670B67001F1BCE /* TokenRefreshManager.swift in Sources */,
 				DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */,
 				DDFA50802C4693BD000A62E2 /* ProfileSetupView.swift in Sources */,
 				78BD612B2C4550A6005752FD /* Bundle.swift in Sources */,
