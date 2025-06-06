@@ -240,6 +240,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     
     private func navigateToLoginScreen() {
         let loginViewModel = LoginViewModel()
+        loginViewModel.logout()
         let loginViewController = LoginViewController(viewModel: loginViewModel)
         loginViewController.modalPresentationStyle = .fullScreen
         self.present(loginViewController, animated: true, completion: nil)

@@ -30,6 +30,33 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             handleNotification(userInfo: userInfo)
         }
         
+        print("Setting up navigation pulse subscription")
+        loginViewModel.navigationPulse.subscribe(with: self) { [weak self] (owner, navigation) in
+            print("🚀 Navigation pulse received: \(navigation)")
+            guard let self = self else { return }
+            
+            DispatchQueue.main.async {
+                switch navigation {
+                case .toMain:
+                    self.showMainScreen()
+                    print("🏠 Navigating to main screen")
+                case .toOnboarding:
+                    let nicknameViewModel = NicknameViewModel()
+                    let nicknameViewController = NicknameViewController(viewModel: nicknameViewModel)
+                    let navigationController = UINavigationController(
+                        rootViewController: nicknameViewController,
+                        isBorderNeeded: false
+                    )
+                    self.animateRootViewControllerChange(to: navigationController)
+                    print("👤 Navigating to onboarding")
+
+                case .showError(let message):
+                    print("Login error: \(message)")
+                    self.showLoginScreen()
+                }
+            }
+        }
+        
         performAutoLogin()
     }
     
@@ -37,9 +64,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         print("Performing auto login")
         loginViewModel.autoLogin { [weak self] success in
             DispatchQueue.main.async {
-                if success {
-                    self?.showMainScreen()
-                } else {
+                if !success {
                     self?.showLoginScreen()
                 }
             }
@@ -61,7 +86,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return false
     }
     
-    private func showMainScreen() {
+     func showMainScreen() {
         let mainTabBarController = MainTabBarController()
         let navigationController = UINavigationController(
             rootViewController: mainTabBarController,
@@ -82,7 +107,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         animateRootViewControllerChange(to: loginViewController)
     }
     
-    private func animateRootViewControllerChange(to newRootViewController: UIViewController) {
+    func animateRootViewControllerChange(to newRootViewController: UIViewController) {
         guard let window = self.window else { return }
         
         UIView.transition(with: window,
