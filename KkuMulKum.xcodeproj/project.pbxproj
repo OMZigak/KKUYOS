@@ -69,6 +69,7 @@
 		785AE1BC2C2E878600677CA0 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BB2C2E878600677CA0 /* FirebaseStorage */; };
 		785AE1BE2C2E878600677CA0 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BD2C2E878600677CA0 /* FirebaseStorageCombine-Community */; };
 		785AE1C02C2E878600677CA0 /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BF2C2E878600677CA0 /* FirebaseVertexAI-Preview */; };
+		785ED5DB2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785ED5DA2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift */; };
 		789196342C486F6B00FF8CDF /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196332C486F6B00FF8CDF /* KeychainAccessible.swift */; };
 		789196362C492F8600FF8CDF /* AuthTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196352C492F8600FF8CDF /* AuthTargetType.swift */; };
 		789196382C49697B00FF8CDF /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196372C49697B00FF8CDF /* AuthError.swift */; };
@@ -86,7 +87,6 @@
 		78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1332C3D951F000AD80A /* NicknameViewController.swift */; };
 		78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1362C3D98D1000AD80A /* NicknameView.swift */; };
 		78B13C4D2DFEC3AA009BE120 /* Amplitude in Frameworks */ = {isa = PBXBuildFile; productRef = 78B13C4C2DFEC3AA009BE120 /* Amplitude */; };
-		78B13C512DFED1D9009BE120 /* Amplitude.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B13C502DFED1D9009BE120 /* Amplitude.swift */; };
 		78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286B2C29402C006D9942 /* AppDelegate.swift */; };
 		78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286D2C29402C006D9942 /* SceneDelegate.swift */; };
 		78B928752C29402E006D9942 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78B928742C29402E006D9942 /* Assets.xcassets */; };
@@ -291,6 +291,7 @@
 		784825082C77623C00FE07A0 /* MypageTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageTargetType.swift; sourceTree = "<group>"; };
 		7848250A2C77627200FE07A0 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		784825102C77666500FE07A0 /* MyPageUserServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUserServiceProtocol.swift; sourceTree = "<group>"; };
+		785ED5DA2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Amplitude+CoreAnalytics.swift"; sourceTree = "<group>"; };
 		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		789196352C492F8600FF8CDF /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
 		789196372C49697B00FF8CDF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
@@ -308,7 +309,6 @@
 		78AA9F1B2D6CC667001F1BCE /* Pulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pulse.swift; sourceTree = "<group>"; };
 		78AED1332C3D951F000AD80A /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		78AED1362C3D98D1000AD80A /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
-		78B13C502DFED1D9009BE120 /* Amplitude.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Amplitude.swift; sourceTree = "<group>"; };
 		78B928682C29402C006D9942 /* KkuMulKum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KkuMulKum.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		78B9286B2C29402C006D9942 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		78B9286D2C29402C006D9942 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -1433,7 +1433,7 @@
 				DE254AB12C31197B00A4015E /* UIButton+.swift */,
 				DE254AB32C31199B00A4015E /* UITextField+.swift */,
 				DE54732D2C72F13B005FB40E /* UINavigationController+.swift */,
-				78B13C502DFED1D9009BE120 /* Amplitude.swift */,
+				785ED5DA2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1924,6 +1924,7 @@
 				DE6D4D102C3F14D80005584B /* InvitationCodePopUpView.swift in Sources */,
 				789196382C49697B00FF8CDF /* AuthError.swift in Sources */,
 				A39F2B1B2C47C206008DA5F5 /* SetReadyCompletedViewController.swift in Sources */,
+				785ED5DB2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift in Sources */,
 				DDFA50812C4693BD000A62E2 /* ProfileSetupViewController.swift in Sources */,
 				DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */,
 				DD8626682C4606A300E4F980 /* ReadyStatusButton.swift in Sources */,
@@ -2038,7 +2039,6 @@
 				DD3976862C41C2AD00E2A4C4 /* HomeView.swift in Sources */,
 				DD8626672C4606A300E4F980 /* SetReadyInfoView.swift in Sources */,
 				DD41BEFC2C41D54D0095A068 /* TardyPenaltyView.swift in Sources */,
-				78B13C512DFED1D9009BE120 /* Amplitude.swift in Sources */,
 				789196362C492F8600FF8CDF /* AuthTargetType.swift in Sources */,
 				789873322C3D1A7B00435E96 /* LoginViewController.swift in Sources */,
 				78BD61342C45B4A7005752FD /* AuthService.swift in Sources */,
