@@ -8,6 +8,7 @@
 import UIKit
 
 import Then
+import Amplitude
 
 class HomeViewController: BaseViewController {
     
@@ -48,11 +49,16 @@ class HomeViewController: BaseViewController {
         view.backgroundColor = .maincolor
         register()
         setupBinding()
+        
+        trackScreenView()
+            Amplitude.instance().logEvent("home_screen_loaded")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.isNavigationBarHidden = true
+        
+        Amplitude.instance().logEvent("home_screen_appeared")
 
         viewModel.requestLoginUser()
         viewModel.requestNearestPromise()
@@ -124,6 +130,13 @@ extension HomeViewController: UICollectionViewDelegateFlowLayout {
         _ collectionView: UICollectionView,
         didSelectItemAt indexPath: IndexPath
     ) {
+        let selectedPromise = viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item]
+        Amplitude.instance().logEvent("upcoming_promise_cell_clicked", withEventProperties: [
+            "promise_id": selectedPromise?.promiseID ?? 0,
+            "cell_index": indexPath.item,
+            "promise_name": selectedPromise?.name ?? ""
+        ])
+        
         let promiseViewController = PromiseViewController(
             viewModel: PromiseViewModel(
                 promiseID: viewModel.upcomingPromiseList.value?.data?.promises[indexPath.item].promiseID ?? 0, 
@@ -538,6 +551,11 @@ private extension HomeViewController {
     
     @objc
     func todayButtonDidTap(_ sender: UIButton) {
+        Amplitude.instance().logEvent("today_promise_button_clicked", withEventProperties: [
+             "promise_id": viewModel.nearestPromise.value?.data?.promiseID ?? 0,
+             "screen": "HomeViewController"
+         ])
+        
         let viewController = PromiseViewController(
             viewModel: PromiseViewModel(
                 promiseID: viewModel.nearestPromise.value?.data?.promiseID ?? 0, 
@@ -553,18 +571,32 @@ private extension HomeViewController {
     
     @objc
     func prepareButtonDidTap(_ sender: UIButton) {
+        Amplitude.instance().logEvent("prepare_button_clicked", withEventProperties: [
+               "promise_id": viewModel.nearestPromise.value?.data?.promiseID ?? 0,
+               "current_state": "prepare"
+           ])
+        
         viewModel.updatePrepareStatus()
         viewModel.currentState.value = .prepare
     }
     
     @objc
     func moveButtonDidTap(_ sender: UIButton) {
+        Amplitude.instance().logEvent("move_button_clicked", withEventProperties: [
+            "promise_id": viewModel.nearestPromise.value?.data?.promiseID ?? 0,
+            "current_state": "move"
+        ])
+        
         viewModel.updateMoveStatus()
         viewModel.currentState.value = .move
     }
     
     @objc
     func arriveButtonDidTap(_ sender: UIButton) {
+        Amplitude.instance().logEvent("arrive_button_clicked", withEventProperties: [
+               "promise_id": viewModel.nearestPromise.value?.data?.promiseID ?? 0,
+               "current_state": "arrive"
+           ])
         viewModel.updateArriveStatus()
         viewModel.currentState.value = .arrive
     }

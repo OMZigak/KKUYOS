@@ -8,6 +8,7 @@
 import UIKit
 
 import KakaoSDKCommon
+import Amplitude
 import KakaoSDKAuth
 import Firebase
 import FirebaseMessaging
@@ -29,13 +30,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Failed to load KAKAO_APP_KEY from PrivacyInfo.plist")
         }
         
+        if let amplitudeKey = Bundle.main.privacyInfo?["AMPLITUDE_API_KEY"] as? String {
+            Amplitude.instance().initializeApiKey(amplitudeKey)
+            print("🎯 Amplitude 초기화 완료: \(amplitudeKey)")
+        } else {
+            print("❌ AMPLITUDE_API_KEY를 PrivacyInfo.plist에서 찾을 수 없음")
+        }
+        
         setupFirebase(application: application)
         
         UNUserNotificationCenter.current().delegate = self
         
         return true
     }
-
+    
     func application(
         _ app: UIApplication,
         open url: URL,
@@ -64,7 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didDiscardSceneSessions sceneSessions: Set<UISceneSession>
     ) {}
-
+    
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         if let sceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
             sceneDelegate.handleNotification(userInfo: userInfo)
@@ -81,7 +89,7 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
         FirebaseApp.configure()
         FirebaseConfiguration.shared.setLoggerLevel(.min)
         Analytics.logEvent(AnalyticsEventAppOpen, parameters: nil)
-           
+        
         Messaging.messaging().delegate = self
         UNUserNotificationCenter.current().delegate = self
         
@@ -134,7 +142,7 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
     ) -> UIInterfaceOrientationMask {
         return .portrait
     }
-
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
@@ -146,7 +154,7 @@ extension AppDelegate: MessagingDelegate, UNUserNotificationCenterDelegate {
             sceneDelegate.handleNotification(userInfo: userInfo)
         }
     }
-
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
