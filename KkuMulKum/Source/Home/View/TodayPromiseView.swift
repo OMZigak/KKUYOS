@@ -101,11 +101,11 @@ final class TodayPromiseView: BaseView {
     }
     
     let prepareLabel = UILabel().then {
-        $0.setText("준비를 시작 시 눌러주세요", style: .label02, color: .gray5)
+        $0.setText("준비 시작 시 눌러주세요", style: .label02, color: .gray5)
     }
     
     let moveLabel = UILabel().then {
-        $0.setText("이동를 시작 시 눌러주세요", style: .label02, color: .gray5)
+        $0.setText("이동 시작 시 눌러주세요", style: .label02, color: .gray5)
     }
     
     let arriveLabel = UILabel().then {

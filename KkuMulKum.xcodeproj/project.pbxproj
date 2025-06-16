@@ -24,6 +24,7 @@
 		782B407D2C3E3984008B0CA7 /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */; };
 		782B407F2C3E44B7008B0CA7 /* WelcomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */; };
 		782B40822C3E4925008B0CA7 /* NicknameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */; };
+		783C04402CAD2AE300965F90 /* ci_post_clone.sh in Resources */ = {isa = PBXBuildFile; fileRef = 783C043F2CAD2AE300965F90 /* ci_post_clone.sh */; };
 		784824F72C6E1C9900FE07A0 /* AuthServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784824F62C6E1C9900FE07A0 /* AuthServiceProtocol.swift */; };
 		784824FC2C75BF7900FE07A0 /* MyPageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784824FB2C75BF7900FE07A0 /* MyPageViewModel.swift */; };
 		784824FE2C75F25900FE07A0 /* MyPageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 784824FD2C75F25900FE07A0 /* MyPageEditViewController.swift */; };
@@ -68,6 +69,7 @@
 		785AE1BC2C2E878600677CA0 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BB2C2E878600677CA0 /* FirebaseStorage */; };
 		785AE1BE2C2E878600677CA0 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BD2C2E878600677CA0 /* FirebaseStorageCombine-Community */; };
 		785AE1C02C2E878600677CA0 /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BF2C2E878600677CA0 /* FirebaseVertexAI-Preview */; };
+		785ED5DB2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785ED5DA2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift */; };
 		789196342C486F6B00FF8CDF /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196332C486F6B00FF8CDF /* KeychainAccessible.swift */; };
 		789196362C492F8600FF8CDF /* AuthTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196352C492F8600FF8CDF /* AuthTargetType.swift */; };
 		789196382C49697B00FF8CDF /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196372C49697B00FF8CDF /* AuthError.swift */; };
@@ -80,8 +82,11 @@
 		789D73AF2C46D99B00C7077D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 789D73AE2C46D99B00C7077D /* GoogleService-Info.plist */; };
 		789D73B32C47CC6D00C7077D /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73B22C47CC6D00C7077D /* LocalNotificationManager.swift */; };
 		789D73BE2C47FE0F00C7077D /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73BD2C47FE0F00C7077D /* AuthInterceptor.swift */; };
+		78AA99CB2D670B67001F1BCE /* TokenRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AA99CA2D670B67001F1BCE /* TokenRefreshManager.swift */; };
+		78AA9F1C2D6CC667001F1BCE /* Pulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AA9F1B2D6CC667001F1BCE /* Pulse.swift */; };
 		78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1332C3D951F000AD80A /* NicknameViewController.swift */; };
 		78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1362C3D98D1000AD80A /* NicknameView.swift */; };
+		78B13C4D2DFEC3AA009BE120 /* Amplitude in Frameworks */ = {isa = PBXBuildFile; productRef = 78B13C4C2DFEC3AA009BE120 /* Amplitude */; };
 		78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286B2C29402C006D9942 /* AppDelegate.swift */; };
 		78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286D2C29402C006D9942 /* SceneDelegate.swift */; };
 		78B928752C29402E006D9942 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78B928742C29402E006D9942 /* Assets.xcassets */; };
@@ -152,7 +157,7 @@
 		DD43937C2C412F4500EC1799 /* InviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4393742C412F4500EC1799 /* InviteCodeViewController.swift */; };
 		DD43937D2C412F4500EC1799 /* CheckInviteCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4393752C412F4500EC1799 /* CheckInviteCodeViewController.swift */; };
 		DD43937F2C41357800EC1799 /* InviteCodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD43937E2C41357800EC1799 /* InviteCodeViewModel.swift */; };
-		DD4909962C440CDC003ED304 /* ArriveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4909952C440CDC003ED304 /* ArriveView.swift */; };
+		DD4909962C440CDC003ED304 /* NoTardyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD4909952C440CDC003ED304 /* NoTardyView.swift */; };
 		DD8626612C4606A300E4F980 /* SetReadyInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626522C4606A300E4F980 /* SetReadyInfoViewModel.swift */; };
 		DD8626632C4606A300E4F980 /* EnterReadyInfoButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626552C4606A300E4F980 /* EnterReadyInfoButtonView.swift */; };
 		DD8626642C4606A300E4F980 /* ReadyPlanInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD8626562C4606A300E4F980 /* ReadyPlanInfoView.swift */; };
@@ -189,6 +194,7 @@
 		DE159D332C406E1600425101 /* MyPageContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2B2C406E1600425101 /* MyPageContentView.swift */; };
 		DE159D342C406E1600425101 /* MyPageEtcSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2C2C406E1600425101 /* MyPageEtcSettingView.swift */; };
 		DE159D362C406E1600425101 /* MyPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE159D2F2C406E1600425101 /* MyPageViewController.swift */; };
+		DE1917772CCB6B7300279D91 /* AddPromiseRequestModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE1917762CCB6B7300279D91 /* AddPromiseRequestModelBuilder.swift */; };
 		DE254AA82C3118EA00A4015E /* UIView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA72C3118EA00A4015E /* UIView+.swift */; };
 		DE254AAA2C31190E00A4015E /* UIStackView+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AA92C31190E00A4015E /* UIStackView+.swift */; };
 		DE254AAC2C31192400A4015E /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE254AAB2C31192400A4015E /* UILabel+.swift */; };
@@ -274,6 +280,7 @@
 		782B407C2C3E3984008B0CA7 /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		782B407E2C3E44B7008B0CA7 /* WelcomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewModel.swift; sourceTree = "<group>"; };
 		782B40812C3E4925008B0CA7 /* NicknameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewModel.swift; sourceTree = "<group>"; };
+		783C043F2CAD2AE300965F90 /* ci_post_clone.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = ci_post_clone.sh; sourceTree = "<group>"; };
 		784824F62C6E1C9900FE07A0 /* AuthServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServiceProtocol.swift; sourceTree = "<group>"; };
 		784824FB2C75BF7900FE07A0 /* MyPageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageViewModel.swift; sourceTree = "<group>"; };
 		784824FD2C75F25900FE07A0 /* MyPageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageEditViewController.swift; sourceTree = "<group>"; };
@@ -284,6 +291,7 @@
 		784825082C77623C00FE07A0 /* MypageTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageTargetType.swift; sourceTree = "<group>"; };
 		7848250A2C77627200FE07A0 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		784825102C77666500FE07A0 /* MyPageUserServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUserServiceProtocol.swift; sourceTree = "<group>"; };
+		785ED5DA2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Amplitude+CoreAnalytics.swift"; sourceTree = "<group>"; };
 		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		789196352C492F8600FF8CDF /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
 		789196372C49697B00FF8CDF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
@@ -297,6 +305,8 @@
 		789D73B02C46DACD00C7077D /* KkuMulKum.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KkuMulKum.entitlements; sourceTree = "<group>"; };
 		789D73B22C47CC6D00C7077D /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		789D73BD2C47FE0F00C7077D /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
+		78AA99CA2D670B67001F1BCE /* TokenRefreshManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshManager.swift; sourceTree = "<group>"; };
+		78AA9F1B2D6CC667001F1BCE /* Pulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pulse.swift; sourceTree = "<group>"; };
 		78AED1332C3D951F000AD80A /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		78AED1362C3D98D1000AD80A /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
 		78B928682C29402C006D9942 /* KkuMulKum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KkuMulKum.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -371,7 +381,7 @@
 		DD4393742C412F4500EC1799 /* InviteCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InviteCodeViewController.swift; sourceTree = "<group>"; };
 		DD4393752C412F4500EC1799 /* CheckInviteCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckInviteCodeViewController.swift; sourceTree = "<group>"; };
 		DD43937E2C41357800EC1799 /* InviteCodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InviteCodeViewModel.swift; sourceTree = "<group>"; };
-		DD4909952C440CDC003ED304 /* ArriveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArriveView.swift; sourceTree = "<group>"; };
+		DD4909952C440CDC003ED304 /* NoTardyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoTardyView.swift; sourceTree = "<group>"; };
 		DD8626522C4606A300E4F980 /* SetReadyInfoViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SetReadyInfoViewModel.swift; sourceTree = "<group>"; };
 		DD8626552C4606A300E4F980 /* EnterReadyInfoButtonView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterReadyInfoButtonView.swift; sourceTree = "<group>"; };
 		DD8626562C4606A300E4F980 /* ReadyPlanInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReadyPlanInfoView.swift; sourceTree = "<group>"; };
@@ -403,6 +413,7 @@
 		DE159D2B2C406E1600425101 /* MyPageContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageContentView.swift; sourceTree = "<group>"; };
 		DE159D2C2C406E1600425101 /* MyPageEtcSettingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageEtcSettingView.swift; sourceTree = "<group>"; };
 		DE159D2F2C406E1600425101 /* MyPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageViewController.swift; sourceTree = "<group>"; };
+		DE1917762CCB6B7300279D91 /* AddPromiseRequestModelBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPromiseRequestModelBuilder.swift; sourceTree = "<group>"; };
 		DE254AA72C3118EA00A4015E /* UIView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+.swift"; sourceTree = "<group>"; };
 		DE254AA92C31190E00A4015E /* UIStackView+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+.swift"; sourceTree = "<group>"; };
 		DE254AAB2C31192400A4015E /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
@@ -485,6 +496,7 @@
 				785AE1C02C2E878600677CA0 /* FirebaseVertexAI-Preview in Frameworks */,
 				780E897A2C5D22B90009D27E /* KakaoSDK in Frameworks */,
 				DEAD45942C6F70FC00395A96 /* ReactorKit in Frameworks */,
+				78B13C4D2DFEC3AA009BE120 /* Amplitude in Frameworks */,
 				785AE19E2C2E878600677CA0 /* FirebaseDatabaseSwift in Frameworks */,
 				785AE1AA2C2E878600677CA0 /* FirebaseFunctionsCombine-Community in Frameworks */,
 				785AE1BC2C2E878600677CA0 /* FirebaseStorage in Frameworks */,
@@ -586,6 +598,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		783C043E2CAD2AD200965F90 /* ci_scripts */ = {
+			isa = PBXGroup;
+			children = (
+				783C043F2CAD2AE300965F90 /* ci_post_clone.sh */,
+			);
+			path = ci_scripts;
+			sourceTree = "<group>";
+		};
 		784824F52C6E1C6800FE07A0 /* ServiceProtocol */ = {
 			isa = PBXGroup;
 			children = (
@@ -656,6 +676,7 @@
 			isa = PBXGroup;
 			children = (
 				789D73BD2C47FE0F00C7077D /* AuthInterceptor.swift */,
+				78AA99CA2D670B67001F1BCE /* TokenRefreshManager.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -705,6 +726,7 @@
 		78B9286A2C29402C006D9942 /* KkuMulKum */ = {
 			isa = PBXGroup;
 			children = (
+				783C043E2CAD2AD200965F90 /* ci_scripts */,
 				789D73B02C46DACD00C7077D /* KkuMulKum.entitlements */,
 				DE254AA12C31106700A4015E /* Application */,
 				DE254AA22C31107700A4015E /* Source */,
@@ -803,7 +825,7 @@
 				DD41BEF92C41D4160095A068 /* TardyView.swift */,
 				DD41BEFB2C41D54D0095A068 /* TardyPenaltyView.swift */,
 				DD41BEFE2C41DAA40095A068 /* TardyEmptyView.swift */,
-				DD4909952C440CDC003ED304 /* ArriveView.swift */,
+				DD4909952C440CDC003ED304 /* NoTardyView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1192,6 +1214,7 @@
 				789873372C3D1B4800435E96 /* ViewController */,
 				789873362C3D1B3900435E96 /* VIewModel */,
 				789873352C3D1B3000435E96 /* View */,
+				78AA9F1B2D6CC667001F1BCE /* Pulse.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1341,6 +1364,14 @@
 			path = MyPage;
 			sourceTree = "<group>";
 		};
+		DE1917752CCB6B6000279D91 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DE1917762CCB6B7300279D91 /* AddPromiseRequestModelBuilder.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		DE254AA12C31106700A4015E /* Application */ = {
 			isa = PBXGroup;
 			children = (
@@ -1402,6 +1433,7 @@
 				DE254AB12C31197B00A4015E /* UIButton+.swift */,
 				DE254AB32C31199B00A4015E /* UITextField+.swift */,
 				DE54732D2C72F13B005FB40E /* UINavigationController+.swift */,
+				785ED5DA2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1640,6 +1672,7 @@
 		DECB844E2C43FB200022A003 /* AddPromise */ = {
 			isa = PBXGroup;
 			children = (
+				DE1917752CCB6B6000279D91 /* Model */,
 				DECB84522C43FB510022A003 /* ServiceType */,
 				DECB84512C43FB400022A003 /* ViewModel */,
 				DECB844F2C43FB300022A003 /* ViewController */,
@@ -1789,6 +1822,7 @@
 				DEAD458E2C6F70D600395A96 /* Differentiator */,
 				DEAD45902C6F70D600395A96 /* RxDataSources */,
 				DEAD45932C6F70FC00395A96 /* ReactorKit */,
+				78B13C4C2DFEC3AA009BE120 /* Amplitude */,
 			);
 			productName = KkuMulKum;
 			productReference = 78B928682C29402C006D9942 /* KkuMulKum.app */;
@@ -1831,6 +1865,7 @@
 				DEAD45862C6F70A400395A96 /* XCRemoteSwiftPackageReference "Moya" */,
 				DEAD458D2C6F70D600395A96 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				DEAD45922C6F70FC00395A96 /* XCRemoteSwiftPackageReference "ReactorKit" */,
+				78B13C4B2DFEC3AA009BE120 /* XCRemoteSwiftPackageReference "Amplitude-iOS" */,
 			);
 			productRefGroup = 78B928692C29402C006D9942 /* Products */;
 			projectDirPath = "";
@@ -1859,6 +1894,7 @@
 				DE254AC52C311DC200A4015E /* Pretendard-Regular.otf in Resources */,
 				DE254AC92C311DC200A4015E /* Pretendard-SemiBold.otf in Resources */,
 				DE254AC42C311DC200A4015E /* Pretendard-ExtraBold.otf in Resources */,
+				783C04402CAD2AE300965F90 /* ci_post_clone.sh in Resources */,
 				789D73AF2C46D99B00C7077D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1888,6 +1924,7 @@
 				DE6D4D102C3F14D80005584B /* InvitationCodePopUpView.swift in Sources */,
 				789196382C49697B00FF8CDF /* AuthError.swift in Sources */,
 				A39F2B1B2C47C206008DA5F5 /* SetReadyCompletedViewController.swift in Sources */,
+				785ED5DB2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift in Sources */,
 				DDFA50812C4693BD000A62E2 /* ProfileSetupViewController.swift in Sources */,
 				DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */,
 				DD8626682C4606A300E4F980 /* ReadyStatusButton.swift in Sources */,
@@ -1911,12 +1948,14 @@
 				DDD62FFB2C5FA4FE00174B57 /* MeetingService.swift in Sources */,
 				DD43937D2C412F4500EC1799 /* CheckInviteCodeViewController.swift in Sources */,
 				DEFBEBD92C46E4C200437188 /* AddPromiseCompleteView.swift in Sources */,
+				78AA9F1C2D6CC667001F1BCE /* Pulse.swift in Sources */,
 				DEFBEBDB2C46FD5700437188 /* AddPromiseResponseModel.swift in Sources */,
 				DD4393772C412F4500EC1799 /* CreateMeetingView.swift in Sources */,
 				789873342C3D1A7B00435E96 /* LoginView.swift in Sources */,
 				782B40822C3E4925008B0CA7 /* NicknameViewModel.swift in Sources */,
 				A3FB18592C3BF77D001483E5 /* MeetingInfoResponseModel.swift in Sources */,
 				DD3466532C7B044F00E62284 /* ChooseMemberViewController.swift in Sources */,
+				DE1917772CCB6B7300279D91 /* AddPromiseRequestModelBuilder.swift in Sources */,
 				DEA932182C3F180800FDF637 /* MeetingPromisesModel.swift in Sources */,
 				DE159D342C406E1600425101 /* MyPageEtcSettingView.swift in Sources */,
 				DE9E18842C3BA84500DB76B4 /* CustomTextField.swift in Sources */,
@@ -2039,7 +2078,7 @@
 				DE9E18802C3BA4AA00DB76B4 /* CustomButton.swift in Sources */,
 				DE0137D32C43C5E50088C777 /* MyPageView.swift in Sources */,
 				DE558C592C45954B008DAC4A /* SelectMemberViewController.swift in Sources */,
-				DD4909962C440CDC003ED304 /* ArriveView.swift in Sources */,
+				DD4909962C440CDC003ED304 /* NoTardyView.swift in Sources */,
 				789196342C486F6B00FF8CDF /* KeychainAccessible.swift in Sources */,
 				DE254AB02C31195B00A4015E /* NSAttributedString+.swift in Sources */,
 				DD43937B2C412F4500EC1799 /* CreateMeetingViewController.swift in Sources */,
@@ -2051,6 +2090,7 @@
 				DD34664E2C7B023F00E62284 /* EditPromiseViewController.swift in Sources */,
 				DD3466552C7B060500E62284 /* ChooseContentViewController.swift in Sources */,
 				DEBB8DEF2C77201200C5A528 /* MeetingInfoPromiseModel.swift in Sources */,
+				78AA99CB2D670B67001F1BCE /* TokenRefreshManager.swift in Sources */,
 				DDAF1C842C3D5D19008A37D3 /* ViewModelType.swift in Sources */,
 				DDFA50802C4693BD000A62E2 /* ProfileSetupView.swift in Sources */,
 				78BD612B2C4550A6005752FD /* Bundle.swift in Sources */,
@@ -2204,16 +2244,15 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = KkuMulKum/KkuMulKumDebug.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = D2DRA3F792;
+				DEVELOPMENT_TEAM = D2DRA3F792;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KkuMulKum/Resource/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "꾸물꿈";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 사용 권한이 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진 라이브러리 접근 권한이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "꾸물꿈은 카메라 권한을 필요로 합니다. 카메라를 통해 자신의 프로필을 즉시 찍어 업로드할 수 있습니다. 허용 안함 시 일부 기능이 동작하지 않을 수 있습니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -2224,11 +2263,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = KkuMulKum.yizihn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = KkumulkumDebug;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2245,16 +2283,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = KkuMulKum/KkuMulKum.entitlements;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = D2DRA3F792;
+				DEVELOPMENT_TEAM = D2DRA3F792;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = KkuMulKum/Resource/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "꾸물꿈";
 				INFOPLIST_KEY_NSCameraUsageDescription = "카메라 사용 권한이 필요합니다.";
 				INFOPLIST_KEY_NSPhotoLibraryAddUsageDescription = "사진 라이브러리 접근 권한이 필요합니다.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "꾸물꿈은 카메라 권한을 필요로 합니다. 카메라를 통해 자신의 프로필을 즉시 찍어 업로드할 수 있습니다. 허용 안함 시 일부 기능이 동작하지 않을 수 있습니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -2265,12 +2303,11 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.2;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = KkuMulKum.yizihn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = KkumulkumRelease;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -2351,6 +2388,14 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 10.28.1;
+			};
+		};
+		78B13C4B2DFEC3AA009BE120 /* XCRemoteSwiftPackageReference "Amplitude-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/amplitude/Amplitude-iOS";
+			requirement = {
+				branch = main;
+				kind = branch;
 			};
 		};
 		78BD611E2C43F557005752FD /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
@@ -2633,6 +2678,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 785AE1882C2E878600677CA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseVertexAI-Preview";
+		};
+		78B13C4C2DFEC3AA009BE120 /* Amplitude */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78B13C4B2DFEC3AA009BE120 /* XCRemoteSwiftPackageReference "Amplitude-iOS" */;
+			productName = Amplitude;
 		};
 		78BD611F2C43F557005752FD /* SwiftKeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -96,7 +96,7 @@ private extension MeetingInfoViewController {
         output.info
             .drive(with: self) { owner, meetingInfo in
                 guard let info = meetingInfo else { return }
-                owner.title = info.name
+                owner.setupNavigationBarTitle(with: info.name)
                 owner.rootView.configureInfo(
                     createdAt: info.createdAt,
                     metCount: info.metCount
@@ -154,7 +154,7 @@ private extension MeetingInfoViewController {
         
         output.navigateToPromiseInfo
             .drive(with: self) { owner, promiseID in
-                guard let promiseID else { return }
+                guard promiseID > 0 else { return }
                 
                 let pagePromiseViewController = PromiseViewController(
                     viewModel: PromiseViewModel(promiseID: promiseID, service: PromiseService())
@@ -223,7 +223,7 @@ extension MeetingInfoViewController: CustomActionSheetDelegate {
 // MARK: - MeetingMemberCellDelegate
 
 extension MeetingInfoViewController: MeetingMemberCellDelegate {
-    func profileImageButtonDidTap() {
+    func profileImageViewDidTap() {
         guard let code = viewModel.meetingInvitationCode else { return }
         
         let viewController = InvitationCodePopUpViewController(

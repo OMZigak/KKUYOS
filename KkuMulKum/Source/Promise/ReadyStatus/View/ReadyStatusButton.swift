@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum ReadyProgressStatus {
+enum ReadyStatus {
     case none
     case ready
     case move
@@ -19,7 +19,7 @@ class ReadyStatusButton: UIButton {
     
     // MARK: - LifeCycle
 
-    init(title: String, readyStatus: ReadyProgressStatus) {
+    init(title: String, readyStatus: ReadyStatus) {
         super.init(frame: .zero)
         
         setupButton(title, readyStatus)
@@ -37,7 +37,7 @@ class ReadyStatusButton: UIButton {
 extension ReadyStatusButton {
     func setupButton(
         _ title: String,
-        _ readyStatus: ReadyProgressStatus
+        _ readyStatus: ReadyStatus
     ) {
         switch readyStatus {
         case .none:

@@ -28,9 +28,12 @@ class PromiseInfoView: BaseView {
         $0.backgroundColor = .white
     }
 
+    let participantLabel: UILabel = UILabel().then {
+        $0.setText("약속 참여 인원", style: .body05, color: .maincolor)
+    }
+    
     let participantNumberLabel: UILabel = UILabel().then {
-        $0.setText("약속 참여 인원 n명", style: .body05, color: .maincolor)
-        $0.setHighlightText("n명", style: .body05, color: .gray3)
+        $0.setText("n명", style: .body05, color: .gray3)
     }
     
     let participantCollectionView: UICollectionView = UICollectionView(
@@ -68,7 +71,7 @@ class PromiseInfoView: BaseView {
         $0.layer.cornerRadius = Screen.height(18)
     }
     
-    private let locationInfoLabel: UILabel = UILabel().then {
+    let locationInfoLabel: UILabel = UILabel().then {
         $0.setText("위치", style: .body05, color: .maincolor)
     }
     
@@ -77,7 +80,7 @@ class PromiseInfoView: BaseView {
         $0.layer.cornerRadius = Screen.height(8)
     }
     
-    private let timeInfoLabel: UILabel = UILabel().then {
+    let timeInfoLabel: UILabel = UILabel().then {
         $0.setText("약속시간", style: .body05, color: .maincolor)
     }
     
@@ -86,7 +89,7 @@ class PromiseInfoView: BaseView {
         $0.layer.cornerRadius = Screen.height(8)
     }
     
-    private let readyLevelInfoLabel: UILabel = UILabel().then {
+    let readyLevelInfoLabel: UILabel = UILabel().then {
         $0.setText("꾸레벨", style: .body05, color: .maincolor)
     }
     
@@ -95,7 +98,7 @@ class PromiseInfoView: BaseView {
         $0.layer.cornerRadius = Screen.height(8)
     }
     
-    private let penaltyLevelInfoLabel: UILabel = UILabel().then {
+    let penaltyLevelInfoLabel: UILabel = UILabel().then {
         $0.setText("벌칙", style: .body05, color: .maincolor)
     }
     
@@ -117,6 +120,7 @@ class PromiseInfoView: BaseView {
         )
         
         backgroundView.addSubviews(
+            participantLabel,
             participantNumberLabel,
             participantCollectionView,
             locationInfoLabel,
@@ -165,9 +169,14 @@ class PromiseInfoView: BaseView {
             $0.bottom.equalToSuperview()
         }
         
-        participantNumberLabel.snp.makeConstraints {
+        participantLabel.snp.makeConstraints {
             $0.top.equalToSuperview().offset(18)
             $0.leading.equalToSuperview().offset(20)
+        }
+        
+        participantNumberLabel.snp.makeConstraints {
+            $0.centerY.equalTo(participantLabel)
+            $0.leading.equalTo(participantLabel.snp.trailing).offset(4)
         }
         
         participantCollectionView.snp.makeConstraints {

@@ -13,8 +13,7 @@ class TardyViewController: BaseViewController {
     // MARK: Property
     
     let viewModel: PromiseViewModel
-    let tardyView: TardyView = TardyView()
-    let arriveView: ArriveView = ArriveView()
+    let rootView: TardyView = TardyView()
     
     
     // MARK: - LifeCycle
@@ -30,7 +29,7 @@ class TardyViewController: BaseViewController {
     }
     
     override func loadView() {
-        view = viewModel.isPastDue.value ? arriveView : tardyView
+        view = rootView
     }
     
     override func viewDidLoad() {
@@ -41,13 +40,15 @@ class TardyViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        viewModel.fetchTardyInfo()
     }
     
     
     // MARK: - Setup
     
     override func setupDelegate() {
-        tardyView.tardyCollectionView.dataSource = self
+        rootView.tardyCollectionView.dataSource = self
     }
 }
 
@@ -56,41 +57,76 @@ class TardyViewController: BaseViewController {
 
 private extension TardyViewController {
     func setupBinding() {
-        /// 시간이 지나고 지각자가 없을 때 arriveView로 띄워짐
-        viewModel.isPastDue.bindOnMain(with: self) { owner, isPastDue in
-            owner.tardyView.tardyCollectionView.isHidden = !isPastDue
-            owner.tardyView.tardyEmptyView.isHidden = isPastDue
-            owner.tardyView.finishMeetingButton.isEnabled = (isPastDue && (owner.viewModel.promiseInfo.value?.isParticipant ?? false))
-        }
-        
         viewModel.penalty.bindOnMain(with: self) { owner, penalty in
-            owner.tardyView.tardyPenaltyView.contentLabel.setText(
-                penalty,
-                style: .body03,
-                color: .gray8
-            )
+            owner.rootView.tardyPenaltyView.contentLabel.text = penalty
         }
         
-        viewModel.hasTardy.bind(with: self) { owner, hasTardy in
-            DispatchQueue.main.async {
-                owner.view = hasTardy && owner.viewModel.isPastDue.value ? owner.arriveView : owner.tardyView
+        viewModel.isPastDue.bindOnMain(with: self) { owner, isPastDue in
+            switch owner.viewModel.showTardyScreen() {
+            case .tardyEmptyView:
+                owner.rootView.do {
+                    $0.finishMeetingButton.isEnabled = false
+                    $0.tardyEmptyView.isHidden = false
+                    $0.titleLabel.isHidden = false
+                    $0.tardyPenaltyView.isHidden = false
+                    $0.noTardyView.isHidden = true
+                    $0.tardyCollectionView.isHidden = true
+                }
+            case .tardyListView:
+                owner.rootView.do {
+                    $0.finishMeetingButton.isEnabled = true
+                    $0.titleLabel.isHidden = false
+                    $0.tardyPenaltyView.isHidden = false
+                    $0.tardyCollectionView.isHidden = false
+                    $0.tardyEmptyView.isHidden = true
+                    $0.noTardyView.isHidden = true
+                    
+                    $0.tardyCollectionView.reloadData()
+                }
+            case .noTardyView:
+                owner.rootView.do {
+                    $0.finishMeetingButton.isEnabled = true
+                    $0.noTardyView.isHidden = false
+                    $0.tardyEmptyView.isHidden = true
+                    $0.titleLabel.isHidden = true
+                    $0.tardyPenaltyView.isHidden = true
+                    $0.tardyCollectionView.isHidden = true
+                }
             }
         }
         
-        viewModel.comers.bind(with: self) { owner, comers in
-            DispatchQueue.main.async {
-                owner.tardyView.tardyCollectionView.reloadData()
+        viewModel.tardyList.bindOnMain(with: self) { owner, tardyList in
+            switch owner.viewModel.showTardyScreen() {
+            case .tardyEmptyView:
+                owner.rootView.do {
+                    $0.finishMeetingButton.isEnabled = false
+                    $0.tardyEmptyView.isHidden = false
+                    $0.titleLabel.isHidden = false
+                    $0.tardyPenaltyView.isHidden = false
+                    $0.noTardyView.isHidden = true
+                    $0.tardyCollectionView.isHidden = true
+                }
+            case .tardyListView:
+                owner.rootView.do {
+                    $0.finishMeetingButton.isEnabled = true
+                    $0.titleLabel.isHidden = false
+                    $0.tardyPenaltyView.isHidden = false
+                    $0.tardyCollectionView.isHidden = false
+                    $0.tardyEmptyView.isHidden = true
+                    $0.noTardyView.isHidden = true
+                    
+                    $0.tardyCollectionView.reloadData()
+                }
+            case .noTardyView:
+                owner.rootView.do {
+                    $0.finishMeetingButton.isEnabled = true
+                    $0.noTardyView.isHidden = false
+                    $0.tardyEmptyView.isHidden = true
+                    $0.titleLabel.isHidden = true
+                    $0.tardyPenaltyView.isHidden = true
+                    $0.tardyCollectionView.isHidden = true
+                }
             }
-        }
-        
-        viewModel.errorMessage.bindOnMain(with: self) { owner, error in
-            let toast = Toast()
-            toast.show(
-                message: error,
-                view: owner.view,
-                position: .bottom,
-                inset: 100
-            )
         }
     }
 }
@@ -102,7 +138,7 @@ extension TardyViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         numberOfItemsInSection section: Int
     ) -> Int {
-        return viewModel.comers.value.count 
+        return viewModel.tardyList.value.count
     }
     
     func collectionView(
@@ -112,16 +148,17 @@ extension TardyViewController: UICollectionViewDataSource {
         guard let cell = collectionView.dequeueReusableCell(
             withReuseIdentifier: TardyCollectionViewCell.reuseIdentifier,
             for: indexPath
-        ) as? TardyCollectionViewCell else { return UICollectionViewCell() }
+        ) as? TardyCollectionViewCell else {
+            return UICollectionViewCell()
+        }
         
-        cell.nameLabel.setText(
-            viewModel.comers.value[indexPath.row].name ?? "",
-            style: .body06,
-            color: .gray6
-        )
-                
+        guard let tardyName = viewModel.tardyList.value[indexPath.row].name else {
+            return cell
+        }
+        
+        cell.nameLabel.setText(tardyName, style: .body06, color: .gray6)
         cell.profileImageView.kf.setImage(
-            with: URL(string: viewModel.comers.value[indexPath.row].profileImageURL ?? ""),
+            with: URL(string: viewModel.tardyList.value[indexPath.row].profileImageURL ?? ""),
             placeholder: UIImage.imgProfile
         )
         

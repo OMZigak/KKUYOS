@@ -7,9 +7,10 @@
 
 import Foundation
 
-enum TappedButton {
-    case ready
-    case move
+enum TardyScreen {
+    case tardyEmptyView
+    case tardyListView
+    case noTardyView
 }
 
 class PromiseViewModel {
@@ -17,62 +18,23 @@ class PromiseViewModel {
     
     // MARK: Property
 
-    /// 서버 통신을 위해 생성자로 주입받을 약속 ID
     let promiseID: Int
-    
-    /// 현재 페이지 인덱스
     let currentPageIndex = ObservablePattern<Int>(0)
-    
-    /// 약속 정보
     let promiseInfo = ObservablePattern<PromiseInfoModel?>(nil)
+    let myReadyInfo = ObservablePattern<MyReadyStatusModel?>(nil)
+    let myReadyStatus = ObservablePattern<ReadyStatus>(.none)
+    let isPastDue = ObservablePattern<Bool?>(nil)
+    let penalty = ObservablePattern<String?>(nil)
+    let dDay = ObservablePattern<Int?>(nil)
+    let requestReadyTime = ObservablePattern<[String]>(["", "", "", ""])
+    let participantList = ObservablePattern<[Participant]>([])
+    let tardyList = ObservablePattern<[Comer]>([])
+    let isFinishSuccess = ObservablePattern<Bool?>(nil)
+    let isDeleteSuccess = ObservablePattern<Bool?>(nil)
+    let isExitSuccess = ObservablePattern<Bool?>(nil)
+    let errorMessage = ObservablePattern<String?>(nil)
     
-    /// 우리들의 준비 현황 스택 뷰에 들어갈 정보들
-    let participantsInfo = ObservablePattern<[Participant]?>(nil)
-   
-    /// 나의 준비현황이 담긴 정보
-    /// 설령 데이터가 없다하더라도 약속 시간은 담겨있음.
-    let myReadyStatus = ObservablePattern<MyReadyStatusModel?>(nil)
-    
-    /// 현재 준비 상태에 대한 버튼 처리
-    let myReadyProgressStatus = ObservablePattern<ReadyProgressStatus>(.none)
-    
-    /// 준비 시작 시간
-    var readyStartTime = ObservablePattern<String>("")
-    
-    /// 준비 소요 시간
-    var readyDuration = ObservablePattern<String>("")
-    
-    /// 이동 시작 시간
-    var moveStartTime = ObservablePattern<String>("")
-    
-    /// 이동 소요 시간
-    var moveDuration = ObservablePattern<String>("")
-    
-    /// 꾸물거림 여부
-    var isLate = ObservablePattern<Bool>(false)
-    
-    /// 지각자 유무 여부
-    var hasTardy: ObservablePattern<Bool> = ObservablePattern<Bool>(false)
-    
-    /// 약속 시간 지났는지 여부
-    var isPastDue: ObservablePattern<Bool> = ObservablePattern<Bool>(false)
-    
-    /// 벌칙 정보
-    var penalty: ObservablePattern<String> = ObservablePattern<String>("")
-    
-    /// 지각자 목록
-    var comers: ObservablePattern<[Comer]> = ObservablePattern<[Comer]>([])
-    
-    /// 서버로부터 받아올 에러 메시지
-    var errorMessage: ObservablePattern<String> = ObservablePattern<String>("")
-    
-    /// 현재 시간 받아오기 위한 dateFormatter 구헌
-    private let dateFormatter = DateFormatter().then {
-        $0.locale = Locale(identifier: "ko_KR")
-        $0.timeZone = TimeZone(identifier: "Asia/Seoul")
-        $0.amSymbol = "AM"
-        $0.pmSymbol = "PM"
-    }
+    var pageControlDirection = false
     
     private let service: PromiseServiceProtocol
     
@@ -88,123 +50,119 @@ class PromiseViewModel {
 
 // MARK: - Extension
 
-extension PromiseViewModel {
-    /// segmentedControl 인덱스 바뀌었을 때 호출되는 함수
-    func segmentIndexDidChange(index: Int) {
-        currentPageIndex.value = index
-    }
-    
-    /// 우리들의 준비 현황 변동되었을 때 호출되는 함수
-    func participantInfosDidChanged(infos: [Participant]) {
-        participantsInfo.value = infos
-    }
-    
-    /// 준비 현황 버튼 클릭했을 때 현재 시간 반환하는 함수
-    func updateReadyStatusTime() -> String {
-        dateFormatter.dateFormat = "a h:mm"
+private extension PromiseViewModel {
+    func calculateDday() {
+        let calendar = Calendar.current
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        dateFormatter.locale = Locale(identifier: "ko_KR")
+        dateFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
         
-        return dateFormatter.string(from: Date())
-    }
-    
-    /// 꾸물거릴 시간이 없어요 팝업 표시를 위해 지각 여부를 판단하는 함수
-    func checkLate(tappedButton: TappedButton) {
-        fetchMyReadyStatus()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH시 mm분"
-        formatter.locale = Locale(identifier: "ko_KR")
-        formatter.timeZone = TimeZone(identifier: "Asia/Seoul")
-
-        switch tappedButton {
-        case .move:
-            if let moveTime = formatter.date(from: moveStartTime.value) {
-                let calendar = Calendar.current
-                
-                let moveTimeComponents = calendar.dateComponents([.hour, .minute], from: moveTime)
-                let currentTimeComponents = calendar.dateComponents([.hour, .minute], from: Date())
-                
-                if let moveHour = moveTimeComponents.hour, let moveMinute = moveTimeComponents.minute,
-                   let currentHour = currentTimeComponents.hour, let currentMinute = currentTimeComponents.minute {
-                    if currentHour > moveHour || (currentHour == moveHour && currentMinute > moveMinute) {
-                        self.isLate.value = true
-                    } else {
-                        self.isLate.value = false
-                    }
-                }
-            }
-        case .ready:
-            if let readyTime = formatter.date(from: readyStartTime.value) {
-                let calendar = Calendar.current
-                
-                let readyTimeComponents = calendar.dateComponents([.hour, .minute], from: readyTime)
-                let currentTimeComponents = calendar.dateComponents([.hour, .minute], from: Date())
-                
-                if let readyHour = readyTimeComponents.hour, let readyMinute = readyTimeComponents.minute,
-                   let currentHour = currentTimeComponents.hour, let currentMinute = currentTimeComponents.minute {
-                    if currentHour > readyHour || (currentHour == readyHour && currentMinute > readyMinute) {
-                        self.isLate.value = true
-                    } else {
-                        self.isLate.value = false
-                    }
-                }
-            }
-        }
-    }
-
-    
-    func updateMyReadyProgressStatus() {
-        myReadyProgressStatus.value = myReadyStatus.value?.preparationStartAt == nil ? .none
-                                      : myReadyStatus.value?.departureAt == nil ? .ready
-                                      : myReadyStatus.value?.arrivalAt == nil ? .move
-                                      : .done
-    }
-    
-    /// 준비 or 이동 소요 시간 계산하는 함수
-    func calculateDuration() {
-        let preparationHours = (self.myReadyStatus.value?.preparationTime ?? 0) / 60
-        let preparationMinutes = (self.myReadyStatus.value?.preparationTime ?? 0) % 60
+        guard let dateWithTime = dateFormatter.date(from: promiseInfo.value?.time ?? "") else { return }
         
-        readyDuration.value = preparationHours == 0 ? "\(preparationMinutes)분" : "\(preparationHours)시간 \(preparationMinutes)분"
+        let dateOnly = calendar.startOfDay(for: dateWithTime)
+        let today = calendar.startOfDay(for: Date())
+        let components = calendar.dateComponents([.day], from: today, to: dateOnly)
         
-        let travelHours = (self.myReadyStatus.value?.travelTime ?? 0) / 60
-        let travelMinutes = (self.myReadyStatus.value?.travelTime ?? 0) % 60
-        
-        moveDuration.value = travelHours == 0 ? "\(travelMinutes)분" : "\(travelHours)시간 \(travelMinutes)분"
+        dDay.value = components.day
     }
     
-    /// 준비 or 이동 시작 시간 계산하는 함수
-    func calculateStartTime() {
+    func calculateReadyInfo() {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         
-        let promiseTime = self.myReadyStatus.value?.promiseTime ?? ""
-        let readyTime = self.myReadyStatus.value?.preparationTime ?? 0
-        let moveTime = self.myReadyStatus.value?.travelTime ?? 0
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "HH시 mm분"
         
-        
-        guard let promiseDate = dateFormatter.date(from: promiseTime) else {
-            print("Invalid date format: \(promiseTime)")
+        guard let promiseTime = myReadyInfo.value?.promiseTime,
+              let promiseDate = dateFormatter.date(from: promiseTime),
+              let preparationTime = myReadyInfo.value?.preparationTime,
+              let travelTime = myReadyInfo.value?.travelTime else {
             return
         }
         
-        let totalPrepTime = TimeInterval((readyTime + moveTime) * 60)
+        let readyStartTime = promiseDate.addingTimeInterval(-TimeInterval(preparationTime + travelTime + 10) * 60)
+        let moveStartTime = promiseDate.addingTimeInterval(-TimeInterval(travelTime + 10) * 60)
+        let preparationHours = preparationTime / 60
+        let preparationMinutes = preparationTime % 60
+        let travelHours = travelTime / 60
+        let travelMinutes = travelTime % 60
+        
+        requestReadyTime.value[0] = timeFormatter.string(from: readyStartTime)
+        requestReadyTime.value[1] = timeFormatter.string(from: moveStartTime)
+        requestReadyTime.value[2] = preparationHours == 0 ? "\(preparationMinutes)분" : "\(preparationHours)시간 \(preparationMinutes)분"
+        requestReadyTime.value[3] = travelHours == 0 ? "\(travelMinutes)분" : "\(travelHours)시간 \(travelMinutes)분"
+    }
+    
+    func getMyReadyStatus() {
+        guard let info = myReadyInfo.value else { return }
+        switch (info.preparationStartAt, info.departureAt, info.arrivalAt) {
+        case (nil, nil, nil):
+            myReadyStatus.value = .none
+        case (.some, nil, nil):
+            myReadyStatus.value = .ready
+        case (.some, .some, nil):
+            myReadyStatus.value = .move
+        case (.some, .some, .some):
+            myReadyStatus.value = .done
+        default:
+            break
+        }
+    }
+}
+
+extension PromiseViewModel {
+    func isEditButtonHidden() -> Bool {
+        guard let isParticipant = promiseInfo.value?.isParticipant,
+              let isPastDue = isPastDue.value 
+        else {
+            return false
+        }
+        
+        return !(isParticipant && !isPastDue)
+    }
+    
+    func isReadyInfoEntered() -> Bool {
+        guard let isParticipant = promiseInfo.value?.isParticipant,
+              let _ = myReadyInfo.value?.preparationTime,
+              let _ = myReadyInfo.value?.travelTime else {
+            return false
+        }
+        
+        return isParticipant
+    }
+    
+    func showTardyScreen() -> TardyScreen {
+        guard let isPastDue = isPastDue.value else { return .tardyEmptyView }
+        let hasTardy = !tardyList.value.isEmpty
+        
+        if !isPastDue {
+            return .tardyEmptyView
+        }
+        else if isPastDue && hasTardy {
+            return .tardyListView
+        }
+        else if isPastDue && !hasTardy {
+            return .noTardyView
+        }
+        
+        return .tardyEmptyView
+    }
+    
+    func convertTime() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        
+        guard let promiseTime = promiseInfo.value?.time else { return "" }
+        guard let promiseDate = dateFormatter.date(from: promiseTime) else { return promiseTime }
         
         let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "HH시 mm분"
-        timeFormatter.timeZone = TimeZone(identifier: "Asia/Seoul")
+        timeFormatter.dateFormat = "M월 d일 a h:mm"
+        timeFormatter.locale = Locale(identifier: "ko_KR")
+        timeFormatter.amSymbol = "AM"
+        timeFormatter.pmSymbol = "PM"
         
-        print("약속 시간: \(timeFormatter.string(from: promiseDate))")
-        print("준비 시간: \(readyTime) 분")
-        print("이동 시간: \(moveTime) 분")
-        print("총 준비 시간: \(totalPrepTime / 60) 분")
-        
-        let readyStartTime = promiseDate.addingTimeInterval(-TimeInterval(readyTime + moveTime + 10) * 60)
-        let moveStartTime = promiseDate.addingTimeInterval(-TimeInterval(moveTime + 10) * 60)
-        
-        self.readyStartTime.value = timeFormatter.string(from: readyStartTime)
-        print("준비 시작 시간: \(self.readyStartTime.value)")
-
-        self.moveStartTime.value = timeFormatter.string(from: moveStartTime)
-        print("이동 시작 시간: \(self.moveStartTime.value)")
+        return timeFormatter.string(from: promiseDate)
     }
     
     /// 약속 상세 정보 조회 API 구현 함수
@@ -216,10 +174,13 @@ extension PromiseViewModel {
                 guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
                 
                 promiseInfo.value = result?.data
+                
+                calculateDday()
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
@@ -230,15 +191,21 @@ extension PromiseViewModel {
     func fetchPromiseParticipantList() {
         Task {
             do {
-                let responseBody = try await service.fetchPromiseParticipantList(with: promiseID)
+                let result = try await service.fetchPromiseParticipantList(with: promiseID)
                 
-                guard let success = responseBody?.success, 
-                        success == true
+                guard let success = result?.success,
+                      success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
                 
-                participantsInfo.value = responseBody?.data?.participants
+                guard let data = result?.data else {
+                    print(">>>>> \("데이터 없음") : \(#function)")
+                    return
+                }
+                
+                participantList.value = data.participants
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
@@ -249,15 +216,19 @@ extension PromiseViewModel {
     func fetchMyReadyStatus() {
         Task {
             do {
-                let responseBody = try await service.fetchMyReadyStatus(with: promiseID)
+                let result = try await service.fetchMyReadyStatus(with: promiseID)
                 
-                guard let success = responseBody?.success,
+                guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
                 
-                myReadyStatus.value = responseBody?.data
+                myReadyInfo.value = result?.data
+                
+                calculateReadyInfo()
+                getMyReadyStatus()
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
@@ -268,19 +239,20 @@ extension PromiseViewModel {
     func updatePreparationStatus() {
         Task {
             do {
-                let responseBody = try await service.updatePreparationStatus(
-                    with: promiseID
-                )
+                let result = try await service.updatePreparationStatus(with: promiseID)
                 
-                guard let success = responseBody?.success,
+                guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
                 
-                myReadyProgressStatus.value = .ready
-                
-                self.checkLate(tappedButton: .ready)
+                fetchMyReadyStatus()
+                fetchPromiseParticipantList()
+            }
+            catch {
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
@@ -289,19 +261,20 @@ extension PromiseViewModel {
     func updateDepartureStatus() {
         Task {
             do {
-                let responseBody = try await service.updateDepartureStatus(
-                    with: promiseID
-                )
+                let result = try await service.updateDepartureStatus(with: promiseID)
                 
-                guard let success = responseBody?.success,
+                guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
                 
-                myReadyProgressStatus.value = .move
-                
-                self.checkLate(tappedButton: .move)
+                fetchMyReadyStatus()
+                fetchPromiseParticipantList()
+            }
+            catch {
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
@@ -310,17 +283,20 @@ extension PromiseViewModel {
     func updateArrivalStatus() {
         Task {
             do {
-                let responseBody = try await service.updateArrivalStatus(
-                    with: promiseID
-                )
+                let result = try await service.updateArrivalStatus(with: promiseID)
                 
-                guard let success = responseBody?.success,
+                guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
                 
-                myReadyProgressStatus.value = .done
+                fetchMyReadyStatus()
+                fetchPromiseParticipantList()
+            }
+            catch {
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
@@ -329,24 +305,23 @@ extension PromiseViewModel {
     func fetchTardyInfo() {
         Task {
             do {
-                let responseBody = try await
-                service.fetchTardyInfo(with: promiseID)
+                let result = try await service.fetchTardyInfo(with: promiseID)
                 
-                guard let success = responseBody?.success,
+                guard let success = result?.success,
                       success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
                 
-                guard let data = responseBody?.data else {
+                guard let data = result?.data else {
+                    print(">>>>> \("데이터 없음") : \(#function)")
                     return
                 }
                 
-                hasTardy.value = data.lateComers.isEmpty
-                isPastDue.value = data.isPastDue
                 penalty.value = data.penalty
-                comers.value = data.lateComers
-                
+                isPastDue.value = data.isPastDue
+                tardyList.value = data.lateComers
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
@@ -354,43 +329,51 @@ extension PromiseViewModel {
     }
     
     /// 약속 완료 API 구현 함수
-    func updatePromiseCompletion(completion: @escaping () -> Void) {
+    func updatePromiseCompletion() {
         Task {
             do {
-                let responseBody = try await service.updatePromiseCompletion(with: promiseID)
+                let result = try await service.updatePromiseCompletion(with: promiseID)
                 
-                guard let success = responseBody?.success,
+                guard let success = result?.success,
                       success == true
                 else {
-                    handleError(errorResponse: responseBody?.error)
+                    guard let message = result?.error?.message else { return }
                     
+                    errorMessage.value = message
+                    
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
-                
-                completion()
+
+                isFinishSuccess.value = success
             } catch {
                 print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
     
-    func deletePromise(completion: @escaping () -> Void) {
+    /// 약속 삭제 API 구현 함수
+    func deletePromise() {
         Task {
             do {
                 let result = try await service.deletePromise(promiseID: promiseID)
                 
                 guard let success = result?.success,
-                        success == true
+                      success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
                 
-                completion()
+                isDeleteSuccess.value = success
+            } catch {
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
         }
     }
     
-    func exitPromise(completion: @escaping () -> Void) {
+    /// 약속 나가기 API 구현 함수
+    func exitPromise() {
         Task {
             do {
                 let result = try await service.exitPromise(promiseID: promiseID)
@@ -398,33 +381,14 @@ extension PromiseViewModel {
                 guard let success = result?.success, 
                         success == true
                 else {
+                    print(">>>>> \(String(describing: result)) : \(#function)")
                     return
                 }
                 
-                completion()
+                isExitSuccess.value = success
+            } catch {
+                print(">>>>> \(error.localizedDescription) : \(#function)")
             }
-        }
-    }
-}
-
-private extension PromiseViewModel {
-    func handleError(errorResponse: ErrorResponse?) {
-        guard let error = errorResponse else {
-            errorMessage.value = "알 수 없는 에러"
-            return
-        }
-        
-        switch error.code {
-        case 40051:
-            errorMessage.value = "도착하지 않은 참여자가 있습니다."
-        case 40050:
-            errorMessage.value = "약속 시간이 지나지 않았습니다."
-        case 40340:
-            errorMessage.value = "참여하지 않은 약속입니다."
-        case 40450:
-            errorMessage.value = "약속을 찾을 수 없습니다."
-        default:
-            errorMessage.value = "알 수 없는 에러"
         }
     }
 }

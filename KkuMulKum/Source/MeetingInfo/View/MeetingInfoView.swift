@@ -74,7 +74,9 @@ final class MeetingInfoView: BaseView {
         $0.setText("남은 약속을 확인해보세요", style: .body01, color: .gray7)
     }
     
-    private let segmentedControl = UnderlineSegmentedControl(items: ["내가 속한 약속", "모든 약속"])
+    private let segmentedControl = UnderlineSegmentedControl(items: ["내가 속한 약속", "모든 약속"]).then {
+        $0.selectedSegmentIndex = 0
+    }
     
     private let emptyDescriptionView = UIView(backgroundColor: .white).then {
         $0.layer.cornerRadius = 8

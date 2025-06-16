@@ -7,13 +7,19 @@
 
 import UIKit
 
+import RxCocoa
+import RxSwift
+
 final class SetReadyInfoViewController: BaseViewController {
     
     
     // MARK: - Property
     
     private let rootView = SetReadyInfoView()
+
     private let viewModel: SetReadyInfoViewModel
+    private let viewWillAppearRelay = PublishRelay<Void>()
+    private let disposeBag = DisposeBag()
     
     
     // MARK: - Initializer
@@ -31,25 +37,26 @@ final class SetReadyInfoViewController: BaseViewController {
     // MARK: - LifeCycle
     
     override func loadView() {
-        self.view = rootView
+        view = rootView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         
-        setupNavigationBarBackButton()
-        setupNavigationBarTitle(with: "준비 정보 입력하기")
-        
-        setupBinding()
-        setupTapGesture()
-        setupTextField()
+        bindViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         navigationController?.isNavigationBarHidden = false
+        viewWillAppearRelay.accept(())
+    }
+    
+    override func setupView() {
+        setupNavigationBarBackButton()
+        setupNavigationBarTitle(with: "준비 정보 입력하기")
     }
     
     override func setupDelegate() {
@@ -57,119 +64,106 @@ final class SetReadyInfoViewController: BaseViewController {
     }
     
     override func setupAction() {
-        rootView.readyHourTextField.addTarget(
-            self,
-            action: #selector(textFieldDidChange),
-            for: .editingChanged
-        )
-        rootView.readyMinuteTextField.addTarget(
-            self,
-            action: #selector(textFieldDidChange),
-            for: .editingChanged
-        )
-        rootView.moveHourTextField.addTarget(
-            self,
-            action: #selector(textFieldDidChange),
-            for: .editingChanged
-        )
-        rootView.moveMinuteTextField.addTarget(
-            self,
-            action: #selector(textFieldDidChange),
-            for: .editingChanged
-        )
-        rootView.doneButton.addTarget(
-            self,
-            action: #selector(doneButtonDidTap),
-            for: .touchUpInside
-        )
-    }
-    
-    @objc
-    private func textFieldDidChange(_ textField: UITextField) {
-        let text = textField.text ?? ""
-        viewModel.updateTime(textField: textField.accessibilityIdentifier ?? "", time: text)
-        viewModel.checkValid(
-            readyHourText: rootView.readyHourTextField.text ?? "",
-            readyMinuteText: rootView.readyMinuteTextField.text ?? "",
-            moveHourText: rootView.moveHourTextField.text ?? "",
-            moveMinuteText: rootView.moveMinuteTextField.text ?? ""
-        )
-    }
-    
-    @objc
-    private func doneButtonDidTap(_ sender: UIButton) {
-        viewModel.updateReadyInfo()
-    }
-    
-    
-    // MARK: - Keyboard Dismissal
-    
-    private func setupTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        setupTextField(textField: rootView.readyHourTextField)
+        setupTextField(textField: rootView.readyMinuteTextField)
+        setupTextField(textField: rootView.moveHourTextField)
+        setupTextField(textField: rootView.moveMinuteTextField)
+        
+        let tapGesture = UITapGestureRecognizer()
         view.addGestureRecognizer(tapGesture)
+        tapGesture.rx.event
+            .subscribe(with: self) { owner, _ in
+                owner.view.endEditing(true)
+            }
+            .disposed(by: disposeBag)
     }
     
-    @objc private func dismissKeyboard() {
-        view.endEditing(true)
-    }
-}
-
-
-// MARK: - UITextFieldDelegate
-
-extension SetReadyInfoViewController: UITextFieldDelegate {
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.layer.borderColor = UIColor.maincolor.cgColor
+    private func bindViewModel() {
+        let input = SetReadyInfoViewModel.Input(
+            viewWillAppear: viewWillAppearRelay,
+            readyHourText: rootView.readyHourTextField.rx.text.orEmpty.asObservable(),
+            readyMinuteText: rootView.readyMinuteTextField.rx.text.orEmpty.asObservable(),
+            moveHourText: rootView.moveHourTextField.rx.text.orEmpty.asObservable(),
+            moveMinuteText: rootView.moveMinuteTextField.rx.text.orEmpty.asObservable(),
+            doneButtonDidTap: rootView.doneButton.rx.tap.asObservable()
+        )
+        
+        let output = viewModel.transform(input: input, disposeBag: disposeBag)
+        
+        output.readyHourText
+            .drive(with: self) { owner, text in
+                owner.rootView.readyHourTextField.text = text
+            }
+            .disposed(by: disposeBag)
+        
+        output.readyMinuteText
+            .drive(with: self) { owner, text in
+                owner.rootView.readyMinuteTextField.text = text
+            }
+            .disposed(by: disposeBag)
+        
+        output.moveHourText
+            .drive(with: self) { owner, text in
+                owner.rootView.moveHourTextField.text = text
+            }
+            .disposed(by: disposeBag)
+        
+        output.moveMinuteText
+            .drive(with: self) { owner, text in
+                owner.rootView.moveMinuteTextField.text = text
+            }
+            .disposed(by: disposeBag)
+        
+        output.errorMessage
+            .drive(with: self) { owner, error in
+                owner.showToast(error)
+            }
+            .disposed(by: disposeBag)
+        
+        output.doneButtonIsEnabled
+            .drive(with: self) { owner, isEnabled in
+                owner.rootView.doneButton.backgroundColor = isEnabled ? .maincolor : .gray2
+                owner.rootView.doneButton.isEnabled = isEnabled
+            }
+            .disposed(by: disposeBag)
+        
+        output.isSucceed
+            .drive(with: self) { owner, isSucceed in
+                if isSucceed {
+                    owner.navigateToSetReadyCompleted()
+                }
+            }
+            .disposed(by: disposeBag)
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        textField.layer.borderColor = UIColor.gray3.cgColor
+    private func setupTextField(textField: UITextField) {
+        let textFieldEvent = Observable.merge(
+            textField.rx.controlEvent(.editingDidBegin).map { UIColor.maincolor.cgColor },
+            textField.rx.controlEvent(.editingDidEnd).map { UIColor.gray3.cgColor },
+            textField.rx.controlEvent(.editingDidEndOnExit).map { UIColor.gray3.cgColor }
+        )
         
-        if let text = textField.text, !text.isEmpty {
-            viewModel.updateTime(
-                textField: textField.accessibilityIdentifier ?? "",
-                time: textField.text ?? ""
-            )
-        }
+        textFieldEvent
+            .bind { borderColor in
+                textField.layer.borderColor = borderColor
+            }
+            .disposed(by: disposeBag)
     }
     
-    func textField(
-        _ textField: UITextField,
-        shouldChangeCharactersIn range: NSRange,
-        replacementString string: String
-    ) -> Bool {
-        let allowedCharacters = CharacterSet.decimalDigits
-        let characterSet = CharacterSet(charactersIn: string)
-        return allowedCharacters.isSuperset(of: characterSet)
-    }
-}
-
-
-// MARK: - Function
-
-private extension SetReadyInfoViewController {
-    func setupTextField() {
-        /// 저장된 준비 시간이 0이 아니면 텍스트 필드에 설정
-        if viewModel.storedReadyHour != 0 || viewModel.storedReadyMinute != 0 {
-            rootView.readyHourTextField.text = String(viewModel.storedReadyHour)
-            rootView.readyMinuteTextField.text = String(viewModel.storedReadyMinute)
-        }
-        
-        /// 저장된 이동 시간이 0이 아니면 텍스트 필드에 설정
-        if viewModel.storedMoveHour != 0 || viewModel.storedMoveMinute != 0 {
-            rootView.moveHourTextField.text = String(viewModel.storedMoveHour)
-            rootView.moveMinuteTextField.text = String(viewModel.storedMoveMinute)
-        }
-        
-        viewModel.checkValid(
-            readyHourText: rootView.readyHourTextField.text ?? "",
-            readyMinuteText: rootView.readyMinuteTextField.text ?? "",
-            moveHourText: rootView.moveHourTextField.text ?? "",
-            moveMinuteText: rootView.moveMinuteTextField.text ?? ""
+    private func navigateToSetReadyCompleted() {
+        let setReadyCompletedViewController = SetReadyCompletedViewController()
+        self.navigationController?.pushViewController(
+            setReadyCompletedViewController,
+            animated: true
         )
     }
     
-    func setTextFieldDelegate() {
+    private func showToast(_ message: String, bottomInset: CGFloat = 128) {
+        guard let view else { return }
+        Toast().show(message: message, view: view, position: .bottom, inset: bottomInset)
+    }
+    
+    private func setTextFieldDelegate() {
         let textFields: [(UITextField, String)] = [
             (rootView.readyHourTextField, "readyHour"),
             (rootView.readyMinuteTextField, "readyMinute"),
@@ -183,51 +177,19 @@ private extension SetReadyInfoViewController {
             textField.accessibilityIdentifier = identifier
         }
     }
-    
-    func showToast(_ message: String, bottomInset: CGFloat = 128) {
-        guard let view else { return }
-        Toast().show(message: message, view: view, position: .bottom, inset: bottomInset)
-    }
-    
-    // MARK: - Data Bind
-    
-    func setupBinding() {
-        viewModel.readyHour.bind { [weak self] readyHour in
-            self?.rootView.readyHourTextField.text = readyHour
-        }
-        
-        viewModel.readyMinute.bind { [weak self] readyMinute in
-            self?.rootView.readyMinuteTextField.text = readyMinute
-        }
-        
-        viewModel.moveHour.bind { [weak self] moveHour in
-            self?.rootView.moveHourTextField.text = moveHour
-        }
-        
-        viewModel.moveMinute.bind { [weak self] moveMinute in
-            self?.rootView.moveMinuteTextField.text = moveMinute
-        }
-        
-        viewModel.isValid.bind { [weak self] isValid in
-            self?.rootView.doneButton.isEnabled = isValid
-        }
-        
-        viewModel.errMessage.bind { [weak self] err in
-            if !err.isEmpty {
-                self?.showToast(err)
-            }
-        }
-        
-        viewModel.isSucceedToSave.bind { [weak self] _ in
-            if self?.viewModel.isSucceedToSave.value == true {
-                DispatchQueue.main.async {
-                    let viewController = SetReadyCompletedViewController()
-                    self?.navigationController?.pushViewController(
-                        viewController,
-                        animated: true
-                    )
-                }
-            }
-        }
+}
+
+
+// MARK: - UITextFieldDelegate
+
+extension SetReadyInfoViewController: UITextFieldDelegate {
+    func textField(
+        _ textField: UITextField,
+        shouldChangeCharactersIn range: NSRange,
+        replacementString string: String
+    ) -> Bool {
+        let allowedCharacters = CharacterSet.decimalDigits
+        let characterSet = CharacterSet(charactersIn: string)
+        return allowedCharacters.isSuperset(of: characterSet)
     }
 }

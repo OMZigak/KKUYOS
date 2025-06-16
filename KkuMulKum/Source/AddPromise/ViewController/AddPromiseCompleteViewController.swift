@@ -38,7 +38,7 @@ final class AddPromiseCompleteViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavigationBarTitle(with: "내 모임 추가하기")
+        setupNavigationBarTitle(with: "내 모임 추가하기", isBorderHidden: true)
         navigationItem.hidesBackButton = true
     }
     
@@ -63,7 +63,6 @@ final class AddPromiseCompleteViewController: BaseViewController {
                     animated: false
                 )
                 rootViewController.navigationController?.pushViewController(
-                    
                     PromiseViewController(
                         viewModel: PromiseViewModel(
                             promiseID: owner.promiseID,

@@ -123,7 +123,7 @@ extension EditPromiseViewModel {
 extension EditPromiseViewModel {
     func putPromiseInfo() {
         let participants = participantList?.value.filter { $0.isParticipant }.map { $0.memberID } ?? []
-        
+
         let request = EditPromiseRequestModel(
             name: promiseName?.value ?? "",
             placeName: placeName?.value ?? "",

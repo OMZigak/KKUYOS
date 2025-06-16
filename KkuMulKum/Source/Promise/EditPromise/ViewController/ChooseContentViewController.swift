@@ -54,7 +54,22 @@ class ChooseContentViewController: BaseViewController {
         rootView.confirmButton.setTitle("수정하기", style: .body03, color: .white)
         
         for button in self.rootView.levelButtons {
-            button.isSelected = (button.titleLabel?.text == viewModel.dressUpLevel?.value)
+            let levels = ["LV1", "LV2", "LV3", "LV4", "FREE"]
+            
+            if var dressUpLevel = button.titleLabel?.text {
+                if dressUpLevel.contains("마음대로 입고 오기") {
+                    dressUpLevel = "FREE"
+                }
+                else {
+                    if let matched = levels.first(where: {
+                        level in dressUpLevel.replacingOccurrences(of: " ", with: "").contains(level)
+                    }) {
+                        dressUpLevel = matched
+                    }
+                }
+                
+                button.isSelected = (dressUpLevel == viewModel.dressUpLevel?.value)
+            }
         }
             
         for button in self.rootView.penaltyButtons {
@@ -91,12 +106,14 @@ private extension ChooseContentViewController {
         })
         
         viewModel.isSuccess.bindOnMain(with: self) { owner, success in
-            let viewController = AddPromiseCompleteViewController(promiseID: self.viewModel.promiseID)
-            
-            viewController.setupNavigationBarTitle(with: "약속 수정하기")
-            viewController.rootView.titleLabel.text = "약속이 수정되었어요!"
-            
-            self.navigationController?.pushViewController(viewController, animated: true)
+            if success {
+                let viewController = AddPromiseCompleteViewController(promiseID: owner.viewModel.promiseID)
+                
+                viewController.setupNavigationBarTitle(with: "약속 수정하기")
+                viewController.rootView.titleLabel.text = "약속이 수정되었어요!"
+                
+                self.navigationController?.pushViewController(viewController, animated: true)
+            }
         }
     }
     

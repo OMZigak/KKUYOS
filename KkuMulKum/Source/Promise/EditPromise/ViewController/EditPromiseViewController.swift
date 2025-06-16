@@ -116,7 +116,7 @@ private extension EditPromiseViewController {
             return
         }
         
-        rootView.datePicker.minimumDate = .none
+        rootView.datePicker.minimumDate = .now
         rootView.datePicker.date = date
         rootView.timePicker.date = date
     }

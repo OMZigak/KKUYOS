@@ -26,6 +26,12 @@ class OurReadyStatusCollectionViewCell: BaseCollectionViewCell {
         $0.layer.borderWidth = 0.5
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        profileImageView.image = nil
+    }
+    
     override func setupView() {
         backgroundColor = .gray0
         layer.cornerRadius = Screen.height(8)

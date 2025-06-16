@@ -16,6 +16,21 @@ class BaseViewController: UIViewController {
         setupView()
         setupAction()
         setupDelegate()
+        trackScreenView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
+        trackScreenEntered()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        trackScreenExited()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -44,12 +59,16 @@ extension BaseViewController {
             .font: UIFont.pretendard(.body03)
         ]
         
-        isBorderHidden ? navigationController?.hideBorder() : navigationController?.showBorder()
-        
         let barAppearance = UINavigationBarAppearance()
         barAppearance.backgroundColor = .white
-        navigationItem.standardAppearance = barAppearance
-        navigationItem.scrollEdgeAppearance = barAppearance
+        barAppearance.shadowColor = nil
+        
+        navigationController?.navigationBar.standardAppearance = barAppearance
+        navigationController?.navigationBar.scrollEdgeAppearance = barAppearance
+        
+        if !isBorderHidden {
+            addBorder()
+        }
     }
     
     /// 네비게이션 바 BackButton 구성
@@ -67,15 +86,44 @@ extension BaseViewController {
     }
 }
 
+
+// MARK: - UIGestureRecognizerDelegate
+
 extension BaseViewController: UIGestureRecognizerDelegate {
     func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         return navigationController?.viewControllers.count ?? 0 > 1
     }
 }
 
+
+// MARK: - Private Method
+
 private extension BaseViewController {
     @objc
     func backButtonDidTap() {
         navigationController?.popViewController(animated: true)
+    }
+    
+    func addBorder() {
+        let identifier = "border"
+        guard view.subviews.first(where: { $0.accessibilityIdentifier == identifier }) == nil else { return }
+        
+        let safeArea = view.safeAreaLayoutGuide
+        let border = UIView(backgroundColor: .gray2).then {
+            $0.accessibilityIdentifier = identifier
+        }
+        
+        view.addSubview(border)
+        
+        border.snp.makeConstraints {
+            $0.top.equalTo(safeArea)
+            $0.horizontalEdges.equalToSuperview()
+            $0.height.equalTo(1)
+        }
+        
+        view.bringSubviewToFront(border)
+        
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
     }
 }

@@ -26,4 +26,3 @@ protocol PromiseServiceProtocol {
     func deletePromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
     func exitPromise(promiseID: Int) async throws -> ResponseBodyDTO<EmptyModel>?
 }
-

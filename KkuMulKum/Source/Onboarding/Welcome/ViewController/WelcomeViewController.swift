@@ -54,7 +54,7 @@ class WelcomeViewController: BaseViewController {
         
         let navigationController = UINavigationController(
             rootViewController: mainTabBarController,
-            isBorderNeeded: true
+            isBorderNeeded: false
         )
         
         navigationController.isNavigationBarHidden = true

@@ -58,7 +58,7 @@ class MyPageViewModel: NSObject {
         case 1:
             return "빼꼼 꾸물이"
         case 2:
-            return "망기적 꾸물이"
+            return "밍기적 꾸물이"
         case 3:
             return "기적 꾸물이"
         case 4:

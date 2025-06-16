@@ -12,10 +12,10 @@ import RxSwift
 
 final class SelectPenaltyViewController: BaseViewController {
     private let viewModel: SelectPenaltyViewModel
-    private let disposeBag = DisposeBag()
-    private let rootView = SelectPenaltyView()
     private let selectedLevelButtonRelay = BehaviorRelay(value: "")
     private let selectedPenaltyButtonRelay = BehaviorRelay(value: "")
+    private let disposeBag = DisposeBag()
+    private let rootView = SelectPenaltyView()
     
     
     // MARK: - Initializer
@@ -40,7 +40,7 @@ final class SelectPenaltyViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupNavigationBarTitle(with: "약속 추가하기")
+        setupNavigationBarTitle(with: "약속 추가하기", isBorderHidden: true)
         setupNavigationBarBackButton()
         
         bindViewModel()
@@ -88,10 +88,10 @@ private extension SelectPenaltyViewController {
             .disposed(by: disposeBag)
         
         output.isSucceedToCreate
-            .drive(with: self) { owner, result in
-                let (flag, promiseID) = result
-                guard flag else { return }
-                let viewController = AddPromiseCompleteViewController(promiseID: promiseID ?? 0)
+            .drive(with: self) { owner, promiseID in
+                guard promiseID > 0 else { return }
+                
+                let viewController = AddPromiseCompleteViewController(promiseID: promiseID)
                 owner.navigationController?.pushViewController(viewController, animated: true)
             }
             .disposed(by: disposeBag)

@@ -66,6 +66,7 @@ class ChooseMemberViewController: BaseViewController {
     }
     
     override func setupDelegate() {
+        rootView.memberListView.delegate = self
         rootView.memberListView.dataSource = self
     }
 }
@@ -76,7 +77,8 @@ class ChooseMemberViewController: BaseViewController {
 private extension ChooseMemberViewController {
     func setupBinding() {
         viewModel.participantList?.bindOnMain(with: self, { owner, members in
-            self.rootView.memberListView.reloadData()
+            owner.rootView.emptyContentView.isHidden = !members.isEmpty
+            owner.rootView.memberListView.reloadData()
         })
     }
     

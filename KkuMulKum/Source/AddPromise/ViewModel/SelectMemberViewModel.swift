@@ -11,29 +11,15 @@ import RxCocoa
 import RxSwift
 
 final class SelectMemberViewModel {
-    let meetingID: Int
-    let name: String
-    let place: Place
-    let promiseDateString: String
-    
-    var members: [Member] { memberListRelay.value }
-    var selectedMembers: [Member] { selectedMemberListRelay.value }
-    
+    private let builder: AddPromiseRequestModel.Builder
     private let service: SelectMemeberServiceType
     private let memberListRelay = BehaviorRelay<[Member]>(value: [])
-    private let selectedMemberListRelay = BehaviorRelay<[Member]>(value: [])
     
     init(
-        meetingID: Int,
-        name: String,
-        place: Place,
-        promiseDateString: String,
+        builder: AddPromiseRequestModel.Builder,
         service: SelectMemeberServiceType
     ) {
-        self.meetingID = meetingID
-        self.name = name
-        self.place = place
-        self.promiseDateString = promiseDateString
+        self.builder = builder
         self.service = service
     }
 }
@@ -41,15 +27,19 @@ final class SelectMemberViewModel {
 extension SelectMemberViewModel: ViewModelType {
     struct Input {
         let viewDidLoad: Observable<Void>
-        let memberSelected: Observable<Member>
-        let memberDeselected: Observable<Member>
+        let memberSelected: Observable<Int>
+        let memberDeselected: Observable<Int>
+        let confirmButtonDidTap: Observable<Void>
     }
     
     struct Output {
         let memberList: Driver<[Member]>
+        let navigateToSelectPenalty: Observable<AddPromiseRequestModel.Builder>
     }
     
     func transform(input: Input, disposeBag: DisposeBag) -> Output {
+        let selectedMemberListRelay = BehaviorRelay<[Member]>(value: [])
+        
         input.viewDidLoad
             .subscribe(with: self) { owner, _ in
                 owner.fetchMeetingMembers()
@@ -57,25 +47,39 @@ extension SelectMemberViewModel: ViewModelType {
             .disposed(by: disposeBag)
         
         input.memberSelected
-            .subscribe(with: self) { owner, member in
-                var selectedMembers = owner.selectedMemberListRelay.value
-                guard !selectedMembers.contains(where: { $0.memberID == member.memberID }) else { return }
-                selectedMembers.append(member)
-                owner.selectedMemberListRelay.accept(selectedMembers)
+            .subscribe(with: self) { owner, selectedItem in
+                guard selectedItem < owner.memberListRelay.value.count else { return }
+                let selectedMember = owner.memberListRelay.value[selectedItem]
+                
+                var selectedMembers = selectedMemberListRelay.value
+                guard !selectedMembers.contains(where: { $0.memberID == selectedMember.memberID }) else { return }
+                selectedMembers.append(selectedMember)
+                selectedMemberListRelay.accept(selectedMembers)
             }
             .disposed(by: disposeBag)
         
         input.memberDeselected
-            .subscribe(with: self) { owner, member in
-                var selectedMembers = owner.selectedMemberListRelay.value
-                guard selectedMembers.contains(where: { $0.memberID == member.memberID }) else { return }
-                selectedMembers.removeAll { $0.memberID == member.memberID }
-                owner.selectedMemberListRelay.accept(selectedMembers)
+            .subscribe(with: self) { owner, deselectedItem in
+                guard deselectedItem < owner.memberListRelay.value.count else { return }
+                let deselectedMember = owner.memberListRelay.value[deselectedItem]
+                
+                var selectedMembers = selectedMemberListRelay.value
+                guard selectedMembers.contains(where: { $0.memberID == deselectedMember.memberID }) else { return }
+                selectedMembers.removeAll { $0.memberID == deselectedMember.memberID }
+                selectedMemberListRelay.accept(selectedMembers)
             }
             .disposed(by: disposeBag)
         
+        let navigateToSelectPenalty = input.confirmButtonDidTap
+            .withLatestFrom(selectedMemberListRelay)
+            .compactMap { [weak self] selectedMembers in
+                return self?.builder
+                    .setParticipants(selectedMembers.map { $0.memberID })
+            }
+        
         let output = Output(
-            memberList: memberListRelay.asDriver(onErrorJustReturn: [])
+            memberList: memberListRelay.asDriver(onErrorJustReturn: []),
+            navigateToSelectPenalty: navigateToSelectPenalty
         )
         
         return output
@@ -86,7 +90,7 @@ private extension SelectMemberViewModel {
     func fetchMeetingMembers() {
         Task {
             do {
-                guard let responseBody = try await service.fetchMeetingMemberListExcludeLoginUser(with: meetingID),
+                guard let responseBody = try await service.fetchMeetingMemberListExcludeLoginUser(with: builder.id),
                       responseBody.success
                 else {
                     memberListRelay.accept([])

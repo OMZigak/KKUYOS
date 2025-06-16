@@ -11,10 +11,17 @@ import Moya
 
 final class HomeService {
     let provider: MoyaProvider<HomeTargetType>
-    
-    init(provider: MoyaProvider<HomeTargetType> = MoyaProvider(plugins: [MoyaLoggingPlugin()])) {
-        self.provider = provider
-    }
+        
+    init() {
+          let authService = AuthService()
+          let authProvider = MoyaProvider<AuthTargetType>(plugins: [MoyaLoggingPlugin()])
+          let authInterceptor = AuthInterceptor(authService: authService, provider: authProvider)
+          
+          self.provider = MoyaProvider<HomeTargetType>(
+              session: Session(interceptor: authInterceptor),
+              plugins: [MoyaLoggingPlugin()]
+          )
+      }
     
     func request<T: ResponseModelType>(
         with request: HomeTargetType
