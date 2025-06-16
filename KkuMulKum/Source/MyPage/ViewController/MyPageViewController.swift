@@ -10,6 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 import Kingfisher
+import Amplitude
 
 class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     private let rootView = MyPageView()
@@ -32,7 +33,8 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .green1
-        
+        Amplitude.instance().logEvent("test_event_from_app")
+            print("📤 테스트 이벤트 전송 완료")
         bindViewModel()
     }
     

@@ -16,6 +16,21 @@ class BaseViewController: UIViewController {
         setupView()
         setupAction()
         setupDelegate()
+        trackScreenView()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        
+        trackScreenEntered()
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        trackScreenExited()
     }
     
     override func viewWillAppear(_ animated: Bool) {

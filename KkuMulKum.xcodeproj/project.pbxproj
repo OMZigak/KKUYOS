@@ -69,6 +69,7 @@
 		785AE1BC2C2E878600677CA0 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BB2C2E878600677CA0 /* FirebaseStorage */; };
 		785AE1BE2C2E878600677CA0 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BD2C2E878600677CA0 /* FirebaseStorageCombine-Community */; };
 		785AE1C02C2E878600677CA0 /* FirebaseVertexAI-Preview in Frameworks */ = {isa = PBXBuildFile; productRef = 785AE1BF2C2E878600677CA0 /* FirebaseVertexAI-Preview */; };
+		785ED5DB2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 785ED5DA2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift */; };
 		789196342C486F6B00FF8CDF /* KeychainAccessible.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196332C486F6B00FF8CDF /* KeychainAccessible.swift */; };
 		789196362C492F8600FF8CDF /* AuthTargetType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196352C492F8600FF8CDF /* AuthTargetType.swift */; };
 		789196382C49697B00FF8CDF /* AuthError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789196372C49697B00FF8CDF /* AuthError.swift */; };
@@ -81,10 +82,11 @@
 		789D73AF2C46D99B00C7077D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 789D73AE2C46D99B00C7077D /* GoogleService-Info.plist */; };
 		789D73B32C47CC6D00C7077D /* LocalNotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73B22C47CC6D00C7077D /* LocalNotificationManager.swift */; };
 		789D73BE2C47FE0F00C7077D /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 789D73BD2C47FE0F00C7077D /* AuthInterceptor.swift */; };
-		78AA9F1C2D6CC667001F1BCE /* Pulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AA9F1B2D6CC667001F1BCE /* Pulse.swift */; };
 		78AA99CB2D670B67001F1BCE /* TokenRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AA99CA2D670B67001F1BCE /* TokenRefreshManager.swift */; };
+		78AA9F1C2D6CC667001F1BCE /* Pulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AA9F1B2D6CC667001F1BCE /* Pulse.swift */; };
 		78AED1342C3D951F000AD80A /* NicknameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1332C3D951F000AD80A /* NicknameViewController.swift */; };
 		78AED1372C3D98D1000AD80A /* NicknameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78AED1362C3D98D1000AD80A /* NicknameView.swift */; };
+		78B13C4D2DFEC3AA009BE120 /* Amplitude in Frameworks */ = {isa = PBXBuildFile; productRef = 78B13C4C2DFEC3AA009BE120 /* Amplitude */; };
 		78B9286C2C29402C006D9942 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286B2C29402C006D9942 /* AppDelegate.swift */; };
 		78B9286E2C29402C006D9942 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78B9286D2C29402C006D9942 /* SceneDelegate.swift */; };
 		78B928752C29402E006D9942 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 78B928742C29402E006D9942 /* Assets.xcassets */; };
@@ -289,6 +291,7 @@
 		784825082C77623C00FE07A0 /* MypageTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MypageTargetType.swift; sourceTree = "<group>"; };
 		7848250A2C77627200FE07A0 /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		784825102C77666500FE07A0 /* MyPageUserServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageUserServiceProtocol.swift; sourceTree = "<group>"; };
+		785ED5DA2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Amplitude+CoreAnalytics.swift"; sourceTree = "<group>"; };
 		789196332C486F6B00FF8CDF /* KeychainAccessible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainAccessible.swift; sourceTree = "<group>"; };
 		789196352C492F8600FF8CDF /* AuthTargetType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthTargetType.swift; sourceTree = "<group>"; };
 		789196372C49697B00FF8CDF /* AuthError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthError.swift; sourceTree = "<group>"; };
@@ -302,8 +305,8 @@
 		789D73B02C46DACD00C7077D /* KkuMulKum.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = KkuMulKum.entitlements; sourceTree = "<group>"; };
 		789D73B22C47CC6D00C7077D /* LocalNotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalNotificationManager.swift; sourceTree = "<group>"; };
 		789D73BD2C47FE0F00C7077D /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
-		78AA9F1B2D6CC667001F1BCE /* Pulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pulse.swift; sourceTree = "<group>"; };
 		78AA99CA2D670B67001F1BCE /* TokenRefreshManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshManager.swift; sourceTree = "<group>"; };
+		78AA9F1B2D6CC667001F1BCE /* Pulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pulse.swift; sourceTree = "<group>"; };
 		78AED1332C3D951F000AD80A /* NicknameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameViewController.swift; sourceTree = "<group>"; };
 		78AED1362C3D98D1000AD80A /* NicknameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameView.swift; sourceTree = "<group>"; };
 		78B928682C29402C006D9942 /* KkuMulKum.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KkuMulKum.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -493,6 +496,7 @@
 				785AE1C02C2E878600677CA0 /* FirebaseVertexAI-Preview in Frameworks */,
 				780E897A2C5D22B90009D27E /* KakaoSDK in Frameworks */,
 				DEAD45942C6F70FC00395A96 /* ReactorKit in Frameworks */,
+				78B13C4D2DFEC3AA009BE120 /* Amplitude in Frameworks */,
 				785AE19E2C2E878600677CA0 /* FirebaseDatabaseSwift in Frameworks */,
 				785AE1AA2C2E878600677CA0 /* FirebaseFunctionsCombine-Community in Frameworks */,
 				785AE1BC2C2E878600677CA0 /* FirebaseStorage in Frameworks */,
@@ -1429,6 +1433,7 @@
 				DE254AB12C31197B00A4015E /* UIButton+.swift */,
 				DE254AB32C31199B00A4015E /* UITextField+.swift */,
 				DE54732D2C72F13B005FB40E /* UINavigationController+.swift */,
+				785ED5DA2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1817,6 +1822,7 @@
 				DEAD458E2C6F70D600395A96 /* Differentiator */,
 				DEAD45902C6F70D600395A96 /* RxDataSources */,
 				DEAD45932C6F70FC00395A96 /* ReactorKit */,
+				78B13C4C2DFEC3AA009BE120 /* Amplitude */,
 			);
 			productName = KkuMulKum;
 			productReference = 78B928682C29402C006D9942 /* KkuMulKum.app */;
@@ -1859,6 +1865,7 @@
 				DEAD45862C6F70A400395A96 /* XCRemoteSwiftPackageReference "Moya" */,
 				DEAD458D2C6F70D600395A96 /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				DEAD45922C6F70FC00395A96 /* XCRemoteSwiftPackageReference "ReactorKit" */,
+				78B13C4B2DFEC3AA009BE120 /* XCRemoteSwiftPackageReference "Amplitude-iOS" */,
 			);
 			productRefGroup = 78B928692C29402C006D9942 /* Products */;
 			projectDirPath = "";
@@ -1917,6 +1924,7 @@
 				DE6D4D102C3F14D80005584B /* InvitationCodePopUpView.swift in Sources */,
 				789196382C49697B00FF8CDF /* AuthError.swift in Sources */,
 				A39F2B1B2C47C206008DA5F5 /* SetReadyCompletedViewController.swift in Sources */,
+				785ED5DB2DFF21F200A03E71 /* Amplitude+CoreAnalytics.swift in Sources */,
 				DDFA50812C4693BD000A62E2 /* ProfileSetupViewController.swift in Sources */,
 				DD30721A2C3C011600416D9F /* AddPromiseRequestModel.swift in Sources */,
 				DD8626682C4606A300E4F980 /* ReadyStatusButton.swift in Sources */,
@@ -2382,6 +2390,14 @@
 				minimumVersion = 10.28.1;
 			};
 		};
+		78B13C4B2DFEC3AA009BE120 /* XCRemoteSwiftPackageReference "Amplitude-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/amplitude/Amplitude-iOS";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		78BD611E2C43F557005752FD /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper.git";
@@ -2662,6 +2678,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 785AE1882C2E878600677CA0 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = "FirebaseVertexAI-Preview";
+		};
+		78B13C4C2DFEC3AA009BE120 /* Amplitude */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 78B13C4B2DFEC3AA009BE120 /* XCRemoteSwiftPackageReference "Amplitude-iOS" */;
+			productName = Amplitude;
 		};
 		78BD611F2C43F557005752FD /* SwiftKeychainWrapper */ = {
 			isa = XCSwiftPackageProductDependency;
