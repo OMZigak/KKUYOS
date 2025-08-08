@@ -8,7 +8,7 @@
 import Foundation
 
 /// 현재 로그인된 유저의 정보를 조회 (Response)
-struct LoginUserModel: ResponseModelType {
+struct LoginUserModel: ResponseModelType, Equatable {
     let userID: Int
     let name: String?
     let level: Int
