@@ -14,13 +14,15 @@ import Kingfisher
 import Amplitude
 
 class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
-    private let rootView = MyPageView()
     private let viewModel = MyPageViewModel()
     private let disposeBag = DisposeBag()
     private var needsUserInfoRefresh = true
+    private var hostingController: UIHostingController<MyPageSwiftUIView>?
     
     override func loadView() {
-        view = rootView
+        super.loadView()
+        view = UIView()
+        view.backgroundColor = .green1
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -33,18 +35,13 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green1
         
-        // Setup SwiftUI content view
-        rootView.setupSwiftUIContent(with: viewModel)
-        if let hostingController = rootView.contentHostingController {
-            addChild(hostingController)
-            hostingController.didMove(toParent: self)
-        }
+        setupSwiftUIView()
         
         Amplitude.instance().logEvent("test_event_from_app")
             print("📤 테스트 이벤트 전송 완료")
         bindViewModel()
+        setupNotificationObservers()
     }
     
     override func setupView() {
@@ -52,34 +49,52 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         setupNavigationBarTitle(with: "마이페이지")
     }
     
+    private func setupSwiftUIView() {
+        let swiftUIView = MyPageSwiftUIView(viewModel: viewModel)
+        hostingController = UIHostingController(rootView: swiftUIView)
+        
+        guard let hostingController = hostingController else { return }
+        
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        hostingController.didMove(toParent: self)
+    }
+    
+    private func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showTerms),
+            name: Notification.Name("ShowTerms"),
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showAsk),
+            name: Notification.Name("ShowAsk"),
+            object: nil
+        )
+    }
+    
+    @objc private func showTerms() {
+        pushTermsViewController()
+    }
+    
+    @objc private func showAsk() {
+        pushAskViewController()
+    }
+    
     private func bindViewModel() {
-        // Inputs
-        // Edit button is now handled by SwiftUI view directly
-        // rootView.contentView.editButton.rx.tap
-        //     .bind(to: viewModel.editButtonTapped)
-        //     .disposed(by: disposeBag)
-        
-        bindRowTapGesture(for: rootView.etcSettingView.logoutRow)
-            .bind(to: viewModel.logoutButtonTapped)
-            .disposed(by: disposeBag)
-        
-        bindRowTapGesture(for: rootView.etcSettingView.unsubscribeRow)
-            .bind(to: viewModel.unsubscribeButtonTapped)
-            .disposed(by: disposeBag)
-        
-        bindRowTapGesture(for: rootView.etcSettingView.versionInfoRow)
-            .subscribe(onNext: { print("버전정보 탭됨") })
-            .disposed(by: disposeBag)
-        
-        bindRowTapGesture(for: rootView.etcSettingView.termsOfServiceRow)
-            .subscribe(onNext: { [weak self] in
-                self?.pushTermsViewController() })
-            .disposed(by: disposeBag)
-        
-        bindRowTapGesture(for: rootView.etcSettingView.inquiryRow)
-            .subscribe(onNext: { [weak self] in
-                self?.pushAskViewController() })
-            .disposed(by: disposeBag)
+        // ViewModel bindings are now handled by SwiftUI views
         
         // Outputs
         viewModel.pushEditProfileVC
@@ -141,31 +156,6 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         //     .disposed(by: disposeBag)
     }
     
-    // These methods are no longer needed as UI updates are handled by SwiftUI view
-    // Keeping them commented for reference in case needed for future migration
-    
-    /*
-    private func updateUI(with userInfo: LoginUserModel?) {
-        // UI updates now handled by SwiftUI MyPageContentSwiftUIView
-    }
-    
-    private func updateProfileImage(with urlString: String?, localImage: UIImage? = nil) {
-        // Profile image updates now handled by SwiftUI MyPageContentSwiftUIView
-    }
-    
-    private func loadImage(from urlString: String, into imageView: UIImageView) {
-        // Image loading now handled by SwiftUI MyPageContentSwiftUIView
-    }
-    */
-    
-    private func bindRowTapGesture(for view: UIView) -> Observable<Void> {
-        return view.gestureRecognizers?
-            .compactMap { $0 as? UITapGestureRecognizer }
-            .first?
-            .rx.event
-            .map { _ in }
-        ?? Observable.empty()
-    }
     
     private func pushEditProfileViewController() {
         let editViewModel = MyPageEditViewModel(authService: AuthService())
