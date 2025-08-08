@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 import RxSwift
 import RxCocoa
@@ -33,6 +34,14 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .green1
+        
+        // Setup SwiftUI content view
+        rootView.setupSwiftUIContent(with: viewModel)
+        if let hostingController = rootView.contentHostingController {
+            addChild(hostingController)
+            hostingController.didMove(toParent: self)
+        }
+        
         Amplitude.instance().logEvent("test_event_from_app")
             print("📤 테스트 이벤트 전송 완료")
         bindViewModel()
@@ -45,9 +54,10 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     
     private func bindViewModel() {
         // Inputs
-        rootView.contentView.editButton.rx.tap
-            .bind(to: viewModel.editButtonTapped)
-            .disposed(by: disposeBag)
+        // Edit button is now handled by SwiftUI view directly
+        // rootView.contentView.editButton.rx.tap
+        //     .bind(to: viewModel.editButtonTapped)
+        //     .disposed(by: disposeBag)
         
         bindRowTapGesture(for: rootView.etcSettingView.logoutRow)
             .bind(to: viewModel.logoutButtonTapped)
@@ -122,85 +132,31 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
             })
             .disposed(by: disposeBag)
         
-        viewModel.userInfo
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] userInfo in
-                self?.updateUI(with: userInfo)
-            })
-            .disposed(by: disposeBag)
+        // UI updates are now handled by SwiftUI view directly through @ObservedObject
+        // viewModel.userInfo
+        //     .observe(on: MainScheduler.instance)
+        //     .subscribe(onNext: { [weak self] userInfo in
+        //         self?.updateUI(with: userInfo)
+        //     })
+        //     .disposed(by: disposeBag)
     }
     
+    // These methods are no longer needed as UI updates are handled by SwiftUI view
+    // Keeping them commented for reference in case needed for future migration
+    
+    /*
     private func updateUI(with userInfo: LoginUserModel?) {
-        guard let userInfo = userInfo else { return }
-        let levelText = viewModel.getLevelText(for: userInfo.level)
-        
-        rootView.contentView.nameLabel.text = (userInfo.name.map { $0 + " 님" }) ?? "꾸물리안 님"
-        
-        let fullLevelText = "Lv. \(userInfo.level) \(levelText)"
-        rootView.contentView.levelLabel.setText(fullLevelText, style: .body05, color: .white)
-        rootView.contentView.levelLabel.setHighlightText("Lv. \(userInfo.level)", style: .body05, color: .lightGreen)
-        
-        updateProfileImage(with: userInfo.profileImageURL)
+        // UI updates now handled by SwiftUI MyPageContentSwiftUIView
     }
     
     private func updateProfileImage(with urlString: String?, localImage: UIImage? = nil) {
-        print("Attempting to update profile image with URL: \(urlString ?? "nil")")
-        if let localImage = localImage {
-            rootView.contentView.profileImageView.image = localImage
-        }
-        
-        if let urlString = urlString, let url = URL(string: urlString) {
-            rootView.contentView.profileImageView.kf.setImage(
-                with: url,
-                placeholder: localImage ?? UIImage.imgProfile,
-                options: [
-                    .transition(.fade(0.2)),
-                    .forceRefresh,
-                    .cacheOriginalImage
-                ],
-                completionHandler: { result in
-                    switch result {
-                    case .success(let value):
-                        print("Profile image loaded successfully from server. Size: \(value.image.size)")
-                    case .failure(let error):
-                        print("Failed to load profile image from server: \(error.localizedDescription)")
-                        if self.rootView.contentView.profileImageView.image == nil {
-                            self.rootView.contentView.profileImageView.image = UIImage.imgProfile
-                        }
-                    }
-                }
-            )
-        } else {
-            print("Invalid URL or nil. Using local image or default profile image.")
-            rootView.contentView.profileImageView.image = localImage ?? UIImage.imgProfile
-        }
+        // Profile image updates now handled by SwiftUI MyPageContentSwiftUIView
     }
     
     private func loadImage(from urlString: String, into imageView: UIImageView) {
-        guard let url = URL(string: urlString) else {
-            print("Invalid URL: \(urlString)")
-            return
-        }
-        
-        imageView.kf.setImage(
-            with: url,
-            placeholder: UIImage.imgProfile,
-            options: [
-                .transition(.fade(0.2)),
-                .forceRefresh,
-                .cacheOriginalImage
-            ],
-            completionHandler: { result in
-                switch result {
-                case .success(_):
-                    print("Image loaded successfully")
-                case .failure(let error):
-                    print("Failed to load image: \(error.localizedDescription)")
-                    imageView.image = UIImage.imgProfile
-                }
-            }
-        )
+        // Image loading now handled by SwiftUI MyPageContentSwiftUIView
     }
+    */
     
     private func bindRowTapGesture(for view: UIView) -> Observable<Void> {
         return view.gestureRecognizers?
@@ -218,11 +174,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         editViewModel.profileImageUpdated
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] imageDataString in
-                if let imageDataString = imageDataString,
-                   let imageData = Data(base64Encoded: imageDataString),
-                   let image = UIImage(data: imageData) {
-                    self?.updateProfileImage(with: nil, localImage: image)
-                }
+                // Profile image update is now handled by SwiftUI view
                 self?.needsUserInfoRefresh = true
             })
             .disposed(by: disposeBag)
