@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 import RxSwift
 import RxCocoa
@@ -13,13 +14,15 @@ import Kingfisher
 import Amplitude
 
 class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
-    private let rootView = MyPageView()
     private let viewModel = MyPageViewModel()
     private let disposeBag = DisposeBag()
     private var needsUserInfoRefresh = true
+    private var hostingController: UIHostingController<MyPageSwiftUIView>?
     
     override func loadView() {
-        view = rootView
+        super.loadView()
+        view = UIView()
+        view.backgroundColor = .green1
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,10 +35,13 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green1
+        
+        setupSwiftUIView()
+        
         Amplitude.instance().logEvent("test_event_from_app")
             print("📤 테스트 이벤트 전송 완료")
         bindViewModel()
+        setupNotificationObservers()
     }
     
     override func setupView() {
@@ -43,33 +49,52 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         setupNavigationBarTitle(with: "마이페이지")
     }
     
+    private func setupSwiftUIView() {
+        let swiftUIView = MyPageSwiftUIView(viewModel: viewModel)
+        hostingController = UIHostingController(rootView: swiftUIView)
+        
+        guard let hostingController = hostingController else { return }
+        
+        addChild(hostingController)
+        view.addSubview(hostingController.view)
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            hostingController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            hostingController.view.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hostingController.view.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            hostingController.view.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
+        
+        hostingController.didMove(toParent: self)
+    }
+    
+    private func setupNotificationObservers() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showTerms),
+            name: Notification.Name("ShowTerms"),
+            object: nil
+        )
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(showAsk),
+            name: Notification.Name("ShowAsk"),
+            object: nil
+        )
+    }
+    
+    @objc private func showTerms() {
+        pushTermsViewController()
+    }
+    
+    @objc private func showAsk() {
+        pushAskViewController()
+    }
+    
     private func bindViewModel() {
-        // Inputs
-        rootView.contentView.editButton.rx.tap
-            .bind(to: viewModel.editButtonTapped)
-            .disposed(by: disposeBag)
-        
-        bindRowTapGesture(for: rootView.etcSettingView.logoutRow)
-            .bind(to: viewModel.logoutButtonTapped)
-            .disposed(by: disposeBag)
-        
-        bindRowTapGesture(for: rootView.etcSettingView.unsubscribeRow)
-            .bind(to: viewModel.unsubscribeButtonTapped)
-            .disposed(by: disposeBag)
-        
-        bindRowTapGesture(for: rootView.etcSettingView.versionInfoRow)
-            .subscribe(onNext: { print("버전정보 탭됨") })
-            .disposed(by: disposeBag)
-        
-        bindRowTapGesture(for: rootView.etcSettingView.termsOfServiceRow)
-            .subscribe(onNext: { [weak self] in
-                self?.pushTermsViewController() })
-            .disposed(by: disposeBag)
-        
-        bindRowTapGesture(for: rootView.etcSettingView.inquiryRow)
-            .subscribe(onNext: { [weak self] in
-                self?.pushAskViewController() })
-            .disposed(by: disposeBag)
+        // ViewModel bindings are now handled by SwiftUI views
         
         // Outputs
         viewModel.pushEditProfileVC
@@ -122,94 +147,15 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
             })
             .disposed(by: disposeBag)
         
-        viewModel.userInfo
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] userInfo in
-                self?.updateUI(with: userInfo)
-            })
-            .disposed(by: disposeBag)
+        // UI updates are now handled by SwiftUI view directly through @ObservedObject
+        // viewModel.userInfo
+        //     .observe(on: MainScheduler.instance)
+        //     .subscribe(onNext: { [weak self] userInfo in
+        //         self?.updateUI(with: userInfo)
+        //     })
+        //     .disposed(by: disposeBag)
     }
     
-    private func updateUI(with userInfo: LoginUserModel?) {
-        guard let userInfo = userInfo else { return }
-        let levelText = viewModel.getLevelText(for: userInfo.level)
-        
-        rootView.contentView.nameLabel.text = (userInfo.name.map { $0 + " 님" }) ?? "꾸물리안 님"
-        
-        let fullLevelText = "Lv. \(userInfo.level) \(levelText)"
-        rootView.contentView.levelLabel.setText(fullLevelText, style: .body05, color: .white)
-        rootView.contentView.levelLabel.setHighlightText("Lv. \(userInfo.level)", style: .body05, color: .lightGreen)
-        
-        updateProfileImage(with: userInfo.profileImageURL)
-    }
-    
-    private func updateProfileImage(with urlString: String?, localImage: UIImage? = nil) {
-        print("Attempting to update profile image with URL: \(urlString ?? "nil")")
-        if let localImage = localImage {
-            rootView.contentView.profileImageView.image = localImage
-        }
-        
-        if let urlString = urlString, let url = URL(string: urlString) {
-            rootView.contentView.profileImageView.kf.setImage(
-                with: url,
-                placeholder: localImage ?? UIImage.imgProfile,
-                options: [
-                    .transition(.fade(0.2)),
-                    .forceRefresh,
-                    .cacheOriginalImage
-                ],
-                completionHandler: { result in
-                    switch result {
-                    case .success(let value):
-                        print("Profile image loaded successfully from server. Size: \(value.image.size)")
-                    case .failure(let error):
-                        print("Failed to load profile image from server: \(error.localizedDescription)")
-                        if self.rootView.contentView.profileImageView.image == nil {
-                            self.rootView.contentView.profileImageView.image = UIImage.imgProfile
-                        }
-                    }
-                }
-            )
-        } else {
-            print("Invalid URL or nil. Using local image or default profile image.")
-            rootView.contentView.profileImageView.image = localImage ?? UIImage.imgProfile
-        }
-    }
-    
-    private func loadImage(from urlString: String, into imageView: UIImageView) {
-        guard let url = URL(string: urlString) else {
-            print("Invalid URL: \(urlString)")
-            return
-        }
-        
-        imageView.kf.setImage(
-            with: url,
-            placeholder: UIImage.imgProfile,
-            options: [
-                .transition(.fade(0.2)),
-                .forceRefresh,
-                .cacheOriginalImage
-            ],
-            completionHandler: { result in
-                switch result {
-                case .success(_):
-                    print("Image loaded successfully")
-                case .failure(let error):
-                    print("Failed to load image: \(error.localizedDescription)")
-                    imageView.image = UIImage.imgProfile
-                }
-            }
-        )
-    }
-    
-    private func bindRowTapGesture(for view: UIView) -> Observable<Void> {
-        return view.gestureRecognizers?
-            .compactMap { $0 as? UITapGestureRecognizer }
-            .first?
-            .rx.event
-            .map { _ in }
-        ?? Observable.empty()
-    }
     
     private func pushEditProfileViewController() {
         let editViewModel = MyPageEditViewModel(authService: AuthService())
@@ -218,11 +164,7 @@ class MyPageViewController: BaseViewController, CustomActionSheetDelegate {
         editViewModel.profileImageUpdated
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] imageDataString in
-                if let imageDataString = imageDataString,
-                   let imageData = Data(base64Encoded: imageDataString),
-                   let image = UIImage(data: imageData) {
-                    self?.updateProfileImage(with: nil, localImage: image)
-                }
+                // Profile image update is now handled by SwiftUI view
                 self?.needsUserInfoRefresh = true
             })
             .disposed(by: disposeBag)

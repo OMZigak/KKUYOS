@@ -31,7 +31,18 @@ class MyPageViewModel: NSObject {
     
     init(userService: MyPageUserServiceProtocol = MyPageUserService()) {
         self.userService = userService
-        self.userInfo = BehaviorRelay<LoginUserModel?>(value: nil)
+        
+        // 목데이터 설정
+        let mockUserInfo = LoginUserModel(
+            userID: 1,
+            name: "테스트유저",
+            level: 3,
+            promiseCount: 15,
+            tardyCount: 2,
+            tardySum: 35,
+            profileImageURL: nil
+        )
+        self.userInfo = BehaviorRelay<LoginUserModel?>(value: mockUserInfo)
         
         pushEditProfileVC = editButtonTapped.asSignal()
         
@@ -69,6 +80,20 @@ class MyPageViewModel: NSObject {
     }
     
     func fetchUserInfo() {
+        // 서버 테스트를 위해 목데이터 사용
+        let mockUserInfo = LoginUserModel(
+            userID: 1,
+            name: "테스트유저",
+            level: 3,
+            promiseCount: 15,
+            tardyCount: 2,
+            tardySum: 35,
+            profileImageURL: nil
+        )
+        userInfo.accept(mockUserInfo)
+        
+        // 실제 서버 호출은 주석 처리
+        /*
         Task {
             do {
                 let info = try await userService.getUserInfo()
@@ -77,6 +102,7 @@ class MyPageViewModel: NSObject {
                 print("Failed to fetch user info: \(error)")
             }
         }
+        */
     }
     
     func logout() {
